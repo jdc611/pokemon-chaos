@@ -159,7 +159,6 @@ static void WarpToTruck(void)
         // save warp directly to Pallet before entering the overworld.
         SetWarpDestination(MAP_GROUP(MAP_PALLET_TOWN_PLAYERS_HOUSE_2F), MAP_NUM(MAP_PALLET_TOWN_PLAYERS_HOUSE_2F), WARP_ID_NONE, 6, 6);
         WarpIntoMap();
-        SetPlayerCoords(6, 6);
     }
     else
     {
