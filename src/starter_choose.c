@@ -167,6 +167,14 @@ static void GenerateRandomStarters(void)
         return;
     }
 
+    if (gSaveBlock3Ptr->starterMode == RUN_STARTER_KANTO && !filtered)
+    {
+        sStarterMon[0] = SPECIES_BULBASAUR;
+        sStarterMon[1] = SPECIES_CHARMANDER;
+        sStarterMon[2] = SPECIES_SQUIRTLE;
+        return;
+    }
+
     if (gSaveBlock3Ptr->starterMode != RUN_STARTER_RANDOM && !filtered)
         return;
 
