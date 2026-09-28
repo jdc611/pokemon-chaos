@@ -1,0 +1,88 @@
+#ifndef GUARD_RUN_SETTINGS_H
+#define GUARD_RUN_SETTINGS_H
+
+enum RunWildMode
+{
+    RUN_WILD_NORMAL,
+    RUN_WILD_RANDOM,
+    RUN_WILD_SCALED,
+};
+
+enum RunStarterMode
+{
+    RUN_STARTER_NORMAL,
+    RUN_STARTER_CHOOSE,
+    RUN_STARTER_RANDOM,
+};
+
+enum RunRivalMode
+{
+    RUN_RIVAL_NORMAL,
+    RUN_RIVAL_CHOOSE,
+    RUN_RIVAL_RANDOM,
+    RUN_RIVAL_COUNTER,
+};
+
+enum RunFilterMode
+{
+    RUN_FILTER_NONE,
+    RUN_FILTER_TYPE,
+    RUN_FILTER_ABILITY,
+    RUN_FILTER_TYPE_ABILITY,
+    RUN_FILTER_GENERATION,
+    RUN_FILTER_BST_LIMIT,
+};
+
+enum RunPartyLegalityReason
+{
+    RUN_PARTY_LEGAL,
+    RUN_PARTY_ILLEGAL_FILTER,
+    RUN_PARTY_ILLEGAL_MEGA_LIMIT,
+};
+
+enum RunDifficulty
+{
+    RUN_DIFFICULTY_EASY,
+    RUN_DIFFICULTY_NORMAL,
+    RUN_DIFFICULTY_HARD,
+    RUN_DIFFICULTY_NUZLOCKE,
+};
+
+enum RunToggle
+{
+    RUN_TOGGLE_OFF,
+    RUN_TOGGLE_ON,
+};
+
+enum RunMovesetMode
+{
+    RUN_MOVESETS_NORMAL,
+    RUN_MOVESETS_RANDOM,
+};
+
+enum RunEvolutionMode
+{
+    RUN_EVOLUTIONS_NORMAL,
+    RUN_EVOLUTIONS_RANDOM,
+};
+
+enum RunBstMode
+{
+    RUN_BST_OFF,
+    RUN_BST_SHUFFLE,
+    RUN_BST_RANDOM,
+};
+
+enum RunAbilityMode
+{
+    RUN_ABILITIES_NORMAL,
+    RUN_ABILITIES_RANDOM,
+};
+
+#define RUN_SETUP_PAGE_PLAY_STYLE  0
+#define RUN_SETUP_PAGE_RANDOMIZER  1
+#define RUN_SETUP_PAGE_FILTERS     2
+#define RUN_SETUP_PAGE_CONFIRM     3
+#define RUN_SETUP_PAGE_COUNT       4
+
+#endif // GUARD_RUN_SETTINGS_H

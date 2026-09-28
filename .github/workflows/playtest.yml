@@ -1,0 +1,82 @@
+name: Build Playtest ROM
+
+"on":
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - "docs/**"
+      - "README.md"
+      - ".github/workflows/apply-*.yml"
+      - ".github/scripts/**"
+  workflow_dispatch: {}
+
+env:
+  GAME_REVISION: 0
+  GAME_LANGUAGE: ENGLISH
+  COMPARE: 0
+  UNUSED_ERROR: 1
+  DEPRECATED_ERROR: 1
+  PLAYTEST_TRIGGER: "Page 2 Draw Input Repair v14"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout latest master
+        uses: actions/checkout@v4
+        with:
+          ref: master
+
+      - name: Apply source migration
+        run: python3 .github/scripts/apply_stat_colors_levelcap_exp.py
+
+      - name: Commit migrated source changes
+        run: |
+          if ! git diff --quiet -- src/battle_controller_player.c src/battle_script_commands.c src/debug.c; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add src/battle_controller_player.c src/battle_script_commands.c src/debug.c
+            git commit -m "Implement remaining status UI and EXP fixes"
+            git push origin HEAD:master
+          fi
+
+      - name: Install build tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends binutils-arm-none-eabi gcc-arm-none-eabi libnewlib-arm-none-eabi libpng-dev python3
+
+      - name: Build Emerald
+        env:
+          GAME_VERSION: EMERALD
+        run: |
+          set -o pipefail
+          make -j$(nproc) -O all 2>&1 | tee build.log
+
+      - name: Surface build errors
+        if: failure()
+        run: |
+          echo "### Compiler errors" >> "$GITHUB_STEP_SUMMARY"
+          grep -nE '(^|: )(fatal error|error:|undefined reference|make(\[[0-9]+\])?: \*\*\*)' build.log | tail -80 | tee errors.txt || true
+          while IFS= read -r line; do
+            safe=${line//'%'/'%25'}
+            safe=${safe//$'\r'/'%0D'}
+            safe=${safe//$'\n'/'%0A'}
+            echo "::error::$safe"
+          done < errors.txt
+
+      - name: Upload build log
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-log-${{ github.sha }}
+          path: build.log
+
+      - name: Upload Playtest ROM
+        uses: actions/upload-artifact@v4
+        with:
+          name: Native-Status-Debug-Cap-v11-${{ github.sha }}
+          path: pokeemerald.gba
