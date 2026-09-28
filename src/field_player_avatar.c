@@ -1569,6 +1569,12 @@ u16 GetRivalAvatarGraphicsIdByStateIdAndGender(u8 state, enum Gender gender)
 
 u16 GetPlayerAvatarGraphicsIdByStateIdAndGender(u8 state, enum Gender gender)
 {
+    // Chaos lets the player choose the Kanto or Hoenn protagonist independently
+    // of the campaign region. FRLG's Red/Leaf object graphics contain their
+    // normal field animation set; special field states continue using the
+    // engine's established state graphics until Kanto-specific variants are wired.
+    if (gSaveBlock3Ptr != NULL && gSaveBlock3Ptr->playerModel == 1 && state == PLAYER_AVATAR_STATE_NORMAL)
+        return sFRLGAvatarGfxIds[gender];
     return sPlayerAvatarGfxIds[state][gender];
 }
 
