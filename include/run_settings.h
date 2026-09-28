@@ -13,6 +13,7 @@ enum RunStarterMode
     RUN_STARTER_NORMAL,
     RUN_STARTER_CHOOSE,
     RUN_STARTER_RANDOM,
+    RUN_STARTER_KANTO,
 };
 
 enum RunRivalMode
