@@ -3378,12 +3378,12 @@ static void CB2_NewGameBirchSpeech_ReturnFromNamingScreen(void)
     if (gSaveBlock2Ptr->playerGender != MALE)
     {
         gTasks[taskId].tPlayerGender = FEMALE;
-        spriteId = gTasks[taskId].tMaySpriteId;
+        spriteId = gRunSetupPlayerModel ? gTasks[taskId].tLeafSpriteId : gTasks[taskId].tMaySpriteId;
     }
     else
     {
         gTasks[taskId].tPlayerGender = MALE;
-        spriteId = gTasks[taskId].tBrendanSpriteId;
+        spriteId = gRunSetupPlayerModel ? gTasks[taskId].tRedSpriteId : gTasks[taskId].tBrendanSpriteId;
     }
     gSprites[spriteId].x = 180;
     gSprites[spriteId].y = 60;
@@ -3847,6 +3847,12 @@ static void Task_NewGameBirchSpeech_ReturnFromNamingScreenShowTextbox(u8 taskId)
         DrawDialogFrameWithCustomTile(0, TRUE, BIRCH_DLG_BASE_TILE_NUM);
         if (sRunSetupReturnToBirch)
         {
+            // Run Setup used its own window tiles/palette. Rebuild the intro
+            // message frame before printing the final line so stale menu
+            // graphics cannot corrupt the text box.
+            FillWindowPixelBuffer(0, PIXEL_FILL(1));
+            DrawDialogFrameWithCustomTile(0, TRUE, BIRCH_DLG_BASE_TILE_NUM);
+            CopyWindowToVram(0, COPYWIN_FULL);
             sRunSetupReturnToBirch = FALSE;
             gTasks[taskId].data[5] = TRUE;
             gTasks[taskId].tTimer = 0;
