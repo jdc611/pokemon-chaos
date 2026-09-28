@@ -1945,7 +1945,9 @@ static bool8 RunFieldCallback(void)
     return TRUE;
 }
 
-extern EWRAM_DATA u8 gRunSetupStartRegion;\n\nvoid CB2_NewGame(void)
+extern EWRAM_DATA u8 gRunSetupStartRegion;
+
+void CB2_NewGame(void)
 {
     FieldClearVBlankHBlankCallbacks();
     StopMapMusic();
