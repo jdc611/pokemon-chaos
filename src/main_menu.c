@@ -1503,7 +1503,6 @@ static void Task_StartRegionSelectInput(u8 taskId)
 }
 static void CB2_StartRegionSelect(void)
 {
-    u8 taskId;
     u16 palette;
     SetVBlankCallback(NULL);
     SetGpuReg(REG_OFFSET_DISPCNT, 0);
