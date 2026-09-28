@@ -2835,12 +2835,12 @@ static void Debug_PrepareImportantBattleParty(u16 trainerId)
     };
     static const u16 sLateParty[] =
     {
-        SPECIES_DRAGONITE,
-        SPECIES_TYRANITAR,
-        SPECIES_METAGROSS,
+        SPECIES_ROTOM_WASH,
+        SPECIES_WEAVILE,
+        SPECIES_EXCADRILL,
         SPECIES_GARCHOMP,
-        SPECIES_LUCARIO,
-        SPECIES_GENGAR,
+        SPECIES_AZUMARILL,
+        SPECIES_SCIZOR,
     };
     const struct Trainer *trainer = GetTrainerStructFromId(trainerId);
     const u16 *species;
