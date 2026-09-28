@@ -243,6 +243,7 @@ static void DebugQuickStartNewGame(u8 taskId);
 static void Task_HandleMainMenuBPressed(u8);
 static void Task_NewGameBirchSpeech_Init(u8);
 static void CB2_StartRegionSelect(void);
+static void CB2_RegionToBirchSpeech(void);
 static void Task_StartRegionSelectInput(u8);
 static void StartRegionSelectDraw(u8);
 static void Task_NewGameBirchSpeech_ChooseModel(u8);
@@ -1521,7 +1522,7 @@ static void Task_StartRegionSelectInput(u8 taskId)
         // configuration.  Re-enter through the full Birch/Oak scene callback
         // so BG templates, windows and VBlank are rebuilt before the intro
         // task touches VRAM.
-        SetMainCallback2(CB2_NewGameBirchSpeech);
+        SetMainCallback2(CB2_RegionToBirchSpeech);
     }
 }
 static void CB2_StartRegionSelect(void)
@@ -1553,6 +1554,25 @@ static void CB2_StartRegionSelect(void)
     SetMainCallback2(CB2_MainMenu);
     ShowBg(0);
 }
+static void CB2_RegionToBirchSpeech(void)
+{
+    u8 taskId;
+
+    SetVBlankCallback(NULL);
+    SetGpuReg(REG_OFFSET_DISPCNT, 0);
+    ResetBgsAndClearDma3BusyFlags(0);
+    InitBgsFromTemplates(0, sMainMenuBgTemplates, ARRAY_COUNT(sMainMenuBgTemplates));
+    InitBgFromTemplate(&sBirchBgTemplate);
+    InitWindows(sNewGameBirchSpeechTextWindows);
+    ResetTasks();
+    ResetSpriteData();
+    FreeAllSpritePalettes();
+    ResetPaletteFade();
+    taskId = CreateTask(Task_NewGameBirchSpeech_Init, 0);
+    SetVBlankCallback(VBlankCB_MainMenu);
+    SetMainCallback2(CB2_MainMenu);
+}
+
 static void Task_NewGameBirchSpeech_Init(u8 taskId)
 {
     SetGpuReg(REG_OFFSET_DISPCNT, 0);
