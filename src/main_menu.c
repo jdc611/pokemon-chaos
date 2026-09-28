@@ -1535,9 +1535,11 @@ static void CB2_StartRegionSelect(void)
     ResetPaletteFade();
     LoadPalette(sMainMenuBgPal, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
     LoadPalette(sMainMenuTextPal, BG_PLTT_ID(15), PLTT_SIZE_4BPP);
+    // Brighter standalone region-select palette. Keep strong contrast on
+    // the selected choice without the gray/dim cast of the main-menu palette.
     palette = RGB_WHITE; LoadPalette(&palette, BG_PLTT_ID(15) + 10, PLTT_SIZEOF(1));
-    palette = RGB(12, 12, 12); LoadPalette(&palette, BG_PLTT_ID(15) + 11, PLTT_SIZEOF(1));
-    palette = RGB(26, 26, 25); LoadPalette(&palette, BG_PLTT_ID(15) + 12, PLTT_SIZEOF(1));
+    palette = RGB(5, 5, 5); LoadPalette(&palette, BG_PLTT_ID(15) + 11, PLTT_SIZEOF(1));
+    palette = RGB(30, 30, 30); LoadPalette(&palette, BG_PLTT_ID(15) + 12, PLTT_SIZEOF(1));
     ResetTasks(); ResetSpriteData(); FreeAllSpritePalettes();
     ResetBgsAndClearDma3BusyFlags(0);
     InitBgsFromTemplates(0, sMainMenuBgTemplates, ARRAY_COUNT(sMainMenuBgTemplates));
