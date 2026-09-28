@@ -193,6 +193,9 @@ EWRAM_DATA u8 gRunSetupDifficulty;
 EWRAM_DATA u8 gRunSetupMovesetMode;
 EWRAM_DATA u8 gRunSetupEvolutionMode;
 EWRAM_DATA bool8 gRunSetupItemRandomization;
+EWRAM_DATA u8 gRunSetupStartRegion;
+EWRAM_DATA u8 gRunSetupPlayerModel;
+static EWRAM_DATA u8 sStartRegionCursor;
 static EWRAM_DATA u8 sRunSetupRandomizer;
 static EWRAM_DATA u8 sRunSetupStarter;
 static EWRAM_DATA bool8 sRunSetupCustom;
@@ -239,6 +242,12 @@ static void Task_HandleMainMenuAPressed(u8);
 static void DebugQuickStartNewGame(u8 taskId);
 static void Task_HandleMainMenuBPressed(u8);
 static void Task_NewGameBirchSpeech_Init(u8);
+static void CB2_StartRegionSelect(void);
+static void Task_StartRegionSelectInput(u8);
+static void StartRegionSelectDraw(u8);
+static void Task_NewGameBirchSpeech_ChooseModel(u8);
+static void NewGameBirchSpeech_ShowModelMenu(void);
+static void RunSetup_DrawWideChoice(const u8 *text, u8 x, u8 y, u8 width, bool32 selected);
 static void Task_DisplayMainMenuInvalidActionError(u8);
 static void AddBirchSpeechObjects(u8);
 static void Task_NewGameBirchSpeech_WaitToShowBirch(u8);
@@ -333,6 +342,15 @@ static const u8 gText_ContinueMenuTime[] = _("TIME");
 static const u8 gText_ContinueMenuPokedex[] = _("POKéDEX");
 static const u8 gText_ContinueMenuBadges[] = _("BADGES");
 static const u8 sText_RunSetupTitle[] = _("RUN SETUP");
+static const u8 sText_StartRegionTitle[] = _("WHERE WILL YOUR JOURNEY BEGIN?");
+static const u8 sText_StartRegionKanto[] = _("KANTO");
+static const u8 sText_StartRegionHoenn[] = _("HOENN");
+static const u8 sText_ModelPrompt[] = _("Choose your look.");
+static const u8 sText_ModelKanto[] = _("KANTO");
+static const u8 sText_ModelHoenn[] = _("HOENN");
+static const u8 sText_OakWelcome[] = _("Hello there! Welcome to the world of POKéMON!");
+static const u8 sText_OakMainSpeech[] = _("My name is OAK. People call me the POKéMON PROFESSOR.\pEven those of us who study POKéMON still have much to learn.");
+
 static const u8 sText_RunSetupConfirm[] = _("CONFIRM RUN");
 static const u8 sText_RunSetupFilterTitle[] = _("RUN FILTER");
 static const u8 sText_RunSetupFilterSettings[] = _("FILTER SETTINGS");
@@ -600,6 +618,10 @@ static const union AffineAnimCmd *const sSpriteAffineAnimTable_PlayerShrink[] =
 static const struct MenuAction sMenuActions_Gender[] = {
     {gText_Boy, {NULL}},
     {gText_Girl, {NULL}}
+};
+static const struct MenuAction sMenuActions_Model[] = {
+    {sText_ModelHoenn, {NULL}},
+    {sText_ModelKanto, {NULL}}
 };
 
 static const u8 *const sMalePresetNames[] = {
@@ -1246,8 +1268,10 @@ static void Task_HandleMainMenuAPressed(u8 taskId)
 
             gPlttBufferUnfaded[0] = RGB_BLACK;
             gPlttBufferFaded[0] = RGB_BLACK;
-            gTasks[taskId].func = Task_NewGameBirchSpeech_Init;
-            break;
+            DestroyTask(taskId);
+            FreeAllWindowBuffers();
+            SetMainCallback2(CB2_StartRegionSelect);
+            return;
         case ACTION_CONTINUE:
             gPlttBufferUnfaded[0] = RGB_BLACK;
             gPlttBufferFaded[0] = RGB_BLACK;
@@ -1449,6 +1473,60 @@ static void HighlightSelectedMainMenuItem(enum PartyMenuType menuType, u8 select
 #define tBrendanSpriteId data[10]
 #define tMaySpriteId data[11]
 
+static void StartRegionSelectDraw(u8 cursor)
+{
+    FillWindowPixelBuffer(0, PIXEL_FILL(TEXT_DYNAMIC_COLOR_1));
+    AddTextPrinterParameterized3(0, FONT_NORMAL, GetStringCenterAlignXOffset(FONT_NORMAL, sText_StartRegionTitle, 208), 24, sTextColor_Headers, TEXT_SKIP_DRAW, sText_StartRegionTitle);
+    RunSetup_DrawWideChoice(sText_StartRegionKanto, 34, 72, 76, cursor == 0);
+    RunSetup_DrawWideChoice(sText_StartRegionHoenn, 130, 72, 76, cursor == 1);
+    PutWindowTilemap(0);
+    CopyWindowToVram(0, COPYWIN_FULL);
+}
+static void Task_StartRegionSelectInput(u8 taskId)
+{
+    if (JOY_NEW(DPAD_LEFT | DPAD_RIGHT))
+    {
+        PlaySE(SE_SELECT);
+        sStartRegionCursor ^= 1;
+        StartRegionSelectDraw(sStartRegionCursor);
+    }
+    else if (JOY_NEW(A_BUTTON))
+    {
+        PlaySE(SE_SELECT);
+        gRunSetupStartRegion = (sStartRegionCursor == 0);
+        gRunSetupPlayerModel = gRunSetupStartRegion;
+        FreeAllWindowBuffers();
+        gTasks[taskId].func = Task_NewGameBirchSpeech_Init;
+    }
+}
+static void CB2_StartRegionSelect(void)
+{
+    u8 taskId;
+    u16 palette;
+    SetVBlankCallback(NULL);
+    SetGpuReg(REG_OFFSET_DISPCNT, 0);
+    DmaFill16(3, 0, (void *)VRAM, VRAM_SIZE);
+    DmaFill32(3, 0, (void *)OAM, OAM_SIZE);
+    DmaFill16(3, 0, (void *)PLTT, PLTT_SIZE);
+    ResetPaletteFade();
+    LoadPalette(sMainMenuBgPal, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
+    LoadPalette(sMainMenuTextPal, BG_PLTT_ID(15), PLTT_SIZE_4BPP);
+    palette = RGB_WHITE; LoadPalette(&palette, BG_PLTT_ID(15) + 10, PLTT_SIZEOF(1));
+    palette = RGB(12, 12, 12); LoadPalette(&palette, BG_PLTT_ID(15) + 11, PLTT_SIZEOF(1));
+    palette = RGB(26, 26, 25); LoadPalette(&palette, BG_PLTT_ID(15) + 12, PLTT_SIZEOF(1));
+    ResetTasks(); ResetSpriteData(); FreeAllSpritePalettes();
+    ResetBgsAndClearDma3BusyFlags(0);
+    InitBgsFromTemplates(0, sMainMenuBgTemplates, ARRAY_COUNT(sMainMenuBgTemplates));
+    InitWindows(sRunSetupWindows);
+    LoadMainMenuWindowFrameTiles(0, MAIN_MENU_BORDER_TILE);
+    DrawMainMenuWindowBorder(&sRunSetupWindows[0], MAIN_MENU_BORDER_TILE);
+    sStartRegionCursor = 0;
+    taskId = CreateTask(Task_StartRegionSelectInput, 0);
+    StartRegionSelectDraw(sStartRegionCursor);
+    SetVBlankCallback(VBlankCB_MainMenu);
+    SetMainCallback2(CB2_MainMenu);
+    ShowBg(0);
+}
 static void Task_NewGameBirchSpeech_Init(u8 taskId)
 {
     SetGpuReg(REG_OFFSET_DISPCNT, 0);
@@ -1522,7 +1600,7 @@ static void Task_NewGameBirchSpeech_WaitForSpriteFadeInWelcome(u8 taskId)
             PutWindowTilemap(0);
             CopyWindowToVram(0, COPYWIN_GFX);
             NewGameBirchSpeech_ClearWindow(0);
-            StringExpandPlaceholders(gStringVar4, gText_Birch_Welcome);
+            StringExpandPlaceholders(gStringVar4, gRunSetupStartRegion ? sText_OakWelcome : gText_Birch_Welcome);
             AddTextPrinterForMessage(TRUE);
             gTasks[taskId].func = Task_NewGameBirchSpeech_ThisIsAPokemon;
         }
@@ -1544,7 +1622,7 @@ static void Task_NewGameBirchSpeech_MainSpeech(u8 taskId)
 {
     if (!RunTextPrintersAndIsPrinter0Active())
     {
-        StringExpandPlaceholders(gStringVar4, gText_Birch_MainSpeech);
+        StringExpandPlaceholders(gStringVar4, gRunSetupStartRegion ? sText_OakMainSpeech : gText_Birch_MainSpeech);
         AddTextPrinterForMessage(TRUE);
         gTasks[taskId].func = Task_NewGameBirchSpeech_AndYouAre;
     }
@@ -1696,13 +1774,13 @@ static void Task_NewGameBirchSpeech_ChooseGender(u8 taskId)
         PlaySE(SE_SELECT);
         gSaveBlock2Ptr->playerGender = gender;
         NewGameBirchSpeech_ClearGenderWindow(1, 1);
-        gTasks[taskId].func = Task_NewGameBirchSpeech_WhatsYourName;
+        gTasks[taskId].func = Task_NewGameBirchSpeech_ChooseModel;
         break;
     case FEMALE:
         PlaySE(SE_SELECT);
         gSaveBlock2Ptr->playerGender = gender;
         NewGameBirchSpeech_ClearGenderWindow(1, 1);
-        gTasks[taskId].func = Task_NewGameBirchSpeech_WhatsYourName;
+        gTasks[taskId].func = Task_NewGameBirchSpeech_ChooseModel;
         break;
     default: //repeat task if nothing is selected
         break;
@@ -1757,6 +1835,39 @@ static void Task_NewGameBirchSpeech_SlideInNewGenderSprite(u8 taskId)
             gSprites[spriteId].oam.objMode = ST_OAM_OBJ_NORMAL;
             gTasks[taskId].func = Task_NewGameBirchSpeech_ChooseGender;
         }
+    }
+}
+
+static void NewGameBirchSpeech_ShowModelMenu(void)
+{
+    DrawMainMenuWindowBorder(&sNewGameBirchSpeechTextWindows[1], 0xF3);
+    FillWindowPixelBuffer(1, PIXEL_FILL(1));
+    PrintMenuTable(1, ARRAY_COUNT(sMenuActions_Model), sMenuActions_Model);
+    InitMenuInUpperLeftCornerNormal(1, ARRAY_COUNT(sMenuActions_Model), gRunSetupPlayerModel);
+    PutWindowTilemap(1);
+    CopyWindowToVram(1, COPYWIN_FULL);
+}
+
+static void Task_NewGameBirchSpeech_ChooseModel(u8 taskId)
+{
+    s8 input;
+    if (gTasks[taskId].data[12] == 0)
+    {
+        NewGameBirchSpeech_ClearWindow(0);
+        StringExpandPlaceholders(gStringVar4, sText_ModelPrompt);
+        AddTextPrinterForMessage(TRUE);
+        NewGameBirchSpeech_ShowModelMenu();
+        gTasks[taskId].data[12] = 1;
+        return;
+    }
+    input = Menu_ProcessInputNoWrap();
+    if (input == 0 || input == 1)
+    {
+        PlaySE(SE_SELECT);
+        gRunSetupPlayerModel = input;
+        gTasks[taskId].data[12] = 0;
+        NewGameBirchSpeech_ClearGenderWindow(1, 1);
+        gTasks[taskId].func = Task_NewGameBirchSpeech_WhatsYourName;
     }
 }
 
