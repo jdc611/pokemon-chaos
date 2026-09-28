@@ -367,6 +367,9 @@ static const u8 sText_RunSetupNo[] = _("NO");
 static const u8 sText_RunSetupRandom[] = _("RANDOM");
 static const u8 sText_RunSetupNormal[] = _("NORMAL");
 static const u8 sText_RunSetupHoenn[] = _("HOENN");
+static const u8 sText_RunSetupKanto[] = _("KANTO");
+static const u8 sText_KantoYourePlayer[] = _("Ah, okay!\pYou're {PLAYER}{KUN} from PALLET TOWN.\pYour Kanto adventure is about to begin!\p");
+static const u8 sText_KantoAreYouReady[] = _("All right, are you ready?\pYour very own adventure is about to unfold.\pTake courage, and step into the world of POKéMON!\pProfessor OAK will be waiting for you in PALLET TOWN.\p");
 static const u8 sText_RunSetupScaled[] = _("SCALED");
 static const u8 sText_RunSetupCustom[] = _("CUSTOM");
 static const u8 sText_RunSetupNeedSeed[] = _("ENTER AT LEAST ONE DIGIT");
@@ -1498,7 +1501,8 @@ static void Task_StartRegionSelectInput(u8 taskId)
         gRunSetupStartRegion = (sStartRegionCursor == 0);
         gRunSetupPlayerModel = gRunSetupStartRegion;
         FreeAllWindowBuffers();
-        gTasks[taskId].func = Task_NewGameBirchSpeech_Init;
+        DestroyTask(taskId);
+        CreateTask(Task_NewGameBirchSpeech_Init, 0);
     }
 }
 static void CB2_StartRegionSelect(void)
@@ -1861,22 +1865,26 @@ static void Task_NewGameBirchSpeech_ChooseModel(u8 taskId)
         gTasks[taskId].data[12] = 1;
         return;
     }
+    if (JOY_NEW(DPAD_UP | DPAD_DOWN))
+    {
+        u8 oldSprite = gTasks[taskId].tPlayerSpriteId;
+        u8 newSprite;
+        gRunSetupPlayerModel ^= 1;
+        newSprite = (gSaveBlock2Ptr->playerGender == MALE)
+                  ? (gRunSetupPlayerModel ? gTasks[taskId].tRedSpriteId : gTasks[taskId].tBrendanSpriteId)
+                  : (gRunSetupPlayerModel ? gTasks[taskId].tLeafSpriteId : gTasks[taskId].tMaySpriteId);
+        gSprites[oldSprite].invisible = TRUE;
+        gSprites[newSprite].x = 180;
+        gSprites[newSprite].y = 60;
+        gSprites[newSprite].invisible = FALSE;
+        gTasks[taskId].tPlayerSpriteId = newSprite;
+    }
     input = Menu_ProcessInputNoWrap();
     if (input == 0 || input == 1)
     {
         PlaySE(SE_SELECT);
         gRunSetupPlayerModel = input;
         gTasks[taskId].data[12] = 0;
-        if (gRunSetupPlayerModel == 1)
-        {
-            u8 oldSprite = gTasks[taskId].tPlayerSpriteId;
-            u8 newSprite = (gSaveBlock2Ptr->playerGender == MALE) ? gTasks[taskId].tRedSpriteId : gTasks[taskId].tLeafSpriteId;
-            gSprites[oldSprite].invisible = TRUE;
-            gSprites[newSprite].x = 180;
-            gSprites[newSprite].y = 60;
-            gSprites[newSprite].invisible = FALSE;
-            gTasks[taskId].tPlayerSpriteId = newSprite;
-        }
         NewGameBirchSpeech_ClearGenderWindow(1, 1);
         gTasks[taskId].func = Task_NewGameBirchSpeech_WhatsYourName;
     }
@@ -1986,7 +1994,7 @@ static void Task_NewGameBirchSpeech_ReshowBirchLotad(u8 taskId)
         NewGameBirchSpeech_StartFadeInTarget1OutTarget2(taskId, 2);
         NewGameBirchSpeech_StartFadePlatformOut(taskId, 1);
         NewGameBirchSpeech_ClearWindow(0);
-        StringExpandPlaceholders(gStringVar4, gText_Birch_YourePlayer);
+        StringExpandPlaceholders(gStringVar4, gRunSetupStartRegion ? sText_KantoYourePlayer : gText_Birch_YourePlayer);
         AddTextPrinterForMessage(TRUE);
         gTasks[taskId].func = Task_NewGameBirchSpeech_WaitForSpriteFadeInAndTextPrinter;
     }
@@ -2473,6 +2481,7 @@ static void RunSetup_DrawConfirmLine(u8 row, u8 y)
         label = sText_RunSetupStarters;
         value = sRunSetupStarter == RUN_STARTER_RANDOM ? sText_RunSetupRandom
               : sRunSetupStarter == RUN_STARTER_CHOOSE ? sText_RunSetupCustom
+              : sRunSetupStarter == RUN_STARTER_KANTO ? sText_RunSetupKanto
               : sText_RunSetupHoenn;
         break;
     case 4:
@@ -2570,6 +2579,8 @@ static void RunSetup_Draw(u8 cursor)
         for (row = firstRow; row < firstRow + 5 && row < 7; row++)
         {
             u8 y = 31 + 16 * (row - firstRow);
+            if (firstRow <= 1 && row >= 2)
+                y += 14;
 
             if (row == 0)
             {
@@ -2581,9 +2592,10 @@ static void RunSetup_Draw(u8 cursor)
             else if (row == 1)
             {
                 AddTextPrinterParameterized3(0, FONT_SMALL, 12, y, sTextColor_Headers, TEXT_SKIP_DRAW, sText_RunSetupStarters);
-                RunSetup_DrawNarrowChoice(sText_RunSetupHoenn, 78, y - 2, sRunSetupStarter == RUN_STARTER_NORMAL);
-                RunSetup_DrawNarrowChoice(sText_RunSetupRandom, 120, y - 2, sRunSetupStarter == RUN_STARTER_RANDOM);
-                RunSetup_DrawNarrowChoice(sText_RunSetupCustom, 162, y - 2, sRunSetupStarter == RUN_STARTER_CHOOSE);
+                RunSetup_DrawWideChoice(sText_RunSetupHoenn, 82, y - 2, 56, sRunSetupStarter == RUN_STARTER_NORMAL);
+                RunSetup_DrawWideChoice(sText_RunSetupKanto, 144, y - 2, 56, sRunSetupStarter == RUN_STARTER_KANTO);
+                RunSetup_DrawWideChoice(sText_RunSetupRandom, 82, y + 12, 56, sRunSetupStarter == RUN_STARTER_RANDOM);
+                RunSetup_DrawWideChoice(sText_RunSetupCustom, 144, y + 12, 56, sRunSetupStarter == RUN_STARTER_CHOOSE);
             }
             else if (row == 2)
             {
@@ -2905,6 +2917,8 @@ static void Task_RunSetup_Input(u8 taskId)
                     sRunSetupStarter = RUN_STARTER_CHOOSE;
                 else if (sRunSetupStarter == RUN_STARTER_CHOOSE)
                     sRunSetupStarter = RUN_STARTER_RANDOM;
+                else if (sRunSetupStarter == RUN_STARTER_RANDOM)
+                    sRunSetupStarter = RUN_STARTER_KANTO;
                 else
                     sRunSetupStarter = RUN_STARTER_NORMAL;
             }
@@ -2920,6 +2934,8 @@ static void Task_RunSetup_Input(u8 taskId)
             else if (*cursor == 1)
             {
                 if (sRunSetupStarter == RUN_STARTER_NORMAL)
+                    sRunSetupStarter = RUN_STARTER_KANTO;
+                else if (sRunSetupStarter == RUN_STARTER_KANTO)
                     sRunSetupStarter = RUN_STARTER_RANDOM;
                 else if (sRunSetupStarter == RUN_STARTER_RANDOM)
                     sRunSetupStarter = RUN_STARTER_CHOOSE;
@@ -2938,6 +2954,8 @@ static void Task_RunSetup_Input(u8 taskId)
             else if (*cursor == 1)
             {
                 if (sRunSetupStarter == RUN_STARTER_NORMAL)
+                    sRunSetupStarter = RUN_STARTER_KANTO;
+                else if (sRunSetupStarter == RUN_STARTER_KANTO)
                     sRunSetupStarter = RUN_STARTER_RANDOM;
                 else if (sRunSetupStarter == RUN_STARTER_RANDOM)
                     sRunSetupStarter = RUN_STARTER_CHOOSE;
@@ -3182,9 +3200,9 @@ static void Task_NewGameBirchSpeech_AreYouReady(u8 taskId)
             return;
         }
         if (gSaveBlock2Ptr->playerGender != MALE)
-            spriteId = gTasks[taskId].tMaySpriteId;
+            spriteId = gRunSetupPlayerModel ? gTasks[taskId].tLeafSpriteId : gTasks[taskId].tMaySpriteId;
         else
-            spriteId = gTasks[taskId].tBrendanSpriteId;
+            spriteId = gRunSetupPlayerModel ? gTasks[taskId].tRedSpriteId : gTasks[taskId].tBrendanSpriteId;
         gSprites[spriteId].x = 120;
         gSprites[spriteId].y = 60;
         gSprites[spriteId].invisible = FALSE;
@@ -3192,7 +3210,7 @@ static void Task_NewGameBirchSpeech_AreYouReady(u8 taskId)
         gTasks[taskId].tPlayerSpriteId = spriteId;
         NewGameBirchSpeech_StartFadeInTarget1OutTarget2(taskId, 2);
         NewGameBirchSpeech_StartFadePlatformOut(taskId, 1);
-        StringExpandPlaceholders(gStringVar4, gText_Birch_AreYouReady);
+        StringExpandPlaceholders(gStringVar4, gRunSetupStartRegion ? sText_KantoAreYouReady : gText_Birch_AreYouReady);
         AddTextPrinterForMessage(TRUE);
         gTasks[taskId].func = Task_NewGameBirchSpeech_ShrinkPlayer;
     }
