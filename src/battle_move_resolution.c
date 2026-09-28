@@ -3443,6 +3443,10 @@ static enum MoveEndResult MoveEndResistBerryMessage(struct BattleCalcValues *cv)
     {
         gBattleScripting.battler = cv->battlerDef;
         gLastUsedItem = gBattleMons[cv->battlerDef].item;
+        // The resist-berry message expands B_LAST_ITEM from gBattleTextBuff1.
+        // Populate it here before the berry is removed; otherwise the message
+        // can render the placeholder as ??????.
+        PREPARE_ITEM_BUFFER(gBattleTextBuff1, gLastUsedItem);
         GetBattlerPartyState(cv->battlerDef)->ateBerry = TRUE;
         gSpecialStatuses[cv->battlerDef].berryReducedMessagePrinted = TRUE;
         BattleScriptCall(BattleScript_BerryReduceDmg);
