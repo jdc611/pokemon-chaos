@@ -1517,7 +1517,11 @@ static void Task_StartRegionSelectInput(u8 taskId)
         FreeAllSpritePalettes();
         ResetPaletteFade();
         DestroyTask(taskId);
-        taskId = CreateTask(Task_NewGameBirchSpeech_Init, 0);
+        // The selector's BG reset invalidates the previous main-menu BG
+        // configuration.  Re-enter through the full Birch/Oak scene callback
+        // so BG templates, windows and VBlank are rebuilt before the intro
+        // task touches VRAM.
+        SetMainCallback2(CB2_NewGameBirchSpeech);
     }
 }
 static void CB2_StartRegionSelect(void)
