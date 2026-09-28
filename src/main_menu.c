@@ -1556,8 +1556,6 @@ static void CB2_StartRegionSelect(void)
 }
 static void CB2_RegionToBirchSpeech(void)
 {
-    u8 taskId;
-
     SetVBlankCallback(NULL);
     SetGpuReg(REG_OFFSET_DISPCNT, 0);
     ResetBgsAndClearDma3BusyFlags(0);
@@ -1568,7 +1566,7 @@ static void CB2_RegionToBirchSpeech(void)
     ResetSpriteData();
     FreeAllSpritePalettes();
     ResetPaletteFade();
-    taskId = CreateTask(Task_NewGameBirchSpeech_Init, 0);
+    CreateTask(Task_NewGameBirchSpeech_Init, 0);
     SetVBlankCallback(VBlankCB_MainMenu);
     SetMainCallback2(CB2_MainMenu);
 }
