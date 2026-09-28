@@ -42,6 +42,7 @@ EverGrandeCity_EventScript_JackLeagueGateDone:
 
 EverGrandeCity_Movement_JackStopsPlayer:
 	walk_down
+	face_up
 	step_end
 
 EverGrandeCity_Movement_JackApproaches:
