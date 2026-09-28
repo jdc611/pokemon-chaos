@@ -1501,9 +1501,23 @@ static void Task_StartRegionSelectInput(u8 taskId)
         PlaySE(SE_SELECT);
         gRunSetupStartRegion = (sStartRegionCursor == 0);
         gRunSetupPlayerModel = gRunSetupStartRegion;
+        // The region selector uses a different BG/window layout than the
+        // professor intro. Tear that scene down completely before initializing
+        // the intro; otherwise its tilemap/char data is interpreted through
+        // the Birch/Oak BG configuration for a frame and produces the
+        // corrupted strip immediately after selecting a region.
         FreeAllWindowBuffers();
+        SetVBlankCallback(NULL);
+        SetGpuReg(REG_OFFSET_DISPCNT, 0);
+        ResetBgsAndClearDma3BusyFlags(0);
+        DmaFill16(3, 0, VRAM, VRAM_SIZE);
+        DmaFill32(3, 0, OAM, OAM_SIZE);
+        DmaFill16(3, 0, PLTT, PLTT_SIZE);
+        ResetSpriteData();
+        FreeAllSpritePalettes();
+        ResetPaletteFade();
         DestroyTask(taskId);
-        CreateTask(Task_NewGameBirchSpeech_Init, 0);
+        taskId = CreateTask(Task_NewGameBirchSpeech_Init, 0);
     }
 }
 static void CB2_StartRegionSelect(void)
