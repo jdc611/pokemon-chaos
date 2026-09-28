@@ -1522,7 +1522,7 @@ static void CB2_StartRegionSelect(void)
     LoadMainMenuWindowFrameTiles(0, MAIN_MENU_BORDER_TILE);
     DrawMainMenuWindowBorder(&sRunSetupWindows[0], MAIN_MENU_BORDER_TILE);
     sStartRegionCursor = 0;
-    taskId = CreateTask(Task_StartRegionSelectInput, 0);
+    CreateTask(Task_StartRegionSelectInput, 0);
     StartRegionSelectDraw(sStartRegionCursor);
     SetVBlankCallback(VBlankCB_MainMenu);
     SetMainCallback2(CB2_MainMenu);
