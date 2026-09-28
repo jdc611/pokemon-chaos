@@ -153,10 +153,19 @@ static void ClearFrontierRecord(void)
 static void WarpToTruck(void)
 {
     if (IS_FRLG || gRunSetupStartRegion)
+    {
+        // Kanto maps imported into the Emerald engine do not use Emerald's
+        // moving-truck new-game bootstrap.  Set both the destination and the
+        // save warp directly to Pallet before entering the overworld.
         SetWarpDestination(MAP_GROUP(MAP_PALLET_TOWN_PLAYERS_HOUSE_2F), MAP_NUM(MAP_PALLET_TOWN_PLAYERS_HOUSE_2F), WARP_ID_NONE, 6, 6);
+        WarpIntoMap();
+        SetPlayerCoords(6, 6);
+    }
     else
+    {
         SetWarpDestination(MAP_GROUP(MAP_INSIDE_OF_TRUCK), MAP_NUM(MAP_INSIDE_OF_TRUCK), WARP_ID_NONE, -1, -1);
-    WarpIntoMap();
+        WarpIntoMap();
+    }
 }
 
 void Sav2_ClearSetDefault(void)
