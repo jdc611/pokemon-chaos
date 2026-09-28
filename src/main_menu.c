@@ -348,8 +348,9 @@ static const u8 sText_StartRegionHoenn[] = _("HOENN");
 static const u8 sText_ModelPrompt[] = _("Choose your look.");
 static const u8 sText_ModelKanto[] = _("KANTO");
 static const u8 sText_ModelHoenn[] = _("HOENN");
-static const u8 sText_OakWelcome[] = _("Hello there! Welcome to the world of POKéMON!");
-static const u8 sText_OakMainSpeech[] = _("My name is OAK. People call me the POKéMON PROFESSOR.\pEven those of us who study POKéMON still have much to learn.");
+static const u8 sText_OakWelcome[] = _("Hello there! Welcome to the\nworld of POKéMON!\p");
+static const u8 sText_OakPokemon[] = _("This is what we call a POKéMON.\p");
+static const u8 sText_OakMainSpeech[] = _("My name is OAK. People call me\nthe POKéMON PROFESSOR.\pEven those of us who study POKéMON\nstill have much to learn.\p");
 
 static const u8 sText_RunSetupConfirm[] = _("CONFIRM RUN");
 static const u8 sText_RunSetupFilterTitle[] = _("RUN FILTER");
@@ -1617,7 +1618,7 @@ static void Task_NewGameBirchSpeech_ThisIsAPokemon(u8 taskId)
     if (!gPaletteFade.active && !RunTextPrintersAndIsPrinter0Active())
     {
         gTasks[taskId].func = Task_NewGameBirchSpeech_MainSpeech;
-        StringExpandPlaceholders(gStringVar4, gText_ThisIsAPokemon);
+        StringExpandPlaceholders(gStringVar4, gRunSetupStartRegion ? sText_OakPokemon : gText_ThisIsAPokemon);
         AddTextPrinterWithCallbackForMessage(TRUE, NewGameBirchSpeech_WaitForThisIsPokemonText);
         sBirchSpeechMainTaskId = taskId;
     }
@@ -1727,7 +1728,7 @@ static void Task_NewGameBirchSpeech_StartPlayerFadeIn(u8 taskId)
         }
         else
         {
-            u8 spriteId = gTasks[taskId].tBrendanSpriteId;
+            u8 spriteId = gRunSetupPlayerModel ? gTasks[taskId].tRedSpriteId : gTasks[taskId].tBrendanSpriteId;
 
             gSprites[spriteId].x = 180;
             gSprites[spriteId].y = 60;
@@ -2611,7 +2612,7 @@ static void RunSetup_Draw(u8 cursor)
             }
             else if (row == 4)
             {
-                AddTextPrinterParameterized3(0, FONT_SMALL, 12, y, sTextColor_Headers, TEXT_SKIP_DRAW, sText_RunSetupBst);
+                AddTextPrinterParameterized3(0, FONT_SMALL, 8, y, sTextColor_Headers, TEXT_SKIP_DRAW, sText_RunSetupBst);
                 RunSetup_DrawNarrowChoice(sText_RunSetupOff, 72, y - 2, sRunSetupBstMode == RUN_BST_OFF);
                 RunSetup_DrawWideChoice(sText_RunSetupShuffle, 112, y - 2, 52, sRunSetupBstMode == RUN_BST_SHUFFLE);
                 RunSetup_DrawNarrowChoice(sText_RunSetupRandom, 166, y - 2, sRunSetupBstMode == RUN_BST_RANDOM);
@@ -3203,6 +3204,12 @@ static void Task_NewGameBirchSpeech_AreYouReady(u8 taskId)
             spriteId = gRunSetupPlayerModel ? gTasks[taskId].tLeafSpriteId : gTasks[taskId].tMaySpriteId;
         else
             spriteId = gRunSetupPlayerModel ? gTasks[taskId].tRedSpriteId : gTasks[taskId].tBrendanSpriteId;
+        // Only the selected model may be visible here.  The naming-screen
+        // return path can leave the alternate model sprite alive in OAM.
+        gSprites[gTasks[taskId].tBrendanSpriteId].invisible = TRUE;
+        gSprites[gTasks[taskId].tMaySpriteId].invisible = TRUE;
+        gSprites[gTasks[taskId].tRedSpriteId].invisible = TRUE;
+        gSprites[gTasks[taskId].tLeafSpriteId].invisible = TRUE;
         gSprites[spriteId].x = 120;
         gSprites[spriteId].y = 60;
         gSprites[spriteId].invisible = FALSE;
