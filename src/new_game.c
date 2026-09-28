@@ -68,6 +68,8 @@ extern EWRAM_DATA u8 gRunSetupDifficulty;
 extern EWRAM_DATA u8 gRunSetupMovesetMode;
 extern EWRAM_DATA u8 gRunSetupEvolutionMode;
 extern EWRAM_DATA bool8 gRunSetupItemRandomization;
+extern EWRAM_DATA u8 gRunSetupStartRegion;
+extern EWRAM_DATA u8 gRunSetupPlayerModel;
 extern const u8 EventScript_ResetAllMapFlags[];
 extern const u8 EventScript_ResetAllMapFlagsFrlg[];
 
@@ -265,6 +267,8 @@ gSaveBlock3Ptr->runDifficulty = gRunSetupDifficulty;
 gSaveBlock3Ptr->movesetMode = gRunSetupMovesetMode;
 gSaveBlock3Ptr->evolutionMode = gRunSetupEvolutionMode;
 gSaveBlock3Ptr->itemRandomization = gRunSetupItemRandomization;
+gSaveBlock3Ptr->startRegion = gRunSetupStartRegion;
+gSaveBlock3Ptr->playerModel = gRunSetupPlayerModel;
 SetCurrentDifficultyLevel(gRunSetupDifficulty == RUN_DIFFICULTY_NUZLOCKE ? DIFFICULTY_HARD : gRunSetupDifficulty);
 gSaveBlock3Ptr->futureEvolutionEligible = FALSE;
     ClearFollowerNPCData();
