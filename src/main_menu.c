@@ -3259,6 +3259,12 @@ static void Task_NewGameBirchSpeech_AreYouReady(u8 taskId)
         gTasks[taskId].tPlayerSpriteId = spriteId;
         NewGameBirchSpeech_StartFadeInTarget1OutTarget2(taskId, 2);
         NewGameBirchSpeech_StartFadePlatformOut(taskId, 1);
+        // Run Setup returns to this same message window. Clear the previous
+        // printer pixels before drawing the final line; otherwise the new
+        // sentence is painted over the old one.
+        FillWindowPixelBuffer(0, PIXEL_FILL(1));
+        DrawDialogFrameWithCustomTile(0, TRUE, BIRCH_DLG_BASE_TILE_NUM);
+        CopyWindowToVram(0, COPYWIN_FULL);
         StringExpandPlaceholders(gStringVar4, gRunSetupStartRegion ? sText_KantoAreYouReady : gText_Birch_AreYouReady);
         AddTextPrinterForMessage(TRUE);
         gTasks[taskId].func = Task_NewGameBirchSpeech_ShrinkPlayer;
