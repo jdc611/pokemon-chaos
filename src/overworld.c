@@ -1,4 +1,4 @@
-#include "global.h"
+#include "global.h"\n#include "run_settings.h"
 #include "challenge_reset.h"
 #include "overworld.h"
 #include "battle_pyramid.h"
@@ -1945,7 +1945,7 @@ static bool8 RunFieldCallback(void)
     return TRUE;
 }
 
-void CB2_NewGame(void)
+extern EWRAM_DATA u8 gRunSetupStartRegion;\n\nvoid CB2_NewGame(void)
 {
     FieldClearVBlankHBlankCallbacks();
     StopMapMusic();
@@ -1955,7 +1955,10 @@ void CB2_NewGame(void)
     PlayTimeCounter_Start();
     ScriptContext_Init();
     UnlockPlayerFieldControls();
-    if (IS_FRLG)
+    // Kanto starts directly in the Pallet Town bedroom.  The Emerald truck
+    // sequence waits for truck-specific map/script state and leaves a Kanto
+    // start on a permanent black screen.
+    if (IS_FRLG || gRunSetupStartRegion)
         gFieldCallback = FieldCB_WarpExitFadeFromBlack;
     else
         gFieldCallback = ExecuteTruckSequence;
