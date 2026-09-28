@@ -1482,7 +1482,8 @@ static void HighlightSelectedMainMenuItem(enum PartyMenuType menuType, u8 select
 
 static void StartRegionSelectDraw(u8 cursor)
 {
-    FillWindowPixelBuffer(0, PIXEL_FILL(TEXT_DYNAMIC_COLOR_1));
+    // Match the bright run-setup menu rather than the dark title-menu fill.
+    FillWindowPixelBuffer(0, PIXEL_FILL(0xA));
     AddTextPrinterParameterized3(0, FONT_NORMAL, GetStringCenterAlignXOffset(FONT_NORMAL, sText_StartRegionTitle, 208), 24, sTextColor_Headers, TEXT_SKIP_DRAW, sText_StartRegionTitle);
     RunSetup_DrawWideChoice(sText_StartRegionKanto, 34, 72, 76, cursor == 0);
     RunSetup_DrawWideChoice(sText_StartRegionHoenn, 130, 72, 76, cursor == 1);
@@ -2607,7 +2608,7 @@ static void RunSetup_Draw(u8 cursor)
 
     if (sRunSetupPage == RUN_SETUP_PAGE_RANDOMIZER && !sRunSetupConfirm)
     {
-        u8 firstRow = cursor >= 5 ? 2 : 0;
+        u8 firstRow = cursor >= 4 ? 3 : 0;
         u8 row;
 
         FillWindowPixelBuffer(0, PIXEL_FILL(0xA));
@@ -2615,11 +2616,14 @@ static void RunSetup_Draw(u8 cursor)
         AddTextPrinterParameterized3(0, FONT_NORMAL, titleX, 3, sTextColor_Headers, TEXT_SKIP_DRAW, sText_RunSetupRandomizerPage);
         FillWindowPixelRect(0, PIXEL_FILL(TEXT_DYNAMIC_COLOR_3), 48, 25, 112, 1);
 
-        for (row = firstRow; row < firstRow + 5 && row < 7; row++)
+        for (row = firstRow; row < firstRow + 4 && row < 7; row++)
         {
-            u8 y = 31 + 16 * (row - firstRow);
-            if (firstRow <= 1 && row >= 2)
-                y += 14;
+            u8 y = 31 + 18 * (row - firstRow);
+            // Starters uses two visual lines; reserve that space only in the
+            // top viewport.  The lower viewport starts at Evolutions so BST,
+            // Abilities and Items are all fully visible.
+            if (firstRow == 0 && row >= 2)
+                y += 16;
 
             if (row == 0)
             {
@@ -2674,7 +2678,7 @@ static void RunSetup_Draw(u8 cursor)
 
         if (firstRow != 0)
             AddTextPrinterParameterized3(0, FONT_SMALL, 198, 29, sTextColor_Headers, TEXT_SKIP_DRAW, sText_RunSetupScrollUp);
-        if (firstRow + 5 < 7)
+        if (firstRow + 4 < 7)
             AddTextPrinterParameterized3(0, FONT_SMALL, 198, 95, sTextColor_Headers, TEXT_SKIP_DRAW, sText_RunSetupScrollDown);
 
         RunSetup_DrawWideChoice(sText_RunSetupBack, 18, 112, 78, cursor == 8);
@@ -3326,6 +3330,10 @@ static void Task_NewGameBirchSpeech_Cleanup(u8 taskId)
         ResetPaletteFade();
         SetVBlankCallback(NULL);
         DestroyTask(taskId);
+        // Restore the display to a neutral state before NewGame initializes the
+        // first map. Do not leave the intro's OBJ-only DISPCNT or fade state
+        // active across the callback handoff.
+        SetGpuReg(REG_OFFSET_DISPCNT, 0);
         SetMainCallback2(CB2_NewGame);
     }
 }
