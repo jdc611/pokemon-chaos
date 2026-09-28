@@ -3347,7 +3347,10 @@ static void AddBirchSpeechObjects(u8 taskId)
     u8 brendanSpriteId;
     u8 maySpriteId;
 
-    birchSpriteId = AddNewGameBirchObject(0x88, 0x3C, 1);
+    if (gRunSetupStartRegion)
+        birchSpriteId = CreateTrainerSprite(TRAINER_PIC_PROFESSOR_OAK_FRLG, 0x88, 0x3C, 0, NULL);
+    else
+        birchSpriteId = AddNewGameBirchObject(0x88, 0x3C, 1);
     gSprites[birchSpriteId].callback = SpriteCB_Null;
     gSprites[birchSpriteId].oam.priority = 0;
     gSprites[birchSpriteId].invisible = TRUE;
