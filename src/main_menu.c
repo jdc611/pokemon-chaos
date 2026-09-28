@@ -3271,11 +3271,24 @@ static void Task_NewGameBirchSpeech_Cleanup(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
+        // Hand off from the intro with VRAM/OAM/palette state clean.  The
+        // Kanto path uses additional professor/player sprites, and leaving
+        // their OAM plus the white OBJ fade active causes the corrupted strip
+        // and dark post-shrink frame seen on hardware/emulators.
         FreeAllWindowBuffers();
         FreeAndDestroyMonPicSprite(gTasks[taskId].tLotadSpriteId);
         ResetAllPicSprites();
-        SetMainCallback2(CB2_NewGame);
+        ResetSpriteData();
+        FreeAllSpritePalettes();
+        DmaFill32(3, 0, OAM, OAM_SIZE);
+        SetGpuReg(REG_OFFSET_DISPCNT, 0);
+        SetGpuReg(REG_OFFSET_BLDCNT, 0);
+        SetGpuReg(REG_OFFSET_BLDALPHA, 0);
+        SetGpuReg(REG_OFFSET_BLDY, 0);
+        ResetPaletteFade();
+        SetVBlankCallback(NULL);
         DestroyTask(taskId);
+        SetMainCallback2(CB2_NewGame);
     }
 }
 
