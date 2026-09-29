@@ -1049,6 +1049,16 @@ gStdScripts_End::
 
 .endif
 
+// Pallet bootstrap scripts must also be linked into the Emerald-engine
+// multi-region build. The full FRLG script block above remains FRLG-only.
+.if !IS_FRLG
+	.include "data/maps/PalletTown_Frlg/scripts.inc"
+	.include "data/maps/PalletTown_PlayersHouse_1F_Frlg/scripts.inc"
+	.include "data/maps/PalletTown_PlayersHouse_2F_Frlg/scripts.inc"
+	.include "data/maps/PalletTown_RivalsHouse_Frlg/scripts.inc"
+	.include "data/maps/PalletTown_ProfessorOaksLab_Frlg/scripts.inc"
+.endif
+
 	.include "data/scripts/std_msgbox.inc"
 	.include "data/scripts/trainer_battle.inc"
 	.include "data/scripts/new_game.inc"
