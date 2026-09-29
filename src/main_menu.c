@@ -194,6 +194,7 @@ EWRAM_DATA u8 gRunSetupMovesetMode;
 EWRAM_DATA u8 gRunSetupEvolutionMode;
 EWRAM_DATA bool8 gRunSetupItemRandomization;
 EWRAM_DATA u8 gRunSetupStartRegion;
+EWRAM_DATA bool8 gDebugForceKantoNewGame;
 EWRAM_DATA u8 gRunSetupPlayerModel;
 static EWRAM_DATA u8 sStartRegionCursor;
 static EWRAM_DATA u8 sRunSetupRandomizer;
@@ -1085,6 +1086,7 @@ static void Task_DebugQuickStartAfterFade(u8 taskId)
     // the entire intro/setup sequence and enters the same Pallet new-game load.
     gRunSetupStartRegion = 1;
     gRunSetupPlayerModel = 1;
+    gDebugForceKantoNewGame = TRUE;
 
     gSaveBlock2Ptr->playerGender = MALE;
     StringCopy(gSaveBlock2Ptr->playerName, COMPOUND_STRING("JACK"));
