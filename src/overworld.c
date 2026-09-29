@@ -1967,9 +1967,10 @@ void CB2_NewGame(void)
     // region-state handoff as a variable from the Start+Select test.
     if (debugForceKanto)
     {
-        SetWarpDestination(MAP_GROUP(MAP_PALLET_TOWN_PLAYERS_HOUSE_2F),
-                           MAP_NUM(MAP_PALLET_TOWN_PLAYERS_HOUSE_2F),
-                           WARP_ID_NONE, 6, 6);
+        // Hard-coded numeric Pallet bedroom target for the diagnostic.
+        // This intentionally bypasses generated MAP_* constants so we can
+        // distinguish bad map-ID generation from later warp replacement.
+        SetWarpDestination(38, 2, WARP_ID_NONE, 6, 6);
         WarpIntoMap();
         gRunSetupStartRegion = 1;
         gDebugForceKantoNewGame = FALSE;
