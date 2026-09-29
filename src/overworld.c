@@ -43,6 +43,7 @@
 #include "m4a.h"
 #include "map_name_popup.h"
 #include "map_preview_screen.h"
+#include "constants/maps.h"
 #include "match_call.h"
 #include "menu.h"
 #include "metatile_behavior.h"
@@ -1951,16 +1952,29 @@ extern EWRAM_DATA bool8 gDebugForceKantoNewGame;
 
 void CB2_NewGame(void)
 {
+    const bool8 debugForceKanto = gDebugForceKantoNewGame;
+
     FieldClearVBlankHBlankCallbacks();
     StopMapMusic();
     ResetSafariZoneFlag_();
-    if (gDebugForceKantoNewGame)
-    {
+    if (debugForceKanto)
         NewGameInitDataKanto();
-        gDebugForceKantoNewGame = FALSE;
-    }
     else
         NewGameInitData();
+
+    // Diagnostic path: after all destructive new-game initialization has
+    // completed, force the actual live save warp to Pallet again. This removes
+    // region-state handoff as a variable from the Start+Select test.
+    if (debugForceKanto)
+    {
+        SetWarpDestination(MAP_GROUP(MAP_PALLET_TOWN_PLAYERS_HOUSE_2F),
+                           MAP_NUM(MAP_PALLET_TOWN_PLAYERS_HOUSE_2F),
+                           WARP_ID_NONE, 6, 6);
+        WarpIntoMap();
+        gRunSetupStartRegion = 1;
+        gDebugForceKantoNewGame = FALSE;
+    }
+
     ResetInitialPlayerAvatarState();
     PlayTimeCounter_Start();
     ScriptContext_Init();
@@ -1969,7 +1983,7 @@ void CB2_NewGame(void)
     // fresh map load, so do not install a warp-return callback: that callback
     // expects return-to-field fade state which does not exist after the intro.
     // Let RunFieldCallback() take its normal NULL path (FieldCB_DefaultWarpExit).
-    if (IS_FRLG || gRunSetupStartRegion)
+    if (IS_FRLG || debugForceKanto || gRunSetupStartRegion)
         gFieldCallback = FieldCB_WarpExitFadeFromBlack;
     else
         gFieldCallback = ExecuteTruckSequence;
