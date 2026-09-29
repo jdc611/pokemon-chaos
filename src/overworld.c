@@ -1962,10 +1962,8 @@ void CB2_NewGame(void)
     // fresh map load, so do not install a warp-return callback: that callback
     // expects return-to-field fade state which does not exist after the intro.
     // Let RunFieldCallback() take its normal NULL path (FieldCB_DefaultWarpExit).
-    if (IS_FRLG)
+    if (IS_FRLG || gRunSetupStartRegion)
         gFieldCallback = FieldCB_WarpExitFadeFromBlack;
-    else if (gRunSetupStartRegion)
-        gFieldCallback = NULL;
     else
         gFieldCallback = ExecuteTruckSequence;
     gFieldCallback2 = NULL;
