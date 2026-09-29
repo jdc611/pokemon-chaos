@@ -350,7 +350,7 @@ static const u8 sText_ModelPrompt[] = _("Choose your look.");
 static const u8 sText_ModelKanto[] = _("KANTO");
 static const u8 sText_ModelHoenn[] = _("HOENN");
 static const u8 sText_OakWelcome[] = _("Hello there! Welcome to the\nworld of POKéMON!\p");
-static const u8 sText_OakPokemon[] = _("This is what we call a POKéMON.\p");
+static const u8 sText_OakPokemon[] = _("This is what we call a POKéMON.{PAUSE 30}\p");
 static const u8 sText_OakMainSpeech[] = _("My name is OAK. People call me\nthe POKéMON PROFESSOR.\pEven those of us who study POKéMON\nstill have much to learn.\p");
 
 static const u8 sText_RunSetupConfirm[] = _("CONFIRM RUN");
