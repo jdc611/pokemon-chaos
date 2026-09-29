@@ -38,6 +38,7 @@
     "gMapGroup_Dungeons_Frlg",
     "gMapGroup_SpecialArea_Frlg",
     "gMapGroup_TownsAndRoutes_Frlg",
+    "gMapGroup_KantoShared",
     "gMapGroup_IndoorPallet_Frlg",
     "gMapGroup_IndoorViridian_Frlg",
     "gMapGroup_IndoorPewter_Frlg",
@@ -74,8 +75,7 @@
     "gMapGroup_IndoorFiveIslandRoute_Frlg",
     "gMapGroup_IndoorTwoIslandRoute_Frlg",
     "gMapGroup_IndoorSixIslandRoute_Frlg",
-    "gMapGroup_IndoorSevenIslandRoute_Frlg",
-    "gMapGroup_KantoShared"
+    "gMapGroup_IndoorSevenIslandRoute_Frlg"
   ],
   "gMapGroup_TownsAndRoutes": [
     "PetalburgCity",
