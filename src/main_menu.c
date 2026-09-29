@@ -1089,7 +1089,7 @@ static void Task_DebugQuickStartAfterFade(u8 taskId)
     gDebugForceKantoNewGame = TRUE;
 
     gSaveBlock2Ptr->playerGender = MALE;
-    StringCopy(gSaveBlock2Ptr->playerName, COMPOUND_STRING("JACK"));
+    StringCopy(gSaveBlock2Ptr->playerName, COMPOUND_STRING("KTEST"));
 
     DestroyTask(taskId);
     FreeAllWindowBuffers();
