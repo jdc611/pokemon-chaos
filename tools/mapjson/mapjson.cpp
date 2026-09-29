@@ -801,9 +801,19 @@ string generate_layout_headers_text(Json layouts_data) {
             else if (version == "firered")
                 layout_version = "frlg";
         }
-        // Emerald-engine multi-region builds must emit both Emerald and FRLG
-        // layout blobs. MapLayout::isFrlg preserves the correct metatile format.
-        if (version == "firered" && layout_version != "frlg")
+        string layoutId = json_to_string(layout, "id", true);
+        bool emeraldPalletLayout =
+            layoutId == "LAYOUT_PALLET_TOWN"
+         || layoutId == "LAYOUT_PALLET_TOWN_PLAYERS_HOUSE_1F_FRLG"
+         || layoutId == "LAYOUT_PALLET_TOWN_PLAYERS_HOUSE_2F_FRLG"
+         || layoutId == "LAYOUT_PALLET_TOWN_RIVALS_HOUSE"
+         || layoutId == "LAYOUT_PALLET_TOWN_PROFESSOR_OAKS_LAB";
+
+        // Emerald normally omits FRLG layouts.  For the multi-region bootstrap,
+        // emit only Pallet's FRLG layouts; leave the rest of Kanto out until
+        // its maps/tilesets/scripts are migrated.
+        if ((version == "emerald" && layout_version != "emerald" && !emeraldPalletLayout)
+         || (version == "firered" && layout_version != "frlg"))
             continue;
         string layoutName = json_to_string(layout, "name");
         string border_label = layoutName + "_Border";
@@ -860,7 +870,15 @@ string generate_layouts_table_text(Json layouts_data) {
             else if (version == "firered")
                 layout_version = "frlg";
         }
-        if (version == "firered" && layout_version != "frlg") {
+        string layoutId = json_to_string(layout, "id", true);
+        bool emeraldPalletLayout =
+            layoutId == "LAYOUT_PALLET_TOWN"
+         || layoutId == "LAYOUT_PALLET_TOWN_PLAYERS_HOUSE_1F_FRLG"
+         || layoutId == "LAYOUT_PALLET_TOWN_PLAYERS_HOUSE_2F_FRLG"
+         || layoutId == "LAYOUT_PALLET_TOWN_RIVALS_HOUSE"
+         || layoutId == "LAYOUT_PALLET_TOWN_PROFESSOR_OAKS_LAB";
+        if ((version == "emerald" && layout_version != "emerald" && !emeraldPalletLayout)
+         || (version == "firered" && layout_version != "frlg")) {
             text << "\t.4byte NULL\n";
         } else {
             string layout_name = json_to_string(layout, "name", true);
