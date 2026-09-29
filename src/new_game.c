@@ -157,8 +157,11 @@ static void WarpToTruck(void)
         // Kanto maps imported into the Emerald engine do not use Emerald's
         // moving-truck new-game bootstrap.  Set both the destination and the
         // save warp directly to Pallet before entering the overworld.
+        // Only stage the first Kanto destination here. CB2_NewGame's map
+        // loader owns ApplyCurrentWarp/LoadCurrentMapData. Calling WarpIntoMap
+        // here pre-loads the map and then makes LoadMapFromWarp process the
+        // already-consumed destination a second time.
         SetWarpDestination(MAP_GROUP(MAP_PALLET_TOWN_PLAYERS_HOUSE_2F), MAP_NUM(MAP_PALLET_TOWN_PLAYERS_HOUSE_2F), WARP_ID_NONE, 6, 6);
-        WarpIntoMap();
     }
     else
     {
