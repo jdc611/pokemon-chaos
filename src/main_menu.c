@@ -1068,6 +1068,10 @@ static void DebugQuickStartNewGame(u8 taskId)
     gRunSetupDifficulty = RUN_DIFFICULTY_NORMAL;
     gRunSetupMovesetMode = 0;
     gRunSetupEvolutionMode = 0;
+    // Direct Kanto diagnostic path: title-screen START+SELECT now bypasses
+    // the entire intro/setup sequence and enters the same Pallet new-game load.
+    gRunSetupStartRegion = 1;
+    gRunSetupPlayerModel = 1;
 
     gSaveBlock2Ptr->playerGender = MALE;
     StringCopy(gSaveBlock2Ptr->playerName, COMPOUND_STRING("JACK"));
