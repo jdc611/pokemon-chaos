@@ -240,6 +240,7 @@ static void HighlightSelectedMainMenuItem(enum PartyMenuType, u8, s16);
 static void Task_HandleMainMenuInput(u8);
 static void Task_HandleMainMenuAPressed(u8);
 static void DebugQuickStartNewGame(u8 taskId);
+static void Task_DebugQuickStartAfterFade(u8 taskId);
 static void Task_HandleMainMenuBPressed(u8);
 static void Task_NewGameBirchSpeech_Init(u8);
 static void CB2_StartRegionSelect(void);
@@ -1055,6 +1056,18 @@ static void Task_HighlightSelectedMainMenuItem(u8 taskId)
 
 static void DebugQuickStartNewGame(u8 taskId)
 {
+    // Use the same deferred fade/teardown sequence as the normal main-menu
+    // transition. Destroying/freeing the menu inside its input task can freeze
+    // before CB2_NewGame ever runs.
+    BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
+    gTasks[taskId].func = Task_DebugQuickStartAfterFade;
+}
+
+static void Task_DebugQuickStartAfterFade(u8 taskId)
+{
+    if (gPaletteFade.active)
+        return;
+
     // Testing shortcut: bypass Birch/run setup with deterministic defaults.
     gRunSetupRandomizerEnabled = FALSE;
     gRunSetupSeedIsCustom = FALSE;
