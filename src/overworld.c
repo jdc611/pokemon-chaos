@@ -1,4 +1,5 @@
-#include "global.h"\n#include "run_settings.h"
+#include "global.h"
+#include "run_settings.h"
 #include "challenge_reset.h"
 #include "overworld.h"
 #include "battle_pyramid.h"
@@ -1965,6 +1966,10 @@ void CB2_NewGame(void)
     else
         gFieldCallback = ExecuteTruckSequence;
     gFieldCallback2 = NULL;
+    // The intro uses gMain.state for its own scene progression. DoMapLoadLoop
+    // expects a fresh state machine. Emerald's stock intro happens to arrive
+    // here with state 0; our custom region/setup path does not.
+    gMain.state = 0;
     DoMapLoadLoop(&gMain.state);
     SetFieldVBlankCallback();
     SetMainCallback1(CB1_Overworld);
