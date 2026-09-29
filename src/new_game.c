@@ -74,7 +74,7 @@ extern const u8 EventScript_ResetAllMapFlags[];
 extern const u8 EventScript_ResetAllMapFlagsFrlg[];
 
 static void ClearFrontierRecord(void);
-static void WarpToTruck(void);
+static void WarpToTruck(bool8 startInKanto);
 static void ResetMiniGamesRecords(void);
 static void ResetItemFlags(void);
 static void ResetDexNav(void);
@@ -150,9 +150,9 @@ static void ClearFrontierRecord(void)
     gSaveBlock2Ptr->frontier.opponentNames[1][0] = EOS;
 }
 
-static void WarpToTruck(void)
+static void WarpToTruck(bool8 startInKanto)
 {
-    if (IS_FRLG || gRunSetupStartRegion)
+    if (IS_FRLG || startInKanto)
     {
         // Kanto maps imported into the Emerald engine do not use Emerald's
         // moving-truck new-game bootstrap.  Set both the destination and the
@@ -189,6 +189,10 @@ void ResetMenuAndMonGlobals(void)
 
 void NewGameInitData(void)
 {
+    // Preserve setup selections before new-game initialization clears save/event
+    // state. Region selection must not depend on mutable setup EWRAM after this.
+    const bool8 startInKanto = gRunSetupStartRegion;
+    const u8 selectedPlayerModel = gRunSetupPlayerModel;
 #if IS_FRLG
     u8 rivalName[PLAYER_NAME_LENGTH + 1];
 #endif
@@ -240,8 +244,8 @@ void NewGameInitData(void)
     ResetFanClub();
     ResetLotteryCorner();
     UpdateDailySeed();
-    WarpToTruck();
-    if (IS_FRLG || gRunSetupStartRegion)
+    WarpToTruck(startInKanto);
+    if (IS_FRLG || startInKanto)
         RunScriptImmediately(EventScript_ResetAllMapFlagsFrlg);
     else
         RunScriptImmediately(EventScript_ResetAllMapFlags);
@@ -279,8 +283,12 @@ gSaveBlock3Ptr->runDifficulty = gRunSetupDifficulty;
 gSaveBlock3Ptr->movesetMode = gRunSetupMovesetMode;
 gSaveBlock3Ptr->evolutionMode = gRunSetupEvolutionMode;
 gSaveBlock3Ptr->itemRandomization = gRunSetupItemRandomization;
-gSaveBlock3Ptr->startRegion = gRunSetupStartRegion;
-gSaveBlock3Ptr->playerModel = gRunSetupPlayerModel;
+gSaveBlock3Ptr->startRegion = startInKanto;
+gSaveBlock3Ptr->playerModel = selectedPlayerModel;
+// CB2_NewGame still needs the region after NewGameInitData returns in order
+// to select the correct first-field callback.
+gRunSetupStartRegion = startInKanto;
+gRunSetupPlayerModel = selectedPlayerModel;
 SetCurrentDifficultyLevel(gRunSetupDifficulty == RUN_DIFFICULTY_NUZLOCKE ? DIFFICULTY_HARD : gRunSetupDifficulty);
 gSaveBlock3Ptr->futureEvolutionEligible = FALSE;
     ClearFollowerNPCData();
