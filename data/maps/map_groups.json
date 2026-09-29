@@ -74,7 +74,8 @@
     "gMapGroup_IndoorFiveIslandRoute_Frlg",
     "gMapGroup_IndoorTwoIslandRoute_Frlg",
     "gMapGroup_IndoorSixIslandRoute_Frlg",
-    "gMapGroup_IndoorSevenIslandRoute_Frlg"
+    "gMapGroup_IndoorSevenIslandRoute_Frlg",
+    "gMapGroup_KantoShared"
   ],
   "gMapGroup_TownsAndRoutes": [
     "PetalburgCity",
@@ -857,7 +858,6 @@
     "NavelRock_Harbor_Frlg"
   ],
   "gMapGroup_TownsAndRoutes_Frlg": [
-    "PalletTown_Frlg",
     "ViridianCity_Frlg",
     "PewterCity_Frlg",
     "CeruleanCity_Frlg",
@@ -920,12 +920,7 @@
     "SevenIsland_SevaultCanyon_Frlg",
     "SevenIsland_TanobyRuins_Frlg"
   ],
-  "gMapGroup_IndoorPallet_Frlg": [
-    "PalletTown_PlayersHouse_1F_Frlg",
-    "PalletTown_PlayersHouse_2F_Frlg",
-    "PalletTown_RivalsHouse_Frlg",
-    "PalletTown_ProfessorOaksLab_Frlg"
-  ],
+  "gMapGroup_IndoorPallet_Frlg": [],
   "gMapGroup_IndoorViridian_Frlg": [
     "ViridianCity_House_Frlg",
     "ViridianCity_Gym_Frlg",
@@ -1160,5 +1155,12 @@
   ],
   "gMapGroup_IndoorSevenIslandRoute_Frlg": [
     "SevenIsland_SevaultCanyon_House_Frlg"
+  ],
+  "gMapGroup_KantoShared": [
+    "PalletTown_Frlg",
+    "PalletTown_PlayersHouse_1F_Frlg",
+    "PalletTown_PlayersHouse_2F_Frlg",
+    "PalletTown_RivalsHouse_Frlg",
+    "PalletTown_ProfessorOaksLab_Frlg"
   ]
 }
