@@ -187,11 +187,20 @@ void ResetMenuAndMonGlobals(void)
     ResetPokeblockScrollPositions();
 }
 
+static bool8 sForceKantoNewGame = FALSE;
+
+void NewGameInitDataKanto(void)
+{
+    sForceKantoNewGame = TRUE;
+    NewGameInitData();
+    sForceKantoNewGame = FALSE;
+}
+
 void NewGameInitData(void)
 {
     // Preserve setup selections before new-game initialization clears save/event
     // state. Region selection must not depend on mutable setup EWRAM after this.
-    const bool8 startInKanto = gRunSetupStartRegion;
+    const bool8 startInKanto = sForceKantoNewGame || gRunSetupStartRegion;
     const u8 selectedPlayerModel = gRunSetupPlayerModel;
 #if IS_FRLG
     u8 rivalName[PLAYER_NAME_LENGTH + 1];
