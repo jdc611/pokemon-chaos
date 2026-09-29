@@ -750,8 +750,10 @@ void process_groups(string groups_filepath, vector<string> &map_filepaths, strin
         }
         string map_name = json_to_string(map_data, "name");
 
-        if ((version == "emerald" && region != "REGION_HOENN")
-         || (version == "firered" && region != "REGION_KANTO")) {
+        // Chaos/Continuum is an Emerald-engine multi-region build. Include both
+        // Hoenn and Kanto map headers/events when compiling Emerald; the map
+        // header's region still records which region the map belongs to.
+        if (version == "firered" && region != "REGION_KANTO") {
             invalid_maps.push_back(map_name);
         }
     }
@@ -790,8 +792,9 @@ string generate_layout_headers_text(Json layouts_data) {
             else if (version == "firered")
                 layout_version = "frlg";
         }
-        if ((version == "emerald" && layout_version != "emerald")
-         || (version == "firered" && layout_version != "frlg"))
+        // Emerald-engine multi-region builds must emit both Emerald and FRLG
+        // layout blobs. MapLayout::isFrlg preserves the correct metatile format.
+        if (version == "firered" && layout_version != "frlg")
             continue;
         string layoutName = json_to_string(layout, "name");
         string border_label = layoutName + "_Border";
@@ -848,7 +851,7 @@ string generate_layouts_table_text(Json layouts_data) {
             else if (version == "firered")
                 layout_version = "frlg";
         }
-        if ((version == "emerald" && layout_version != "emerald") || (version == "firered" && layout_version != "frlg")) {
+        if (version == "firered" && layout_version != "frlg") {
             text << "\t.4byte NULL\n";
         } else {
             string layout_name = json_to_string(layout, "name", true);
