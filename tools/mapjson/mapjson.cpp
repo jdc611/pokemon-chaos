@@ -750,10 +750,19 @@ void process_groups(string groups_filepath, vector<string> &map_filepaths, strin
         }
         string map_name = json_to_string(map_data, "name");
 
-        // Chaos/Continuum is an Emerald-engine multi-region build. Include both
-        // Hoenn and Kanto map headers/events when compiling Emerald; the map
-        // header's region still records which region the map belongs to.
-        if (version == "firered" && region != "REGION_KANTO") {
+        // Chaos/Continuum is an Emerald-engine multi-region build. For now,
+        // compile the Pallet bootstrap cluster into Emerald while the remaining
+        // imported Kanto maps still contain FRLG-only placeholder event flags.
+        // Expand this allowlist as each Kanto area is migrated.
+        bool emeraldKantoBootstrap =
+            map_name == "PalletTown_Frlg"
+         || map_name == "PalletTown_PlayersHouse_1F_Frlg"
+         || map_name == "PalletTown_PlayersHouse_2F_Frlg"
+         || map_name == "PalletTown_RivalsHouse_Frlg"
+         || map_name == "PalletTown_ProfessorOaksLab_Frlg";
+
+        if ((version == "emerald" && region != "REGION_HOENN" && !emeraldKantoBootstrap)
+         || (version == "firered" && region != "REGION_KANTO")) {
             invalid_maps.push_back(map_name);
         }
     }
