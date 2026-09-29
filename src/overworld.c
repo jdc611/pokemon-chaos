@@ -1958,11 +1958,14 @@ void CB2_NewGame(void)
     PlayTimeCounter_Start();
     ScriptContext_Init();
     UnlockPlayerFieldControls();
-    // Kanto starts directly in the Pallet Town bedroom.  The Emerald truck
-    // sequence waits for truck-specific map/script state and leaves a Kanto
-    // start on a permanent black screen.
-    if (IS_FRLG || gRunSetupStartRegion)
+    // Kanto starts directly in the Pallet Town bedroom.  This is already a
+    // fresh map load, so do not install a warp-return callback: that callback
+    // expects return-to-field fade state which does not exist after the intro.
+    // Let RunFieldCallback() take its normal NULL path (FieldCB_DefaultWarpExit).
+    if (IS_FRLG)
         gFieldCallback = FieldCB_WarpExitFadeFromBlack;
+    else if (gRunSetupStartRegion)
+        gFieldCallback = NULL;
     else
         gFieldCallback = ExecuteTruckSequence;
     gFieldCallback2 = NULL;
