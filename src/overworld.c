@@ -1947,13 +1947,20 @@ static bool8 RunFieldCallback(void)
 }
 
 extern EWRAM_DATA u8 gRunSetupStartRegion;
+extern EWRAM_DATA bool8 gDebugForceKantoNewGame;
 
 void CB2_NewGame(void)
 {
     FieldClearVBlankHBlankCallbacks();
     StopMapMusic();
     ResetSafariZoneFlag_();
-    NewGameInitData();
+    if (gDebugForceKantoNewGame)
+    {
+        NewGameInitDataKanto();
+        gDebugForceKantoNewGame = FALSE;
+    }
+    else
+        NewGameInitData();
     ResetInitialPlayerAvatarState();
     PlayTimeCounter_Start();
     ScriptContext_Init();
