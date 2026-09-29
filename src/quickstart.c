@@ -16,6 +16,10 @@
 #include "task.h"
 
 
+extern EWRAM_DATA bool8 gDebugForceKantoNewGame;
+extern EWRAM_DATA u8 gRunSetupStartRegion;
+extern EWRAM_DATA u8 gRunSetupPlayerModel;
+
 #define TAG_SKIP_INTRO 2000
 
 static const u32 gQuickstartHudGfx[] = INCGFX_U32("graphics/quickstart/quickstart_hud.png", ".4bpp.smol");
@@ -85,9 +89,15 @@ static void CB2_SkipToNewGame(void)
 
     if (!UpdatePaletteFade())
     {
-        gSaveBlock2Ptr->playerGender = SetQuickstartPlayerGender();
-        const u8* textPtr = gSaveBlock2Ptr->playerGender == FEMALE ? sText_PlayerFemale : sText_PlayerMale;
-        StringCopy_PlayerName(gSaveBlock2Ptr->playerName, textPtr);
+        // Chaos Kanto diagnostic: title-screen SELECT used to invoke the
+        // expansion's stock Emerald quickstart, which randomized Brendan/May
+        // and always entered Littleroot. Route it through the same forced-Kanto
+        // path as the main-menu diagnostic so SELECT cannot bypass the test.
+        gSaveBlock2Ptr->playerGender = MALE;
+        StringCopy_PlayerName(gSaveBlock2Ptr->playerName, COMPOUND_STRING("KTEST"));
+        gRunSetupStartRegion = 1;
+        gRunSetupPlayerModel = 1;
+        gDebugForceKantoNewGame = TRUE;
 
 #if IS_FRLG
         StringCopy_PlayerName(gSaveBlock1Ptr->rivalName, sText_Rival);
