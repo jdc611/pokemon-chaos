@@ -15,7 +15,53 @@
   "floor_number": 0,
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
   "connections": null,
-  "object_events": [],
+  "object_events": [
+    {
+      "local_id": "LOCALID_PALLET_SIGN_LADY",
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_WOMAN_1",
+      "x": 3,
+      "y": 10,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
+      "movement_range_x": 1,
+      "movement_range_y": 4,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "PalletTown_EventScript_SignLady",
+      "flag": "0"
+    },
+    {
+      "local_id": "LOCALID_PALLET_FAT_MAN",
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_FAT_MAN",
+      "x": 13,
+      "y": 17,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
+      "movement_range_x": 6,
+      "movement_range_y": 2,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "PalletTown_EventScript_FatMan",
+      "flag": "0"
+    },
+    {
+      "local_id": "LOCALID_PALLET_PROF_OAK",
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_PROF_OAK",
+      "x": 10,
+      "y": 8,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_UP",
+      "movement_range_x": 1,
+      "movement_range_y": 1,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "0x0",
+      "flag": "FLAG_HIDE_OAK_IN_PALLET_TOWN"
+    }
+  ],
   "warp_events": [
     {
       "x": 6,
