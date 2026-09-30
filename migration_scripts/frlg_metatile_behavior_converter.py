@@ -27,7 +27,7 @@ import glob
 # python frlg_metatile_behavior_converter.py
 
 # CHANGE THIS
-ATTRIBUTES_PATH = "path/to/metatile_attributes.bin"
+ATTRIBUTES_PATH = "data/tilesets/**/*_frlg/metatile_attributes.bin"
 
 
 FRLG_BEHAVIORS = {
@@ -533,7 +533,7 @@ def write_attribute_bin(file_path, new_data):
         f.write(struct.pack("<" + "I" * len(new_data), *new_data))
 
 def process_metatile_attribute_files():
-    for file in glob.glob(ATTRIBUTES_PATH):
+    for file in glob.glob(ATTRIBUTES_PATH, recursive=True):
         print(f"Processing {file}...")
         old_data = read_attribute_bin(file)
         new_data = process_metatile_attribute_data(old_data)
