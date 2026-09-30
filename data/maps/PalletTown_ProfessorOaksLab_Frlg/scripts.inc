@@ -6,9 +6,9 @@
 .equ SHOWED_OAK_COMPLETE_DEX, FLAG_TEMP_2
 
 PalletTown_ProfessorOaksLab_Frlg_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, PalletTown_ProfessorOaksLab_OnTransition
-	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, PalletTown_ProfessorOaksLab_OnWarp
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, PalletTown_ProfessorOaksLab_OnFrame
+	@ Chaos Emerald multi-region diagnostic:
+	@ disable FRLG automatic startup/story hooks while isolating the timed
+	@ Oak's Lab reset. Manual NPC/sign/object scripts remain available.
 	.byte 0
 
 PalletTown_ProfessorOaksLab_OnTransition::
