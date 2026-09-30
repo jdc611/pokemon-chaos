@@ -750,18 +750,13 @@ void process_groups(string groups_filepath, vector<string> &map_filepaths, strin
         }
         string map_name = json_to_string(map_data, "name");
 
-        // Chaos/Continuum is an Emerald-engine multi-region build. For now,
-        // compile the Pallet bootstrap cluster into Emerald while the remaining
-        // imported Kanto maps still contain FRLG-only placeholder event flags.
-        // Expand this allowlist as each Kanto area is migrated.
-        bool emeraldKantoBootstrap =
-            map_name == "PalletTown_Frlg"
-         || map_name == "PalletTown_PlayersHouse_1F_Frlg"
-         || map_name == "PalletTown_PlayersHouse_2F_Frlg"
-         || map_name == "PalletTown_RivalsHouse_Frlg"
-         || map_name == "PalletTown_ProfessorOaksLab_Frlg";
+        // Chaos is an Emerald-engine multi-region build. Include both Hoenn
+        // and Kanto maps in the Emerald ROM so connections/warps can resolve
+        // across the complete world instead of pointing at filtered map IDs.
+        bool emeraldRegionSupported =
+            region == "REGION_HOENN" || region == "REGION_KANTO";
 
-        if ((version == "emerald" && region != "REGION_HOENN" && !emeraldKantoBootstrap)
+        if ((version == "emerald" && !emeraldRegionSupported)
          || (version == "firered" && region != "REGION_KANTO")) {
             invalid_maps.push_back(map_name);
         }
@@ -802,17 +797,10 @@ string generate_layout_headers_text(Json layouts_data) {
                 layout_version = "frlg";
         }
         string layoutId = json_to_string(layout, "id", true);
-        bool emeraldPalletLayout =
-            layoutId == "LAYOUT_PALLET_TOWN"
-         || layoutId == "LAYOUT_PALLET_TOWN_PLAYERS_HOUSE_1F_FRLG"
-         || layoutId == "LAYOUT_PALLET_TOWN_PLAYERS_HOUSE_2F_FRLG"
-         || layoutId == "LAYOUT_PALLET_TOWN_RIVALS_HOUSE"
-         || layoutId == "LAYOUT_PALLET_TOWN_PROFESSOR_OAKS_LAB";
-
-        // Emerald normally omits FRLG layouts.  For the multi-region bootstrap,
-        // emit only Pallet's FRLG layouts; leave the rest of Kanto out until
-        // its maps/tilesets/scripts are migrated.
-        if ((version == "emerald" && layout_version != "emerald" && !emeraldPalletLayout)
+        // Chaos is multi-region: Emerald builds must emit both native Emerald
+        // layouts and imported FRLG layouts. The layout header records whether
+        // each layout uses FRLG format so the engine can interpret it correctly.
+        if ((version == "emerald" && layout_version != "emerald" && layout_version != "frlg")
          || (version == "firered" && layout_version != "frlg"))
             continue;
         string layoutName = json_to_string(layout, "name");
@@ -870,14 +858,7 @@ string generate_layouts_table_text(Json layouts_data) {
             else if (version == "firered")
                 layout_version = "frlg";
         }
-        string layoutId = json_to_string(layout, "id", true);
-        bool emeraldPalletLayout =
-            layoutId == "LAYOUT_PALLET_TOWN"
-         || layoutId == "LAYOUT_PALLET_TOWN_PLAYERS_HOUSE_1F_FRLG"
-         || layoutId == "LAYOUT_PALLET_TOWN_PLAYERS_HOUSE_2F_FRLG"
-         || layoutId == "LAYOUT_PALLET_TOWN_RIVALS_HOUSE"
-         || layoutId == "LAYOUT_PALLET_TOWN_PROFESSOR_OAKS_LAB";
-        if ((version == "emerald" && layout_version != "emerald" && !emeraldPalletLayout)
+        if ((version == "emerald" && layout_version != "emerald" && layout_version != "frlg")
          || (version == "firered" && layout_version != "frlg")) {
             text << "\t.4byte NULL\n";
         } else {
