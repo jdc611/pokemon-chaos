@@ -833,7 +833,9 @@ const struct Tileset gTileset_UnionRoom =
     .callback = NULL,
 };
 
-#else
+#endif
+
+#if IS_FRLG || IS_EMERALD
 
 // FRLG tilesets
 const struct Tileset gTileset_BuildingFrlg =
@@ -1610,4 +1612,4 @@ const struct Tileset gTileset_Lab_Frlg =
     .metatileAttributes = gMetatileAttributes_Lab_Frlg,
     .callback = NULL,
 };
-#endif // !IS_FRLG
+#endif // IS_FRLG || IS_EMERALD
