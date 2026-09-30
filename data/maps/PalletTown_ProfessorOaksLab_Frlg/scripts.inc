@@ -1,3 +1,13 @@
+@ Chaos diagnostic: map objects are temporarily stripped from map.json.
+@ Keep their former local IDs defined so dormant FRLG scripts still assemble.
+.equ LOCALID_OAKS_LAB_PROF_OAK, 4
+.equ LOCALID_BULBASAUR_BALL, 5
+.equ LOCALID_SQUIRTLE_BALL, 6
+.equ LOCALID_CHARMANDER_BALL, 7
+.equ LOCALID_OAKS_LAB_RIVAL, 8
+.equ LOCALID_POKEDEX_1, 9
+.equ LOCALID_POKEDEX_2, 10
+
 .equ PLAYER_STARTER_NUM,      VAR_TEMP_1
 .equ PLAYER_STARTER_SPECIES,  VAR_TEMP_2
 .equ RIVAL_STARTER_SPECIES,   VAR_TEMP_3
