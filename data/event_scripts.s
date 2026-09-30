@@ -600,9 +600,9 @@ gStdScripts_End::
 	.include "data/maps/Route119_House/scripts.inc"
 	.include "data/maps/Route124_DivingTreasureHuntersHouse/scripts.inc"
 
-.if IS_FRLG
+.if IS_FRLG || IS_EMERALD
 
-@ FRLG scripts
+@ FRLG/Kanto scripts: Chaos links these into the Emerald multi-region build too.
 	.include "data/maps/BattleColosseum_2P_Frlg/scripts.inc"
 	.include "data/maps/TradeCenter_Frlg/scripts.inc"
 	.include "data/maps/RecordCorner_Frlg/scripts.inc"
@@ -1047,16 +1047,6 @@ gStdScripts_End::
 	.include "data/scripts/flavor_text.inc"
 	.include "data/scripts/pkmn_center_nurse_frlg.inc"
 
-.endif
-
-// Pallet bootstrap scripts must also be linked into the Emerald-engine
-// multi-region build. The full FRLG script block above remains FRLG-only.
-.if !IS_FRLG
-	.include "data/maps/PalletTown_Frlg/scripts.inc"
-	.include "data/maps/PalletTown_PlayersHouse_1F_Frlg/scripts.inc"
-	.include "data/maps/PalletTown_PlayersHouse_2F_Frlg/scripts.inc"
-	.include "data/maps/PalletTown_RivalsHouse_Frlg/scripts.inc"
-	.include "data/maps/PalletTown_ProfessorOaksLab_Frlg/scripts.inc"
 .endif
 
 	.include "data/scripts/std_msgbox.inc"
