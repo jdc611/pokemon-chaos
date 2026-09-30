@@ -351,6 +351,16 @@ string generate_map_events_text(Json map_data) {
                      << json_to_string(bg_event, "script") << "\n";
             }
             else if (type == "hidden_item") {
+                // FRLG compatibility flags are currently placeholders in Chaos.
+                // Do not emit imported Kanto hidden items into Emerald until they
+                // have dedicated persistent flag IDs; emitting flag 0 is invalid
+                // and previously prevented the complete Kanto world from building.
+                string region = json_to_string(map_data, "region", true);
+                string hiddenFlag = json_to_string(bg_event, "flag", true);
+                if (version == "emerald" && region == "REGION_KANTO"
+                 && (hiddenFlag.empty() || hiddenFlag == "0" || hiddenFlag.find("FLAG_") == 0)) {
+                    continue;
+                }
                 string quantity = json_to_string(bg_event, "quantity", true);
                 if (quantity.empty()) {
                     quantity = "1";
