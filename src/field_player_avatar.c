@@ -1569,12 +1569,12 @@ u16 GetRivalAvatarGraphicsIdByStateIdAndGender(u8 state, enum Gender gender)
 
 u16 GetPlayerAvatarGraphicsIdByStateIdAndGender(u8 state, enum Gender gender)
 {
-    // Chaos lets the player choose the Kanto or Hoenn protagonist independently
-    // of the campaign region. FRLG's Red/Leaf object graphics contain their
-    // normal field animation set; special field states continue using the
-    // engine's established state graphics until Kanto-specific variants are wired.
-    if (gSaveBlock3Ptr != NULL && gSaveBlock3Ptr->playerModel == 1 && state == PLAYER_AVATAR_STATE_NORMAL)
-        return sFRLGAvatarGfxIds[gender];
+    // Diagnostic: keep the Emerald player-avatar graphics for every live field
+    // state, even when the Kanto model was selected in the intro. The generic
+    // OBJ_EVENT_GFX_RED/LEAF sprites are NPC-style overworld graphics, not the
+    // full FRLG player-avatar state set (normal/run/bike/surf/etc.). If this
+    // removes the B-button/reset issue, the next migration step is importing
+    // the dedicated FRLG avatar graphics/state tables into the Emerald build.
     return sPlayerAvatarGfxIds[state][gender];
 }
 
