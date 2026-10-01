@@ -1973,6 +1973,13 @@ void CB2_NewGame(void)
         VarSet(VAR_MAP_SCENE_PALLET_TOWN_OAK, 3);
         FlagSet(FLAG_HIDE_OAK_IN_PALLET_TOWN);
 
+        // KTEST bypasses Oak and starter selection, but Route 1 can trigger a
+        // wild battle immediately. NewGameInitData() clears the party, so give
+        // the diagnostic save a real mon before testing encounter tiles.
+        // Without this, the first successful grass encounter enters battle with
+        // a zero-mon player party and can look like a Route 1/map reset.
+        ScriptGiveMon(SPECIES_BULBASAUR, 10, ITEM_NONE);
+
         // All Kanto maps are now emitted in their canonical FRLG groups, so use
         // generated constants instead of the temporary KantoShared numeric IDs.
         SetWarpDestination(MAP_GROUP(MAP_PALLET_TOWN_PLAYERS_HOUSE_2F),
