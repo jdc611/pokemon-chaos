@@ -49,9 +49,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends binutils-arm-none-eabi gcc-arm-none-eabi libnewlib-arm-none-eabi libpng-dev python3
 
-      - name: Convert FRLG metatile behaviors for Emerald
-        run: python3 migration_scripts/frlg_metatile_behavior_converter.py
-
       - name: Build Emerald
         env:
           GAME_VERSION: EMERALD
