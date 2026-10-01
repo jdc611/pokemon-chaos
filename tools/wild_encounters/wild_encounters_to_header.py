@@ -245,9 +245,9 @@ class WildEncounterAssembler:
                 elif "LeafGreen" in shared_label:
                     version = "LEAFGREEN"
                 if version == "FIRERED":
-                self.WriteLine("#if defined(FIRERED) || defined(EMERALD)")
-            else:
-                self.WriteLine(f"#ifdef {version}")
+                    self.WriteLine("#if defined(FIRERED) || defined(EMERALD)")
+                else:
+                    self.WriteLine(f"#ifdef {version}")
                 for mon_type in self.config.mon_types:
                     if mon_type not in map_encounters:
                         headers["data"][shared_label][mon_type] = "NULL"
