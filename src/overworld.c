@@ -1971,11 +1971,13 @@ void CB2_NewGame(void)
         // Skip Pallet's Oak grass-edge intro so FRLG story scripting / the
         // temporarily stripped Oak Lab cannot mask connection/collision tests.
         VarSet(VAR_MAP_SCENE_PALLET_TOWN_OAK, 3);
+        FlagSet(FLAG_HIDE_OAK_IN_PALLET_TOWN);
 
-        // Hard-coded numeric Pallet bedroom target for the diagnostic.
-        // This intentionally bypasses generated MAP_* constants so we can
-        // distinguish bad map-ID generation from later warp replacement.
-        SetWarpDestination(38, 2, WARP_ID_NONE, 6, 6);
+        // All Kanto maps are now emitted in their canonical FRLG groups, so use
+        // generated constants instead of the temporary KantoShared numeric IDs.
+        SetWarpDestination(MAP_GROUP(MAP_PALLET_TOWN_PLAYERS_HOUSE_2F),
+                           MAP_NUM(MAP_PALLET_TOWN_PLAYERS_HOUSE_2F),
+                           WARP_ID_NONE, 6, 6);
         WarpIntoMap();
         gRunSetupStartRegion = 1;
         gDebugForceKantoNewGame = FALSE;
