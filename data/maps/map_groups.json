@@ -875,7 +875,6 @@
     "FiveIsland_Frlg",
     "SevenIsland_Frlg",
     "SixIsland_Frlg",
-    "Route2_Frlg",
     "Route3_Frlg",
     "Route4_Frlg",
     "Route5_Frlg",
@@ -894,9 +893,7 @@
     "Route18_Frlg",
     "Route19_Frlg",
     "Route20_Frlg",
-    "Route21_North_Frlg",
     "Route21_South_Frlg",
-    "Route22_Frlg",
     "Route23_Frlg",
     "Route24_Frlg",
     "Route25_Frlg",
@@ -920,11 +917,6 @@
   ],
   "gMapGroup_IndoorPallet_Frlg": [],
   "gMapGroup_IndoorViridian_Frlg": [
-    "ViridianCity_House_Frlg",
-    "ViridianCity_Gym_Frlg",
-    "ViridianCity_School_Frlg",
-    "ViridianCity_Mart_Frlg",
-    "ViridianCity_PokemonCenter_1F_Frlg",
     "ViridianCity_PokemonCenter_2F_Frlg"
   ],
   "gMapGroup_IndoorPewter_Frlg": [
@@ -1161,6 +1153,14 @@
     "PalletTown_RivalsHouse_Frlg",
     "PalletTown_ProfessorOaksLab_Frlg",
     "Route1_Frlg",
-    "ViridianCity_Frlg"
+    "ViridianCity_Frlg",
+    "Route2_Frlg",
+    "Route21_North_Frlg",
+    "Route22_Frlg",
+    "ViridianCity_PokemonCenter_1F_Frlg",
+    "ViridianCity_House_Frlg",
+    "ViridianCity_Gym_Frlg",
+    "ViridianCity_School_Frlg",
+    "ViridianCity_Mart_Frlg"
   ]
 }
