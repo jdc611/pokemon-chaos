@@ -1967,6 +1967,11 @@ void CB2_NewGame(void)
     // region-state handoff as a variable from the Start+Select test.
     if (debugForceKanto)
     {
+        // KTEST is a world-traversal diagnostic, not the real Kanto story path.
+        // Skip Pallet's Oak grass-edge intro so FRLG story scripting / the
+        // temporarily stripped Oak Lab cannot mask connection/collision tests.
+        VarSet(VAR_MAP_SCENE_PALLET_TOWN_OAK, 3);
+
         // Hard-coded numeric Pallet bedroom target for the diagnostic.
         // This intentionally bypasses generated MAP_* constants so we can
         // distinguish bad map-ID generation from later warp replacement.
