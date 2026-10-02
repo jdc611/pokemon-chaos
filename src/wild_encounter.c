@@ -846,6 +846,13 @@ bool8 AreLegendariesInSootopolisPreventingEncounters(void)
 
 bool8 StandardWildEncounter(u16 curMetatileBehavior, u16 prevMetatileBehavior)
 {
+    // Kanto bring-up diagnostic: Route 1 must be able to traverse independently
+    // of the wild-encounter table/randomizer path. Remove after the Kanto
+    // encounter data is proven safe.
+    if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_ROUTE1)
+     && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_ROUTE1))
+        return FALSE;
+
     u32 headerId;
     enum TimeOfDay timeOfDay;
     struct Roamer *roamer;
