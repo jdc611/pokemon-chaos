@@ -255,7 +255,14 @@ void NewGameInitData(void)
     UpdateDailySeed();
     WarpToTruck(startInKanto);
     if (IS_FRLG || startInKanto)
+    {
         RunScriptImmediately(EventScript_ResetAllMapFlagsFrlg);
+        // KTEST/SELECT is a traversal diagnostic. Skip the canonical Oak
+        // grass-edge story trigger so we can test Pallet -> Route 1 -> Viridian
+        // independently of the still-unported FRLG Oak event chain.
+        if (startInKanto && StringCompare(gSaveBlock2Ptr->playerName, COMPOUND_STRING("KTEST")) == 0)
+            VarSet(VAR_MAP_SCENE_PALLET_TOWN_OAK, 3);
+    }
     else
         RunScriptImmediately(EventScript_ResetAllMapFlags);
 #if IS_FRLG
