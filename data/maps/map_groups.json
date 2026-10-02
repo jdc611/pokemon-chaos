@@ -858,7 +858,6 @@
     "NavelRock_Harbor_Frlg"
   ],
   "gMapGroup_TownsAndRoutes_Frlg": [
-    "ViridianCity_Frlg",
     "PewterCity_Frlg",
     "CeruleanCity_Frlg",
     "LavenderTown_Frlg",
@@ -876,7 +875,6 @@
     "FiveIsland_Frlg",
     "SevenIsland_Frlg",
     "SixIsland_Frlg",
-    "Route1_Frlg",
     "Route2_Frlg",
     "Route3_Frlg",
     "Route4_Frlg",
@@ -1158,6 +1156,8 @@
   ],
   "gMapGroup_KantoShared": [
     "PalletTown_Frlg",
+    "Route1_Frlg",
+    "ViridianCity_Frlg",
     "PalletTown_PlayersHouse_1F_Frlg",
     "PalletTown_PlayersHouse_2F_Frlg",
     "PalletTown_RivalsHouse_Frlg",
