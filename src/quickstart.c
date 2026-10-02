@@ -16,7 +16,6 @@
 #include "task.h"
 
 
-extern EWRAM_DATA bool8 gDebugForceKantoNewGame;
 extern EWRAM_DATA u8 gRunSetupStartRegion;
 extern EWRAM_DATA u8 gRunSetupPlayerModel;
 
@@ -95,7 +94,6 @@ static void CB2_SkipToNewGame(void)
         StringCopy_PlayerName(gSaveBlock2Ptr->playerName, COMPOUND_STRING("KTEST"));
         gRunSetupStartRegion = 1;
         gRunSetupPlayerModel = 1;
-        gDebugForceKantoNewGame = TRUE;
 
 #if IS_FRLG
         StringCopy_PlayerName(gSaveBlock1Ptr->rivalName, sText_Rival);
