@@ -324,7 +324,6 @@ static void FindMapsWithMon(enum Species species)
                 SetAreaHasMon(sFeebasData[i][1], sFeebasData[i][2]);
                 break;
             case MAP_GROUP_DUNGEONS:
-            case MAP_GROUP_DUNGEONS_FRLG:
             case MAP_GROUP_SPECIAL_AREA:
             case MAP_GROUP_SPECIAL_AREA_FRLG:
                 SetSpecialMapHasMon(sFeebasData[i][1], sFeebasData[i][2]);
@@ -361,8 +360,7 @@ static void FindMapsWithMon(enum Species species)
                     SetAreaHasMon(gWildMonHeaders[i].mapGroup, gWildMonHeaders[i].mapNum);
                     break;
                 case MAP_GROUP_DUNGEONS:
-                case MAP_GROUP_DUNGEONS_FRLG:
-                case MAP_GROUP_SPECIAL_AREA:
+                    case MAP_GROUP_SPECIAL_AREA:
                 case MAP_GROUP_SPECIAL_AREA_FRLG:
                     SetSpecialMapHasMon(gWildMonHeaders[i].mapGroup, gWildMonHeaders[i].mapNum);
                     break;
