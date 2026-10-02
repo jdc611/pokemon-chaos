@@ -671,7 +671,6 @@
     "UnionRoom_Frlg"
   ],
   "gMapGroup_Dungeons_Frlg": [
-    "ViridianForest_Frlg",
     "MtMoon_1F_Frlg",
     "MtMoon_B1F_Frlg",
     "MtMoon_B2F_Frlg",
@@ -919,14 +918,7 @@
     "SevenIsland_TanobyRuins_Frlg"
   ],
   "gMapGroup_IndoorPallet_Frlg": [],
-  "gMapGroup_IndoorViridian_Frlg": [
-    "ViridianCity_House_Frlg",
-    "ViridianCity_Gym_Frlg",
-    "ViridianCity_School_Frlg",
-    "ViridianCity_Mart_Frlg",
-    "ViridianCity_PokemonCenter_1F_Frlg",
-    "ViridianCity_PokemonCenter_2F_Frlg"
-  ],
+  "gMapGroup_IndoorViridian_Frlg": [],
   "gMapGroup_IndoorPewter_Frlg": [
     "PewterCity_Museum_1F_Frlg",
     "PewterCity_Museum_2F_Frlg",
@@ -1027,12 +1019,7 @@
     "SaffronCity_MrPsychicsHouse_Frlg",
     "SaffronCity_PokemonTrainerFanClub_Frlg"
   ],
-  "gMapGroup_IndoorRoute2_Frlg": [
-    "Route2_ViridianForest_SouthEntrance_Frlg",
-    "Route2_House_Frlg",
-    "Route2_EastBuilding_Frlg",
-    "Route2_ViridianForest_NorthEntrance_Frlg"
-  ],
+  "gMapGroup_IndoorRoute2_Frlg": [],
   "gMapGroup_IndoorRoute4_Frlg": [
     "Route4_PokemonCenter_1F_Frlg",
     "Route4_PokemonCenter_2F_Frlg"
@@ -1161,6 +1148,17 @@
     "PalletTown_PlayersHouse_1F_Frlg",
     "PalletTown_PlayersHouse_2F_Frlg",
     "PalletTown_RivalsHouse_Frlg",
-    "PalletTown_ProfessorOaksLab_Frlg"
+    "PalletTown_ProfessorOaksLab_Frlg",
+    "ViridianCity_House_Frlg",
+    "ViridianCity_Gym_Frlg",
+    "ViridianCity_School_Frlg",
+    "ViridianCity_Mart_Frlg",
+    "ViridianCity_PokemonCenter_1F_Frlg",
+    "ViridianCity_PokemonCenter_2F_Frlg",
+    "Route2_ViridianForest_SouthEntrance_Frlg",
+    "Route2_House_Frlg",
+    "Route2_EastBuilding_Frlg",
+    "Route2_ViridianForest_NorthEntrance_Frlg",
+    "ViridianForest_Frlg"
   ]
 }
