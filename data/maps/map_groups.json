@@ -857,7 +857,6 @@
     "NavelRock_Harbor_Frlg"
   ],
   "gMapGroup_TownsAndRoutes_Frlg": [
-    "PewterCity_Frlg",
     "CeruleanCity_Frlg",
     "LavenderTown_Frlg",
     "VermilionCity_Frlg",
@@ -875,7 +874,6 @@
     "SevenIsland_Frlg",
     "SixIsland_Frlg",
     "Route2_Frlg",
-    "Route3_Frlg",
     "Route4_Frlg",
     "Route5_Frlg",
     "Route6_Frlg",
@@ -920,14 +918,6 @@
   "gMapGroup_IndoorPallet_Frlg": [],
   "gMapGroup_IndoorViridian_Frlg": [],
   "gMapGroup_IndoorPewter_Frlg": [
-    "PewterCity_Museum_1F_Frlg",
-    "PewterCity_Museum_2F_Frlg",
-    "PewterCity_Gym_Frlg",
-    "PewterCity_Mart_Frlg",
-    "PewterCity_House1_Frlg",
-    "PewterCity_PokemonCenter_1F_Frlg",
-    "PewterCity_PokemonCenter_2F_Frlg",
-    "PewterCity_House2_Frlg"
   ],
   "gMapGroup_IndoorCerulean_Frlg": [
     "CeruleanCity_House1_Frlg",
@@ -1159,6 +1149,16 @@
     "Route2_House_Frlg",
     "Route2_EastBuilding_Frlg",
     "Route2_ViridianForest_NorthEntrance_Frlg",
-    "ViridianForest_Frlg"
+    "ViridianForest_Frlg",
+    "PewterCity_Frlg",
+    "Route3_Frlg",
+    "PewterCity_Museum_1F_Frlg",
+    "PewterCity_Museum_2F_Frlg",
+    "PewterCity_Gym_Frlg",
+    "PewterCity_Mart_Frlg",
+    "PewterCity_House1_Frlg",
+    "PewterCity_PokemonCenter_1F_Frlg",
+    "PewterCity_PokemonCenter_2F_Frlg",
+    "PewterCity_House2_Frlg"
   ]
 }
