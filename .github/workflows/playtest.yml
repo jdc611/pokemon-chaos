@@ -44,6 +44,9 @@ jobs:
             git push origin HEAD:master
           fi
 
+      - name: Materialize approved Chaos title artwork
+        run: python3 .github/scripts/materialize_chaos_title.py
+
       - name: Install build tools
         run: |
           sudo apt-get update
