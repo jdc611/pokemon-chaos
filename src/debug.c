@@ -1319,13 +1319,14 @@ static bool32 IsSubMenuAction(const void *action)
 static u32 Debug_GenerateListBasicMenu(const struct DebugMenuOption *items)
 {
     u32 totalItems = 0;
-    for (u32 i = 0; items[i].text != NULL; i++)
+    for (u32 i = 0; i < DEBUG_MAX_MENU_ITEMS && items[i].text != NULL; i++)
     {
         sDebugMenuListData->listItems[i].id = i;
         StringExpandPlaceholders(gStringVar4, items[i].text);
         if (IsSubMenuAction(items[i].action))
             StringAppend(gStringVar4, sDebugText_Arrow);
-        StringCopy(&sDebugMenuListData->itemNames[i][0], gStringVar4);
+        StringCopyN(&sDebugMenuListData->itemNames[i][0], gStringVar4, sizeof(sDebugMenuListData->itemNames[i]) - 1);
+        sDebugMenuListData->itemNames[i][sizeof(sDebugMenuListData->itemNames[i]) - 1] = EOS;
         sDebugMenuListData->listItems[i].name = &sDebugMenuListData->itemNames[i][0];
         totalItems++;
     }
@@ -2051,11 +2052,15 @@ static u32 Debug_GenerateListFlagsMenu(const struct DebugMenuOption *items)
 static void DebugTask_HandleMenuInput_General(u8 taskId)
 {
     const struct DebugMenuOption *options = Debug_GetCurrentCallbackMenu();
-    u32 input = ListMenu_ProcessInput(gTasks[taskId].tMenuTaskId);
-    struct DebugMenuOption option = options[input];
+    u32 optionCount = 0;
+    s32 input = ListMenu_ProcessInput(gTasks[taskId].tMenuTaskId);
 
-    if (JOY_NEW(A_BUTTON))
+    while (options != NULL && optionCount < DEBUG_MAX_MENU_ITEMS && options[optionCount].text != NULL)
+        optionCount++;
+
+    if (JOY_NEW(A_BUTTON) && input >= 0 && (u32)input < optionCount)
     {
+        struct DebugMenuOption option = options[input];
         PlaySE(SE_SELECT);
         if (option.action != NULL)
         {
@@ -2881,6 +2886,8 @@ static void DebugAction_Trainers_TryBattle(u8 taskId)
             lastMatch -= 1;
         trainer1Id = gRematchTable[rematchId].trainerIds[lastMatch];
     }
+    InitTrainerBattleParameter();
+    gPartnerTrainerId = 0;
     gBattleTypeFlags = BATTLE_TYPE_TRAINER;
     TRAINER_BATTLE_PARAM.opponentA = trainer1Id;
     TRAINER_BATTLE_PARAM.opponentB = 0xFFFF;
@@ -3054,7 +3061,7 @@ static void DebugAction_ImportantBattle(u8 taskId, const void *params)
 
     // Reproduce the complete Mossdeep partner battle rather than testing
     // Maxie's half of the encounter in isolation.
-    if (trainerId == TRAINER_MAXIE_MOSSDEEP)
+    if (!IS_FRLG && trainerId == TRAINER_MAXIE_MOSSDEEP)
     {
         sDebugMenuListData->data[2] = TRAINER_TABITHA_MOSSDEEP;
         sDebugMenuListData->data[4] = PARTNER_STEVEN;

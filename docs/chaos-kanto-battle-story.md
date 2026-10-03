@@ -177,3 +177,13 @@ https://www.deviantart.com/monicaccina/art/GBA-Jessie-and-James-353030680
 Jessie and James battle art is centered on separate 64x64 canvases and indexed
 to fifteen opaque colors plus transparency; overworld frames are assembled in
 native nine-frame walking order on 144x32 sheets without resizing the artwork.
+
+Debug safety review: Battle Tests has 15 entries, Rocket Tests seven, and Mega
+Rematches three. The shared list builder enforces its twenty-entry capacity
+and terminates cached labels within their buffers. Input is checked against
+the current menu length before indexing. Debug trainer launches initialize
+the native battle parameters and clear stale partner state. CI host checks
+execute all 23 shortcut selections through the actual input, preparation and
+launch functions with memory sanitizers; they also cover oversized menus, long
+labels, idle input, cancellation and invalid selections. These are source and
+host checks; Delta gameplay remains the final display/runtime test.
