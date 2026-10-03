@@ -10,6 +10,7 @@
 #include "menu.h"
 #include "palette.h"
 #include "pokedex.h"
+#include "overworld.h"
 #include "pokemon.h"
 #include "random.h"
 #include "random_mon_generation.h"
@@ -483,6 +484,32 @@ u16 GetStarterPokemon(u16 chosenStarterId)
     if (chosenStarterId >= STARTER_MON_COUNT)
         chosenStarterId = 0;
     return sStarterMon[chosenStarterId];
+}
+
+// Oak's physical ball order is Bulbasaur, Squirtle, Charmander.
+// Run setup uses the shared starter picker (Bulbasaur, Charmander, Squirtle).
+bool8 ChaosOakStarterIsCustom(void)
+{
+    return gSaveBlock3Ptr->starterMode == RUN_STARTER_CHOOSE;
+}
+
+void ChooseOakStarter(void)
+{
+    gMain.savedCallback = CB2_ReturnToFieldContinueScriptPlayMapMusic;
+    SetMainCallback2(CB2_ChooseStarter);
+}
+
+void ResolveChaosOakStarters(void)
+{
+    static const u8 kantoSlots[] = {0, 2, 1};
+    static const u16 kantoRivals[] = {SPECIES_CHARMANDER, SPECIES_BULBASAUR, SPECIES_SQUIRTLE};
+    u8 ball = gSpecialVar_0x8004 % STARTER_MON_COUNT;
+    u8 slot = gSaveBlock3Ptr->starterMode == RUN_STARTER_KANTO ? kantoSlots[ball] : ball;
+
+    GenerateRandomStarters();
+    gSpecialVar_0x8005 = GetStarterPokemon(slot);
+    gSpecialVar_0x8006 = gSaveBlock3Ptr->starterMode == RUN_STARTER_CHOOSE
+        ? kantoRivals[ball] : GetStarterPokemon((slot + 1) % STARTER_MON_COUNT);
 }
 
 static void VblankCB_StarterChoose(void)

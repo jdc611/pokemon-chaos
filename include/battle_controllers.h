@@ -3,6 +3,8 @@
 
 typedef void (*BattleControllerFunc)(enum BattlerId battler);
 
+void ShowStatusDetailsPrompt(void);
+
 enum {
     REQUEST_ALL_BATTLE,
     REQUEST_SPECIES_BATTLE,

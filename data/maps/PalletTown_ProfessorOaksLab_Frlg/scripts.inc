@@ -1078,14 +1078,22 @@ PalletTown_ProfessorOaksLab_EventScript_BulbasaurBall::
 	end
 
 PalletTown_ProfessorOaksLab_EventScript_ConfirmStarterChoice::
+	specialvar VAR_RESULT, ChaosOakStarterIsCustom
+	goto_if_ne VAR_RESULT, TRUE, PalletTown_ProfessorOaksLab_EventScript_ResolveStarterChoice
+	special ChooseOakStarter
+PalletTown_ProfessorOaksLab_EventScript_ResolveStarterChoice::
+	copyvar VAR_0x8004, PLAYER_STARTER_NUM
+	special ResolveChaosOakStarters
+	copyvar PLAYER_STARTER_SPECIES, VAR_0x8005
+	copyvar RIVAL_STARTER_SPECIES, VAR_0x8006
 	applymovement LOCALID_OAKS_LAB_PROF_OAK, Common_Movement_FaceRight
 	waitmovement 0
 	showmonpic PLAYER_STARTER_SPECIES, 10, 3
 	textcolor NPC_TEXT_COLOR_MALE
-	goto_if_eq PLAYER_STARTER_NUM, 0, PalletTown_ProfessorOaksLab_EventScript_ConfirmBulbasaur
-	goto_if_eq PLAYER_STARTER_NUM, 1, PalletTown_ProfessorOaksLab_EventScript_ConfirmSquirtle
-	goto_if_eq PLAYER_STARTER_NUM, 2, PalletTown_ProfessorOaksLab_EventScript_ConfirmCharmander
-	end
+	bufferspeciesname STR_VAR_1, PLAYER_STARTER_SPECIES
+	msgbox PalletTown_ProfessorOaksLab_Text_ChaosConfirmStarter, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, YES, PalletTown_ProfessorOaksLab_EventScript_ChoseStarter
+	goto PalletTown_ProfessorOaksLab_EventScript_DeclinedStarter
 
 PalletTown_ProfessorOaksLab_EventScript_ConfirmBulbasaur::
 	msgbox PalletTown_ProfessorOaksLab_Text_OakChoosingBulbasaur, MSGBOX_YESNO
@@ -1655,3 +1663,6 @@ PalletTown_ProfessorOaksLab_Text_RivalIllCompleteThePokedex::
 	.string "ONE ISLAND first…\p"
 	.string "Anyways, I'm outta here!$"
 
+
+PalletTown_ProfessorOaksLab_Text_ChaosConfirmStarter:
+	.string "So, you want {STR_VAR_1}?$"

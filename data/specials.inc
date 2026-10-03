@@ -643,3 +643,7 @@ gSpecials::
 
 	def_special ChallengeReset_ForceCurrentGymFresh
 	def_special ReturnPlayerToLastPokemonCenter
+
+	def_special ChaosOakStarterIsCustom
+	def_special ChooseOakStarter, waitstate=1
+	def_special ResolveChaosOakStarters

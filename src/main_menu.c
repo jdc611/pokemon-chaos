@@ -202,6 +202,7 @@ static EWRAM_DATA u8 sRunSetupStarter;
 static EWRAM_DATA bool8 sRunSetupCustom;
 static EWRAM_DATA bool8 sRunSetupConfirm;
 static EWRAM_DATA bool8 sRunSetupReturnToBirch;
+static EWRAM_DATA bool8 sRunSetupReturnToFireRed;
 static EWRAM_DATA bool8 sRunSetupEmptySeed;
 static EWRAM_DATA u32 sRunSetupSeed;
 static EWRAM_DATA u8 sRunSetupPage;
@@ -2077,26 +2078,45 @@ static void Task_NewGameBirchSpeech_WaitForSpriteFadeInAndTextPrinter(u8 taskId)
     }
 }
 
+static void RunSetup_ResetDefaults(void)
+{
+    sRunSetupRandomizer = FALSE;
+    sRunSetupStarter = RUN_STARTER_NORMAL;
+    sRunSetupCustom = FALSE;
+    sRunSetupConfirm = FALSE;
+    sRunSetupEmptySeed = FALSE;
+    sRunSetupPage = RUN_SETUP_PAGE_PLAY_STYLE;
+    sRunSetupDifficulty = RUN_DIFFICULTY_NORMAL;
+    sRunSetupMinimalGrinding = FALSE;
+    sRunSetupMovesets = RUN_MOVESETS_NORMAL;
+    sRunSetupEvolutions = RUN_EVOLUTIONS_NORMAL;
+    sRunSetupBstMode = RUN_BST_OFF;
+    sRunSetupAbilityMode = RUN_ABILITIES_NORMAL;
+    sRunSetupFilter = RUN_FILTER_NONE;
+    sRunSetupType = TYPE_NONE;
+    sRunSetupAbility = ABILITY_NONE;
+    sRunSetupSeed = (((u32)Random() << 16) | Random()) % 100000000;
+    sRunSetupItemRandomization = FALSE;
+    sRunSetupLowPoolConfirmed = FALSE;
+}
+
+void CB2_RunSetupForFireRed(void)
+{
+    RunSetup_ResetDefaults();
+    sRunSetupStarter = RUN_STARTER_KANTO;
+    sRunSetupReturnToFireRed = TRUE;
+    sRunSetupReturnToBirch = FALSE;
+    gRunSetupStartRegion = 1;
+    gRunSetupPlayerModel = 1;
+    CB2_RunSetup_Init();
+}
+
 static void Task_NewGameBirchSpeech_AskRandomizer(u8 taskId)
 {
     if (!RunTextPrintersAndIsPrinter0Active())
     {
-        sRunSetupRandomizer = FALSE;
-        sRunSetupStarter = RUN_STARTER_NORMAL;
-        sRunSetupCustom = FALSE;
-        sRunSetupConfirm = FALSE;
-        sRunSetupEmptySeed = FALSE;
-        sRunSetupPage = RUN_SETUP_PAGE_PLAY_STYLE;
-        sRunSetupDifficulty = RUN_DIFFICULTY_NORMAL;
-        sRunSetupMinimalGrinding = FALSE;
-        sRunSetupMovesets = RUN_MOVESETS_NORMAL;
-        sRunSetupEvolutions = RUN_EVOLUTIONS_NORMAL;
-        sRunSetupBstMode = RUN_BST_OFF;
-        sRunSetupAbilityMode = RUN_ABILITIES_NORMAL;
-        sRunSetupFilter = RUN_FILTER_NONE;
-        sRunSetupType = TYPE_NONE;
-        sRunSetupAbility = ABILITY_NONE;
-        sRunSetupSeed = (((u32)Random() << 16) | Random()) % 100000000;
+        RunSetup_ResetDefaults();
+        sRunSetupReturnToFireRed = FALSE;
         FreeAllWindowBuffers();
         DestroyTask(taskId);
         SetMainCallback2(CB2_RunSetup_Init);
@@ -3106,11 +3126,17 @@ static void Task_RunSetup_Input(u8 taskId)
                                  : sRunSetupFilter == RUN_FILTER_ABILITY ? sRunSetupAbility
                                  : sRunSetupFilter == RUN_FILTER_TYPE_ABILITY ? (sRunSetupAbility << 5) | sRunSetupType
                                  : 0;
-            sRunSetupReturnToBirch = TRUE;
+            sRunSetupReturnToBirch = !sRunSetupReturnToFireRed;
             RunSetup_DestroyIcons();
             FreeAllWindowBuffers();
             DestroyTask(taskId);
-            SetMainCallback2(CB2_NewGameBirchSpeech_ReturnFromNamingScreen);
+            if (sRunSetupReturnToFireRed)
+            {
+                sRunSetupReturnToFireRed = FALSE;
+                SetMainCallback2(CB2_NewGame);
+            }
+            else
+                SetMainCallback2(CB2_NewGameBirchSpeech_ReturnFromNamingScreen);
             return;
         }
         else

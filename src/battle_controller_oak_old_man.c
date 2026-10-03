@@ -787,6 +787,8 @@ static void OakOldManHandleChooseAction(enum BattlerId battler)
     else
         BattleStringExpandPlaceholdersToDisplayedString(gText_WhatWillOldManDo);
     BattlePutTextOnWindow(gDisplayedStringBattle, B_WIN_ACTION_PROMPT);
+    if (gBattleTypeFlags & BATTLE_TYPE_FIRST_BATTLE)
+        ShowStatusDetailsPrompt();
 }
 
 static void OakHandleChooseMove_WaitDma3(enum BattlerId battler)
@@ -804,6 +806,7 @@ static void OakOldManHandleChooseMove(enum BattlerId battler)
     if (gBattleTypeFlags & BATTLE_TYPE_FIRST_BATTLE)
     {
         InitMoveSelectionsVarsAndStrings(battler);
+        TryToAddMoveInfoWindow();
         gBattlerControllerFuncs[battler] = OakHandleChooseMove_WaitDma3;
     }
     else

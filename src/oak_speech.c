@@ -7,6 +7,7 @@
 #include "malloc.h"
 #include "math_util.h"
 #include "menu.h"
+#include "main_menu.h"
 #include "naming_screen.h"
 #include "overworld.h"
 #include "palette.h"
@@ -1786,7 +1787,7 @@ static void Task_OakSpeech_FreeResources(u8 taskId)
     Free(sOakSpeechResources);
     sOakSpeechResources = NULL;
     gTextFlags.canABSpeedUpPrint = FALSE;
-    SetMainCallback2(CB2_NewGame);
+    SetMainCallback2(CB2_RunSetupForFireRed);
     DestroyTask(taskId);
 }
 

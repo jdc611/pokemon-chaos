@@ -280,7 +280,7 @@ static void RestoreBattleStagePanelUnderlay(void)
     gPlttBufferFaded[BG_PLTT_ID(5) + 8] = sStagePanelSavedShadow;
 }
 
-static void ShowStatusDetailsPrompt(void)
+void ShowStatusDetailsPrompt(void)
 {
     static const u8 sStatusHint[] = _("L:STAT");
     static const u8 sStatusHintColors[] = { 14, 13, 15 };
@@ -1965,7 +1965,7 @@ static void MoveSelectionDisplayMoveDescription(enum BattlerId battler)
         acc = 0;
     }
 
-    u8 pwr_num[3], acc_num[3];
+    u8 pwr_num[4], acc_num[4];
     u8 cat_desc[7] = _("CAT: ");
     u8 pwr_desc[7] = _("PWR: ");
     u8 acc_desc[7] = _("ACC: ");
