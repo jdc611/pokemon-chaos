@@ -1,6 +1,5 @@
 ViridianCity_Mart_Frlg_MapScripts::
-	@ Chaos Kanto port: no FRLG entry-time scripts in Emerald.
-	@ Keep the room, NPCs, shop and warps; avoid imported entry-time metatile/script state.
+	@ KTEST: isolate the Viridian Mart layout/warp from all imported FRLG entry events.
 	.byte 0
 
 ViridianCity_Mart_OnLoad::
