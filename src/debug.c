@@ -2899,37 +2899,46 @@ static u8 Debug_GetImportantBattleCap(u16 trainerId)
     return cap;
 }
 
+struct ChaosDebugBattleMon
+{
+    u16 species;
+    u16 moves[MAX_MON_MOVES];
+    u16 ability;
+};
+
 static void Debug_PrepareImportantBattleParty(u16 trainerId)
 {
-    static const u16 sEarlyParty[] =
+    // Deliberate, usable sets: evolved species do not necessarily learn their
+    // essential moves when CreateMon only takes the last four level-up moves.
+    static const struct ChaosDebugBattleMon sEarlyParty[] =
     {
-        SPECIES_ODDISH,
-        SPECIES_PIKACHU,
-        SPECIES_MANKEY,
-        SPECIES_BULBASAUR,
-        SPECIES_SQUIRTLE,
-        SPECIES_CHARMANDER,
+        { SPECIES_ODDISH, { MOVE_ABSORB, MOVE_ACID, MOVE_SLEEP_POWDER, MOVE_GROWTH }, ABILITY_CHLOROPHYLL },
+        { SPECIES_PIKACHU, { MOVE_THUNDER_SHOCK, MOVE_QUICK_ATTACK, MOVE_THUNDER_WAVE, MOVE_ELECTRO_BALL }, ABILITY_STATIC },
+        { SPECIES_MANKEY, { MOVE_KARATE_CHOP, MOVE_LOW_KICK, MOVE_ROCK_TOMB, MOVE_FOCUS_ENERGY }, ABILITY_VITAL_SPIRIT },
+        { SPECIES_BULBASAUR, { MOVE_VINE_WHIP, MOVE_RAZOR_LEAF, MOVE_LEECH_SEED, MOVE_SLEEP_POWDER }, ABILITY_OVERGROW },
+        { SPECIES_SQUIRTLE, { MOVE_WATER_GUN, MOVE_BITE, MOVE_RAPID_SPIN, MOVE_WITHDRAW }, ABILITY_TORRENT },
+        { SPECIES_CHARMANDER, { MOVE_EMBER, MOVE_DRAGON_BREATH, MOVE_METAL_CLAW, MOVE_SMOKESCREEN }, ABILITY_BLAZE },
     };
-    static const u16 sMidParty[] =
+    static const struct ChaosDebugBattleMon sMidParty[] =
     {
-        SPECIES_IVYSAUR,
-        SPECIES_CHARMELEON,
-        SPECIES_WARTORTLE,
-        SPECIES_KADABRA,
-        SPECIES_RAICHU,
-        SPECIES_CROBAT,
+        { SPECIES_IVYSAUR, { MOVE_RAZOR_LEAF, MOVE_SLUDGE, MOVE_SLEEP_POWDER, MOVE_LEECH_SEED }, ABILITY_OVERGROW },
+        { SPECIES_CHARMELEON, { MOVE_FLAME_BURST, MOVE_DRAGON_BREATH, MOVE_BRICK_BREAK, MOVE_WILL_O_WISP }, ABILITY_BLAZE },
+        { SPECIES_WARTORTLE, { MOVE_WATER_PULSE, MOVE_BITE, MOVE_ICE_BEAM, MOVE_PROTECT }, ABILITY_TORRENT },
+        { SPECIES_KADABRA, { MOVE_PSYBEAM, MOVE_SHADOW_BALL, MOVE_REFLECT, MOVE_RECOVER }, ABILITY_SYNCHRONIZE },
+        { SPECIES_RAICHU, { MOVE_THUNDER_PUNCH, MOVE_BRICK_BREAK, MOVE_QUICK_ATTACK, MOVE_THUNDER_WAVE }, ABILITY_STATIC },
+        { SPECIES_CROBAT, { MOVE_WING_ATTACK, MOVE_POISON_FANG, MOVE_BITE, MOVE_ROOST }, ABILITY_INNER_FOCUS },
     };
-    static const u16 sLateParty[] =
+    static const struct ChaosDebugBattleMon sLateParty[] =
     {
-        SPECIES_ROTOM_WASH,
-        SPECIES_WEAVILE,
-        SPECIES_EXCADRILL,
-        SPECIES_GARCHOMP,
-        SPECIES_AZUMARILL,
-        SPECIES_SCIZOR,
+        { SPECIES_ROTOM_WASH, { MOVE_HYDRO_PUMP, MOVE_THUNDERBOLT, MOVE_VOLT_SWITCH, MOVE_WILL_O_WISP }, ABILITY_LEVITATE },
+        { SPECIES_WEAVILE, { MOVE_ICE_PUNCH, MOVE_NIGHT_SLASH, MOVE_LOW_KICK, MOVE_ICE_SHARD }, ABILITY_PRESSURE },
+        { SPECIES_EXCADRILL, { MOVE_EARTHQUAKE, MOVE_IRON_HEAD, MOVE_ROCK_SLIDE, MOVE_SWORDS_DANCE }, ABILITY_MOLD_BREAKER },
+        { SPECIES_GARCHOMP, { MOVE_DRAGON_CLAW, MOVE_EARTHQUAKE, MOVE_ROCK_SLIDE, MOVE_SWORDS_DANCE }, ABILITY_ROUGH_SKIN },
+        { SPECIES_AZUMARILL, { MOVE_AQUA_TAIL, MOVE_PLAY_ROUGH, MOVE_AQUA_JET, MOVE_ICE_PUNCH }, ABILITY_HUGE_POWER },
+        { SPECIES_SCIZOR, { MOVE_BULLET_PUNCH, MOVE_X_SCISSOR, MOVE_BRICK_BREAK, MOVE_SWORDS_DANCE }, ABILITY_TECHNICIAN },
     };
     const struct Trainer *trainer = GetTrainerStructFromId(trainerId);
-    const u16 *species;
+    const struct ChaosDebugBattleMon *team;
     u8 cap = Debug_GetImportantBattleCap(trainerId);
     u8 testLevel = cap;
 
@@ -2949,28 +2958,41 @@ static void Debug_PrepareImportantBattleParty(u16 trainerId)
     FlagSet(FLAG_TEMP_2); // IMPORTANT_BATTLE_DEBUG_OBEDIENCE
 
     if (cap <= 19)
-        species = sEarlyParty;
+        team = sEarlyParty;
     else if (cap <= 35)
-        species = sMidParty;
+        team = sMidParty;
     else
-        species = sLateParty;
+        team = sLateParty;
 
     ZeroPlayerPartyMons();
     for (u32 i = 0; i < trainer->partySize && i < PARTY_SIZE; i++)
     {
-        ScriptGiveMon(species[i], testLevel, ITEM_NONE);
+        u8 abilitySlot = 0;
+        u8 iv = 15;
+        u8 nature = NATURE_HARDY;
+        u16 berry = cap <= 19 ? ITEM_ORAN_BERRY : ITEM_SITRUS_BERRY;
+        ScriptGiveMon(team[i].species, testLevel, berry);
+        for (u32 move = 0; move < MAX_MON_MOVES; move++)
+            SetMonMoveSlot(&gPlayerParty[i], team[i].moves[move], move);
+        // Respect randomized run abilities. With normal settings, select the
+        // explicit useful ability (including hidden slots) rather than luck.
+        for (u32 slot = 0; slot < NUM_ABILITY_SLOTS; slot++)
+            if (GetSpeciesAbility(team[i].species, slot) == team[i].ability)
+            {
+                abilitySlot = slot;
+                break;
+            }
+        SetMonData(&gPlayerParty[i], MON_DATA_ABILITY_NUM, &abilitySlot);
+        SetMonData(&gPlayerParty[i], MON_DATA_HIDDEN_NATURE, &nature);
+        for (u32 stat = MON_DATA_HP_IV; stat <= MON_DATA_SPDEF_IV; stat++)
+            SetMonData(&gPlayerParty[i], stat, &iv);
+        CalculateMonStats(&gPlayerParty[i]);
         // Debug battle teams are native player Pokemon. Modern obedience also considers
         // the level at which a Pokemon was obtained, so normalize both ownership and met level.
         SetMonData(&gPlayerParty[i], MON_DATA_OT_ID, &gSaveBlock2Ptr->playerTrainerId[0]);
         {
             u8 metLevel = testLevel;
             SetMonData(&gPlayerParty[i], MON_DATA_MET_LEVEL, &metLevel);
-        }
-        if (i == 0 && cap <= 19)
-        {
-            u16 growth = MOVE_GROWTH;
-            SetMonData(&gPlayerParty[i], MON_DATA_MOVE1, &growth);
-            SetMonData(&gPlayerParty[i], MON_DATA_PP1, &gMovesInfo[MOVE_GROWTH].pp);
         }
     }
     HealPlayerParty();
