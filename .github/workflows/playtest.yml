@@ -17,7 +17,7 @@ env:
   COMPARE: 0
   UNUSED_ERROR: 1
   DEPRECATED_ERROR: 1
-  PLAYTEST_TRIGGER: "Native FireRed Feasibility Audit v1"
+  PLAYTEST_TRIGGER: "Native FireRed Feasibility Audit v2"
 
 jobs:
   build:
