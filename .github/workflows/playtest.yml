@@ -17,7 +17,7 @@ env:
   COMPARE: 0
   UNUSED_ERROR: 1
   DEPRECATED_ERROR: 1
-  PLAYTEST_TRIGGER: "Page 2 Draw Input Repair v14"
+  PLAYTEST_TRIGGER: "Kanto Trainer ID Separation v1"
 
 jobs:
   build:
@@ -54,6 +54,9 @@ jobs:
 
       - name: Convert FRLG metatile behaviors for Emerald
         run: python3 migration_scripts/frlg_metatile_behavior_converter.py
+
+      - name: Prepare Kanto trainer IDs for combined Chaos build
+        run: python3 .github/scripts/prepare_chaos_kanto_trainers.py
 
       - name: Build Emerald
         env:
