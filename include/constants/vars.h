@@ -3,6 +3,8 @@
 
 #include "constants/vars_frlg.h"
 
+#define VAR_CHAOS_RIVAL_STARTER 0x40FF // Persistent counter starter; unused in native FRLG.
+
 #define VARS_START 0x4000
 
 // temporary vars

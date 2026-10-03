@@ -12,6 +12,7 @@
 #include "pokedex.h"
 #include "overworld.h"
 #include "pokemon.h"
+#include "script_pokemon_util.h"
 #include "random.h"
 #include "random_mon_generation.h"
 #include "constants/random_mon_generation.h"
@@ -499,6 +500,63 @@ void ChooseOakStarter(void)
     SetMainCallback2(CB2_ChooseStarter);
 }
 
+static u16 ChooseChaosCounterStarter(u16 playerSpecies)
+{
+    static const u16 candidates[] = {
+        SPECIES_BULBASAUR, SPECIES_CHARMANDER, SPECIES_SQUIRTLE,
+        SPECIES_CHIKORITA, SPECIES_CYNDAQUIL, SPECIES_TOTODILE,
+        SPECIES_TREECKO, SPECIES_TORCHIC, SPECIES_MUDKIP,
+        SPECIES_TURTWIG, SPECIES_CHIMCHAR, SPECIES_PIPLUP,
+        SPECIES_SNIVY, SPECIES_TEPIG, SPECIES_OSHAWOTT,
+        SPECIES_CHESPIN, SPECIES_FENNEKIN, SPECIES_FROAKIE,
+        SPECIES_ROWLET, SPECIES_LITTEN, SPECIES_POPPLIO,
+        SPECIES_PIKACHU, SPECIES_MACHOP, SPECIES_ABRA, SPECIES_GASTLY,
+        SPECIES_DRATINI, SPECIES_SNEASEL, SPECIES_CLEFAIRY, SPECIES_GEODUDE,
+        SPECIES_SANDSHREW, SPECIES_MAGNEMITE, SPECIES_SCYTHER,
+    };
+    u32 bestScore = 0;
+    u16 bestSpecies = SPECIES_EEVEE;
+    for (u32 i = 0; i < ARRAY_COUNT(candidates); i++)
+    {
+        if (candidates[i] == playerSpecies)
+            continue;
+        for (u32 slot = 0; slot < 2; slot++)
+        {
+            u8 type = GetSpeciesType(candidates[i], slot);
+            u8 def1 = GetSpeciesType(playerSpecies, 0);
+            u8 def2 = GetSpeciesType(playerSpecies, 1);
+            u32 score = gTypeEffectivenessTable[type][def1];
+            if (def1 != def2)
+                score = score * gTypeEffectivenessTable[type][def2] / UQ_4_12(1.0);
+            if (score > bestScore)
+            {
+                bestScore = score;
+                bestSpecies = candidates[i];
+            }
+        }
+    }
+    return bestSpecies;
+}
+
+void GiveChaosOakStarter(void)
+{
+    struct PokemonTemplate starter = {0};
+    starter.species = gSpecialVar_0x8004;
+    starter.level = 5;
+    starter.heldItem = ITEM_NONE;
+    starter.nature = NATURE_RANDOM;
+    starter.gender = MON_GENDER_RANDOM;
+    starter.isShiny = gSaveBlock3Ptr->starterMode == RUN_STARTER_CHOOSE && gCustomStarterShiny;
+    starter.doNotUseDefaultShinyness = gSaveBlock3Ptr->starterMode == RUN_STARTER_CHOOSE;
+    starter.origin = GIFTMON_ORIGIN;
+    for (u32 i = 0; i < NUM_STATS; i++)
+        starter.ivs[i] = USE_RANDOM_IVS;
+    for (u32 i = 0; i < MAX_MON_MOVES; i++)
+        starter.moves[i] = MOVE_DEFAULT;
+    ScriptGiveMonParameterized(B_SIDE_PLAYER, PARTY_SIZE, &starter);
+    TrySetMonAbilityToActiveRunFilter(&gParties[B_TRAINER_PLAYER][0]);
+}
+
 void ResolveChaosOakStarters(void)
 {
     static const u8 kantoSlots[] = {0, 2, 1};
@@ -508,8 +566,10 @@ void ResolveChaosOakStarters(void)
 
     GenerateRandomStarters();
     gSpecialVar_0x8005 = GetStarterPokemon(slot);
-    gSpecialVar_0x8006 = gSaveBlock3Ptr->starterMode == RUN_STARTER_CHOOSE
-        ? kantoRivals[ball] : GetStarterPokemon((slot + 1) % STARTER_MON_COUNT);
+    if (gSaveBlock3Ptr->starterMode == RUN_STARTER_KANTO && gSaveBlock3Ptr->filterMode == RUN_FILTER_NONE)
+        gSpecialVar_0x8006 = kantoRivals[ball];
+    else
+        gSpecialVar_0x8006 = ChooseChaosCounterStarter(gSpecialVar_0x8005);
 }
 
 static void VblankCB_StarterChoose(void)

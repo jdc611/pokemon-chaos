@@ -633,7 +633,7 @@ static u32 (*const generateListFunctions[])(const struct DebugMenuOption *) =
 
 // *******************************
 // Menu Actions. Make sure that submenus are defined before the menus that call them.
-static const struct DebugMenuOption sDebugMenu_Actions_TimeMenu_TimesOfDay[] =
+static const struct DebugMenuOption sDebugMenu_Actions_TimeMenu_TimesOfDay[] __attribute__((unused)) =
 {
     [TIME_MORNING] = { gTimeOfDayStringsTable[TIME_MORNING], DebugAction_TimeMenu_ChangeTimeOfDay },
     [TIME_DAY]     = { gTimeOfDayStringsTable[TIME_DAY],     DebugAction_TimeMenu_ChangeTimeOfDay },
@@ -642,7 +642,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_TimeMenu_TimesOfDay[] =
     { NULL }
 };
 
-static const struct DebugMenuOption sDebugMenu_Actions_TimeMenu_Weekdays[] =
+static const struct DebugMenuOption sDebugMenu_Actions_TimeMenu_Weekdays[] __attribute__((unused)) =
 {
     [WEEKDAY_SUN] = { gDayNameStringsTable[WEEKDAY_SUN], DebugAction_TimeMenu_ChangeWeekdays },
     [WEEKDAY_MON] = { gDayNameStringsTable[WEEKDAY_MON], DebugAction_TimeMenu_ChangeWeekdays },
@@ -654,7 +654,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_TimeMenu_Weekdays[] =
     { NULL }
 };
 
-static const struct DebugMenuOption sDebugMenu_Actions_FollowerNPCMenu_Create[] =
+static const struct DebugMenuOption sDebugMenu_Actions_FollowerNPCMenu_Create[] __attribute__((unused)) =
 {
     [DEBUG_FNPC_BRENDAN] = { gFollowerNPCStringsTable[DEBUG_FNPC_BRENDAN], DebugAction_CreateFollowerNPC },
     [DEBUG_FNPC_MAY] =     { gFollowerNPCStringsTable[DEBUG_FNPC_MAY],     DebugAction_CreateFollowerNPC },
@@ -665,7 +665,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_FollowerNPCMenu_Create[] 
     { NULL }
 };
 
-static const struct DebugMenuOption sDebugMenu_Actions_TimeMenu[] =
+static const struct DebugMenuOption sDebugMenu_Actions_TimeMenu[] __attribute__((unused)) =
 {
     { COMPOUND_STRING("Get time…"),         DebugAction_ExecuteScript, Debug_EventScript_TellTheTime },
     { COMPOUND_STRING("Get time of day…"),  DebugAction_ExecuteScript, Debug_EventScript_PrintTimeOfDay },
@@ -677,7 +677,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_TimeMenu[] =
     { NULL }
 };
 
-static const struct DebugMenuOption sDebugMenu_Actions_BerryFunctions[] =
+static const struct DebugMenuOption sDebugMenu_Actions_BerryFunctions[] __attribute__((unused)) =
 {
     { COMPOUND_STRING("Clear map trees"),      DebugAction_BerryFunctions_ClearAll },
     { COMPOUND_STRING("Ready map trees"),      DebugAction_BerryFunctions_Ready },
@@ -687,14 +687,14 @@ static const struct DebugMenuOption sDebugMenu_Actions_BerryFunctions[] =
     { NULL }
 };
 
-static const struct DebugMenuOption sDebugMenu_Actions_FollowerNPCMenu[] =
+static const struct DebugMenuOption sDebugMenu_Actions_FollowerNPCMenu[] __attribute__((unused)) =
 {
     { COMPOUND_STRING("Create Follower"),  DebugAction_OpenSubMenuCreateFollowerNPC, sDebugMenu_Actions_FollowerNPCMenu_Create },
     { COMPOUND_STRING("Destroy Follower"), DebugAction_DestroyFollowerNPC },
     { NULL }
 };
 
-static const struct DebugMenuOption sDebugMenu_Actions_FieldMoveTests[] =
+static const struct DebugMenuOption sDebugMenu_Actions_FieldMoveTests[] __attribute__((unused)) =
 {
     { COMPOUND_STRING("Cut"),                   DebugAction_Util_FieldMoveCut },
     { COMPOUND_STRING("Rock Smash"),            DebugAction_Util_FieldMoveRockSmash },
@@ -716,15 +716,17 @@ static const struct KantoDebugWarp sKantoWarp_Pewter       = { MAP_PEWTER_CITY, 
 static const struct KantoDebugWarp sKantoWarp_PewterMart   = { MAP_PEWTER_CITY_MART, 4, 6 };
 static const struct KantoDebugWarp sKantoWarp_PewterPC     = { MAP_PEWTER_CITY_POKEMON_CENTER_1F, 7, 7 };
 static const struct KantoDebugWarp sKantoWarp_BrockGym     = { MAP_PEWTER_CITY_GYM, 6, 13 };
+static const struct KantoDebugWarp sKantoWarp_Forest = { MAP_VIRIDIAN_FOREST, 29, 60 };
 static const struct KantoDebugWarp sKantoWarp_Route3       = { MAP_ROUTE3, 2, 7 };
 
-static const struct DebugMenuOption sDebugMenu_Actions_KantoWarps[] =
+static const struct DebugMenuOption sDebugMenu_Actions_KantoWarps[] __attribute__((unused)) =
 {
     { COMPOUND_STRING("Pallet Town"),       DebugAction_KantoWarp, &sKantoWarp_Pallet },
     { COMPOUND_STRING("Route 1"),           DebugAction_KantoWarp, &sKantoWarp_Route1 },
     { COMPOUND_STRING("Viridian City"),     DebugAction_KantoWarp, &sKantoWarp_Viridian },
     { COMPOUND_STRING("Viridian Mart"),     DebugAction_KantoWarp, &sKantoWarp_ViridianMart },
     { COMPOUND_STRING("Viridian Center"),   DebugAction_KantoWarp, &sKantoWarp_ViridianPC },
+    { COMPOUND_STRING("Viridian Forest"), DebugAction_KantoWarp, &sKantoWarp_Forest },
     { COMPOUND_STRING("Pewter Safe Area"),  DebugAction_KantoWarp, &sKantoWarp_Pewter },
     { COMPOUND_STRING("Pewter Mart"),       DebugAction_KantoWarp, &sKantoWarp_PewterMart },
     { COMPOUND_STRING("Pewter Center"),     DebugAction_KantoWarp, &sKantoWarp_PewterPC },
@@ -733,7 +735,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_KantoWarps[] =
     { NULL }
 };
 
-static const struct DebugMenuOption sDebugMenu_Actions_Utilities[] =
+static const struct DebugMenuOption sDebugMenu_Actions_Utilities[] __attribute__((unused)) =
 {
     { COMPOUND_STRING("Fly to map…"),               DebugAction_Util_Fly },
     { COMPOUND_STRING("Warp to map warp…"),         DebugAction_Selection_Init, &sWarpSelection},
@@ -755,7 +757,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_Utilities[] =
     { NULL }
 };
 
-static const struct DebugMenuOption sDebugMenu_Actions_PCBag_Fill[] =
+static const struct DebugMenuOption sDebugMenu_Actions_PCBag_Fill[] __attribute__((unused)) =
 {
     { COMPOUND_STRING("Fill PC Boxes Fast"),        DebugAction_PCBag_Fill_PCBoxes_Fast },
     { COMPOUND_STRING("Fill PC Boxes Slow (LAG!)"), DebugAction_PCBag_Fill_PCBoxes_Slow },
@@ -768,7 +770,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_PCBag_Fill[] =
     { NULL }
 };
 
-static const struct DebugMenuOption sDebugMenu_Actions_PCBag[] =
+static const struct DebugMenuOption sDebugMenu_Actions_PCBag[] __attribute__((unused)) =
 {
     { COMPOUND_STRING("Access PC"),           DebugAction_ExecuteScript, EventScript_PC },
     { COMPOUND_STRING("Fill…"),               DebugAction_OpenSubMenu, sDebugMenu_Actions_PCBag_Fill },
@@ -777,7 +779,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_PCBag[] =
     { NULL }
 };
 
-static const struct DebugMenuOption sDebugMenu_Actions_EditPokemon[] =
+static const struct DebugMenuOption sDebugMenu_Actions_EditPokemon[] __attribute__((unused)) =
 {
     { COMPOUND_STRING("Inflict Status1"),    DebugAction_ExecuteScript, Debug_EventScript_InflictStatus1 },
     { COMPOUND_STRING("Faint Pokemon"),      DebugAction_ExecuteScript, Debug_EventScript_KoPokemon },
@@ -787,7 +789,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_EditPokemon[] =
     { NULL }
 };
 
-static const struct DebugMenuOption sDebugMenu_Actions_Party[] =
+static const struct DebugMenuOption sDebugMenu_Actions_Party[] __attribute__((unused)) =
 {
     { COMPOUND_STRING("Move Relearner"),     DebugAction_ExecuteScript, Common_EventScript_MoveRelearner },
     { COMPOUND_STRING("Hatch an Egg"),       DebugAction_ExecuteScript, Debug_HatchAnEgg },
@@ -803,7 +805,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_Party[] =
     { NULL }
 };
 
-static const struct DebugMenuOption sDebugMenu_Actions_Give[] =
+static const struct DebugMenuOption sDebugMenu_Actions_Give[] __attribute__((unused)) =
 {
     { COMPOUND_STRING("Give item XYZ…"),    DebugAction_Selection_Init, &sGiveItemSelection },
     { COMPOUND_STRING("Pokémon (Basic)"),   DebugAction_Selection_Init, &sSimplePokemonSelection },
@@ -817,7 +819,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_Give[] =
     { NULL }
 };
 
-static const struct DebugMenuOption sDebugMenu_Actions_Player[] =
+static const struct DebugMenuOption sDebugMenu_Actions_Player[] __attribute__((unused)) =
 {
     { COMPOUND_STRING("Player name"),    DebugAction_Player_Name },
     { COMPOUND_STRING("Toggle gender"),  DebugAction_Player_Gender },
@@ -825,7 +827,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_Player[] =
     { NULL }
 };
 
-static const struct DebugMenuOption sDebugMenu_Actions_Scripts[] =
+static const struct DebugMenuOption sDebugMenu_Actions_Scripts[] __attribute__((unused)) =
 {
     { COMPOUND_STRING("Script 1"), DebugAction_ExecuteScript, Debug_EventScript_Script_1 },
     { COMPOUND_STRING("Script 2"), DebugAction_ExecuteScript, Debug_EventScript_Script_2 },
@@ -838,7 +840,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_Scripts[] =
     { NULL }
 };
 
-static const struct DebugMenuOption sDebugMenu_Actions_Trainers[] =
+static const struct DebugMenuOption sDebugMenu_Actions_Trainers[] __attribute__((unused)) =
 {
     { COMPOUND_STRING("Choose trainer from map"), DebugAction_Selection_Init, &sTrainerFromMapSelection},
     { COMPOUND_STRING("Trainer 1: {STR_VAR_1}"), DebugAction_Selection_Init, &sTrainer1Selection},
@@ -852,7 +854,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_Trainers[] =
     { NULL }
 };
 
-static const struct DebugMenuOption sDebugMenu_Actions_MassOutbreak[] =
+static const struct DebugMenuOption sDebugMenu_Actions_MassOutbreak[] __attribute__((unused)) =
 {
     { COMPOUND_STRING("Set Static Outbreak"), DebugAction_Selection_Init, &sStaticMassOutbreakSelection },
     { COMPOUND_STRING("Clear Active Outbreak"), DebugAction_Outbreak_ClearActive },
@@ -866,13 +868,13 @@ static const struct DebugMenuOption sDebugMenu_Actions_MassOutbreak[] =
     { NULL }
 };
 
-static const struct DebugMenuOption sDebugMenu_Actions_Encounters[] =
+static const struct DebugMenuOption sDebugMenu_Actions_Encounters[] __attribute__((unused)) =
 {
     { COMPOUND_STRING("Mass outbreak…"), DebugAction_OpenOutbreakMenu, sDebugMenu_Actions_MassOutbreak },
     { NULL }
 };
 
-static const struct DebugMenuOption sDebugMenu_Actions_Sound[] =
+static const struct DebugMenuOption sDebugMenu_Actions_Sound[] __attribute__((unused)) =
 {
     { COMPOUND_STRING("SFX…"),   DebugAction_Sound_SE },
     { COMPOUND_STRING("Music…"), DebugAction_Sound_MUS },
@@ -887,7 +889,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_ROMInfo2[] =
     { NULL }
 };
 
-static const struct DebugMenuOption sDebugMenu_Actions_Flags[] =
+static const struct DebugMenuOption sDebugMenu_Actions_Flags[] __attribute__((unused)) =
 {
     [DEBUG_FLAGVAR_MENU_ITEM_FLAGS]                = { COMPOUND_STRING("Set Flag XYZ…"),                     DebugAction_Selection_Init, &sToggleFlagSelection },
     [DEBUG_FLAGVAR_MENU_ITEM_VARS]                 = { COMPOUND_STRING("Set Var XYZ…"),                      DebugAction_Selection_Init, &sSetVarSelection},
@@ -1006,7 +1008,7 @@ static const u16 sDebugImportantTrainerIds[] =
 
 #define IMPORTANT_BATTLE(label, index) { COMPOUND_STRING(label), DebugAction_ImportantBattle, &sDebugImportantTrainerIds[index] }
 
-static const struct DebugMenuOption sDebugMenu_Actions_ImportantGyms[] =
+static const struct DebugMenuOption sDebugMenu_Actions_ImportantGyms[] __attribute__((unused)) =
 {
     IMPORTANT_BATTLE("Roxanne", DEBUG_BATTLE_ROXANNE),
     IMPORTANT_BATTLE("Brawly", DEBUG_BATTLE_BRAWLY),
@@ -1019,7 +1021,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_ImportantGyms[] =
     { NULL }
 };
 
-static const struct DebugMenuOption sDebugMenu_Actions_ImportantLeague[] =
+static const struct DebugMenuOption sDebugMenu_Actions_ImportantLeague[] __attribute__((unused)) =
 {
     IMPORTANT_BATTLE("Sidney", DEBUG_BATTLE_SIDNEY),
     IMPORTANT_BATTLE("Phoebe", DEBUG_BATTLE_PHOEBE),
@@ -1029,7 +1031,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_ImportantLeague[] =
     { NULL }
 };
 
-static const struct DebugMenuOption sDebugMenu_Actions_ImportantRivals[] =
+static const struct DebugMenuOption sDebugMenu_Actions_ImportantRivals[] __attribute__((unused)) =
 {
     IMPORTANT_BATTLE("R103 - Grass", DEBUG_BATTLE_R103_GRASS),
     IMPORTANT_BATTLE("R103 - Fire", DEBUG_BATTLE_R103_FIRE),
@@ -1049,7 +1051,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_ImportantRivals[] =
     { NULL }
 };
 
-static const struct DebugMenuOption sDebugMenu_Actions_ImportantAdmins[] =
+static const struct DebugMenuOption sDebugMenu_Actions_ImportantAdmins[] __attribute__((unused)) =
 {
     IMPORTANT_BATTLE("Shelly - Weather", DEBUG_BATTLE_SHELLY_WEATHER),
     IMPORTANT_BATTLE("Shelly - Seafloor", DEBUG_BATTLE_SHELLY_SEAFLOOR),
@@ -1059,7 +1061,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_ImportantAdmins[] =
     { NULL }
 };
 
-static const struct DebugMenuOption sDebugMenu_Actions_ImportantStory[] =
+static const struct DebugMenuOption sDebugMenu_Actions_ImportantStory[] __attribute__((unused)) =
 {
     IMPORTANT_BATTLE("Archie", DEBUG_BATTLE_ARCHIE),
     IMPORTANT_BATTLE("Maxie - Mt Chimney", DEBUG_BATTLE_MAXIE_CHIMNEY),
@@ -1072,7 +1074,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_ImportantStory[] =
 
 #undef IMPORTANT_BATTLE
 
-static const struct DebugMenuOption sDebugMenu_Actions_ImportantBattles[] =
+static const struct DebugMenuOption sDebugMenu_Actions_ImportantBattles[] __attribute__((unused)) =
 {
     { COMPOUND_STRING("Gym Leaders…"), DebugAction_OpenSubMenu, sDebugMenu_Actions_ImportantGyms },
     { COMPOUND_STRING("Pokémon League…"), DebugAction_OpenSubMenu, sDebugMenu_Actions_ImportantLeague },
@@ -1082,7 +1084,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_ImportantBattles[] =
     { NULL }
 };
 
-static const struct DebugMenuOption sDebugMenu_Actions_TestHub[] =
+static const struct DebugMenuOption sDebugMenu_Actions_TestHub[] __attribute__((unused)) =
 {
     { COMPOUND_STRING("Early Free Roam"),       DebugAction_Util_CheatStart },
     { COMPOUND_STRING("Fly / Checkpoints…"),    DebugAction_Util_Fly },
@@ -1097,21 +1099,60 @@ static const struct DebugMenuOption sDebugMenu_Actions_TestHub[] =
     { NULL }
 };
 
-static const struct DebugMenuOption sDebugMenu_Actions_Main[] =
+static const struct DebugMenuOption sChaosDebugSupplies[] =
 {
-    { COMPOUND_STRING("TEST HUB…"),      DebugAction_OpenSubMenu, sDebugMenu_Actions_TestHub, },
-    { COMPOUND_STRING("Utilities…"),    DebugAction_OpenSubMenu, sDebugMenu_Actions_Utilities, },
-    { COMPOUND_STRING("PC/Bag…"),       DebugAction_OpenSubMenu, sDebugMenu_Actions_PCBag, },
-    { COMPOUND_STRING("Party…"),        DebugAction_OpenSubMenu, sDebugMenu_Actions_Party, },
-    { COMPOUND_STRING("Give X…"),       DebugAction_OpenSubMenu, sDebugMenu_Actions_Give, },
-    { COMPOUND_STRING("Player…"),       DebugAction_OpenSubMenu, sDebugMenu_Actions_Player, },
-    { COMPOUND_STRING("Scripts…"),      DebugAction_OpenSubMenu, sDebugMenu_Actions_Scripts, },
-    { COMPOUND_STRING("Trainers…"),     DebugAction_OpenSubMenuTrainers, sDebugMenu_Actions_Trainers, },
-    { COMPOUND_STRING("Encounters…"),   DebugAction_OpenSubMenu, sDebugMenu_Actions_Encounters, },
-    { COMPOUND_STRING("Flags & Vars…"), DebugAction_OpenSubMenuFlagsVars, sDebugMenu_Actions_Flags, },
-    { COMPOUND_STRING("Sound…"),        DebugAction_OpenSubMenu, sDebugMenu_Actions_Sound, },
-    { COMPOUND_STRING("ROM Info…"),     DebugAction_OpenSubMenu, sDebugMenu_Actions_ROMInfo2, },
-    { COMPOUND_STRING("Cancel"),        DebugAction_Cancel, },
+    { COMPOUND_STRING("Give Pokémon"), DebugAction_Selection_Init, &sComplexPokemonSelection },
+    { COMPOUND_STRING("Give item"), DebugAction_Selection_Init, &sGiveItemSelection },
+    { COMPOUND_STRING("Fill Poké Balls"), DebugAction_PCBag_Fill_PocketPokeBalls },
+    { COMPOUND_STRING("Max Money"), DebugAction_Give_MaxMoney },
+    { NULL }
+};
+
+static const struct DebugMenuOption sChaosDebugProgress[] =
+{
+    { COMPOUND_STRING("Kanto Free Roam"), DebugAction_Util_CheatStart },
+    { COMPOUND_STRING("Toggle All Badges"), DebugAction_FlagsVars_ToggleBadgeFlags },
+    { COMPOUND_STRING("Set Flag"), DebugAction_Selection_Init, &sToggleFlagSelection },
+    { COMPOUND_STRING("Set Variable"), DebugAction_Selection_Init, &sSetVarSelection },
+    { NULL }
+};
+
+#define KANTO_TEST_BATTLE(label, trainer) { COMPOUND_STRING(label), DebugAction_ImportantBattle, &(const u16){trainer} }
+static const struct DebugMenuOption sChaosDebugBattles[] =
+{
+    KANTO_TEST_BATTLE("Brock", TRAINER_LEADER_BROCK),
+    KANTO_TEST_BATTLE("Misty", TRAINER_LEADER_MISTY),
+    KANTO_TEST_BATTLE("Lt. Surge", TRAINER_LEADER_LT_SURGE),
+    KANTO_TEST_BATTLE("Erika", TRAINER_LEADER_ERIKA),
+    KANTO_TEST_BATTLE("Koga", TRAINER_LEADER_KOGA),
+    KANTO_TEST_BATTLE("Sabrina", TRAINER_LEADER_SABRINA),
+    KANTO_TEST_BATTLE("Blaine", TRAINER_LEADER_BLAINE),
+    KANTO_TEST_BATTLE("Giovanni", TRAINER_LEADER_GIOVANNI),
+    KANTO_TEST_BATTLE("Lorelei", TRAINER_ELITE_FOUR_LORELEI),
+    KANTO_TEST_BATTLE("Bruno", TRAINER_ELITE_FOUR_BRUNO),
+    KANTO_TEST_BATTLE("Agatha", TRAINER_ELITE_FOUR_AGATHA),
+    KANTO_TEST_BATTLE("Lance", TRAINER_ELITE_FOUR_LANCE),
+    KANTO_TEST_BATTLE("Champion", TRAINER_CHAMPION_FIRST_CHARMANDER),
+    { NULL }
+};
+
+static const struct DebugMenuOption sChaosDebugDiagnostics[] =
+{
+    { COMPOUND_STRING("Time / Day"), DebugAction_OpenSubMenu, sDebugMenu_Actions_TimeMenu },
+    { COMPOUND_STRING("Species Randomizer"), DebugAction_Selection_Init, &sSpeciesGeneratorSelection },
+    { COMPOUND_STRING("Item Randomizer"), DebugAction_Selection_Init, &sItemGeneratorSelection },
+    { COMPOUND_STRING("ROM / Save Info"), DebugAction_OpenSubMenu, sDebugMenu_Actions_ROMInfo2 },
+    { NULL }
+};
+
+static const struct DebugMenuOption sDebugMenu_Actions_Main[] __attribute__((unused)) =
+{
+    { COMPOUND_STRING("Kanto Warps"), DebugAction_OpenSubMenu, sDebugMenu_Actions_KantoWarps },
+    { COMPOUND_STRING("Battle Tests"), DebugAction_OpenSubMenu, sChaosDebugBattles },
+    { COMPOUND_STRING("Test Supplies"), DebugAction_OpenSubMenu, sChaosDebugSupplies },
+    { COMPOUND_STRING("Progress Controls"), DebugAction_OpenSubMenu, sChaosDebugProgress },
+    { COMPOUND_STRING("Diagnostics"), DebugAction_OpenSubMenu, sChaosDebugDiagnostics },
+    { COMPOUND_STRING("Close"), DebugAction_Cancel },
     { NULL }
 };
 
@@ -2862,20 +2903,20 @@ static void Debug_PrepareImportantBattleParty(u16 trainerId)
 {
     static const u16 sEarlyParty[] =
     {
-        SPECIES_SHROOMISH,
-        SPECIES_LOTAD,
+        SPECIES_ODDISH,
+        SPECIES_PIKACHU,
         SPECIES_MANKEY,
-        SPECIES_TREECKO,
-        SPECIES_MUDKIP,
-        SPECIES_MARILL,
+        SPECIES_BULBASAUR,
+        SPECIES_SQUIRTLE,
+        SPECIES_CHARMANDER,
     };
     static const u16 sMidParty[] =
     {
-        SPECIES_GROVYLE,
-        SPECIES_COMBUSKEN,
-        SPECIES_MARSHTOMP,
-        SPECIES_KIRLIA,
-        SPECIES_MANECTRIC,
+        SPECIES_IVYSAUR,
+        SPECIES_CHARMELEON,
+        SPECIES_WARTORTLE,
+        SPECIES_KADABRA,
+        SPECIES_RAICHU,
         SPECIES_CROBAT,
     };
     static const u16 sLateParty[] =

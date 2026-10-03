@@ -647,3 +647,5 @@ gSpecials::
 	def_special ChaosOakStarterIsCustom
 	def_special ChooseOakStarter, waitstate=1
 	def_special ResolveChaosOakStarters
+
+	def_special GiveChaosOakStarter

@@ -371,7 +371,6 @@ static const u8 sText_RunSetupYes[] = _("YES");
 static const u8 sText_RunSetupNo[] = _("NO");
 static const u8 sText_RunSetupRandom[] = _("RANDOM");
 static const u8 sText_RunSetupNormal[] = _("NORMAL");
-static const u8 sText_RunSetupHoenn[] = _("HOENN");
 static const u8 sText_RunSetupKanto[] = _("KANTO");
 static const u8 sText_KantoYourePlayer[] = _("Ah, okay!\pYou're {PLAYER}{KUN} from PALLET TOWN.\pYour Kanto adventure is about to begin!\p");
 static const u8 sText_KantoAreYouReady[] = _("All right, are you ready?\pYour very own adventure is\nabout to unfold.\pTake courage, and step into\nthe world of POKéMON!\pProfessor OAK will be waiting\nfor you in PALLET TOWN.\p");
@@ -2081,7 +2080,7 @@ static void Task_NewGameBirchSpeech_WaitForSpriteFadeInAndTextPrinter(u8 taskId)
 static void RunSetup_ResetDefaults(void)
 {
     sRunSetupRandomizer = FALSE;
-    sRunSetupStarter = RUN_STARTER_NORMAL;
+    sRunSetupStarter = RUN_STARTER_KANTO;
     sRunSetupCustom = FALSE;
     sRunSetupConfirm = FALSE;
     sRunSetupEmptySeed = FALSE;
@@ -2561,7 +2560,7 @@ static void RunSetup_DrawConfirmLine(u8 row, u8 y)
         value = sRunSetupStarter == RUN_STARTER_RANDOM ? sText_RunSetupRandom
               : sRunSetupStarter == RUN_STARTER_CHOOSE ? sText_RunSetupCustom
               : sRunSetupStarter == RUN_STARTER_KANTO ? sText_RunSetupKanto
-              : sText_RunSetupHoenn;
+              : sText_RunSetupKanto;
         break;
     case 4:
         label = sText_RunSetupMovesets;
@@ -2575,7 +2574,7 @@ static void RunSetup_DrawConfirmLine(u8 row, u8 y)
         label = sText_RunSetupBst;
         value = sRunSetupBstMode == RUN_BST_SHUFFLE ? sText_RunSetupShuffle
               : sRunSetupBstMode == RUN_BST_RANDOM ? sText_RunSetupRandom
-              : sText_RunSetupOff;
+              : sText_RunSetupNormal;
         break;
     case 7:
         label = sText_RunSetupAbilities;
@@ -2674,8 +2673,7 @@ static void RunSetup_Draw(u8 cursor)
             else if (row == 1)
             {
                 AddTextPrinterParameterized3(0, FONT_SMALL, 12, y, sTextColor_Headers, TEXT_SKIP_DRAW, sText_RunSetupStarters);
-                RunSetup_DrawWideChoice(sText_RunSetupHoenn, 82, y - 2, 56, sRunSetupStarter == RUN_STARTER_NORMAL);
-                RunSetup_DrawWideChoice(sText_RunSetupKanto, 144, y - 2, 56, sRunSetupStarter == RUN_STARTER_KANTO);
+                RunSetup_DrawWideChoice(sText_RunSetupKanto, 113, y - 2, 56, sRunSetupStarter == RUN_STARTER_KANTO);
                 RunSetup_DrawWideChoice(sText_RunSetupRandom, 82, y + 12, 56, sRunSetupStarter == RUN_STARTER_RANDOM);
                 RunSetup_DrawWideChoice(sText_RunSetupCustom, 144, y + 12, 56, sRunSetupStarter == RUN_STARTER_CHOOSE);
             }
@@ -2694,7 +2692,7 @@ static void RunSetup_Draw(u8 cursor)
             else if (row == 4)
             {
                 AddTextPrinterParameterized3(0, FONT_SMALL, 8, y, sTextColor_Headers, TEXT_SKIP_DRAW, sText_RunSetupBst);
-                RunSetup_DrawNarrowChoice(sText_RunSetupOff, 72, y - 2, sRunSetupBstMode == RUN_BST_OFF);
+                RunSetup_DrawNarrowChoice(sText_RunSetupNormal, 72, y - 2, sRunSetupBstMode == RUN_BST_OFF);
                 RunSetup_DrawWideChoice(sText_RunSetupShuffle, 112, y - 2, 52, sRunSetupBstMode == RUN_BST_SHUFFLE);
                 RunSetup_DrawNarrowChoice(sText_RunSetupRandom, 166, y - 2, sRunSetupBstMode == RUN_BST_RANDOM);
             }
@@ -2995,14 +2993,14 @@ static void Task_RunSetup_Input(u8 taskId)
             if (*cursor == 0) sRunSetupRandomizer = sRunSetupRandomizer == RUN_WILD_NORMAL ? RUN_WILD_SCALED : sRunSetupRandomizer - 1;
             else if (*cursor == 1)
             {
-                if (sRunSetupStarter == RUN_STARTER_NORMAL)
+                if (sRunSetupStarter == RUN_STARTER_KANTO)
                     sRunSetupStarter = RUN_STARTER_CHOOSE;
                 else if (sRunSetupStarter == RUN_STARTER_CHOOSE)
                     sRunSetupStarter = RUN_STARTER_RANDOM;
                 else if (sRunSetupStarter == RUN_STARTER_RANDOM)
                     sRunSetupStarter = RUN_STARTER_KANTO;
                 else
-                    sRunSetupStarter = RUN_STARTER_NORMAL;
+                    sRunSetupStarter = RUN_STARTER_KANTO;
             }
             else if (*cursor == 2) sRunSetupMovesets ^= 1;
             else if (*cursor == 3) sRunSetupEvolutions ^= 1;
@@ -3015,14 +3013,12 @@ static void Task_RunSetup_Input(u8 taskId)
             if (*cursor == 0) sRunSetupRandomizer = sRunSetupRandomizer == RUN_WILD_SCALED ? RUN_WILD_NORMAL : sRunSetupRandomizer + 1;
             else if (*cursor == 1)
             {
-                if (sRunSetupStarter == RUN_STARTER_NORMAL)
-                    sRunSetupStarter = RUN_STARTER_KANTO;
-                else if (sRunSetupStarter == RUN_STARTER_KANTO)
+                if (sRunSetupStarter == RUN_STARTER_KANTO)
                     sRunSetupStarter = RUN_STARTER_RANDOM;
                 else if (sRunSetupStarter == RUN_STARTER_RANDOM)
                     sRunSetupStarter = RUN_STARTER_CHOOSE;
                 else
-                    sRunSetupStarter = RUN_STARTER_NORMAL;
+                    sRunSetupStarter = RUN_STARTER_KANTO;
             }
             else if (*cursor == 2) sRunSetupMovesets ^= 1;
             else if (*cursor == 3) sRunSetupEvolutions ^= 1;
@@ -3035,14 +3031,12 @@ static void Task_RunSetup_Input(u8 taskId)
             if (*cursor == 0) sRunSetupRandomizer = (sRunSetupRandomizer + 1) % 3;
             else if (*cursor == 1)
             {
-                if (sRunSetupStarter == RUN_STARTER_NORMAL)
-                    sRunSetupStarter = RUN_STARTER_KANTO;
-                else if (sRunSetupStarter == RUN_STARTER_KANTO)
+                if (sRunSetupStarter == RUN_STARTER_KANTO)
                     sRunSetupStarter = RUN_STARTER_RANDOM;
                 else if (sRunSetupStarter == RUN_STARTER_RANDOM)
                     sRunSetupStarter = RUN_STARTER_CHOOSE;
                 else
-                    sRunSetupStarter = RUN_STARTER_NORMAL;
+                    sRunSetupStarter = RUN_STARTER_KANTO;
             }
             else if (*cursor == 2) sRunSetupMovesets ^= 1;
             else if (*cursor == 3) sRunSetupEvolutions ^= 1;

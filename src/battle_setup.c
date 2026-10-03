@@ -2359,7 +2359,36 @@ void CreateNPCTrainerPartyFromTrainer(struct Pokemon *party, const struct Traine
     for (i = 0; i < monsCount; i++)
     {
         u32 monIndex = monIndices[i];
-        GenerateMonFromTrainerMon(&party[i], &trainer->party[monIndex], trainerGen);
+        const struct TrainerMon *entry = &trainer->party[monIndex];
+        u16 counter = VarGet(VAR_CHAOS_RIVAL_STARTER);
+        bool32 isKantoRival = IS_FRLG && (trainer->trainerClass == TRAINER_CLASS_RIVAL_EARLY_FRLG
+                          || trainer->trainerClass == TRAINER_CLASS_RIVAL_LATE_FRLG
+                          || trainer->trainerClass == TRAINER_CLASS_CHAMPION_FRLG);
+        if (isKantoRival && counter != SPECIES_NONE && counter < NUM_SPECIES
+         && entry->species >= SPECIES_BULBASAUR && entry->species <= SPECIES_BLASTOISE)
+        {
+            struct TrainerMon counterEntry = *entry;
+            struct Pokemon evolutionMon;
+            bool32 canStopEvo;
+            CreateMon(&evolutionMon, counter, entry->lvl, USE_RANDOM_IVS, FALSE, 0, OT_ID_PLAYER_ID, 0);
+            // Follow ordinary level evolution at this encounter's level.
+            for (u32 stage = 0; stage < 3; stage++)
+            {
+                u16 evolved = GetEvolutionTargetSpecies(&evolutionMon, EVO_MODE_NORMAL, ITEM_NONE, NULL, &canStopEvo, CHECK_EVO);
+                if (evolved == SPECIES_NONE || evolved == counter)
+                    break;
+                counter = evolved;
+                SetMonData(&evolutionMon, MON_DATA_SPECIES, &counter);
+            }
+            counterEntry.species = counter;
+            for (u32 move = 0; move < MAX_MON_MOVES; move++)
+                counterEntry.moves[move] = MOVE_NONE;
+            counterEntry.ability = ABILITY_NONE;
+            counterEntry.gender = TRAINER_MON_RANDOM_GENDER;
+            GenerateMonFromTrainerMon(&party[i], &counterEntry, trainerGen);
+        }
+        else
+            GenerateMonFromTrainerMon(&party[i], entry, trainerGen);
     }
     Free(trainerGen);
 }
