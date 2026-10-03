@@ -150,3 +150,9 @@ assert 'ChaosAllGymRematchesCleared' in koga and 'checkitem ITEM_MEGA_RING' in k
 silph=(ROOT/'data/maps/SilphCo_7F_Frlg/scripts.inc').read_text()
 assert 'PARTNER_CHAOS_RIVAL' in silph and 'ChaosCancelSilphSelection' in silph
 print('PASS: native event and party-restoration hooks.')
+
+for town, leader, badge in [('PewterCity','Brock',1),('CeruleanCity','Misty',2),('VermilionCity','LtSurge',3)]:
+    gym=(ROOT/f'data/maps/{town}_Gym_Frlg/scripts.inc').read_text()
+    entry=gym.split(f'{town}_Gym_EventScript_{leader}::',1)[1].split('famechecker',1)[0]
+    assert entry.index(f'FLAG_BADGE0{badge}_GET') < entry.index('VAR_CHAOS_OAK_MEGA_REWARD')
+print('PASS: original badges remain obtainable before optional rematches.')

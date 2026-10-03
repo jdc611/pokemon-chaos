@@ -2,7 +2,9 @@ CeruleanCity_Gym_Frlg_MapScripts::
 	.byte 0
 
 CeruleanCity_Gym_EventScript_Misty::
+	goto_if_unset FLAG_BADGE02_GET, CeruleanCity_Gym_EventScript_MistyOriginal
 	goto_if_eq VAR_CHAOS_OAK_MEGA_REWARD, 2, CeruleanCity_Gym_EventScript_MistyChaosRematch
+CeruleanCity_Gym_EventScript_MistyOriginal::
 	famechecker FAMECHECKER_MISTY, FCPICKSTATE_COLORED, UpdatePickStateFromSpecialVar8005
 	trainerbattle_single TRAINER_LEADER_MISTY, CeruleanCity_Gym_Text_MistyIntro, CeruleanCity_Gym_Text_MistyDefeat, CeruleanCity_Gym_EventScript_MistyDefeated, NO_MUSIC
 	goto_if_unset FLAG_GOT_TM03_FROM_MISTY, CeruleanCity_Gym_EventScript_GiveTM03

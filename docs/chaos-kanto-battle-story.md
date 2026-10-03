@@ -36,6 +36,9 @@ random team already has a Mega-capable Pokemon. The remaining overworld stone
 locations are deliberately unassigned. Bag-full failures preserve the reward
 for a retry and do not unlock the rematches early.
 
+A leader still offers their original badge battle if that badge is missing,
+including an optional first Surge challenge after Oak's reward.
+
 Brock, Misty, and Surge's rematches are unlocked by Oak's reward and can be won in
 any order. Their Mega aces are Steelix, Gyarados, and Manectric. Completing all
 three lifts the player cap from 44 to 46. Koga is a mandatory Double Battle with
