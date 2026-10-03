@@ -15,6 +15,7 @@ SaffronCity_Gym_EventScript_DefeatedSabrina::
 	clearflag FLAG_HIDE_SAFFRON_CITY_POKECENTER_SABRINA_JOURNALS
 	setflag FLAG_DEFEATED_SABRINA
 	setflag FLAG_BADGE06_GET
+	call_if_eq VAR_CHAOS_OAK_MEGA_REWARD, 0, EventScript_ChaosReadyOakMegaReward
 	set_gym_trainers_frlg 6
 	goto SaffronCity_Gym_EventScript_GiveTM04
 	end
@@ -255,3 +256,7 @@ SaffronCity_Gym_Text_GymStatuePlayerWon::
 	.string "WINNING TRAINERS:\n"
 	.string "{RIVAL}, {PLAYER}$"
 
+
+EventScript_ChaosReadyOakMegaReward::
+	setvar VAR_CHAOS_OAK_MEGA_REWARD, 1
+	return

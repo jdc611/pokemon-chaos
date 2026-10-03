@@ -247,8 +247,7 @@ SilphCo_5F_EventScript_ItemTM01::
 	end
 
 SilphCo_5F_EventScript_ItemCardKey::
-	finditem ITEM_CARD_KEY
-	end
+	goto EventScript_ChaosCardKeyGauntlet
 
 SilphCo_6F_EventScript_ItemHPUp::
 	finditem ITEM_HP_UP

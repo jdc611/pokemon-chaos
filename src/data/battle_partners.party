@@ -42,3 +42,37 @@ EVs: 252 Atk / 252 SpA / 6 SpD
 - Protect
 - Solar Beam
 - Dragon Claw
+
+=== PARTNER_CHAOS_RIVAL ===
+Name: BLUE
+Class: Rival Late Frlg
+Pic: Rival Late Frlg
+Gender: Male
+Music: Male
+Double Battle: Yes
+Multi Party: Half
+AI: Check Bad Move / Try To Faint / Check Viability
+
+Pidgeot
+Level: 37
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+- Air Slash
+- Quick Attack
+- Feather Dance
+- Roost
+
+Arcanine
+Level: 38
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+- Flamethrower
+- Crunch
+- Extreme Speed
+- Helping Hand
+
+Blastoise
+Level: 39
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+- Surf
+- Ice Beam
+- Bite
+- Protect

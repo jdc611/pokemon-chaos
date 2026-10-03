@@ -31,6 +31,7 @@ Route16_OnWarpCyclingRoad::
 Route16_EventScript_Snorlax::
 	lock
 	faceplayer
+	goto_if_unset FLAG_BADGE06_GET, EventScript_ChaosFuchsiaGateLocked
 	goto_if_unset FLAG_GOT_POKE_FLUTE, Route16_EventScript_SnorlaxNoPokeFlute
 	msgbox Text_WantToUsePokeFlute, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, Route16_EventScript_DontUsePokeFlute

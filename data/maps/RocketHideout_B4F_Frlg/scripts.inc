@@ -144,26 +144,22 @@ RocketHideout_B4F_Text_GiovanniPostBattle::
 	.string "I hope we meet again…$"
 
 RocketHideout_B4F_Text_Grunt2Intro::
-	.string "I know you!\n"
-	.string "You ruined our plans at MT. MOON!$"
+	.string "COLE: Remember me?\nYou will not reach the BOSS!$"
 
 RocketHideout_B4F_Text_Grunt2Defeat::
-	.string "Burned again!$"
+	.string "COLE: No! Not again!$"
 
 RocketHideout_B4F_Text_Grunt2PostBattle::
-	.string "Do you have something against TEAM\n"
-	.string "ROCKET?$"
+	.string "COLE: VESPER, stop this kid!$"
 
 RocketHideout_B4F_Text_Grunt3Intro::
-	.string "How can you not see the beauty of\n"
-	.string "our evil?$"
+	.string "VESPER: Strength is so predictable.\nLet me show you control.$"
 
 RocketHideout_B4F_Text_Grunt3Defeat::
-	.string "Ayaya!$"
+	.string "VESPER: You broke my hold...$"
 
 RocketHideout_B4F_Text_Grunt3PostBattle::
-	.string "BOSS!\n"
-	.string "I'm sorry I failed you!$"
+	.string "VESPER: The BOSS is waiting.$"
 
 RocketHideout_B4F_Text_Grunt1Intro::
 	.string "The elevator doesn't work?\n"

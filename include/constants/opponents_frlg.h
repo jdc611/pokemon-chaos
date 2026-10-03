@@ -632,7 +632,18 @@
 //       only space for 25 additional trainers before trainer flag space overflows.
 //       MAX_TRAINERS_COUNT_FRLG can be increased but will take up additional saveblock space
 
-#define TRAINERS_COUNT_FRLG                      624
+#define TRAINER_LEADER_BROCK_REMATCH 624
+#define TRAINER_LEADER_MISTY_REMATCH 625
+#define TRAINER_LEADER_LT_SURGE_REMATCH 626
+
+#define TRAINER_CHAOS_COLE_SILPH 627
+#define TRAINER_CHAOS_VESPER_SILPH 628
+#define TRAINER_CHAOS_JESSIE_MOON 629
+#define TRAINER_CHAOS_JAMES_MOON 630
+#define TRAINER_CHAOS_JESSIE_SILPH 631
+#define TRAINER_CHAOS_JAMES_SILPH 632
+
+#define TRAINERS_COUNT_FRLG                      633
 #define MAX_TRAINERS_COUNT_FRLG                  768
 
 #endif  // GUARD_CONSTANTS_OPPONENTS_FRLG_H

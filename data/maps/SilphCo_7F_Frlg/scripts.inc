@@ -10,6 +10,8 @@ SilphCo_7F_OnLoad::
 	end
 
 SilphCo_7F_OnTransition::
+	setflag FLAG_TEMP_4
+	call_if_eq VAR_MAP_SCENE_SILPH_CO_7F, 0, EventScript_ChaosShowSilphRockets
 	call_if_ge VAR_MAP_SCENE_SILPH_CO_11F, 1, SilphCo_7F_EventScript_SetObjRocketsGone
 	end
 
@@ -31,32 +33,57 @@ SilphCo_7F_EventScript_RivalTriggerBottom::
 
 SilphCo_7F_EventScript_RivalScene::
 	textcolor NPC_TEXT_COLOR_MALE
-	playbgm MUS_RG_ENCOUNTER_RIVAL, 0
-	applymovement LOCALID_SILPH_CO_RIVAL, Common_Movement_ExclamationMark
-	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterDown
-	applymovement LOCALID_SILPH_CO_RIVAL, Common_Movement_Delay48
-	waitmovement 0
-	msgbox SilphCo_7F_Text_RivalWhatKeptYou
-	call_if_eq VAR_TEMP_1, 0, SilphCo_7F_EventScript_RivalApproachTop
-	call_if_eq VAR_TEMP_1, 1, SilphCo_7F_EventScript_RivalApproachBottom
-	msgbox SilphCo_7F_Text_RivalIntro
-	setvar VAR_LAST_TALKED, LOCALID_SILPH_CO_RIVAL
-	call_if_eq VAR_STARTER_MON, 2, SilphCo_7F_EventScript_RivalSquirtle
-	call_if_eq VAR_STARTER_MON, 1, SilphCo_7F_EventScript_RivalBulbasaur
-	call_if_eq VAR_STARTER_MON, 0, SilphCo_7F_EventScript_RivalCharmander
-	msgbox SilphCo_7F_Text_RivalPostBattle
-	closemessage
-	playbgm MUS_RG_RIVAL_EXIT, 0
-	call_if_eq VAR_TEMP_1, 0, SilphCo_7F_EventScript_RivalExitTop
-	call_if_eq VAR_TEMP_1, 1, SilphCo_7F_EventScript_RivalExitBottom
-	playse SE_WARP_IN
-	fadedefaultbgm
+	call_if_eq VAR_TEMP_2, 0, EventScript_ChaosRivalApproachOnce
+	msgbox Text_ChaosRivalTeamUp
+	goto EventScript_ChaosSilphChooseThree
+
+EventScript_ChaosSilphChooseThree::
+	lockall
+	specialvar VAR_RESULT, CountPartyNonEggMons
+	goto_if_lt VAR_RESULT, 3, EventScript_ChaosSilphNeedThree
+	msgbox Text_ChaosSilphChooseThree, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, EventScript_ChaosSilphCancel
+	special HealPlayerParty
+	special ChaosPrepareSilphSelection
+	fadescreen FADE_TO_BLACK
+	special ChooseHalfPartyForBattle
+	goto_if_eq VAR_RESULT, 0, EventScript_ChaosSilphSelectionCancel
+	special ChaosBeginSilphPartnerBattle
+	setmultitrainerbattle TRAINER_CHAOS_JESSIE_SILPH, Text_ChaosJessieDefeat, TRAINER_CHAOS_JAMES_SILPH, Text_ChaosJamesDefeat, PARTNER_CHAOS_RIVAL
+	setvar VAR_0x8005, MULTI_BATTLE_2_VS_2 | MULTI_BATTLE_CHOOSE_MONS
+	callnative BattleSetup_StartMultiBattle
+	waitstate
+	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_ne VAR_RESULT, B_OUTCOME_WON, EventScript_ChaosSilphCancel
+	msgbox Text_ChaosRocketBlastOff
+	msgbox Text_ChaosRivalTeamUpWon
+	removeobject LOCALID_CHAOS_SILPH_JESSIE
+	removeobject LOCALID_CHAOS_SILPH_JAMES
 	removeobject LOCALID_SILPH_CO_RIVAL
-	waitse
 	setvar VAR_MAP_SCENE_SILPH_CO_7F, 1
 	releaseall
 	end
+EventScript_ChaosSilphSelectionCancel::
+	special ChaosCancelSilphSelection
+EventScript_ChaosSilphCancel::
+	releaseall
+	end
+
+Text_ChaosRivalTeamUp::
+	.string "{RIVAL}: I give you a hard time,\n"
+	.string "but I'll admit it.\p"
+	.string "You're a great Trainer, and you\n"
+	.string "show up when people need help.\p"
+	.string "Let's put our rivalry aside and\n"
+	.string "take these buffoons down together!$"
+Text_ChaosSilphChooseThree::
+	.string "I'll heal your team. Choose three\n"
+	.string "POKéMON, and I'll bring three too.\p"
+	.string "Ready to face JESSIE and JAMES?$"
+Text_ChaosRivalTeamUpWon::
+	.string "{RIVAL}: We make a pretty good team!\p"
+	.string "Don't get used to it, though.\n"
+	.string "Next time, we're rivals again!$"
 
 SilphCo_7F_EventScript_RivalApproachTop::
 	closemessage
@@ -366,3 +393,25 @@ SilphCo_7F_Text_FloorSign::
 	.string "SILPH CO. HEAD OFFICE\n"
 	.string "7F$"
 
+
+EventScript_ChaosShowSilphRockets::
+	clearflag FLAG_TEMP_4
+	return
+
+EventScript_ChaosSilphNeedThree::
+	msgbox Text_ChaosSilphNeedThree
+	releaseall
+	end
+Text_ChaosSilphNeedThree::
+	.string "Bring at least three POKéMON.\n"
+	.string "We'll each choose three to battle!$"
+
+EventScript_ChaosRivalApproachOnce::
+	call_if_eq VAR_TEMP_1, 0, SilphCo_7F_EventScript_RivalApproachTop
+	call_if_eq VAR_TEMP_1, 1, SilphCo_7F_EventScript_RivalApproachBottom
+	setvar VAR_TEMP_2, 1
+	return
+EventScript_ChaosSilphRivalTalk::
+	lockall
+	faceplayer
+	goto EventScript_ChaosSilphChooseThree

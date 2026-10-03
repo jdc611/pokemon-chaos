@@ -2,6 +2,7 @@
 #include "main.h"
 #include "battle.h"
 #include "battle_partner.h"
+#include "chaos_progression.h"
 #include "battle_frontier.h"
 #include "data.h"
 #include "frontier_util.h"
@@ -44,7 +45,18 @@ void FillPartnerParty(u16 trainerId)
             partnerGen.otID = OTID_STRUCT_PRESET(STEVEN_OTID);
         for (i = 0; i < lastIndex && i < partner->partySize; i++)
         {
-            GenerateMonFromTrainerMon(&gParties[B_TRAINER_PARTNER][i], &partner->party[i], &partnerGen);
+            if (trainerId == TRAINER_PARTNER(PARTNER_CHAOS_RIVAL) && i == 2)
+            {
+                struct TrainerMon entry = partner->party[i];
+                entry.species = ChaosGetRivalCounter(entry.lvl);
+                entry.ability = ABILITY_NONE;
+                entry.gender = TRAINER_MON_RANDOM_GENDER;
+                for (u32 move = 0; move < MAX_MON_MOVES; move++)
+                    entry.moves[move] = MOVE_NONE;
+                GenerateMonFromTrainerMon(&gParties[B_TRAINER_PARTNER][i], &entry, &partnerGen);
+            }
+            else
+                GenerateMonFromTrainerMon(&gParties[B_TRAINER_PARTNER][i], &partner->party[i], &partnerGen);
         }
     }
     else if (trainerId == TRAINER_EREADER)

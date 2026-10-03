@@ -39,6 +39,21 @@ u32 GetCurrentLevelCap(void)
     if (sDebugImportantBattleLevelCap != 0)
         return sDebugImportantBattleLevelCap;
 
+    if (IS_FRLG)
+    {
+        if (!FlagGet(FLAG_BADGE01_GET)) return 15;
+        if (!FlagGet(FLAG_BADGE02_GET)) return 22;
+        if (!FlagGet(FLAG_BADGE03_GET)) return 28;
+        if (!FlagGet(FLAG_BADGE04_GET)) return 34;
+        if (!FlagGet(FLAG_BADGE06_GET)) return 40;
+        if ((VarGet(VAR_CHAOS_REMATCHES) & 7) != 7) return 44;
+        if (!FlagGet(FLAG_BADGE05_GET)) return 46;
+        if (!FlagGet(FLAG_BADGE07_GET)) return 52;
+        if (!FlagGet(FLAG_BADGE08_GET)) return 58;
+        if (!FlagGet(FLAG_SYS_GAME_CLEAR)) return 66;
+        return 100;
+    }
+
     for (i = 0; i < ARRAY_COUNT(sLevelCapFlagMap); i++)
         if (!FlagGet(sLevelCapFlagMap[i][0]))
             return sLevelCapFlagMap[i][1];

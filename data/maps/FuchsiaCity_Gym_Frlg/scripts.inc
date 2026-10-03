@@ -2,8 +2,13 @@ FuchsiaCity_Gym_Frlg_MapScripts::
 	.byte 0
 
 FuchsiaCity_Gym_EventScript_Koga::
+	goto_if_unset FLAG_BADGE06_GET, EventScript_ChaosKogaLocked
+	specialvar VAR_RESULT, ChaosAllGymRematchesCleared
+	goto_if_eq VAR_RESULT, FALSE, EventScript_ChaosKogaLocked
+	checkitem ITEM_MEGA_RING
+	goto_if_eq VAR_RESULT, FALSE, EventScript_ChaosKogaLocked
 	famechecker FAMECHECKER_KOGA, FCPICKSTATE_COLORED, UpdatePickStateFromSpecialVar8005
-	trainerbattle_single TRAINER_LEADER_KOGA, FuchsiaCity_Gym_Text_KogaIntro, FuchsiaCity_Gym_Text_KogaDefeat, FuchsiaCity_Gym_EventScript_DefeatedKoga, NO_MUSIC
+	trainerbattle_double TRAINER_LEADER_KOGA, FuchsiaCity_Gym_Text_KogaIntro, FuchsiaCity_Gym_Text_KogaDefeat, Text_ChaosKogaNeedTwo, FuchsiaCity_Gym_EventScript_DefeatedKoga, NO_MUSIC
 	goto_if_unset FLAG_GOT_TM06_FROM_KOGA, FuchsiaCity_Gym_EventScript_GiveTM06
 	msgbox FuchsiaCity_Gym_Text_KogaPostBattle
 	release
@@ -245,3 +250,20 @@ FuchsiaCity_Gym_Text_GymStatuePlayerWon::
 	.string "WINNING TRAINERS:\n"
 	.string "{RIVAL}, {PLAYER}$"
 
+
+EventScript_ChaosKogaLocked::
+	lock
+	faceplayer
+	msgbox Text_ChaosKogaRematchRequirement
+	release
+	end
+Text_ChaosKogaRematchRequirement::
+	.string "OAK has set a test for you.\p"
+	.string "Receive his MEGA RING after\n"
+	.string "defeating SABRINA. Then win the\p"
+	.string "BROCK, MISTY, and LT. SURGE\n"
+	.string "rematches before facing me!$"
+
+Text_ChaosKogaNeedTwo::
+	.string "Bring two battle-ready POKéMON.\n"
+	.string "My challenge is a Double Battle!$"

@@ -7459,6 +7459,10 @@ static u8 GetMinBattleEntries(void)
     switch (VarGet(VAR_FRONTIER_FACILITY))
     {
     case FACILITY_MULTI_OR_EREADER:
+        if (IS_FRLG
+         && gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_SILPH_CO_7F)
+         && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_SILPH_CO_7F))
+            return MULTI_PARTY_SIZE;
         return 1;
     case FACILITY_UNION_ROOM:
         return UNION_ROOM_PARTY_SIZE;

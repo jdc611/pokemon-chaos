@@ -202,6 +202,7 @@ VermilionCity_Gym_EventScript_SetBeamsOn::
 	return
 
 VermilionCity_Gym_EventScript_LtSurge::
+	goto_if_eq VAR_CHAOS_OAK_MEGA_REWARD, 2, VermilionCity_Gym_EventScript_LtSurgeChaosRematch
 	famechecker FAMECHECKER_LTSURGE, FCPICKSTATE_COLORED, UpdatePickStateFromSpecialVar8005
 	trainerbattle_single TRAINER_LEADER_LT_SURGE, VermilionCity_Gym_Text_LtSurgeIntro, VermilionCity_Gym_Text_LtSurgeDefeat, VermilionCity_Gym_EventScript_DefeatedLtSurge, NO_MUSIC
 	goto_if_unset FLAG_GOT_TM34_FROM_SURGE, VermilionCity_Gym_EventScript_GiveTM34
@@ -419,3 +420,16 @@ VermilionCity_Gym_Text_OnlyTrashLocksWereReset::
 	.string "Hey!\n"
 	.string "The electric locks were reset!$"
 
+
+VermilionCity_Gym_EventScript_LtSurgeChaosRematch::
+	trainerbattle_single TRAINER_LEADER_LT_SURGE_REMATCH, Text_ChaosRematchIntro, Text_ChaosRematchDefeat, VermilionCity_Gym_EventScript_LtSurgeChaosRematchWon, NO_MUSIC
+	msgbox Text_ChaosRematchAlreadyWon
+	release
+	end
+
+VermilionCity_Gym_EventScript_LtSurgeChaosRematchWon::
+	setvar VAR_0x8004, 4
+	special ChaosMarkGymRematch
+	msgbox Text_ChaosRematchWon
+	release
+	end

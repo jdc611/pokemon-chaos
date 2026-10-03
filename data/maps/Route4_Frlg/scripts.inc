@@ -1,4 +1,5 @@
 Route4_Frlg_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, EventScript_ChaosMtMoonOnTransition
 	.byte 0
 
 Route4_EventScript_Unused::
@@ -95,3 +96,51 @@ Route4_Text_PeopleLikeAndRespectBrock::
 	.string "People like and respect him.\p"
 	.string "I want to become a GYM LEADER\n"
 	.string "like him.$"
+
+EventScript_ChaosMtMoonOnTransition::
+	setvar VAR_TEMP_0, 0
+	setflag FLAG_TEMP_4
+	call_if_defeated TRAINER_CHAOS_JESSIE_MOON, EventScript_ChaosMtMoonAlreadyWon
+	call_if_eq VAR_TEMP_0, 0, EventScript_ChaosShowMoonRockets
+	end
+EventScript_ChaosMtMoonAlreadyWon::
+	setvar VAR_TEMP_0, 1
+	return
+EventScript_ChaosShowMoonRockets::
+	clearflag FLAG_TEMP_4
+	return
+EventScript_ChaosMtMoonRockets::
+	lockall
+	specialvar VAR_RESULT, CountPartyAliveNonEggMons
+	goto_if_lt VAR_RESULT, 2, EventScript_ChaosMoonNeedTwo
+	msgbox Text_ChaosMoonRocketIntro
+	trainerbattle_two_trainers TRAINER_CHAOS_JESSIE_MOON, Text_ChaosJessieDefeat, TRAINER_CHAOS_JAMES_MOON, Text_ChaosJamesDefeat
+	settrainerflag TRAINER_CHAOS_JESSIE_MOON
+	settrainerflag TRAINER_CHAOS_JAMES_MOON
+	setvar VAR_TEMP_0, 1
+	msgbox Text_ChaosRocketBlastOff
+	removeobject LOCALID_CHAOS_MOON_JESSIE
+	removeobject LOCALID_CHAOS_MOON_JAMES
+	setflag FLAG_TEMP_4
+	releaseall
+	end
+EventScript_ChaosMoonNeedTwo::
+	msgbox Text_ChaosMoonBringTwo
+	applymovement LOCALID_PLAYER, Common_Movement_WalkDown
+	waitmovement 0
+	releaseall
+	end
+Text_ChaosMoonRocketIntro::
+	.string "JESSIE: Prepare for trouble!\n"
+	.string "JAMES: And make it double!\p"
+	.string "MEOWTH: No electric rat today?\n"
+	.string "We'll take your POKéMON instead!$"
+Text_ChaosJessieDefeat::
+	.string "JESSIE: Our perfect plan!$"
+Text_ChaosJamesDefeat::
+	.string "JAMES: Not another defeat!$"
+Text_ChaosRocketBlastOff::
+	.string "Team Rocket's blasting off again!$"
+Text_ChaosMoonBringTwo::
+	.string "Bring two battle-ready POKéMON\n"
+	.string "before challenging this duo!$"

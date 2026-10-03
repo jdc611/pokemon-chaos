@@ -402,16 +402,10 @@ CeruleanCity_Text_ExplainFameCheckerSmellYa::
 	.string "gone. Smell ya!$"
 
 CeruleanCity_Text_GruntIntro::
-	.string "Hey! Stay out!\n"
-	.string "It's not your yard!\p"
-	.string "…Huh?\n"
-	.string "Me?\p"
-	.string "I'm an innocent bystander!\n"
-	.string "Don't you believe me?{PLAY_BGM}{MUS_RG_ENCOUNTER_ROCKET}$"
+	.string "COLE: That DIG TM is mine now!\pYou want it? Come and take it!$"
 
 CeruleanCity_Text_GruntDefeat::
-	.string "GRUNT: Stop! I give up!\n"
-	.string "I'll leave quietly!$"
+	.string "COLE: You hit harder than I thought!$"
 
 CeruleanCity_Text_OkayIllReturnStolenTM::
 	.string "…Okay.\n"

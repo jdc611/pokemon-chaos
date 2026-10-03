@@ -653,3 +653,11 @@ gSpecials::
 	def_special ResolveChaosQuickStartStarter
 
 	def_special ShowChaosOakStarterPic
+
+	def_special ChaosMarkGymRematch
+	def_special ChaosAllGymRematchesCleared
+	def_special ChaosChooseOakMegaStone
+
+	def_special ChaosPrepareSilphSelection
+	def_special ChaosCancelSilphSelection
+	def_special ChaosBeginSilphPartnerBattle

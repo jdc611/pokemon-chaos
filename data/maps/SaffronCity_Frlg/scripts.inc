@@ -4,6 +4,9 @@ SaffronCity_Frlg_MapScripts::
 
 SaffronCity_OnTransition::
 	setworldmapflag FLAG_WORLD_MAP_SAFFRON_CITY
+	call_if_set FLAG_BADGE06_GET, EventScript_ChaosCheckOakRewardReady
+	setflag FLAG_TEMP_3
+	call_if_eq VAR_CHAOS_OAK_MEGA_REWARD, 1, EventScript_ChaosShowSaffronOak
 	call_if_unset FLAG_RESCUED_MR_FUJI, SaffronCity_EventScript_MoveDoorGuardGrunt
 	end
 
@@ -238,3 +241,99 @@ SaffronCity_Text_HowCanClubNotRecognizeLance::
 	.string "He's cool, and yet passionate!\l"
 	.string "He's the greatest, LANCE!$"
 
+
+EventScript_ChaosShowSaffronOak::
+	clearflag FLAG_TEMP_3
+	return
+
+EventScript_ChaosOakMegaReward::
+	lockall
+	goto_if_ne VAR_CHAOS_OAK_MEGA_REWARD, 1, EventScript_ChaosOakRewardEnd
+	applymovement LOCALID_PLAYER, Common_Movement_FaceLeft
+	waitmovement 0
+	msgbox Text_ChaosOakWatchingGrowth
+	checkitem ITEM_MEGA_RING
+	call_if_eq VAR_RESULT, FALSE, EventScript_ChaosOakGiveMegaRing
+	checkitem ITEM_MEGA_RING
+	goto_if_eq VAR_RESULT, FALSE, EventScript_ChaosOakBagFull
+	special ChaosChooseOakMegaStone
+	call_if_eq VAR_RESULT, FALSE, EventScript_ChaosOakFallbackStone
+	giveitem VAR_0x8004
+	goto_if_eq VAR_RESULT, FALSE, EventScript_ChaosOakBagFull
+	setvar VAR_CHAOS_OAK_MEGA_REWARD, 2
+	msgbox Text_ChaosOakRematchChallenge
+	removeobject LOCALID_CHAOS_SAFFRON_OAK
+	setflag FLAG_TEMP_3
+EventScript_ChaosOakRewardEnd::
+	releaseall
+	end
+
+EventScript_ChaosOakGiveMegaRing::
+	giveitem ITEM_MEGA_RING
+	return
+
+EventScript_ChaosOakFallbackStone::
+	msgbox Text_ChaosOakGyaradosStone
+	return
+
+EventScript_ChaosOakBagFull::
+	msgbox Text_ChaosOakMakeRoom
+	releaseall
+	end
+
+Text_ChaosOakWatchingGrowth::
+	.string "OAK: {PLAYER}! I've been hearing\n"
+	.string "wonderful things about you!\p"
+	.string "Your POKéMON grow with you.\n"
+	.string "That bond is something special.\p"
+	.string "This MEGA RING and MEGA STONE\n"
+	.string "can help that bond shine!\p"
+	.string "Give the stone to its POKéMON,\n"
+	.string "then use Mega Evolution in battle.$"
+
+Text_ChaosOakGyaradosStone::
+	.string "GYARADOS can use this stone!\p"
+	.string "The man on ROUTE 4 sells MAGIKARP.\n"
+	.string "Raise one into a fine GYARADOS!$"
+
+Text_ChaosOakRematchChallenge::
+	.string "But I have one more test for you!\p"
+	.string "BROCK, MISTY, and LT. SURGE are\n"
+	.string "ready to challenge you again.\p"
+	.string "Visit them in any order. Win all\n"
+	.string "three, then take on KOGA!\p"
+	.string "I know you and your POKéMON\n"
+	.string "can rise to the challenge!$"
+
+Text_ChaosOakMakeRoom::
+	.string "Make room in your BAG, then\n"
+	.string "come speak to me again.$"
+
+Text_ChaosRematchIntro::
+	.string "OAK told me about your progress!\p"
+	.string "Let's see how far you've come!\n"
+	.string "My new team is ready!$"
+Text_ChaosRematchDefeat::
+	.string "What a remarkable bond!\n"
+	.string "You have grown into a fine Trainer!$"
+Text_ChaosRematchWon::
+	.string "You've passed my rematch test!\p"
+	.string "When all three tests are complete,\n"
+	.string "KOGA will be ready for you.$"
+Text_ChaosRematchAlreadyWon::
+	.string "You've already passed my test.\n"
+	.string "Keep growing with your POKéMON!$"
+Text_ChaosNeedSabrina::
+	.string "The route to FUCHSIA is reserved\n"
+	.string "for Trainers with the MARSHBADGE.\p"
+	.string "Challenge SABRINA in SAFFRON\n"
+	.string "CITY before continuing.$"
+
+EventScript_ChaosFuchsiaGateLocked::
+	msgbox Text_ChaosNeedSabrina
+	release
+	end
+
+EventScript_ChaosCheckOakRewardReady::
+	call_if_eq VAR_CHAOS_OAK_MEGA_REWARD, 0, EventScript_ChaosReadyOakMegaReward
+	return

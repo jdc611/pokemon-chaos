@@ -4,8 +4,12 @@ Route16_NorthEntrance_1F_Frlg_MapScripts::
 
 Route16_NorthEntrance_1F_OnTransition::
 	clearflag FLAG_SYS_ON_CYCLING_ROAD
-	call_if_set FLAG_GOT_BICYCLE, Route16_NorthEntrance_1F_EventScript_DisableNeedBikeTrigger
+	call_if_set FLAG_BADGE06_GET, EventScript_ChaosEnableCyclingRoadIfBike
 	end
+
+EventScript_ChaosEnableCyclingRoadIfBike::
+	call_if_set FLAG_GOT_BICYCLE, Route16_NorthEntrance_1F_EventScript_DisableNeedBikeTrigger
+	return
 
 Route16_NorthEntrance_1F_EventScript_DisableNeedBikeTrigger::
 	setvar VAR_TEMP_1, 1
@@ -46,8 +50,9 @@ Route16_NorthEntrance_1F_EventScript_NeedBikeTriggerBottom::
 	end
 
 Route16_NorthEntrance_1F_EventScript_NeedBikeTrigger::
+	call_if_unset FLAG_BADGE06_GET, EventScript_ChaosCyclingRoadSabrinaMessage
 	textcolor NPC_TEXT_COLOR_MALE
-	msgbox Route16_NorthEntrance_1F_Text_ExcuseMeWaitUp
+	call_if_set FLAG_BADGE06_GET, EventScript_ChaosCyclingRoadBikeMessage
 	closemessage
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
@@ -56,7 +61,7 @@ Route16_NorthEntrance_1F_EventScript_NeedBikeTrigger::
 	call_if_eq VAR_0x8008, 2, Route16_NorthEntrance_1F_EventScript_PlayerWalkToCounterMid
 	call_if_eq VAR_0x8008, 3, Route16_NorthEntrance_1F_EventScript_PlayerWalkToCounterMidBottom
 	call_if_eq VAR_0x8008, 4, Route16_NorthEntrance_1F_EventScript_PlayerWalkToCounterBottom
-	msgbox Route16_NorthEntrance_1F_Text_NoPedestriansOnCyclingRoad
+	call_if_set FLAG_BADGE06_GET, EventScript_ChaosCyclingRoadNoPedestrians
 	closemessage
 	applymovement LOCALID_PLAYER, Route16_NorthEntrance_1F_Movement_WalkRight
 	waitmovement 0
@@ -129,3 +134,14 @@ Route16_NorthEntrance_1F_Text_HowdYouGetInGoodEffort::
 	.string "How'd you get in?\n"
 	.string "Good effort!$"
 
+
+EventScript_ChaosCyclingRoadSabrinaMessage::
+	msgbox Text_ChaosNeedSabrina
+	return
+EventScript_ChaosCyclingRoadBikeMessage::
+	msgbox Route16_NorthEntrance_1F_Text_ExcuseMeWaitUp
+	return
+
+EventScript_ChaosCyclingRoadNoPedestrians::
+	msgbox Route16_NorthEntrance_1F_Text_NoPedestriansOnCyclingRoad
+	return

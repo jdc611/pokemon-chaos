@@ -6,6 +6,7 @@
 #include "battle_pike.h"
 #include "battle_pyramid.h"
 #include "battle_setup.h"
+#include "chaos_progression.h"
 #include "challenge_reset.h"
 #include "battle_partner.h"
 #include "battle_tower.h"
@@ -1671,6 +1672,7 @@ static void HandleBattleVariantEndParty(void)
 
 static void CB2_EndTrainerBattle(void)
 {
+    ChaosRestoreSilphPartnerParty();
     HandleBattleVariantEndParty();
     Nuzlocke_ProcessBattleDeaths();
     if (IsPlayerDefeated(gBattleOutcome))

@@ -138,3 +138,45 @@ SilphCo_5F_Text_RocketBossLookingForStrongMons::
 	.string "strong POKéMON.\p"
 	.string "I hope our PRESIDENT managed to\n"
 	.string "avoid trouble…$"
+
+EventScript_ChaosCardKeyGauntlet::
+	lockall
+	goto_if_eq VAR_CHAOS_ROCKET_GAUNTLET, 2, EventScript_ChaosFindCardKey
+	goto_if_eq VAR_CHAOS_ROCKET_GAUNTLET, 1, EventScript_ChaosRetryVesper
+	msgbox Text_ChaosGauntletWarning, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, EventScript_ChaosGauntletCancel
+	msgbox Text_ChaosColeSilphIntro
+	trainerbattle_no_intro TRAINER_CHAOS_COLE_SILPH, Text_ChaosColeSilphDefeat
+	setvar VAR_CHAOS_ROCKET_GAUNTLET, 1
+	msgbox Text_ChaosVesperSilphIntro
+	goto EventScript_ChaosBattleVesper
+EventScript_ChaosRetryVesper::
+	msgbox Text_ChaosRetryVesper, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, EventScript_ChaosGauntletCancel
+EventScript_ChaosBattleVesper::
+	trainerbattle_no_intro TRAINER_CHAOS_VESPER_SILPH, Text_ChaosVesperSilphDefeat
+	setvar VAR_CHAOS_ROCKET_GAUNTLET, 2
+EventScript_ChaosFindCardKey::
+	finditem ITEM_CARD_KEY
+	releaseall
+	end
+EventScript_ChaosGauntletCancel::
+	releaseall
+	end
+Text_ChaosGauntletWarning::
+	.string "COLE and VESPER guard the CARD KEY.\p"
+	.string "Each has four POKéMON. You must\n"
+	.string "fight both without healing between.\p"
+	.string "Are you ready?$"
+Text_ChaosColeSilphIntro::
+	.string "COLE: I'll wear your team down!$"
+Text_ChaosColeSilphDefeat::
+	.string "COLE: VESPER! Finish the job!$"
+Text_ChaosVesperSilphIntro::
+	.string "VESPER: No time to catch your breath.\n"
+	.string "Now you face me!$"
+Text_ChaosVesperSilphDefeat::
+	.string "VESPER: You've earned the CARD KEY.$"
+Text_ChaosRetryVesper::
+	.string "COLE is already beaten.\n"
+	.string "Challenge VESPER again?$"

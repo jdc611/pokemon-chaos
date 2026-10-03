@@ -52,6 +52,9 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends binutils-arm-none-eabi gcc-arm-none-eabi libnewlib-arm-none-eabi libpng-dev python3
 
+      - name: Check Kanto progression and party preservation
+        run: python3 .github/scripts/check_chaos_kanto.py
+
       - name: Build native FireRed target
         run: |
           set -o pipefail

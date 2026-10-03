@@ -258,13 +258,13 @@ PokemonTower_7F_Text_Grunt2PostBattle::
 	.string "You stay out of our business!$"
 
 PokemonTower_7F_Text_Grunt3Intro::
-	.string "You're not saving anyone, kid!$"
+	.string "VESPER: MR. FUJI stays with us.\nYour little rescue ends here!$"
 
 PokemonTower_7F_Text_Grunt3Defeat::
-	.string "Don't fight us ROCKETS!$"
+	.string "VESPER: How did you escape my trap?$"
 
 PokemonTower_7F_Text_Grunt3PostBattle::
-	.string "You're not getting away with this!$"
+	.string "VESPER: This is not over!$"
 
 PokemonTower_7F_Text_MrFujiThankYouFollowMe::
 	.string "MR. FUJI: Heh?\n"
