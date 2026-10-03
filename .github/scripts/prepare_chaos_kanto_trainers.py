@@ -27,7 +27,7 @@ def offset_define(match: re.Match[str]) -> str:
 
 # Only trainer IDs are transformed; count/max constants are left untouched.
 text = re.sub(
-    r"^#define\s+(TRAINER_(?!PARTNER)[A-Z0-9_]+)\s+(\d+)\s*$",
+    r"^#define\s+(TRAINER_(?!(?:PARTNER|FLAGS|SLIDE))[A-Z0-9_]+)\s+(\d+)\s*$",
     offset_define,
     text,
     flags=re.MULTILINE,
