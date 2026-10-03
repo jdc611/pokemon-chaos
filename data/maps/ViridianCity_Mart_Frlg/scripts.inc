@@ -1,6 +1,8 @@
 ViridianCity_Mart_Frlg_MapScripts::
 	map_script MAP_SCRIPT_ON_LOAD, ViridianCity_Mart_OnLoad
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, ViridianCity_Mart_OnFrame
+	@ Chaos Kanto port: the FRLG Oak's Parcel auto-entry scene is disabled here.
+	@ Automatic FRLG on-frame scenes currently use incompatible imported state and can
+	@ reset the Emerald runtime as soon as the map loads. The clerk/shop remain usable.
 	.byte 0
 
 ViridianCity_Mart_OnLoad::
