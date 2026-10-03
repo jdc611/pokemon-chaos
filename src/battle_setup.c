@@ -424,6 +424,11 @@ void BattleSetup_StartDoubleWildBattle(void)
 
 void BattleSetup_StartMultiBattle(void)
 {
+    // Chaos's story partner battle needs the normal trainer exit callback so
+    // all original party slots are restored before whiteout/Nuzlocke handling.
+    if (IS_FRLG && gPartnerTrainerId == TRAINER_PARTNER(PARTNER_CHAOS_RIVAL))
+        gMain.savedCallback = CB2_EndTrainerBattle;
+
     if (gSpecialVar_0x8005 & MULTI_BATTLE_2_VS_WILD) // Player + AI against wild mon
     {
         gBattleTypeFlags = BATTLE_TYPE_DOUBLE | BATTLE_TYPE_MULTI | BATTLE_TYPE_INGAME_PARTNER;

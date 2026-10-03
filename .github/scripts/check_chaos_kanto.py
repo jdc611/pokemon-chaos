@@ -137,7 +137,10 @@ with tempfile.TemporaryDirectory() as directory:
  subprocess.run(['cc','-std=gnu11','-Wall','-Werror',str(source),'-o',str(binary)],check=True)
  subprocess.run([str(binary)],check=True)
 # Structural checks cover the hooks and native event dependencies.
-setup=(ROOT/'src/battle_setup.c').read_text().split('static void CB2_EndTrainerBattle(void)\n{',1)[1]
+setup_source=(ROOT/'src/battle_setup.c').read_text()
+multi=setup_source.split('void BattleSetup_StartMultiBattle(void)\n{',1)[1].split('void BattleSetup_StartBattlePikeWildBattle',1)[0]
+assert 'PARTNER_CHAOS_RIVAL' in multi and 'gMain.savedCallback = CB2_EndTrainerBattle;' in multi
+setup=setup_source.split('static void CB2_EndTrainerBattle(void)\n{',1)[1]
 assert setup.index('ChaosRestoreSilphPartnerParty();') < setup.index('Nuzlocke_ProcessBattleDeaths();')
 party=(ROOT/'src/party_menu.c').read_text().split('static u8 GetMinBattleEntries(void)\n{',1)[1].split('static u8 GetBattleEntryLevelCap',1)[0]
 assert 'MAP_SILPH_CO_7F' in party and 'return MULTI_PARTY_SIZE;' in party
