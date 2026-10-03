@@ -1187,7 +1187,6 @@ PalletTown_ProfessorOaksLab_EventScript_RivalTakesStarter::
 	end
 
 PalletTown_ProfessorOaksLab_EventScript_ReadyEndSignLadyScene::
-	setvar VAR_MAP_SCENE_PALLET_TOWN_SIGN_LADY, 1
 	return
 
 PalletTown_ProfessorOaksLab_Movement_RivalWalksToCharmander::

@@ -443,7 +443,8 @@ static void BuildNormalStartMenu(void)
             AddStartMenuAction(MENU_ACTION_POKEVIAL);
             AddStartMenuAction(MENU_ACTION_PC_STORAGE);
             AddStartMenuAction(MENU_ACTION_POKERIDER);
-            AddStartMenuAction(MENU_ACTION_TIME_CHANGER);
+            if (!IS_FRLG || VarGet(VAR_CHAOS_TIME_CHANGER_UNLOCKED))
+                AddStartMenuAction(MENU_ACTION_TIME_CHANGER);
             AddStartMenuAction(MENU_ACTION_AUTO_REPEL);
         }
         else

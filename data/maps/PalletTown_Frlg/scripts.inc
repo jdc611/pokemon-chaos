@@ -13,9 +13,9 @@ PalletTown_OnTransition::
 	end
 
 PalletTown_EventScript_TryReadySignLady::
-	goto_if_unset FLAG_OPENED_START_MENU, Common_EventScript_NopReturn
-	goto_if_ge VAR_MAP_SCENE_PALLET_TOWN_SIGN_LADY, 1, Common_EventScript_NopReturn
-	setvar VAR_MAP_SCENE_PALLET_TOWN_SIGN_LADY, 1
+	goto_if_unset FLAG_SYS_POKEMON_GET, Common_EventScript_NopReturn
+	goto_if_eq VAR_CHAOS_TIME_CHANGER_UNLOCKED, TRUE, Common_EventScript_NopReturn
+	setvar VAR_MAP_SCENE_PALLET_TOWN_SIGN_LADY, 0
 	return
 
 PalletTown_EventScript_SetSignLadyDone::
@@ -427,18 +427,16 @@ PalletTown_EventScript_SignLadyTrigger::
 
 PalletTown_EventScript_SignLadyShowSign::
 	textcolor NPC_TEXT_COLOR_FEMALE
-	msgbox PalletTown_Text_LookCopiedTrainerTipsSign
-	closemessage
-	delay 20
-	textcolor NPC_TEXT_COLOR_NEUTRAL
-	setflag FLAG_OPENED_START_MENU
-	setvar VAR_MAP_SCENE_PALLET_TOWN_SIGN_LADY, 1
+	msgbox PalletTown_Text_ChaosTimeChangerGift
+	setvar VAR_CHAOS_TIME_CHANGER_UNLOCKED, TRUE
+	setvar VAR_MAP_SCENE_PALLET_TOWN_SIGN_LADY, 2
 	setvar SIGN_LADY_READY, FALSE
-	special SetWalkingIntoSignVars
-	special DisableMsgBoxWalkaway
-	signmsg
-	msgbox PalletTown_Text_PressStartToOpenMenuCopy
-	normalmsg
+	textcolor NPC_TEXT_COLOR_NEUTRAL
+	message PalletTown_Text_ChaosObtainedTimeChanger
+	waitmessage
+	playfanfare MUS_RG_OBTAIN_KEY_ITEM
+	waitfanfare
+	msgbox PalletTown_Text_ChaosUseTimeChanger
 	return
 
 PalletTown_EventScript_SignLadyStartShowSign::
@@ -546,3 +544,18 @@ PalletTown_Text_PressStartToOpenMenuCopy::
 	.string "Press START to open the MENU!$"
 
 
+
+PalletTown_Text_ChaosTimeChangerGift::
+	.string "You and your POKéMON are ready to\n"
+	.string "see the world together!\p"
+	.string "The world feels different by day\n"
+	.string "and by night. Take this TIME CHANGER\l"
+	.string "and explore at your own pace!$"
+
+PalletTown_Text_ChaosObtainedTimeChanger::
+	.string "{PLAYER} obtained the TIME CHANGER!$"
+
+PalletTown_Text_ChaosUseTimeChanger::
+	.string "Use TIME in QUICK TOOLS to change\n"
+	.string "the time of day.\p"
+	.string "Good luck to you and your POKéMON!$"
