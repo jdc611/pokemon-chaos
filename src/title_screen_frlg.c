@@ -27,6 +27,10 @@
 
 #if IS_FRLG
 
+#define KEYSTROKE_DELSAVE (B_BUTTON | SELECT_BUTTON | DPAD_UP)
+#define KEYSTROKE_RESET_RTC (B_BUTTON | SELECT_BUTTON | DPAD_LEFT)
+#define KEYSTROKE_BERRY_FIX (B_BUTTON | SELECT_BUTTON)
+
 enum TitleScreenScene
 {
     TITLESCREENSCENE_INIT = 0,
@@ -378,7 +382,123 @@ static const u32 *const sUnused_Tilemaps[] = {
     sUnused_Tilemap6,
 };
 
+// Approved full-screen Chaos artwork; keep particles outside the central logo.
+#define CHAOS_STAR_TAG 3100
+#define CHAOS_WARM_STAR_TAG 3101
+static const u32 sChaosTitleGfx[] = INCGFX_U32("graphics/title_screen/chaos_title.png", ".4bpp.smol");
+static const u32 sChaosTitleMap[] = INCGFX_U32("graphics/title_screen/chaos_title.bin", ".smolTM");
+static const u16 sChaosTitlePal[] = INCGFX_U16("graphics/title_screen/chaos_title.png", ".gbapal");
+static const struct BgTemplate sChaosTitleBg[] = {
+    { .bg = 0, .charBaseIndex = 0, .mapBaseIndex = 28, .screenSize = 0, .paletteMode = 0, .priority = 1 },
+};
+static const u32 sChaosStarTiles[] = {
+    0x00000000, 0x00010000, 0x00010000, 0x01111100,
+    0x00010000, 0x00010000, 0x00000000, 0x00000000,
+};
+static const u16 sChaosCoolStarPal[16] = { RGB_BLACK, RGB(18, 27, 31) };
+static const u16 sChaosWarmStarPal[16] = { RGB_BLACK, RGB(31, 23, 12) };
+static const struct SpriteSheet sChaosStarSheet = { sChaosStarTiles, sizeof(sChaosStarTiles), CHAOS_STAR_TAG };
+static const struct SpritePalette sChaosStarPalettes[] = {
+    { sChaosCoolStarPal, CHAOS_STAR_TAG },
+    { sChaosWarmStarPal, CHAOS_WARM_STAR_TAG },
+};
+static const struct OamData sChaosStarOam = {
+    .affineMode = ST_OAM_AFFINE_OFF, .objMode = ST_OAM_OBJ_NORMAL,
+    .shape = SPRITE_SHAPE(8x8), .size = SPRITE_SIZE(8x8), .priority = 0,
+};
+
+static void SpriteCB_ChaosTitleStar(struct Sprite *sprite)
+{
+    sprite->data[0] = (sprite->data[0] + 1) % 240;
+    if (sprite->data[0] % 3 == 0)
+        sprite->y--;
+    if (sprite->data[0] % 12 == 0)
+        sprite->x += sprite->data[1] ? 1 : -1;
+    sprite->invisible = sprite->data[0] % 48 >= 40;
+    if (sprite->y < -8)
+    {
+        sprite->y = 168;
+        sprite->x = sprite->data[2];
+    }
+}
+
+static const struct SpriteTemplate sChaosStarTemplate = {
+    .tileTag = CHAOS_STAR_TAG, .paletteTag = CHAOS_STAR_TAG,
+    .oam = &sChaosStarOam, .anims = gDummySpriteAnimTable,
+    .images = NULL, .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_ChaosTitleStar,
+};
+
+static void Task_ChaosTitleInput(u8 taskId)
+{
+    if (gPaletteFade.active)
+        return;
+    if (gTasks[taskId].data[0])
+    {
+        SetMainCallback2(gTasks[taskId].data[0] == 2 ? CB2_RunSetupQuickStart : CB2_InitMainMenu);
+        DestroyTask(taskId);
+        return;
+    }
+    if (JOY_HELD(KEYSTROKE_DELSAVE) == KEYSTROKE_DELSAVE)
+        SetMainCallback2(CB2_FadeOutTransitionToSaveClearScreen);
+    else if (JOY_HELD(KEYSTROKE_RESET_RTC) == KEYSTROKE_RESET_RTC && CanResetRTC())
+        SetMainCallback2(CB2_FadeOutTransitionToResetRtcScreen);
+    else if (JOY_HELD(KEYSTROKE_BERRY_FIX) == KEYSTROKE_BERRY_FIX)
+        SetMainCallback2(CB2_FadeOutTransitionToBerryFix);
+    else if ((QUICKSTART && JOY_NEW(SELECT_BUTTON)) || JOY_NEW(A_BUTTON | START_BUTTON))
+    {
+        gTasks[taskId].data[0] = QUICKSTART && JOY_NEW(SELECT_BUTTON) ? 2 : 1;
+        FadeOutBGM(4);
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+    }
+}
+
 void CB2_InitTitleScreenFrlg(void)
+{
+    SetVBlankCallback(NULL);
+    StartTimer1();
+    InitHeap(gHeap, HEAP_SIZE);
+    ResetTasks();
+    ResetSpriteData();
+    FreeAllSpritePalettes();
+    ResetPaletteFade();
+    ResetGpuRegs();
+    ScanlineEffect_Stop();
+    DmaFill16(3, 0, (void *)VRAM, VRAM_SIZE);
+    DmaFill32(3, 0, (void *)OAM, OAM_SIZE);
+    DmaFill16(3, 0, (void *)PLTT, PLTT_SIZE);
+    ResetBgsAndClearDma3BusyFlags(FALSE);
+    InitBgsFromTemplates(0, sChaosTitleBg, ARRAY_COUNT(sChaosTitleBg));
+    DecompressDataWithHeaderVram(sChaosTitleGfx, (void *)BG_CHAR_ADDR(0));
+    DecompressDataWithHeaderVram(sChaosTitleMap, (void *)BG_SCREEN_ADDR(28));
+    LoadPalette(sChaosTitlePal, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
+    LoadSpriteSheet(&sChaosStarSheet);
+    LoadSpritePalette(&sChaosStarPalettes[0]);
+    LoadSpritePalette(&sChaosStarPalettes[1]);
+    for (u32 i = 0; i < 8; i++)
+    {
+        s16 x = i < 4 ? 12 + i * 9 : 199 + (i - 4) * 9;
+        u8 spriteId = CreateSprite(&sChaosStarTemplate, x, 12 + (i % 4) * 42, 0);
+        if (spriteId == MAX_SPRITES)
+            continue;
+        gSprites[spriteId].data[0] = i * 19;
+        gSprites[spriteId].data[1] = i >= 4;
+        gSprites[spriteId].data[2] = x;
+        if (i >= 4)
+            gSprites[spriteId].oam.paletteNum = IndexOfSpritePaletteTag(CHAOS_WARM_STAR_TAG);
+    }
+    ShowBg(0);
+    SetGpuRegBits(REG_OFFSET_DISPCNT, DISPCNT_OBJ_1D_MAP | DISPCNT_OBJ_ON);
+    sTitleScreenTimerTaskId = TASK_NONE;
+    CreateTask(Task_ChaosTitleInput, 0);
+    BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
+    SetVBlankCallback(VBlankCB);
+    SetMainCallback2(CB2_TitleScreenRun);
+    m4aSongNumStart(MUS_TITLE);
+}
+
+static void UNUSED CB2_InitOriginalTitleScreenFrlg(void)
+
 {
     switch (gMain.state)
     {
@@ -646,9 +766,6 @@ static void SetTitleScreenScene_FadeIn(s16 *data)
     }
 }
 
-#define KEYSTROKE_DELSAVE (B_BUTTON | SELECT_BUTTON | DPAD_UP)
-#define KEYSTROKE_RESET_RTC (B_BUTTON | SELECT_BUTTON | DPAD_LEFT)
-#define KEYSTROKE_BERRY_FIX (B_BUTTON | SELECT_BUTTON)
 
 static void SetTitleScreenScene_Run(s16 *data)
 {
