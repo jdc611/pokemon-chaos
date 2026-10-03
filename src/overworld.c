@@ -1972,10 +1972,22 @@ void CB2_NewGame(void)
         // temporarily stripped Oak Lab cannot mask connection/collision tests.
         VarSet(VAR_MAP_SCENE_PALLET_TOWN_OAK, 3);
 
-        // Hard-coded numeric Pallet bedroom target for the diagnostic.
-        // This intentionally bypasses generated MAP_* constants so we can
-        // distinguish bad map-ID generation from later warp replacement.
-        SetWarpDestination(38, 2, WARP_ID_NONE, 6, 6);
+        // KTEST warp hub: hold a direction while the SELECT quickstart fades.
+        // No direction keeps the original Pallet bedroom start.
+        // UP    = Viridian City (safe outdoor test point)
+        // RIGHT = Viridian Mart (inside, base-entry diagnostic)
+        // DOWN  = Pewter City (safe tile beside the Pokemon Center test area)
+        // LEFT  = Route 3 (safe outdoor progression test point)
+        if (JOY_HELD(DPAD_UP))
+            SetWarpDestination(MAP_GROUP(MAP_VIRIDIAN_CITY), MAP_NUM(MAP_VIRIDIAN_CITY), WARP_ID_NONE, 22, 24);
+        else if (JOY_HELD(DPAD_RIGHT))
+            SetWarpDestination(MAP_GROUP(MAP_VIRIDIAN_CITY_MART), MAP_NUM(MAP_VIRIDIAN_CITY_MART), WARP_ID_NONE, 4, 6);
+        else if (JOY_HELD(DPAD_DOWN))
+            SetWarpDestination(MAP_GROUP(MAP_PEWTER_CITY), MAP_NUM(MAP_PEWTER_CITY), WARP_ID_NONE, 16, 26);
+        else if (JOY_HELD(DPAD_LEFT))
+            SetWarpDestination(MAP_GROUP(MAP_ROUTE3), MAP_NUM(MAP_ROUTE3), WARP_ID_NONE, 2, 7);
+        else
+            SetWarpDestination(MAP_GROUP(MAP_PALLET_TOWN_PLAYERS_HOUSE_2F), MAP_NUM(MAP_PALLET_TOWN_PLAYERS_HOUSE_2F), WARP_ID_NONE, 6, 6);
         WarpIntoMap();
         gRunSetupStartRegion = 1;
         gDebugForceKantoNewGame = FALSE;
