@@ -5090,7 +5090,8 @@ static enum MoveEndResult MoveEndRampage(struct BattleCalcValues *cv)
     else if (--gBattleMons[cv->battlerAtk].volatiles.rampageTurns == 0)
     {
         CancelMultiTurnMoves(cv->battlerAtk);
-        if (CanBeConfused(cv->battlerAtk, cv->battlerAtk))
+        if (GetBattlerAbility(cv->battlerAtk) != ABILITY_RAMPAGE
+         && CanBeConfused(cv->battlerAtk, cv->battlerAtk))
         {
             gBattleScripting.battler = cv->battlerAtk;
             gBattleMons[cv->battlerAtk].volatiles.confusionTimer = RandomUniform(RNG_CONFUSION_TURNS, 2, B_CONFUSION_TURNS); // 2-5 turns

@@ -1,4 +1,5 @@
 #include "global.h"
+#include "chaos_mega.h"
 #include "battle.h"
 #include "battle_hold_effects.h"
 #include "battle_message.h"
@@ -1002,6 +1003,8 @@ static void Cmd_attackcanceler(void)
 
     if (DoAttackCanceler() != CANCELER_RESULT_SUCCESS)
         return;
+
+    ChaosRampageStart(gBattlerAttacker, gChosenMove);
 
     // Frist Hack: Prevents messages being printed multiply times
     // Second Hack: Prevent moveend for stat change moves. If nothing is affected it will just break out and do nothing

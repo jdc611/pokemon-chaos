@@ -207,6 +207,8 @@ enum VolatileFlags
     F(VOLATILE_TORMENT,                     torment,                       (u32, 1)) \
     F(VOLATILE_BIDE,                        bideTurns,                     (u32, 3)) \
     F(VOLATILE_RAMPAGE_TURNS,               rampageTurns,                  (u32, B_RAMPAGE_TURNS + 1)) \
+    F(VOLATILE_CHAOS_RAMPAGE_TURNS,         chaosRampageTurns,             (u32, 3)) \
+    F(VOLATILE_CHAOS_RAMPAGE_MOVE,          chaosRampageMove,              (u32, MOVES_COUNT_ALL - 1)) \
     F(VOLATILE_MULTIPLETURNS,               multipleTurns,                 (u32, 1)) \
     F(VOLATILE_SKY_DROP_TARGET,             skyDropTarget,                 (enum BattlerId, MAX_BATTLERS_COUNT)) \
     F(VOLATILE_CONFUSE_AFTER_DROP,          confuseAfterDrop,              (u32, 1)) \

@@ -42,6 +42,8 @@ CinnabarIsland_PokemonLab_ExperimentRoom_EventScript_AlreadyTraded::
 CinnabarIsland_PokemonLab_ExperimentRoom_EventScript_FossilScientist::
 	lock
 	faceplayer
+	checkitem ITEM_STRANGE_FOSSIL
+	goto_if_eq VAR_RESULT, TRUE, Chaos_EventScript_IdentifyStrangeFossil
 	setvar VAR_RESULT, FALSE
 	call_if_set FLAG_REVIVED_AMBER, CinnabarIsland_PokemonLab_ExperimentRoom_EventScript_CheckRevivedMtMoonFossil
 	goto_if_eq VAR_RESULT, TRUE, CinnabarIsland_PokemonLab_ExperimentRoom_EventScript_RevivedAllFossils
@@ -361,3 +363,55 @@ CinnabarIsland_PokemonLab_ExperimentRoom_Text_YouComeAgain::
 	.string "Aiyah!\n"
 	.string "You come again!$"
 
+
+@ Placeholder caller is Cinnabar. Move this shared identification event intact
+@ when the early fossil scientist's final location is chosen.
+Chaos_EventScript_IdentifyStrangeFossil::
+	msgbox Chaos_Text_StudyStrangeFossil, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, Chaos_EventScript_DeclineFossilStudy
+	msgbox Chaos_Text_FossilIdentification
+	msgbox Chaos_Text_ReturnNidokingite, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, YES, Chaos_EventScript_GiveNidokingite
+	msgbox Chaos_Text_FakeRefusalNidokingite
+Chaos_EventScript_GiveNidokingite::
+	giveitem ITEM_NIDOKINGITE
+	goto_if_eq VAR_RESULT, FALSE, Chaos_EventScript_NidokingiteBagFull
+	removeitem ITEM_STRANGE_FOSSIL, 1
+	setvar VAR_CHAOS_STRANGE_FOSSIL, 2
+	msgbox Chaos_Text_NidokingiteExplanation
+	release
+	end
+Chaos_EventScript_NidokingiteBagFull::
+	msgbox Chaos_Text_MakeRoomForNidokingite
+	release
+	end
+Chaos_EventScript_DeclineFossilStudy::
+	msgbox Chaos_Text_BringItBackToStudy
+	release
+	end
+Chaos_Text_StudyStrangeFossil::
+	.string "Oh! What an unusual fossil!\n"
+	.string "Shall I try to revive it for you?$"
+Chaos_Text_FossilIdentification::
+	.string "Hmm... The machine won't respond.\n"
+	.string "There's no ancient life inside!\p"
+	.string "This isn't a fossil at all!\n"
+	.string "It's a MEGA STONE!\p"
+	.string "Its energy signature matches\n"
+	.string "NIDOKING. Remarkable!$"
+Chaos_Text_ReturnNidokingite::
+	.string "I'll call it NIDOKINGITE.\n"
+	.string "Would you like it back?$"
+Chaos_Text_FakeRefusalNidokingite::
+	.string "What? Don't be silly!\n"
+	.string "You found it. It belongs to you!$"
+Chaos_Text_NidokingiteExplanation::
+	.string "Let NIDOKING hold that stone.\n"
+	.string "With a MEGA RING, its hidden\l"
+	.string "power may awaken in battle!$"
+Chaos_Text_MakeRoomForNidokingite::
+	.string "Your BAG is full. Make some room,\n"
+	.string "then bring that stone back to me.$"
+Chaos_Text_BringItBackToStudy::
+	.string "Of course! Bring it back when\n"
+	.string "you're ready to investigate.$"

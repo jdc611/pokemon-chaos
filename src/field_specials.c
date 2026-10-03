@@ -206,6 +206,8 @@ static u32 ChaosFieldItemHash(u32 value)
 
 static bool32 ChaosFieldItemIsProtected(enum Item item)
 {
+    if (item == ITEM_NIDOKINGITE || item == ITEM_STRANGE_FOSSIL)
+        return TRUE;
     if (item >= ITEM_HM01 && item <= ITEM_HM08)
         return TRUE;
     if (item >= ITEM_VENUSAURITE && item <= ITEM_DIANCITE)

@@ -1,4 +1,5 @@
 #include "global.h"
+#include "chaos_mega.h"
 #include "battle.h"
 #include "battle_anim.h"
 #include "battle_anim_scripts.h"
@@ -493,6 +494,14 @@ void HandleAction_UseMove(void)
         gProtectStructs[gBattlerAttacker].noValidMoves = FALSE;
         gCurrentMove = gChosenMove = MOVE_STRUGGLE;
         gBattleStruct->moveTarget[gBattlerAttacker] = GetBattleMoveTarget(MOVE_STRUGGLE, TARGET_NONE);
+    }
+    else if (gBattleMons[gBattlerAttacker].volatiles.chaosRampageTurns > 0)
+    {
+        gCurrentMove = gChosenMove = gBattleMons[gBattlerAttacker].volatiles.chaosRampageMove;
+        for (u32 i = 0; i < MAX_MON_MOVES; i++)
+            if (gBattleMons[gBattlerAttacker].moves[i] == gCurrentMove)
+                gCurrMovePos = gChosenMovePos = i;
+        gBattleStruct->moveTarget[gBattlerAttacker] = GetBattleMoveTarget(gCurrentMove, TARGET_NONE);
     }
     else if (gBattleMons[gBattlerAttacker].volatiles.multipleTurns || gBattleMons[gBattlerAttacker].volatiles.rechargeTimer > 0)
     {
@@ -6605,6 +6614,9 @@ static inline u32 CalcMoveBasePowerAfterModifiers(struct DamageContext *ctx)
         {
             modifier = uq4_12_multiply(modifier, UQ_4_12(1.3));
         }
+        break;
+    case ABILITY_RAMPAGE:
+        modifier = uq4_12_multiply(modifier, UQ_4_12(1.4));
         break;
     case ABILITY_TOUGH_CLAWS:
         if (IsMoveMakingContact(battlerAtk, battlerDef, ctx->abilities[battlerAtk], ctx->holdEffects[battlerAtk], ctx->move))

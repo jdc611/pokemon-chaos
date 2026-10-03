@@ -38,15 +38,18 @@ MtMoon_B2F_EventScript_BattleMiguel::
 	trainerbattle_no_intro TRAINER_SUPER_NERD_MIGUEL, MtMoon_B2F_Text_MiguelDefeat
 	setvar VAR_MAP_SCENE_MT_MOON_B2F, 1
 	msgbox MtMoon_B2F_Text_WellEachTakeAFossil
+	call Chaos_EventScript_GiveStrangeFossil
 	return
 
 MtMoon_B2F_EventScript_MiguelFossilPicked::
 	msgbox MtMoon_B2F_Text_LabOnCinnabarRegeneratesFossils
+	call Chaos_EventScript_GiveStrangeFossil
 	release
 	end
 
 MtMoon_B2F_EventScript_MiguelGoPickFossil::
 	msgbox MtMoon_B2F_Text_WellEachTakeAFossil
+	call Chaos_EventScript_GiveStrangeFossil
 	release
 	end
 
@@ -217,3 +220,23 @@ MtMoon_B2F_Text_ObtainedHelixFossil::
 MtMoon_B2F_Text_ObtainedDomeFossil::
 	.string "Obtained the DOME FOSSIL!$"
 
+
+@ Shared reward: reusable if excavation location changes.
+Chaos_EventScript_GiveStrangeFossil::
+	goto_if_ne VAR_CHAOS_STRANGE_FOSSIL, 0, Chaos_EventScript_FossilReturn
+	msgbox Chaos_Text_FoundStrangeFossil
+	giveitem ITEM_STRANGE_FOSSIL
+	goto_if_eq VAR_RESULT, FALSE, Chaos_EventScript_FossilReturn
+	setvar VAR_CHAOS_STRANGE_FOSSIL, 1
+	msgbox Chaos_Text_TakeStrangeFossilToScientist
+Chaos_EventScript_FossilReturn::
+	return
+
+Chaos_Text_FoundStrangeFossil::
+	.string "Wait! There's another odd stone here.\n"
+	.string "It looks like a fossil... maybe.\p"
+	.string "I've never seen one quite like it.\n"
+	.string "You can have this one, too!$"
+Chaos_Text_TakeStrangeFossilToScientist::
+	.string "A fossil scientist might know\n"
+	.string "what to make of it.$"

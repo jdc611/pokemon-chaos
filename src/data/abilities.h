@@ -1420,6 +1420,13 @@ const struct AbilityInfo gAbilitiesInfo[ABILITIES_COUNT] =
         .aiRating = 0,
     },
 
+    [ABILITY_RAMPAGE] =
+    {
+        .name = _("Rampage"),
+        .description = COMPOUND_STRING("Boosts damage; locks 3 turns."),
+        .aiRating = 8,
+    },
+
     [ABILITY_TOUGH_CLAWS] =
     {
         .name = _("Tough Claws"),

@@ -62,7 +62,7 @@ The exact levels and moves are stored in `src/data/trainers_frlg.party`.
 | Surge rematch | Kilowattrel, Magnezone, Electivire, Mega Manectric |
 | Koga | Glimmora, Crobat, Toxicroak, Revavroom, Galarian Weezing, Mega Beedrill |
 | Blaine | Talonflame, Ceruledge, Skeledirge, Volcarona, Houndoom, Arcanine |
-| Giovanni | Excadrill, Krookodile, Ursaluna, Rhyperior, Great Tusk, Nidoking |
+| Giovanni | Excadrill, Krookodile, Ursaluna, Rhyperior, Great Tusk, Mega Nidoking |
 
 Sabrina is a singles team at cap 40. Indeedee uses Psychic Surge with Psychic,
 Dazzling Gleam, Hyper Voice and Reflect; Malamar uses Contrary with Psycho Cut,
@@ -109,10 +109,8 @@ Cancelling selection restores the previous facility context and permits retry.
 
 ## Deliberately pending
 
-- Custom Mega Nidoking's species assets, stats, ability, stone and final moveset.
-  Its first reveal remains reserved for Viridian Gym. The current Viridian ace
-  is regular Nidoking until those decisions are finalized; no earlier Giovanni
-  team can reveal the custom Mega.
+- Final location for the earlier fossil scientist (Cinnabar is a placeholder).
+- Lossless Mega Nidoking source sprites for final pixel polish.
 - Other overworld Mega Stone placements.
 - Final rival / Victory Road approximately 59-60, Jack approximately 61, Elite
   Four approximately 62-65, Champion approximately 66: exact redesign pending.
@@ -131,3 +129,30 @@ Test a fresh run's early Gyms and Mt. Moon doubles; both Sabrina gates; Oak's
 one-time gift including bag-full retry; all rematch orders and persistence;
 Koga with one versus two usable Pokemon; the Card Key checkpoint; Silph selection
 cancel/retry, a win, and a loss with all original party slots restored.
+
+
+## Custom Mega Nidoking and Strange Fossil
+
+Implemented Poison/Ground Mega Nidoking (81/130/95/115/89/95, BST 605).
+Rampage boosts damaging moves by 1.4 and commits the user for three turns;
+status moves do not start a commitment and the ability causes no confusion.
+The lock expires once per turn (including spread attacks), releases on loss
+of the ability, fainting, or depleted PP, and clears on switching.
+Viridian Giovanni's Nidoking holds Nidokingite and uses Earthquake, Poison Jab,
+Ice Beam, and Megahorn. Earlier Giovanni fights retain regular Nidoking.
+Mega Nidoking is excluded from random encounter pools.
+
+Mt. Moon's fossil researcher gives a bonus Strange Fossil after his battle.
+This is a protected key item, separate from the Helix/Dome choice. Cinnabar's
+fossil scientist is a placeholder identification location: he discovers there
+is no ancient life to revive, recognizes Nidoking's energy signature, and gives
+Nidokingite. A joking refusal still returns the stone. Bag-full and declined
+study paths preserve the fossil for retry. Both events use reusable labels so
+the scientist can move earlier without rewriting the reward or save state.
+Oak's starter Mega Stone selection skips Nidokingite to preserve this reveal.
+
+Sprites: exact four-view selection from the updated sprite master, attributed
+to FYTYNo1, Mega Nidoking GBA sprite v2. Front/back normal and shiny palettes
+are shared GBA indexes. The embedded master source is a JPEG screenshot;
+lossless source recovery remains desirable for final pixel-level polish.
+Party icons retain ordinary Nidoking's icon, as with existing icon palette rules.

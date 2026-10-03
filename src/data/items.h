@@ -3182,6 +3182,32 @@ const struct ItemInfo gItemsInfo[] =
         .iconPalette = gItemIconPalette_StrangeSouvenir,
     },
 
+    [ITEM_NIDOKINGITE] =
+    {
+        .name = ITEM_NAME("Nidokingite"),
+        .price = 0,
+        .holdEffect = HOLD_EFFECT_MEGA_STONE,
+        .description = COMPOUND_STRING("Enables Nidoking to\nMega Evolve during\nbattle."),
+        .pocket = POCKET_ITEMS,
+        .sortType = ITEM_TYPE_MEGA_STONE,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 80,
+        .iconPic = gItemIcon_Beedrillite,
+        .iconPalette = gItemIconPalette_Beedrillite,
+    },
+    [ITEM_STRANGE_FOSSIL] =
+    {
+        .name = ITEM_NAME("Strange Fossil"),
+        .price = 0,
+        .importance = 1,
+        .description = COMPOUND_STRING("A mysterious stone\nexcavated in MT. MOON.\nIts origin is unknown."),
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .iconPic = gItemIcon_DomeFossil,
+        .iconPalette = gItemIconPalette_KantoFossil,
+    },
 // Fossils
 
     [ITEM_HELIX_FOSSIL] =

@@ -1,3 +1,14 @@
+#if P_FAMILY_NIDORAN
+static const struct FormChange sNidokingFormChangeTable[] = {
+#if P_MEGA_EVOLUTIONS
+    {FORM_CHANGE_BATTLE_MEGA_EVOLUTION_ITEM, SPECIES_NIDOKING_MEGA, ITEM_NIDOKINGITE},
+#endif
+    {FORM_CHANGE_FAINT, SPECIES_NIDOKING},
+    {FORM_CHANGE_END_BATTLE, SPECIES_NIDOKING},
+    {FORM_CHANGE_TERMINATOR},
+};
+#endif
+
 #if P_FAMILY_BULBASAUR
 static const struct FormChange sVenusaurFormChangeTable[] =
 {

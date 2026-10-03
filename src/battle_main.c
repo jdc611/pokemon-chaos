@@ -1,4 +1,5 @@
 #include "global.h"
+#include "chaos_mega.h"
 #include "battle.h"
 #include "battle_anim.h"
 #include "battle_ai_main.h"
@@ -3843,7 +3844,8 @@ static void HandleTurnActionSelectionState(void)
                 }
                 else
                 {
-                    if (gBattleMons[battler].volatiles.multipleTurns
+                    if (gBattleMons[battler].volatiles.chaosRampageTurns > 0
+                        || gBattleMons[battler].volatiles.multipleTurns
                         || gBattleMons[battler].volatiles.rechargeTimer > 0)
                     {
                         gChosenActionByBattler[battler] = B_ACTION_USE_MOVE;
@@ -4463,6 +4465,8 @@ s32 GetChosenMovePriority(enum BattlerId battler, enum Ability ability)
     gProtectStructs[battler].pranksterElevated = FALSE;
     if (gProtectStructs[battler].noValidMoves)
         move = MOVE_STRUGGLE;
+    else if (gBattleMons[battler].volatiles.chaosRampageTurns > 0)
+        move = gBattleMons[battler].volatiles.chaosRampageMove;
     else if (gLockedMoves[battler] != MOVE_NONE
           && (gBattleMons[battler].volatiles.multipleTurns || gBattleMons[battler].volatiles.rechargeTimer > 0))
         move = gLockedMoves[battler];

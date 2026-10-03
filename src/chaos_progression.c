@@ -27,7 +27,8 @@ static u16 GetOwnedMegaStone(u16 species)
 {
     const struct FormChange *forms = GetSpeciesFormChanges(species);
     for (u32 i = 0; forms != NULL && forms[i].method != FORM_CHANGE_TERMINATOR; i++)
-        if (forms[i].method == FORM_CHANGE_BATTLE_MEGA_EVOLUTION_ITEM)
+        if (forms[i].method == FORM_CHANGE_BATTLE_MEGA_EVOLUTION_ITEM
+         && forms[i].param1 != ITEM_NIDOKINGITE)
             return forms[i].param1;
     return ITEM_NONE;
 }

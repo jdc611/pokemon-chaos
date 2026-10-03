@@ -1,4 +1,5 @@
 #include "global.h"
+#include "chaos_mega.h"
 #include "battle.h"
 #include "battle_hold_effects.h"
 #include "battle_setup.h"
@@ -58,6 +59,8 @@ static bool32 HandleEndTurnVarious(enum BattlerId battler)
 
     for (enum BattlerId i = 0; i < gBattlersCount; i++)
     {
+        ChaosRampageEndTurn(i);
+
         if (gBattleMons[i].volatiles.throatChopTimer > 0)
         {
             gBattleMons[i].volatiles.throatChopTimer--;
@@ -387,7 +390,8 @@ static bool32 HandleEndTurnFirstEventBlock(enum BattlerId battler)
             else if (!gBattleMons[battler].volatiles.rampageTurns && gBattleMons[battler].volatiles.multipleTurns)
             {
                 gBattleMons[battler].volatiles.multipleTurns = FALSE;
-                if (!gBattleMons[battler].volatiles.confusionTimer)
+                if (GetBattlerAbility(battler) != ABILITY_RAMPAGE
+                 && !gBattleMons[battler].volatiles.confusionTimer)
                 {
                     SetMoveEffectHelper(battler, battler, MOVE_EFFECT_CONFUSION, gBattlescriptCurrInstr, EFFECT_PRIMARY);
                     if (gBattleMons[battler].volatiles.confusionTimer)

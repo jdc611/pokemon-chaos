@@ -5141,13 +5141,13 @@ IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
 - Knock Off
 - Rapid Spin
 
-Nidoking
+Nidoking @ Nidokingite
 Level: 58
 IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
-- Earth Power
-- Sludge Bomb
+- Earthquake
+- Poison Jab
 - Ice Beam
-- Thunderbolt
+- Megahorn
 
 === TRAINER_TEAM_ROCKET_GRUNT ===
 Name: GRUNT
