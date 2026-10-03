@@ -1975,14 +1975,16 @@ void CB2_NewGame(void)
     // region-state handoff as a variable from the Start+Select test.
     if (debugForceKanto)
     {
-        // KTEST is a world-traversal diagnostic, not the real Kanto story path.
-        // Skip Pallet's Oak grass-edge intro so FRLG story scripting / the
-        // temporarily stripped Oak Lab cannot mask connection/collision tests.
-        VarSet(VAR_MAP_SCENE_PALLET_TOWN_OAK, 3);
-
-        // Keep SELECT quickstart deterministic: KTEST always begins in the
-        // Pallet bedroom. Reusable travel belongs in the R+Start debug menu.
-        SetWarpDestination(MAP_GROUP(MAP_PALLET_TOWN_PLAYERS_HOUSE_2F), MAP_NUM(MAP_PALLET_TOWN_PLAYERS_HOUSE_2F), WARP_ID_NONE, 6, 6);
+        // Quick start skips the intro, but uses Oak's physical starter balls.
+        VarSet(VAR_MAP_SCENE_PALLET_TOWN_OAK, 1);
+        VarSet(VAR_MAP_SCENE_PALLET_TOWN_PROFESSOR_OAKS_LAB, 2);
+        FlagClear(FLAG_HIDE_OAK_IN_HIS_LAB);
+        FlagSet(FLAG_HIDE_RIVAL_IN_LAB);
+        FlagSet(FLAG_BEAT_RIVAL_IN_OAKS_LAB);
+        FlagClear(FLAG_HIDE_BULBASAUR_BALL);
+        FlagClear(FLAG_HIDE_CHARMANDER_BALL);
+        FlagClear(FLAG_HIDE_SQUIRTLE_BALL);
+        SetWarpDestination(MAP_GROUP(MAP_PALLET_TOWN_PROFESSOR_OAKS_LAB), MAP_NUM(MAP_PALLET_TOWN_PROFESSOR_OAKS_LAB), WARP_ID_NONE, 6, 5);
         WarpIntoMap();
         gRunSetupStartRegion = 1;
         gDebugForceKantoNewGame = FALSE;

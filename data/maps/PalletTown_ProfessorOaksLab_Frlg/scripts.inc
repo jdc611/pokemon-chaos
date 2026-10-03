@@ -1148,6 +1148,7 @@ EventScript_GiveNicknameToStarter::
 
 PalletTown_ProfessorOaksLab_EventScript_RivalPicksStarter::
 	closemessage
+	goto_if_set FLAG_BEAT_RIVAL_IN_OAKS_LAB, PalletTown_ProfessorOaksLab_EventScript_FinishQuickStart
 	goto_if_eq PLAYER_STARTER_NUM, 0, PalletTown_ProfessorOaksLab_EventScript_RivalWalksToCharmander
 	goto_if_eq PLAYER_STARTER_NUM, 1, PalletTown_ProfessorOaksLab_EventScript_RivalWalksToBulbasaur
 	goto_if_eq PLAYER_STARTER_NUM, 2, PalletTown_ProfessorOaksLab_EventScript_RivalWalksToSquirtle
@@ -1668,3 +1669,16 @@ PalletTown_ProfessorOaksLab_Text_RivalIllCompleteThePokedex::
 
 PalletTown_ProfessorOaksLab_Text_ChaosConfirmStarter:
 	.string "So, you want {STR_VAR_1}?$"
+
+@ Quick start uses the same ball previews and gift logic, without the rival intro.
+PalletTown_ProfessorOaksLab_EventScript_FinishQuickStart::
+	removeobject LOCALID_BULBASAUR_BALL
+	removeobject LOCALID_CHARMANDER_BALL
+	removeobject LOCALID_SQUIRTLE_BALL
+	setflag FLAG_HIDE_BULBASAUR_BALL
+	setflag FLAG_HIDE_CHARMANDER_BALL
+	setflag FLAG_HIDE_SQUIRTLE_BALL
+	setvar VAR_MAP_SCENE_VIRIDIAN_CITY_MART, 2
+	setvar VAR_MAP_SCENE_PALLET_TOWN_PROFESSOR_OAKS_LAB, 6
+	releaseall
+	end

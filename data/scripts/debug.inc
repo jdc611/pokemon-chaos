@@ -833,22 +833,8 @@ DebugEventScript_PrintWeekday_Text_0:
 @ Configurable quick start: no badges or later story flags are granted.
 EventScript_ChaosQuickStart::
 	lockall
-	special ChooseOakStarter
-	special ResolveChaosQuickStartStarter
-	special GiveChaosOakStarter
-	setflag FLAG_SYS_POKEMON_GET
-	setflag FLAG_PALLET_LADY_NOT_BLOCKING_SIGN
 	setflag FLAG_OPENED_START_MENU
 	setflag FLAG_VISITED_OAKS_LAB
-	setflag FLAG_BEAT_RIVAL_IN_OAKS_LAB
-	clearflag FLAG_HIDE_OAK_IN_HIS_LAB
-	setflag FLAG_HIDE_RIVAL_IN_LAB
-	setflag FLAG_HIDE_BULBASAUR_BALL
-	setflag FLAG_HIDE_CHARMANDER_BALL
-	setflag FLAG_HIDE_SQUIRTLE_BALL
-	setvar VAR_MAP_SCENE_PALLET_TOWN_OAK, 1
-	setvar VAR_MAP_SCENE_PALLET_TOWN_PROFESSOR_OAKS_LAB, 6
-	setvar VAR_MAP_SCENE_VIRIDIAN_CITY_MART, 2
 	setvar VAR_MAP_SCENE_VIRIDIAN_CITY_OLD_MAN, 1
 	setvar VAR_MAP_SCENE_PALLET_TOWN_RIVALS_HOUSE, 1
 	setflag FLAG_SYS_POKEDEX_GET
@@ -856,5 +842,10 @@ EventScript_ChaosQuickStart::
 	setflag FLAG_SYS_B_DASH
 	additem ITEM_POKE_BALL, 10
 	additem ITEM_POTION, 5
+	msgbox Text_ChaosQuickStartChooseLabStarter
 	releaseall
 	end
+
+Text_ChaosQuickStartChooseLabStarter::
+	.string "OAK: Your adventure awaits!\n"
+	.string "Choose a POKéMON from the table.$"
