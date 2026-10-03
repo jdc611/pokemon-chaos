@@ -1341,7 +1341,6 @@
 // See constants/opponents.h. The values there + FLAG_TRAINER_FLAG_START are the flag IDs
 
 #define TRAINER_FLAGS_START                                         0x500
-#define FLAG_HIDE_JACK_LEAGUE                                      (TRAINER_FLAGS_START + TRAINER_JACK)
 
 #define TRAINER_FLAGS_END                                           (TRAINER_FLAGS_START + MAX_TRAINERS_COUNT - 1) // 0x85F
 
@@ -2437,6 +2436,9 @@
 #define FLAG_WORLD_MAP_BIRTH_ISLAND_EXTERIOR                        0
 
 #endif
+
+// Chaos flags shared by Emerald and native FireRed/LeafGreen.
+#define FLAG_HIDE_JACK_LEAGUE                                      (TRAINER_FLAGS_START + TRAINER_JACK)
 
 #if TESTING
 #define TESTING_FLAGS_START                     0x5000
