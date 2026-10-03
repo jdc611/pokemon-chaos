@@ -1122,6 +1122,26 @@ static const struct DebugMenuOption sChaosDebugProgress[] =
 };
 
 #define KANTO_TEST_BATTLE(label, trainer) { COMPOUND_STRING(label), DebugAction_ImportantBattle, &(const u16){trainer} }
+static const struct DebugMenuOption sChaosDebugRematches[] =
+{
+    KANTO_TEST_BATTLE("Brock Rematch", TRAINER_LEADER_BROCK_REMATCH),
+    KANTO_TEST_BATTLE("Misty Rematch", TRAINER_LEADER_MISTY_REMATCH),
+    KANTO_TEST_BATTLE("Surge Rematch", TRAINER_LEADER_LT_SURGE_REMATCH),
+    { NULL }
+};
+
+static const struct DebugMenuOption sChaosDebugRocketBattles[] =
+{
+    KANTO_TEST_BATTLE("Cole - Cerulean", TRAINER_TEAM_ROCKET_GRUNT_5),
+    KANTO_TEST_BATTLE("Vesper - Tower", TRAINER_TEAM_ROCKET_GRUNT_21),
+    KANTO_TEST_BATTLE("Cole - Hideout", TRAINER_TEAM_ROCKET_GRUNT_16),
+    KANTO_TEST_BATTLE("Vesper - Hideout", TRAINER_TEAM_ROCKET_GRUNT_17),
+    { COMPOUND_STRING("J/J - Mt. Moon"), DebugAction_RocketBattle, &(const u16){TRAINER_CHAOS_JESSIE_MOON} },
+    { COMPOUND_STRING("J/J - Silph"), DebugAction_RocketBattle, &(const u16){TRAINER_CHAOS_JESSIE_SILPH} },
+    { COMPOUND_STRING("Silph Gauntlet"), DebugAction_RocketBattle, &(const u16){TRAINER_CHAOS_VESPER_SILPH} },
+    { NULL }
+};
+
 static const struct DebugMenuOption sChaosDebugBattles[] =
 {
     KANTO_TEST_BATTLE("Brock", TRAINER_LEADER_BROCK),
@@ -1132,16 +1152,8 @@ static const struct DebugMenuOption sChaosDebugBattles[] =
     KANTO_TEST_BATTLE("Sabrina", TRAINER_LEADER_SABRINA),
     KANTO_TEST_BATTLE("Blaine", TRAINER_LEADER_BLAINE),
     KANTO_TEST_BATTLE("Giovanni", TRAINER_LEADER_GIOVANNI),
-    KANTO_TEST_BATTLE("Brock Rematch", TRAINER_LEADER_BROCK_REMATCH),
-    KANTO_TEST_BATTLE("Misty Rematch", TRAINER_LEADER_MISTY_REMATCH),
-    KANTO_TEST_BATTLE("Surge Rematch", TRAINER_LEADER_LT_SURGE_REMATCH),
-    KANTO_TEST_BATTLE("Cole - Cerulean", TRAINER_TEAM_ROCKET_GRUNT_5),
-    KANTO_TEST_BATTLE("Vesper - Tower", TRAINER_TEAM_ROCKET_GRUNT_21),
-    KANTO_TEST_BATTLE("Cole - Hideout", TRAINER_TEAM_ROCKET_GRUNT_16),
-    KANTO_TEST_BATTLE("Vesper - Hideout", TRAINER_TEAM_ROCKET_GRUNT_17),
-    { COMPOUND_STRING("Jessie/James - Moon"), DebugAction_RocketBattle, &(const u16){TRAINER_CHAOS_JESSIE_MOON} },
-    { COMPOUND_STRING("Jessie/James - Silph"), DebugAction_RocketBattle, &(const u16){TRAINER_CHAOS_JESSIE_SILPH} },
-    { COMPOUND_STRING("Cole/Vesper Gauntlet"), DebugAction_RocketBattle, &(const u16){TRAINER_CHAOS_VESPER_SILPH} },
+    { COMPOUND_STRING("Mega Rematches"), DebugAction_OpenSubMenu, sChaosDebugRematches },
+    { COMPOUND_STRING("Rocket Tests"), DebugAction_OpenSubMenu, sChaosDebugRocketBattles },
     KANTO_TEST_BATTLE("Lorelei", TRAINER_ELITE_FOUR_LORELEI),
     KANTO_TEST_BATTLE("Bruno", TRAINER_ELITE_FOUR_BRUNO),
     KANTO_TEST_BATTLE("Agatha", TRAINER_ELITE_FOUR_AGATHA),
