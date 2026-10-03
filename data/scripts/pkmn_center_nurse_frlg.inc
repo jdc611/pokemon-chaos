@@ -37,6 +37,7 @@ EventScript_PkmnCenterNurse_TakeAndHealPkmn_Frlg::
 	applymovement VAR_LAST_TALKED, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	special HealPlayerParty
+	call_if_eq VAR_CHAOS_RECOVERY_TOOLS_UNLOCKED, FALSE, EventScript_ChaosNurseEquipRecoveryTools
 	return
 
 EventScript_PkmnCenterNurse_CheckTrainerTowerAndUnionRoom_Frlg::
@@ -92,3 +93,14 @@ Text_RestoredPkmnToFullHealth_Frlg::
 	.string "Thank you for waiting.\n"
 	.string "We've restored your POKéMON to\l"
 	.string "full health.$"
+
+EventScript_ChaosNurseEquipRecoveryTools::
+	setvar VAR_CHAOS_RECOVERY_TOOLS_UNLOCKED, TRUE
+	msgbox Text_ChaosNurseRecoveryTools
+	return
+
+Text_ChaosNurseRecoveryTools::
+	.string "I've equipped you with a\n"
+	.string "POKéVIAL and a PORTABLE PC!\p"
+	.string "You can heal your POKéMON and\n"
+	.string "access your Boxes in QUICK TOOLS.$"

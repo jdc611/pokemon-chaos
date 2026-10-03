@@ -438,10 +438,15 @@ static void BuildNormalStartMenu(void)
 
     if (sQuickToolsMode)
     {
+        if (IS_FRLG && !VarGet(VAR_CHAOS_CHANGERS_UNLOCKED))
+            sStartMenuPage = 0;
         if (sStartMenuPage == 0)
         {
-            AddStartMenuAction(MENU_ACTION_POKEVIAL);
-            AddStartMenuAction(MENU_ACTION_PC_STORAGE);
+            if (!IS_FRLG || VarGet(VAR_CHAOS_RECOVERY_TOOLS_UNLOCKED))
+            {
+                AddStartMenuAction(MENU_ACTION_POKEVIAL);
+                AddStartMenuAction(MENU_ACTION_PC_STORAGE);
+            }
             AddStartMenuAction(MENU_ACTION_POKERIDER);
             if (!IS_FRLG || VarGet(VAR_CHAOS_TIME_CHANGER_UNLOCKED))
                 AddStartMenuAction(MENU_ACTION_TIME_CHANGER);
@@ -816,7 +821,8 @@ static bool8 HandleStartMenuInput(void)
         PlaySE(SE_SELECT);
         sStartMenuCursorPos = Menu_MoveCursor(1);
     }
-    if (!sGameOptionsMode && JOY_NEW(DPAD_RIGHT | DPAD_LEFT))
+    if (!sGameOptionsMode && JOY_NEW(DPAD_RIGHT | DPAD_LEFT)
+     && (!sQuickToolsMode || !IS_FRLG || VarGet(VAR_CHAOS_CHANGERS_UNLOCKED)))
     {
         PlaySE(SE_SELECT);
 
