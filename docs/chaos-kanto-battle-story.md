@@ -209,3 +209,13 @@ They can use their defensive options and save Arcanine/Nidoking for last.
 Neither team gains omniscient prediction, higher levels, IV increases or EV
 buffs. Rampage remains a three-turn commitment, including the risk of an immune
 Pokemon switching into the repeated attack.
+
+## Gym teams at their level caps with perfect IVs
+
+Every Pokemon on each Gym Leader roster now uses that battle’s full cap:
+Brock 15, Misty 22, Lt. Surge 28, Erika 34, Sabrina 40, Koga 46,
+Blaine 52 and Viridian Giovanni 58. Mega rematches use Brock 42, Misty 43
+and Lt. Surge 44 for every team member. These levels supersede the earlier
+staggered levels above. The story encounters with Giovanni retain their
+existing levels. All eleven rosters have perfect 31 IVs in all six stats. Species, moves,
+items, abilities and battle formats remain as previously defined; the same native rosters serve the debug shortcuts.

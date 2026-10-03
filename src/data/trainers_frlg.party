@@ -5102,41 +5102,41 @@ Double Battle: No
 AI: Check Bad Move / Try To Faint / Check Viability / Smart Switching / HP Aware / Ace Pokemon
 
 Excadrill
-Level: 54
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+Level: 58
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Earthquake
 - Iron Head
 - Rock Slide
 - Swords Dance
 
 Krookodile
-Level: 55
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+Level: 58
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Earthquake
 - Crunch
 - Brick Break
 - Stone Edge
 
 Ursaluna
-Level: 56
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+Level: 58
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Headlong Rush
 - Facade
 - Crunch
 - Ice Punch
 
 Gastrodon West @ Leftovers
-Level: 56
+Level: 58
 Ability: Storm Drain
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Earth Power
 - Muddy Water
 - Ice Beam
 - Recover
 
 Great Tusk
-Level: 57
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+Level: 58
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Headlong Rush
 - Close Combat
 - Knock Off
@@ -5144,7 +5144,7 @@ IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
 
 Nidoking @ Nidokingite
 Level: 58
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Earthquake
 - Poison Jab
 - Ice Beam
@@ -7234,24 +7234,24 @@ Double Battle: No
 AI: Check Bad Move / Try To Faint / Check Viability
 
 Geodude
-Level: 13
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+Level: 15
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Rock Tomb
 - Bulldoze
 - Defense Curl
 - Rollout
 
 Rockruff
-Level: 14
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+Level: 15
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Rock Tomb
 - Bite
 - Sand Attack
 - Howl
 
 Nacli
-Level: 14
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+Level: 15
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Smack Down
 - Mud Shot
 - Recover
@@ -7259,7 +7259,7 @@ IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
 
 Onix
 Level: 15
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Rock Tomb
 - Bulldoze
 - Dragon Breath
@@ -7275,24 +7275,24 @@ Double Battle: No
 AI: Check Bad Move / Try To Faint / Check Viability
 
 Dewott
-Level: 20
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+Level: 22
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Razor Shell
 - Aqua Jet
 - Fury Cutter
 - Focus Energy
 
 Lombre
-Level: 20
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+Level: 22
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Bubble Beam
 - Mega Drain
 - Fake Out
 - Nature Power
 
 Finizen
-Level: 21
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+Level: 22
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Aqua Jet
 - Water Pulse
 - Icy Wind
@@ -7300,7 +7300,7 @@ IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
 
 Starmie
 Level: 22
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Water Pulse
 - Psybeam
 - Swift
@@ -7316,24 +7316,24 @@ Double Battle: No
 AI: Check Bad Move / Try To Faint / Check Viability
 
 Charjabug
-Level: 25
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+Level: 28
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Spark
 - Bug Bite
 - Mud Slap
 - Thunder Wave
 
 Luxio
-Level: 26
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+Level: 28
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Spark
 - Bite
 - Ice Fang
 - Thunder Wave
 
 Toxtricity
-Level: 27
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+Level: 28
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Shock Wave
 - Acid
 - Snarl
@@ -7341,7 +7341,7 @@ IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
 
 Raichu
 Level: 28
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Thunder Punch
 - Brick Break
 - Quick Attack
@@ -7357,32 +7357,32 @@ Double Battle: No
 AI: Check Bad Move / Try To Faint / Check Viability
 
 Roserade
-Level: 31
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+Level: 34
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Giga Drain
 - Venoshock
 - Stun Spore
 - Leech Seed
 
 Lurantis
-Level: 32
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+Level: 34
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Leaf Blade
 - X Scissor
 - Brick Break
 - Synthesis
 
 Arboliva
-Level: 32
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+Level: 34
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Giga Drain
 - Earth Power
 - Dazzling Gleam
 - Safeguard
 
 Vileplume
-Level: 33
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+Level: 34
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Giga Drain
 - Sludge Bomb
 - Sleep Powder
@@ -7390,7 +7390,7 @@ IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
 
 Tsareena
 Level: 34
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Trop Kick
 - Stomp
 - Low Sweep
@@ -7406,8 +7406,8 @@ Double Battle: Yes
 AI: Check Bad Move / Try To Faint / Check Viability
 
 Glimmora
-Level: 43
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+Level: 46
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Ability: Toxic Debris
 - Sludge Bomb
 - Power Gem
@@ -7415,8 +7415,8 @@ Ability: Toxic Debris
 - Protect
 
 Crobat
-Level: 43
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+Level: 46
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Ability: Inner Focus
 - Cross Poison
 - Acrobatics
@@ -7424,8 +7424,8 @@ Ability: Inner Focus
 - Tailwind
 
 Toxicroak
-Level: 44
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+Level: 46
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Ability: Dry Skin
 - Drain Punch
 - Poison Jab
@@ -7433,8 +7433,8 @@ Ability: Dry Skin
 - Protect
 
 Revavroom
-Level: 44
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+Level: 46
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Ability: Filter
 - Gunk Shot
 - Iron Head
@@ -7442,8 +7442,8 @@ Ability: Filter
 - Protect
 
 Weezing Galar
-Level: 45
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+Level: 46
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Ability: Levitate
 - Sludge Bomb
 - Strange Steam
@@ -7452,7 +7452,7 @@ Ability: Levitate
 
 Beedrill @ Beedrillite
 Level: 46
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Poison Jab
 - X Scissor
 - Drill Run
@@ -7468,41 +7468,41 @@ Double Battle: No
 AI: Check Bad Move / Try To Faint / Check Viability / Smart Switching / HP Aware / Ace Pokemon
 
 Torkoal @ Heat Rock
-Level: 48
+Level: 52
 Ability: Drought
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Lava Plume
 - Solar Beam
 - Body Press
 - Stealth Rock
 
 Ceruledge
-Level: 49
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+Level: 52
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Bitter Blade
 - Shadow Claw
 - Psycho Cut
 - Swords Dance
 
 Skeledirge
-Level: 49
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+Level: 52
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Torch Song
 - Shadow Ball
 - Earth Power
 - Slack Off
 
 Volcarona
-Level: 50
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+Level: 52
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Flamethrower
 - Bug Buzz
 - Giga Drain
 - Quiver Dance
 
 Houndoom
-Level: 51
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+Level: 52
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Flamethrower
 - Dark Pulse
 - Solar Beam
@@ -7510,7 +7510,7 @@ IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
 
 Arcanine
 Level: 52
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Flare Blitz
 - Extreme Speed
 - Crunch
@@ -7526,8 +7526,8 @@ Double Battle: No
 AI: Check Bad Move / Try To Faint / Check Viability
 
 Indeedee F
-Level: 37
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+Level: 40
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Ability: Psychic Surge
 - Psychic
 - Dazzling Gleam
@@ -7535,8 +7535,8 @@ Ability: Psychic Surge
 - Reflect
 
 Malamar
-Level: 37
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+Level: 40
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Ability: Contrary
 - Psycho Cut
 - Night Slash
@@ -7544,8 +7544,8 @@ Ability: Contrary
 - Topsy Turvy
 
 Hatterene
-Level: 38
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+Level: 40
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Ability: Magic Bounce
 - Psychic
 - Dazzling Gleam
@@ -7553,8 +7553,8 @@ Ability: Magic Bounce
 - Calm Mind
 
 Espeon
-Level: 39
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+Level: 40
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Ability: Magic Bounce
 - Psychic
 - Shadow Ball
@@ -7563,7 +7563,7 @@ Ability: Magic Bounce
 
 Alakazam
 Level: 40
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Psychic
 - Shadow Ball
 - Focus Blast
@@ -14091,24 +14091,24 @@ Double Battle: No
 AI: Check Bad Move / Try To Faint / Check Viability
 
 Glimmora
-Level: 40
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+Level: 42
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Power Gem
 - Sludge Bomb
 - Stealth Rock
 - Earth Power
 
 Lycanroc Dusk
-Level: 40
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+Level: 42
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Rock Slide
 - Accelerock
 - Crunch
 - Brick Break
 
 Coalossal
-Level: 41
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+Level: 42
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Rock Slide
 - Flamethrower
 - Body Press
@@ -14116,7 +14116,7 @@ IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
 
 Steelix @ Steelixite
 Level: 42
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Heavy Slam
 - Earthquake
 - Rock Slide
@@ -14133,24 +14133,24 @@ Double Battle: No
 AI: Check Bad Move / Try To Faint / Check Viability
 
 Barraskewda
-Level: 41
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+Level: 43
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Liquidation
 - Aqua Jet
 - Crunch
 - Ice Fang
 
 Ludicolo
-Level: 41
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+Level: 43
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Surf
 - Giga Drain
 - Ice Beam
 - Fake Out
 
 Azumarill
-Level: 42
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+Level: 43
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Ability: Huge Power
 - Aqua Tail
 - Play Rough
@@ -14159,7 +14159,7 @@ Ability: Huge Power
 
 Gyarados @ Gyaradosite
 Level: 43
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Waterfall
 - Crunch
 - Ice Fang
@@ -14176,24 +14176,24 @@ Double Battle: No
 AI: Check Bad Move / Try To Faint / Check Viability
 
 Kilowattrel
-Level: 42
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+Level: 44
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Discharge
 - Air Slash
 - Volt Switch
 - Roost
 
 Magnezone
-Level: 42
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+Level: 44
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Thunderbolt
 - Flash Cannon
 - Volt Switch
 - Thunder Wave
 
 Electivire
-Level: 43
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+Level: 44
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Thunder Punch
 - Ice Punch
 - Brick Break
@@ -14201,7 +14201,7 @@ IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
 
 Manectric @ Manectite
 Level: 44
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Thunderbolt
 - Flamethrower
 - Volt Switch
