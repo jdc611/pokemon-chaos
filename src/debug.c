@@ -301,6 +301,7 @@ static void DebugAction_Util_FieldMoveWaterfall(u8 taskId);
 static void DebugAction_Util_FieldMoveDive(u8 taskId);
 static void DebugAction_Util_FieldMoveFlash(u8 taskId);
 static void DebugAction_Util_MirageTowerWarp(u8 taskId);
+static void DebugAction_KantoWarp(u8 taskId, const void *params);
 
 static void DebugAction_TimeMenu_ChangeTimeOfDay(u8 taskId);
 static void DebugAction_TimeMenu_ChangeWeekdays(u8 taskId);
@@ -407,6 +408,23 @@ static void DebugAction_Util_MirageTowerWarp(u8 taskId)
     // Temporary test shortcut: enter Mirage Tower directly without Route 111 progression checks.
     // Spawn one tile north of the 1F exit warp so the player does not immediately leave again.
     DebugAction_Util_FieldMoveWarp(taskId, MAP_MIRAGE_TOWER_1F, 10, 13);
+}
+
+struct KantoDebugWarp
+{
+    u16 map;
+    s16 x;
+    s16 y;
+};
+
+static void DebugAction_KantoWarp(u8 taskId, const void *params)
+{
+    const struct KantoDebugWarp *warp = params;
+
+    Debug_DestroyMenu_Full(taskId);
+    SetWarpDestination(MAP_GROUP(warp->map), MAP_NUM(warp->map), WARP_ID_NONE, warp->x, warp->y);
+    DoWarp();
+    ResetInitialPlayerAvatarState();
 }
 
 static void DebugAction_Util_FieldMoveCut(u8 taskId)
@@ -689,10 +707,37 @@ static const struct DebugMenuOption sDebugMenu_Actions_FieldMoveTests[] =
     { NULL }
 };
 
+static const struct KantoDebugWarp sKantoWarp_Pallet       = { MAP_PALLET_TOWN, 10, 10 };
+static const struct KantoDebugWarp sKantoWarp_Route1       = { MAP_ROUTE1, 10, 30 };
+static const struct KantoDebugWarp sKantoWarp_Viridian     = { MAP_VIRIDIAN_CITY, 26, 27 };
+static const struct KantoDebugWarp sKantoWarp_ViridianMart = { MAP_VIRIDIAN_CITY_MART, 4, 6 };
+static const struct KantoDebugWarp sKantoWarp_ViridianPC   = { MAP_VIRIDIAN_CITY_POKEMON_CENTER_1F, 7, 7 };
+static const struct KantoDebugWarp sKantoWarp_Pewter       = { MAP_PEWTER_CITY, 16, 26 };
+static const struct KantoDebugWarp sKantoWarp_PewterMart   = { MAP_PEWTER_CITY_MART, 4, 6 };
+static const struct KantoDebugWarp sKantoWarp_PewterPC     = { MAP_PEWTER_CITY_POKEMON_CENTER_1F, 7, 7 };
+static const struct KantoDebugWarp sKantoWarp_BrockGym     = { MAP_PEWTER_CITY_GYM, 6, 13 };
+static const struct KantoDebugWarp sKantoWarp_Route3       = { MAP_ROUTE3, 2, 7 };
+
+static const struct DebugMenuOption sDebugMenu_Actions_KantoWarps[] =
+{
+    { COMPOUND_STRING("Pallet Town"),       DebugAction_KantoWarp, &sKantoWarp_Pallet },
+    { COMPOUND_STRING("Route 1"),           DebugAction_KantoWarp, &sKantoWarp_Route1 },
+    { COMPOUND_STRING("Viridian City"),     DebugAction_KantoWarp, &sKantoWarp_Viridian },
+    { COMPOUND_STRING("Viridian Mart"),     DebugAction_KantoWarp, &sKantoWarp_ViridianMart },
+    { COMPOUND_STRING("Viridian Center"),   DebugAction_KantoWarp, &sKantoWarp_ViridianPC },
+    { COMPOUND_STRING("Pewter Safe Area"),  DebugAction_KantoWarp, &sKantoWarp_Pewter },
+    { COMPOUND_STRING("Pewter Mart"),       DebugAction_KantoWarp, &sKantoWarp_PewterMart },
+    { COMPOUND_STRING("Pewter Center"),     DebugAction_KantoWarp, &sKantoWarp_PewterPC },
+    { COMPOUND_STRING("Brock Gym"),         DebugAction_KantoWarp, &sKantoWarp_BrockGym },
+    { COMPOUND_STRING("Route 3"),           DebugAction_KantoWarp, &sKantoWarp_Route3 },
+    { NULL }
+};
+
 static const struct DebugMenuOption sDebugMenu_Actions_Utilities[] =
 {
     { COMPOUND_STRING("Fly to map…"),               DebugAction_Util_Fly },
     { COMPOUND_STRING("Warp to map warp…"),         DebugAction_Selection_Init, &sWarpSelection},
+    { COMPOUND_STRING("Kanto Warps…"),              DebugAction_OpenSubMenu, sDebugMenu_Actions_KantoWarps },
     { COMPOUND_STRING("Field Move Tests…"),         DebugAction_OpenSubMenu, sDebugMenu_Actions_FieldMoveTests },
     { COMPOUND_STRING("Set weather…"),              DebugAction_Selection_Init, &sSetWeatherSelection },
     { COMPOUND_STRING("Font Test…"),                DebugAction_ExecuteScript, Debug_EventScript_FontTest },
