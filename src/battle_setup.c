@@ -2372,7 +2372,7 @@ void CreateNPCTrainerPartyFromTrainer(struct Pokemon *party, const struct Traine
             struct TrainerMon counterEntry = *entry;
             struct Pokemon evolutionMon;
             bool32 canStopEvo;
-            CreateMon(&evolutionMon, counter, entry->lvl, USE_RANDOM_IVS, FALSE, 0, OT_ID_PLAYER_ID, 0);
+            CreateMon(&evolutionMon, counter, entry->lvl, 0, OTID_STRUCT_PLAYER_ID);
             // Follow ordinary level evolution at this encounter's level.
             for (u32 stage = 0; stage < 3; stage++)
             {
