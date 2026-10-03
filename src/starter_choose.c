@@ -13,6 +13,8 @@
 #include "overworld.h"
 #include "pokemon.h"
 #include "script_pokemon_util.h"
+#include "script_menu.h"
+#include "script.h"
 #include "random.h"
 #include "random_mon_generation.h"
 #include "constants/random_mon_generation.h"
@@ -1298,4 +1300,23 @@ static void SpriteCB_StarterPokemon(struct Sprite *sprite)
         sprite->y -= 2;
     if (sprite->y < STARTER_PKMN_POS_Y)
         sprite->y += 2;
+}
+
+// Shared picker order -> physical Oak ball order for later rival scripts.
+void ResolveChaosQuickStartStarter(void)
+{
+    static const u8 kantoBalls[] = {0, 2, 1};
+    u8 slot = gSpecialVar_Result % STARTER_MON_COUNT;
+    gSpecialVar_0x8004 = gSaveBlock3Ptr->starterMode == RUN_STARTER_KANTO ? kantoBalls[slot] : slot;
+    VarSet(VAR_STARTER_MON, gSpecialVar_0x8004);
+    ResolveChaosOakStarters();
+    VarSet(VAR_CHAOS_RIVAL_STARTER, gSpecialVar_0x8006);
+    gSpecialVar_0x8004 = gSpecialVar_0x8005;
+}
+
+void ShowChaosOakStarterPic(void)
+{
+    Script_RequestEffects(SCREFF_V1 | SCREFF_HARDWARE);
+    ScriptMenu_ShowPokemonPicWithShiny(gSpecialVar_0x8004,
+        gSaveBlock3Ptr->starterMode == RUN_STARTER_CHOOSE && gCustomStarterShiny, 10, 3);
 }

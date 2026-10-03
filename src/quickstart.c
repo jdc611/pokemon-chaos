@@ -5,6 +5,7 @@
 #include "decompress.h"
 #include "graphics.h"
 #include "main.h"
+#include "main_menu.h"
 #include "overworld.h"
 #include "palette.h"
 #include "config/quickstart.h"
@@ -100,7 +101,7 @@ static void CB2_SkipToNewGame(void)
         ResetSpriteData();
         FreeAllSpritePalettes();
         ResetTasks();
-        SetMainCallback2(CB2_NewGame);
+        SetMainCallback2(CB2_RunSetupQuickStart);
     }
 }
 

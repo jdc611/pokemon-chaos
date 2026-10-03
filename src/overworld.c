@@ -1950,6 +1950,14 @@ static bool8 RunFieldCallback(void)
 extern EWRAM_DATA u8 gRunSetupStartRegion;
 extern EWRAM_DATA bool8 gDebugForceKantoNewGame;
 
+static void Task_QuickStartChooseStarter(u8 taskId)
+{
+    if (gPaletteFade.active || ArePlayerFieldControlsLocked())
+        return;
+    ScriptContext_SetupScript(EventScript_ChaosQuickStart);
+    DestroyTask(taskId);
+}
+
 void CB2_NewGame(void)
 {
     const bool8 debugForceKanto = gDebugForceKantoNewGame;
@@ -2001,6 +2009,8 @@ void CB2_NewGame(void)
     SetFieldVBlankCallback();
     SetMainCallback1(CB1_Overworld);
     SetMainCallback2(CB2_Overworld);
+    if (debugForceKanto)
+        CreateTask(Task_QuickStartChooseStarter, 20);
 #if OW_USE_FAKE_RTC
     // Wall clock now track local time so we set it to 10AM to match initial wall clock time
     RtcCalcLocalTimeOffset(0, 10, 0, 0);

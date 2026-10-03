@@ -3,6 +3,7 @@
 
 void CB2_InitMainMenu(void);
 void CB2_RunSetupForFireRed(void);
+void CB2_RunSetupQuickStart(void);
 void CreateYesNoMenuParameterized(u8 x, u8 y, u16 baseTileNum, u16 baseBlock, u8 yesNoPalNum, u8 winPalNum);
 void NewGameBirchSpeech_SetDefaultPlayerName(u8);
 

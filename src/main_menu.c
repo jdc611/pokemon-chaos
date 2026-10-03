@@ -1069,31 +1069,9 @@ static void Task_DebugQuickStartAfterFade(u8 taskId)
     if (gPaletteFade.active)
         return;
 
-    // Testing shortcut: bypass Birch/run setup with deterministic defaults.
-    gRunSetupRandomizerEnabled = FALSE;
-    gRunSetupSeedIsCustom = FALSE;
-    gRunSetupStarterMode = RUN_STARTER_NORMAL;
-    gRunSetupWorldSeed = 1;
-    gRunSetupFilterMode = RUN_FILTER_NONE;
-    gRunSetupFilterValue = 0;
-    gRunSetupBstMode = RUN_BST_OFF;
-    gRunSetupAbilityMode = FALSE;
-    gRunSetupMinimalGrindingMode = FALSE;
-    gRunSetupDifficulty = RUN_DIFFICULTY_NORMAL;
-    gRunSetupMovesetMode = 0;
-    gRunSetupEvolutionMode = 0;
-    // Direct Kanto diagnostic path: title-screen START+SELECT now bypasses
-    // the entire intro/setup sequence and enters the same Pallet new-game load.
-    gRunSetupStartRegion = 1;
-    gRunSetupPlayerModel = 1;
-    gDebugForceKantoNewGame = TRUE;
-
-    gSaveBlock2Ptr->playerGender = MALE;
-    StringCopy(gSaveBlock2Ptr->playerName, COMPOUND_STRING("KTEST"));
-
     DestroyTask(taskId);
     FreeAllWindowBuffers();
-    SetMainCallback2(CB2_NewGame);
+    SetMainCallback2(CB2_RunSetupQuickStart);
 }
 
 static bool8 HandleMainMenuInput(u8 taskId)
@@ -2099,7 +2077,7 @@ static void RunSetup_ResetDefaults(void)
     sRunSetupLowPoolConfirmed = FALSE;
 }
 
-void CB2_RunSetupForFireRed(void)
+static void RunSetup_StartForFireRed(bool8 quickStart)
 {
     RunSetup_ResetDefaults();
     sRunSetupStarter = RUN_STARTER_KANTO;
@@ -2107,7 +2085,27 @@ void CB2_RunSetupForFireRed(void)
     sRunSetupReturnToBirch = FALSE;
     gRunSetupStartRegion = 1;
     gRunSetupPlayerModel = 1;
+    gDebugForceKantoNewGame = quickStart;
+    if (quickStart)
+    {
+        gSaveBlock2Ptr->playerGender = MALE;
+        StringCopy(gSaveBlock2Ptr->playerName, COMPOUND_STRING("KTEST"));
+#if IS_FRLG
+        StringCopy(gSaveBlock1Ptr->rivalName, COMPOUND_STRING("BLUE"));
+#endif
+        sRunSetupPage = RUN_SETUP_PAGE_RANDOMIZER;
+    }
     CB2_RunSetup_Init();
+}
+
+void CB2_RunSetupForFireRed(void)
+{
+    RunSetup_StartForFireRed(FALSE);
+}
+
+void CB2_RunSetupQuickStart(void)
+{
+    RunSetup_StartForFireRed(TRUE);
 }
 
 static void Task_NewGameBirchSpeech_AskRandomizer(u8 taskId)

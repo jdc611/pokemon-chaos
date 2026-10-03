@@ -649,3 +649,7 @@ gSpecials::
 	def_special ResolveChaosOakStarters
 
 	def_special GiveChaosOakStarter
+
+	def_special ResolveChaosQuickStartStarter
+
+	def_special ShowChaosOakStarterPic
