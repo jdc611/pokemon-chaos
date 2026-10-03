@@ -77,7 +77,7 @@
     },
     {
       "type": "object",
-      "graphics_id": "OBJ_EVENT_GFX_ROCKET_F",
+      "graphics_id": "OBJ_EVENT_GFX_CHAOS_VESPER",
       "x": 19,
       "y": 14,
       "elevation": 3,
@@ -91,7 +91,7 @@
     },
     {
       "type": "object",
-      "graphics_id": "OBJ_EVENT_GFX_ROCKET_M",
+      "graphics_id": "OBJ_EVENT_GFX_CHAOS_COLE",
       "x": 16,
       "y": 14,
       "elevation": 3,

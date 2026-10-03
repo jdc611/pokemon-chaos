@@ -849,3 +849,32 @@ EventScript_ChaosQuickStart::
 Text_ChaosQuickStartChooseLabStarter::
 	.string "OAK: Your adventure awaits!\n"
 	.string "Choose a POKéMON from the table.$"
+
+@ Native Kanto Rocket practice battles. No quest checkpoints or item rewards.
+Debug_ChaosMoonBattle::
+	trainerbattle_two_trainers TRAINER_CHAOS_JESSIE_MOON, Debug_ChaosRocketDefeat, TRAINER_CHAOS_JAMES_MOON, Debug_ChaosRocketDefeat
+	releaseall
+	end
+Debug_ChaosSilphBattle::
+	special ChaosPrepareSilphSelection
+	fadescreen FADE_TO_BLACK
+	special ChooseHalfPartyForBattle
+	goto_if_eq VAR_RESULT, 0, Debug_ChaosSilphCancel
+	special ChaosBeginSilphPartnerBattle
+	setmultitrainerbattle TRAINER_CHAOS_JESSIE_SILPH, Debug_ChaosRocketDefeat, TRAINER_CHAOS_JAMES_SILPH, Debug_ChaosRocketDefeat, PARTNER_CHAOS_RIVAL
+	setvar VAR_0x8005, MULTI_BATTLE_2_VS_2 | MULTI_BATTLE_CHOOSE_MONS
+	callnative BattleSetup_StartMultiBattle
+	waitstate
+	releaseall
+	end
+Debug_ChaosSilphCancel::
+	special ChaosCancelSilphSelection
+	releaseall
+	end
+Debug_ChaosRocketGauntlet::
+	trainerbattle_no_intro TRAINER_CHAOS_COLE_SILPH, Debug_ChaosRocketDefeat
+	trainerbattle_no_intro TRAINER_CHAOS_VESPER_SILPH, Debug_ChaosRocketDefeat
+	releaseall
+	end
+Debug_ChaosRocketDefeat::
+	.string "You won this round!$"

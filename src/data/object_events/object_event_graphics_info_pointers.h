@@ -1,3 +1,7 @@
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ChaosCole;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ChaosVesper;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ChaosJessie;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ChaosJames;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_BrendanNormal;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_BrendanMachBike;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_BrendanSurfing;
@@ -410,6 +414,10 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_QUINTY_PLUMP] =             &gObjectEventGraphicsInfo_QuintyPlump,
     [OBJ_EVENT_GFX_NINJA_BOY] =                &gObjectEventGraphicsInfo_NinjaBoy,
     [OBJ_EVENT_GFX_TWIN] =                     &gObjectEventGraphicsInfo_Twin,
+    [OBJ_EVENT_GFX_CHAOS_COLE] = &gObjectEventGraphicsInfo_ChaosCole,
+    [OBJ_EVENT_GFX_CHAOS_VESPER] = &gObjectEventGraphicsInfo_ChaosVesper,
+    [OBJ_EVENT_GFX_CHAOS_JESSIE] = &gObjectEventGraphicsInfo_ChaosJessie,
+    [OBJ_EVENT_GFX_CHAOS_JAMES] = &gObjectEventGraphicsInfo_ChaosJames,
     [OBJ_EVENT_GFX_JACK] =                     &gObjectEventGraphicsInfo_Jack,
     [OBJ_EVENT_GFX_BOY_1] =                    &gObjectEventGraphicsInfo_Boy1,
     [OBJ_EVENT_GFX_GIRL_1] =                   &gObjectEventGraphicsInfo_Girl1,

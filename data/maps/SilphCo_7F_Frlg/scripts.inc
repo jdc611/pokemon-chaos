@@ -59,6 +59,7 @@ EventScript_ChaosSilphChooseThree::
 	msgbox Text_ChaosRivalTeamUpWon
 	removeobject LOCALID_CHAOS_SILPH_JESSIE
 	removeobject LOCALID_CHAOS_SILPH_JAMES
+	removeobject LOCALID_CHAOS_SILPH_MEOWTH
 	removeobject LOCALID_SILPH_CO_RIVAL
 	setvar VAR_MAP_SCENE_SILPH_CO_7F, 1
 	releaseall

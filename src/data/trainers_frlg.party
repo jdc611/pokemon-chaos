@@ -5224,7 +5224,7 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 === TRAINER_TEAM_ROCKET_GRUNT_5 ===
 Name: COLE
 Class: Team Rocket Frlg
-Pic: Rocket Grunt M Frlg
+Pic: Chaos Cole
 Gender: Male
 Music: Male
 Double Battle: No
@@ -5484,7 +5484,7 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 === TRAINER_TEAM_ROCKET_GRUNT_16 ===
 Name: COLE
 Class: Team Rocket Frlg
-Pic: Rocket Grunt M Frlg
+Pic: Chaos Cole
 Gender: Male
 Music: Male
 Double Battle: No
@@ -5541,7 +5541,7 @@ IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 === TRAINER_TEAM_ROCKET_GRUNT_17 ===
 Name: VESPER
 Class: Team Rocket Frlg
-Pic: Rocket Grunt F Frlg
+Pic: Chaos Vesper
 Gender: Female
 Music: Female
 Double Battle: No
@@ -5653,7 +5653,7 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 === TRAINER_TEAM_ROCKET_GRUNT_21 ===
 Name: VESPER
 Class: Team Rocket Frlg
-Pic: Rocket Grunt F Frlg
+Pic: Chaos Vesper
 Gender: Female
 Music: Female
 Double Battle: No
@@ -14208,7 +14208,7 @@ IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
 === TRAINER_CHAOS_COLE_SILPH ===
 Name: COLE
 Class: Team Rocket Frlg
-Pic: Rocket Grunt M Frlg
+Pic: Chaos Cole
 Gender: Male
 Music: Male
 Double Battle: No
@@ -14250,7 +14250,7 @@ IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 === TRAINER_CHAOS_VESPER_SILPH ===
 Name: VESPER
 Class: Team Rocket Frlg
-Pic: Rocket Grunt F Frlg
+Pic: Chaos Vesper
 Gender: Female
 Music: Female
 Double Battle: No
@@ -14292,7 +14292,7 @@ IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 === TRAINER_CHAOS_JESSIE_MOON ===
 Name: JESSIE
 Class: Team Rocket Frlg
-Pic: Rocket Grunt F Frlg
+Pic: Chaos Jessie
 Gender: Female
 Music: Female
 Double Battle: Yes
@@ -14318,7 +14318,7 @@ IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 === TRAINER_CHAOS_JAMES_MOON ===
 Name: JAMES
 Class: Team Rocket Frlg
-Pic: Rocket Grunt M Frlg
+Pic: Chaos James
 Gender: Male
 Music: Male
 Double Battle: Yes
@@ -14344,7 +14344,7 @@ IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 === TRAINER_CHAOS_JESSIE_SILPH ===
 Name: JESSIE
 Class: Team Rocket Frlg
-Pic: Rocket Grunt F Frlg
+Pic: Chaos Jessie
 Gender: Female
 Music: Female
 Double Battle: Yes
@@ -14379,7 +14379,7 @@ IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 === TRAINER_CHAOS_JAMES_SILPH ===
 Name: JAMES
 Class: Team Rocket Frlg
-Pic: Rocket Grunt M Frlg
+Pic: Chaos James
 Gender: Male
 Music: Male
 Double Battle: Yes

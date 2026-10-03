@@ -333,6 +333,10 @@ static void DebugAction_Trainers_SetRematchReadiness(u8 taskId);
 static void DebugAction_Trainers_TryBattle(u8 taskId);
 static void DebugAction_Trainers_RechargeVsSeeker(u8 taskId);
 static void DebugAction_ImportantBattle(u8 taskId, const void *params);
+static void DebugAction_RocketBattle(u8 taskId, const void *params);
+extern const u8 Debug_ChaosMoonBattle[];
+extern const u8 Debug_ChaosSilphBattle[];
+extern const u8 Debug_ChaosRocketGauntlet[];
 
 static void DebugAction_Outbreak_ClearActive(u8 taskId);
 
@@ -1128,6 +1132,16 @@ static const struct DebugMenuOption sChaosDebugBattles[] =
     KANTO_TEST_BATTLE("Sabrina", TRAINER_LEADER_SABRINA),
     KANTO_TEST_BATTLE("Blaine", TRAINER_LEADER_BLAINE),
     KANTO_TEST_BATTLE("Giovanni", TRAINER_LEADER_GIOVANNI),
+    KANTO_TEST_BATTLE("Brock Rematch", TRAINER_LEADER_BROCK_REMATCH),
+    KANTO_TEST_BATTLE("Misty Rematch", TRAINER_LEADER_MISTY_REMATCH),
+    KANTO_TEST_BATTLE("Surge Rematch", TRAINER_LEADER_LT_SURGE_REMATCH),
+    KANTO_TEST_BATTLE("Cole - Cerulean", TRAINER_TEAM_ROCKET_GRUNT_5),
+    KANTO_TEST_BATTLE("Vesper - Tower", TRAINER_TEAM_ROCKET_GRUNT_21),
+    KANTO_TEST_BATTLE("Cole - Hideout", TRAINER_TEAM_ROCKET_GRUNT_16),
+    KANTO_TEST_BATTLE("Vesper - Hideout", TRAINER_TEAM_ROCKET_GRUNT_17),
+    { COMPOUND_STRING("Jessie/James - Moon"), DebugAction_RocketBattle, &(const u16){TRAINER_CHAOS_JESSIE_MOON} },
+    { COMPOUND_STRING("Jessie/James - Silph"), DebugAction_RocketBattle, &(const u16){TRAINER_CHAOS_JESSIE_SILPH} },
+    { COMPOUND_STRING("Cole/Vesper Gauntlet"), DebugAction_RocketBattle, &(const u16){TRAINER_CHAOS_VESPER_SILPH} },
     KANTO_TEST_BATTLE("Lorelei", TRAINER_ELITE_FOUR_LORELEI),
     KANTO_TEST_BATTLE("Bruno", TRAINER_ELITE_FOUR_BRUNO),
     KANTO_TEST_BATTLE("Agatha", TRAINER_ELITE_FOUR_AGATHA),
@@ -2906,7 +2920,7 @@ struct ChaosDebugBattleMon
     u16 ability;
 };
 
-static void Debug_PrepareImportantBattleParty(u16 trainerId)
+static void Debug_PrepareImportantBattleParty(u16 trainerId, u8 partySize)
 {
     // Deliberate, usable sets: evolved species do not necessarily learn their
     // essential moves when CreateMon only takes the last four level-up moves.
@@ -2965,7 +2979,9 @@ static void Debug_PrepareImportantBattleParty(u16 trainerId)
         team = sLateParty;
 
     ZeroPlayerPartyMons();
-    for (u32 i = 0; i < trainer->partySize && i < PARTY_SIZE; i++)
+    if (partySize == 0)
+        partySize = trainer->partySize;
+    for (u32 i = 0; i < partySize && i < PARTY_SIZE; i++)
     {
         u8 abilitySlot = 0;
         u8 iv = 15;
@@ -2998,11 +3014,25 @@ static void Debug_PrepareImportantBattleParty(u16 trainerId)
     HealPlayerParty();
 }
 
+static void DebugAction_RocketBattle(u8 taskId, const void *params)
+{
+    u16 trainerId = *(const u16 *)params;
+    const u8 *script;
+    Debug_PrepareImportantBattleParty(trainerId, trainerId == TRAINER_CHAOS_JESSIE_MOON ? 4 : PARTY_SIZE);
+    if (trainerId == TRAINER_CHAOS_JESSIE_MOON)
+        script = Debug_ChaosMoonBattle;
+    else if (trainerId == TRAINER_CHAOS_JESSIE_SILPH)
+        script = Debug_ChaosSilphBattle;
+    else
+        script = Debug_ChaosRocketGauntlet;
+    Debug_DestroyMenu_Full_Script(taskId, script);
+}
+
 static void DebugAction_ImportantBattle(u8 taskId, const void *params)
 {
     u16 trainerId = *(const u16 *)params;
 
-    Debug_PrepareImportantBattleParty(trainerId);
+    Debug_PrepareImportantBattleParty(trainerId, 0);
     sDebugMenuListData->data[0] = trainerId;
     sDebugMenuListData->data[1] = -1;
     sDebugMenuListData->data[2] = TRAINER_NONE;

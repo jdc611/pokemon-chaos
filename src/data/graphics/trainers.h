@@ -1,6 +1,15 @@
 #include "constants/trainers.h"
 #include "data.h"
 
+const u32 gTrainerFrontPic_ChaosCole[] = INCGFX_U32("graphics/trainers/front_pics/chaos_cole.png", ".4bpp.smol");
+const u16 gTrainerPalette_ChaosCole[] = INCGFX_U16("graphics/trainers/front_pics/chaos_cole.png", ".gbapal");
+const u32 gTrainerFrontPic_ChaosVesper[] = INCGFX_U32("graphics/trainers/front_pics/chaos_vesper.png", ".4bpp.smol");
+const u16 gTrainerPalette_ChaosVesper[] = INCGFX_U16("graphics/trainers/front_pics/chaos_vesper.png", ".gbapal");
+const u32 gTrainerFrontPic_ChaosJessie[] = INCGFX_U32("graphics/trainers/front_pics/chaos_jessie.png", ".4bpp.smol");
+const u16 gTrainerPalette_ChaosJessie[] = INCGFX_U16("graphics/trainers/front_pics/chaos_jessie.png", ".gbapal");
+const u32 gTrainerFrontPic_ChaosJames[] = INCGFX_U32("graphics/trainers/front_pics/chaos_james.png", ".4bpp.smol");
+const u16 gTrainerPalette_ChaosJames[] = INCGFX_U16("graphics/trainers/front_pics/chaos_james.png", ".gbapal");
+
 const u32 gTrainerFrontPic_None[] = INCGFX_U32("graphics/trainers/front_pics/none.png", ".4bpp.smol");
 const u16 gTrainerPalette_None[] = INCGFX_U16("graphics/trainers/palettes/none.pal", ".gbapal");
 
@@ -1229,6 +1238,10 @@ const struct TrainerPicInfo gTrainerPicInfo[TRAINER_PIC_COUNT] =
     {
         .frontPic = TRAINER_FRONT_PIC(gTrainerFrontPic_PainterFrlg, gTrainerPalette_PainterFrlg),
     },
+    [TRAINER_PIC_CHAOS_COLE] = { .frontPic = TRAINER_FRONT_PIC(gTrainerFrontPic_ChaosCole, gTrainerPalette_ChaosCole) },
+    [TRAINER_PIC_CHAOS_VESPER] = { .frontPic = TRAINER_FRONT_PIC(gTrainerFrontPic_ChaosVesper, gTrainerPalette_ChaosVesper) },
+    [TRAINER_PIC_CHAOS_JESSIE] = { .frontPic = TRAINER_FRONT_PIC(gTrainerFrontPic_ChaosJessie, gTrainerPalette_ChaosJessie) },
+    [TRAINER_PIC_CHAOS_JAMES] = { .frontPic = TRAINER_FRONT_PIC(gTrainerFrontPic_ChaosJames, gTrainerPalette_ChaosJames) },
     [TRAINER_PIC_JACK] =
     {
         .frontPic = TRAINER_FRONT_PIC(gTrainerFrontPic_Jack, gTrainerPalette_Jack),

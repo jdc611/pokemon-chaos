@@ -2498,3 +2498,8 @@ static const struct SpriteFrameImage sPicTable_MomFrlg[] = {
 };
 
 #endif // IS_FRLG
+
+static const struct SpriteFrameImage sPicTable_ChaosCole[] = { overworld_ascending_frames(gObjectEventPic_ChaosCole, 2, 4), };
+static const struct SpriteFrameImage sPicTable_ChaosVesper[] = { overworld_ascending_frames(gObjectEventPic_ChaosVesper, 2, 4), };
+static const struct SpriteFrameImage sPicTable_ChaosJessie[] = { overworld_ascending_frames(gObjectEventPic_ChaosJessie, 2, 4), };
+static const struct SpriteFrameImage sPicTable_ChaosJames[] = { overworld_ascending_frames(gObjectEventPic_ChaosJames, 2, 4), };

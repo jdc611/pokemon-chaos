@@ -95,8 +95,10 @@ Jessie and James use anime Pokemon; Meowth is dialogue rather than a battle slot
 Their first encounter is a mandatory Double Battle outside Mt. Moon: Jessie has
 Ekans 17 and Wobbuffet 18; James has Koffing 17 and Cacnea 18. The electric-rat
 reference appears only here. They say "Team Rocket's blasting off again!" after
-losing. Native Rocket grunt sprites are temporary representations of the named
-characters, not custom Jessie/James art.
+losing. Cole and Vesper use the approved Black Fragrant Archer/Ariana battle and
+overworld art. Jessie and James use separate poses and walking frames extracted
+from Monicaccina / Ody-chan’s approved GBA sheet. Meowth uses the native
+overworld Pokemon sprite and remains a dialogue character.
 
 Silph's rival encounter becomes a mandatory partner Double Battle. The rival
 acknowledges the player's kindness and asks to put their rivalry aside. The
@@ -156,3 +158,22 @@ to FYTYNo1, Mega Nidoking GBA sprite v2. Front/back normal and shiny palettes
 are shared GBA indexes. The embedded master source is a JPEG screenshot;
 lossless source recovery remains desirable for final pixel-level polish.
 Party icons retain ordinary Nidoking's icon, as with existing icon palette rules.
+
+## Rocket sprite and shortcut testing
+
+Battle Tests includes Cole (Cerulean and Hideout), Vesper (Tower and Hideout),
+Mt. Moon Jessie/James doubles, Silph Jessie/James with three selected player
+Pokemon and three rival Pokemon, and the uninterrupted Cole/Vesper Silph
+gauntlet. The latter gives six level-38 test Pokemon and does not heal between
+battles or award the Card Key. Story checkpoints remain unchanged by the
+practice scripts, although native trainer victory flags are recorded as with
+other battle tests. Gym rematch shortcuts are also available.
+
+Asset credits: Black Fragrant / Pokemon FireGold (Cole and Vesper source art);
+Monicaccina, formerly Ody-chan (Jessie and James GBA-style pack). Source links:
+https://github.com/TeamAquasHideout/Team-Aquas-Asset-Repo
+https://www.deviantart.com/monicaccina/art/GBA-Jessie-and-James-353030680
+
+Jessie and James battle art is centered on separate 64x64 canvases and indexed
+to fifteen opaque colors plus transparency; overworld frames are assembled in
+native nine-frame walking order on 144x32 sheets without resizing the artwork.

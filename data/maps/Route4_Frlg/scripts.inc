@@ -121,6 +121,7 @@ EventScript_ChaosMtMoonRockets::
 	msgbox Text_ChaosRocketBlastOff
 	removeobject LOCALID_CHAOS_MOON_JESSIE
 	removeobject LOCALID_CHAOS_MOON_JAMES
+	removeobject LOCALID_CHAOS_MOON_MEOWTH
 	setflag FLAG_TEMP_4
 	releaseall
 	end
@@ -144,3 +145,10 @@ Text_ChaosRocketBlastOff::
 Text_ChaosMoonBringTwo::
 	.string "Bring two battle-ready POKéMON\n"
 	.string "before challenging this duo!$"
+
+EventScript_ChaosMeowthTalk::
+	msgbox Text_ChaosMeowthTalk, MSGBOX_NPC
+	end
+Text_ChaosMeowthTalk::
+	.string "MEOWTH: That's right!\n"
+	.string "Team Rocket's got big plans!$"

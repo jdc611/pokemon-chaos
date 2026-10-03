@@ -635,3 +635,12 @@ const u16 gObjectEventPic_PidgeyOld[] = INCGFX_U16("graphics/object_events/pics/
 const u16 gObjectEventPic_ClefairyOld[] = INCGFX_U16("graphics/object_events/pics/pokemon_old/clefairy.png", ".4bpp", "-mwidth 2 -mheight 2");
 
 #endif // IS_FRLG
+
+const u16 gObjectEventPic_ChaosCole[] = INCGFX_U16("graphics/object_events/pics/people/chaos_cole.png", ".4bpp", "-mwidth 2 -mheight 4");
+const u16 gObjectEventPal_ChaosCole[] = INCGFX_U16("graphics/object_events/pics/people/chaos_cole.png", ".gbapal");
+const u16 gObjectEventPic_ChaosVesper[] = INCGFX_U16("graphics/object_events/pics/people/chaos_vesper.png", ".4bpp", "-mwidth 2 -mheight 4");
+const u16 gObjectEventPal_ChaosVesper[] = INCGFX_U16("graphics/object_events/pics/people/chaos_vesper.png", ".gbapal");
+const u16 gObjectEventPic_ChaosJessie[] = INCGFX_U16("graphics/object_events/pics/people/chaos_jessie.png", ".4bpp", "-mwidth 2 -mheight 4");
+const u16 gObjectEventPal_ChaosJessie[] = INCGFX_U16("graphics/object_events/pics/people/chaos_jessie.png", ".gbapal");
+const u16 gObjectEventPic_ChaosJames[] = INCGFX_U16("graphics/object_events/pics/people/chaos_james.png", ".4bpp", "-mwidth 2 -mheight 4");
+const u16 gObjectEventPal_ChaosJames[] = INCGFX_U16("graphics/object_events/pics/people/chaos_james.png", ".gbapal");
