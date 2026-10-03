@@ -49,6 +49,7 @@ with tempfile.TemporaryDirectory() as d:
 # Check the real integration points and transactional script paths.
 assert 'UQ_4_12(1.4)' in (root/'src/battle_util.c').read_text()
 assert 'ChaosRampageStart(gBattlerAttacker, gChosenMove)' in (root/'src/battle_script_commands.c').read_text()
+assert 'GetBattlerAbility(se->effectBattler) == ABILITY_RAMPAGE' in (root/'src/battle_set_effect.c').read_text()
 assert 'ChaosRampageEndTurn(i)' in (root/'src/battle_end_turn.c').read_text()
 assert 'chaosRampageTurns > 0' in (root/'src/battle_main.c').read_text()
 f=(root/'data/maps/CinnabarIsland_PokemonLab_ExperimentRoom_Frlg/scripts.inc').read_text()

@@ -347,7 +347,9 @@ static void HandleSetEffectRemoveStatus(struct BattleCalcValues *cv, struct SetE
 static void HandleSetEffectThrash(struct BattleCalcValues *cv, struct SetEffect *se)
 {
     // Petal Dance (dance move) doesn't lock mons that copy the move with Dancer
-    if (gSpecialStatuses[se->effectBattler].dancerUsedMove || gBattleMons[se->effectBattler].volatiles.rampageTurns)
+    if (GetBattlerAbility(se->effectBattler) == ABILITY_RAMPAGE
+     || gSpecialStatuses[se->effectBattler].dancerUsedMove
+     || gBattleMons[se->effectBattler].volatiles.rampageTurns)
     {
         gBattlescriptCurrInstr = se->script;
     }
