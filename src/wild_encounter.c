@@ -586,6 +586,23 @@ static enum Species GenerateRandomizedWildSpeciesForMap(const struct WildPokemon
     rng_value_t oldRngState = gRngValue;
     enum Species species;
     u8 seedMonIndex = wildMonIndex;
+    bool32 preserveNativePool = gSaveBlock3Ptr->filterMode == RUN_FILTER_NONE;
+    enum Species nativeSpecies = wildMonInfo->wildPokemon[wildMonIndex].species;
+
+    if (preserveNativePool)
+    {
+        if (nativeSpecies == SPECIES_NONE)
+            return SPECIES_NONE;
+        // Weighted repeats of one native species share one replacement.
+        for (u32 i = 0; i < wildMonIndex; i++)
+        {
+            if (wildMonInfo->wildPokemon[i].species == nativeSpecies)
+            {
+                seedMonIndex = i;
+                break;
+            }
+        }
+    }
 
     struct FilterFuncArgs filterArgs =
     {
@@ -614,9 +631,9 @@ static enum Species GenerateRandomizedWildSpeciesForMap(const struct WildPokemon
     }
     // Weighted water slots repeat a smaller set so randomized routes do not
     // become overcrowded: three Surf species and five across the three rods.
-    if (area == WILD_AREA_WATER && seedMonIndex >= RANDOMIZED_WATER_UNIQUE_SLOTS)
+    if (!preserveNativePool && area == WILD_AREA_WATER && seedMonIndex >= RANDOMIZED_WATER_UNIQUE_SLOTS)
         seedMonIndex %= RANDOMIZED_WATER_UNIQUE_SLOTS;
-    else if (area == WILD_AREA_FISHING)
+    else if (!preserveNativePool && area == WILD_AREA_FISHING)
     {
         if (seedMonIndex == 1)
             seedMonIndex = 0; // one Old Rod species
@@ -628,12 +645,10 @@ static enum Species GenerateRandomizedWildSpeciesForMap(const struct WildPokemon
 
     seed ^= seedMonIndex;
 
-    // Only the four rare land slots rotate with an area's Night table.
-    // This keeps most of a randomized route stable between Day and Night.
-    if (gSaveBlock3Ptr->filterMode == RUN_FILTER_NONE
-     && area == WILD_AREA_LAND && wildMonIndex >= 8
-     && timeOfDay == TIME_NIGHT)
-        seed ^= 0x4E494748; // "NIGH"
+    // Native Day/Night tables decide which species exist, rather than adding
+    // four extra randomized species just because their slot is rare.
+    if (preserveNativePool)
+        seed ^= (u32)nativeSpecies * 0x9E3779B1u;
 
     if (gSaveBlock3Ptr->filterMode == RUN_FILTER_TYPE
      || gSaveBlock3Ptr->filterMode == RUN_FILTER_ABILITY
@@ -652,7 +667,7 @@ static enum Species GenerateRandomizedWildSpeciesForMap(const struct WildPokemon
     }
     else if (gSaveBlock3Ptr->randomizerEnabled == RUN_WILD_SCALED)
     {
-        filterArgs.arg1 = GetScaledWildTier(wildMonInfo, area, wildMonIndex, seedMonIndex);
+        filterArgs.arg1 = GetScaledWildTier(wildMonInfo, area, seedMonIndex, seedMonIndex);
         generator = SPECIES_GENERATOR_SCALED_WILD;
     }
 
@@ -670,8 +685,35 @@ static enum Species GenerateRandomizedWildSpeciesForMap(const struct WildPokemon
          && cache->arg2 == filterArgs.arg2)
             return cache->species;
 
+        // Resolve earlier native groups before sampling this group. Recursion
+        // only visits lower slot indices; filtered runs keep their old rules.
+        enum Species previousSpecies[NUM_LAND_MONS_ENCOUNTER_SLOTS];
+        u32 previousCount = 0;
+        if (preserveNativePool)
+        {
+            for (u32 i = 0; i < seedMonIndex; i++)
+            {
+                enum Species previousNative = wildMonInfo->wildPokemon[i].species;
+                bool32 repeated = previousNative == SPECIES_NONE;
+                for (u32 j = 0; j < i; j++)
+                    if (wildMonInfo->wildPokemon[j].species == previousNative)
+                        repeated = TRUE;
+                if (!repeated && previousCount < ARRAY_COUNT(previousSpecies))
+                    previousSpecies[previousCount++] = GenerateRandomizedWildSpeciesForMap(wildMonInfo, area, i, mapGroup, mapNum, timeOfDay);
+            }
+        }
         SeedRng(seed);
-        species = GetRandomSpecies(generator, &filterArgs);
+        for (u32 attempt = 0; ; attempt++)
+        {
+            bool32 duplicate = FALSE;
+            species = GetRandomSpecies(generator, &filterArgs);
+            for (u32 i = 0; i < previousCount; i++)
+                if (previousSpecies[i] == species)
+                    duplicate = TRUE;
+            // Bound work even if a scaled tier ever has too few candidates.
+            if (!duplicate || attempt >= 63)
+                break;
+        }
 
         cache->seed = seed;
         cache->generator = generator;
