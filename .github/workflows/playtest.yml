@@ -3,7 +3,7 @@ name: Build Playtest ROM
 "on":
   push:
     branches:
-      - master
+      - chaos-firered
     paths-ignore:
       - "docs/**"
       - "README.md"
@@ -17,7 +17,7 @@ env:
   COMPARE: 0
   UNUSED_ERROR: 1
   DEPRECATED_ERROR: 1
-  PLAYTEST_TRIGGER: "Kanto Trainer ID Separation v1"
+  PLAYTEST_TRIGGER: "Native FireRed Feasibility Audit v1"
 
 jobs:
   build:
@@ -26,10 +26,10 @@ jobs:
       contents: write
 
     steps:
-      - name: Checkout latest master
+      - name: Checkout FireRed port branch
         uses: actions/checkout@v4
         with:
-          ref: master
+          ref: chaos-firered
 
       - name: Apply source migration
         run: python3 .github/scripts/apply_stat_colors_levelcap_exp.py
@@ -41,7 +41,7 @@ jobs:
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add src/battle_controller_player.c src/battle_script_commands.c src/debug.c
             git commit -m "Implement remaining status UI and EXP fixes"
-            git push origin HEAD:master
+            git push origin HEAD:chaos-firered
           fi
 
       - name: Materialize approved Chaos title artwork
@@ -52,24 +52,16 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends binutils-arm-none-eabi gcc-arm-none-eabi libnewlib-arm-none-eabi libpng-dev python3
 
-      - name: Convert FRLG metatile behaviors for Emerald
-        run: python3 migration_scripts/frlg_metatile_behavior_converter.py
-
-      - name: Prepare Kanto trainer IDs for combined Chaos build
-        run: python3 .github/scripts/prepare_chaos_kanto_trainers.py
-
-      - name: Build Emerald
-        env:
-          GAME_VERSION: EMERALD
+      - name: Build native FireRed target
         run: |
           set -o pipefail
-          make -k -j$(nproc) -O all 2>&1 | tee build.log
+          make firered -k -j$(nproc) -O all 2>&1 | tee build.log
 
       - name: Surface build errors
         if: failure()
         run: |
           echo "### Compiler errors" >> "$GITHUB_STEP_SUMMARY"
-          grep -nE '(^|: )(fatal error|error:|undefined reference|make(\[[0-9]+\])?: \*\*\*)' build.log | tail -80 | tee errors.txt || true
+          grep -nE '(^|: )(fatal error|error:|undefined reference|multiple definition|redefinition|make(\[[0-9]+\])?: \*\*\*)' build.log | tail -300 | tee errors.txt || true
           while IFS= read -r line; do
             safe=${line//'%'/'%25'}
             safe=${safe//$'\r'/'%0D'}
@@ -87,5 +79,5 @@ jobs:
       - name: Upload Playtest ROM
         uses: actions/upload-artifact@v4
         with:
-          name: Native-Status-Debug-Cap-v11-${{ github.sha }}
-          path: pokeemerald.gba
+          name: Chaos-FireRed-Audit-${{ github.sha }}
+          path: pokefirered.gba
