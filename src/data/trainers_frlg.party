@@ -5099,7 +5099,7 @@ Pic: Leader Giovanni Frlg
 Gender: Male
 Music: Male
 Double Battle: No
-AI: Check Bad Move / Try To Faint / Check Viability
+AI: Check Bad Move / Try To Faint / Check Viability / Smart Switching / HP Aware / Ace Pokemon
 
 Excadrill
 Level: 54
@@ -5125,13 +5125,14 @@ IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
 - Crunch
 - Ice Punch
 
-Rhyperior
+Gastrodon West @ Leftovers
 Level: 56
+Ability: Storm Drain
 IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
-- Earthquake
-- Stone Edge
-- Megahorn
-- Hammer Arm
+- Earth Power
+- Muddy Water
+- Ice Beam
+- Recover
 
 Great Tusk
 Level: 57
@@ -7464,15 +7465,16 @@ Pic: Leader Blaine Frlg
 Gender: Male
 Music: Male
 Double Battle: No
-AI: Check Bad Move / Try To Faint / Check Viability
+AI: Check Bad Move / Try To Faint / Check Viability / Smart Switching / HP Aware / Ace Pokemon
 
-Talonflame
+Torkoal @ Heat Rock
 Level: 48
+Ability: Drought
 IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
-- Flare Blitz
-- Acrobatics
-- Steel Wing
-- Roost
+- Lava Plume
+- Solar Beam
+- Body Press
+- Stealth Rock
 
 Ceruledge
 Level: 49
@@ -7503,7 +7505,7 @@ Level: 51
 IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
 - Flamethrower
 - Dark Pulse
-- Sludge Bomb
+- Solar Beam
 - Nasty Plot
 
 Arcanine

@@ -187,3 +187,25 @@ execute all 23 shortcut selections through the actual input, preparation and
 launch functions with memory sanitizers; they also cover oversized menus, long
 labels, idle input, cancellation and invalid selections. These are source and
 host checks; Delta gameplay remains the final display/runtime test.
+
+## Late Gym Water-matchup adjustment (tester feedback)
+
+Blaine remains six Pokemon with a level-52 ace. Torkoal replaces Talonflame as
+his level-48 lead: Drought, Heat Rock, Lava Plume / Solar Beam / Body Press /
+Stealth Rock. Houndoom replaces Sludge Bomb with Solar Beam. The other species,
+levels and moves stay the same. Sun reduces Water damage, strengthens Fire
+attacks and supports immediate Solar Beam; Heat Rock keeps it active longer.
+Blaine still uses regular Arcanine until the separately planned custom Mega
+Arcanine/permanent-Mega implementation lands.
+
+Viridian Giovanni remains six Pokemon with a level-58 Mega Nidoking ace.
+Level-56 Storm Drain Gastrodon-West with Leftovers replaces Rhyperior:
+Earth Power / Muddy Water / Ice Beam / Recover. It supplies a Water immunity
+and recovery while retaining the Ground theme. The other five sets stay the
+same. Game Corner and Silph Giovanni are unchanged.
+
+Both late Gym teams add Smart Switching, HP Aware and Ace Pokemon AI flags.
+They can use their defensive options and save Arcanine/Nidoking for last.
+Neither team gains omniscient prediction, higher levels, IV increases or EV
+buffs. Rampage remains a three-turn commitment, including the risk of an immune
+Pokemon switching into the repeated attack.
