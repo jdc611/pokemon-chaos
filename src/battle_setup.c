@@ -2364,7 +2364,9 @@ void CreateNPCTrainerPartyFromTrainer(struct Pokemon *party, const struct Traine
         bool32 isKantoRival = IS_FRLG && (trainer->trainerClass == TRAINER_CLASS_RIVAL_EARLY_FRLG
                           || trainer->trainerClass == TRAINER_CLASS_RIVAL_LATE_FRLG
                           || trainer->trainerClass == TRAINER_CLASS_CHAMPION_FRLG);
-        if (isKantoRival && counter != SPECIES_NONE && counter < NUM_SPECIES
+        if (isKantoRival
+         && (gSaveBlock3Ptr->starterMode != RUN_STARTER_KANTO || gSaveBlock3Ptr->filterMode != RUN_FILTER_NONE)
+         && counter != SPECIES_NONE && counter < NUM_SPECIES
          && entry->species >= SPECIES_BULBASAUR && entry->species <= SPECIES_BLASTOISE)
         {
             struct TrainerMon counterEntry = *entry;
