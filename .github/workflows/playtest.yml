@@ -55,7 +55,7 @@ jobs:
       - name: Build native FireRed target
         run: |
           set -o pipefail
-          make firered -k -j$(nproc) -O all 2>&1 | tee build.log
+          make firered -k -j$(nproc) -O 2>&1 | tee build.log
 
       - name: Surface build errors
         if: failure()
