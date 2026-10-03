@@ -63,7 +63,7 @@ jobs:
           GAME_VERSION: EMERALD
         run: |
           set -o pipefail
-          make -j$(nproc) -O all 2>&1 | tee build.log
+          make -k -j$(nproc) -O all 2>&1 | tee build.log
 
       - name: Surface build errors
         if: failure()
