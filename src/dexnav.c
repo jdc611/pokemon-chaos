@@ -2630,12 +2630,20 @@ static void Task_DexNavMain(u8 taskId)
 
         if (species != SPECIES_NONE)
         {
-            PrintSearchableSpecies(species);
-            //PlaySE(SE_DEX_SEARCH);
-            PlayCry_Script(species, 0);
-
-            // create value to store in a var
-            VarSet(DN_VAR_SPECIES, ((sDexNavUiDataPtr->environment << 14) | species));
+            // R on the registered selection toggles registration off.
+            u16 registration = (sDexNavUiDataPtr->environment << 14) | species;
+            if (VarGet(DN_VAR_SPECIES) == registration)
+            {
+                VarSet(DN_VAR_SPECIES, SPECIES_NONE);
+                PrintSearchableSpecies(SPECIES_NONE);
+                PlaySE(SE_RG_BAG_CURSOR);
+            }
+            else
+            {
+                VarSet(DN_VAR_SPECIES, registration);
+                PrintSearchableSpecies(species);
+                PlayCry_Script(species, 0);
+            }
         }
         else
         {
