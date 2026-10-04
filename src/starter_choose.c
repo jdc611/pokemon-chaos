@@ -252,10 +252,10 @@ static void GenerateRandomStarters(void)
     if (GetActiveRunFilterAbilityForMonChanges() != ABILITY_NONE)
     {
         count = PickCurrentAbilityStarters(generator, &filterArgs, sStarterMon);
-        if (count == 0 && gSaveBlock3Ptr->randomizerEnabled == RUN_WILD_SCALED)
+        if (count < STARTER_MON_COUNT && gSaveBlock3Ptr->randomizerEnabled == RUN_WILD_SCALED)
         {
-            // A sparse filter can have only future-ability matches in tier 0.
-            // Keep the filter, but allow an immediately legal starter above it.
+            // Tier 0 must supply three distinct choices. If it cannot,
+            // keep the filters and select from the wider legal starter pool.
             generator = gSaveBlock3Ptr->filterMode == RUN_FILTER_ABILITY
                 ? SPECIES_GENERATOR_ABILITY_FILTERED : SPECIES_GENERATOR_TYPE_ABILITY_FILTERED;
             filterArgs.arg2 = FILTER_FUNC_ARG_NONE;
@@ -263,16 +263,19 @@ static void GenerateRandomStarters(void)
         }
     }
     else
+    {
         count = PickRandomStarterSpecies(generator, &filterArgs, sStarterMon);
-    if (count > 0)
-    {
-        // Never replace a sparse valid pool with unrelated vanilla starters.
-        for (u32 i = count; i < STARTER_MON_COUNT; i++)
-            sStarterMon[i] = sStarterMon[i % count];
+        if (count < STARTER_MON_COUNT && filtered && gSaveBlock3Ptr->randomizerEnabled == RUN_WILD_SCALED)
+        {
+            generator = SPECIES_GENERATOR_TYPE_FILTERED;
+            filterArgs.arg2 = FILTER_FUNC_ARG_NONE;
+            count = PickRandomStarterSpecies(generator, &filterArgs, sStarterMon);
+        }
     }
-    else
+    if (count < STARTER_MON_COUNT)
     {
-        // Retain a nonempty fallback for older/corrupt setup states.
+        // Only reachable with an older/corrupt setup that has no valid trio.
+        // Do not show repeated balls even in that unsupported state.
         sStarterMon[0] = SPECIES_TREECKO;
         sStarterMon[1] = SPECIES_TORCHIC;
         sStarterMon[2] = SPECIES_MUDKIP;
