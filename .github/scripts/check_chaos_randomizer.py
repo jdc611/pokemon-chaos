@@ -218,3 +218,12 @@ int main(void){
 }
 '''
 run(code)
+# A full informational page must not overwrite the reserved dialogue/frame tiles.
+code=base+r'''
+#define WINDOW_NONE 255
+u8 sStartMenuWindowId=WINDOW_NONE;u32 firstTile,tileCount;
+u16 AddWindowParameterized(u8 bg,u8 left,u8 top,u8 width,u8 height,u8 palette,u16 base){firstTile=base;tileCount=width*height;assert(left==1&&top==1&&height<=18);return 0;}
+'''+function('src/menu.c','AddGameOptionsWindow')+function('src/menu.c','AddQuickToolsWindow')+r'''
+int main(void){AddGameOptionsWindow(9);assert(firstTile>0&&firstTile+tileCount<=0x200);sStartMenuWindowId=WINDOW_NONE;AddQuickToolsWindow(6);assert(firstTile>0&&firstTile+tileCount<=0x200);puts("PASS: native full-page menu allocation preserves blank, dialogue and frame tiles.");}
+'''
+run(code)
