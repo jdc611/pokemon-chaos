@@ -207,7 +207,7 @@ CeladonCity_GameCorner_PrizeRoom_EventScript_NotEnoughCoins::
 CeladonCity_GameCorner_PrizeRoom_EventScript_ReceivedMonParty::
 	removecoins VAR_TEMP_2
 	updatecoinsbox
-	bufferspeciesname STR_VAR_1, VAR_TEMP_1
+	bufferspeciesname STR_VAR_1, VAR_TEMP_TRANSFERRED_SPECIES
 	playfanfare MUS_LEVEL_UP
 	message gText_PlayerObtainedTheMon
 	waitmessage
@@ -220,7 +220,7 @@ CeladonCity_GameCorner_PrizeRoom_EventScript_ReceivedMonParty::
 CeladonCity_GameCorner_PrizeRoom_EventScript_ReceivedMonPC::
 	removecoins VAR_TEMP_2
 	updatecoinsbox
-	bufferspeciesname STR_VAR_1, VAR_TEMP_1
+	bufferspeciesname STR_VAR_1, VAR_TEMP_TRANSFERRED_SPECIES
 	playfanfare MUS_LEVEL_UP
 	message gText_PlayerObtainedTheMon
 	waitmessage

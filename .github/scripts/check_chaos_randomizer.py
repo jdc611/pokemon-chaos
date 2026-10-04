@@ -21,12 +21,17 @@ base=r'''
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+#define min(a,b) ((a)<(b)?(a):(b))
+#define AllocZeroed(n) calloc(1,n)
+#define NUM_NORMAL_ABILITY_SLOTS 2
 typedef uint8_t u8;typedef uint16_t u16;typedef uint32_t u32;typedef uint32_t rng_value_t;
 typedef int bool32;typedef int bool8;
 #define TRUE 1
 #define FALSE 0
 #define ARRAY_COUNT(x) (sizeof(x)/sizeof((x)[0]))
 #define FILTER_FUNC_ARG_NONE 0
+#define RUN_ABILITIES_RANDOM 1
 #define RUN_WILD_NORMAL 0
 #define RUN_WILD_RANDOM 1
 #define RUN_WILD_SCALED 2
@@ -47,7 +52,7 @@ typedef int bool32;typedef int bool8;
 #define GET_BASE_SPECIES_ID(x) (x)
 enum Species {SPECIES_NONE=0};
 struct FilterFuncArgs {u32 arg1,arg2;};
-struct SpeciesInfo {u32 baseHP,baseAttack,baseDefense,baseSpeed,baseSpAttack,baseSpDefense; bool32 isMegaEvolution,isPrimalReversion,isRestrictedLegendary,isSubLegendary,isMythical,isUltraBeast,isParadox;} gSpeciesInfo[110];
+struct SpeciesInfo {u32 baseHP,baseAttack,baseDefense,baseSpeed,baseSpAttack,baseSpDefense; u16 abilities[2]; bool32 isMegaEvolution,isPrimalReversion,isRestrictedLegendary,isSubLegendary,isMythical,isUltraBeast,isParadox;} gSpeciesInfo[110];
 struct Save3 {u32 randomizerEnabled,filterMode,filterValue,abilityMode,evolutionMode,runDifficulty,worldSeed,itemRandomization;} save3,*gSaveBlock3Ptr=&save3;
 struct Save1 {struct {u8 mapGroup,mapNum;} location;} save1,*gSaveBlock1Ptr=&save1;
 rng_value_t gRngValue;
@@ -95,14 +100,20 @@ run(code)
 source='src/main_menu.c'
 code=base+r'''
 u8 sRunSetupRandomizer=RUN_WILD_RANDOM,sRunSetupType,sRunSetupFilter,sRunSetupTypeChoices[NUMBER_OF_MON_TYPES],sRunSetupTypeChoiceCount;
-u8 sRunSetupAbilityMode,sRunSetupEvolutions,sRunSetupDifficulty,sRunSetupBaseEligible[NATIONAL_DEX_COUNT+1];
+u8 sRunSetupAbilityMode,sRunSetupEvolutions,sRunSetupDifficulty,unusedByte;
 u16 sRunSetupAbility,sRunSetupAbilityChoices[ABILITIES_COUNT],sRunSetupAbilityChoiceCount,sRunSetupTypeChoiceAbility;
 u32 sRunSetupSeed,sRunSetupFinalEligible,sRunSetupBaseGenerator;
 bool8 sRunSetupBasePoolValid,sRunSetupLowPoolConfirmed;
+u16 *sRunSetupPoolCounts;
+u32 sRunSetupLineSeen[NUMBER_OF_MON_TYPES][(ABILITIES_COUNT+31)/32];
 int baseCalls;
+u8 GetSpeciesType(enum Species s,u32 slot){return slot==0?s%3+1:3;}
+u16 GetRandomizedAbilityForSeed(enum Species s,u8 slot,u32 seed){return seed%2?3:2;}
+void VisitRunFilterReachableSpeciesForSettings(enum Species s,u8 ev,u8 diff,u32 seed,void(*v)(enum Species)){gSpeciesInfo[s].abilities[0]=seed%2?3:2;gSpeciesInfo[s].abilities[1]=0;v(s);}
+
 enum Species NationalPokedexNumToSpecies(u32 x){return x;}
 bool32 IsSpeciesEligibleRandomSpecies(u32 gen,enum Species s,const struct FilterFuncArgs*a){baseCalls++;return TRUE;}
-'''+function(source,'RunSetup_CountEligibleSelection')+function(source,'RunSetup_BuildTypeChoices')+function(source,'RunSetup_BuildAbilityChoices')+function(source,'RunSetup_InvalidateSeedFilters')+r'''
+'''+function(source,'RunSetup_RecordPair')+function(source,'RunSetup_RecordReachableSpecies')+function(source,'RunSetup_CountEligibleSelection')+function(source,'RunSetup_BuildTypeChoices')+function(source,'RunSetup_BuildAbilityChoices')+function(source,'RunSetup_InvalidateSeedFilters')+r'''
 int main(void){
  sRunSetupSeed=42;sRunSetupType=3;RunSetup_BuildAbilityChoices();
  assert(sRunSetupAbilityChoiceCount==2&&sRunSetupAbilityChoices[1]==2);assert(baseCalls==12);
@@ -143,3 +154,41 @@ assert obtain.count('callnative ChaosRandomizeOverworldItem')==2
 assert 'callnative ChaosRandomizeOverworldItem' not in (root/'data/scripts/item_ball_scripts.inc').read_text()
 assert 'GetRandomizedScriptedSpecies(monTemplate.species, monTemplate.level, 0)' in (root/'src/script_pokemon_util.c').read_text()
 print('PASS: ordinary/hidden pickup script entry points and gift creation hook.')
+# The optimized setup traversal must see exactly the same forms as the native
+# eligibility predicate, including branching evolutions, Megas and depth limits.
+source='src/pokemon.c'
+code=base.replace('DoesSpeciesOrReachableFormMatchRunFilterForSettings(enum Species s,u8 mode,u16 val,u8 am,u8 ev,u8 diff,u32 seed)', 'DoesSpeciesMatchRunFilterForSettings(enum Species s,u8 mode,u16 val,u8 am,u32 seed)')+r'''
+#define NUM_SPECIES 110
+#define SPECIES_EGG 109
+#define FORM_SPECIES_END 65535
+#define EVOLUTIONS_END 0
+#define RUN_EVOLUTIONS_RANDOM 1
+struct Evolution {u32 method;enum Species targetSpecies;};
+struct Evolution evolutions[13][3]={ [1]={{1,2},{1,5},{0,0}},[2]={{1,3},{0,0}},[3]={{1,4},{0,0}} };
+u16 forms[13][3]={[1]={1,12,FORM_SPECIES_END},[4]={4,11,FORM_SPECIES_END}};
+bool32 IsSpeciesEnabled(enum Species s){return s>0&&s<13;}
+enum Species SanitizeSpeciesId(enum Species s){return s;}
+const struct Evolution*GetSpeciesEvolutions(enum Species s){return evolutions[s];}
+const u16*GetSpeciesFormTable(enum Species s){return s==1||s==4?forms[s]:NULL;}
+u8 GetSpeciesType(enum Species s,u32 slot){return slot==0?s%3+1:3;}
+enum Species GetRandomEvolutionTargetForSettings(enum Species s,u8 d,u32 seed){return s<4?s+1:SPECIES_NONE;}
+'''+function(source,'DoesSpeciesOrReachableFormMatchRunFilterInternal')+function(source,'DoesSpeciesOrReachableFormMatchRunFilterForSettings')+function(source,'VisitRunFilterReachableSpeciesInternal')+function(source,'VisitRunFilterReachableSpeciesForSettings')+r'''
+bool32 seen[110];void visit(enum Species s){seen[s]=TRUE;}
+int main(void){
+ gSpeciesInfo[11].isMegaEvolution=TRUE;gSpeciesInfo[12].isMegaEvolution=TRUE;
+ for(u32 mode=0;mode<2;mode++)for(u32 seed=0;seed<2;seed++)for(enum Species start=1;start<=5;start++){
+  memset(seen,0,sizeof(seen));VisitRunFilterReachableSpeciesForSettings(start,mode,0,seed,visit);
+  for(u8 type=1;type<=3;type++)for(u16 ability=1;ability<=4;ability++){
+   bool32 expected=FALSE;
+   for(enum Species s=1;s<13;s++)if(seen[s]&&DoesSpeciesOrReachableFormMatchRunFilterForSettings(s,RUN_FILTER_TYPE_ABILITY,(ability<<5)|type,0,0,0,seed)){
+    // Only the direct form's traits count in this aggregation.
+    u32 t=s%3+1,a=seed%2?3:2;
+    if((type==3||type==t)&&ability==a)expected=TRUE;
+   }
+   assert(expected==DoesSpeciesOrReachableFormMatchRunFilterForSettings(start,RUN_FILTER_TYPE_ABILITY,(ability<<5)|type,0,mode,0,seed));
+  }
+ }
+ puts("PASS: cached traversal agrees with native reachable-line predicate across branches, Megas, random evolutions, seeds and combined filters.");
+}
+'''
+run(code)

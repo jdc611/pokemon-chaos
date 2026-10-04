@@ -217,7 +217,8 @@ static EWRAM_DATA u8 sRunSetupFilter;
 static EWRAM_DATA u8 sRunSetupType;
 static EWRAM_DATA u16 sRunSetupAbility;
 static EWRAM_DATA u16 sRunSetupAbilityChoices[ABILITIES_COUNT];
-static EWRAM_DATA u8 sRunSetupBaseEligible[NATIONAL_DEX_COUNT + 1];
+static EWRAM_DATA u16 *sRunSetupPoolCounts;
+static EWRAM_DATA u32 sRunSetupLineSeen[NUMBER_OF_MON_TYPES][(ABILITIES_COUNT + 31) / 32];
 static EWRAM_DATA bool8 sRunSetupBasePoolValid;
 static EWRAM_DATA u8 sRunSetupTypeChoices[NUMBER_OF_MON_TYPES];
 static EWRAM_DATA u8 sRunSetupTypeChoiceCount;
@@ -2081,6 +2082,7 @@ static void RunSetup_ResetDefaults(void)
     sRunSetupItemRandomization = FALSE;
     sRunSetupLowPoolConfirmed = FALSE;
     sRunSetupBasePoolValid = FALSE;
+    sRunSetupPoolCounts = NULL;
     sRunSetupAbilityChoiceCount = 0;
     sRunSetupTypeChoiceCount = 0;
 }
@@ -2301,6 +2303,39 @@ static u8 RunSetup_PickerIndexToType(u8 index)
     return sRunSetupTypeChoices[index % sRunSetupTypeChoiceCount];
 }
 
+static void RunSetup_RecordPair(u8 type, u16 ability)
+{
+    u32 bit = 1u << (ability % 32);
+    if (type >= NUMBER_OF_MON_TYPES || ability >= ABILITIES_COUNT)
+        return;
+    if (!(sRunSetupLineSeen[type][ability / 32] & bit))
+    {
+        sRunSetupLineSeen[type][ability / 32] |= bit;
+        sRunSetupPoolCounts[type * ABILITIES_COUNT + ability]++;
+    }
+}
+
+static void RunSetup_RecordReachableSpecies(enum Species species)
+{
+    u32 slot;
+    u8 type1 = GetSpeciesType(species, 0);
+    u8 type2 = GetSpeciesType(species, 1);
+    RunSetup_RecordPair(TYPE_NONE, ABILITY_NONE);
+    RunSetup_RecordPair(type1, ABILITY_NONE);
+    RunSetup_RecordPair(type2, ABILITY_NONE);
+    for (slot = 0; slot < NUM_NORMAL_ABILITY_SLOTS; slot++)
+    {
+        u16 ability = sRunSetupAbilityMode == RUN_ABILITIES_RANDOM
+                    ? GetRandomizedAbilityForSeed(species, slot, sRunSetupSeed)
+                    : gSpeciesInfo[species].abilities[slot];
+        if (ability == ABILITY_NONE)
+            continue;
+        RunSetup_RecordPair(TYPE_NONE, ability);
+        RunSetup_RecordPair(type1, ability);
+        RunSetup_RecordPair(type2, ability);
+    }
+}
+
 static u32 RunSetup_CountEligibleSelection(u8 type, u16 ability, u32 stopAt)
 {
     struct FilterFuncArgs baseArgs =
@@ -2309,49 +2344,29 @@ static u32 RunSetup_CountEligibleSelection(u8 type, u16 ability, u32 stopAt)
         .arg2 = FILTER_FUNC_ARG_NONE,
     };
     u32 baseGenerator = sRunSetupRandomizer == RUN_WILD_RANDOM ? SPECIES_GENERATOR_NO_SUPERMONS : SPECIES_GENERATOR_SCALED_WILD;
-    u8 filterMode = RUN_FILTER_NONE;
-    u16 filterValue = 0;
-    u32 count = 0;
     u32 i;
-
-    if (type != TYPE_NONE && ability != ABILITY_NONE)
-    {
-        filterMode = RUN_FILTER_TYPE_ABILITY;
-        filterValue = (ability << 5) | type;
-    }
-    else if (type != TYPE_NONE)
-    {
-        filterMode = RUN_FILTER_TYPE;
-        filterValue = type;
-    }
-    else if (ability != ABILITY_NONE)
-    {
-        filterMode = RUN_FILTER_ABILITY;
-        filterValue = ability;
-    }
-
+    if (sRunSetupPoolCounts == NULL)
+        sRunSetupPoolCounts = AllocZeroed(NUMBER_OF_MON_TYPES * ABILITIES_COUNT * sizeof(u16));
+    if (sRunSetupPoolCounts == NULL)
+        return 0;
     if (!sRunSetupBasePoolValid || sRunSetupBaseGenerator != baseGenerator)
     {
+        memset(sRunSetupPoolCounts, 0, NUMBER_OF_MON_TYPES * ABILITIES_COUNT * sizeof(u16));
         for (i = 1; i <= NATIONAL_DEX_COUNT; i++)
-            sRunSetupBaseEligible[i] = IsSpeciesEligibleRandomSpecies(baseGenerator, NationalPokedexNumToSpecies(i), &baseArgs);
+        {
+            enum Species species = NationalPokedexNumToSpecies(i);
+            if (!IsSpeciesEligibleRandomSpecies(baseGenerator, species, &baseArgs))
+                continue;
+            memset(sRunSetupLineSeen, 0, sizeof(sRunSetupLineSeen));
+            VisitRunFilterReachableSpeciesForSettings(species, sRunSetupEvolutions, sRunSetupDifficulty,
+                                                       sRunSetupSeed, RunSetup_RecordReachableSpecies);
+        }
         sRunSetupBaseGenerator = baseGenerator;
         sRunSetupBasePoolValid = TRUE;
     }
-    for (i = 1; i <= NATIONAL_DEX_COUNT; i++)
-    {
-        enum Species species = NationalPokedexNumToSpecies(i);
-
-        if (!sRunSetupBaseEligible[i])
-            continue;
-        if (!DoesSpeciesOrReachableFormMatchRunFilterForSettings(species, filterMode, filterValue,
-                                                                 sRunSetupAbilityMode, sRunSetupEvolutions,
-                                                                 sRunSetupDifficulty, sRunSetupSeed))
-            continue;
-        if (++count >= stopAt)
-            break;
-    }
-
-    return count;
+    if (type >= NUMBER_OF_MON_TYPES || ability >= ABILITIES_COUNT)
+        return 0;
+    return min(sRunSetupPoolCounts[type * ABILITIES_COUNT + ability], stopAt);
 }
 
 static void RunSetup_BuildAbilityChoices(void)
@@ -3110,6 +3125,8 @@ static void Task_RunSetup_Input(u8 taskId)
                                  : 0;
             sRunSetupReturnToBirch = !sRunSetupReturnToFireRed;
             RunSetup_DestroyIcons();
+            Free(sRunSetupPoolCounts);
+            sRunSetupPoolCounts = NULL;
             FreeAllWindowBuffers();
             DestroyTask(taskId);
             if (sRunSetupReturnToFireRed)

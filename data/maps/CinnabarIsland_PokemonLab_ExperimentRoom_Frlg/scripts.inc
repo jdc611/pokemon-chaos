@@ -232,6 +232,7 @@ CinnabarIsland_PokemonLab_ExperimentRoom_EventScript_GiveAerodactyl::
 CinnabarIsland_PokemonLab_ExperimentRoom_EventScript_NicknameMonParty::
 	textcolor NPC_TEXT_COLOR_NEUTRAL
 	playfanfare MUS_LEVEL_UP
+	bufferspeciesname STR_VAR_1, VAR_TEMP_TRANSFERRED_SPECIES
 	message CinnabarIsland_PokemonLab_ExperimentRoom_Text_ReceivedMonFromDoctor
 	waitmessage
 	waitfanfare
@@ -246,6 +247,7 @@ CinnabarIsland_PokemonLab_ExperimentRoom_EventScript_NicknameMonParty::
 CinnabarIsland_PokemonLab_ExperimentRoom_EventScript_NicknameMonPC::
 	textcolor NPC_TEXT_COLOR_NEUTRAL
 	playfanfare MUS_LEVEL_UP
+	bufferspeciesname STR_VAR_1, VAR_TEMP_TRANSFERRED_SPECIES
 	message CinnabarIsland_PokemonLab_ExperimentRoom_Text_ReceivedMonFromDoctor
 	waitmessage
 	waitfanfare

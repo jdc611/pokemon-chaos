@@ -855,6 +855,9 @@ enum Type GetSpeciesType(enum Species species, u8 slot);
 enum Ability GetSpeciesAbility(enum Species species, u8 slot);
 enum Ability GetRandomizedAbilityForSeed(enum Species species, u8 slot, u32 seed);
 bool32 DoesSpeciesMatchRunFilterForSettings(enum Species species, u8 filterMode, u16 filterValue, u8 abilityMode, u32 seed);
+// Enumerate precisely the forms inspected by reachable-line run filters.
+void VisitRunFilterReachableSpeciesForSettings(enum Species species, u8 evolutionMode, u8 difficulty, u32 seed,
+                                               void (*visitor)(enum Species));
 bool32 DoesSpeciesOrReachableFormMatchRunFilterForSettings(enum Species species, u8 filterMode, u16 filterValue, u8 abilityMode, u8 evolutionMode, u8 difficulty, u32 seed);
 bool32 DoesSpeciesMatchActiveRunFilter(enum Species species);
 bool32 DoesMonMatchActiveRunFilter(struct Pokemon *mon);

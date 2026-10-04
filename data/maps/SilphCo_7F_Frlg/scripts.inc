@@ -156,10 +156,11 @@ SilphCo_7F_EventScript_LaprasGuy::
 SilphCo_7F_EventScript_ReceiveLaprasParty::
 	textcolor NPC_TEXT_COLOR_NEUTRAL
 	playfanfare MUS_LEVEL_UP
+	bufferspeciesname STR_VAR_1, VAR_TEMP_TRANSFERRED_SPECIES
 	message SilphCo_7F_Text_ObtainedLaprasFromEmployee
 	waitmessage
 	waitfanfare
-	bufferspeciesname STR_VAR_1, SPECIES_LAPRAS
+	bufferspeciesname STR_VAR_1, VAR_TEMP_TRANSFERRED_SPECIES
 	msgbox gText_NicknameThisPokemon, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, SilphCo_7F_EventScript_EndReceiveLapras
 	call Common_EventScript_GetGiftMonPartySlot
@@ -170,10 +171,11 @@ SilphCo_7F_EventScript_ReceiveLaprasParty::
 SilphCo_7F_EventScript_ReceiveLaprasPC::
 	textcolor NPC_TEXT_COLOR_NEUTRAL
 	playfanfare MUS_LEVEL_UP
+	bufferspeciesname STR_VAR_1, VAR_TEMP_TRANSFERRED_SPECIES
 	message SilphCo_7F_Text_ObtainedLaprasFromEmployee
 	waitmessage
 	waitfanfare
-	bufferspeciesname STR_VAR_1, SPECIES_LAPRAS
+	bufferspeciesname STR_VAR_1, VAR_TEMP_TRANSFERRED_SPECIES
 	msgbox gText_NicknameThisPokemon, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, SilphCo_7F_EventScript_LaprasTransferredToPC
 	call Common_EventScript_NameReceivedBoxMon
@@ -268,18 +270,13 @@ SilphCo_7F_Text_HaveMonForSavingUs::
 	.string "for saving us.$"
 
 SilphCo_7F_Text_ObtainedLaprasFromEmployee::
-	.string "{PLAYER} obtained a LAPRAS from\n"
+	.string "{PLAYER} obtained {STR_VAR_1} from\n"
 	.string "the SILPH employee!$"
 
 SilphCo_7F_Text_ExplainLapras::
-	.string "It's a LAPRAS.\n"
-	.string "It's a very intelligent POKéMON.\p"
-	.string "We kept it in our lab, but it will\n"
-	.string "be much better off with you.\p"
-	.string "I think you will be a good TRAINER\n"
-	.string "for LAPRAS!\p"
-	.string "It's a good swimmer.\n"
-	.string "It'll give you a lift across water!$"
+	.string "We kept this POKéMON in our lab,\n"
+	.string "but it will be better off with you.\p"
+	.string "Take good care of your new friend!$"
 
 SilphCo_7F_Text_RocketBossWentToBoardroom::
 	.string "TEAM ROCKET's BOSS went to the\n"

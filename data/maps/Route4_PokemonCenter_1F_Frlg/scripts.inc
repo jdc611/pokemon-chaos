@@ -99,10 +99,11 @@ Route4_PokemonCenter_1F_EventScript_PayForMagikarp::
 	removemoney MAGIKARP_PRICE
 	updatemoneybox
 	playfanfare MUS_LEVEL_UP
+	bufferspeciesname STR_VAR_1, VAR_TEMP_TRANSFERRED_SPECIES
 	message Route4_PokemonCenter_1F_Text_PaidOutrageouslyForMagikarp
 	waitmessage
 	waitfanfare
-	bufferspeciesname STR_VAR_1, SPECIES_MAGIKARP
+	bufferspeciesname STR_VAR_1, VAR_TEMP_TRANSFERRED_SPECIES
 	return
 
 Route4_PokemonCenter_1F_EventScript_DeclineMagikarp::

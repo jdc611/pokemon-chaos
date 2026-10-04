@@ -3567,6 +3567,45 @@ static bool32 DoesSpeciesOrReachableFormMatchRunFilterInternal(enum Species spec
     return FALSE;
 }
 
+static void VisitRunFilterReachableSpeciesInternal(enum Species species, u8 evolutionMode, u8 difficulty, u32 seed,
+                                                   void (*visitor)(enum Species), u8 depth)
+{
+    const struct Evolution *evolutions;
+    const u16 *forms;
+    u32 i;
+    if (species <= SPECIES_NONE || species >= NUM_SPECIES || !IsSpeciesEnabled(species))
+        return;
+    visitor(species);
+    if (depth >= 3)
+        return;
+    forms = GetSpeciesFormTable(species);
+    if (forms != NULL)
+        for (i = 0; forms[i] != FORM_SPECIES_END; i++)
+            if (forms[i] > SPECIES_NONE && forms[i] < NUM_SPECIES && IsSpeciesEnabled(forms[i]) && gSpeciesInfo[forms[i]].isMegaEvolution)
+                visitor(forms[i]);
+    if (evolutionMode == RUN_EVOLUTIONS_RANDOM)
+    {
+        enum Species target = GetRandomEvolutionTargetForSettings(species, difficulty, seed);
+        if (target != SPECIES_NONE)
+            VisitRunFilterReachableSpeciesInternal(target, evolutionMode, difficulty, seed, visitor, depth + 1);
+        return;
+    }
+    evolutions = GetSpeciesEvolutions(species);
+    if (evolutions != NULL)
+        for (i = 0; evolutions[i].method != EVOLUTIONS_END; i++)
+        {
+            enum Species target = SanitizeSpeciesId(evolutions[i].targetSpecies);
+            if (target != SPECIES_NONE)
+                VisitRunFilterReachableSpeciesInternal(target, evolutionMode, difficulty, seed, visitor, depth + 1);
+        }
+}
+
+void VisitRunFilterReachableSpeciesForSettings(enum Species species, u8 evolutionMode, u8 difficulty, u32 seed,
+                                               void (*visitor)(enum Species))
+{
+    VisitRunFilterReachableSpeciesInternal(species, evolutionMode, difficulty, seed, visitor, 0);
+}
+
 bool32 DoesSpeciesOrReachableFormMatchRunFilterForSettings(enum Species species, u8 filterMode, u16 filterValue,
                                                            u8 abilityMode, u8 evolutionMode, u8 difficulty, u32 seed)
 {
