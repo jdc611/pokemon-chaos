@@ -55,6 +55,7 @@ jobs:
       - name: Check Kanto progression and party preservation
         run: |
           python3 .github/scripts/check_chaos_kanto.py
+          python3 .github/scripts/check_chaos_gym_reset.py
           python3 .github/scripts/check_chaos_mega.py
           python3 .github/scripts/check_chaos_shortcuts.py
           python3 .github/scripts/check_chaos_randomizer.py

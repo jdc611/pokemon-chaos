@@ -67,10 +67,18 @@ static bool8 IsSupportedChallengeCave(mapsec_u16_t section)
     }
 }
 
-static bool8 IsHoennGymMap(u16 mapId)
+static bool8 IsGymMap(u16 mapId)
 {
     switch (mapId)
     {
+    case MAP_PEWTER_CITY_GYM:
+    case MAP_CERULEAN_CITY_GYM:
+    case MAP_VERMILION_CITY_GYM:
+    case MAP_CELADON_CITY_GYM:
+    case MAP_FUCHSIA_CITY_GYM:
+    case MAP_SAFFRON_CITY_GYM:
+    case MAP_CINNABAR_ISLAND_GYM:
+    case MAP_VIRIDIAN_CITY_GYM:
     case MAP_RUSTBORO_CITY_GYM:
     case MAP_DEWFORD_TOWN_GYM:
     case MAP_MAUVILLE_CITY_GYM:
@@ -123,6 +131,14 @@ static bool8 IsGymCompleted(mapsec_u16_t section)
     // so badge flags are not reliable evidence that a gym attempt is complete.
     switch (section)
     {
+    case MAPSEC_PEWTER_CITY: return FlagGet(FLAG_DEFEATED_BROCK);
+    case MAPSEC_CERULEAN_CITY: return FlagGet(FLAG_DEFEATED_MISTY);
+    case MAPSEC_VERMILION_CITY: return FlagGet(FLAG_DEFEATED_LT_SURGE);
+    case MAPSEC_CELADON_CITY: return FlagGet(FLAG_DEFEATED_ERIKA);
+    case MAPSEC_FUCHSIA_CITY: return FlagGet(FLAG_DEFEATED_KOGA);
+    case MAPSEC_SAFFRON_CITY: return FlagGet(FLAG_DEFEATED_SABRINA);
+    case MAPSEC_CINNABAR_ISLAND: return FlagGet(FLAG_DEFEATED_BLAINE);
+    case MAPSEC_VIRIDIAN_CITY: return FlagGet(FLAG_DEFEATED_LEADER_GIOVANNI);
     case MAPSEC_RUSTBORO_CITY: return FlagGet(FLAG_DEFEATED_RUSTBORO_GYM);
     case MAPSEC_DEWFORD_TOWN: return FlagGet(FLAG_DEFEATED_DEWFORD_GYM);
     case MAPSEC_MAUVILLE_CITY: return FlagGet(FLAG_DEFEATED_MAUVILLE_GYM);
@@ -141,6 +157,22 @@ static void ClearGymTrainerFlags(mapsec_u16_t section)
 #define CLEAR_TRAINER(trainer) FlagClear(TRAINER_FLAGS_START + (trainer))
     switch (section)
     {
+    case MAPSEC_PEWTER_CITY:
+        CLEAR_TRAINER(TRAINER_CAMPER_LIAM); break;
+    case MAPSEC_CERULEAN_CITY:
+        CLEAR_TRAINER(TRAINER_PICNICKER_DIANA); CLEAR_TRAINER(TRAINER_SWIMMER_MALE_LUIS); break;
+    case MAPSEC_VERMILION_CITY:
+        CLEAR_TRAINER(TRAINER_SAILOR_DWAYNE); CLEAR_TRAINER(TRAINER_ENGINEER_BAILY); CLEAR_TRAINER(TRAINER_GENTLEMAN_TUCKER); break;
+    case MAPSEC_CELADON_CITY:
+        CLEAR_TRAINER(TRAINER_LASS_KAY); CLEAR_TRAINER(TRAINER_LASS_LISA); CLEAR_TRAINER(TRAINER_PICNICKER_TINA); CLEAR_TRAINER(TRAINER_BEAUTY_BRIDGET); CLEAR_TRAINER(TRAINER_BEAUTY_TAMIA); CLEAR_TRAINER(TRAINER_BEAUTY_LORI); CLEAR_TRAINER(TRAINER_COOLTRAINER_MARY); break;
+    case MAPSEC_FUCHSIA_CITY:
+        CLEAR_TRAINER(TRAINER_TAMER_PHIL); CLEAR_TRAINER(TRAINER_TAMER_EDGAR); CLEAR_TRAINER(TRAINER_JUGGLER_KIRK); CLEAR_TRAINER(TRAINER_JUGGLER_SHAWN); CLEAR_TRAINER(TRAINER_JUGGLER_KAYDEN); CLEAR_TRAINER(TRAINER_JUGGLER_NATE); break;
+    case MAPSEC_SAFFRON_CITY:
+        CLEAR_TRAINER(TRAINER_PSYCHIC_JOHAN); CLEAR_TRAINER(TRAINER_PSYCHIC_TYRON); CLEAR_TRAINER(TRAINER_PSYCHIC_CAMERON); CLEAR_TRAINER(TRAINER_PSYCHIC_PRESTON); CLEAR_TRAINER(TRAINER_CHANNELER_AMANDA); CLEAR_TRAINER(TRAINER_CHANNELER_STACY); CLEAR_TRAINER(TRAINER_CHANNELER_TASHA); break;
+    case MAPSEC_CINNABAR_ISLAND:
+        CLEAR_TRAINER(TRAINER_SUPER_NERD_ERIK); CLEAR_TRAINER(TRAINER_SUPER_NERD_AVERY); CLEAR_TRAINER(TRAINER_SUPER_NERD_DEREK); CLEAR_TRAINER(TRAINER_SUPER_NERD_ZAC); CLEAR_TRAINER(TRAINER_BURGLAR_QUINN); CLEAR_TRAINER(TRAINER_BURGLAR_RAMON); CLEAR_TRAINER(TRAINER_BURGLAR_DUSTY); break;
+    case MAPSEC_VIRIDIAN_CITY:
+        CLEAR_TRAINER(TRAINER_TAMER_JASON); CLEAR_TRAINER(TRAINER_TAMER_COLE); CLEAR_TRAINER(TRAINER_BLACK_BELT_ATSUSHI); CLEAR_TRAINER(TRAINER_BLACK_BELT_KIYO); CLEAR_TRAINER(TRAINER_BLACK_BELT_TAKASHI); CLEAR_TRAINER(TRAINER_COOLTRAINER_SAMUEL); CLEAR_TRAINER(TRAINER_COOLTRAINER_YUJI); CLEAR_TRAINER(TRAINER_COOLTRAINER_WARREN); break;
     case MAPSEC_RUSTBORO_CITY:
         CLEAR_TRAINER(TRAINER_JOSH); CLEAR_TRAINER(TRAINER_TOMMY); CLEAR_TRAINER(TRAINER_MARC); break;
     case MAPSEC_DEWFORD_TOWN:
@@ -238,11 +270,12 @@ void ChallengeReset_OnMapLoaded(void)
     // every visit with their regular trainer flags clear; earned badges make
     // that completion permanent.
     if (gMapHeader.battleType == MAP_BATTLE_SCENE_GYM
-     && !IsGymCompleted(gMapHeader.regionMapSectionId))
+     && !IsGymCompleted(gMapHeader.regionMapSectionId)
+     && (!sChallengeActive || !sChallengeIsGym || sChallengeMapSection != gMapHeader.regionMapSectionId))
     {
-        // Every physical gym load is a new unfinished attempt. Reset both the
-        // persistent trainer flags and the in-memory per-visit list here,
-        // after the destination map is authoritative and before field play.
+        // Resume an active visit across internal gym warps and battle returns.
+        // A fresh entry/load begins an attempt with regular trainer flags clear;
+        // leader completion flags are never cleared here.
         ClearGymTrainerFlags(gMapHeader.regionMapSectionId);
         sChallengeTrainerCount = 0;
         sChallengeActive = TRUE;
@@ -278,7 +311,7 @@ void ChallengeReset_OnMapTransition(const struct MapHeader *from, const struct M
     // Gym resets are intentionally stateless. Every transition directly from
     // a gym to a non-gym map is authoritative: without that gym's badge,
     // restore its regular trainers; with the badge, preserve completion.
-    if (IsHoennGymMap(fromMap) && to->battleType != MAP_BATTLE_SCENE_GYM)
+    if (IsGymMap(fromMap) && to->battleType != MAP_BATTLE_SCENE_GYM)
     {
         if (!IsGymCompleted(from->regionMapSectionId))
             ClearGymTrainerFlags(from->regionMapSectionId);
