@@ -1872,13 +1872,13 @@ static void DrawGamePageChrome(const u8 *title, const u8 *help)
 {
     u8 windowId = GetStartMenuWindowId();
     u32 width = GetWindowAttribute(windowId, WINDOW_WIDTH) * 8;
+    DrawStdWindowFrame(windowId, FALSE);
     FillWindowPixelBuffer(windowId, PIXEL_FILL(1));
     AddTextPrinterParameterized(windowId, FONT_NORMAL, title, 8, 5, TEXT_SKIP_DRAW, NULL);
     AddTextPrinterParameterized(windowId, FONT_NORMAL, title, 9, 5, TEXT_SKIP_DRAW, NULL);
     FillWindowPixelRect(windowId, PIXEL_FILL(2), 6, 27, width - 12, 1);
     FillWindowPixelRect(windowId, PIXEL_FILL(2), 6, 126, width - 12, 1);
     AddTextPrinterParameterized(windowId, FONT_SMALL, help, 8, 129, TEXT_SKIP_DRAW, NULL);
-    DrawStdWindowFrame(windowId, FALSE);
 }
 
 static void PrintGamePageBody(const u8 *text, u8 y)

@@ -192,3 +192,29 @@ int main(void){
 }
 '''
 run(code)
+# DrawStdWindowFrame clears the pixel buffer. Chrome must draw the frame first,
+# otherwise titles/dividers/footer disappear when the body is printed afterward.
+code=base+r'''
+#define WINDOW_WIDTH 0
+#define FONT_NORMAL 1
+#define FONT_SMALL 0
+#define TEXT_SKIP_DRAW 0
+#define PIXEL_FILL(x) (x)
+u8 pixels[224*144];
+u8 GetStartMenuWindowId(void){return 0;}
+u32 GetWindowAttribute(u8 id,u32 attr){return 28;}
+void FillWindowPixelBuffer(u8 id,u32 value){memset(pixels,value,sizeof(pixels));}
+void DrawStdWindowFrame(u8 id,bool32 copy){FillWindowPixelBuffer(id,1);}
+void AddTextPrinterParameterized(u8 id,u8 font,const u8*text,u8 x,u8 y,u8 speed,void*cb){pixels[y*224+x]=2;}
+void FillWindowPixelRect(u8 id,u32 color,u32 x,u32 y,u32 w,u32 h){for(u32 i=0;i<w;i++)pixels[y*224+x+i]=color;}
+'''+function('src/start_menu.c','DrawGamePageChrome')+r'''
+int main(void){
+ DrawGamePageChrome((const u8*)"GAME INFO",(const u8*)"A/B: Back");
+ assert(pixels[5*224+8]==2&&pixels[5*224+9]==2);
+ assert(pixels[27*224+6]==2&&pixels[126*224+6]==2&&pixels[129*224+8]==2);
+ DrawGamePageChrome((const u8*)"GAME RULES",(const u8*)"B: Back");
+ assert(pixels[129*224+8]==2);
+ puts("PASS: actual shared chrome preserves title, dividers and footer after frame drawing.");
+}
+'''
+run(code)
