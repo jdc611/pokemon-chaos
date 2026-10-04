@@ -358,6 +358,7 @@ static void DebugAction_FlagsVars_CatchingOnOff(u8 taskId);
 static void DebugAction_FlagsVars_RunningShoes(u8 taskId);
 
 static void DebugAction_Give_MaxMoney(u8 taskId);
+static void DebugAction_Give_FieldTools(u8 taskId);
 static void DebugAction_Give_MaxCoins(u8 taskId);
 static void DebugAction_Give_MaxBattlePoints(u8 taskId);
 static void DebugAction_Give_DayCareEgg(u8 taskId);
@@ -1116,6 +1117,7 @@ static const struct DebugMenuOption sChaosDebugProgress[] =
 {
     { COMPOUND_STRING("Kanto Free Roam"), DebugAction_Util_CheatStart },
     { COMPOUND_STRING("Toggle All Badges"), DebugAction_FlagsVars_ToggleBadgeFlags },
+    { COMPOUND_STRING("Give All HM Tools"), DebugAction_Give_FieldTools },
     { COMPOUND_STRING("Set Flag"), DebugAction_Selection_Init, &sToggleFlagSelection },
     { COMPOUND_STRING("Set Variable"), DebugAction_Selection_Init, &sSetVarSelection },
     { NULL }
@@ -4098,6 +4100,16 @@ static const struct DebugSelection sGiveDecorationSelection = {
     .steps = {&sDecorationSelectionStep},
     .maxSteps = 1,
 };
+
+static void DebugAction_Give_FieldTools(u8 taskId)
+{
+    const u16 tools[] = {ITEM_HM_CUT, ITEM_HM_FLY, ITEM_HM_SURF, ITEM_HM_STRENGTH,
+                         ITEM_HM_FLASH, ITEM_HM_ROCK_SMASH, ITEM_HM_WATERFALL, ITEM_HM_DIVE};
+    for (u32 i = 0; i < ARRAY_COUNT(tools); i++)
+        if (!CheckBagHasItem(tools[i], 1))
+            AddBagItem(tools[i], 1);
+    PlaySE(SE_PC_LOGIN);
+}
 
 static void DebugAction_Give_MaxMoney(u8 taskId)
 {

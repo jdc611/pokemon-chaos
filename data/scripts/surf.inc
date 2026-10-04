@@ -8,12 +8,22 @@ EventScript_UseSurf::
 	goto EventScript_ReleaseUseSurf
 
 EventScript_UseSurfSelected::
+	checkitem ITEM_HM_SURF
+	goto_if_eq VAR_RESULT, FALSE, EventScript_SurfToolMissing
 	checkfieldmove FIELD_MOVE_SURF, TRUE
-	goto_if_eq VAR_RESULT, PARTY_SIZE, EventScript_ReleaseUseSurf
+	goto_if_eq VAR_RESULT, PARTY_SIZE, EventScript_SurfBadgeMissing
 	setfieldeffectargument 0, PARTY_SIZE
 	setfieldeffectargument 1, ITEM_HM_SURF
 	msgbox gText_PlayerUsedSurf, MSGBOX_DEFAULT
 	dofieldeffect FLDEFF_USE_SURF
+	goto EventScript_ReleaseUseSurf
+
+EventScript_SurfToolMissing::
+	msgbox Text_SurfToolMissing, MSGBOX_DEFAULT
+	goto EventScript_ReleaseUseSurf
+
+EventScript_SurfBadgeMissing::
+	msgbox Text_SurfBadgeMissing, MSGBOX_DEFAULT
 	goto EventScript_ReleaseUseSurf
 
 EventScript_UseFishSelected::
