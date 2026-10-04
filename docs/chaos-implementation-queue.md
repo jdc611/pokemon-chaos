@@ -47,3 +47,28 @@ Oak notices and genuinely investigates increasingly impossible appearances, Rock
 - Full normal-mode Pokémon availability across Kanto.
 
 Do not fill these gaps with assumed final decisions.
+
+## October 3 addendum — current locked acquisition/progression direction
+
+These decisions supersede older acquisition notes above. They are design locks, not claims that every event is implemented.
+
+- **PokéRider:** rival awards it immediately after the Cerulean rival battle before Nugget Bridge. Only visited, valid towns; no indoor use or sequence-breaking destinations. Retain the later Badge-8 tracking interface direction without route listings or flashing location markers.
+- **Pewter researcher:** add a restoration-area employee whose badge/progression-dependent dialogue hints at new options and encourages returning, without revealing the future fossil roster. Badge/species order and prices remain TBD.
+- **Cerulean knowledge challenge:** repurpose the badge-explanation NPC. Three random questions per attempt, one each from hidden moderate/experienced/expert tiers, roughly 8–12 questions each. All three correct unlock Nature, Ability and Gender Changers. Friendly failure and fresh questions on retry. Final bank remains TBD; do not ship a guessed bank.
+- **Bicycle:** first Bike Shop entry forces a short owner scene congratulating the silly millionth customer and awards the Bicycle without a voucher. Remove the fetch-quest requirement.
+- **Game Corner Pokémon:** Porygon, Rotom, Dratini, Zorua, Larvesta, Jangmo-o, Toxel, Bagon, Beldum and Dreepy. Rotom purchase offers only forms actually implemented in the native master. Coin prices remain TBD.
+- **Game Corner TMs:** premium attacks plus strategy/support, repeatable access and coverage of gaps rather than duplicating every useful TM. Reflect/Light Screen/Safeguard/Substitute/possibly Protect and Thunderbolt/Ice Beam/Flamethrower/Shadow Ball/Psychic/Brick Break/Aerial Ace are candidates, not a finalized list. List/prices remain TBD.
+- **Celadon Department Store:** evolution/competitive utility hub based on supported native items; Link Cable, stones, Metal Coat, King's Rock, Upgrade, Dubious Disc, Razor items, Protector, Reaper Cloth and similar supported items are candidates. Ability Capsule may be normal stock; Ability Patch is special stock. Item prices remain TBD.
+- **Marsh Badge clerk:** before Sabrina asks to see a real Marsh Badge; after Sabrina celebrates and unlocks Ability Patches and otherwise unplaced Mega Stones. Never sell stones assigned to an overworld placement, story, rematch, trainer challenge or other deliberate acquisition. Exact inventory remains TBD.
+
+### Rematch reward correction — no Champion gate
+
+**Latest user instruction supersedes the addendum's preferred postgame timing:** signature Mega Stones must not wait until Champion. Starting with Brock's rematch, each Gym Leader's first rematch victory gives their signature Mega Stone and the planned specialty TM, once only. Brock, Misty and Surge retain the existing unrestricted rematch order after Sabrina and before Koga. Their already locked signature Megas are Steelix, Gyarados and Manectric. Do not add a Champion gate to these rewards or move the required rematches to postgame. Later rematch availability still needs a progression decision; do not invent exact timing. Rematch stones are excluded from Celadon stock. Final rematch TMs and remaining signature assignments are TBD. **Blaine requires an alternative reward, TBD, because Arcanite is obtained separately in Lavender.** Nidokingite also retains its separate story route.
+
+### Separate custom Mega acquisition stories
+
+**Nidokingite:** find the Strange Fossil early around Mt. Moon (exact tile TBD). Pewter accepts it, then reports failed resurrection and anomalous material. Having Nidoking in the party optionally produces an unexplained glow/pulse; the scientist does not understand it, and the sequence works without Nidoking. Oak researches it and, with the Mega Ring, reveals and returns the impossible Nidokingite as a breadcrumb toward Chaos. Do not gate it behind Giovanni. Preserve the existing post-Sabrina Mega Ring timing unless deliberately revised; the new addendum leaves timing TBD only if not already implemented.
+
+**Arcanite:** optional strong NPC in Mr. Fuji's Lavender house challenges exactly one selected party Pokémon with Mega Arcanine. First win awards Arcanite once; retries are allowed until victory. The player party must be restored correctly after the special format. NPC identity/name and level remain TBD. Arcanite must be implemented as a real supported stone/item; the current native Mega Arcanine uses no stone. Blaine can showcase it later but does not gate acquisition.
+
+Still undecided: quiz bank, coin prices, Game Corner TM list/prices, Celadon item prices and Mega inventory, remaining rematch Mega assignments/TMs, exact Strange Fossil tile, Arcanite challenger identity/level, and later rematch unlock milestones. Do not auto-decide these.
