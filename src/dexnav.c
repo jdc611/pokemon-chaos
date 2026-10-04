@@ -1757,6 +1757,11 @@ static void UpdateCursorPosition(void)
 {
     u16 x, y;
 
+    u8 columnCount = sDexNavUiDataPtr->cursorRow == ROW_WATER ? COL_WATER_COUNT
+                   : sDexNavUiDataPtr->cursorRow == ROW_FISHING ? COL_FISHING_COUNT : COL_LAND_COUNT;
+    if (sDexNavUiDataPtr->cursorCol >= columnCount)
+        sDexNavUiDataPtr->cursorCol = columnCount - 1;
+
     switch (sDexNavUiDataPtr->cursorRow)
     {
     case ROW_WATER:
@@ -1784,6 +1789,8 @@ static void UpdateCursorPosition(void)
     }
 
     struct Sprite *cursor = &gSprites[sDexNavUiDataPtr->cursorSpriteId];
+    cursor->affineAnimBeginning = FALSE;
+    cursor->affineAnimPaused = TRUE;
     cursor->oam.affineMode = sDexNavUiDataPtr->cursorRow == ROW_FISHING ? ST_OAM_AFFINE_NORMAL : ST_OAM_AFFINE_OFF;
     cursor->oam.matrixNum = sDexNavUiDataPtr->cursorRow == ROW_FISHING ? sDexNavUiDataPtr->fishingIconMatrix : 0;
     gSprites[sDexNavUiDataPtr->cursorSpriteId].x = x;
@@ -2152,6 +2159,8 @@ static void DrawSpeciesIcons(void)
         if (species == SPECIES_NONE)
             y -= 4;
         u8 spriteId = TryDrawIconInSlot(species, x, y);
+        gSprites[spriteId].affineAnimBeginning = FALSE;
+        gSprites[spriteId].affineAnimPaused = TRUE;
         gSprites[spriteId].oam.affineMode = ST_OAM_AFFINE_NORMAL;
         gSprites[spriteId].oam.matrixNum = sDexNavUiDataPtr->fishingIconMatrix;
     }
