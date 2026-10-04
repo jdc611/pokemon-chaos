@@ -23,8 +23,8 @@ SafariZone_Center_Text_RestHouse::
 
 SafariZone_Center_Text_PressStartToCheckTime::
 	.string "TRAINER TIPS\p"
-	.string "Press START to check\n"
-	.string "remaining time.$"
+	.string "Take your time exploring!\n"
+	.string "Use your own POKé BALLS here.$"
 
 SafariZone_Center_Text_CenterArea::
 	.string "CENTER AREA$"

@@ -1,6 +1,11 @@
 FuchsiaCity_SafariZone_Entrance_Frlg_MapScripts::
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, FuchsiaCity_SafariZone_Entrance_OnFrame
+	map_script MAP_SCRIPT_ON_LOAD, FuchsiaCity_SafariZone_Entrance_ChaosOnLoad
 	.byte 0
+
+FuchsiaCity_SafariZone_Entrance_ChaosOnLoad::
+	clearflag FLAG_SYS_SAFARI_MODE
+	setvar VAR_MAP_SCENE_FUCHSIA_CITY_SAFARI_ZONE_ENTRANCE, 0
+	end
 
 FuchsiaCity_SafariZone_Entrance_OnFrame::
 	map_script_2 VAR_MAP_SCENE_FUCHSIA_CITY_SAFARI_ZONE_ENTRANCE, 1, FuchsiaCity_SafariZone_Entrance_EventScript_ExitWarpIn
@@ -98,37 +103,13 @@ FuchsiaCity_SafariZone_Entrance_EventScript_EntryTriggerLeft::
 	end
 
 FuchsiaCity_SafariZone_Entrance_EventScript_AskEnterSafariZone::
-	textcolor NPC_TEXT_COLOR_MALE
-	msgbox FuchsiaCity_SafariZone_Entrance_Text_WelcomeToSafariZone
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
-	waitmovement 0
-	showmoneybox 0, 0
-	msgbox FuchsiaCity_SafariZone_Entrance_Text_PlaySafariGameFor500, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, YES, FuchsiaCity_SafariZone_Entrance_EventScript_TryEnterSafariZone
-	msgbox FuchsiaCity_SafariZone_Entrance_Text_OkayPleaseComeAgain
-	goto FuchsiaCity_SafariZone_Entrance_EventScript_ForcePlayerBack
-	end
-
-FuchsiaCity_SafariZone_Entrance_EventScript_TryEnterSafariZone::
-	call FuchsiaCity_SafariZone_Entrance_EventScript_CheckSpaceForMons
-	checkmoney 500
-	goto_if_eq VAR_RESULT, FALSE, FuchsiaCity_SafariZone_Entrance_EventScript_NotEnoughMoney
-	removemoney 500
-	updatemoneybox
-	msgbox FuchsiaCity_SafariZone_Entrance_Text_ThatllBe500WeOnlyUseSpecialBalls
-	textcolor NPC_TEXT_COLOR_NEUTRAL
-	playfanfare MUS_LEVEL_UP
-	message FuchsiaCity_SafariZone_Entrance_Text_PlayerReceived30SafariBalls
-	waitfanfare
-	call EventScript_RestorePrevTextColor
-	msgbox FuchsiaCity_SafariZone_Entrance_Text_CallYouOnPAWhenYouRunOut
+	msgbox FuchsiaCity_SafariZone_Entrance_Text_ChaosWelcome, MSGBOX_DEFAULT
 	closemessage
-	hidemoneybox
 	call_if_eq VAR_TEMP_2, 0, FuchsiaCity_SafariZone_Entrance_EventScript_EnterSafariZoneMid
 	call_if_eq VAR_TEMP_2, 1, FuchsiaCity_SafariZone_Entrance_EventScript_EnterSafariZoneRight
 	call_if_eq VAR_TEMP_2, 2, FuchsiaCity_SafariZone_Entrance_EventScript_EnterSafariZoneLeft
-	special EnterSafariMode
-	setvar VAR_MAP_SCENE_FUCHSIA_CITY_SAFARI_ZONE_ENTRANCE, 2
+	clearflag FLAG_SYS_SAFARI_MODE
+	setvar VAR_MAP_SCENE_FUCHSIA_CITY_SAFARI_ZONE_ENTRANCE, 0
 	warp MAP_SAFARI_ZONE_CENTER, 255, 26, 30
 	waitstate
 	end
@@ -194,16 +175,16 @@ FuchsiaCity_SafariZone_Entrance_Movement_EnterSafariZoneLeft::
 FuchsiaCity_SafariZone_Entrance_EventScript_InfoAttendant::
 	lock
 	faceplayer
-	msgbox FuchsiaCity_SafariZone_Entrance_Text_FirstTimeAtSafariZone, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, YES, FuchsiaCity_SafariZone_Entrance_EventScript_ExplainSafariZone
-	msgbox FuchsiaCity_SafariZone_Entrance_Text_SorryYoureARegularHere
+	msgbox FuchsiaCity_SafariZone_Entrance_Text_ChaosWelcome, MSGBOX_DEFAULT
 	release
 	end
 
-FuchsiaCity_SafariZone_Entrance_EventScript_ExplainSafariZone::
-	msgbox FuchsiaCity_SafariZone_Entrance_Text_ExplainSafariZone
-	release
-	end
+FuchsiaCity_SafariZone_Entrance_Text_ChaosWelcome::
+	.string "Welcome to the SAFARI ZONE!\p"
+	.string "Admission is free. Take your time\n"
+	.string "and explore!\p"
+	.string "Battle with your POKéMON and use\n"
+	.string "your own POKé BALLS to catch them.$"
 
 FuchsiaCity_SafariZone_Entrance_Text_WelcomeToSafariZone::
 	.string "Welcome to the SAFARI ZONE!$"

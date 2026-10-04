@@ -59,6 +59,7 @@ jobs:
           python3 .github/scripts/check_chaos_respawn.py
           python3 .github/scripts/check_chaos_party_exit.py
           python3 .github/scripts/check_chaos_early_pool.py
+          python3 .github/scripts/check_chaos_field.py
           python3 .github/scripts/check_chaos_mega.py
           python3 .github/scripts/check_chaos_shortcuts.py
           python3 .github/scripts/check_chaos_randomizer.py

@@ -2330,6 +2330,9 @@ bool8 ScrCmd_checkfieldmove(struct ScriptContext *ctx)
             gSpecialVar_0x8004 = species;
             return FALSE;
         }
+        // HM acquisition remains required even if a Pokémon already knows it.
+        if (hmItem != ITEM_NONE)
+            return FALSE;
     }
 
     // Preserve the normal learned-move fallback for non-HM/custom field moves.
