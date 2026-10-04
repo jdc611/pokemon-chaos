@@ -34,6 +34,7 @@
 #include "constants/item.h"
 #include "constants/items.h"
 #include "constants/layouts.h"
+#include "constants/maps.h"
 #include "constants/songs.h"
 #include "constants/weather.h"
 #include "run_settings.h"
@@ -82,10 +83,17 @@ struct RandomizedWildCacheEntry
 };
 
 EWRAM_DATA static struct RandomizedWildCacheEntry sRandomizedWildCache[RANDOMIZED_WILD_CACHE_SIZE] = {0};
+EWRAM_DATA static u16 sEarlyKantoFilteredPool[3];
+EWRAM_DATA static u8 sEarlyKantoFilteredCount;
+EWRAM_DATA static bool8 sEarlyKantoFilteredValid;
+EWRAM_DATA static u32 sEarlyKantoFilteredSeed;
+EWRAM_DATA static u16 sEarlyKantoFilteredValue;
+EWRAM_DATA static u8 sEarlyKantoFilteredSettings[5];
 
 void ResetRandomizedWildCache(void)
 {
     memset(sRandomizedWildCache, 0, sizeof(sRandomizedWildCache));
+    sEarlyKantoFilteredValid = FALSE;
 }
 
 #include "data/wild_encounters.h"
@@ -581,8 +589,76 @@ static u32 GetScaledWildTier(const struct WildPokemonInfo *wildMonInfo, enum Wil
     return tier;
 }
 
+static bool32 IsEarlyKantoFilteredArea(u8 mapGroup, u8 mapNum)
+{
+    switch ((mapGroup << 8) | mapNum)
+    {
+    case MAP_PALLET_TOWN:
+    case MAP_VIRIDIAN_CITY:
+    case MAP_PEWTER_CITY:
+    case MAP_ROUTE1:
+    case MAP_ROUTE2:
+    case MAP_ROUTE22:
+    case MAP_VIRIDIAN_FOREST:
+        return TRUE;
+    default:
+        return FALSE;
+    }
+}
+
+static enum Species GetEarlyKantoFilteredSpecies(enum WildPokemonArea area, u8 wildMonIndex, u8 mapGroup, u8 mapNum)
+{
+    const u8 settings[] = {gSaveBlock3Ptr->filterMode, gSaveBlock3Ptr->randomizerEnabled,
+        gSaveBlock3Ptr->abilityMode, gSaveBlock3Ptr->evolutionMode, gSaveBlock3Ptr->runDifficulty};
+    u32 slot = 0;
+    if (!sEarlyKantoFilteredValid || sEarlyKantoFilteredSeed != gSaveBlock3Ptr->worldSeed
+     || sEarlyKantoFilteredValue != gSaveBlock3Ptr->filterValue
+     || memcmp(settings, sEarlyKantoFilteredSettings, sizeof(settings)) != 0)
+    {
+        const bool32 scaled = gSaveBlock3Ptr->randomizerEnabled == RUN_WILD_SCALED;
+        struct FilterFuncArgs args = {.arg1 = gSaveBlock3Ptr->filterValue,
+            .arg2 = scaled ? 0 : FILTER_FUNC_ARG_NONE};
+        u32 generator;
+        rng_value_t oldRng = gRngValue;
+        if (gSaveBlock3Ptr->filterMode == RUN_FILTER_TYPE)
+            generator = scaled ? SPECIES_GENERATOR_SCALED_TYPE_FILTERED : SPECIES_GENERATOR_TYPE_FILTERED;
+        else if (gSaveBlock3Ptr->filterMode == RUN_FILTER_ABILITY)
+            generator = scaled ? SPECIES_GENERATOR_SCALED_ABILITY_FILTERED : SPECIES_GENERATOR_ABILITY_FILTERED;
+        else
+            generator = scaled ? SPECIES_GENERATOR_SCALED_TYPE_ABILITY_FILTERED : SPECIES_GENERATOR_TYPE_ABILITY_FILTERED;
+        // One bounded, seeded pool for the whole opening region. Reuse the
+        // sampler and eligibility rules already used by filtered starters.
+        SeedRng(gSaveBlock3Ptr->worldSeed ^ 0x4B414E54u);
+        sEarlyKantoFilteredCount = PickRandomStarterSpecies(generator, &args, sEarlyKantoFilteredPool);
+        gRngValue = oldRng;
+        sEarlyKantoFilteredSeed = gSaveBlock3Ptr->worldSeed;
+        sEarlyKantoFilteredValue = gSaveBlock3Ptr->filterValue;
+        memcpy(sEarlyKantoFilteredSettings, settings, sizeof(settings));
+        sEarlyKantoFilteredValid = TRUE;
+    }
+    if (sEarlyKantoFilteredCount == 0)
+        return SPECIES_NONE;
+    if (area == WILD_AREA_FISHING)
+        slot = 2; // Old Rod overlaps the forest option, rather than adding one.
+    else if (((mapGroup << 8) | mapNum) == MAP_VIRIDIAN_FOREST)
+        slot = wildMonIndex % 3;
+    else if (((mapGroup << 8) | mapNum) == MAP_ROUTE2)
+        slot = wildMonIndex % 2;
+    else if (((mapGroup << 8) | mapNum) == MAP_ROUTE22)
+        slot = 1;
+    return sEarlyKantoFilteredPool[slot % sEarlyKantoFilteredCount];
+}
+
 static enum Species GenerateRandomizedWildSpeciesForMap(const struct WildPokemonInfo *wildMonInfo, enum WildPokemonArea area, u8 wildMonIndex, u8 mapGroup, u8 mapNum, enum TimeOfDay timeOfDay)
 {
+    if (IS_FRLG && gSaveBlock3Ptr->filterMode != RUN_FILTER_NONE
+     && IsEarlyKantoFilteredArea(mapGroup, mapNum)
+     && (area == WILD_AREA_LAND || (area == WILD_AREA_FISHING && wildMonIndex < 2)))
+    {
+        enum Species earlySpecies = GetEarlyKantoFilteredSpecies(area, wildMonIndex, mapGroup, mapNum);
+        if (earlySpecies != SPECIES_NONE)
+            return earlySpecies;
+    }
     rng_value_t oldRngState = gRngValue;
     enum Species species;
     u8 seedMonIndex = wildMonIndex;

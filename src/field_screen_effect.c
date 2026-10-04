@@ -54,7 +54,7 @@ static void Task_ExitDoor(u8);
 static bool32 WaitForWeatherFadeIn(void);
 static void Task_SpinEnterWarp(u8 taskId);
 static void Task_EnableScriptAfterMusicFade(u8 taskId);
-static void Task_RunFilterPostCenterExit(u8 taskId);
+static void Task_ValidatePartyAfterBuildingExit(u8 taskId);
 
 static void ExitStairsMovement(s16*, s16*, s16*, s16*, s16*);
 static void GetStairsMovementDirection(u32, s16*, s16*);
@@ -343,13 +343,32 @@ static void FieldCB_MossdeepGymWarpExit(void)
 }
 
 
-static void Task_RunFilterPostCenterExit(u8 taskId)
+static bool32 ShouldValidatePartyAfterBuildingExit(void)
+{
+    const struct MapHeader *from;
+    if (gLastUsedWarp.mapGroup < 0 || gLastUsedWarp.mapNum < 0)
+        return FALSE;
+    if (gMapHeader.mapType != MAP_TYPE_TOWN && gMapHeader.mapType != MAP_TYPE_CITY
+     && gMapHeader.mapType != MAP_TYPE_ROUTE)
+        return FALSE;
+    from = Overworld_GetMapHeaderByGroupAndId(gLastUsedWarp.mapGroup, gLastUsedWarp.mapNum);
+    return from->mapType == MAP_TYPE_INDOOR;
+}
+
+static void FinishWarpExit(u8 taskId)
+{
+    DestroyTask(taskId);
+    if (ShouldValidatePartyAfterBuildingExit())
+        CreateTask(Task_ValidatePartyAfterBuildingExit, 80);
+}
+
+static void Task_ValidatePartyAfterBuildingExit(u8 taskId)
 {
     u8 badPartyIndex, reason;
 
     // Run only after the normal door-exit task has completely finished and
     // restored field control. Never participate in the warp/input path itself.
-    if (gPaletteFade.active || !IsPlayerStandingStill())
+    if (gPaletteFade.active || FadeInMapPreviewScreenIsRunning() || !IsPlayerStandingStill())
         return;
 
     if (!IsPlayerPartyLegalForRun(&badPartyIndex, &reason))
@@ -408,13 +427,8 @@ static void Task_ExitDoor(u8 taskId)
         if (!FadeInMapPreviewScreenIsRunning())
             UnlockPlayerFieldControls();
 
-        // If this door came from a Pokémon Center, validate only now: the
-        // vanilla warp, fade, door animation, and control restoration are done.
-        if (gLastUsedWarp.mapGroup >= 0
-         && IsPokemonCenterLayout(Overworld_GetMapHeaderByGroupAndId(gLastUsedWarp.mapGroup, gLastUsedWarp.mapNum)->mapLayoutId))
-            CreateTask(Task_RunFilterPostCenterExit, 80);
-
-        DestroyTask(taskId);
+        // Validate after the vanilla door exit has restored field control.
+        FinishWarpExit(taskId);
         break;
     }
 }
@@ -464,7 +478,7 @@ static void Task_ExitNonAnimDoor(u8 taskId)
         if (!FadeInMapPreviewScreenIsRunning())
             UnlockPlayerFieldControls();
 
-        DestroyTask(taskId);
+        FinishWarpExit(taskId);
         break;
     }
 }
@@ -486,7 +500,7 @@ static void Task_ExitNonDoor(u8 taskId)
             if (!FadeInMapPreviewScreenIsRunning())
                 UnlockPlayerFieldControls();
 
-            DestroyTask(taskId);
+            FinishWarpExit(taskId);
         }
         break;
     }
@@ -1615,7 +1629,7 @@ static void Task_ExitStairs(u8 taskId)
         {
             CameraObjectReset();
             UnlockPlayerFieldControls();
-            DestroyTask(taskId);
+            FinishWarpExit(taskId);
         }
         break;
     case 0:

@@ -19,6 +19,7 @@
 #include "field_specials.h"
 #include "field_weather.h"
 #include "graphics.h"
+#include "heal_location.h"
 #include "international_string_util.h"
 #include "item.h"
 #include "item_icon.h"
@@ -6022,7 +6023,23 @@ void ReturnPlayerToLastPokemonCenter(void)
 {
     // This is invoked only after the player is fully outside and the warning
     // message has been dismissed. Use the engine's ordinary warp machinery.
-    SetWarpDestinationToLastHealLocation();
+    if (gLastUsedWarp.mapGroup >= 0 && gLastUsedWarp.mapNum >= 0
+     && IsPokemonCenterLayout(Overworld_GetMapHeaderByGroupAndId(gLastUsedWarp.mapGroup, gLastUsedWarp.mapNum)->mapLayoutId))
+    {
+        // Withdrawal is allowed before healing. Return to the actual Center
+        // just left, even when the recorded whiteout destination is still Mom.
+        SetWarpDestinationToMapWarp(gLastUsedWarp.mapGroup, gLastUsedWarp.mapNum, 0);
+    }
+    else if (GetHealLocationIndexByWarpData(&gSaveBlock1Ptr->lastHealLocation) == HEAL_LOCATION_NONE
+          || IsLastHealLocationPlayerHouse())
+    {
+        // A repair return must provide a PC; a home loop cannot fix a bad type.
+        if (IS_FRLG || gSaveBlock3Ptr->startRegion)
+            SetWarpDestinationToMapWarp(MAP_GROUP(MAP_VIRIDIAN_CITY_POKEMON_CENTER_1F), MAP_NUM(MAP_VIRIDIAN_CITY_POKEMON_CENTER_1F), 0);
+        else
+            SetWarpDestinationToMapWarp(MAP_GROUP(MAP_OLDALE_TOWN_POKEMON_CENTER_1F), MAP_NUM(MAP_OLDALE_TOWN_POKEMON_CENTER_1F), 0);
+    }
+    else
+        SetWarpDestinationToLastHealLocation();
     DoWarp();
 }
-
