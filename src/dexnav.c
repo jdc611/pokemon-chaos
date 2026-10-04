@@ -132,6 +132,7 @@ struct DexNavGUI
     MainCallback savedCallback;
     u8 state;
     u8 cursorSpriteId;
+    u8 fishingIconMatrix;
     enum Species landSpecies[NUM_LAND_MONS_ENCOUNTER_SLOTS];
     enum Species waterSpecies[NUM_WATER_MONS_ENCOUNTER_SLOTS];
     enum Species fishingSpecies[COL_FISHING_COUNT];
@@ -224,6 +225,14 @@ static const u32 sFishingBottomTiles[] =
     0x54545454,
 };
 
+// Finish the header after twelve pixels, leaving a taller icon interior.
+static const u32 sFishingContentTopTile[] =
+{
+    0x88888888, 0x88888888, 0x88888888, 0x88888888,
+    0xDDDDDDDD, 0x11111111, 0x11111111, 0x11111111,
+};
+
+#define FISHING_CONTENT_TOP_TILE 0xB4
 #define FISHING_HEADER_TILE 0xB0
 #define FISHING_BOTTOM_TILE 0xB1
 
@@ -1703,7 +1712,7 @@ static void PrepareFishingDexNavLayout(void)
     // The Hidden label shares Land's bottom row: replace its lettering with
     // the existing clean Land border before replacing Hidden with Fishing.
     u32 x;
-    const u16 style[] = {FISHING_HEADER_TILE, tilemap[2 * 32 + 5],
+    const u16 style[] = {FISHING_HEADER_TILE, FISHING_CONTENT_TOP_TILE,
         tilemap[4 * 32 + 1], tilemap[4 * 32 + 5], tilemap[4 * 32 + 17],
         FISHING_BOTTOM_TILE, FISHING_BOTTOM_TILE + 1, FISHING_BOTTOM_TILE + 2};
     for (x = 4; x <= 14; x++)
@@ -1723,6 +1732,7 @@ static bool8 DexNav_LoadGraphics(void)
     case 1:
         if (FreeTempTileDataBuffersIfPossible() != TRUE)
         {
+            LoadBgTiles(1, sFishingContentTopTile, sizeof(sFishingContentTopTile), FISHING_CONTENT_TOP_TILE);
             LoadBgTiles(1, sFishingHeaderTile, sizeof(sFishingHeaderTile), FISHING_HEADER_TILE);
             LoadBgTiles(1, sFishingBottomTiles, sizeof(sFishingBottomTiles), FISHING_BOTTOM_TILE);
             DecompressDataWithHeaderWram(sDexNavGuiTilemap, sBg1TilemapBuffer);
@@ -1773,6 +1783,9 @@ static void UpdateCursorPosition(void)
         return;
     }
 
+    struct Sprite *cursor = &gSprites[sDexNavUiDataPtr->cursorSpriteId];
+    cursor->oam.affineMode = sDexNavUiDataPtr->cursorRow == ROW_FISHING ? ST_OAM_AFFINE_NORMAL : ST_OAM_AFFINE_OFF;
+    cursor->oam.matrixNum = sDexNavUiDataPtr->cursorRow == ROW_FISHING ? sDexNavUiDataPtr->fishingIconMatrix : 0;
     gSprites[sDexNavUiDataPtr->cursorSpriteId].x = x;
     gSprites[sDexNavUiDataPtr->cursorSpriteId].y = y;
 
@@ -1796,11 +1809,6 @@ static void CreateSelectionCursor(void)
 
     sDexNavUiDataPtr->cursorSpriteId = spriteId;
     UpdateCursorPosition();
-}
-
-static void CreateNoDataIcon(s16 x, s16 y)
-{
-    CreateSprite(&sNoDataIconTemplate, x, y, 0);
 }
 
 static bool8 CapturedAllLandMons(u32 headerId)
@@ -1938,6 +1946,7 @@ static void DexNav_InitWindows(void)
 
 static void DexNavGuiFreeResources(void)
 {
+    FreeOamMatrix(sDexNavUiDataPtr->fishingIconMatrix);
     Free(sDexNavUiDataPtr);
     Free(sBg1TilemapBuffer);
     FreeAllWindowBuffers();
@@ -2101,14 +2110,11 @@ static void DexNavLoadEncounterData(void)
     }
 }
 
-static void TryDrawIconInSlot(enum Species species, s16 x, s16 y)
+static u8 TryDrawIconInSlot(enum Species species, s16 x, s16 y)
 {
-    if (species == SPECIES_NONE || species > NUM_SPECIES)
-        CreateNoDataIcon(x, y);   //'X' in slot
-    else if (FALSE)
-        CreateMonIcon(SPECIES_NONE, SpriteCB_MonIcon, x, y, 0, 0xFFFFFFFF); //question mark
-    else
-        CreateMonIcon(species, SpriteCB_MonIcon, x, y, 0, 0xFFFFFFFF);
+    if (species == SPECIES_NONE || species >= NUM_SPECIES)
+        return CreateSprite(&sNoDataIconTemplate, x, y, 0);
+    return CreateMonIcon(species, SpriteCB_MonIcon, x, y, 0, 0xFFFFFFFF);
 }
 
 static void DrawSpeciesIcons(void)
@@ -2134,12 +2140,20 @@ static void DrawSpeciesIcons(void)
         TryDrawIconInSlot(species, x, y);
     }
 
+    // A single shared matrix keeps every fishing icon inside the short panel.
+    sDexNavUiDataPtr->fishingIconMatrix = AllocOamMatrix();
+    SetOamMatrix(sDexNavUiDataPtr->fishingIconMatrix, 0x1A0, 0, 0, 0x1A0);
     for (i = 0; i < COL_FISHING_COUNT; i++)
     {
         species = sDexNavUiDataPtr->fishingSpecies[i];
         x = ROW_FISHING_ICON_X + 21 * i;
         y = ROW_FISHING_ICON_Y;
-        TryDrawIconInSlot(species, x, y);
+        // The X artwork sits below its sprite center; compensate before scaling.
+        if (species == SPECIES_NONE)
+            y -= 4;
+        u8 spriteId = TryDrawIconInSlot(species, x, y);
+        gSprites[spriteId].oam.affineMode = ST_OAM_AFFINE_NORMAL;
+        gSprites[spriteId].oam.matrixNum = sDexNavUiDataPtr->fishingIconMatrix;
     }
 }
 
