@@ -3654,12 +3654,9 @@ bool32 DoesMonMatchActiveRunFilter(struct Pokemon *mon)
         return TRUE;
     requiredAbility = GetActiveRunFilterAbility();
 
-    // Ability legality is a property of the actual mon, not merely of the
-    // species' generated ability table. This matters after random evolution,
-    // where the required ability has already been assigned to the mon.
-    if (requiredAbility != ABILITY_NONE && GetMonAbility(mon) != requiredAbility
-     && (SpeciesHasAbilityForSettings(species, requiredAbility, gSaveBlock3Ptr->abilityMode, gSaveBlock3Ptr->worldSeed)
-      || !DoesSpeciesLineMatchActiveRunFilter(species)))
+    // Encounter eligibility may include a future evolution, but departure
+    // legality requires the selected ability on the actual Pokémon now.
+    if (requiredAbility != ABILITY_NONE && GetMonAbility(mon) != requiredAbility)
         return FALSE;
 
     // For combined Type + Ability runs, the ability was checked above; retain
@@ -3668,7 +3665,7 @@ bool32 DoesMonMatchActiveRunFilter(struct Pokemon *mon)
     if (gSaveBlock3Ptr != NULL && gSaveBlock3Ptr->filterMode == RUN_FILTER_ABILITY)
         return TRUE;
 
-    return DoesSpeciesLineMatchActiveRunFilter(species);
+    return gSaveBlock3Ptr == NULL || DoesSpeciesLineMatchActiveRunFilter(species);
 }
 
 bool32 DoesBoxMonMatchActiveRunFilter(struct BoxPokemon *boxMon)
@@ -3679,16 +3676,15 @@ bool32 DoesBoxMonMatchActiveRunFilter(struct BoxPokemon *boxMon)
 
     if (species == SPECIES_NONE || species == SPECIES_EGG)
         return TRUE;
-    if (!DoesSpeciesLineMatchActiveRunFilter(species))
+    if (gSaveBlock3Ptr != NULL && !DoesSpeciesLineMatchActiveRunFilter(species))
         return FALSE;
 
     requiredAbility = GetActiveRunFilterAbility();
-    if (requiredAbility == ABILITY_NONE
-     || !SpeciesHasAbilityForSettings(species, requiredAbility, gSaveBlock3Ptr->abilityMode, gSaveBlock3Ptr->worldSeed))
+    if (requiredAbility == ABILITY_NONE)
         return TRUE;
 
     abilityNum = GetBoxMonData(boxMon, MON_DATA_ABILITY_NUM);
-    return GetSpeciesAbility(species, abilityNum) == requiredAbility;
+    return GetAbilityBySpecies(species, abilityNum) == requiredAbility;
 }
 
 bool32 TrySetMonAbilityToActiveRunFilter(struct Pokemon *mon)

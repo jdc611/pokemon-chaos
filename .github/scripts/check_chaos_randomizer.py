@@ -263,6 +263,7 @@ u32 GetMonData(struct Pokemon *m,u32 f){return m->species;}
 u32 GetMonAbility(struct Pokemon *m){return m->ability;}
 u32 GetBoxMonData(struct BoxPokemon *m,u32 f){return f==MON_DATA_ABILITY_NUM?m->ability:m->species;}
 u32 GetSpeciesAbility(enum Species s,u8 slot){return slot;}
+u32 GetAbilityBySpecies(enum Species s,u8 slot){return slot;}
 u32 GetActiveRunFilterAbility(void){return 3;}
 bool32 SpeciesHasAbilityForSettings(enum Species s,u32 a,u8 mode,u32 seed){return hasCurrentAbility;}
 enum Species SanitizeSpeciesId(enum Species s){return s;}
@@ -273,12 +274,12 @@ bool32 PlayerPartyHasPermanentMega(void){return FALSE;}
 +function('src/pokemon.c','CanSpeciesJoinActiveRunParty')+r'''
 int main(void){struct Pokemon m={1,1};struct BoxPokemon b={1,1};
  save3.filterMode=RUN_FILTER_TYPE_ABILITY;save3.filterValue=(3<<5)|3;save3.worldSeed=1;
- assert(CanSpeciesJoinActiveRunParty(1));assert(DoesMonMatchActiveRunFilter(&m));assert(DoesBoxMonMatchActiveRunFilter(&b));
+ assert(CanSpeciesJoinActiveRunParty(1));assert(!DoesMonMatchActiveRunFilter(&m));assert(!DoesBoxMonMatchActiveRunFilter(&b));
  hasCurrentAbility=TRUE;assert(!DoesMonMatchActiveRunFilter(&m));assert(!DoesBoxMonMatchActiveRunFilter(&b));
  m.ability=3;b.ability=3;assert(DoesMonMatchActiveRunFilter(&m));assert(DoesBoxMonMatchActiveRunFilter(&b));
  hasCurrentAbility=FALSE;save3.filterValue=(4<<5)|4;m.ability=1;
  assert(!CanSpeciesJoinActiveRunParty(1));assert(!DoesMonMatchActiveRunFilter(&m));assert(!DoesBoxMonMatchActiveRunFilter(&b));
- puts("PASS: actual party/PC admission accepts future-line matches while rejecting wrong current abilities and incompatible lines.");}
+ puts("PASS: encounter pools retain future-line matches while party/PC legality requires the current selected ability.");}
 ''')
 
 run(base+r'''
