@@ -20,8 +20,8 @@ enum RowGUIInfo
 #define ROW_LAND_TOP_ICON_Y     72
 #define ROW_LAND_BOT_ICON_Y     (ROW_LAND_TOP_ICON_Y + 28)
 
-#define ROW_FISHING_ICON_X      16
-#define ROW_FISHING_ICON_Y      144
+#define ROW_FISHING_ICON_X      17
+#define ROW_FISHING_ICON_Y      138
 
 enum EncounterType
 {

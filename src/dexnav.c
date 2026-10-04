@@ -196,7 +196,36 @@ static const u32 sFishingHeaderTile[] =
     0x88888888,
 };
 
+static const u32 sFishingBottomTiles[] =
+{
+    0x1111DE75,
+    0x1111DE74,
+    0xDDDDDE75,
+    0xEEEEEE74,
+    0x77777775,
+    0x44444444,
+    0x45454545,
+    0x54545454,
+    0x11111111,
+    0x11111111,
+    0xDDDDDDDD,
+    0xEEEEEEEE,
+    0x77777777,
+    0x44444444,
+    0x45454545,
+    0x54545454,
+    0xED111111,
+    0xED111111,
+    0xEDDDDDDD,
+    0xEEEEEEEE,
+    0x77777777,
+    0x44444444,
+    0x45454545,
+    0x54545454,
+};
+
 #define FISHING_HEADER_TILE 0xB0
+#define FISHING_BOTTOM_TILE 0xB1
 
 static const u32 sSelectionCursorGfx[] = INCGFX_U32("graphics/dexnav/cursor.png", ".4bpp.smol");
 static const u16 sSelectionCursorPal[] = INCGFX_U16("graphics/dexnav/cursor.png", ".gbapal");
@@ -238,8 +267,6 @@ static const u8 sText_MethodOldSuper[] = _("O+S");
 static const u8 sText_MethodGoodSuper[] = _("G+S");
 static const u8 sText_MethodAllRods[] = _("ALL RODS");
 static const u8 sText_Fishing[] = _("FISHING");
-static const u8 sText_WaterPanel[] = _("WATER");
-static const u8 sText_LandPanel[] = _("LAND");
 
 static const u8 sText_ArrowLeft[] = _("{LEFT_ARROW}");
 static const u8 sText_ArrowRight[] = _("{RIGHT_ARROW}");
@@ -1672,12 +1699,15 @@ static void DrawDexNavEncounterPanel(u16 *tilemap, u32 left, u32 top, u32 width,
 static void PrepareFishingDexNavLayout(void)
 {
     u16 *tilemap = (u16 *)sBg1TilemapBuffer;
-    // Sample Water before drawing any panel, then reuse its exact border tiles.
-    const u16 style[] = {tilemap[2 * 32 + 5], tilemap[3 * 32 + 5],
+    // Retain the original Water and Land panels, including their baked labels.
+    // The Hidden label shares Land's bottom row: replace its lettering with
+    // the existing clean Land border before replacing Hidden with Fishing.
+    u32 x;
+    const u16 style[] = {FISHING_HEADER_TILE, tilemap[2 * 32 + 5],
         tilemap[4 * 32 + 1], tilemap[4 * 32 + 5], tilemap[4 * 32 + 17],
-        tilemap[6 * 32 + 1], tilemap[6 * 32 + 5], tilemap[6 * 32 + 17]};
-    DrawDexNavEncounterPanel(tilemap, 1, 2, 18, 6, style);
-    DrawDexNavEncounterPanel(tilemap, 0, 7, 20, 14, style);
+        FISHING_BOTTOM_TILE, FISHING_BOTTOM_TILE + 1, FISHING_BOTTOM_TILE + 2};
+    for (x = 4; x <= 14; x++)
+        tilemap[14 * 32 + x] = tilemap[14 * 32 + 1];
     DrawDexNavEncounterPanel(tilemap, 0, 15, 20, 19, style);
 }
 
@@ -1694,6 +1724,7 @@ static bool8 DexNav_LoadGraphics(void)
         if (FreeTempTileDataBuffersIfPossible() != TRUE)
         {
             LoadBgTiles(1, sFishingHeaderTile, sizeof(sFishingHeaderTile), FISHING_HEADER_TILE);
+            LoadBgTiles(1, sFishingBottomTiles, sizeof(sFishingBottomTiles), FISHING_BOTTOM_TILE);
             DecompressDataWithHeaderWram(sDexNavGuiTilemap, sBg1TilemapBuffer);
             PrepareFishingDexNavLayout();
             ScheduleBgCopyTilemapToVram(1);
@@ -1892,8 +1923,8 @@ static void DexNav_InitWindows(void)
 {
     InitWindows(sDexNavGuiWindowTemplates);
     DeactivateAllTextPrinters();
-    const u8 labels[] = {WINDOW_WATER_LABEL, WINDOW_LAND_LABEL, WINDOW_FISHING_LABEL};
-    const u8 *const text[] = {sText_WaterPanel, sText_LandPanel, sText_Fishing};
+    const u8 labels[] = {WINDOW_FISHING_LABEL};
+    const u8 *const text[] = {sText_Fishing};
     u32 i;
     for (i = 0; i < ARRAY_COUNT(labels); i++)
     {
