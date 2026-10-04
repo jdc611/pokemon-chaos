@@ -451,7 +451,10 @@ static void BuildNormalStartMenu(void)
             AddStartMenuAction(MENU_ACTION_POKERIDER);
             if (!IS_FRLG || VarGet(VAR_CHAOS_TIME_CHANGER_UNLOCKED))
                 AddStartMenuAction(MENU_ACTION_TIME_CHANGER);
-            AddStartMenuAction(MENU_ACTION_AUTO_REPEL);
+            // Teachy TV handoff also equips Auto Repel; completed older saves
+            // already have this persistent scene state and retain access.
+            if (!IS_FRLG || VarGet(VAR_MAP_SCENE_VIRIDIAN_CITY_OLD_MAN) >= 2)
+                AddStartMenuAction(MENU_ACTION_AUTO_REPEL);
         }
         else
         {

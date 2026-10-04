@@ -72,3 +72,7 @@ These decisions supersede older acquisition notes above. They are design locks, 
 **Arcanite:** optional strong NPC in Mr. Fuji's Lavender house challenges exactly one selected party Pokémon with Mega Arcanine. First win awards Arcanite once; retries are allowed until victory. The player party must be restored correctly after the special format. NPC identity/name and level remain TBD. Arcanite must be implemented as a real supported stone/item; the current native Mega Arcanine uses no stone. Blaine can showcase it later but does not gate acquisition.
 
 Still undecided: quiz bank, coin prices, Game Corner TM list/prices, Celadon item prices and Mega inventory, remaining rematch Mega assignments/TMs, exact Strange Fossil tile, Arcanite challenger identity/level, and later rematch unlock milestones. Do not auto-decide these.
+
+### Auto Repel acquisition
+
+The Viridian Teachy TV old man equips Auto Repel in the same short handoff, without a catching tutorial. It becomes available in the tools menu after the gift; the toggle remains off until the player enables it. Completed older saves retain access through the existing old-man scene state. A failed Teachy TV gift does not advance the handoff.

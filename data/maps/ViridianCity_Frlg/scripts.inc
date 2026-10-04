@@ -220,8 +220,16 @@ ViridianCity_EventScript_TutorialTriggerRight::
 
 ViridianCity_EventScript_DoTutorialBattle::
 	giveitem ITEM_TEACHY_TV
+	goto_if_eq VAR_RESULT, FALSE, ViridianCity_EventScript_TutorialGiftDone
 	setvar VAR_MAP_SCENE_VIRIDIAN_CITY_OLD_MAN, 2
+	msgbox ViridianCity_Text_AutoRepelGift, MSGBOX_DEFAULT
+ViridianCity_EventScript_TutorialGiftDone::
 	return
+
+ViridianCity_Text_AutoRepelGift::
+	.string "I'll set you up with AUTO REPEL!\n"
+	.string "Use your tools menu to keep\l"
+	.string "wild POKéMON away.$"
 
 ViridianCity_Text_CanCarryMonsAnywhere::
 	.string "Those POKé BALLS at your waist!\n"
