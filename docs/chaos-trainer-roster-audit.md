@@ -1,8 +1,8 @@
 # Kanto trainer modernization
 
-567 ordinary native FireRed trainer teams, 1,402 party slots, and 337 distinct replacement species. All levels, party sizes, trainer identities, battle formats, IVs and event IDs were preserved. Species are fixed authored rosters, independent of the encounter seed.
+567 ordinary native FireRed trainer teams, 1,402 party slots, and 339 distinct replacement species. All levels, party sizes, trainer identities, battle formats, IVs and event IDs were preserved. Species are fixed authored rosters, independent of the encounter seed.
 
-Early teams use basic species. Midgame and later teams advance through thematic evolutionary lines; 1,141 slots have moves selected from their actual level-up learnsets at their existing level. Late ordinary trainer aces may carry a Sitrus Berry. Existing ability assignments were cleared when changing species so the native generator assigns valid abilities.
+Early teams use basic species. Midgame and later teams advance through thematic evolutionary lines; 1,137 slots have moves selected from their actual level-up learnsets at their existing level. Late ordinary trainer aces may carry a Sitrus Berry. Existing ability assignments were cleared when changing species so the native generator assigns valid abilities.
 
 The following 66 established or major story teams were excluded and verified byte-for-byte against the pre-change master. This protects rival starter counter logic, Gym Leaders, Giovanni, named Rockets, Elite Four, Champion and previously customized battles.
 

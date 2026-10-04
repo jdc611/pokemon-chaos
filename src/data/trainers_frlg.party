@@ -152,8 +152,8 @@ AI: Check Bad Move
 Bibarel
 Level: 21
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Aqua Jet
 - Headbutt
+- Aqua Jet
 - Rollout
 - Taunt
 
@@ -569,8 +569,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Bibarel
 Level: 31
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Aqua Jet
 - Headbutt
+- Aqua Jet
 - Crunch
 - Taunt
 
@@ -794,8 +794,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Bibarel
 Level: 22
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Aqua Jet
 - Headbutt
+- Aqua Jet
 - Rollout
 - Taunt
 
@@ -995,8 +995,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Ducklett
 Level: 21
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Bubble Beam
 - Aerial Ace
+- Bubble Beam
 - Water Pulse
 - Water Gun
 
@@ -1059,8 +1059,8 @@ AI: Check Bad Move
 Oddish
 Level: 20
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Acid
 - Mega Drain
+- Acid
 - Sleep Powder
 - Absorb
 
@@ -1280,8 +1280,8 @@ AI: Check Bad Move
 Gloom
 Level: 21
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Acid
 - Mega Drain
+- Acid
 - Sleep Powder
 - Absorb
 
@@ -1289,8 +1289,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Fearow
 Level: 21
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Fury Attack
 - Pluck
+- Fury Attack
 - Drill Run
 - Aerial Ace
 
@@ -1306,8 +1306,8 @@ AI: Check Bad Move
 Fearow
 Level: 21
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Fury Attack
 - Pluck
+- Fury Attack
 - Drill Run
 - Aerial Ace
 
@@ -1341,8 +1341,8 @@ AI: Check Bad Move
 Noctowl
 Level: 22
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Echoed Voice
 - Sky Attack
+- Echoed Voice
 - Confusion
 - Reflect
 
@@ -1350,8 +1350,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Fearow
 Level: 22
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Fury Attack
 - Pluck
+- Fury Attack
 - Drill Run
 - Aerial Ace
 
@@ -1367,8 +1367,8 @@ AI: Check Bad Move
 Fearow
 Level: 24
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Take Down
 - Pluck
+- Take Down
 - Drill Run
 - Aerial Ace
 
@@ -1406,8 +1406,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Smoliv
 Level: 24
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Tackle
 - Mega Drain
+- Tackle
 - Razor Leaf
 - Absorb
 
@@ -1415,8 +1415,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Swellow
 Level: 24
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Quick Attack
 - Brave Bird
+- Quick Attack
 - Pluck
 - Aerial Ace
 
@@ -1441,8 +1441,8 @@ AI: Check Bad Move
 Spheal
 Level: 29
 IVs: 3 HP / 3 Atk / 3 Def / 3 SpA / 3 SpD / 3 Spe
-- Brine
 - Aurora Beam
+- Brine
 - Rollout
 - Water Gun
 
@@ -1476,8 +1476,8 @@ IVs: 3 HP / 3 Atk / 3 Def / 3 SpA / 3 SpD / 3 Spe
 Spheal
 Level: 20
 IVs: 3 HP / 3 Atk / 3 Def / 3 SpA / 3 SpD / 3 Spe
-- Water Gun
 - Powder Snow
+- Water Gun
 - Rollout
 - Snore
 
@@ -1589,8 +1589,8 @@ IVs: 3 HP / 3 Atk / 3 Def / 3 SpA / 3 SpD / 3 Spe
 Abomasnow @ Sitrus Berry
 Level: 40
 IVs: 3 HP / 3 Atk / 3 Def / 3 SpA / 3 SpD / 3 Spe
-- Ice Punch
 - Razor Leaf
+- Ice Punch
 - Leafage
 - Ice Shard
 
@@ -1688,8 +1688,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Helioptile
 Level: 20
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Pound
 - Thunder Shock
+- Pound
 - Bulldoze
 - Quick Attack
 
@@ -1749,8 +1749,8 @@ AI: Check Bad Move
 Varoom
 Level: 26
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Gyro Ball
 - Sludge
+- Gyro Ball
 - Headbutt
 - Taunt
 
@@ -1784,8 +1784,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Heliolisk
 Level: 36
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Quick Attack
 - Discharge
+- Quick Attack
 - Bulldoze
 - Thunder Wave
 
@@ -1823,8 +1823,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Lairon
 Level: 34
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Iron Head
 - Rock Slide
+- Iron Head
 - Headbutt
 - Protect
 
@@ -2262,8 +2262,8 @@ AI: Check Bad Move
 Salandit
 Level: 29
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Poison Fang
 - Ember
+- Poison Fang
 - Scratch
 - Nasty Plot
 
@@ -2297,8 +2297,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Salandit
 Level: 25
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Poison Fang
 - Ember
+- Poison Fang
 - Scratch
 - Nasty Plot
 
@@ -2359,8 +2359,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Sandile
 Level: 28
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Dig
 - Crunch
+- Dig
 - Bite
 - Power Trip
 
@@ -2428,8 +2428,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Sandile
 Level: 28
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Dig
 - Crunch
+- Dig
 - Bite
 - Power Trip
 
@@ -2471,8 +2471,8 @@ AI: Check Bad Move
 Krokorok
 Level: 29
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Dig
 - Crunch
+- Dig
 - Bite
 - Power Trip
 
@@ -2629,8 +2629,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Sandile
 Level: 28
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Dig
 - Crunch
+- Dig
 - Bite
 - Power Trip
 
@@ -2716,8 +2716,8 @@ AI: Check Bad Move
 Pyroar @ Sitrus Berry
 Level: 41
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Hyper Beam
 - Fire Fang
+- Hyper Beam
 - Work Up
 - Take Down
 
@@ -2802,8 +2802,8 @@ AI: Check Bad Move
 Camerupt
 Level: 34
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Earth Power
 - Eruption
+- Earth Power
 - Take Down
 - Lava Plume
 
@@ -2811,8 +2811,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Litleo
 Level: 34
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Take Down
 - Fire Fang
+- Take Down
 - Work Up
 - Headbutt
 
@@ -3024,8 +3024,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Chinchou
 Level: 21
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Bubble Beam
 - Spark
+- Bubble Beam
 - Thunder Wave
 - Water Gun
 
@@ -3046,8 +3046,8 @@ AI: Check Bad Move
 Barboach
 Level: 28
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Aqua Tail
 - Mud-Slap
+- Aqua Tail
 - Water Pulse
 - Water Gun
 
@@ -3099,8 +3099,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Sharpedo
 Level: 31
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Aqua Jet
 - Night Slash
+- Aqua Jet
 - Slash
 - Ice Fang
 
@@ -3134,8 +3134,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Lanturn
 Level: 27
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Bubble Beam
 - Spark
+- Bubble Beam
 - Spit Up
 - Thunder Wave
 
@@ -3156,8 +3156,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Barboach
 Level: 27
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Aqua Tail
 - Mud-Slap
+- Aqua Tail
 - Water Pulse
 - Water Gun
 
@@ -3208,8 +3208,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Chinchou
 Level: 24
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Bubble Beam
 - Spark
+- Bubble Beam
 - Thunder Wave
 - Water Gun
 
@@ -3242,8 +3242,8 @@ AI: Check Bad Move
 Tentacruel
 Level: 30
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Bubble Beam
 - Acid
+- Bubble Beam
 - Wrap
 - Water Pulse
 
@@ -3303,8 +3303,8 @@ AI: Check Bad Move
 Skrelp
 Level: 30
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Water Pulse
 - Poison Tail
+- Water Pulse
 - Tackle
 - Acid
 
@@ -3312,8 +3312,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Tentacruel
 Level: 30
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Bubble Beam
 - Acid
+- Bubble Beam
 - Wrap
 - Water Pulse
 
@@ -3329,8 +3329,8 @@ AI: Check Bad Move
 Quagsire
 Level: 27
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Water Gun
 - Mud Shot
+- Water Gun
 - Slam
 - Yawn
 
@@ -3347,8 +3347,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Palpitoad
 Level: 27
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Bubble Beam
 - Mud Shot
+- Bubble Beam
 - Round
 - Echoed Voice
 
@@ -3373,8 +3373,8 @@ AI: Check Bad Move
 Azumarill
 Level: 29
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Bubble Beam
 - Play Rough
+- Bubble Beam
 - Bounce
 - Aqua Tail
 
@@ -3382,8 +3382,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Palpitoad
 Level: 29
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Bubble Beam
 - Mud Shot
+- Bubble Beam
 - Round
 - Echoed Voice
 
@@ -3391,8 +3391,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Tentacool
 Level: 29
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Bubble Beam
 - Acid
+- Bubble Beam
 - Wrap
 - Water Pulse
 
@@ -3408,8 +3408,8 @@ AI: Check Bad Move
 Skrelp
 Level: 30
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Water Pulse
 - Poison Tail
+- Water Pulse
 - Tackle
 - Acid
 
@@ -3417,8 +3417,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Ducklett
 Level: 30
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Bubble Beam
 - Aerial Ace
+- Bubble Beam
 - Roost
 - Air Slash
 
@@ -3434,8 +3434,8 @@ AI: Check Bad Move
 Azumarill
 Level: 27
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Bubble Beam
 - Play Rough
+- Bubble Beam
 - Bounce
 - Aqua Tail
 
@@ -3452,8 +3452,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Frillish
 Level: 27
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Brine
 - Night Shade
+- Brine
 - Absorb
 - Water Pulse
 
@@ -3461,8 +3461,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Palpitoad
 Level: 27
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Bubble Beam
 - Mud Shot
+- Bubble Beam
 - Round
 - Echoed Voice
 
@@ -3496,8 +3496,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Quagsire
 Level: 31
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Aqua Tail
 - Mud Shot
+- Aqua Tail
 - Slam
 - Yawn
 
@@ -3513,8 +3513,8 @@ AI: Check Bad Move
 Azumarill
 Level: 35
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Bubble Beam
 - Play Rough
+- Bubble Beam
 - Bounce
 - Aqua Tail
 
@@ -3539,8 +3539,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Quagsire
 Level: 28
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Aqua Tail
 - Mud Shot
+- Aqua Tail
 - Slam
 - Yawn
 
@@ -3574,8 +3574,8 @@ AI: Check Bad Move
 Frillish
 Level: 33
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Brine
 - Shadow Ball
+- Brine
 - Absorb
 - Recover
 
@@ -3617,8 +3617,8 @@ AI: Check Bad Move
 Ducklett
 Level: 33
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Bubble Beam
 - Aerial Ace
+- Bubble Beam
 - Roost
 - Air Slash
 
@@ -3656,8 +3656,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Tentacruel
 Level: 32
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Bubble Beam
 - Acid
+- Bubble Beam
 - Wrap
 - Water Pulse
 
@@ -3717,8 +3717,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Meditite
 Level: 29
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Zen Headbutt
 - High Jump Kick
+- Zen Headbutt
 - Calm Mind
 - Force Palm
 
@@ -3734,8 +3734,8 @@ AI: Check Bad Move
 Krokorok
 Level: 29
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Dig
 - Crunch
+- Dig
 - Bite
 - Power Trip
 
@@ -3769,8 +3769,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Varoom
 Level: 29
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Iron Head
 - Sludge
+- Iron Head
 - Headbutt
 - Taunt
 
@@ -3882,8 +3882,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Meditite
 Level: 29
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Zen Headbutt
 - High Jump Kick
+- Zen Headbutt
 - Calm Mind
 - Force Palm
 
@@ -4046,8 +4046,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Natu
 Level: 24
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Stored Power
 - Peck
+- Stored Power
 - Night Shade
 - Confuse Ray
 
@@ -4266,8 +4266,8 @@ AI: Check Bad Move
 Azumarill
 Level: 29
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Bubble Beam
 - Play Rough
+- Bubble Beam
 - Bounce
 - Aqua Tail
 
@@ -4353,8 +4353,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Skrelp
 Level: 27
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Water Gun
 - Poison Tail
+- Water Gun
 - Tackle
 - Acid
 
@@ -4371,8 +4371,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Ducklett
 Level: 27
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Bubble Beam
 - Aerial Ace
+- Bubble Beam
 - Air Slash
 - Water Pulse
 
@@ -4380,8 +4380,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Quagsire
 Level: 27
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Water Gun
 - Mud Shot
+- Water Gun
 - Slam
 - Yawn
 
@@ -4419,8 +4419,8 @@ AI: Check Bad Move
 Ducklett
 Level: 29
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Bubble Beam
 - Aerial Ace
+- Bubble Beam
 - Air Slash
 - Water Pulse
 
@@ -4432,8 +4432,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Quagsire
 Level: 29
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Aqua Tail
 - Mud Shot
+- Aqua Tail
 - Slam
 - Yawn
 
@@ -4449,8 +4449,8 @@ AI: Check Bad Move
 Azumarill
 Level: 30
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Bubble Beam
 - Play Rough
+- Bubble Beam
 - Bounce
 - Aqua Tail
 
@@ -4467,8 +4467,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Palpitoad
 Level: 30
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Bubble Beam
 - Mud Shot
+- Bubble Beam
 - Round
 - Echoed Voice
 
@@ -4497,8 +4497,8 @@ IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 Baltoy
 Level: 31
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
-- Extrasensory
 - Earth Power
+- Extrasensory
 - Ancient Power
 - Psybeam
 
@@ -4619,8 +4619,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Helioptile
 Level: 20
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Pound
 - Thunder Shock
+- Pound
 - Bulldoze
 - Quick Attack
 
@@ -4697,8 +4697,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Claydol
 Level: 41
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Extrasensory
 - Earth Power
+- Extrasensory
 - Hyper Beam
 - Psybeam
 
@@ -4780,8 +4780,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Baltoy
 Level: 34
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Extrasensory
 - Earth Power
+- Extrasensory
 - Ancient Power
 - Psybeam
 
@@ -4823,8 +4823,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Xatu
 Level: 46
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Psychic
 - Air Slash
+- Psychic
 - Night Shade
 - Tailwind
 
@@ -4910,8 +4910,8 @@ IVs: 4 HP / 4 Atk / 4 Def / 4 SpA / 4 SpD / 4 Spe
 Salazzle
 Level: 34
 IVs: 4 HP / 4 Atk / 4 Def / 4 SpA / 4 SpD / 4 Spe
-- Poison Fang
 - Ember
+- Poison Fang
 - Scratch
 - Nasty Plot
 
@@ -4927,8 +4927,8 @@ AI: Check Bad Move
 Snover
 Level: 33
 IVs: 4 HP / 4 Atk / 4 Def / 4 SpA / 4 SpD / 4 Spe
-- Ice Shard
 - Razor Leaf
+- Ice Shard
 - Leafage
 - Icy Wind
 
@@ -4962,8 +4962,8 @@ AI: Check Bad Move
 Slowbro @ Sitrus Berry
 Level: 43
 IVs: 4 HP / 4 Atk / 4 Def / 4 SpA / 4 SpD / 4 Spe
-- Water Pulse
 - Psychic
+- Water Pulse
 - Headbutt
 - Slack Off
 
@@ -5005,8 +5005,8 @@ AI: Check Bad Move
 Revavroom
 Level: 44
 IVs: 4 HP / 4 Atk / 4 Def / 4 SpA / 4 SpD / 4 Spe
-- Iron Head
 - Poison Jab
+- Iron Head
 - Headbutt
 - Taunt
 
@@ -5040,8 +5040,8 @@ IVs: 4 HP / 4 Atk / 4 Def / 4 SpA / 4 SpD / 4 Spe
 Slowbro
 Level: 42
 IVs: 4 HP / 4 Atk / 4 Def / 4 SpA / 4 SpD / 4 Spe
-- Water Pulse
 - Psychic
+- Water Pulse
 - Headbutt
 - Slack Off
 
@@ -5080,8 +5080,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Noctowl
 Level: 29
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Take Down
 - Sky Attack
+- Take Down
 - Extrasensory
 - Reflect
 
@@ -5115,8 +5115,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Pelipper
 Level: 25
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Water Pulse
 - Air Slash
+- Water Pulse
 - Quick Attack
 - Agility
 
@@ -5133,8 +5133,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Swellow
 Level: 25
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Quick Attack
 - Brave Bird
+- Quick Attack
 - Pluck
 - Aerial Ace
 
@@ -5237,8 +5237,8 @@ AI: Check Bad Move
 Swellow
 Level: 26
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Quick Attack
 - Brave Bird
+- Quick Attack
 - Pluck
 - Aerial Ace
 
@@ -5246,8 +5246,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Fearow
 Level: 26
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Take Down
 - Pluck
+- Take Down
 - Drill Run
 - Aerial Ace
 
@@ -5299,8 +5299,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Staravia
 Level: 28
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Tackle
 - Aerial Ace
+- Tackle
 - Quick Attack
 - Endeavor
 
@@ -5412,8 +5412,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Noctowl
 Level: 30
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Take Down
 - Sky Attack
+- Take Down
 - Extrasensory
 - Reflect
 
@@ -5421,8 +5421,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Staravia
 Level: 30
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Tackle
 - Aerial Ace
+- Tackle
 - Quick Attack
 - Endeavor
 
@@ -5438,8 +5438,8 @@ AI: Check Bad Move
 Pelipper
 Level: 39
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Water Pulse
 - Air Slash
+- Water Pulse
 - Quick Attack
 - Agility
 
@@ -5447,8 +5447,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Corviknight
 Level: 39
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Steel Wing
 - Drill Peck
+- Steel Wing
 - Power Trip
 - Taunt
 
@@ -5456,8 +5456,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Swellow
 Level: 39
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Quick Attack
 - Brave Bird
+- Quick Attack
 - Agility
 - Pluck
 
@@ -5482,8 +5482,8 @@ AI: Check Bad Move
 Staraptor
 Level: 39
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Take Down
 - Aerial Ace
+- Take Down
 - Close Combat
 - Tackle
 
@@ -5508,8 +5508,8 @@ AI: Check Bad Move
 Staravia
 Level: 28
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Tackle
 - Aerial Ace
+- Tackle
 - Quick Attack
 - Endeavor
 
@@ -5517,8 +5517,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Swellow
 Level: 28
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Quick Attack
 - Brave Bird
+- Quick Attack
 - Pluck
 - Aerial Ace
 
@@ -5552,8 +5552,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Swellow
 Level: 26
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Quick Attack
 - Brave Bird
+- Quick Attack
 - Pluck
 - Aerial Ace
 
@@ -5561,8 +5561,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Pelipper
 Level: 26
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Water Pulse
 - Air Slash
+- Water Pulse
 - Quick Attack
 - Agility
 
@@ -5622,8 +5622,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Staravia
 Level: 28
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Tackle
 - Aerial Ace
+- Tackle
 - Quick Attack
 - Endeavor
 
@@ -5631,8 +5631,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Swellow
 Level: 28
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Quick Attack
 - Brave Bird
+- Quick Attack
 - Pluck
 - Aerial Ace
 
@@ -5648,8 +5648,8 @@ AI: Check Bad Move
 Crabominable
 Level: 37
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Ice Hammer
 - Brick Break
+- Ice Hammer
 - Slam
 - Protect
 
@@ -5735,8 +5735,8 @@ AI: Check Bad Move
 Crabominable
 Level: 36
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Ice Punch
 - Brick Break
+- Ice Punch
 - Slam
 - Protect
 
@@ -5761,8 +5761,8 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 Meditite
 Level: 31
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Zen Headbutt
 - High Jump Kick
+- Zen Headbutt
 - Calm Mind
 - Force Palm
 
@@ -5839,8 +5839,8 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 Lucario
 Level: 38
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Metal Claw
 - Force Palm
+- Metal Claw
 - Quick Attack
 - Calm Mind
 
@@ -5848,8 +5848,8 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 Crabominable
 Level: 38
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Ice Hammer
 - Brick Break
+- Ice Hammer
 - Slam
 - Protect
 
@@ -5874,8 +5874,8 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 Crabominable
 Level: 43
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Ice Hammer
 - Brick Break
+- Ice Hammer
 - Slam
 - Protect
 
@@ -5883,8 +5883,8 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 Medicham @ Sitrus Berry
 Level: 43
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Zen Headbutt
 - High Jump Kick
+- Zen Headbutt
 - Fire Punch
 - Calm Mind
 
@@ -6246,8 +6246,8 @@ AI: Check Bad Move
 Varoom
 Level: 33
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Iron Head
 - Sludge
+- Iron Head
 - Headbutt
 - Taunt
 
@@ -6281,8 +6281,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Varoom
 Level: 26
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Gyro Ball
 - Sludge
+- Gyro Ball
 - Headbutt
 - Taunt
 
@@ -6316,8 +6316,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Baltoy
 Level: 25
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Psybeam
 - Mud-Slap
+- Psybeam
 - Ancient Power
 - Confusion
 
@@ -6325,8 +6325,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Xatu
 Level: 25
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Stored Power
 - Air Slash
+- Stored Power
 - Night Shade
 - Tailwind
 
@@ -6343,8 +6343,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Varoom
 Level: 25
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Gyro Ball
 - Sludge
+- Gyro Ball
 - Headbutt
 - Taunt
 
@@ -6421,8 +6421,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Bronzor
 Level: 28
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Gyro Ball
 - Extrasensory
+- Gyro Ball
 - Payback
 - Confusion
 
@@ -6447,8 +6447,8 @@ AI: Check Bad Move
 Xatu
 Level: 29
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Stored Power
 - Air Slash
+- Stored Power
 - Night Shade
 - Tailwind
 
@@ -6491,8 +6491,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Heliolisk
 Level: 33
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Quick Attack
 - Discharge
+- Quick Attack
 - Bulldoze
 - Thunder Wave
 
@@ -6720,15 +6720,15 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Shroodle
+Zubat
 Level: 11
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Koffing
+Nickit
 Level: 11
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Scraggy
+Salandit
 Level: 11
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
@@ -6741,11 +6741,11 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Shroodle
+Sandile
 Level: 11
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Koffing
+Croagunk
 Level: 11
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
@@ -6758,11 +6758,11 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Shroodle
+Salandit
 Level: 13
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Koffing
+Poochyena
 Level: 13
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
@@ -6800,11 +6800,11 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Pawniard
+Varoom
 Level: 15
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Koffing
+Nickit
 Level: 15
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
@@ -6817,22 +6817,22 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Pawniard
+Thievul
 Level: 20
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Metal Claw
-- Scratch
-- Fury Cutter
-- Scary Face
-
-
-Koffing
-Level: 20
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Sludge
-- Tackle
-- Clear Smog
+- Snarl
+- Quick Attack
 - Assurance
+- Hone Claws
+
+
+Ekans
+Level: 20
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+- Acid
+- Bite
+- Glare
+- Poison Sting
 
 === TRAINER_TEAM_ROCKET_GRUNT_8 ===
 Name: GRUNT
@@ -6843,22 +6843,22 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Pawniard
+Croagunk
 Level: 21
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Metal Claw
-- Scratch
-- Fury Cutter
-- Scary Face
+- Venoshock
+- Astonish
+- Taunt
+- Poison Sting
 
 
-Koffing
+Ekans
 Level: 21
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Sludge
-- Tackle
-- Clear Smog
-- Assurance
+- Acid
+- Bite
+- Glare
+- Poison Sting
 
 === TRAINER_TEAM_ROCKET_GRUNT_9 ===
 Name: GRUNT
@@ -6869,22 +6869,22 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Pawniard
+Mightyena
 Level: 21
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Metal Claw
+- Crunch
+- Fire Fang
+- Ice Fang
+- Thunder Fang
+
+
+Stunky
+Level: 21
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+- Venoshock
+- Bite
+- Acid Spray
 - Scratch
-- Fury Cutter
-- Scary Face
-
-
-Koffing
-Level: 21
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Sludge
-- Tackle
-- Clear Smog
-- Assurance
 
 === TRAINER_TEAM_ROCKET_GRUNT_10 ===
 Name: GRUNT
@@ -6895,31 +6895,31 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Pawniard
+Scraggy
 Level: 20
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Metal Claw
-- Scratch
-- Fury Cutter
+- Payback
+- Headbutt
+- Facade
+- Torment
+
+
+Sandile
+Level: 20
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+- Power Trip
+- Bite
+- Torment
 - Scary Face
 
 
-Grimer
+Salandit
 Level: 20
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Sludge
-- Pound
-- Mud Shot
-- Mud-Slap
-
-
-Mightyena
-Level: 20
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Crunch
-- Fire Fang
-- Ice Fang
-- Thunder Fang
+- Ember
+- Poison Fang
+- Scratch
+- Sweet Scent
 
 === TRAINER_TEAM_ROCKET_GRUNT_11 ===
 Name: GRUNT
@@ -6930,19 +6930,19 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Pawniard
+Grimer
 Level: 19
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Koffing
+Sandile
 Level: 19
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Scraggy
+Houndour
 Level: 19
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Zubat
+Ekans
 Level: 19
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
@@ -6955,22 +6955,22 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Pawniard
+Scraggy
 Level: 22
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Metal Claw
-- Scratch
-- Fury Cutter
-- Scary Face
+- Payback
+- Headbutt
+- Facade
+- Torment
 
 
-Grimer
+Sandile
 Level: 22
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Sludge
-- Pound
-- Mud Shot
-- Mud-Slap
+- Power Trip
+- Dig
+- Bite
+- Torment
 
 === TRAINER_TEAM_ROCKET_GRUNT_13 ===
 Name: GRUNT
@@ -6981,23 +6981,23 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Pawniard
+Scraggy
 Level: 17
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-Grimer
+Houndour
+Level: 17
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Croagunk
+Level: 17
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Koffing
 Level: 17
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 Poochyena
-Level: 17
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-
-Varoom
-Level: 17
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-
-Ekans
 Level: 17
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
@@ -7010,13 +7010,22 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Pawniard
+Thievul
 Level: 20
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Metal Claw
+- Snarl
+- Quick Attack
+- Assurance
+- Hone Claws
+
+
+Shroodle
+Level: 20
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 - Scratch
-- Fury Cutter
-- Scary Face
+- Poison Fang
+- Bite
+- Acid Spray
 
 
 Koffing
@@ -7026,15 +7035,6 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 - Tackle
 - Clear Smog
 - Assurance
-
-
-Scraggy
-Level: 20
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Payback
-- Headbutt
-- Facade
-- Torment
 
 === TRAINER_TEAM_ROCKET_GRUNT_15 ===
 Name: GRUNT
@@ -7045,22 +7045,22 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Pawniard
+Salandit
 Level: 21
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Metal Claw
+- Ember
+- Poison Fang
 - Scratch
-- Fury Cutter
-- Scary Face
+- Sweet Scent
 
 
-Koffing
+Sandile
 Level: 21
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Sludge
-- Tackle
-- Clear Smog
-- Assurance
+- Power Trip
+- Dig
+- Bite
+- Torment
 
 === TRAINER_TEAM_ROCKET_GRUNT_16 ===
 Name: COLE
@@ -7185,22 +7185,22 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Pawniard
+Sandile
 Level: 21
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Metal Claw
-- Scratch
-- Fury Cutter
-- Scary Face
+- Power Trip
+- Dig
+- Bite
+- Torment
 
 
-Koffing
+Ekans
 Level: 21
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Sludge
-- Tackle
-- Clear Smog
-- Assurance
+- Acid
+- Bite
+- Glare
+- Poison Sting
 
 === TRAINER_TEAM_ROCKET_GRUNT_19 ===
 Name: GRUNT
@@ -7211,31 +7211,31 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Pawniard
+Arbok
 Level: 25
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Metal Claw
-- Scratch
-- Fury Cutter
-- Assurance
+- Acid
+- Crunch
+- Glare
+- Fire Fang
 
 
-Koffing
+Varoom
 Level: 25
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 - Sludge
-- Tackle
-- Clear Smog
-- Haze
+- Gyro Ball
+- Headbutt
+- Taunt
 
 
-Scraggy
+Grimer
 Level: 25
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Payback
-- Headbutt
-- Facade
-- Beat Up
+- Sludge
+- Pound
+- Mud Shot
+- Mud-Slap
 
 === TRAINER_TEAM_ROCKET_GRUNT_20 ===
 Name: GRUNT
@@ -7246,22 +7246,22 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Pawniard
+Sandile
 Level: 26
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Metal Claw
-- Scratch
-- Fury Cutter
-- Assurance
+- Power Trip
+- Dig
+- Bite
+- Swagger
 
 
-Koffing
+Varoom
 Level: 26
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 - Sludge
-- Tackle
-- Clear Smog
-- Haze
+- Gyro Ball
+- Headbutt
+- Taunt
 
 === TRAINER_TEAM_ROCKET_GRUNT_21 ===
 Name: VESPER
@@ -7329,22 +7329,22 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Pawniard
+Houndoom
 Level: 26
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Metal Claw
-- Scratch
-- Fury Cutter
-- Assurance
+- Ember
+- Thunder Fang
+- Nasty Plot
+- Bite
 
 
-Grimer
+Scraggy
 Level: 26
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Sludge
-- Pound
-- Toxic
-- Mud Shot
+- Payback
+- Headbutt
+- Facade
+- Beat Up
 
 === TRAINER_TEAM_ROCKET_GRUNT_23 ===
 Name: GRUNT
@@ -7355,22 +7355,22 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Pawniard
+Salandit
 Level: 29
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Metal Claw
+- Ember
+- Poison Fang
 - Scratch
-- Fury Cutter
-- Assurance
+- Nasty Plot
 
 
-Koffing
+Scraggy
 Level: 29
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Sludge
-- Tackle
-- Clear Smog
-- Self-Destruct
+- Payback
+- Headbutt
+- Facade
+- Scary Face
 
 === TRAINER_TEAM_ROCKET_GRUNT_24 ===
 Name: GRUNT
@@ -7381,31 +7381,13 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Pawniard
+Sandile
 Level: 25
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Metal Claw
-- Scratch
-- Fury Cutter
-- Assurance
-
-
-Koffing
-Level: 25
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Sludge
-- Tackle
-- Clear Smog
-- Haze
-
-
-Scraggy
-Level: 25
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Payback
-- Headbutt
-- Facade
-- Beat Up
+- Power Trip
+- Dig
+- Bite
+- Swagger
 
 
 Golbat
@@ -7417,13 +7399,31 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 - Quick Guard
 
 
-Varoom
+Salandit
 Level: 25
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Gyro Ball
-- Sludge
-- Headbutt
+- Ember
+- Poison Fang
+- Scratch
+- Nasty Plot
+
+
+Croagunk
+Level: 25
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+- Venoshock
+- Astonish
 - Taunt
+- Poison Sting
+
+
+Shroodle
+Level: 25
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+- Slash
+- Poison Fang
+- U-turn
+- Scratch
 
 === TRAINER_TEAM_ROCKET_GRUNT_25 ===
 Name: GRUNT
@@ -7434,22 +7434,13 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Pawniard
+Thievul
 Level: 28
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Metal Claw
-- Scratch
-- Fury Cutter
-- Assurance
-
-
-Koffing
-Level: 28
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Sludge
-- Tackle
-- Clear Smog
-- Self-Destruct
+- Snarl
+- Quick Attack
+- Nasty Plot
+- Sucker Punch
 
 
 Scraggy
@@ -7459,6 +7450,15 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 - Headbutt
 - Facade
 - Scary Face
+
+
+Grafaiai
+Level: 28
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+- Slash
+- Poison Fang
+- U-turn
+- Scratch
 
 === TRAINER_TEAM_ROCKET_GRUNT_26 ===
 Name: GRUNT
@@ -7469,22 +7469,22 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Pawniard
-Level: 29
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Metal Claw
-- Scratch
-- Fury Cutter
-- Assurance
-
-
-Koffing
+Varoom
 Level: 29
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 - Sludge
-- Tackle
-- Clear Smog
-- Self-Destruct
+- Iron Head
+- Headbutt
+- Taunt
+
+
+Houndoom
+Level: 29
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+- Ember
+- Thunder Fang
+- Nasty Plot
+- Bite
 
 === TRAINER_TEAM_ROCKET_GRUNT_27 ===
 Name: GRUNT
@@ -7495,13 +7495,22 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Pawniard
+Golbat
 Level: 28
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Metal Claw
-- Scratch
-- Fury Cutter
-- Assurance
+- Poison Fang
+- Astonish
+- Absorb
+- Air Cutter
+
+
+Stunky
+Level: 28
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+- Venoshock
+- Bite
+- Toxic
+- Acid Spray
 
 
 Koffing
@@ -7512,15 +7521,6 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 - Clear Smog
 - Self-Destruct
 
-
-Scraggy
-Level: 28
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Payback
-- Headbutt
-- Facade
-- Scary Face
-
 === TRAINER_TEAM_ROCKET_GRUNT_28 ===
 Name: GRUNT
 Class: Team Rocket Frlg
@@ -7530,13 +7530,13 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Pawniard
+Thievul
 Level: 33
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Metal Claw
-- Scratch
-- Fury Cutter
-- Metal Sound
+- Snarl
+- Quick Attack
+- Nasty Plot
+- Sucker Punch
 
 === TRAINER_TEAM_ROCKET_GRUNT_29 ===
 Name: GRUNT
@@ -7547,13 +7547,13 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Pawniard
+Scraggy
 Level: 33
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Metal Claw
-- Scratch
-- Fury Cutter
-- Metal Sound
+- Payback
+- Brick Break
+- Headbutt
+- Facade
 
 === TRAINER_TEAM_ROCKET_GRUNT_30 ===
 Name: GRUNT
@@ -7573,13 +7573,13 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 - Assurance
 
 
-Koffing
+Thievul
 Level: 29
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Sludge
-- Tackle
-- Clear Smog
-- Self-Destruct
+- Snarl
+- Quick Attack
+- Nasty Plot
+- Sucker Punch
 
 === TRAINER_TEAM_ROCKET_GRUNT_31 ===
 Name: GRUNT
@@ -7590,24 +7590,6 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Pawniard
-Level: 28
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Metal Claw
-- Scratch
-- Fury Cutter
-- Assurance
-
-
-Koffing
-Level: 28
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Sludge
-- Tackle
-- Clear Smog
-- Self-Destruct
-
-
 Scraggy
 Level: 28
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
@@ -7615,6 +7597,24 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 - Headbutt
 - Facade
 - Scary Face
+
+
+Stunky
+Level: 28
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+- Venoshock
+- Bite
+- Toxic
+- Acid Spray
+
+
+Arbok
+Level: 28
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+- Acid
+- Crunch
+- Glare
+- Fire Fang
 
 === TRAINER_TEAM_ROCKET_GRUNT_32 ===
 Name: GRUNT
@@ -7625,127 +7625,13 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Pawniard
+Shroodle
 Level: 26
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Metal Claw
+- Slash
+- Poison Fang
+- U-turn
 - Scratch
-- Fury Cutter
-- Assurance
-
-
-Koffing
-Level: 26
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Sludge
-- Tackle
-- Clear Smog
-- Haze
-
-
-Scraggy
-Level: 26
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Payback
-- Headbutt
-- Facade
-- Beat Up
-
-
-Grimer
-Level: 26
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Sludge
-- Pound
-- Toxic
-- Mud Shot
-
-=== TRAINER_TEAM_ROCKET_GRUNT_33 ===
-Name: GRUNT
-Class: Team Rocket Frlg
-Pic: Rocket Grunt M Frlg
-Gender: Male
-Music: Aqua
-Double Battle: No
-AI: Check Bad Move
-
-Pawniard
-Level: 29
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Metal Claw
-- Scratch
-- Fury Cutter
-- Assurance
-
-
-Koffing
-Level: 29
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Sludge
-- Tackle
-- Clear Smog
-- Self-Destruct
-
-=== TRAINER_TEAM_ROCKET_GRUNT_34 ===
-Name: GRUNT
-Class: Team Rocket Frlg
-Pic: Rocket Grunt M Frlg
-Gender: Male
-Music: Aqua
-Double Battle: No
-AI: Check Bad Move
-
-Pawniard
-Level: 29
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Metal Claw
-- Scratch
-- Fury Cutter
-- Assurance
-
-
-Koffing
-Level: 29
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Sludge
-- Tackle
-- Clear Smog
-- Self-Destruct
-
-=== TRAINER_TEAM_ROCKET_GRUNT_35 ===
-Name: GRUNT
-Class: Team Rocket Frlg
-Pic: Rocket Grunt M Frlg
-Gender: Male
-Music: Aqua
-Double Battle: No
-AI: Check Bad Move
-
-Pawniard
-Level: 26
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Metal Claw
-- Scratch
-- Fury Cutter
-- Assurance
-
-
-Koffing
-Level: 26
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Sludge
-- Tackle
-- Clear Smog
-- Haze
-
-
-Scraggy
-Level: 26
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Payback
-- Headbutt
-- Facade
-- Beat Up
 
 
 Golbat
@@ -7756,7 +7642,25 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 - Absorb
 - Quick Guard
 
-=== TRAINER_TEAM_ROCKET_GRUNT_36 ===
+
+Pawniard
+Level: 26
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+- Metal Claw
+- Scratch
+- Fury Cutter
+- Assurance
+
+
+Croagunk
+Level: 26
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+- Venoshock
+- Astonish
+- Taunt
+- Poison Sting
+
+=== TRAINER_TEAM_ROCKET_GRUNT_33 ===
 Name: GRUNT
 Class: Team Rocket Frlg
 Pic: Rocket Grunt M Frlg
@@ -7765,14 +7669,101 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Pawniard
-Level: 28
+Scraggy
+Level: 29
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Metal Claw
-- Scratch
-- Fury Cutter
-- Assurance
+- Payback
+- Headbutt
+- Facade
+- Scary Face
 
+
+Mightyena
+Level: 29
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+- Crunch
+- Fire Fang
+- Ice Fang
+- Thunder Fang
+
+=== TRAINER_TEAM_ROCKET_GRUNT_34 ===
+Name: GRUNT
+Class: Team Rocket Frlg
+Pic: Rocket Grunt M Frlg
+Gender: Male
+Music: Aqua
+Double Battle: No
+AI: Check Bad Move
+
+Croagunk
+Level: 29
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+- Venoshock
+- Astonish
+- Taunt
+- Poison Sting
+
+
+Krokorok
+Level: 29
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+- Crunch
+- Dig
+- Bite
+- Power Trip
+
+=== TRAINER_TEAM_ROCKET_GRUNT_35 ===
+Name: GRUNT
+Class: Team Rocket Frlg
+Pic: Rocket Grunt M Frlg
+Gender: Male
+Music: Aqua
+Double Battle: No
+AI: Check Bad Move
+
+Koffing
+Level: 26
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+- Sludge
+- Tackle
+- Clear Smog
+- Haze
+
+
+Mightyena
+Level: 26
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+- Crunch
+- Fire Fang
+- Ice Fang
+- Thunder Fang
+
+
+Arbok
+Level: 26
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+- Acid
+- Crunch
+- Glare
+- Fire Fang
+
+
+Grimer
+Level: 26
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+- Sludge
+- Pound
+- Toxic
+- Mud Shot
+
+=== TRAINER_TEAM_ROCKET_GRUNT_36 ===
+Name: GRUNT
+Class: Team Rocket Frlg
+Pic: Rocket Grunt M Frlg
+Gender: Male
+Music: Aqua
+Double Battle: No
+AI: Check Bad Move
 
 Koffing
 Level: 28
@@ -7783,13 +7774,22 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 - Self-Destruct
 
 
-Scraggy
+Salandit
 Level: 28
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Payback
+- Ember
+- Poison Fang
+- Scratch
+- Nasty Plot
+
+
+Varoom
+Level: 28
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+- Sludge
+- Iron Head
 - Headbutt
-- Facade
-- Scary Face
+- Taunt
 
 === TRAINER_TEAM_ROCKET_GRUNT_37 ===
 Name: GRUNT
@@ -7800,31 +7800,31 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Pawniard
+Arbok
 Level: 28
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Metal Claw
-- Scratch
-- Fury Cutter
-- Assurance
+- Acid
+- Crunch
+- Glare
+- Fire Fang
 
 
-Koffing
+Stunky
+Level: 28
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+- Venoshock
+- Bite
+- Toxic
+- Acid Spray
+
+
+Varoom
 Level: 28
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 - Sludge
-- Tackle
-- Clear Smog
-- Self-Destruct
-
-
-Scraggy
-Level: 28
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Payback
+- Iron Head
 - Headbutt
-- Facade
-- Scary Face
+- Taunt
 
 === TRAINER_TEAM_ROCKET_GRUNT_38 ===
 Name: GRUNT
@@ -7844,22 +7844,22 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 - Assurance
 
 
-Koffing
+Thievul
 Level: 28
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Sludge
-- Tackle
-- Clear Smog
-- Self-Destruct
+- Snarl
+- Quick Attack
+- Nasty Plot
+- Sucker Punch
 
 
-Scraggy
+Golbat
 Level: 28
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Payback
-- Headbutt
-- Facade
-- Scary Face
+- Poison Fang
+- Astonish
+- Absorb
+- Air Cutter
 
 === TRAINER_TEAM_ROCKET_GRUNT_39 ===
 Name: GRUNT
@@ -7870,13 +7870,13 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Pawniard
+Varoom
 Level: 33
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Metal Claw
-- Scratch
-- Fury Cutter
-- Metal Sound
+- Sludge
+- Iron Head
+- Headbutt
+- Taunt
 
 === TRAINER_TEAM_ROCKET_GRUNT_40 ===
 Name: GRUNT
@@ -7887,6 +7887,15 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
+Varoom
+Level: 25
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+- Sludge
+- Gyro Ball
+- Headbutt
+- Taunt
+
+
 Pawniard
 Level: 25
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
@@ -7896,22 +7905,13 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 - Assurance
 
 
-Koffing
+Houndoom
 Level: 25
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Sludge
-- Tackle
-- Clear Smog
-- Haze
-
-
-Scraggy
-Level: 25
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Payback
-- Headbutt
-- Facade
-- Beat Up
+- Ember
+- Thunder Fang
+- Nasty Plot
+- Bite
 
 
 Golbat
@@ -7923,13 +7923,13 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 - Quick Guard
 
 
-Varoom
+Scraggy
 Level: 25
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Gyro Ball
-- Sludge
+- Payback
 - Headbutt
-- Taunt
+- Facade
+- Beat Up
 
 === TRAINER_TEAM_ROCKET_GRUNT_41 ===
 Name: GRUNT
@@ -7940,13 +7940,13 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Pawniard
+Krokorok
 Level: 32
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Metal Claw
-- Scratch
-- Fury Cutter
-- Metal Sound
+- Crunch
+- Dig
+- Bite
+- Power Trip
 
 
 Koffing
@@ -7958,13 +7958,13 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 - Clear Smog
 
 
-Scraggy
+Mightyena
 Level: 32
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Payback
-- Brick Break
-- Headbutt
-- Facade
+- Crunch
+- Fire Fang
+- Ice Fang
+- Thunder Fang
 
 === TRAINER_COOLTRAINER_SAMUEL ===
 Name: SAMUEL
@@ -7979,8 +7979,8 @@ AI: Check Bad Move / Try To Faint / Check Viability
 Medicham
 Level: 37
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Zen Headbutt
 - High Jump Kick
+- Zen Headbutt
 - Fire Punch
 - Calm Mind
 
@@ -7988,8 +7988,8 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 Bronzong
 Level: 37
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Gyro Ball
 - Extrasensory
+- Gyro Ball
 - Payback
 - Confusion
 
@@ -7997,8 +7997,8 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 Ludicolo
 Level: 38
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Bubble Beam
 - Mega Drain
+- Bubble Beam
 - Zen Headbutt
 - Water Gun
 
@@ -8006,8 +8006,8 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 Pelipper
 Level: 39
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Water Pulse
 - Air Slash
+- Water Pulse
 - Quick Attack
 - Agility
 
@@ -8042,8 +8042,8 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 Camerupt
 Level: 42
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Earth Power
 - Eruption
+- Earth Power
 - Take Down
 - Yawn
 
@@ -8057,20 +8057,15 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 - Magical Leaf
 
 
-Finizen
+Palafin
 Level: 42
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Aqua Tail
-- Acrobatics
-- Encore
-- Aqua Jet
-
 
 Ludicolo @ Sitrus Berry
 Level: 42
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Bubble Beam
 - Mega Drain
+- Bubble Beam
 - Zen Headbutt
 - Water Gun
 
@@ -8105,8 +8100,8 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 Pyroar
 Level: 42
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Hyper Beam
 - Fire Fang
+- Hyper Beam
 - Crunch
 - Work Up
 
@@ -8191,8 +8186,8 @@ AI: Check Bad Move / Try To Faint / Check Viability
 Corviknight
 Level: 42
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Steel Wing
 - Drill Peck
+- Steel Wing
 - Power Trip
 - Taunt
 
@@ -8200,8 +8195,8 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 Medicham
 Level: 42
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Zen Headbutt
 - High Jump Kick
+- Zen Headbutt
 - Fire Punch
 - Calm Mind
 
@@ -8272,8 +8267,8 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 Lucario
 Level: 42
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Metal Claw
 - Force Palm
+- Metal Claw
 - Quick Attack
 - Swords Dance
 
@@ -8281,8 +8276,8 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 Armarouge @ Sitrus Berry
 Level: 42
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Psyshock
 - Lava Plume
+- Psyshock
 - Clear Smog
 - Calm Mind
 
@@ -8312,8 +8307,8 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 Doublade
 Level: 42
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Iron Head
 - Shadow Sneak
+- Iron Head
 - Slash
 - Night Slash
 
@@ -8366,8 +8361,8 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 Camerupt
 Level: 42
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Earth Power
 - Eruption
+- Earth Power
 - Take Down
 - Yawn
 
@@ -8384,8 +8379,8 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 Ferrothorn @ Sitrus Berry
 Level: 42
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Iron Head
 - Power Whip
+- Iron Head
 - Tackle
 - Flash Cannon
 
@@ -8420,8 +8415,8 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 Medicham
 Level: 38
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Zen Headbutt
 - High Jump Kick
+- Zen Headbutt
 - Fire Punch
 - Calm Mind
 
@@ -8438,8 +8433,8 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 Pelipper
 Level: 38
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Water Pulse
 - Air Slash
+- Water Pulse
 - Quick Attack
 - Agility
 
@@ -8456,8 +8451,8 @@ AI: Check Bad Move / Try To Faint / Check Viability
 Tentacruel
 Level: 37
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Bubble Beam
 - Acid
+- Bubble Beam
 - Wrap
 - Water Pulse
 
@@ -8465,8 +8460,8 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 Vileplume
 Level: 37
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Acid
 - Petal Blizzard
+- Acid
 - Moonblast
 - Moonlight
 
@@ -8474,8 +8469,8 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 Roserade
 Level: 38
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Poison Sting
 - Petal Dance
+- Poison Sting
 - Synthesis
 - Petal Blizzard
 
@@ -8528,8 +8523,8 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 Numel
 Level: 22
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Bulldoze
 - Lava Plume
+- Bulldoze
 - Tackle
 - Ember
 
@@ -8627,8 +8622,8 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 Armarouge
 Level: 42
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Psyshock
 - Lava Plume
+- Psyshock
 - Clear Smog
 - Calm Mind
 
@@ -8645,8 +8640,8 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 Seismitoad
 Level: 42
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Bubble Beam
 - Mud Shot
+- Bubble Beam
 - Round
 - Echoed Voice
 
@@ -8672,8 +8667,8 @@ AI: Check Bad Move / Try To Faint / Check Viability
 Jellicent
 Level: 42
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Brine
 - Shadow Ball
+- Brine
 - Absorb
 - Recover
 
@@ -8789,8 +8784,8 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 Pawniard
 Level: 42
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Metal Claw
 - Night Slash
+- Metal Claw
 - Slash
 - Scratch
 
@@ -8807,8 +8802,8 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 Jellicent
 Level: 42
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Brine
 - Shadow Ball
+- Brine
 - Absorb
 - Recover
 
@@ -8816,8 +8811,8 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 Noctowl @ Sitrus Berry
 Level: 42
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Take Down
 - Sky Attack
+- Take Down
 - Extrasensory
 - Roost
 
@@ -8834,8 +8829,8 @@ AI: Check Bad Move / Try To Faint / Check Viability
 Poliwrath
 Level: 42
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Bubble Beam
 - Circle Throw
+- Bubble Beam
 - Body Slam
 - Dynamic Punch
 
@@ -8861,8 +8856,8 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 Skrelp
 Level: 42
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Water Pulse
 - Poison Tail
+- Water Pulse
 - Tackle
 - Toxic
 
@@ -8888,8 +8883,8 @@ AI: Check Bad Move / Try To Faint / Check Viability
 Aggron
 Level: 42
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Iron Head
 - Rock Slide
+- Iron Head
 - Take Down
 - Protect
 
@@ -8897,8 +8892,8 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 Swellow
 Level: 42
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Quick Attack
 - Brave Bird
+- Quick Attack
 - Agility
 - Pluck
 
@@ -8915,8 +8910,8 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 Poliwrath
 Level: 42
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Bubble Beam
 - Circle Throw
+- Bubble Beam
 - Body Slam
 - Dynamic Punch
 
@@ -8924,8 +8919,8 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 Fearow @ Sitrus Berry
 Level: 42
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Take Down
 - Drill Peck
+- Take Down
 - Drill Run
 - Agility
 
@@ -9541,8 +9536,8 @@ AI: Check Bad Move
 Diggersby @ Sitrus Berry
 Level: 48
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Take Down
 - Earthquake
+- Take Down
 - Bounce
 - Swords Dance
 
@@ -10206,8 +10201,8 @@ AI: Check Bad Move
 Litwick
 Level: 23
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Astonish
 - Ember
+- Astonish
 - Will-O-Wisp
 - Hex
 
@@ -10223,8 +10218,8 @@ AI: Check Bad Move
 Litwick
 Level: 24
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Astonish
 - Ember
+- Astonish
 - Will-O-Wisp
 - Fire Spin
 
@@ -10262,8 +10257,8 @@ AI: Check Bad Move
 Litwick
 Level: 22
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Astonish
 - Ember
+- Astonish
 - Will-O-Wisp
 - Hex
 
@@ -10425,8 +10420,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Litwick
 Level: 34
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Astonish
 - Ember
+- Astonish
 - Will-O-Wisp
 - Night Shade
 
@@ -10468,8 +10463,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Litwick
 Level: 33
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Astonish
 - Ember
+- Astonish
 - Will-O-Wisp
 - Night Shade
 
@@ -10591,8 +10586,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Swellow
 Level: 24
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Quick Attack
 - Brave Bird
+- Quick Attack
 - Pluck
 - Aerial Ace
 
@@ -10617,8 +10612,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Dolliv
 Level: 30
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Tackle
 - Seed Bomb
+- Tackle
 - Mega Drain
 - Razor Leaf
 
@@ -10652,8 +10647,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Swellow
 Level: 27
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Quick Attack
 - Brave Bird
+- Quick Attack
 - Pluck
 - Aerial Ace
 
@@ -10774,8 +10769,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Dolliv
 Level: 30
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Tackle
 - Seed Bomb
+- Tackle
 - Mega Drain
 - Razor Leaf
 
@@ -10791,8 +10786,8 @@ AI: Check Bad Move
 Smoliv
 Level: 20
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Tackle
 - Mega Drain
+- Tackle
 - Razor Leaf
 - Absorb
 
@@ -10877,8 +10872,8 @@ AI: Check Bad Move
 Roselia
 Level: 29
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Poison Sting
 - Magical Leaf
+- Poison Sting
 - Leech Seed
 - Mega Drain
 
@@ -10912,8 +10907,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Dolliv
 Level: 29
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Tackle
 - Seed Bomb
+- Tackle
 - Mega Drain
 - Razor Leaf
 
@@ -10956,8 +10951,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Noctowl
 Level: 28
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Take Down
 - Sky Attack
+- Take Down
 - Extrasensory
 - Reflect
 
@@ -10982,8 +10977,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Pelipper
 Level: 29
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Water Pulse
 - Air Slash
+- Water Pulse
 - Quick Attack
 - Agility
 
@@ -11067,8 +11062,8 @@ AI: Check Bad Move / Try To Faint / Check Viability
 Staraptor
 Level: 45
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Take Down
 - Aerial Ace
+- Take Down
 - Close Combat
 - Agility
 
@@ -11076,8 +11071,8 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 Camerupt @ Sitrus Berry
 Level: 45
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Earth Power
 - Eruption
+- Earth Power
 - Take Down
 - Yawn
 
@@ -11102,8 +11097,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Diggersby
 Level: 24
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Tackle
 - Bulldoze
+- Tackle
 - Double Kick
 - Quick Attack
 
@@ -11128,8 +11123,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Diggersby
 Level: 29
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Tackle
 - Dig
+- Tackle
 - Double Kick
 - Bulldoze
 
@@ -11145,8 +11140,8 @@ AI: Check Bad Move
 Meditite
 Level: 29
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
-- Zen Headbutt
 - High Jump Kick
+- Zen Headbutt
 - Calm Mind
 - Force Palm
 
@@ -11197,8 +11192,8 @@ AI: Check Bad Move
 Palpitoad
 Level: 30
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Bubble Beam
 - Mud Shot
+- Bubble Beam
 - Round
 - Echoed Voice
 
@@ -11223,8 +11218,8 @@ AI: Check Bad Move
 Azumarill
 Level: 33
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Bubble Beam
 - Play Rough
+- Bubble Beam
 - Bounce
 - Aqua Tail
 
@@ -11594,22 +11589,22 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Pawniard
+Houndoom
 Level: 49
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Metal Claw
-- Night Slash
-- Slash
-- Scratch
+- Foul Play
+- Fire Fang
+- Thunder Fang
+- Nasty Plot
 
 
-Weezing @ Sitrus Berry
+Thievul @ Sitrus Berry
 Level: 49
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Sludge Bomb
-- Tackle
-- Toxic
-- Sludge
+- Foul Play
+- Quick Attack
+- Nasty Plot
+- Snarl
 
 === TRAINER_PSYCHIC_JACLYN ===
 Name: JACLYN
@@ -11667,8 +11662,8 @@ IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 Medicham
 Level: 37
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
-- Zen Headbutt
 - High Jump Kick
+- Zen Headbutt
 - Fire Punch
 - Calm Mind
 
@@ -11693,8 +11688,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Tentacruel
 Level: 35
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Bubble Beam
 - Acid
+- Bubble Beam
 - Wrap
 - Water Pulse
 
@@ -11750,8 +11745,8 @@ AI: Check Bad Move / Try To Faint / Check Viability
 Excadrill
 Level: 51
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Metal Claw
 - Dig
+- Metal Claw
 - Crush Claw
 - Swords Dance
 
@@ -11759,8 +11754,8 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 Tentacruel @ Sitrus Berry
 Level: 51
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Bubble Beam
 - Poison Jab
+- Bubble Beam
 - Wrap
 - Water Pulse
 
@@ -12026,8 +12021,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Diggersby
 Level: 33
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Tackle
 - Dig
+- Tackle
 - Bounce
 - Bulldoze
 
@@ -12110,15 +12105,6 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Pawniard
-Level: 37
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Metal Claw
-- Slash
-- Scratch
-- Fury Cutter
-
-
 Weezing
 Level: 37
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
@@ -12126,6 +12112,15 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 - Tackle
 - Sludge
 - Clear Smog
+
+
+Skuntank
+Level: 37
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+- Venoshock
+- Bite
+- Toxic
+- Scratch
 
 === TRAINER_TEAM_ROCKET_GRUNT_44 ===
 Name: GRUNT
@@ -12136,33 +12131,6 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Pawniard
-Level: 35
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Metal Claw
-- Slash
-- Scratch
-- Fury Cutter
-
-
-Weezing
-Level: 35
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Sludge Bomb
-- Tackle
-- Sludge
-- Clear Smog
-
-
-Scraggy
-Level: 35
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Payback
-- Brick Break
-- Headbutt
-- Facade
-
-
 Golbat
 Level: 35
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
@@ -12170,6 +12138,33 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 - Bite
 - Astonish
 - Absorb
+
+
+Mightyena
+Level: 35
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+- Crunch
+- Fire Fang
+- Ice Fang
+- Thunder Fang
+
+
+Thievul
+Level: 35
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+- Snarl
+- Quick Attack
+- Nasty Plot
+- Night Slash
+
+
+Varoom
+Level: 35
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+- Sludge
+- Iron Head
+- Headbutt
+- Taunt
 
 === TRAINER_TEAM_ROCKET_GRUNT_45 ===
 Name: GRUNT
@@ -12180,31 +12175,31 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Pawniard
+Thievul
 Level: 38
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Metal Claw
+- Snarl
+- Quick Attack
+- Nasty Plot
+- Night Slash
+
+
+Grafaiai
+Level: 38
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 - Slash
-- Scratch
-- Fury Cutter
+- Poison Jab
+- U-turn
+- Taunt
 
 
-Weezing
+Skuntank
 Level: 38
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Sludge Bomb
-- Tackle
+- Night Slash
+- Venoshock
+- Bite
 - Toxic
-- Sludge
-
-
-Scraggy
-Level: 38
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Payback
-- Brick Break
-- Headbutt
-- Facade
 
 === TRAINER_TEAM_ROCKET_GRUNT_46 ===
 Name: GRUNT
@@ -12218,28 +12213,28 @@ AI: Check Bad Move
 Pawniard
 Level: 48
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Metal Claw
 - Night Slash
+- Metal Claw
 - Slash
 - Scratch
 
 
-Weezing
+Houndoom
 Level: 48
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+- Foul Play
+- Fire Fang
+- Thunder Fang
+- Nasty Plot
+
+
+Toxicroak @ Sitrus Berry
+Level: 48
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+- Poison Jab
+- Astonish
+- Nasty Plot
 - Sludge Bomb
-- Tackle
-- Toxic
-- Sludge
-
-
-Scrafty @ Sitrus Berry
-Level: 48
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Crunch
-- High Jump Kick
-- Headbutt
-- Brick Break
 
 === TRAINER_TEAM_ROCKET_GRUNT_47 ===
 Name: GRUNT
@@ -12250,15 +12245,6 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Pawniard
-Level: 48
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Metal Claw
-- Night Slash
-- Slash
-- Scratch
-
-
 Weezing
 Level: 48
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
@@ -12268,13 +12254,22 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 - Sludge
 
 
-Scrafty @ Sitrus Berry
+Krookodile
 Level: 48
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Crunch
-- High Jump Kick
-- Headbutt
-- Brick Break
+- Foul Play
+- Earthquake
+- Bite
+- Dig
+
+
+Crobat @ Sitrus Berry
+Level: 48
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+- Cross Poison
+- Bite
+- Toxic
+- Poison Fang
 
 === TRAINER_TEAM_ROCKET_GRUNT_48 ===
 Name: GRUNT
@@ -12288,19 +12283,19 @@ AI: Check Bad Move
 Pawniard
 Level: 49
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Metal Claw
 - Night Slash
+- Metal Claw
 - Slash
 - Scratch
 
 
-Weezing @ Sitrus Berry
+Revavroom @ Sitrus Berry
 Level: 49
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Sludge Bomb
-- Tackle
-- Toxic
-- Sludge
+- Poison Jab
+- Iron Head
+- Headbutt
+- Taunt
 
 === TRAINER_TEAM_ROCKET_ADMIN ===
 Name: ADMIN
@@ -12315,8 +12310,8 @@ AI: Check Bad Move / Try To Faint / Check Viability
 Bisharp
 Level: 52
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
-- Metal Claw
 - Night Slash
+- Metal Claw
 - Slash
 - Retaliate
 
@@ -12333,8 +12328,8 @@ IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 Revavroom @ Sitrus Berry
 Level: 54
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
-- Spin Out
 - Poison Jab
+- Spin Out
 - Headbutt
 - Taunt
 
@@ -12348,13 +12343,13 @@ Items: Hyper Potion
 Double Battle: No
 AI: Check Bad Move / Try To Faint / Check Viability
 
-Bisharp
+Weezing
 Level: 53
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
-- Metal Claw
-- Night Slash
-- Slash
-- Retaliate
+- Sludge Bomb
+- Tackle
+- Toxic
+- Sludge
 
 
 Mightyena
@@ -12366,13 +12361,13 @@ IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 - Fire Fang
 
 
-Revavroom @ Sitrus Berry
+Toxicroak @ Sitrus Berry
 Level: 55
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
-- Spin Out
 - Poison Jab
-- Headbutt
-- Taunt
+- Astonish
+- Nasty Plot
+- Sludge Bomb
 
 === TRAINER_SCIENTIST_GIDEON ===
 Name: GIDEON
@@ -12386,8 +12381,8 @@ AI: Check Bad Move
 Heliolisk
 Level: 46
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Quick Attack
 - Discharge
+- Quick Attack
 - Bulldoze
 - Thunder Wave
 
@@ -12399,8 +12394,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Bronzong
 Level: 46
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Gyro Ball
 - Extrasensory
+- Gyro Ball
 - Payback
 - Confusion
 
@@ -12417,8 +12412,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Xatu @ Sitrus Berry
 Level: 46
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Psychic
 - Air Slash
+- Psychic
 - Night Shade
 - Tailwind
 
@@ -12452,8 +12447,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Skrelp
 Level: 36
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Water Pulse
 - Poison Tail
+- Water Pulse
 - Tackle
 - Toxic
 
@@ -12469,8 +12464,8 @@ AI: Check Bad Move
 Swanna
 Level: 37
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Bubble Beam
 - Aerial Ace
+- Bubble Beam
 - Roost
 - Air Slash
 
@@ -12478,8 +12473,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Frillish
 Level: 37
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Brine
 - Shadow Ball
+- Brine
 - Absorb
 - Recover
 
@@ -12530,8 +12525,8 @@ AI: Check Bad Move
 Skrelp
 Level: 38
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Water Pulse
 - Poison Tail
+- Water Pulse
 - Tackle
 - Toxic
 
@@ -12556,8 +12551,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Swanna
 Level: 35
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Bubble Beam
 - Aerial Ace
+- Bubble Beam
 - Roost
 - Air Slash
 
@@ -12565,8 +12560,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Tentacruel
 Level: 38
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Bubble Beam
 - Acid
+- Bubble Beam
 - Wrap
 - Water Pulse
 
@@ -12582,8 +12577,8 @@ AI: Check Bad Move
 Crawdaunt
 Level: 33
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Bubble Beam
 - Night Slash
+- Bubble Beam
 - Swift
 - Protect
 
@@ -12591,8 +12586,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Lanturn
 Level: 33
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Bubble Beam
 - Discharge
+- Bubble Beam
 - Spit Up
 - Thunder Wave
 
@@ -12600,8 +12595,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Sharpedo
 Level: 35
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Aqua Jet
 - Crunch
+- Aqua Jet
 - Slash
 - Night Slash
 
@@ -12670,8 +12665,8 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 Crabominable
 Level: 38
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Ice Hammer
 - Brick Break
+- Ice Hammer
 - Slam
 - Protect
 
@@ -12766,8 +12761,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Noctowl
 Level: 35
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Take Down
 - Sky Attack
+- Take Down
 - Extrasensory
 - Reflect
 
@@ -12827,8 +12822,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Roselia
 Level: 36
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Poison Sting
 - Magical Leaf
+- Poison Sting
 - Synthesis
 - Mega Drain
 
@@ -12871,8 +12866,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Quagsire
 Level: 34
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Aqua Tail
 - Mud Shot
+- Aqua Tail
 - Slam
 - Yawn
 
@@ -12880,8 +12875,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Azumarill
 Level: 34
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Bubble Beam
 - Play Rough
+- Bubble Beam
 - Bounce
 - Aqua Tail
 
@@ -12957,8 +12952,8 @@ AI: Check Bad Move
 Xatu @ Sitrus Berry
 Level: 50
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
-- Psychic
 - Air Slash
+- Psychic
 - Night Shade
 - Tailwind
 
@@ -13005,8 +13000,8 @@ AI: Check Bad Move
 Bibarel
 Level: 48
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Aqua Jet
 - Take Down
+- Aqua Jet
 - Crunch
 - Swords Dance
 
@@ -13044,8 +13039,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Poliwrath @ Sitrus Berry
 Level: 48
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Bubble Beam
 - Circle Throw
+- Bubble Beam
 - Body Slam
 - Dynamic Punch
 
@@ -13058,13 +13053,13 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Pawniard
+Houndoom
 Level: 48
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Metal Claw
-- Night Slash
-- Slash
-- Scratch
+- Foul Play
+- Fire Fang
+- Thunder Fang
+- Nasty Plot
 
 
 Weezing
@@ -13076,13 +13071,13 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 - Sludge
 
 
-Scrafty @ Sitrus Berry
+Mightyena @ Sitrus Berry
 Level: 48
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 - Crunch
-- High Jump Kick
-- Headbutt
-- Brick Break
+- Take Down
+- Taunt
+- Fire Fang
 
 === TRAINER_TEAM_ROCKET_GRUNT_50 ===
 Name: GRUNT
@@ -13093,22 +13088,22 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Pawniard
+Arbok
 Level: 49
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Metal Claw
-- Night Slash
-- Slash
+- Sludge Bomb
+- Crunch
+- Glare
+- Fire Fang
+
+
+Salazzle @ Sitrus Berry
+Level: 49
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+- Ember
+- Venoshock
 - Scratch
-
-
-Muk @ Sitrus Berry
-Level: 49
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Gunk Shot
-- Pound
-- Toxic
-- Sludge Wave
+- Nasty Plot
 
 === TRAINER_TEAM_ROCKET_GRUNT_51 ===
 Name: GRUNT
@@ -13119,31 +13114,31 @@ Music: Aqua
 Double Battle: No
 AI: Check Bad Move
 
-Pawniard
+Thievul
 Level: 48
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
-- Metal Claw
-- Night Slash
-- Slash
+- Foul Play
+- Quick Attack
+- Nasty Plot
+- Snarl
+
+
+Salazzle
+Level: 48
+IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
+- Ember
+- Venoshock
 - Scratch
+- Nasty Plot
 
 
-Weezing
+Crobat @ Sitrus Berry
 Level: 48
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
-- Sludge Bomb
-- Tackle
+- Cross Poison
+- Bite
 - Toxic
-- Sludge
-
-
-Scrafty @ Sitrus Berry
-Level: 48
-IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
-- Crunch
-- High Jump Kick
-- Headbutt
-- Brick Break
+- Poison Fang
 
 === TRAINER_BIRD_KEEPER_MILO ===
 Name: MILO
@@ -13157,8 +13152,8 @@ AI: Check Bad Move
 Noctowl
 Level: 47
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Take Down
 - Sky Attack
+- Take Down
 - Moonblast
 - Roost
 
@@ -13192,8 +13187,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Unfezant @ Sitrus Berry
 Level: 49
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Quick Attack
 - Air Slash
+- Quick Attack
 - Gust
 - Taunt
 
@@ -13209,8 +13204,8 @@ AI: Check Bad Move
 Fearow
 Level: 47
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Take Down
 - Drill Peck
+- Take Down
 - Drill Run
 - Agility
 
@@ -13218,8 +13213,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Pelipper @ Sitrus Berry
 Level: 49
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Water Pulse
 - Air Slash
+- Water Pulse
 - Quick Attack
 - Agility
 
@@ -13235,8 +13230,8 @@ AI: Check Bad Move
 Lanturn
 Level: 49
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Bubble Beam
 - Discharge
+- Bubble Beam
 - Take Down
 - Thunder Wave
 
@@ -13244,8 +13239,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Sharpedo @ Sitrus Berry
 Level: 49
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Liquidation
 - Crunch
+- Liquidation
 - Slash
 - Agility
 
@@ -13261,8 +13256,8 @@ AI: Check Bad Move
 Quagsire
 Level: 49
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Aqua Tail
 - Mud Shot
+- Aqua Tail
 - Slam
 - Toxic
 
@@ -13326,8 +13321,8 @@ AI: Check Bad Move
 Vileplume
 Level: 49
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Acid
 - Petal Blizzard
+- Acid
 - Moonblast
 - Moonlight
 
@@ -13349,13 +13344,9 @@ Music: Swimmer
 Double Battle: No
 AI: Check Bad Move
 
-Finizen @ Sitrus Berry
+Palafin
 Level: 50
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Aqua Tail
-- Acrobatics
-- Encore
-- Aqua Jet
 
 === TRAINER_SWIMMER_FEMALE_DENISE ===
 Name: DENISE
@@ -13378,8 +13369,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Poliwrath @ Sitrus Berry
 Level: 49
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Bubble Beam
 - Circle Throw
+- Bubble Beam
 - Body Slam
 - Dynamic Punch
 
@@ -13430,8 +13421,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Aggron @ Sitrus Berry
 Level: 49
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Iron Head
 - Rock Slide
+- Iron Head
 - Take Down
 - Protect
 
@@ -13464,8 +13455,8 @@ AI: Check Bad Move
 Kabutops
 Level: 49
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Brine
 - Ancient Power
+- Brine
 - Slash
 - Protect
 
@@ -13533,8 +13524,8 @@ AI: Check Bad Move
 Hatterene @ Sitrus Berry
 Level: 52
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Psychic
 - Dazzling Gleam
+- Psychic
 - Brutal Swing
 - Calm Mind
 
@@ -13580,8 +13571,8 @@ AI: Check Bad Move
 Roserade
 Level: 50
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Poison Sting
 - Petal Dance
+- Poison Sting
 - Synthesis
 - Petal Blizzard
 
@@ -13611,8 +13602,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Diggersby @ Sitrus Berry
 Level: 50
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Take Down
 - Earthquake
+- Take Down
 - Bounce
 - Swords Dance
 
@@ -13707,8 +13698,8 @@ AI: Check Bad Move
 Lucario
 Level: 38
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
-- Metal Claw
 - Force Palm
+- Metal Claw
 - Quick Attack
 - Calm Mind
 
@@ -13733,8 +13724,8 @@ AI: Check Bad Move
 Salazzle
 Level: 48
 IVs: 4 HP / 4 Atk / 4 Def / 4 SpA / 4 SpD / 4 Spe
-- Venoshock
 - Ember
+- Venoshock
 - Scratch
 - Nasty Plot
 
@@ -13751,8 +13742,8 @@ IVs: 4 HP / 4 Atk / 4 Def / 4 SpA / 4 SpD / 4 Spe
 Slowbro @ Sitrus Berry
 Level: 49
 IVs: 4 HP / 4 Atk / 4 Def / 4 SpA / 4 SpD / 4 Spe
-- Water Pulse
 - Psychic
+- Water Pulse
 - Headbutt
 - Slack Off
 
@@ -13768,8 +13759,8 @@ AI: Check Bad Move
 Sealeo
 Level: 33
 IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
-- Brine
 - Aurora Beam
+- Brine
 - Rollout
 - Water Gun
 
@@ -13853,8 +13844,8 @@ AI: Check Bad Move / Try To Faint / Check Viability
 Arboliva
 Level: 38
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Tackle
 - Seed Bomb
+- Tackle
 - Mirror Coat
 - Mega Drain
 
@@ -13862,8 +13853,8 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 Swanna
 Level: 38
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Bubble Beam
 - Aerial Ace
+- Bubble Beam
 - Roost
 - Air Slash
 
@@ -13889,8 +13880,8 @@ AI: Check Bad Move / Try To Faint / Check Viability
 Aggron @ Sitrus Berry
 Level: 52
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Iron Head
 - Rock Slide
+- Iron Head
 - Take Down
 - Protect
 
@@ -13925,8 +13916,8 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 Aggron
 Level: 47
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Iron Head
 - Rock Slide
+- Iron Head
 - Take Down
 - Protect
 
@@ -13961,8 +13952,8 @@ AI: Check Bad Move / Try To Faint / Check Viability
 Ludicolo
 Level: 47
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Bubble Beam
 - Mega Drain
+- Bubble Beam
 - Zen Headbutt
 - Water Gun
 
@@ -13970,8 +13961,8 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 Quagsire
 Level: 47
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Aqua Tail
 - Mud Shot
+- Aqua Tail
 - Slam
 - Toxic
 
@@ -14041,8 +14032,8 @@ AI: Check Bad Move
 Carracosta @ Sitrus Berry
 Level: 50
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Aqua Tail
 - Rock Slide
+- Aqua Tail
 - Crunch
 - Protect
 
@@ -14067,8 +14058,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Omastar
 Level: 48
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Brine
 - Ancient Power
+- Brine
 - Crunch
 - Protect
 
@@ -14093,8 +14084,8 @@ AI: Check Bad Move
 Vileplume @ Sitrus Berry
 Level: 50
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
-- Acid
 - Petal Blizzard
+- Acid
 - Moonblast
 - Moonlight
 
@@ -14158,8 +14149,8 @@ AI: Check Bad Move
 Excadrill
 Level: 47
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Metal Claw
 - Dig
+- Metal Claw
 - Crush Claw
 - Swords Dance
 
@@ -14202,8 +14193,8 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 Hatterene
 Level: 48
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Psychic
 - Dazzling Gleam
+- Psychic
 - Brutal Swing
 - Calm Mind
 
@@ -14211,8 +14202,8 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 Claydol @ Sitrus Berry
 Level: 49
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Extrasensory
 - Earth Power
+- Extrasensory
 - Hyper Beam
 - Psybeam
 
@@ -14488,8 +14479,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 Vileplume @ Sitrus Berry
 Level: 50
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Acid
 - Petal Blizzard
+- Acid
 - Moonblast
 - Moonlight
 
@@ -14596,8 +14587,8 @@ IVs: 7 HP / 7 Atk / 7 Def / 7 SpA / 7 SpD / 7 Spe
 Roselia
 Level: 29
 IVs: 7 HP / 7 Atk / 7 Def / 7 SpA / 7 SpD / 7 Spe
-- Poison Sting
 - Magical Leaf
+- Poison Sting
 - Leech Seed
 - Mega Drain
 
@@ -14622,8 +14613,8 @@ IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
 Roserade @ Sitrus Berry
 Level: 49
 IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
-- Poison Sting
 - Petal Dance
+- Poison Sting
 - Synthesis
 - Petal Blizzard
 
@@ -14639,8 +14630,8 @@ AI: Check Bad Move
 Gloom
 Level: 22
 IVs: 2 HP / 2 Atk / 2 Def / 2 SpA / 2 SpD / 2 Spe
-- Acid
 - Mega Drain
+- Acid
 - Sleep Powder
 - Absorb
 
@@ -14656,8 +14647,8 @@ AI: Check Bad Move
 Gloom
 Level: 30
 IVs: 7 HP / 7 Atk / 7 Def / 7 SpA / 7 SpD / 7 Spe
-- Acid
 - Mega Drain
+- Acid
 - Sleep Powder
 - Absorb
 
@@ -14673,8 +14664,8 @@ AI: Check Bad Move
 Vileplume @ Sitrus Berry
 Level: 55
 IVs: 14 HP / 14 Atk / 14 Def / 14 SpA / 14 SpD / 14 Spe
-- Acid
 - Petal Blizzard
+- Acid
 - Moonblast
 - Moonlight
 
@@ -15037,8 +15028,8 @@ AI: Check Bad Move
 Excadrill
 Level: 54
 IVs: 14 HP / 14 Atk / 14 Def / 14 SpA / 14 SpD / 14 Spe
-- Metal Claw
 - Earthquake
+- Metal Claw
 - Crush Claw
 - Swords Dance
 
@@ -15111,8 +15102,8 @@ IVs: 7 HP / 7 Atk / 7 Def / 7 SpA / 7 SpD / 7 Spe
 Aron
 Level: 28
 IVs: 7 HP / 7 Atk / 7 Def / 7 SpA / 7 SpD / 7 Spe
-- Iron Head
 - Rock Slide
+- Iron Head
 - Headbutt
 - Protect
 
@@ -15128,8 +15119,8 @@ AI: Check Bad Move
 Walrein
 Level: 54
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
-- Brine
 - Aurora Beam
+- Brine
 - Body Slam
 - Encore
 
@@ -15163,8 +15154,8 @@ IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
 Spheal
 Level: 29
 IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
-- Brine
 - Aurora Beam
+- Brine
 - Rollout
 - Water Gun
 
@@ -15189,8 +15180,8 @@ IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 Walrein @ Sitrus Berry
 Level: 54
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
-- Brine
 - Aurora Beam
+- Brine
 - Body Slam
 - Encore
 
@@ -15232,8 +15223,8 @@ AI: Check Bad Move
 Diggersby
 Level: 22
 IVs: 4 HP / 4 Atk / 4 Def / 4 SpA / 4 SpD / 4 Spe
-- Tackle
 - Mud Shot
+- Tackle
 - Double Kick
 - Quick Attack
 
@@ -15285,8 +15276,8 @@ AI: Check Bad Move
 Diggersby
 Level: 46
 IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
-- Take Down
 - Dig
+- Take Down
 - Bounce
 - Swords Dance
 
@@ -15312,8 +15303,8 @@ IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
 Arboliva
 Level: 47
 IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
-- Terrain Pulse
 - Seed Bomb
+- Terrain Pulse
 - Mirror Coat
 - Leech Seed
 
@@ -15382,8 +15373,8 @@ IVs: 7 HP / 7 Atk / 7 Def / 7 SpA / 7 SpD / 7 Spe
 Xatu
 Level: 30
 IVs: 7 HP / 7 Atk / 7 Def / 7 SpA / 7 SpD / 7 Spe
-- Stored Power
 - Air Slash
+- Stored Power
 - Night Shade
 - Tailwind
 
@@ -15443,8 +15434,8 @@ IVs: 7 HP / 7 Atk / 7 Def / 7 SpA / 7 SpD / 7 Spe
 Lanturn
 Level: 28
 IVs: 7 HP / 7 Atk / 7 Def / 7 SpA / 7 SpD / 7 Spe
-- Bubble Beam
 - Spark
+- Bubble Beam
 - Spit Up
 - Thunder Wave
 
@@ -15522,8 +15513,8 @@ IVs: 7 HP / 7 Atk / 7 Def / 7 SpA / 7 SpD / 7 Spe
 Staravia
 Level: 28
 IVs: 7 HP / 7 Atk / 7 Def / 7 SpA / 7 SpD / 7 Spe
-- Tackle
 - Aerial Ace
+- Tackle
 - Quick Attack
 - Endeavor
 
@@ -15557,8 +15548,8 @@ AI: Check Bad Move
 Corviknight
 Level: 47
 IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
-- Steel Wing
 - Drill Peck
+- Steel Wing
 - Power Trip
 - Taunt
 
@@ -15566,8 +15557,8 @@ IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
 Staraptor
 Level: 47
 IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
-- Take Down
 - Aerial Ace
+- Take Down
 - Close Combat
 - Agility
 
@@ -15637,8 +15628,8 @@ IVs: 7 HP / 7 Atk / 7 Def / 7 SpA / 7 SpD / 7 Spe
 Swellow
 Level: 27
 IVs: 7 HP / 7 Atk / 7 Def / 7 SpA / 7 SpD / 7 Spe
-- Quick Attack
 - Brave Bird
+- Quick Attack
 - Pluck
 - Aerial Ace
 
@@ -15654,8 +15645,8 @@ AI: Check Bad Move
 Unfezant
 Level: 47
 IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
-- Quick Attack
 - Air Slash
+- Quick Attack
 - Gust
 - Taunt
 
@@ -15690,8 +15681,8 @@ IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
 Swellow @ Sitrus Berry
 Level: 47
 IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
-- Quick Attack
 - Brave Bird
+- Quick Attack
 - Agility
 - Pluck
 
@@ -15707,8 +15698,8 @@ AI: Check Bad Move
 Unfezant
 Level: 52
 IVs: 14 HP / 14 Atk / 14 Def / 14 SpA / 14 SpD / 14 Spe
-- Quick Attack
 - Air Slash
+- Quick Attack
 - Gust
 - Roost
 
@@ -15743,8 +15734,8 @@ IVs: 14 HP / 14 Atk / 14 Def / 14 SpA / 14 SpD / 14 Spe
 Swellow @ Sitrus Berry
 Level: 52
 IVs: 14 HP / 14 Atk / 14 Def / 14 SpA / 14 SpD / 14 Spe
-- Quick Attack
 - Brave Bird
+- Quick Attack
 - Agility
 - Pluck
 
@@ -15830,8 +15821,8 @@ AI: Check Bad Move
 Corviknight
 Level: 49
 IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
-- Steel Wing
 - Drill Peck
+- Steel Wing
 - Power Trip
 - Taunt
 
@@ -15865,8 +15856,8 @@ IVs: 7 HP / 7 Atk / 7 Def / 7 SpA / 7 SpD / 7 Spe
 Staravia
 Level: 30
 IVs: 7 HP / 7 Atk / 7 Def / 7 SpA / 7 SpD / 7 Spe
-- Tackle
 - Aerial Ace
+- Tackle
 - Quick Attack
 - Endeavor
 
@@ -15874,8 +15865,8 @@ IVs: 7 HP / 7 Atk / 7 Def / 7 SpA / 7 SpD / 7 Spe
 Swellow
 Level: 30
 IVs: 7 HP / 7 Atk / 7 Def / 7 SpA / 7 SpD / 7 Spe
-- Quick Attack
 - Brave Bird
+- Quick Attack
 - Pluck
 - Aerial Ace
 
@@ -15891,8 +15882,8 @@ AI: Check Bad Move
 Unfezant
 Level: 48
 IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
-- Quick Attack
 - Air Slash
+- Quick Attack
 - Gust
 - Taunt
 
@@ -15900,8 +15891,8 @@ IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
 Staraptor
 Level: 48
 IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
-- Take Down
 - Aerial Ace
+- Take Down
 - Close Combat
 - Agility
 
@@ -15909,8 +15900,8 @@ IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
 Swellow @ Sitrus Berry
 Level: 48
 IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
-- Quick Attack
 - Brave Bird
+- Quick Attack
 - Agility
 - Pluck
 
@@ -15926,8 +15917,8 @@ AI: Check Bad Move
 Azumarill
 Level: 49
 IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
-- Bubble Beam
 - Play Rough
+- Bubble Beam
 - Bounce
 - Aqua Tail
 
@@ -15970,8 +15961,8 @@ IVs: 7 HP / 7 Atk / 7 Def / 7 SpA / 7 SpD / 7 Spe
 Staravia
 Level: 30
 IVs: 7 HP / 7 Atk / 7 Def / 7 SpA / 7 SpD / 7 Spe
-- Tackle
 - Aerial Ace
+- Tackle
 - Quick Attack
 - Endeavor
 
@@ -16005,8 +15996,8 @@ IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
 Staraptor @ Sitrus Berry
 Level: 48
 IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
-- Take Down
 - Aerial Ace
+- Take Down
 - Close Combat
 - Agility
 
@@ -16031,8 +16022,8 @@ IVs: 7 HP / 7 Atk / 7 Def / 7 SpA / 7 SpD / 7 Spe
 Pelipper
 Level: 32
 IVs: 7 HP / 7 Atk / 7 Def / 7 SpA / 7 SpD / 7 Spe
-- Water Pulse
 - Air Slash
+- Water Pulse
 - Quick Attack
 - Agility
 
@@ -16057,8 +16048,8 @@ IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
 Pelipper @ Sitrus Berry
 Level: 49
 IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
-- Water Pulse
 - Air Slash
+- Water Pulse
 - Quick Attack
 - Agility
 
@@ -16083,8 +16074,8 @@ IVs: 14 HP / 14 Atk / 14 Def / 14 SpA / 14 SpD / 14 Spe
 Pelipper @ Sitrus Berry
 Level: 54
 IVs: 14 HP / 14 Atk / 14 Def / 14 SpA / 14 SpD / 14 Spe
-- Water Pulse
 - Air Slash
+- Water Pulse
 - Quick Attack
 - Agility
 
@@ -16100,8 +16091,8 @@ AI: Check Bad Move
 Meditite
 Level: 33
 IVs: 13 HP / 13 Atk / 13 Def / 13 SpA / 13 SpD / 13 Spe
-- Zen Headbutt
 - High Jump Kick
+- Zen Headbutt
 - Calm Mind
 - Force Palm
 
@@ -16126,8 +16117,8 @@ AI: Check Bad Move
 Medicham
 Level: 51
 IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
-- Zen Headbutt
 - High Jump Kick
+- Zen Headbutt
 - Fire Punch
 - Calm Mind
 
@@ -16178,8 +16169,8 @@ IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
 Krookodile
 Level: 48
 IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
-- Earthquake
 - Foul Play
+- Earthquake
 - Bite
 - Dig
 
@@ -16204,8 +16195,8 @@ AI: Check Bad Move
 Krookodile
 Level: 49
 IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
-- Earthquake
 - Foul Play
+- Earthquake
 - Bite
 - Dig
 
@@ -16291,8 +16282,8 @@ IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
 Medicham @ Sitrus Berry
 Level: 49
 IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
-- Zen Headbutt
 - High Jump Kick
+- Zen Headbutt
 - Fire Punch
 - Calm Mind
 
@@ -16326,8 +16317,8 @@ IVs: 7 HP / 7 Atk / 7 Def / 7 SpA / 7 SpD / 7 Spe
 Staravia
 Level: 28
 IVs: 7 HP / 7 Atk / 7 Def / 7 SpA / 7 SpD / 7 Spe
-- Tackle
 - Aerial Ace
+- Tackle
 - Quick Attack
 - Endeavor
 
@@ -16361,8 +16352,8 @@ IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
 Corviknight
 Level: 47
 IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
-- Steel Wing
 - Drill Peck
+- Steel Wing
 - Power Trip
 - Taunt
 
@@ -16370,8 +16361,8 @@ IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
 Staraptor
 Level: 47
 IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
-- Take Down
 - Aerial Ace
+- Take Down
 - Close Combat
 - Agility
 
@@ -16427,20 +16418,15 @@ IVs: 14 HP / 14 Atk / 14 Def / 14 SpA / 14 SpD / 14 Spe
 Quagsire
 Level: 52
 IVs: 14 HP / 14 Atk / 14 Def / 14 SpA / 14 SpD / 14 Spe
-- Aqua Tail
 - Earthquake
+- Aqua Tail
 - Slam
 - Toxic
 
 
-Finizen
+Palafin
 Level: 52
 IVs: 14 HP / 14 Atk / 14 Def / 14 SpA / 14 SpD / 14 Spe
-- Aqua Tail
-- Acrobatics
-- Encore
-- Aqua Jet
-
 
 Barraskewda @ Sitrus Berry
 Level: 52
@@ -16532,8 +16518,8 @@ IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
 Lanturn
 Level: 47
 IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
-- Bubble Beam
 - Discharge
+- Bubble Beam
 - Spit Up
 - Thunder Wave
 
@@ -16554,8 +16540,8 @@ IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
 Whiscash @ Sitrus Berry
 Level: 47
 IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
-- Aqua Tail
 - Earthquake
+- Aqua Tail
 - Zen Headbutt
 - Water Pulse
 
@@ -16571,8 +16557,8 @@ AI: Check Bad Move
 Poliwrath @ Sitrus Berry
 Level: 50
 IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
-- Bubble Beam
 - Circle Throw
+- Bubble Beam
 - Body Slam
 - Dynamic Punch
 
@@ -16588,8 +16574,8 @@ AI: Check Bad Move
 Azumarill
 Level: 50
 IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
-- Bubble Beam
 - Play Rough
+- Bubble Beam
 - Superpower
 - Aqua Tail
 
@@ -16614,8 +16600,8 @@ AI: Check Bad Move
 Azumarill
 Level: 55
 IVs: 14 HP / 14 Atk / 14 Def / 14 SpA / 14 SpD / 14 Spe
-- Bubble Beam
 - Play Rough
+- Bubble Beam
 - Superpower
 - Aqua Tail
 
@@ -16657,8 +16643,8 @@ AI: Check Bad Move
 Annihilape
 Level: 50
 IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
-- Shadow Punch
 - Close Combat
+- Shadow Punch
 - Stomping Tantrum
 - Cross Chop
 
@@ -16666,8 +16652,8 @@ IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
 Medicham @ Sitrus Berry
 Level: 50
 IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
-- Zen Headbutt
 - High Jump Kick
+- Zen Headbutt
 - Fire Punch
 - Calm Mind
 
@@ -16752,8 +16738,8 @@ IVs: 21 HP / 21 Atk / 21 Def / 21 SpA / 21 SpD / 21 Spe
 Crabominable @ Sitrus Berry
 Level: 50
 IVs: 21 HP / 21 Atk / 21 Def / 21 SpA / 21 SpD / 21 Spe
-- Ice Hammer
 - Close Combat
+- Ice Hammer
 - Slam
 - Protect
 
@@ -16778,8 +16764,8 @@ IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
 Crabominable @ Sitrus Berry
 Level: 55
 IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
-- Ice Hammer
 - Close Combat
+- Ice Hammer
 - Slam
 - Protect
 
@@ -16856,8 +16842,8 @@ IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
 Annihilape @ Sitrus Berry
 Level: 51
 IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
-- Shadow Punch
 - Close Combat
+- Shadow Punch
 - Stomping Tantrum
 - Cross Chop
 
@@ -16899,8 +16885,8 @@ IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
 Tentacruel
 Level: 47
 IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
-- Bubble Beam
 - Poison Jab
+- Bubble Beam
 - Wrap
 - Water Pulse
 
@@ -16951,8 +16937,8 @@ AI: Check Bad Move
 Xatu @ Sitrus Berry
 Level: 54
 IVs: 14 HP / 14 Atk / 14 Def / 14 SpA / 14 SpD / 14 Spe
-- Psychic
 - Air Slash
+- Psychic
 - Night Shade
 - Tailwind
 
@@ -16968,8 +16954,8 @@ AI: Check Bad Move
 Bibarel
 Level: 53
 IVs: 14 HP / 14 Atk / 14 Def / 14 SpA / 14 SpD / 14 Spe
-- Aqua Jet
 - Take Down
+- Aqua Jet
 - Superpower
 - Swords Dance
 
@@ -17033,8 +17019,8 @@ IVs: 7 HP / 7 Atk / 7 Def / 7 SpA / 7 SpD / 7 Spe
 Diggersby
 Level: 30
 IVs: 7 HP / 7 Atk / 7 Def / 7 SpA / 7 SpD / 7 Spe
-- Tackle
 - Dig
+- Tackle
 - Double Kick
 - Bulldoze
 
@@ -17059,8 +17045,8 @@ IVs: 14 HP / 14 Atk / 14 Def / 14 SpA / 14 SpD / 14 Spe
 Diggersby @ Sitrus Berry
 Level: 55
 IVs: 14 HP / 14 Atk / 14 Def / 14 SpA / 14 SpD / 14 Spe
-- Take Down
 - Earthquake
+- Take Down
 - Bounce
 - Swords Dance
 
@@ -17076,8 +17062,8 @@ AI: Check Bad Move
 Noctowl
 Level: 53
 IVs: 14 HP / 14 Atk / 14 Def / 14 SpA / 14 SpD / 14 Spe
-- Take Down
 - Sky Attack
+- Take Down
 - Moonblast
 - Roost
 
@@ -17111,8 +17097,8 @@ IVs: 14 HP / 14 Atk / 14 Def / 14 SpA / 14 SpD / 14 Spe
 Unfezant @ Sitrus Berry
 Level: 55
 IVs: 14 HP / 14 Atk / 14 Def / 14 SpA / 14 SpD / 14 Spe
-- Quick Attack
 - Air Slash
+- Quick Attack
 - Gust
 - Roost
 
@@ -17128,8 +17114,8 @@ AI: Check Bad Move
 Fearow
 Level: 53
 IVs: 14 HP / 14 Atk / 14 Def / 14 SpA / 14 SpD / 14 Spe
-- Take Down
 - Drill Peck
+- Take Down
 - Drill Run
 - Agility
 
@@ -17137,8 +17123,8 @@ IVs: 14 HP / 14 Atk / 14 Def / 14 SpA / 14 SpD / 14 Spe
 Pelipper @ Sitrus Berry
 Level: 55
 IVs: 14 HP / 14 Atk / 14 Def / 14 SpA / 14 SpD / 14 Spe
-- Water Pulse
 - Air Slash
+- Water Pulse
 - Quick Attack
 - Agility
 
@@ -17203,13 +17189,9 @@ Music: Swimmer
 Double Battle: No
 AI: Check Bad Move
 
-Finizen @ Sitrus Berry
+Palafin
 Level: 55
 IVs: 14 HP / 14 Atk / 14 Def / 14 SpA / 14 SpD / 14 Spe
-- Aqua Tail
-- Acrobatics
-- Encore
-- Aqua Jet
 
 === TRAINER_HIKER_EARL_2 ===
 Name: EARL
@@ -17232,8 +17214,8 @@ IVs: 14 HP / 14 Atk / 14 Def / 14 SpA / 14 SpD / 14 Spe
 Aggron @ Sitrus Berry
 Level: 54
 IVs: 14 HP / 14 Atk / 14 Def / 14 SpA / 14 SpD / 14 Spe
-- Iron Head
 - Rock Slide
+- Iron Head
 - Take Down
 - Protect
 
@@ -17249,8 +17231,8 @@ AI: Check Bad Move
 Kabutops
 Level: 54
 IVs: 14 HP / 14 Atk / 14 Def / 14 SpA / 14 SpD / 14 Spe
-- Brine
 - Ancient Power
+- Brine
 - Slash
 - Protect
 
@@ -17301,8 +17283,8 @@ AI: Check Bad Move
 Hatterene @ Sitrus Berry
 Level: 56
 IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
-- Psychic
 - Dazzling Gleam
+- Psychic
 - Brutal Swing
 - Calm Mind
 
@@ -17393,8 +17375,8 @@ AI: Check Bad Move / Try To Faint / Check Viability
 Excadrill
 Level: 55
 IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
-- Metal Claw
 - Earthquake
+- Metal Claw
 - Crush Claw
 - Swords Dance
 
@@ -17402,8 +17384,8 @@ IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
 Tentacruel @ Sitrus Berry
 Level: 55
 IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
-- Bubble Beam
 - Sludge Wave
+- Bubble Beam
 - Wrap
 - Water Pulse
 
@@ -17467,8 +17449,8 @@ AI: Check Bad Move
 Salazzle
 Level: 52
 IVs: 19 HP / 19 Atk / 19 Def / 19 SpA / 19 SpD / 19 Spe
-- Venoshock
 - Ember
+- Venoshock
 - Scratch
 - Nasty Plot
 
@@ -17485,8 +17467,8 @@ IVs: 19 HP / 19 Atk / 19 Def / 19 SpA / 19 SpD / 19 Spe
 Slowbro @ Sitrus Berry
 Level: 55
 IVs: 19 HP / 19 Atk / 19 Def / 19 SpA / 19 SpD / 19 Spe
-- Water Pulse
 - Psychic
+- Water Pulse
 - Headbutt
 - Slack Off
 
@@ -17534,8 +17516,8 @@ AI: Check Bad Move / Try To Faint / Check Viability
 Aggron @ Sitrus Berry
 Level: 56
 IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
-- Iron Head
 - Rock Slide
+- Iron Head
 - Take Down
 - Protect
 
@@ -17570,8 +17552,8 @@ IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
 Aggron
 Level: 52
 IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
-- Iron Head
 - Rock Slide
+- Iron Head
 - Take Down
 - Protect
 
@@ -17606,8 +17588,8 @@ AI: Check Bad Move / Try To Faint / Check Viability
 Ludicolo
 Level: 53
 IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
-- Bubble Beam
 - Mega Drain
+- Bubble Beam
 - Zen Headbutt
 - Water Gun
 
@@ -17615,8 +17597,8 @@ IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
 Quagsire
 Level: 53
 IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
-- Aqua Tail
 - Earthquake
+- Aqua Tail
 - Slam
 - Toxic
 
@@ -17786,8 +17768,8 @@ IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
 Tentacruel @ Sitrus Berry
 Level: 49
 IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
-- Bubble Beam
 - Poison Jab
+- Bubble Beam
 - Wrap
 - Water Pulse
 
@@ -17812,8 +17794,8 @@ IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
 Swanna @ Sitrus Berry
 Level: 49
 IVs: 9 HP / 9 Atk / 9 Def / 9 SpA / 9 SpD / 9 Spe
-- Bubble Beam
 - Brave Bird
+- Bubble Beam
 - Roost
 - Aerial Ace
 
