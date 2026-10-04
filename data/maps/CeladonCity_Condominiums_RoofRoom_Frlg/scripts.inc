@@ -19,10 +19,11 @@ CeladonCity_Condominiums_RoofRoom_EventScript_EeveeBall::
 CeladonCity_Condominiums_RoofRoom_EventScript_GetEeveeParty::
 	removeobject LOCALID_EEVEE_POKEBALL
 	playfanfare MUS_LEVEL_UP
+	bufferspeciesname STR_VAR_1, VAR_TEMP_TRANSFERRED_SPECIES
 	message CeladonCity_Condominiums_RoofRoom_Text_ObtainedAnEevee
 	waitmessage
 	waitfanfare
-	bufferspeciesname STR_VAR_1, SPECIES_EEVEE
+	bufferspeciesname STR_VAR_1, VAR_TEMP_TRANSFERRED_SPECIES
 	msgbox gText_NicknameThisPokemon, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, CeladonCity_Condominiums_RoofRoom_EventScript_SetGotEevee
 	call Common_EventScript_GetGiftMonPartySlot
@@ -33,10 +34,11 @@ CeladonCity_Condominiums_RoofRoom_EventScript_GetEeveeParty::
 CeladonCity_Condominiums_RoofRoom_EventScript_GetEeveePC::
 	removeobject LOCALID_EEVEE_POKEBALL
 	playfanfare MUS_LEVEL_UP
+	bufferspeciesname STR_VAR_1, VAR_TEMP_TRANSFERRED_SPECIES
 	message CeladonCity_Condominiums_RoofRoom_Text_ObtainedAnEevee
 	waitmessage
 	waitfanfare
-	bufferspeciesname STR_VAR_1, SPECIES_EEVEE
+	bufferspeciesname STR_VAR_1, VAR_TEMP_TRANSFERRED_SPECIES
 	msgbox gText_NicknameThisPokemon, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, CeladonCity_Condominiums_RoofRoom_EventScript_TransferEeveeToPC
 	call Common_EventScript_NameReceivedBoxMon
@@ -112,7 +114,7 @@ CeladonCity_Condominiums_RoofRoom_Text_TheresNothingIDontKnow::
 	.string "enjoy trading POKéMON!$"
 
 CeladonCity_Condominiums_RoofRoom_Text_ObtainedAnEevee::
-	.string "{PLAYER} obtained an EEVEE!$"
+	.string "{PLAYER} obtained {STR_VAR_1}!$"
 
 CeladonCity_Condominiums_RoofRoom_Text_BoxIsFull::
 	.string "ポケモンが　いっぱいだ\n"

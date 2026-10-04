@@ -217,7 +217,12 @@ static EWRAM_DATA u8 sRunSetupFilter;
 static EWRAM_DATA u8 sRunSetupType;
 static EWRAM_DATA u16 sRunSetupAbility;
 static EWRAM_DATA u16 sRunSetupAbilityChoices[ABILITIES_COUNT];
-static EWRAM_DATA u8 sRunSetupAbilityEligibleCounts[ABILITIES_COUNT];
+static EWRAM_DATA u8 sRunSetupBaseEligible[NATIONAL_DEX_COUNT + 1];
+static EWRAM_DATA bool8 sRunSetupBasePoolValid;
+static EWRAM_DATA u8 sRunSetupTypeChoices[NUMBER_OF_MON_TYPES];
+static EWRAM_DATA u8 sRunSetupTypeChoiceCount;
+static EWRAM_DATA u16 sRunSetupTypeChoiceAbility;
+static EWRAM_DATA u32 sRunSetupBaseGenerator;
 static EWRAM_DATA u16 sRunSetupAbilityChoiceCount;
 static EWRAM_DATA u8 sRunSetupConfirmScroll;
 static EWRAM_DATA u32 sRunSetupFinalEligible;
@@ -378,7 +383,7 @@ static const u8 sText_RunSetupScaled[] = _("SCALED");
 static const u8 sText_RunSetupCustom[] = _("CUSTOM");
 static const u8 sText_RunSetupNeedSeed[] = _("ENTER AT LEAST ONE DIGIT");
 static const u8 sText_RunSetupSeedNumber[] = _("VALUE: {STR_VAR_1}");
-static const u8 sText_RunSetupConfirmButton[] = _("CONFIRM");
+static const u8 sText_RunSetupConfirmButton[] = _("NEXT");
 static const u8 sText_RunSetupStartJourney[] = _("START");
 static const u8 sText_RunSetupNext[] = _("NEXT");
 static const u8 sText_RunSetupBack[] = _("BACK");
@@ -411,8 +416,8 @@ static const u8 sText_RunSetupBst[] = _("BST");
 static const u8 sText_RunSetupAbilities[] = _("ABILITIES");
 static const u8 sText_RunSetupItems[] = _("ITEMS");
 static const u8 sText_RunSetupShuffle[] = _("SHUFFLE");
-static const u8 sText_RunSetupFiltersPage[] = _("3/4  FILTERS");
-static const u8 sText_RunSetupSeedPage[] = _("4/4  SEED");
+static const u8 sText_RunSetupFiltersPage[] = _("4/4  FILTERS");
+static const u8 sText_RunSetupSeedPage[] = _("3/4  SEED");
 static const u8 sText_RunSetupEnterSeed[] = _("PRESS A TO ENTER SEED");
 static const u8 sText_RunSetupPool[] = _("ELIGIBLE");
 static const u8 sText_RunSetupPoolLow[] = _("LOW");
@@ -2075,6 +2080,9 @@ static void RunSetup_ResetDefaults(void)
     sRunSetupSeed = (((u32)Random() << 16) | Random()) % 100000000;
     sRunSetupItemRandomization = FALSE;
     sRunSetupLowPoolConfirmed = FALSE;
+    sRunSetupBasePoolValid = FALSE;
+    sRunSetupAbilityChoiceCount = 0;
+    sRunSetupTypeChoiceCount = 0;
 }
 
 static void RunSetup_StartForFireRed(bool8 quickStart)
@@ -2258,18 +2266,39 @@ static void RunSetup_UpdateFilterMode(void)
         sRunSetupRandomizer = RUN_WILD_SCALED;
 }
 
+static u32 RunSetup_CountEligibleSelection(u8 type, u16 ability, u32 stopAt);
+
+static void RunSetup_BuildTypeChoices(void)
+{
+    u32 type;
+    if (sRunSetupTypeChoiceCount && sRunSetupTypeChoiceAbility == sRunSetupAbility)
+        return;
+    sRunSetupTypeChoiceCount = 0;
+    sRunSetupTypeChoiceAbility = sRunSetupAbility;
+    sRunSetupTypeChoices[sRunSetupTypeChoiceCount++] = TYPE_NONE;
+    for (type = 0; type < NUMBER_OF_MON_TYPES; type++)
+    {
+        if (type == TYPE_MYSTERY || type == TYPE_NONE)
+            continue;
+        if (RunSetup_CountEligibleSelection(type, sRunSetupAbility, 3) >= 3)
+            sRunSetupTypeChoices[sRunSetupTypeChoiceCount++] = type;
+    }
+}
+
 static u8 RunSetup_TypeToPickerIndex(u8 type)
 {
-    if (type == TYPE_NONE)
-        return 0;
-    return type < TYPE_MYSTERY ? type : type - 1;
+    u32 i;
+    RunSetup_BuildTypeChoices();
+    for (i = 0; i < sRunSetupTypeChoiceCount; i++)
+        if (sRunSetupTypeChoices[i] == type)
+            return i;
+    return 0;
 }
 
 static u8 RunSetup_PickerIndexToType(u8 index)
 {
-    if (index == 0)
-        return TYPE_NONE;
-    return index < TYPE_MYSTERY ? index : index + 1;
+    RunSetup_BuildTypeChoices();
+    return sRunSetupTypeChoices[index % sRunSetupTypeChoiceCount];
 }
 
 static u32 RunSetup_CountEligibleSelection(u8 type, u16 ability, u32 stopAt)
@@ -2301,11 +2330,18 @@ static u32 RunSetup_CountEligibleSelection(u8 type, u16 ability, u32 stopAt)
         filterValue = ability;
     }
 
+    if (!sRunSetupBasePoolValid || sRunSetupBaseGenerator != baseGenerator)
+    {
+        for (i = 1; i <= NATIONAL_DEX_COUNT; i++)
+            sRunSetupBaseEligible[i] = IsSpeciesEligibleRandomSpecies(baseGenerator, NationalPokedexNumToSpecies(i), &baseArgs);
+        sRunSetupBaseGenerator = baseGenerator;
+        sRunSetupBasePoolValid = TRUE;
+    }
     for (i = 1; i <= NATIONAL_DEX_COUNT; i++)
     {
         enum Species species = NationalPokedexNumToSpecies(i);
 
-        if (!IsSpeciesEligibleRandomSpecies(baseGenerator, species, &baseArgs))
+        if (!sRunSetupBaseEligible[i])
             continue;
         if (!DoesSpeciesOrReachableFormMatchRunFilterForSettings(species, filterMode, filterValue,
                                                                  sRunSetupAbilityMode, sRunSetupEvolutions,
@@ -2320,85 +2356,30 @@ static u32 RunSetup_CountEligibleSelection(u8 type, u16 ability, u32 stopAt)
 
 static void RunSetup_BuildAbilityChoices(void)
 {
-    struct FilterFuncArgs args =
-    {
-        .arg1 = FILTER_FUNC_ARG_NONE,
-        .arg2 = FILTER_FUNC_ARG_NONE,
-    };
-    bool32 scaled = sRunSetupRandomizer != RUN_WILD_RANDOM;
-    u32 generator;
-    u32 i;
-
+    u32 ability;
     if (sRunSetupAbilityChoiceCount != 0)
         return;
-
-    if (sRunSetupType != TYPE_NONE)
-    {
-        // Do not pre-filter the generator by type here. Form-aware run-filter
-        // matching below is the source of truth for Type+Ability eligibility.
-        // The old type-filtered generator could collapse the ability list to
-        // ALL even when valid paired matches existed.
-        generator = scaled ? SPECIES_GENERATOR_SCALED_WILD : SPECIES_GENERATOR_NO_SUPERMONS;
-        if (scaled)
-            args.arg1 = 0;
-    }
-    else if (scaled)
-    {
-        args.arg1 = 0;
-        generator = SPECIES_GENERATOR_SCALED_WILD;
-    }
-    else
-    {
-        generator = SPECIES_GENERATOR_NO_SUPERMONS;
-    }
-
-    for (i = 0; i < ABILITIES_COUNT; i++)
-        sRunSetupAbilityEligibleCounts[i] = 0;
-    for (i = 1; i <= NATIONAL_DEX_COUNT; i++)
-    {
-        enum Species species = NationalPokedexNumToSpecies(i);
-        enum Ability abilities[3];
-        u32 slot;
-
-        if (!IsSpeciesEligibleRandomSpecies(generator, species, &args))
-            continue;
-        if (sRunSetupType != TYPE_NONE
-         && !DoesSpeciesOrReachableFormMatchRunFilterForSettings(species, RUN_FILTER_TYPE, sRunSetupType,
-                                                                 sRunSetupAbilityMode, sRunSetupEvolutions,
-                                                                 sRunSetupDifficulty, sRunSetupSeed))
-            continue;
-
-        if (sRunSetupAbilityMode == RUN_ABILITIES_RANDOM)
-        {
-            abilities[0] = GetRandomizedAbilityForSeed(species, 0, sRunSetupSeed);
-            abilities[1] = GetRandomizedAbilityForSeed(species, 1, sRunSetupSeed);
-            abilities[2] = GetRandomizedAbilityForSeed(species, 2, sRunSetupSeed);
-        }
-        else
-        {
-            abilities[0] = gSpeciesInfo[species].abilities[0];
-            abilities[1] = gSpeciesInfo[species].abilities[1];
-            abilities[2] = gSpeciesInfo[species].abilities[2];
-        }
-        for (slot = 0; slot < ARRAY_COUNT(abilities); slot++)
-        {
-            enum Ability ability = abilities[slot];
-
-            if (ability == ABILITY_NONE
-             || (slot > 0 && ability == abilities[0])
-             || (slot > 1 && ability == abilities[1]))
-                continue;
-            if (sRunSetupAbilityEligibleCounts[ability] < 3)
-                sRunSetupAbilityEligibleCounts[ability]++;
-        }
-    }
-
     sRunSetupAbilityChoices[sRunSetupAbilityChoiceCount++] = ABILITY_NONE;
-    for (i = 1; i < ABILITIES_COUNT; i++)
+    // Use the exact same seed, normal-ability and reachable-line eligibility
+    // predicate as final validation. A base-species ability tally omitted
+    // viable evolved forms and counted hidden slots that could never start.
+    for (ability = 1; ability < ABILITIES_COUNT; ability++)
     {
-        if (sRunSetupAbilityEligibleCounts[i] >= 3)
-            sRunSetupAbilityChoices[sRunSetupAbilityChoiceCount++] = i;
+        if (RunSetup_CountEligibleSelection(sRunSetupType, ability, 3) >= 3)
+            sRunSetupAbilityChoices[sRunSetupAbilityChoiceCount++] = ability;
     }
+}
+
+static void RunSetup_InvalidateSeedFilters(void)
+{
+    sRunSetupType = TYPE_NONE;
+    sRunSetupAbility = ABILITY_NONE;
+    sRunSetupFilter = RUN_FILTER_NONE;
+    sRunSetupAbilityChoiceCount = 0;
+    sRunSetupFinalEligible = 0;
+    sRunSetupBasePoolValid = FALSE;
+    sRunSetupTypeChoiceCount = 0;
+    sRunSetupLowPoolConfirmed = FALSE;
 }
 
 static bool32 RunSetup_IsAbilityUsed(u16 ability)
@@ -2452,16 +2433,16 @@ static void RunSetup_DrawPicker(u8 picker, u16 value)
         u8 selected = RunSetup_TypeToPickerIndex(value);
         u8 first = selected / 3 >= 6 ? 3 : 0;
 
-        for (i = first; i < 19 && i < first + 18; i++)
+        for (i = first; i < sRunSetupTypeChoiceCount && i < first + 18; i++)
         {
             u8 type = RunSetup_PickerIndexToType(i);
             const u8 *name = type == TYPE_NONE ? sText_RunSetupAll : gTypesInfo[type].name;
             RunSetup_DrawWideChoice(name, 7 + (i % 3) * 67, 31 + ((i - first) / 3) * 15, 62, i == selected);
         }
 
-        if (first == 0)
+        if (first == 0 && sRunSetupTypeChoiceCount > 18)
             AddTextPrinterParameterized3(0, FONT_SMALL, 198, 111, sTextColor_Headers, TEXT_SKIP_DRAW, sText_RunSetupScrollDown);
-        else
+        else if (first != 0)
             AddTextPrinterParameterized3(0, FONT_SMALL, 198, 31, sTextColor_Headers, TEXT_SKIP_DRAW, sText_RunSetupScrollUp);
     }
     else
@@ -2814,6 +2795,8 @@ static void CB2_RunSetup_ReturnFromSeed(void)
     }
     else
     {
+        if (sRunSetupSeed != ParseCustomSeed(gStringVar2))
+            RunSetup_InvalidateSeedFilters();
         sRunSetupSeed = ParseCustomSeed(gStringVar2);
         sRunSetupPage = RUN_SETUP_PAGE_CONFIRM;
         sRunSetupConfirm = FALSE;
@@ -2880,16 +2863,22 @@ static void Task_RunSetup_Input(u8 taskId)
             u8 index = RunSetup_TypeToPickerIndex(*pickerValue);
 
             if (JOY_NEW(DPAD_LEFT))
-                index = (index + 18) % 19;
+                index = (index + sRunSetupTypeChoiceCount - 1) % sRunSetupTypeChoiceCount;
             else if (JOY_NEW(DPAD_RIGHT))
-                index = (index + 1) % 19;
+                index = (index + 1) % sRunSetupTypeChoiceCount;
             else if (JOY_NEW(DPAD_UP))
-                index = (index + 16) % 19;
+                index = (index + sRunSetupTypeChoiceCount - min(3, sRunSetupTypeChoiceCount)) % sRunSetupTypeChoiceCount;
             else if (JOY_NEW(DPAD_DOWN))
-                index = (index + 3) % 19;
+                index = (index + 3) % sRunSetupTypeChoiceCount;
             else if (JOY_NEW(A_BUTTON))
             {
-                sRunSetupType = RunSetup_PickerIndexToType(index);
+                u8 selectedType = RunSetup_PickerIndexToType(index);
+                if (selectedType != TYPE_NONE && RunSetup_CountEligibleSelection(selectedType, sRunSetupAbility, 3) < 3)
+                {
+                    PlaySE(SE_BOO);
+                    return;
+                }
+                sRunSetupType = selectedType;
                 sRunSetupAbilityChoiceCount = 0;
                 RunSetup_UpdateFilterMode();
                 *picker = 0;
@@ -3053,11 +3042,12 @@ static void Task_RunSetup_Input(u8 taskId)
         }
         else if (JOY_NEW(A_BUTTON) && *cursor == 7)
         {
-            sRunSetupPage = RUN_SETUP_PAGE_FILTERS;
+            sRunSetupPage = RUN_SETUP_PAGE_CONFIRM;
             *cursor = 0;
         }
         else return;
 
+        RunSetup_InvalidateSeedFilters();
         PlaySE(SE_SELECT);
         RunSetup_Draw(*cursor);
         return;
@@ -3081,8 +3071,8 @@ static void Task_RunSetup_Input(u8 taskId)
         {
             sRunSetupConfirm = FALSE;
             sRunSetupLowPoolConfirmed = FALSE;
-            sRunSetupPage = RUN_SETUP_PAGE_CONFIRM;
-            *cursor = 2;
+            sRunSetupPage = RUN_SETUP_PAGE_FILTERS;
+            *cursor = 3;
             sRunSetupConfirmScroll = 0;
         }
         else if (JOY_NEW(A_BUTTON) && *cursor == 1)
@@ -3166,17 +3156,17 @@ static void Task_RunSetup_Input(u8 taskId)
         }
         else if (JOY_NEW(B_BUTTON) || (JOY_NEW(A_BUTTON) && *cursor == 2))
         {
-            sRunSetupPage = RUN_SETUP_PAGE_RANDOMIZER;
-            *cursor = 7;
+            sRunSetupPage = RUN_SETUP_PAGE_CONFIRM;
+            *cursor = 2;
         }
         else if (JOY_NEW(A_BUTTON) && *cursor == 3)
         {
-            // Do not reject paired filters before the random seed is finalized.
-            // The confirmation page computes the seed-specific eligible pool and
-            // enforces the <3 block / 3-5 warning at START instead.
             sRunSetupLowPoolConfirmed = FALSE;
-            sRunSetupPage = RUN_SETUP_PAGE_CONFIRM;
-            *cursor = 0;
+            sRunSetupFinalEligible = sRunSetupFilter == RUN_FILTER_NONE
+                                   ? NATIONAL_DEX_COUNT : RunSetup_CountFinalEligibleMons();
+            sRunSetupConfirm = TRUE;
+            sRunSetupConfirmScroll = 0;
+            *cursor = 1;
         }
         else
             return;
@@ -3205,6 +3195,7 @@ static void Task_RunSetup_Input(u8 taskId)
             if (sRunSetupCustom)
             {
                 sRunSetupCustom = FALSE;
+                RunSetup_InvalidateSeedFilters();
                 sRunSetupSeed = (((u32)Random() << 16) | Random()) % 100000000;
                 sRunSetupEmptySeed = FALSE;
             }
@@ -3234,8 +3225,8 @@ static void Task_RunSetup_Input(u8 taskId)
         }
         else if (JOY_NEW(B_BUTTON) || (JOY_NEW(A_BUTTON) && *cursor == 1))
         {
-            sRunSetupPage = RUN_SETUP_PAGE_FILTERS;
-            *cursor = 3;
+            sRunSetupPage = RUN_SETUP_PAGE_RANDOMIZER;
+            *cursor = 7;
         }
         else if (JOY_NEW(A_BUTTON) && *cursor == 2)
         {
@@ -3245,15 +3236,9 @@ static void Task_RunSetup_Input(u8 taskId)
                 RunSetup_Draw(*cursor);
                 return;
             }
-            // The final confirmation is the first point where the chosen seed
-            // is authoritative. Compute the seed-dependent pool once here and
-            // cache it so menu redraws and input do not rescan the full dex.
-            sRunSetupFinalEligible = sRunSetupFilter == RUN_FILTER_NONE
-                                   ? NATIONAL_DEX_COUNT
-                                   : RunSetup_CountFinalEligibleMons();
-            sRunSetupConfirm = TRUE;
-            sRunSetupConfirmScroll = 0;
-            *cursor = 1;
+            sRunSetupAbilityChoiceCount = 0;
+            sRunSetupPage = RUN_SETUP_PAGE_FILTERS;
+            *cursor = 0;
         }
         else
             return;

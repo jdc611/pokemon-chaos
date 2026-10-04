@@ -261,6 +261,7 @@ static const u8 sText_GameInfoBstShuffle[] = _("SHUFFLE");
 static const u8 sText_GameInfoBack[] = _("A/B: BACK");
 static const u8 sText_GameInfoNormal[] = _("NORMAL");
 static const u8 sText_GameInfoHoenn[] = _("HOENN");
+static const u8 sText_GameInfoKanto[] = _("KANTO");
 static const u8 sText_GameInfoRandom[] = _("RANDOM");
 static const u8 sText_GameInfoScaled[] = _("SCALED");
 static const u8 sText_GameInfoCustom[] = _("CUSTOM");
@@ -1866,14 +1867,23 @@ static bool8 StartMenuGameOptions(void)
     return FALSE;
 }
 
-static void PrintGameInfoLineToWindow(u8 windowId, const u8 *text, u8 y)
+// Shared fixed chrome for informational pages: only body text/cursor changes.
+static void DrawGamePageChrome(const u8 *title, const u8 *help)
 {
-    AddTextPrinterParameterized(windowId, FONT_NORMAL, text, 8, y, TEXT_SKIP_DRAW, NULL);
+    u8 windowId = GetStartMenuWindowId();
+    u32 width = GetWindowAttribute(windowId, WINDOW_WIDTH) * 8;
+    FillWindowPixelBuffer(windowId, PIXEL_FILL(1));
+    AddTextPrinterParameterized(windowId, FONT_NORMAL, title, 8, 5, TEXT_SKIP_DRAW, NULL);
+    AddTextPrinterParameterized(windowId, FONT_NORMAL, title, 9, 5, TEXT_SKIP_DRAW, NULL);
+    FillWindowPixelRect(windowId, PIXEL_FILL(2), 6, 27, width - 12, 1);
+    FillWindowPixelRect(windowId, PIXEL_FILL(2), 6, 126, width - 12, 1);
+    AddTextPrinterParameterized(windowId, FONT_SMALL, help, 8, 129, TEXT_SKIP_DRAW, NULL);
+    DrawStdWindowFrame(windowId, FALSE);
 }
 
-static void PrintGameInfoLine(const u8 *text, u8 y)
+static void PrintGamePageBody(const u8 *text, u8 y)
 {
-    PrintGameInfoLineToWindow(GetStartMenuWindowId(), text, y);
+    AddTextPrinterParameterized(GetStartMenuWindowId(), FONT_SMALL, text, 8, y, TEXT_SKIP_DRAW, NULL);
 }
 
 static void BuildGameInfoLine(u8 row)
@@ -1910,7 +1920,7 @@ static void BuildGameInfoLine(u8 row)
         StringCopy(gStringVar4, sText_GameInfoStarters);
         StringAppend(gStringVar4, gSaveBlock3Ptr->starterMode == RUN_STARTER_RANDOM ? sText_GameInfoRandom
                                 : gSaveBlock3Ptr->starterMode == RUN_STARTER_CHOOSE ? sText_GameInfoCustom
-                                : sText_GameInfoHoenn);
+                                : gSaveBlock3Ptr->startRegion ? sText_GameInfoKanto : sText_GameInfoHoenn);
         break;
     case 3:
         StringCopy(gStringVar4, sText_GameInfoMovesets);
@@ -1958,18 +1968,13 @@ static void BuildGameInfoLine(u8 row)
 static void DrawGameInfo(void)
 {
     u8 row;
-    FillWindowPixelBuffer(GetStartMenuWindowId(), PIXEL_FILL(1));
-    PrintGameInfoLine(sText_GameInfoTitle, 9);
-    PrintGameInfoLine(sText_GameInfoVersion, 25);
+    DrawGamePageChrome(sText_GameInfoTitle, COMPOUND_STRING("UP/DOWN: Scroll    A/B: Back"));
+    PrintGamePageBody(sText_GameInfoVersion, 29);
     for (row = 0; row < 6; row++)
     {
         BuildGameInfoLine(sGameInfoScroll + row);
-        PrintGameInfoLine(gStringVar4, 41 + row * 16);
+        PrintGamePageBody(gStringVar4, 43 + row * 13);
     }
-    if (sGameInfoScroll > 0 || sGameInfoScroll < 6)
-        PrintGameInfoLine(COMPOUND_STRING("UP/DOWN SCROLL  A/B BACK"), 137);
-    else
-        PrintGameInfoLine(sText_GameInfoBack, 137);
     PutWindowTilemap(GetStartMenuWindowId());
     CopyWindowToVram(GetStartMenuWindowId(), COPYWIN_FULL);
 }
@@ -1988,69 +1993,63 @@ static const u8 sText_GameRulesPageTitles[][32] =
 static void DrawGameRules(void)
 {
     u8 windowId = GetStartMenuWindowId();
-    FillWindowPixelBuffer(windowId, PIXEL_FILL(1));
+    DrawGamePageChrome(sGameRulesContents ? sText_GameRulesTitle : sText_GameRulesPageTitles[sGameRulesPage],
+        sGameRulesContents ? COMPOUND_STRING("A: Open    B: Back") : COMPOUND_STRING("B: Contents"));
 
     if (sGameRulesContents)
     {
-        PrintGameInfoLine(COMPOUND_STRING("GAME RULES"), 9);
-        PrintGameInfoLine(COMPOUND_STRING("CONTENTS"), 25);
-        PrintGameInfoLine(COMPOUND_STRING("DIFFICULTY"), 41);
-        PrintGameInfoLine(COMPOUND_STRING("LEVEL CAPS / GRINDING"), 57);
-        PrintGameInfoLine(COMPOUND_STRING("NUZLOCKE"), 73);
-        PrintGameInfoLine(COMPOUND_STRING("RANDOMIZER / FILTERS"), 89);
-        PrintGameInfoLine(COMPOUND_STRING("POKEMON / PARTY"), 105);
-        PrintGameInfoLine(COMPOUND_STRING("A: OPEN   B: BACK"), 137);
-        InitMenuNormal(windowId, FONT_NORMAL, 0, 41, 16, ARRAY_COUNT(sText_GameRulesPageTitles), sGameRulesPage);
+        PrintGamePageBody(COMPOUND_STRING("CONTENTS"), 29);
+        PrintGamePageBody(COMPOUND_STRING("DIFFICULTY"), 43);
+        PrintGamePageBody(COMPOUND_STRING("LEVEL CAPS / GRINDING"), 56);
+        PrintGamePageBody(COMPOUND_STRING("NUZLOCKE"), 69);
+        PrintGamePageBody(COMPOUND_STRING("RANDOMIZER / FILTERS"), 82);
+        PrintGamePageBody(COMPOUND_STRING("POKEMON / PARTY"), 95);
+        InitMenuNormal(windowId, FONT_SMALL, 0, 43, 13, ARRAY_COUNT(sText_GameRulesPageTitles), sGameRulesPage);
     }
     else
     {
         // Topic pages use the topic itself as the screen header.  This removes
         // the redundant GAME RULES label and gives the body more breathing room.
-        PrintGameInfoLine(sText_GameRulesPageTitles[sGameRulesPage], 9);
-        PrintGameInfoLine(COMPOUND_STRING("----------------------"), 25);
         switch (sGameRulesPage)
         {
         case 0:
-            PrintGameInfoLine(COMPOUND_STRING("EASY"), 41);
-            PrintGameInfoLine(COMPOUND_STRING("Switch after KO; TM learner."), 57);
-            PrintGameInfoLine(COMPOUND_STRING("NORMAL"), 73);
-            PrintGameInfoLine(COMPOUND_STRING("Intended difficulty."), 89);
-            PrintGameInfoLine(COMPOUND_STRING("HARD"), 105);
-            PrintGameInfoLine(COMPOUND_STRING("Better AI; gym/cave resets."), 121);
-            PrintGameInfoLine(COMPOUND_STRING("No PC/PokeVial in gym/caves."), 137);
+            PrintGamePageBody(COMPOUND_STRING("EASY"), 43);
+            PrintGamePageBody(COMPOUND_STRING("Switch after KO; TM learner."), 56);
+            PrintGamePageBody(COMPOUND_STRING("NORMAL"), 69);
+            PrintGamePageBody(COMPOUND_STRING("Intended difficulty."), 82);
+            PrintGamePageBody(COMPOUND_STRING("HARD: better AI; gym/cave resets."), 95);
+            PrintGamePageBody(COMPOUND_STRING("No PC/PokeVial in gym/caves."), 108);
             break;
         case 1:
-            PrintGameInfoLine(COMPOUND_STRING("Caps apply in every mode."), 41);
-            PrintGameInfoLine(COMPOUND_STRING("Key battles are at the cap."), 57);
-            PrintGameInfoLine(COMPOUND_STRING("MGM is optional."), 73);
-            PrintGameInfoLine(COMPOUND_STRING("Candy cannot pass the cap."), 89);
-            PrintGameInfoLine(COMPOUND_STRING("At cap, evolutions still work."), 105);
+            PrintGamePageBody(COMPOUND_STRING("Caps apply in every mode."), 43);
+            PrintGamePageBody(COMPOUND_STRING("Key battles are at the cap."), 56);
+            PrintGamePageBody(COMPOUND_STRING("MGM is optional."), 69);
+            PrintGamePageBody(COMPOUND_STRING("Candy cannot pass the cap."), 82);
+            PrintGamePageBody(COMPOUND_STRING("At cap, evolutions still work."), 95);
             break;
         case 2:
-            PrintGameInfoLine(COMPOUND_STRING("Uses Hard difficulty rules."), 41);
-            PrintGameInfoLine(COMPOUND_STRING("One encounter per area."), 57);
-            PrintGameInfoLine(COMPOUND_STRING("Gifts do not use encounter."), 73);
-            PrintGameInfoLine(COMPOUND_STRING("Fainted mons go to GRAVE."), 89);
-            PrintGameInfoLine(COMPOUND_STRING("GRAVE mons cannot return."), 105);
-            PrintGameInfoLine(COMPOUND_STRING("MGM remains optional."), 121);
+            PrintGamePageBody(COMPOUND_STRING("Uses Hard difficulty rules."), 43);
+            PrintGamePageBody(COMPOUND_STRING("One encounter per area."), 56);
+            PrintGamePageBody(COMPOUND_STRING("Gifts do not use encounter."), 69);
+            PrintGamePageBody(COMPOUND_STRING("Fainted mons go to GRAVE."), 82);
+            PrintGamePageBody(COMPOUND_STRING("GRAVE mons cannot return."), 95);
+            PrintGamePageBody(COMPOUND_STRING("MGM remains optional."), 108);
             break;
         case 3:
-            PrintGameInfoLine(COMPOUND_STRING("Seed controls random results."), 41);
-            PrintGameInfoLine(COMPOUND_STRING("Type + Ability may pair."), 57);
-            PrintGameInfoLine(COMPOUND_STRING("Pool checked after seed."), 73);
-            PrintGameInfoLine(COMPOUND_STRING("3-5 warns; under 3 blocks."), 89);
-            PrintGameInfoLine(COMPOUND_STRING("Random/Scaled obey filters."), 105);
+            PrintGamePageBody(COMPOUND_STRING("Seed controls random results."), 43);
+            PrintGamePageBody(COMPOUND_STRING("Type + Ability may pair."), 56);
+            PrintGamePageBody(COMPOUND_STRING("Pool checked after seed."), 69);
+            PrintGamePageBody(COMPOUND_STRING("3-5 warns; under 3 blocks."), 82);
+            PrintGamePageBody(COMPOUND_STRING("Random/Scaled obey filters."), 95);
             break;
         case 4:
-            PrintGameInfoLine(COMPOUND_STRING("Filters apply outside Centers."), 41);
-            PrintGameInfoLine(COMPOUND_STRING("Changer swaps normal abilities."), 57);
-            PrintGameInfoLine(COMPOUND_STRING("Hidden ability needs its item."), 73);
-            PrintGameInfoLine(COMPOUND_STRING("Only one Mega per party."), 89);
-            PrintGameInfoLine(COMPOUND_STRING("Illegal mons stay boxed."), 105);
+            PrintGamePageBody(COMPOUND_STRING("Filters apply outside Centers."), 43);
+            PrintGamePageBody(COMPOUND_STRING("Changer swaps normal abilities."), 56);
+            PrintGamePageBody(COMPOUND_STRING("Hidden ability needs its item."), 69);
+            PrintGamePageBody(COMPOUND_STRING("Only one Mega per party."), 82);
+            PrintGamePageBody(COMPOUND_STRING("Illegal mons stay boxed."), 95);
             break;
         }
-        if (sGameRulesPage != 0)
-            PrintGameInfoLine(COMPOUND_STRING("B: CONTENTS"), 137);
     }
     PutWindowTilemap(windowId);
     CopyWindowToVram(windowId, COPYWIN_FULL);

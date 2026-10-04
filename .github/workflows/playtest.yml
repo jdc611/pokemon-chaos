@@ -57,6 +57,7 @@ jobs:
           python3 .github/scripts/check_chaos_kanto.py
           python3 .github/scripts/check_chaos_mega.py
           python3 .github/scripts/check_chaos_shortcuts.py
+          python3 .github/scripts/check_chaos_randomizer.py
 
       - name: Build native FireRed target
         run: |
@@ -87,3 +88,11 @@ jobs:
         with:
           name: Chaos-FireRed-Audit-${{ github.sha }}
           path: pokefirered.gba
+
+      - name: Upload emulator verification symbols
+        uses: actions/upload-artifact@v4
+        with:
+          name: Chaos-QA-symbols-${{ github.sha }}
+          path: |
+            pokefirered.elf
+            pokefirered.map

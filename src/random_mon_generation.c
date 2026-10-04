@@ -48,6 +48,7 @@ struct RandomItemGeneratorOptions
     u16 bannedHoldEffectsCount;
 };
 
+static bool32 IsScriptedEncounterSpeciesFilterFunc(enum Species species, const struct FilterFuncArgs *filterFuncArgs);
 static enum Species GetSpeciesCandidateForm(enum Species species, const struct RandomSpeciesGeneratorOptions *options, const struct FilterFuncArgs *filterFuncArgs);
 static bool32 UNUSED IsInBstRangeFilterFunc(enum Species species, const struct FilterFuncArgs *filterFuncArgs);
 static bool32 IsScaledWildSpeciesFilterFunc(enum Species species, const struct FilterFuncArgs *filterFuncArgs);
@@ -158,6 +159,69 @@ static bool32 IsScaledWildSpeciesFilterFunc(enum Species species, const struct F
     }
 
     return TRUE;
+}
+
+// Gifts/statics have their own deterministic pool, independent of route slots.
+static bool32 IsScriptedEncounterSpeciesFilterFunc(enum Species species, const struct FilterFuncArgs *filterFuncArgs)
+{
+    enum Species original = filterFuncArgs->arg1;
+    const struct SpeciesInfo *originalInfo = &gSpeciesInfo[original];
+    const struct SpeciesInfo *candidate = &gSpeciesInfo[species];
+    bool32 majorReward = originalInfo->isRestrictedLegendary || originalInfo->isSubLegendary || originalInfo->isMythical;
+    u32 bst;
+    u32 originalBst;
+    struct FilterFuncArgs scaledArgs;
+
+    if (species == original || species >= SPECIES_CUSTOM_START
+     || candidate->isMegaEvolution || candidate->isPrimalReversion
+     || !DoesSpeciesOrReachableFormMatchRunFilterForSettings(species,
+            gSaveBlock3Ptr->filterMode, gSaveBlock3Ptr->filterValue,
+            gSaveBlock3Ptr->abilityMode, gSaveBlock3Ptr->evolutionMode,
+            gSaveBlock3Ptr->runDifficulty, gSaveBlock3Ptr->worldSeed))
+        return FALSE;
+
+    if (majorReward)
+    {
+        // Preserve the value of legendary rewards, including in Random mode.
+        bst = GetOriginalSpeciesBst(species);
+        originalBst = GetOriginalSpeciesBst(original);
+        return bst + 50 >= originalBst && bst <= originalBst + 50;
+    }
+    if (candidate->isRestrictedLegendary || candidate->isSubLegendary || candidate->isMythical
+     || candidate->isUltraBeast || candidate->isParadox)
+        return FALSE;
+    if (gSaveBlock3Ptr->randomizerEnabled != RUN_WILD_SCALED)
+        return TRUE;
+
+    scaledArgs.arg1 = filterFuncArgs->arg2 <= 10 ? 0
+                   : filterFuncArgs->arg2 <= 20 ? 1
+                   : filterFuncArgs->arg2 <= 30 ? 2
+                   : filterFuncArgs->arg2 <= 40 ? 3 : 4;
+    scaledArgs.arg2 = FILTER_FUNC_ARG_NONE;
+    return IsScaledWildSpeciesFilterFunc(species, &scaledArgs);
+}
+
+enum Species GetRandomizedScriptedSpecies(enum Species species, u8 level, u8 encounterKind)
+{
+    struct FilterFuncArgs args = {species, level};
+    enum Species replacement;
+    rng_value_t oldRngState;
+    u32 seed;
+
+    if (gSaveBlock3Ptr == NULL || gSaveBlock3Ptr->randomizerEnabled == RUN_WILD_NORMAL
+     || species == SPECIES_NONE || species >= SPECIES_CUSTOM_START)
+        return species;
+
+    seed = gSaveBlock3Ptr->worldSeed ^ ((u32)species * 0x9E3779B1u)
+         ^ ((u32)gSaveBlock1Ptr->location.mapGroup << 24)
+         ^ ((u32)gSaveBlock1Ptr->location.mapNum << 16)
+         ^ ((u32)level << 8) ^ encounterKind ^ 0xA17F93C5u;
+    oldRngState = gRngValue;
+    SeedRng(seed);
+    replacement = GetRandomSpecies(SPECIES_GENERATOR_SCRIPTED_ENCOUNTER, &args);
+    gRngValue = oldRngState;
+    // An impossible combination of filters must not create an invalid mon.
+    return replacement != SPECIES_NONE ? replacement : species;
 }
 
 static bool32 IsTypeFilteredWildSpeciesFilterFunc(enum Species species, const struct FilterFuncArgs *filterFuncArgs)

@@ -5,6 +5,12 @@
 
 static const struct RandomSpeciesGeneratorOptions sRandomSpeciesGeneratorOptions[RANDOM_SPECIES_OPTIONS_COUNT] =
 {
+    [SPECIES_GENERATOR_SCRIPTED_ENCOUNTER] =
+    {
+        .filterFunc = IsScriptedEncounterSpeciesFilterFunc,
+        .randomizeForms = FALSE,
+        .dexMode = RANDOM_MON_DEX_NATIONAL,
+    },
     [SPECIES_GENERATOR_NO_SUPERMONS] =
     {
         .banLegendary = TRUE,

@@ -1,5 +1,4 @@
 Common_EventScript_FindItem::
 	callnative GetItemBallIdAndAmountFromTemplate
-	callnative ChaosRandomizeOverworldItem
 	finditem VAR_RESULT VAR_0x8009
 	end

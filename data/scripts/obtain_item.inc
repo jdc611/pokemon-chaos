@@ -104,6 +104,9 @@ EventScript_NoRoomForDecor::
 	return
 
 Std_FindItem::
+	copyvar VAR_RESULT, ITEMID
+	callnative ChaosRandomizeOverworldItem
+	copyvar ITEMID, VAR_RESULT
 	lock
 	faceplayer
 	waitse
@@ -176,6 +179,9 @@ EventScript_HiddenItemScript::
 	lockall
 	waitse
 	goto_if_eq VAR_0x8005, 0, EventScript_TryPickUpHiddenCoins
+	copyvar VAR_RESULT, VAR_0x8005
+	callnative ChaosRandomizeOverworldItem
+	copyvar VAR_0x8005, VAR_RESULT
 	copyvar VAR_0x8006, VAR_0x8005
 	additem VAR_0x8005, VAR_0x8009
 	copyvar VAR_0x8007, VAR_RESULT

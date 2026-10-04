@@ -76,6 +76,8 @@ enum WindowIds
     WINDOW_INFO,
     WINDOW_REGISTERED,
     WINDOW_FISHING_LABEL,
+    WINDOW_WATER_LABEL,
+    WINDOW_LAND_LABEL,
     WINDOW_COUNT,
 };
 
@@ -236,6 +238,8 @@ static const u8 sText_MethodOldSuper[] = _("O+S");
 static const u8 sText_MethodGoodSuper[] = _("G+S");
 static const u8 sText_MethodAllRods[] = _("ALL RODS");
 static const u8 sText_Fishing[] = _("FISHING");
+static const u8 sText_WaterPanel[] = _("WATER");
+static const u8 sText_LandPanel[] = _("LAND");
 
 static const u8 sText_ArrowLeft[] = _("{LEFT_ARROW}");
 static const u8 sText_ArrowRight[] = _("{RIGHT_ARROW}");
@@ -268,11 +272,21 @@ static const struct WindowTemplate sDexNavGuiWindowTemplates[] =
     {
         .bg = 0,
         .tilemapLeft = 0,
-        .tilemapTop = 14,
+        .tilemapTop = 15,
         .width = 8,
         .height = 2,
         .paletteNum = 15,
         .baseBlock = 136,
+    },
+    [WINDOW_WATER_LABEL] =
+    {
+        .bg = 0, .tilemapLeft = 1, .tilemapTop = 2,
+        .width = 8, .height = 2, .paletteNum = 15, .baseBlock = 252,
+    },
+    [WINDOW_LAND_LABEL] =
+    {
+        .bg = 0, .tilemapLeft = 1, .tilemapTop = 7,
+        .width = 8, .height = 2, .paletteNum = 15, .baseBlock = 268,
     },
     DUMMY_WIN_TEMPLATE
 };
@@ -1634,33 +1648,37 @@ static bool8 DexNav_InitBgs(void)
     return TRUE;
 }
 
+static void DrawDexNavEncounterPanel(u16 *tilemap, u32 left, u32 top, u32 width, u32 bottom, const u16 *style)
+{
+    u32 x, y;
+    for (x = left; x < left + width; x++)
+    {
+        tilemap[top * 32 + x] = style[0];
+        tilemap[(top + 1) * 32 + x] = style[1];
+    }
+    for (y = top + 2; y < bottom; y++)
+    {
+        tilemap[y * 32 + left] = style[2];
+        for (x = left + 1; x < left + width - 1; x++)
+            tilemap[y * 32 + x] = style[3];
+        tilemap[y * 32 + left + width - 1] = style[4];
+    }
+    tilemap[bottom * 32 + left] = style[5];
+    for (x = left + 1; x < left + width - 1; x++)
+        tilemap[bottom * 32 + x] = style[6];
+    tilemap[bottom * 32 + left + width - 1] = style[7];
+}
+
 static void PrepareFishingDexNavLayout(void)
 {
-    u32 x;
     u16 *tilemap = (u16 *)sBg1TilemapBuffer;
-
-    // Replace the unused Hidden box with a full-width Fishing panel. Its
-    // header, sides, interior, and bottom all use Water's visual language.
-    for (x = 0; x < 20; x++)
-        tilemap[15 * 32 + x] = FISHING_HEADER_TILE;
-
-    for (x = 1; x < 19; x++)
-    {
-        tilemap[16 * 32 + x] = tilemap[4 * 32 + 5];
-        tilemap[17 * 32 + x] = tilemap[4 * 32 + 5];
-        tilemap[18 * 32 + x] = tilemap[4 * 32 + 5];
-    }
-    tilemap[16 * 32] = tilemap[4 * 32 + 1];
-    tilemap[17 * 32] = tilemap[4 * 32 + 1];
-    tilemap[18 * 32] = tilemap[4 * 32 + 1];
-    tilemap[16 * 32 + 19] = tilemap[4 * 32 + 17];
-    tilemap[17 * 32 + 19] = tilemap[4 * 32 + 17];
-    tilemap[18 * 32 + 19] = tilemap[4 * 32 + 17];
-
-    tilemap[19 * 32] = tilemap[6 * 32 + 1];
-    for (x = 1; x < 19; x++)
-        tilemap[19 * 32 + x] = tilemap[6 * 32 + 5];
-    tilemap[19 * 32 + 19] = tilemap[6 * 32 + 17];
+    // Sample Water before drawing any panel, then reuse its exact border tiles.
+    const u16 style[] = {tilemap[2 * 32 + 5], tilemap[3 * 32 + 5],
+        tilemap[4 * 32 + 1], tilemap[4 * 32 + 5], tilemap[4 * 32 + 17],
+        tilemap[6 * 32 + 1], tilemap[6 * 32 + 5], tilemap[6 * 32 + 17]};
+    DrawDexNavEncounterPanel(tilemap, 1, 2, 18, 6, style);
+    DrawDexNavEncounterPanel(tilemap, 0, 7, 20, 14, style);
+    DrawDexNavEncounterPanel(tilemap, 0, 15, 20, 19, style);
 }
 
 static bool8 DexNav_LoadGraphics(void)
@@ -1874,10 +1892,16 @@ static void DexNav_InitWindows(void)
 {
     InitWindows(sDexNavGuiWindowTemplates);
     DeactivateAllTextPrinters();
-    FillWindowPixelBuffer(WINDOW_FISHING_LABEL, PIXEL_FILL(TEXT_COLOR_TRANSPARENT));
-    AddTextPrinterParameterized3(WINDOW_FISHING_LABEL, FONT_SMALL_NARROW, 2, 6, sFontColor_White, 0, sText_Fishing);
-    PutWindowTilemap(WINDOW_FISHING_LABEL);
-    CopyWindowToVram(WINDOW_FISHING_LABEL, COPYWIN_FULL);
+    const u8 labels[] = {WINDOW_WATER_LABEL, WINDOW_LAND_LABEL, WINDOW_FISHING_LABEL};
+    const u8 *const text[] = {sText_WaterPanel, sText_LandPanel, sText_Fishing};
+    u32 i;
+    for (i = 0; i < ARRAY_COUNT(labels); i++)
+    {
+        FillWindowPixelBuffer(labels[i], PIXEL_FILL(TEXT_COLOR_TRANSPARENT));
+        AddTextPrinterParameterized3(labels[i], FONT_SMALL_NARROW, 2, 0, sFontColor_White, TEXT_SKIP_DRAW, text[i]);
+        PutWindowTilemap(labels[i]);
+        CopyWindowToVram(labels[i], COPYWIN_FULL);
+    }
     ScheduleBgCopyTilemapToVram(0);
 }
 

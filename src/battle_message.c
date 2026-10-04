@@ -2422,6 +2422,16 @@ static const struct BattleWindowText *const sBattleTextOnWindowsInfo[] =
 
 static const u8 sRecordedBattleTextSpeeds[] = {8, 4, 1, 0};
 
+static void AppendPermanentMegaNotice(enum BattlerId battler)
+{
+    enum Species species = GetMonData(GetBattlerMon(battler), MON_DATA_SPECIES);
+    if (species == SPECIES_NONE || species >= NUM_SPECIES || !gSpeciesInfo[species].isMegaEvolution)
+        return;
+    StringAppend(gDisplayedStringBattle, COMPOUND_STRING("\p"));
+    StringAppend(gDisplayedStringBattle, GetSpeciesName(species));
+    StringAppend(gDisplayedStringBattle, COMPOUND_STRING("\nhas been Mega Evolved!"));
+}
+
 void BufferStringBattle(enum StringID stringID, enum BattlerId battler)
 {
     s32 i;
@@ -2814,6 +2824,14 @@ void BufferStringBattle(enum StringID stringID, enum BattlerId battler)
     }
 
     BattleStringExpandPlaceholdersToDisplayedString(stringPtr);
+    if (stringID == STRINGID_INTROSENDOUT)
+    {
+        AppendPermanentMegaNotice(battler);
+        if (IsDoubleBattle() && IsValidForBattle(GetBattlerMon(GetPartnerBattler(battler))))
+            AppendPermanentMegaNotice(GetPartnerBattler(battler));
+    }
+    else if (stringID == STRINGID_SWITCHINMON)
+        AppendPermanentMegaNotice(gBattleScripting.battler);
 }
 
 u32 BattleStringExpandPlaceholdersToDisplayedString(const u8 *src)

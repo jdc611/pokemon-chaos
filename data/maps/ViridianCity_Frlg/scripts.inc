@@ -348,3 +348,69 @@ ViridianCity_Text_GymSign::
 ViridianCity_Text_GymDoorsAreLocked::
 	.string "VIRIDIAN GYM's doors are locked…$"
 
+
+ViridianCity_ChaosOldRod_EventScript_FishingGuru::
+	lock
+	faceplayer
+	goto_if_set FLAG_GOT_OLD_ROD, ViridianCity_ChaosOldRod_EventScript_AlreadyGotOldRod
+	msgbox ViridianCity_ChaosOldRod_Text_ImFishingGuruDoYouLikeToFish, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, YES, ViridianCity_ChaosOldRod_EventScript_GiveOldRod
+	msgbox ViridianCity_ChaosOldRod_Text_OhThatsSoDisappointing
+	release
+	end
+
+ViridianCity_ChaosOldRod_EventScript_AlreadyGotOldRod::
+	msgbox ViridianCity_ChaosOldRod_Text_HowAreTheFishBiting
+	release
+	end
+
+ViridianCity_ChaosOldRod_EventScript_GiveOldRod::
+	checkitemspace ITEM_OLD_ROD
+	goto_if_eq VAR_RESULT, FALSE, ViridianCity_ChaosOldRod_EventScript_NoRoomForOldRod
+	additem ITEM_OLD_ROD
+	msgbox ViridianCity_ChaosOldRod_Text_TakeThisAndFish
+	msgreceiveditem ViridianCity_ChaosOldRod_Text_ReceivedOldRodFromFishingGuru, ITEM_OLD_ROD
+	setflag FLAG_GOT_OLD_ROD
+	msgbox ViridianCity_ChaosOldRod_Text_FishingIsAWayOfLife
+	release
+	end
+
+ViridianCity_ChaosOldRod_EventScript_NoRoomForOldRod::
+	msgbox ViridianCity_ChaosOldRod_Text_NoRoomForNiceGift
+	release
+	end
+
+ViridianCity_ChaosOldRod_Text_ImFishingGuruDoYouLikeToFish::
+	.string "I'm the FISHING GURU!\p"
+	.string "I simply looove fishing!\n"
+	.string "I can't bear to go without.\p"
+	.string "Tell me, do you like to fish?$"
+
+ViridianCity_ChaosOldRod_Text_TakeThisAndFish::
+	.string "Grand! I like your style.\n"
+	.string "I think we can be friends.\p"
+	.string "Take this and fish, young friend!$"
+
+ViridianCity_ChaosOldRod_Text_ReceivedOldRodFromFishingGuru::
+	.string "{PLAYER} received an OLD ROD from\n"
+	.string "the FISHING GURU.$"
+
+ViridianCity_ChaosOldRod_Text_FishingIsAWayOfLife::
+	.string "Fishing is a way of life!\n"
+	.string "It is like the finest poetry.\p"
+	.string "From the seas to rivers, go out\n"
+	.string "and land the big one, my friend.$"
+
+ViridianCity_ChaosOldRod_Text_OhThatsSoDisappointing::
+	.string "Oh…\n"
+	.string "That's so disappointing…$"
+
+ViridianCity_ChaosOldRod_Text_HowAreTheFishBiting::
+	.string "Hello there, {PLAYER}!\p"
+	.string "How are the fish biting?$"
+
+ViridianCity_ChaosOldRod_Text_NoRoomForNiceGift::
+	.string "Oh, no!\p"
+	.string "I had a nice gift for you, but you\n"
+	.string "have no room for it!$"
+

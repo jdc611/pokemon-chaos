@@ -233,7 +233,7 @@ void ChaosRandomizeOverworldItem(void)
     if (original == ITEM_NONE || ChaosFieldItemIsProtected(original))
         return;
 
-    seed = ((u32)gSaveBlock1Ptr->location.mapGroup << 24)
+    seed = gSaveBlock3Ptr->worldSeed ^ ((u32)gSaveBlock1Ptr->location.mapGroup << 24)
          ^ ((u32)gSaveBlock1Ptr->location.mapNum << 16)
          ^ ((u32)original << 1)
          ^ 0x4348414F; // "CHAO"

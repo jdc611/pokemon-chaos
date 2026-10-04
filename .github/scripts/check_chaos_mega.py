@@ -99,3 +99,35 @@ with tempfile.TemporaryDirectory() as d:
  p=Path(d)/'tempered.c';p.write_text(fixture)
  subprocess.run(['cc','-std=gnu11','-Wall','-Werror',str(p),'-o',d+'/tempered'],check=True)
  subprocess.run([d+'/tempered'],check=True)
+
+# Actual send-out notice helper: base forms remain silent, permanent Mega forms announce.
+message=(root/'src/battle_message.c').read_text()
+notice=re.search(r'static void AppendPermanentMegaNotice\(.*?\n\}',message,re.S).group(0)
+notice=notice.replace('"\\p"','"\\f"')
+fixture=r'''
+#include <assert.h>
+#include <string.h>
+#include <stdio.h>
+typedef unsigned char u8;
+enum BattlerId {B0,B1,B2,B3};enum Species {SPECIES_NONE=0,BASE=1,MEGA=2,NUM_SPECIES=3};
+#define MON_DATA_SPECIES 1
+#define COMPOUND_STRING(x) ((const u8*)(x))
+struct Pokemon {enum Species species;} mons[4];
+struct SpeciesInfo {int isMegaEvolution;} gSpeciesInfo[3]={{0},{0},{1}};
+u8 gDisplayedStringBattle[425];
+struct Pokemon* GetBattlerMon(enum BattlerId b){return &mons[b];}
+enum Species GetMonData(struct Pokemon*p,int k){return p->species;}
+const u8*GetSpeciesName(enum Species s){return (const u8*)"Arcanine";}
+void StringAppend(u8*d,const u8*s){strcat((char*)d,(const char*)s);}
+'''+notice+r'''
+int main(void){
+ mons[0].species=BASE;AppendPermanentMegaNotice(0);assert(!gDisplayedStringBattle[0]);
+ mons[0].species=MEGA;AppendPermanentMegaNotice(0);assert(strstr((char*)gDisplayedStringBattle,"Arcanine\nhas been Mega Evolved!"));
+ memset(gDisplayedStringBattle,0,sizeof(gDisplayedStringBattle));mons[1].species=MEGA;AppendPermanentMegaNotice(1);assert(gDisplayedStringBattle[0]);
+ puts("PASS: actual permanent Mega notice for either side; base forms are silent.");
+}
+'''
+with tempfile.TemporaryDirectory() as d:
+ p=Path(d)/'notice.c';p.write_text(fixture)
+ subprocess.run(['cc','-std=gnu11','-Wall','-Werror',str(p),'-o',d+'/notice'],check=True)
+ subprocess.run([d+'/notice'],check=True)

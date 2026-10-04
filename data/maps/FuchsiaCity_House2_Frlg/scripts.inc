@@ -4,7 +4,7 @@ FuchsiaCity_House2_Frlg_MapScripts::
 FuchsiaCity_House2_EventScript_FishingGurusBrother::
 	lock
 	faceplayer
-	goto_if_set FLAG_GOT_GOOD_ROD, FuchsiaCity_House2_EventScript_AlreadyGotGoodRod
+	goto_if_set FLAG_GOT_SUPER_ROD, FuchsiaCity_House2_EventScript_AlreadyGotGoodRod
 	msgbox FuchsiaCity_House2_Text_DoYouLikeToFish, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, YES, FuchsiaCity_House2_EventScript_GiveGoodRod
 	msgbox FuchsiaCity_House2_Text_OhThatsDisappointing
@@ -18,11 +18,11 @@ FuchsiaCity_House2_EventScript_AlreadyGotGoodRod::
 
 FuchsiaCity_House2_EventScript_GiveGoodRod::
 	msgbox FuchsiaCity_House2_Text_LikeYourStyleTakeThis
-	checkitemspace ITEM_GOOD_ROD
+	checkitemspace ITEM_SUPER_ROD
 	goto_if_eq VAR_RESULT, FALSE, FuchsiaCity_House2_EventScript_NoRoomForGoodRod
-	giveitem_msg FuchsiaCity_House2_Text_ReceivedGoodRod, ITEM_GOOD_ROD
+	giveitem_msg FuchsiaCity_House2_Text_ReceivedGoodRod, ITEM_SUPER_ROD
 	msgbox FuchsiaCity_House2_Text_GoodRodCanCatchBetterMons
-	setflag FLAG_GOT_GOOD_ROD
+	setflag FLAG_GOT_SUPER_ROD
 	release
 	end
 
@@ -44,7 +44,7 @@ FuchsiaCity_House2_Text_LikeYourStyleTakeThis::
 	.string "Take this and fish, young friend!$"
 
 FuchsiaCity_House2_Text_ReceivedGoodRod::
-	.string "{PLAYER} received a GOOD ROD from\n"
+	.string "{PLAYER} received a SUPER ROD from\n"
 	.string "the FISHING GURU's brother.$"
 
 FuchsiaCity_House2_Text_GoodRodCanCatchBetterMons::
@@ -52,7 +52,7 @@ FuchsiaCity_House2_Text_GoodRodCanCatchBetterMons::
 	.string "It is like the finest poetry.\p"
 	.string "A crummy OLD ROD could only catch\n"
 	.string "MAGIKARP, yes?\p"
-	.string "But with a GOOD ROD, you can\n"
+	.string "But with a SUPER ROD, you can\n"
 	.string "catch much better POKéMON.$"
 
 FuchsiaCity_House2_Text_OhThatsDisappointing::

@@ -69,7 +69,11 @@ u8 ScriptGiveEgg(enum Species species)
     struct Pokemon mon;
     u8 isEgg;
 
+#if IS_FRLG
+    species = GetRandomizedScriptedSpecies(species, 1, 1);
+#endif
     CreateEgg(&mon, species, TRUE);
+    TrySetMonAbilityToActiveRunFilter(&mon);
     isEgg = TRUE;
     SetMonData(&mon, MON_DATA_IS_EGG, &isEgg);
 
@@ -123,6 +127,9 @@ bool8 DoesPartyHaveEnigmaBerry(void)
 void CreateScriptedWildMon(enum Species species, u8 level, enum Item item)
 {
     u8 heldItem[2];
+#if IS_FRLG
+    species = GetRandomizedScriptedSpecies(species, level, 2);
+#endif
 
     ZeroEnemyPartyMons();
     u32 personality = GetMonPersonality(species,
@@ -131,6 +138,7 @@ void CreateScriptedWildMon(enum Species species, u8 level, enum Item item)
         RANDOM_UNOWN_LETTER);
     CreateMonWithIVs(&gParties[B_TRAINER_OPPONENT_A][0], species, level, personality, OTID_STRUCT_PLAYER_ID, USE_RANDOM_IVS);
     GiveMonInitialMoveset(&gParties[B_TRAINER_OPPONENT_A][0]);
+    TrySetMonAbilityToActiveRunFilter(&gParties[B_TRAINER_OPPONENT_A][0]);
     if (item)
     {
         heldItem[0] = item;
@@ -142,6 +150,10 @@ void CreateScriptedDoubleWildMon(enum Species species1, u8 level1, enum Item ite
 {
     u8 heldItem1[2];
     u8 heldItem2[2];
+#if IS_FRLG
+    species1 = GetRandomizedScriptedSpecies(species1, level1, 2);
+    species2 = GetRandomizedScriptedSpecies(species2, level2, 3);
+#endif
 
     ZeroEnemyPartyMons();
     u32 personality = GetMonPersonality(species1,
@@ -150,6 +162,7 @@ void CreateScriptedDoubleWildMon(enum Species species1, u8 level1, enum Item ite
         RANDOM_UNOWN_LETTER);
     CreateMonWithIVs(&gParties[B_TRAINER_OPPONENT_A][0], species1, level1, personality, OTID_STRUCT_PLAYER_ID, USE_RANDOM_IVS);
     GiveMonInitialMoveset(&gParties[B_TRAINER_OPPONENT_A][0]);
+    TrySetMonAbilityToActiveRunFilter(&gParties[B_TRAINER_OPPONENT_A][0]);
     if (item1)
     {
         heldItem1[0] = item1;
@@ -163,6 +176,7 @@ void CreateScriptedDoubleWildMon(enum Species species1, u8 level1, enum Item ite
         RANDOM_UNOWN_LETTER);
     CreateMonWithIVs(&gParties[B_TRAINER_OPPONENT_A][1], species2, level2, personality, OTID_STRUCT_PLAYER_ID, USE_RANDOM_IVS);
     GiveMonInitialMoveset(&gParties[B_TRAINER_OPPONENT_A][1]);
+    TrySetMonAbilityToActiveRunFilter(&gParties[B_TRAINER_OPPONENT_A][1]);
     if (item2)
     {
         heldItem2[0] = item2;
@@ -370,6 +384,8 @@ u32 ScriptGiveMonParameterized(u8 side, u8 slot, struct PokemonTemplate *monTemp
     struct Pokemon mon;
 
     CreateMonFromTemplate(&mon, monTemplate);
+    if (side == B_SIDE_PLAYER)
+        TrySetMonAbilityToActiveRunFilter(&mon);
 
     if (side == B_SIDE_PLAYER)
         return GiveScriptedMonToPlayer(&mon, slot);
@@ -463,8 +479,14 @@ void ScrCmd_createmon(struct ScriptContext *ctx)
     }
 
     monTemplate.ignoreTotalEvCheck = flags >> 26;
+#if IS_FRLG
+    if (side == B_SIDE_PLAYER && slot == PARTY_SIZE)
+        monTemplate.species = GetRandomizedScriptedSpecies(monTemplate.species, monTemplate.level, 0);
+#endif
 
     gSpecialVar_Result = ScriptGiveMonParameterized(side, slot, &monTemplate);
+    if (side == B_SIDE_PLAYER && gSpecialVar_Result != MON_CANT_GIVE)
+        VarSet(VAR_TEMP_TRANSFERRED_SPECIES, monTemplate.species);
 }
 
 #undef PARSE_FLAG
