@@ -157,6 +157,10 @@ static const u8 sStarterLabelCoords[STARTER_MON_COUNT][2] =
 
 
 static u16 sStarterMon[STARTER_MON_COUNT];
+static EWRAM_DATA bool8 sRandomStartersValid;
+static EWRAM_DATA u32 sRandomStartersSeed;
+static EWRAM_DATA u16 sRandomStartersFilterValue;
+static EWRAM_DATA u8 sRandomStartersSettings[6];
 
 static void GenerateRandomStarters(void)
 {
@@ -165,6 +169,7 @@ static void GenerateRandomStarters(void)
 
     if (gSaveBlock3Ptr->starterMode == RUN_STARTER_NORMAL && !filtered)
     {
+        sRandomStartersValid = FALSE;
         sStarterMon[0] = SPECIES_TREECKO;
         sStarterMon[1] = SPECIES_TORCHIC;
         sStarterMon[2] = SPECIES_MUDKIP;
@@ -173,6 +178,7 @@ static void GenerateRandomStarters(void)
 
     if (gSaveBlock3Ptr->starterMode == RUN_STARTER_KANTO && !filtered)
     {
+        sRandomStartersValid = FALSE;
         sStarterMon[0] = SPECIES_BULBASAUR;
         sStarterMon[1] = SPECIES_CHARMANDER;
         sStarterMon[2] = SPECIES_SQUIRTLE;
@@ -180,7 +186,10 @@ static void GenerateRandomStarters(void)
     }
 
     if (gSaveBlock3Ptr->starterMode != RUN_STARTER_RANDOM && !filtered)
+    {
+        sRandomStartersValid = FALSE;
         return;
+    }
 
     rng_value_t oldRngState = gRngValue;
     struct FilterFuncArgs filterArgs =
@@ -203,31 +212,26 @@ static void GenerateRandomStarters(void)
             generator = gSaveBlock3Ptr->randomizerEnabled == RUN_WILD_SCALED ? SPECIES_GENERATOR_SCALED_TYPE_ABILITY_FILTERED : SPECIES_GENERATOR_TYPE_ABILITY_FILTERED;
     }
 
-    // Setup prevents pools smaller than three, but retain a safe fallback for
-    // old/corrupt saves so the third Poké Ball can never become SPECIES_NONE.
-    if (filtered && CountEligibleRandomSpecies(generator, &filterArgs, STARTER_MON_COUNT) < STARTER_MON_COUNT)
+    const u8 settings[] = {gSaveBlock3Ptr->starterMode, gSaveBlock3Ptr->filterMode,
+        gSaveBlock3Ptr->randomizerEnabled, gSaveBlock3Ptr->abilityMode,
+        gSaveBlock3Ptr->evolutionMode, gSaveBlock3Ptr->runDifficulty};
+    if (sRandomStartersValid && sRandomStartersSeed == gSaveBlock3Ptr->worldSeed
+     && sRandomStartersFilterValue == gSaveBlock3Ptr->filterValue
+     && memcmp(settings, sRandomStartersSettings, sizeof(settings)) == 0)
+        return;
+
+    SeedRng(gSaveBlock3Ptr->worldSeed);
+    if (PickRandomStarterSpecies(generator, &filterArgs, sStarterMon) < STARTER_MON_COUNT)
     {
+        // Retain a nonempty fallback for older/corrupt setup states.
         sStarterMon[0] = SPECIES_TREECKO;
         sStarterMon[1] = SPECIES_TORCHIC;
         sStarterMon[2] = SPECIES_MUDKIP;
-        return;
     }
-
-    SeedRng(gSaveBlock3Ptr->worldSeed);
-
-    for (u32 i = 0; i < STARTER_MON_COUNT; i++)
-    {
-        u32 attempts = 0;
-        do
-        {
-            sStarterMon[i] = GetRandomSpecies(generator, &filterArgs);
-            attempts++;
-        }
-        while ((!DoesSpeciesMatchRunFilterForSettings(sStarterMon[i], gSaveBlock3Ptr->filterMode, gSaveBlock3Ptr->filterValue,
-                                                       gSaveBlock3Ptr->abilityMode, gSaveBlock3Ptr->worldSeed)
-             || (i > 0 && sStarterMon[i] == sStarterMon[0])
-             || (i > 1 && sStarterMon[i] == sStarterMon[1])) && attempts < 1000);
-    }
+    sRandomStartersSeed = gSaveBlock3Ptr->worldSeed;
+    sRandomStartersFilterValue = gSaveBlock3Ptr->filterValue;
+    memcpy(sRandomStartersSettings, settings, sizeof(settings));
+    sRandomStartersValid = TRUE;
 
     gRngValue = oldRngState;
 }

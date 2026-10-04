@@ -227,3 +227,26 @@ u16 AddWindowParameterized(u8 bg,u8 left,u8 top,u8 width,u8 height,u8 palette,u1
 int main(void){AddGameOptionsWindow(9);assert(firstTile>0&&firstTile+tileCount<=0x200);sStartMenuWindowId=WINDOW_NONE;AddQuickToolsWindow(6);assert(firstTile>0&&firstTile+tileCount<=0x200);puts("PASS: native full-page menu allocation preserves blank, dialogue and frame tiles.");}
 '''
 run(code)
+
+# The actual bounded starter selector must retain matches supplied by the
+# line-aware generator, including a sparse pool with exactly three members.
+run(base+r'''
+#define RANDOM_SPECIES_OPTIONS_COUNT 2
+#define RANDOM_MON_DEX_HOENN 1
+#define HOENN_DEX_COUNT 13
+#define RNG_NONE 0
+struct RandomSpeciesGeneratorOptions {u32 speciesPoolCount,dexMode;} sRandomSpeciesGeneratorOptions[2];
+u32 checks;
+enum Species GetRandomSpeciesAtIndex(const struct RandomSpeciesGeneratorOptions *o,u32 i){return i+1;}
+enum Species GetSpeciesCandidateForm(enum Species s,const struct RandomSpeciesGeneratorOptions *o,const struct FilterFuncArgs *a){checks++;return a->arg1==0||s==1||s==4||s==9?s:SPECIES_NONE;}
+u32 RandomUniform(u32 stream,u32 lo,u32 hi){return lo+Random()%(hi-lo+1);}
+'''+function('src/random_mon_generation.c','PickRandomStarterSpecies')+r'''
+int main(void){u16 starters[3],again[3];struct FilterFuncArgs a={1,0};
+ assert(PickRandomStarterSpecies(0,&a,starters)==3);assert(checks==NATIONAL_DEX_COUNT);
+ assert(starters[0]==1&&starters[1]==4&&starters[2]==9);
+ a.arg1=0;SeedRng(123);assert(PickRandomStarterSpecies(0,&a,starters)==3);
+ assert(starters[0]!=starters[1]&&starters[0]!=starters[2]&&starters[1]!=starters[2]);
+ SeedRng(123);assert(PickRandomStarterSpecies(0,&a,again)==3);assert(memcmp(starters,again,sizeof(starters))==0);
+ assert(PickRandomStarterSpecies(99,&a,starters)==0);assert(starters[0]==0&&starters[1]==0&&starters[2]==0);
+ puts("PASS: actual starter selection is bounded, seeded, distinct and retains sparse evolution-line-eligible candidates.");}
+''')

@@ -468,6 +468,38 @@ u32 CountEligibleRandomSpecies(u32 optionId, const struct FilterFuncArgs *filter
     return count;
 }
 
+// Pick distinct starters in one bounded pass through the same eligible pool
+// used by setup. In particular, retain evolution-line-aware filter matches.
+u32 PickRandomStarterSpecies(u32 optionId, const struct FilterFuncArgs *filterFuncArgs, u16 starters[3])
+{
+    const struct RandomSpeciesGeneratorOptions *options;
+    u32 poolSize, eligibleCount = 0;
+    for (u32 i = 0; i < 3; i++)
+        starters[i] = SPECIES_NONE;
+    if (optionId >= RANDOM_SPECIES_OPTIONS_COUNT)
+        return 0;
+    options = &sRandomSpeciesGeneratorOptions[optionId];
+    poolSize = options->speciesPoolCount != 0 ? options->speciesPoolCount
+        : options->dexMode == RANDOM_MON_DEX_HOENN ? HOENN_DEX_COUNT - 1 : NATIONAL_DEX_COUNT;
+    for (u32 i = 0; i < poolSize; i++)
+    {
+        enum Species species = GetRandomSpeciesAtIndex(options, i);
+        species = GetSpeciesCandidateForm(species, options, filterFuncArgs);
+        if (species == SPECIES_NONE)
+            continue;
+        eligibleCount++;
+        if (eligibleCount <= 3)
+            starters[eligibleCount - 1] = species;
+        else
+        {
+            u32 slot = RandomUniform(RNG_NONE, 0, eligibleCount - 1);
+            if (slot < 3)
+                starters[slot] = species;
+        }
+    }
+    return min(eligibleCount, 3);
+}
+
 bool32 IsSpeciesEligibleRandomSpecies(u32 optionId, enum Species species, const struct FilterFuncArgs *filterFuncArgs)
 {
     if (optionId >= RANDOM_SPECIES_OPTIONS_COUNT)
