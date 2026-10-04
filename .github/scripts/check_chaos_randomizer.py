@@ -288,7 +288,7 @@ run(base+r'''
 #define LAYOUT_ONE_ISLAND_POKEMON_CENTER_1F 4
 #define LAYOUT_INDIGO_PLATEAU_POKEMON_CENTER_1F 5
 struct {u32 mapLayoutId;} gMapHeader;
-'''+function('src/pokemon.c','IsPlayerInPokemonCenter')+r'''
+'''+function('src/pokemon.c','IsPokemonCenterLayout')+function('src/pokemon.c','IsPlayerInPokemonCenter')+r'''
 int main(void){for(u32 i=1;i<=5;i++){gMapHeader.mapLayoutId=i;assert(IsPlayerInPokemonCenter());}
  gMapHeader.mapLayoutId=6;assert(!IsPlayerInPokemonCenter());
  puts("PASS: actual Center detection includes native Kanto, One Island and League centers while excluding other rooms.");}

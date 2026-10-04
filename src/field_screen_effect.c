@@ -411,7 +411,7 @@ static void Task_ExitDoor(u8 taskId)
         // If this door came from a Pokémon Center, validate only now: the
         // vanilla warp, fade, door animation, and control restoration are done.
         if (gLastUsedWarp.mapGroup >= 0
-         && Overworld_GetMapHeaderByGroupAndId(gLastUsedWarp.mapGroup, gLastUsedWarp.mapNum)->mapLayoutId == LAYOUT_POKEMON_CENTER_1F)
+         && IsPokemonCenterLayout(Overworld_GetMapHeaderByGroupAndId(gLastUsedWarp.mapGroup, gLastUsedWarp.mapNum)->mapLayoutId))
             CreateTask(Task_RunFilterPostCenterExit, 80);
 
         DestroyTask(taskId);

@@ -3718,13 +3718,18 @@ bool32 TrySetMonAbilityToActiveRunFilter(struct Pokemon *mon)
     return FALSE;
 }
 
+bool32 IsPokemonCenterLayout(u16 layoutId)
+{
+    return layoutId == LAYOUT_POKEMON_CENTER_1F
+        || layoutId == LAYOUT_LAVARIDGE_TOWN_POKEMON_CENTER_1F
+        || layoutId == LAYOUT_POKEMON_CENTER_1F_FRLG
+        || layoutId == LAYOUT_ONE_ISLAND_POKEMON_CENTER_1F
+        || layoutId == LAYOUT_INDIGO_PLATEAU_POKEMON_CENTER_1F;
+}
+
 bool32 IsPlayerInPokemonCenter(void)
 {
-    return gMapHeader.mapLayoutId == LAYOUT_POKEMON_CENTER_1F
-        || gMapHeader.mapLayoutId == LAYOUT_LAVARIDGE_TOWN_POKEMON_CENTER_1F
-        || gMapHeader.mapLayoutId == LAYOUT_POKEMON_CENTER_1F_FRLG
-        || gMapHeader.mapLayoutId == LAYOUT_ONE_ISLAND_POKEMON_CENTER_1F
-        || gMapHeader.mapLayoutId == LAYOUT_INDIGO_PLATEAU_POKEMON_CENTER_1F;
+    return IsPokemonCenterLayout(gMapHeader.mapLayoutId);
 }
 
 bool32 PlayerPartyHasPermanentMega(void)
