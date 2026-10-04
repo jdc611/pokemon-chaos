@@ -1,54 +1,57 @@
 CeruleanCity_BikeShop_Frlg_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, CeruleanCity_BikeShop_OnTransition
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, CeruleanCity_BikeShop_OnFrame
 	.byte 0
 
-CeruleanCity_BikeShop_EventScript_Clerk::
-	lock
-	faceplayer
-	goto_if_set FLAG_GOT_BICYCLE, CeruleanCity_BikeShop_EventScript_AlreadyGotBicycle
-	goto_if_set FLAG_GOT_BIKE_VOUCHER, CeruleanCity_BikeShop_EventScript_ExchangeBikeVoucher
-	showmoneybox 0, 0
-	message CeruleanCity_BikeShop_Text_WelcomeToBikeShop
-	waitmessage
-	multichoice 11, 0, MULTI_BIKE_SHOP, FALSE
-	hidemoneybox
-	showmoneybox 0, 0
-	switch VAR_RESULT
-	case 0, CeruleanCity_BikeShop_EventScript_TryPurchaseBicycle
-	case 1, CeruleanCity_BikeShop_EventScript_ClerkGoodbye
-	case 127, CeruleanCity_BikeShop_EventScript_ClerkGoodbye
-	end
-
-@ The Bicycle price / players money is never actually checked
-CeruleanCity_BikeShop_EventScript_TryPurchaseBicycle::
-	msgbox CeruleanCity_BikeShop_Text_SorryYouCantAffordIt
-	goto CeruleanCity_BikeShop_EventScript_ClerkGoodbye
-	end
-
-CeruleanCity_BikeShop_EventScript_ClerkGoodbye::
-	msgbox CeruleanCity_BikeShop_Text_ThankYouComeAgain
-	hidemoneybox
-	release
-	end
-
-CeruleanCity_BikeShop_EventScript_ExchangeBikeVoucher::
-	msgbox CeruleanCity_BikeShop_Text_OhBikeVoucherHereYouGo
-	msgreceiveditem CeruleanCity_BikeShop_Text_ExchangedVoucherForBicycle, ITEM_BICYCLE, 1, MUS_RG_OBTAIN_KEY_ITEM
+CeruleanCity_BikeShop_OnTransition::
+	setvar VAR_TEMP_1, 0
+	checkitem ITEM_BICYCLE
+	goto_if_eq VAR_RESULT, FALSE, CeruleanCity_BikeShop_EventScript_ReadyGift
 	setflag FLAG_GOT_BICYCLE
+	setvar VAR_TEMP_1, 1
+CeruleanCity_BikeShop_EventScript_ReadyGift::
+	end
+
+CeruleanCity_BikeShop_OnFrame::
+	map_script_2 VAR_TEMP_1, 0, CeruleanCity_BikeShop_EventScript_EntryGift
+	.2byte 0
+
+CeruleanCity_BikeShop_EventScript_EntryGift::
+	lockall
+	turnobject 1, DIR_SOUTH
+	goto CeruleanCity_BikeShop_EventScript_FreeBicycle
+
+CeruleanCity_BikeShop_EventScript_Clerk::
+	lockall
+	faceplayer
+	checkitem ITEM_BICYCLE
+	goto_if_eq VAR_RESULT, TRUE, CeruleanCity_BikeShop_EventScript_AlreadyGotBicycle
+	goto CeruleanCity_BikeShop_EventScript_FreeBicycle
+
+CeruleanCity_BikeShop_EventScript_FreeBicycle::
+	setvar VAR_TEMP_1, 1
+	msgbox CeruleanCity_BikeShop_Text_MillionthCustomer
 	additem ITEM_BICYCLE
+	goto_if_eq VAR_RESULT, FALSE, CeruleanCity_BikeShop_EventScript_NoRoomForBicycle
+	setflag FLAG_GOT_BICYCLE
+	checkitem ITEM_BIKE_VOUCHER
+	goto_if_eq VAR_RESULT, FALSE, CeruleanCity_BikeShop_EventScript_ReceiveFreeBicycle
 	removeitem ITEM_BIKE_VOUCHER
-	msgbox CeruleanCity_BikeShop_Text_ThankYouComeAgain
-	release
+CeruleanCity_BikeShop_EventScript_ReceiveFreeBicycle::
+	msgreceiveditem CeruleanCity_BikeShop_Text_ReceivedFreeBicycle, ITEM_BICYCLE, 1, MUS_RG_OBTAIN_KEY_ITEM
+	msgbox CeruleanCity_BikeShop_Text_FreeRide
+	releaseall
 	end
 
 CeruleanCity_BikeShop_EventScript_AlreadyGotBicycle::
+	setflag FLAG_GOT_BICYCLE
 	msgbox CeruleanCity_BikeShop_Text_HowDoYouLikeNewBicycle
-	release
+	releaseall
 	end
 
-@ Unused
 CeruleanCity_BikeShop_EventScript_NoRoomForBicycle::
 	msgbox CeruleanCity_BikeShop_Text_MakeRoomForBicycle
-	release
+	releaseall
 	end
 
 CeruleanCity_BikeShop_EventScript_Woman::
@@ -113,8 +116,8 @@ CeruleanCity_BikeShop_Text_CityBikeGoodEnoughForMe::
 	.string "basket on a mountain bike.$"
 
 CeruleanCity_BikeShop_Text_BikesCoolButExpensive::
-	.string "These bikes are cool, but they're\n"
-	.string "way expensive!$"
+	.string "These bikes are cool! I wonder\n"
+	.string "who will win the shop's big prize?$"
 
 CeruleanCity_BikeShop_Text_WowYourBikeIsCool::
 	.string "Wow.\n"
@@ -129,3 +132,16 @@ CeruleanCity_BikeShop_Text_GermanFoldableBicyleFinallyOnMarket::
 CeruleanCity_BikeShop_Text_ShinyNewBicycle::
 	.string "A shiny new BICYCLE!$"
 
+
+CeruleanCity_BikeShop_Text_MillionthCustomer::
+	.string "Wait! You're our one-millionth\n"
+	.string "customer! What incredible timing!\p"
+	.string "Your prize is a brand-new BICYCLE!\n"
+	.string "No voucher, no charge!$"
+
+CeruleanCity_BikeShop_Text_ReceivedFreeBicycle::
+	.string "{PLAYER} received a BICYCLE!$"
+
+CeruleanCity_BikeShop_Text_FreeRide::
+	.string "Go on, take it for a spin!\n"
+	.string "Just watch out for the flowerbeds!$"

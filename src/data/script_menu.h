@@ -1154,6 +1154,13 @@ static const struct MenuAction MultichoiceList_FishingRods[] =
     {COMPOUND_STRING("CANCEL")},
 };
 
+static const struct MenuAction MultichoiceList_ChaosKnowledgeQuiz[] =
+{
+    {gStringVar1},
+    {gStringVar2},
+    {gStringVar3},
+};
+
 static const struct MultichoiceListStruct sMultichoiceLists[] =
 {
     [MULTI_BRINEY_ON_DEWFORD]          = MULTICHOICE(MultichoiceList_BrineyOnDewford),
@@ -1271,6 +1278,7 @@ static const struct MultichoiceListStruct sMultichoiceLists[] =
     [MULTI_FALLARBOR_TENT_RULES]       = MULTICHOICE(MultichoiceList_FallarborTentRules),
     [MULTI_TAG_MATCH_TYPE]             = MULTICHOICE(MultichoiceList_TagMatchType),
     [MULTI_BERRY_PLOT]                 = MULTICHOICE(MultichoiceList_BerryPlot),
+    [MULTI_CHAOS_KNOWLEDGE_QUIZ] = MULTICHOICE(MultichoiceList_ChaosKnowledgeQuiz),
     [MULTI_BIKE_SHOP]                  = MULTICHOICE(sMultichoiceList_BikeShop),
     [MULTI_EEVEELUTIONS]               = MULTICHOICE(sMultichoiceList_Eeveelutions),
     [MULTI_ISLAND_23]                  = MULTICHOICE(sMultichoiceList_Island23),

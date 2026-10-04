@@ -6,7 +6,7 @@
 #define VAR_CHAOS_REMATCHES 0x40F9 // Brock/Misty/Surge completion bits.
 #define VAR_CHAOS_OAK_MEGA_REWARD 0x40FA // 0=waiting, 1=ready, 2=received.
 #define VAR_CHAOS_ROCKET_GAUNTLET 0x40FB // Card Key gauntlet checkpoint.
-#define VAR_CHAOS_CHANGERS_UNLOCKED 0x40FC // Reserved for a later PC upgrade event.
+#define VAR_CHAOS_CHANGERS_UNLOCKED 0x40FC // Cerulean knowledge challenge completed.
 #define VAR_CHAOS_RECOVERY_TOOLS_UNLOCKED 0x40FD // First Pokemon Center heal.
 #define VAR_CHAOS_TIME_CHANGER_UNLOCKED 0x40FE // Pallet Town departure gift.
 #define VAR_CHAOS_RIVAL_STARTER 0x40FF // Persistent counter starter; unused in native FRLG.

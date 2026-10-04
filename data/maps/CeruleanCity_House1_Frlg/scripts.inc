@@ -4,8 +4,41 @@ CeruleanCity_House1_Frlg_MapScripts::
 CeruleanCity_House1_EventScript_BadgeGuy::
 	lock
 	faceplayer
-	msgbox CeruleanCity_House1_Text_BadgesHaveAmazingSecrets
-	goto CeruleanCity_House1_EventScript_DescribeAnotherBadge
+	goto_if_eq VAR_CHAOS_CHANGERS_UNLOCKED, 1, CeruleanCity_House1_EventScript_QuizAlreadyPassed
+	msgbox CeruleanCity_House1_Text_QuizOffer, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, CeruleanCity_House1_EventScript_QuizDeclined
+	setvar VAR_0x8004, 0
+CeruleanCity_House1_EventScript_QuizQuestion::
+	callnative ChaosQuizPrepareQuestion
+	message gStringVar4
+	waitmessage
+	multichoice 14, 0, MULTI_CHAOS_KNOWLEDGE_QUIZ, FALSE
+	goto_if_eq VAR_RESULT, 127, CeruleanCity_House1_EventScript_QuizDeclined
+	goto_if_ne VAR_RESULT, VAR_0x8005, CeruleanCity_House1_EventScript_QuizFailed
+	addvar VAR_0x8004, 1
+	goto_if_lt VAR_0x8004, 3, CeruleanCity_House1_EventScript_QuizNextQuestion
+	setvar VAR_CHAOS_CHANGERS_UNLOCKED, 1
+	msgbox CeruleanCity_House1_Text_QuizReward
+	release
+	end
+
+CeruleanCity_House1_EventScript_QuizNextQuestion::
+	msgbox CeruleanCity_House1_Text_QuizCorrect
+	goto CeruleanCity_House1_EventScript_QuizQuestion
+
+CeruleanCity_House1_EventScript_QuizFailed::
+	msgbox CeruleanCity_House1_Text_QuizTryAgain
+	release
+	end
+
+CeruleanCity_House1_EventScript_QuizDeclined::
+	msgbox CeruleanCity_House1_Text_QuizComeBack
+	release
+	end
+
+CeruleanCity_House1_EventScript_QuizAlreadyPassed::
+	msgbox CeruleanCity_House1_Text_QuizAlreadyPassed
+	release
 	end
 
 CeruleanCity_House1_EventScript_DescribeAnotherBadge::
@@ -143,3 +176,37 @@ CeruleanCity_House1_Text_SpStatsWaterfall::
 CeruleanCity_House1_Text_AllMonsWillObeyYou::
 	.string "All POKéMON will obey you!$"
 
+
+CeruleanCity_House1_Text_QuizOffer::
+	.string "I can teach your POKéMON some new\n"
+	.string "tricks! First, let's test your\l"
+	.string "POKéMON knowledge.\p"
+	.string "Answer three questions correctly,\n"
+	.string "and I'll share my special tools!\p"
+	.string "Shall we begin?$"
+
+CeruleanCity_House1_Text_QuizCorrect::
+	.string "That's right!\n"
+	.string "Let's try another one.$"
+
+CeruleanCity_House1_Text_QuizTryAgain::
+	.string "Not quite! Even great TRAINERS\n"
+	.string "have more to learn.\p"
+	.string "Come try again whenever you like!$"
+
+CeruleanCity_House1_Text_QuizComeBack::
+	.string "No rush! Come back when you're\n"
+	.string "ready to try some new tricks!$"
+
+CeruleanCity_House1_Text_QuizReward::
+	.string "Excellent! You really know your\n"
+	.string "POKéMON! Here are my special tools.\p"
+	.string "You can now change your POKéMON's\n"
+	.string "NATURE, ABILITY, and GENDER!\p"
+	.string "Open your quick tools with L,\n"
+	.string "then turn to the second page.$"
+
+CeruleanCity_House1_Text_QuizAlreadyPassed::
+	.string "How are those new tricks working?\p"
+	.string "Your NATURE, ABILITY, and GENDER\n"
+	.string "tools are on quick tools page two.$"
