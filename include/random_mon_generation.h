@@ -18,6 +18,7 @@ struct FilterFuncArgs
 enum Species GetRandomSpecies(u32 optionId, const struct FilterFuncArgs *filterFuncArgs);
 u32 PickRandomStarterSpecies(u32 optionId, const struct FilterFuncArgs *filterFuncArgs, u16 starters[3]);
 u32 CountEligibleRandomSpecies(u32 optionId, const struct FilterFuncArgs *filterFuncArgs, u32 stopAt);
+bool32 IsExactSpeciesEligibleRandomSpecies(u32 optionId, enum Species species, const struct FilterFuncArgs *filterFuncArgs);
 bool32 IsSpeciesEligibleRandomSpecies(u32 optionId, enum Species species, const struct FilterFuncArgs *filterFuncArgs);
 enum Species GetRandomizedScriptedSpecies(enum Species species, u8 level, u8 encounterKind);
 enum Item GetRandomItem(u32 optionId, const struct FilterFuncArgs *filterFuncArgs);

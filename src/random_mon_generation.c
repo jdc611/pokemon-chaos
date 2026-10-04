@@ -500,6 +500,17 @@ u32 PickRandomStarterSpecies(u32 optionId, const struct FilterFuncArgs *filterFu
     return min(eligibleCount, 3);
 }
 
+bool32 IsExactSpeciesEligibleRandomSpecies(u32 optionId, enum Species species, const struct FilterFuncArgs *filterFuncArgs)
+{
+    if (optionId >= RANDOM_SPECIES_OPTIONS_COUNT || !IsSpeciesEnabled(species))
+        return FALSE;
+    const u16 *forms = GetSpeciesFormTable(species);
+    if (species != GET_BASE_SPECIES_ID(species) && forms == NULL)
+        return FALSE;
+    return IsRandomSpeciesFormAllowed(species, forms)
+        && !IsSpeciesBannedByRandomSpeciesOptions(species, &sRandomSpeciesGeneratorOptions[optionId], filterFuncArgs);
+}
+
 bool32 IsSpeciesEligibleRandomSpecies(u32 optionId, enum Species species, const struct FilterFuncArgs *filterFuncArgs)
 {
     if (optionId >= RANDOM_SPECIES_OPTIONS_COUNT)

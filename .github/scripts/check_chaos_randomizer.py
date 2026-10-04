@@ -294,3 +294,21 @@ int main(void){for(u32 i=1;i<=5;i++){gMapHeader.mapLayoutId=i;assert(IsPlayerInP
  gMapHeader.mapLayoutId=6;assert(!IsPlayerInPokemonCenter());
  puts("PASS: actual Center detection includes native Kanto, One Island and League centers while excluding other rooms.");}
 ''')
+
+run(base+r'''
+enum Ability {ABILITY_STARTER_FIXTURE=3};
+#define STARTER_MON_COUNT 3
+#define SPECIES_BULBASAUR 1
+#define NUM_SPECIES 12
+#define RNG_NONE 0
+u32 GetActiveRunFilterAbilityForMonChanges(void){return 3;}
+bool32 IsSpeciesEnabled(enum Species s){return s<11;}
+u32 GetSpeciesAbility(enum Species s,u32 slot){return slot==1&&(s==2||s==5||s==8)?3:1;}
+bool32 IsExactSpeciesEligibleRandomSpecies(u32 gen,enum Species s,const struct FilterFuncArgs *a){return a->arg1==0||s==5;}
+u32 RandomUniform(u32 stream,u32 lo,u32 hi){return lo+Random()%(hi-lo+1);}'''+function('src/starter_choose.c','PickCurrentAbilityStarters')+r'''
+int main(void){u16 out[3];struct FilterFuncArgs a={0,0};
+ assert(PickCurrentAbilityStarters(0,&a,out)==3);
+ for(u32 i=0;i<3;i++)assert(GetSpeciesAbility(out[i],1)==3);
+ a.arg1=1;assert(PickCurrentAbilityStarters(0,&a,out)==1);assert(out[0]==5);
+ puts("PASS: bounded starter sampler requires the current normal ability and retains sparse legal candidates.");}
+''')

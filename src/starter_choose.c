@@ -18,6 +18,7 @@
 #include "random.h"
 #include "random_mon_generation.h"
 #include "constants/random_mon_generation.h"
+#include "constants/abilities.h"
 #include "scanline_effect.h"
 #include "sound.h"
 #include "sprite.h"
@@ -162,6 +163,32 @@ static EWRAM_DATA u32 sRandomStartersSeed;
 static EWRAM_DATA u16 sRandomStartersFilterValue;
 static EWRAM_DATA u8 sRandomStartersSettings[6];
 
+// Starters must be usable immediately. Wild pools can still contain Pokémon
+// that gain the requested ability only after evolution.
+static u32 PickCurrentAbilityStarters(u32 generator, const struct FilterFuncArgs *args, u16 starters[3])
+{
+    enum Ability ability = GetActiveRunFilterAbilityForMonChanges();
+    u32 count = 0;
+    for (u32 i = 0; i < STARTER_MON_COUNT; i++)
+        starters[i] = SPECIES_NONE;
+    for (enum Species species = SPECIES_BULBASAUR; species < NUM_SPECIES; species++)
+    {
+        bool32 matches = FALSE;
+        if (!IsSpeciesEnabled(species))
+            continue;
+        for (u32 slot = 0; slot < NUM_NORMAL_ABILITY_SLOTS; slot++)
+            if (GetSpeciesAbility(species, slot) == ability)
+                matches = TRUE;
+        if (!matches || !IsExactSpeciesEligibleRandomSpecies(generator, species, args))
+            continue;
+        count++;
+        u32 slot = count <= STARTER_MON_COUNT ? count - 1 : RandomUniform(RNG_NONE, 0, count - 1);
+        if (slot < STARTER_MON_COUNT)
+            starters[slot] = species;
+    }
+    return min(count, STARTER_MON_COUNT);
+}
+
 static void GenerateRandomStarters(void)
 {
     bool8 filtered = gSaveBlock3Ptr->filterMode != RUN_FILTER_NONE;
@@ -221,7 +248,29 @@ static void GenerateRandomStarters(void)
         return;
 
     SeedRng(gSaveBlock3Ptr->worldSeed);
-    if (PickRandomStarterSpecies(generator, &filterArgs, sStarterMon) < STARTER_MON_COUNT)
+    u32 count;
+    if (GetActiveRunFilterAbilityForMonChanges() != ABILITY_NONE)
+    {
+        count = PickCurrentAbilityStarters(generator, &filterArgs, sStarterMon);
+        if (count == 0 && gSaveBlock3Ptr->randomizerEnabled == RUN_WILD_SCALED)
+        {
+            // A sparse filter can have only future-ability matches in tier 0.
+            // Keep the filter, but allow an immediately legal starter above it.
+            generator = gSaveBlock3Ptr->filterMode == RUN_FILTER_ABILITY
+                ? SPECIES_GENERATOR_ABILITY_FILTERED : SPECIES_GENERATOR_TYPE_ABILITY_FILTERED;
+            filterArgs.arg2 = FILTER_FUNC_ARG_NONE;
+            count = PickCurrentAbilityStarters(generator, &filterArgs, sStarterMon);
+        }
+    }
+    else
+        count = PickRandomStarterSpecies(generator, &filterArgs, sStarterMon);
+    if (count > 0)
+    {
+        // Never replace a sparse valid pool with unrelated vanilla starters.
+        for (u32 i = count; i < STARTER_MON_COUNT; i++)
+            sStarterMon[i] = sStarterMon[i % count];
+    }
+    else
     {
         // Retain a nonempty fallback for older/corrupt setup states.
         sStarterMon[0] = SPECIES_TREECKO;

@@ -49,17 +49,20 @@ code+='\n'.join(function('src/field_screen_effect.c',n) for n in ['ShouldValidat
 code+='\n'+function('src/field_specials.c','ReturnPlayerToLastPokemonCenter')
 code+=r'''
 int main(void){
- gLastUsedWarp=(struct WarpData){38,10};gMapHeader.mapType=MAP_TYPE_CITY;from.mapType=MAP_TYPE_INDOOR;
+ gLastUsedWarp=(struct WarpData){38,11};gMapHeader.mapType=MAP_TYPE_CITY;from.mapType=MAP_TYPE_INDOOR;from.mapLayoutId=1;
  assert(ShouldValidatePartyAfterBuildingExit());FinishWarpExit(0);assert(pending==1&&destroyed==1);
  legal=0;gPaletteFade.active=1;Task_ValidatePartyAfterBuildingExit(1);assert(scripts==0);
  gPaletteFade.active=0;preview=1;Task_ValidatePartyAfterBuildingExit(1);assert(scripts==0);
  preview=0;standing=0;Task_ValidatePartyAfterBuildingExit(1);assert(scripts==0);
  standing=1;Task_ValidatePartyAfterBuildingExit(1);assert(scripts==1&&destroyed==2);
  legal=1;Task_ValidatePartyAfterBuildingExit(1);assert(scripts==1&&destroyed==3);
+ // Labs, Marts, houses and gyms are not legality checkpoints.
+ from.mapLayoutId=0;assert(!ShouldValidatePartyAfterBuildingExit());
+ from.mapLayoutId=1;
  // Internal Center floors, entry into a Center, and ordinary route crossings
  // must not send the player away while they are trying to repair a party.
  gMapHeader.mapType=MAP_TYPE_INDOOR;assert(!ShouldValidatePartyAfterBuildingExit());
- gMapHeader.mapType=MAP_TYPE_ROUTE;from.mapType=MAP_TYPE_ROUTE;assert(!ShouldValidatePartyAfterBuildingExit());
+ gMapHeader.mapType=MAP_TYPE_ROUTE;from.mapType=MAP_TYPE_ROUTE;from.mapLayoutId=0;assert(!ShouldValidatePartyAfterBuildingExit());
  gLastUsedWarp.mapGroup=-1;assert(!ShouldValidatePartyAfterBuildingExit());
  // PC withdrawal before healing returns to the Center actually just left.
  gLastUsedWarp=(struct WarpData){38,11};from.mapLayoutId=1;home=1;healIndex=0;ReturnPlayerToLastPokemonCenter();assert(dest==0x260b&&warps==1);
@@ -67,7 +70,7 @@ int main(void){
  // rather than looping through Mom's house with an unrepairable bad type.
  from.mapLayoutId=0;gLastUsedWarp.mapNum=10;ReturnPlayerToLastPokemonCenter();assert(dest==0x260b&&warps==2);
  healIndex=1;home=0;ReturnPlayerToLastPokemonCenter();assert(dest==999&&warps==3);
- puts("PASS: native Mart/Center building departure checks wait for warp completion, allow repairs indoors, block illegal parties, and return to a usable PC before the first heal.");
+ puts("PASS: native Center-only departure checks wait for warp completion, allow repairs indoors, block illegal parties, and return to a usable PC before the first heal.");
 }
 '''
 with tempfile.TemporaryDirectory() as d:

@@ -352,7 +352,7 @@ static bool32 ShouldValidatePartyAfterBuildingExit(void)
      && gMapHeader.mapType != MAP_TYPE_ROUTE)
         return FALSE;
     from = Overworld_GetMapHeaderByGroupAndId(gLastUsedWarp.mapGroup, gLastUsedWarp.mapNum);
-    return from->mapType == MAP_TYPE_INDOOR;
+    return IsPokemonCenterLayout(from->mapLayoutId);
 }
 
 static void FinishWarpExit(u8 taskId)
