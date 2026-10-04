@@ -219,3 +219,20 @@ and Lt. Surge 44 for every team member. These levels supersede the earlier
 staggered levels above. The story encounters with Giovanni retain their
 existing levels. All eleven rosters have perfect 31 IVs in all six stats. Species, moves,
 items, abilities and battle formats remain as previously defined; the same native rosters serve the debug shortcuts.
+
+## Blaine Mega Arcanine display test
+
+Blaine now sends out permanent Mega Arcanine directly as his level-52 ace
+with perfect IVs and the existing four moves. Fire/Steel;
+90/145/110/90/110/110 (BST 655); Tempered reduces super-effective damage
+by 25%, using the same damage/AI calculation as Filter. This supersedes the
+regular-Arcanine placeholder above. The held-item slot is free.
+
+Selected Elite Redux front/back sprites and normal/shiny palettes are installed.
+The back sprite's palette is corrected without changing its pixel indices;
+the front animation duplicates the approved still frame. Party icon and
+overworld retain normal Arcanine art. No battle-end reversion is configured
+for this form. Player-facing Arcanite acquisition/use remains a separate task.
+Source: Elite-Redux/eliteredux-source, graphics/pokemon/arcanine/mega
+(upcoming branch). Preserve Elite Redux attribution; exact artist credit
+is still pending as recorded in the approved design master.

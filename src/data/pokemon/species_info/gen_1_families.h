@@ -8183,6 +8183,77 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .formSpeciesIdTable = sArcanineFormSpeciesIdTable,
     },
 
+#if P_MEGA_EVOLUTIONS
+    [SPECIES_ARCANINE_MEGA] =
+    {
+        .baseHP        = 90,
+        .baseAttack    = 145,
+        .baseDefense   = 110,
+        .baseSpeed     = 110,
+        .baseSpAttack  = 90,
+        .baseSpDefense = 110,
+        .types = MON_TYPES(TYPE_FIRE, TYPE_STEEL),
+        .catchRate = 75,
+        .expYield = (P_UPDATED_EXP_YIELDS >= GEN_5) ? 194 : 213,
+        .evYield_Attack = 2,
+        .genderRatio = PERCENT_FEMALE(25),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FIELD),
+        .abilities = { ABILITY_TEMPERED, ABILITY_TEMPERED, ABILITY_TEMPERED },
+        .bodyColor = BODY_COLOR_BROWN,
+        .speciesName = _("Arcanine"),
+        .cryId = CRY_ARCANINE,
+        .natDexNum = NATIONAL_DEX_ARCANINE,
+        .categoryName = _("Legendary"),
+        .height = 19,
+        .weight = 1550,
+        .description = COMPOUND_STRING(
+            "This fleet-footed Pokémon is said to run\n"
+            "over 6,200 miles in a single day and night.\n"
+            "The fire that blazes wildly within its body\n"
+            "is its source of power."),
+        .pokemonScale = 256,
+        .pokemonOffset = 1,
+        .trainerScale = 312,
+        .trainerOffset = 4,
+        .frontPic = gMonFrontPic_ArcanineMega,
+        .frontPicSize = MON_COORDS_SIZE(64, 64),
+        .frontPicYOffset = 2,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(1, 38),
+            ANIMCMD_FRAME(0, 1),
+        ),
+        .frontAnimId = P_GBA_STYLE_SPECIES_GFX ? ANIM_H_VIBRATE : ANIM_V_SHAKE,
+        .frontAnimDelay = P_GBA_STYLE_SPECIES_GFX ? 40 : 8,
+        .backPic = gMonBackPic_ArcanineMega,
+        .backPicSize = MON_COORDS_SIZE(64, 64),
+        .backPicYOffset = 0,
+        .backAnimId = BACK_ANIM_JOLT_RIGHT,
+        .palette = gMonPalette_ArcanineMega,
+        .shinyPalette = gMonShinyPalette_ArcanineMega,
+        .iconSprite = gMonIcon_Arcanine,
+        .iconPalIndex = P_GBA_STYLE_SPECIES_ICONS ? 0 : 3,
+        .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
+        SHADOW(-4, 11, SHADOW_SIZE_XL_BATTLE_ONLY)
+        FOOTPRINT(Arcanine)
+        OVERWORLD(
+            sPicTable_Arcanine,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT,
+            sAnimTable_Following,
+            gOverworldPalette_Arcanine,
+            gShinyOverworldPalette_Arcanine
+        )
+        .levelUpLearnset = sArcanineLevelUpLearnset,
+        .teachableLearnset = sArcanineTeachableLearnset,
+        .isMegaEvolution = TRUE,
+        .formSpeciesIdTable = sArcanineFormSpeciesIdTable,
+    },
+#endif
+
 #if P_HISUIAN_FORMS
     [SPECIES_GROWLITHE_HISUI] =
     {

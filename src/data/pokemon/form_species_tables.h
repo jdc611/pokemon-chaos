@@ -245,6 +245,9 @@ static const u16 sGrowlitheFormSpeciesIdTable[] = {
 
 static const u16 sArcanineFormSpeciesIdTable[] = {
     SPECIES_ARCANINE,
+#if P_MEGA_EVOLUTIONS
+    SPECIES_ARCANINE_MEGA,
+#endif
 #if P_HISUIAN_FORMS
     SPECIES_ARCANINE_HISUI,
 #endif

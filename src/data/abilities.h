@@ -1420,6 +1420,14 @@ const struct AbilityInfo gAbilitiesInfo[ABILITIES_COUNT] =
         .aiRating = 0,
     },
 
+    [ABILITY_TEMPERED] =
+    {
+        .name = _("Tempered"),
+        .description = COMPOUND_STRING("Reduces super-effective damage."),
+        .aiRating = 6,
+        .breakable = TRUE,
+    },
+
     [ABILITY_RAMPAGE] =
     {
         .name = _("Rampage"),

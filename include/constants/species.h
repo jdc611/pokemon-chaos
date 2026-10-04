@@ -1694,6 +1694,7 @@ enum __attribute__((packed)) Species
 // Add any custom species between here and SPECIES_CUSTOM_END
 SPECIES_SYNKITH,
 SPECIES_NIDOKING_MEGA,
+SPECIES_ARCANINE_MEGA,
 SPECIES_CUSTOM_END,
 
     SPECIES_EGG = SPECIES_CUSTOM_END,
