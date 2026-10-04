@@ -81,6 +81,7 @@
 #include "constants/abilities.h"
 #include "constants/event_object_movement.h"
 #include "constants/event_objects.h"
+#include "constants/heal_locations.h"
 #include "constants/layouts.h"
 #include "constants/region_map_sections.h"
 #include "constants/rgb.h"
@@ -748,6 +749,18 @@ void SetWarpDestinationToHealLocation(u8 healLocationId)
         SetWarpDestination(healLocation->mapGroup, healLocation->mapNum, WARP_ID_NONE, healLocation->x, healLocation->y);
 }
 
+static void EnsureValidLastHealLocation(void)
+{
+    // Older quick-start saves can have an unset recovery warp. Preserve any
+    // recorded heal location; repair only a warp absent from the heal table.
+    if (GetHealLocationIndexByWarpData(&gSaveBlock1Ptr->lastHealLocation) == HEAL_LOCATION_NONE)
+        SetLastHealLocationWarp(IS_FRLG || gSaveBlock3Ptr->startRegion
+            ? HEAL_LOCATION_PALLET_TOWN
+            : gSaveBlock2Ptr->playerGender == MALE
+                ? HEAL_LOCATION_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F
+                : HEAL_LOCATION_LITTLEROOT_TOWN_MAYS_HOUSE_2F);
+}
+
 static bool32 IsWhiteoutCutscene(void)
 {
     if (OW_WHITEOUT_CUTSCENE < GEN_4)
@@ -757,6 +770,7 @@ static bool32 IsWhiteoutCutscene(void)
 
 void SetWarpDestinationToLastHealLocation(void)
 {
+    EnsureValidLastHealLocation();
     if (IsWhiteoutCutscene())
         SetWhiteoutRespawnWarpAndHealerNPC(&sWarpDestination);
     else
@@ -765,6 +779,7 @@ void SetWarpDestinationToLastHealLocation(void)
 
 void SetWarpDestinationForTeleport(void)
 {
+    EnsureValidLastHealLocation();
     sWarpDestination = gSaveBlock1Ptr->lastHealLocation;
 }
 

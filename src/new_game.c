@@ -49,6 +49,7 @@
 #include "mystery_gift.h"
 #include "union_room_chat.h"
 #include "constants/map_groups.h"
+#include "constants/heal_locations.h"
 #include "constants/items.h"
 #include "difficulty.h"
 #include "follower_npc.h"
@@ -253,6 +254,10 @@ void NewGameInitData(void)
     ResetFanClub();
     ResetLotteryCorner();
     UpdateDailySeed();
+    // Quick start skips the upstairs map script that normally sets respawn.
+    // Establish home before either intro path can enter the overworld.
+    if (IS_FRLG || startInKanto)
+        SetLastHealLocationWarp(HEAL_LOCATION_PALLET_TOWN);
     WarpToTruck(startInKanto);
     if (IS_FRLG || startInKanto)
     {
