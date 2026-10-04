@@ -3637,6 +3637,14 @@ enum Ability GetActiveRunFilterAbilityForMonChanges(void)
     return GetActiveRunFilterAbility();
 }
 
+static bool32 DoesSpeciesLineMatchActiveRunFilter(enum Species species)
+{
+    return DoesSpeciesOrReachableFormMatchRunFilterForSettings(species,
+        gSaveBlock3Ptr->filterMode, gSaveBlock3Ptr->filterValue,
+        gSaveBlock3Ptr->abilityMode, gSaveBlock3Ptr->evolutionMode,
+        gSaveBlock3Ptr->runDifficulty, gSaveBlock3Ptr->worldSeed);
+}
+
 bool32 DoesMonMatchActiveRunFilter(struct Pokemon *mon)
 {
     enum Species species = GetMonData(mon, MON_DATA_SPECIES_OR_EGG);
@@ -3649,7 +3657,9 @@ bool32 DoesMonMatchActiveRunFilter(struct Pokemon *mon)
     // Ability legality is a property of the actual mon, not merely of the
     // species' generated ability table. This matters after random evolution,
     // where the required ability has already been assigned to the mon.
-    if (requiredAbility != ABILITY_NONE && GetMonAbility(mon) != requiredAbility)
+    if (requiredAbility != ABILITY_NONE && GetMonAbility(mon) != requiredAbility
+     && (SpeciesHasAbilityForSettings(species, requiredAbility, gSaveBlock3Ptr->abilityMode, gSaveBlock3Ptr->worldSeed)
+      || !DoesSpeciesLineMatchActiveRunFilter(species)))
         return FALSE;
 
     // For combined Type + Ability runs, the ability was checked above; retain
@@ -3658,7 +3668,7 @@ bool32 DoesMonMatchActiveRunFilter(struct Pokemon *mon)
     if (gSaveBlock3Ptr != NULL && gSaveBlock3Ptr->filterMode == RUN_FILTER_ABILITY)
         return TRUE;
 
-    return DoesSpeciesMatchActiveRunFilter(species);
+    return DoesSpeciesLineMatchActiveRunFilter(species);
 }
 
 bool32 DoesBoxMonMatchActiveRunFilter(struct BoxPokemon *boxMon)
@@ -3669,11 +3679,12 @@ bool32 DoesBoxMonMatchActiveRunFilter(struct BoxPokemon *boxMon)
 
     if (species == SPECIES_NONE || species == SPECIES_EGG)
         return TRUE;
-    if (!DoesSpeciesMatchActiveRunFilter(species))
+    if (!DoesSpeciesLineMatchActiveRunFilter(species))
         return FALSE;
 
     requiredAbility = GetActiveRunFilterAbility();
-    if (requiredAbility == ABILITY_NONE)
+    if (requiredAbility == ABILITY_NONE
+     || !SpeciesHasAbilityForSettings(species, requiredAbility, gSaveBlock3Ptr->abilityMode, gSaveBlock3Ptr->worldSeed))
         return TRUE;
 
     abilityNum = GetBoxMonData(boxMon, MON_DATA_ABILITY_NUM);
@@ -3709,7 +3720,11 @@ bool32 TrySetMonAbilityToActiveRunFilter(struct Pokemon *mon)
 
 bool32 IsPlayerInPokemonCenter(void)
 {
-    return gMapHeader.mapLayoutId == LAYOUT_POKEMON_CENTER_1F;
+    return gMapHeader.mapLayoutId == LAYOUT_POKEMON_CENTER_1F
+        || gMapHeader.mapLayoutId == LAYOUT_LAVARIDGE_TOWN_POKEMON_CENTER_1F
+        || gMapHeader.mapLayoutId == LAYOUT_POKEMON_CENTER_1F_FRLG
+        || gMapHeader.mapLayoutId == LAYOUT_ONE_ISLAND_POKEMON_CENTER_1F
+        || gMapHeader.mapLayoutId == LAYOUT_INDIGO_PLATEAU_POKEMON_CENTER_1F;
 }
 
 bool32 PlayerPartyHasPermanentMega(void)
@@ -3727,7 +3742,7 @@ bool32 PlayerPartyHasPermanentMega(void)
 bool32 CanSpeciesJoinActiveRunParty(enum Species species)
 {
     species = SanitizeSpeciesId(species);
-    if (!DoesSpeciesMatchActiveRunFilter(species))
+    if (!DoesSpeciesLineMatchActiveRunFilter(species))
         return FALSE;
     if (gSpeciesInfo[species].isMegaEvolution && PlayerPartyHasPermanentMega())
         return FALSE;

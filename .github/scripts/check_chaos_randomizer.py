@@ -250,3 +250,46 @@ int main(void){u16 starters[3],again[3];struct FilterFuncArgs a={1,0};
  assert(PickRandomStarterSpecies(99,&a,starters)==0);assert(starters[0]==0&&starters[1]==0&&starters[2]==0);
  puts("PASS: actual starter selection is bounded, seeded, distinct and retains sparse evolution-line-eligible candidates.");}
 ''')
+
+run(base+r'''
+enum Ability {ABILITY_FIXTURE=3};
+#define SPECIES_EGG 99
+#define MON_DATA_SPECIES_OR_EGG 1
+#define MON_DATA_ABILITY_NUM 2
+struct Pokemon {u16 species,ability;};
+struct BoxPokemon {u16 species,ability;};
+bool32 hasCurrentAbility;
+u32 GetMonData(struct Pokemon *m,u32 f){return m->species;}
+u32 GetMonAbility(struct Pokemon *m){return m->ability;}
+u32 GetBoxMonData(struct BoxPokemon *m,u32 f){return f==MON_DATA_ABILITY_NUM?m->ability:m->species;}
+u32 GetSpeciesAbility(enum Species s,u8 slot){return slot;}
+u32 GetActiveRunFilterAbility(void){return 3;}
+bool32 SpeciesHasAbilityForSettings(enum Species s,u32 a,u8 mode,u32 seed){return hasCurrentAbility;}
+enum Species SanitizeSpeciesId(enum Species s){return s;}
+bool32 PlayerPartyHasPermanentMega(void){return FALSE;}
+'''+function('src/pokemon.c','DoesSpeciesLineMatchActiveRunFilter')
++function('src/pokemon.c','DoesMonMatchActiveRunFilter')
++function('src/pokemon.c','DoesBoxMonMatchActiveRunFilter')
++function('src/pokemon.c','CanSpeciesJoinActiveRunParty')+r'''
+int main(void){struct Pokemon m={1,1};struct BoxPokemon b={1,1};
+ save3.filterMode=RUN_FILTER_TYPE_ABILITY;save3.filterValue=(3<<5)|3;save3.worldSeed=1;
+ assert(CanSpeciesJoinActiveRunParty(1));assert(DoesMonMatchActiveRunFilter(&m));assert(DoesBoxMonMatchActiveRunFilter(&b));
+ hasCurrentAbility=TRUE;assert(!DoesMonMatchActiveRunFilter(&m));assert(!DoesBoxMonMatchActiveRunFilter(&b));
+ m.ability=3;b.ability=3;assert(DoesMonMatchActiveRunFilter(&m));assert(DoesBoxMonMatchActiveRunFilter(&b));
+ hasCurrentAbility=FALSE;save3.filterValue=(4<<5)|4;m.ability=1;
+ assert(!CanSpeciesJoinActiveRunParty(1));assert(!DoesMonMatchActiveRunFilter(&m));assert(!DoesBoxMonMatchActiveRunFilter(&b));
+ puts("PASS: actual party/PC admission accepts future-line matches while rejecting wrong current abilities and incompatible lines.");}
+''')
+
+run(base+r'''
+#define LAYOUT_POKEMON_CENTER_1F 1
+#define LAYOUT_LAVARIDGE_TOWN_POKEMON_CENTER_1F 2
+#define LAYOUT_POKEMON_CENTER_1F_FRLG 3
+#define LAYOUT_ONE_ISLAND_POKEMON_CENTER_1F 4
+#define LAYOUT_INDIGO_PLATEAU_POKEMON_CENTER_1F 5
+struct {u32 mapLayoutId;} gMapHeader;
+'''+function('src/pokemon.c','IsPlayerInPokemonCenter')+r'''
+int main(void){for(u32 i=1;i<=5;i++){gMapHeader.mapLayoutId=i;assert(IsPlayerInPokemonCenter());}
+ gMapHeader.mapLayoutId=6;assert(!IsPlayerInPokemonCenter());
+ puts("PASS: actual Center detection includes native Kanto, One Island and League centers while excluding other rooms.");}
+''')
