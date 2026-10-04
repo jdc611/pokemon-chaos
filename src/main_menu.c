@@ -219,6 +219,7 @@ static EWRAM_DATA u8 sRunSetupType;
 static EWRAM_DATA u16 sRunSetupAbility;
 static EWRAM_DATA u16 sRunSetupAbilityChoices[ABILITIES_COUNT];
 static EWRAM_DATA u16 *sRunSetupPoolCounts;
+static EWRAM_DATA u16 sRunSetupStarterAbilities[NUM_NORMAL_ABILITY_SLOTS];
 static EWRAM_DATA u32 sRunSetupLineSeen[NUMBER_OF_MON_TYPES][(ABILITIES_COUNT + 31) / 32];
 static EWRAM_DATA bool8 sRunSetupBasePoolValid;
 static EWRAM_DATA u8 sRunSetupTypeChoices[NUMBER_OF_MON_TYPES];
@@ -2331,6 +2332,12 @@ static void RunSetup_RecordReachableSpecies(enum Species species)
                     : gSpeciesInfo[species].abilities[slot];
         if (ability == ABILITY_NONE)
             continue;
+        bool32 starterHasAbility = FALSE;
+        for (u32 starterSlot = 0; starterSlot < NUM_NORMAL_ABILITY_SLOTS; starterSlot++)
+            if (sRunSetupStarterAbilities[starterSlot] == ability)
+                starterHasAbility = TRUE;
+        if (!starterHasAbility)
+            continue;
         RunSetup_RecordPair(TYPE_NONE, ability);
         RunSetup_RecordPair(type1, ability);
         RunSetup_RecordPair(type2, ability);
@@ -2344,7 +2351,12 @@ static u32 RunSetup_CountEligibleSelection(u8 type, u16 ability, u32 stopAt)
         .arg1 = sRunSetupRandomizer == RUN_WILD_RANDOM ? FILTER_FUNC_ARG_NONE : 0,
         .arg2 = FILTER_FUNC_ARG_NONE,
     };
-    u32 baseGenerator = sRunSetupRandomizer == RUN_WILD_RANDOM ? SPECIES_GENERATOR_NO_SUPERMONS : SPECIES_GENERATOR_SCALED_WILD;
+    // Ability starters must work now. If tier 0 has only future-ability
+    // candidates, starter selection may use a legal species above that tier.
+    u32 baseGenerator = ability != ABILITY_NONE || sRunSetupRandomizer == RUN_WILD_RANDOM
+        ? SPECIES_GENERATOR_NO_SUPERMONS : SPECIES_GENERATOR_SCALED_WILD;
+    if (baseGenerator == SPECIES_GENERATOR_NO_SUPERMONS)
+        baseArgs.arg1 = FILTER_FUNC_ARG_NONE;
     u32 i;
     if (sRunSetupPoolCounts == NULL)
         sRunSetupPoolCounts = AllocZeroed(NUMBER_OF_MON_TYPES * ABILITIES_COUNT * sizeof(u16));
@@ -2358,6 +2370,10 @@ static u32 RunSetup_CountEligibleSelection(u8 type, u16 ability, u32 stopAt)
             enum Species species = NationalPokedexNumToSpecies(i);
             if (!IsSpeciesEligibleRandomSpecies(baseGenerator, species, &baseArgs))
                 continue;
+            for (u32 slot = 0; slot < NUM_NORMAL_ABILITY_SLOTS; slot++)
+                sRunSetupStarterAbilities[slot] = sRunSetupAbilityMode == RUN_ABILITIES_RANDOM
+                    ? GetRandomizedAbilityForSeed(species, slot, sRunSetupSeed)
+                    : gSpeciesInfo[species].abilities[slot];
             memset(sRunSetupLineSeen, 0, sizeof(sRunSetupLineSeen));
             VisitRunFilterReachableSpeciesForSettings(species, sRunSetupEvolutions, sRunSetupDifficulty,
                                                        sRunSetupSeed, RunSetup_RecordReachableSpecies);

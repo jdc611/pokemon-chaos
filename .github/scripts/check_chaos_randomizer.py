@@ -105,13 +105,14 @@ u16 sRunSetupAbility,sRunSetupAbilityChoices[ABILITIES_COUNT],sRunSetupAbilityCh
 u32 sRunSetupSeed,sRunSetupFinalEligible,sRunSetupBaseGenerator;
 bool8 sRunSetupBasePoolValid,sRunSetupLowPoolConfirmed;
 u16 *sRunSetupPoolCounts;
+u16 sRunSetupStarterAbilities[NUM_NORMAL_ABILITY_SLOTS];
 u32 sRunSetupLineSeen[NUMBER_OF_MON_TYPES][(ABILITIES_COUNT+31)/32];
 int baseCalls;
 u8 GetSpeciesType(enum Species s,u32 slot){return slot==0?s%3+1:3;}
 u16 GetRandomizedAbilityForSeed(enum Species s,u8 slot,u32 seed){return seed%2?3:2;}
 void VisitRunFilterReachableSpeciesForSettings(enum Species s,u8 ev,u8 diff,u32 seed,void(*v)(enum Species)){gSpeciesInfo[s].abilities[0]=seed%2?3:2;gSpeciesInfo[s].abilities[1]=0;v(s);}
 
-enum Species NationalPokedexNumToSpecies(u32 x){return x;}
+enum Species NationalPokedexNumToSpecies(u32 x){gSpeciesInfo[x].abilities[0]=sRunSetupSeed%2?3:2;return x;}
 bool32 IsSpeciesEligibleRandomSpecies(u32 gen,enum Species s,const struct FilterFuncArgs*a){baseCalls++;return TRUE;}
 '''+function(source,'RunSetup_RecordPair')+function(source,'RunSetup_RecordReachableSpecies')+function(source,'RunSetup_CountEligibleSelection')+function(source,'RunSetup_BuildTypeChoices')+function(source,'RunSetup_BuildAbilityChoices')+function(source,'RunSetup_InvalidateSeedFilters')+r'''
 int main(void){
