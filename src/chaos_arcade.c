@@ -118,19 +118,62 @@ static void ArcadePrint(const u8 *text, u32 x, u32 y)
     AddTextPrinterParameterized4(0, FONT_SMALL, x, y, 0, 0, colors, TEXT_SKIP_DRAW, text);
 }
 
+static void DrawPiece(u32 x, u32 y, u32 piece)
+{
+    static const u8 widths[] = {4, 8, 10, 10, 10, 10, 10, 10, 8, 4};
+    FillWindowPixelRect(0, 3, x + 4, y + 12, 7, 1);
+    for (u32 row = 0; row < 10; row++)
+    {
+        u32 width = widths[row];
+        FillWindowPixelRect(0, 2, x + (14 - width) / 2, y + 2 + row, width, 1);
+        if (row > 0 && row < 9)
+            FillWindowPixelRect(0, row < 4 ? ((piece & 3) == 1 ? 6 : 7) : 1,
+                x + (14 - width) / 2 + 1, y + 2 + row, width - 2, 1);
+    }
+    FillWindowPixelRect(0, 2, x + 2, y + 6, 10, 2);
+    FillWindowPixelRect(0, 2, x + 5, y + 5, 4, 4);
+    FillWindowPixelRect(0, 1, x + 6, y + 6, 2, 2);
+    if (piece & CHAOS_CHECKERS_KING)
+    {
+        FillWindowPixelRect(0, 8, x + 3, y + 2, 8, 2);
+        FillWindowPixelRect(0, 8, x + 3, y, 2, 4);
+        FillWindowPixelRect(0, 8, x + 6, y, 2, 4);
+        FillWindowPixelRect(0, 8, x + 9, y, 2, 4);
+    }
+}
+
+static bool32 IsNextLanding(u32 square)
+{
+    u32 length = sCheckers->selected.length;
+    if (!length) return FALSE;
+    for (u32 i = 0; i < sCheckers->count; i++)
+    {
+        const struct ChaosCheckersMove *move = &sCheckers->moves[i];
+        if (length >= move->length || move->path[length] != square) continue;
+        u32 j = 0;
+        while (j < length && move->path[j] == sCheckers->selected.path[j]) j++;
+        if (j == length) return TRUE;
+    }
+    return FALSE;
+}
+
 static void DrawCheckers(void)
 {
     FillWindowPixelBuffer(0, PIXEL_FILL(1));
-    ArcadePrint(COMPOUND_STRING("CHAOS ARCADE: CHECKERS"), 2, 0);
-    ArcadePrint(sDifficulty[sCheckers->difficulty], 158, 16);
+    FillWindowPixelRect(0, 4, 0, 0, 224, 18);
+    static const u8 headerColors[] = {4, 1, 2};
+    AddTextPrinterParameterized4(0, FONT_SMALL, 5, 1, 0, 0, headerColors, TEXT_SKIP_DRAW, COMPOUND_STRING("CHAOS CHECKERS"));
+    u8 coins[16];
+    StringCopy(coins, COMPOUND_STRING("COINS "));
+    ConvertIntToDecimalStringN(coins + 6, GetCoins(), STR_CONV_MODE_RIGHT_ALIGN, 4);
+    AddTextPrinterParameterized4(0, FONT_SMALL, 160, 1, 0, 0, headerColors, TEXT_SKIP_DRAW, coins);
     if (sCheckers->phase == 0)
     {
-        ArcadePrint(COMPOUND_STRING("Choose difficulty: LEFT / RIGHT\nA: Play   B: Leave\n\nMandatory captures; short kings.\nFinish each capture chain.\nPromotion ends the turn.\n\nWin: 450 / 900 / 1500 COINS\nDraw: 50 / 100 / 150 COINS\nForfeit earns no COINS."), 4, 30);
+        ArcadePrint(sDifficulty[sCheckers->difficulty], 4, 21);
+        ArcadePrint(COMPOUND_STRING("LEFT / RIGHT: Difficulty   A: Play\nB: Leave\nCapture when possible; finish the chain.\nGold kings move and capture both ways.\nWins: 450 / 900 / 1500 COINS\nDraws: 50 / 100 / 150 COINS"), 4, 38);
     }
     else if (sCheckers->phase == 6)
-    {
         ArcadePrint(COMPOUND_STRING("Forfeit this game?\nA: Forfeit   B: Keep playing\n\nForfeit earns no COINS."), 4, 40);
-    }
     else if (sCheckers->phase >= 3)
     {
         ArcadePrint(sCheckers->phase == 3 ? COMPOUND_STRING("You won!") : sCheckers->phase == 4 ? COMPOUND_STRING("The arcade won.") : sCheckers->phase == 7 ? COMPOUND_STRING("Not enough memory to continue.") : COMPOUND_STRING("Draw game."), 4, 38);
@@ -146,37 +189,28 @@ static void DrawCheckers(void)
             ChaosCheckersApply(&preview, &sCheckers->selected);
             preview.turn = sCheckers->board.turn;
         }
+        FillWindowPixelRect(0, 2, 2, 22, 116, 116);
         for (u32 row = 0; row < 8; row++)
             for (u32 col = 0; col < 8; col++)
             {
                 s32 sq = ChaosCheckersSquare(row, col);
-                u32 x = 4 + col * 12, y = 28 + row * 12;
-                FillWindowPixelRect(0, sq < 0 ? 5 : 4, x, y, 12, 12);
-                if (sq >= 0 && sq == sCheckers->cursor)
+                u32 x = 4 + col * 14, y = 24 + row * 14;
+                FillWindowPixelRect(0, sq < 0 ? 5 : 4, x, y, 14, 14);
+                if (sq >= 0 && preview.squares[sq]) DrawPiece(x, y, preview.squares[sq]);
+                u32 color = sq >= 0 && sq == sCheckers->cursor ? 8 : sq >= 0 && IsNextLanding(sq) ? 9 : 0;
+                if (color)
                 {
-                    FillWindowPixelRect(0, 8, x, y, 12, 1);
-                    FillWindowPixelRect(0, 8, x, y + 11, 12, 1);
-                    FillWindowPixelRect(0, 8, x, y, 1, 12);
-                    FillWindowPixelRect(0, 8, x + 11, y, 1, 12);
-                }
-                if (sq < 0 || !preview.squares[sq]) continue;
-                u32 piece = preview.squares[sq];
-                // Poké Ball pieces: contrasting hemispheres and central button.
-                FillWindowPixelRect(0, (piece & 3) == 1 ? 6 : 7, x + 3, y + 2, 6, 4);
-                FillWindowPixelRect(0, 1, x + 3, y + 6, 6, 4);
-                FillWindowPixelRect(0, 2, x + 2, y + 5, 8, 2);
-                FillWindowPixelRect(0, 1, x + 5, y + 5, 2, 2);
-                if (piece & CHAOS_CHECKERS_KING)
-                {
-                    FillWindowPixelRect(0, 8, x + 3, y, 6, 2);
-                    FillWindowPixelRect(0, 8, x + 3, y + 1, 1, 3);
-                    FillWindowPixelRect(0, 8, x + 8, y + 1, 1, 3);
+                    FillWindowPixelRect(0, color, x, y, 14, 1);
+                    FillWindowPixelRect(0, color, x, y + 13, 14, 1);
+                    FillWindowPixelRect(0, color, x, y, 1, 14);
+                    FillWindowPixelRect(0, color, x + 13, y, 1, 14);
                 }
             }
-        ArcadePrint(COMPOUND_STRING("BLUE: YOU\nRED: ARCADE"), 112, 35);
-        ArcadePrint(sCheckers->phase == 2 ? COMPOUND_STRING("Thinking...") : sCheckers->selected.length ? COMPOUND_STRING("Choose landing\nA: Move\nB: Clear choice") : COMPOUND_STRING("Choose a piece\nA: Select\nB: Forfeit"), 112, 68);
+        ArcadePrint(sDifficulty[sCheckers->difficulty], 124, 23);
+        ArcadePrint(COMPOUND_STRING("BLUE: YOU\nRED: ARCADE"), 124, 40);
+        ArcadePrint(sCheckers->phase == 2 ? COMPOUND_STRING("Thinking...") : sCheckers->selected.length ? COMPOUND_STRING("Green: land here\nA: Move\nB: Clear choice") : COMPOUND_STRING("Choose a piece\nA: Select\nB: Forfeit"), 124, 74);
         if (sCheckers->count && sCheckers->moves[0].captures)
-            ArcadePrint(COMPOUND_STRING("Capture required!"), 112, 113);
+            ArcadePrint(COMPOUND_STRING("Must capture!"), 124, 121);
     }
     PutWindowTilemap(0);
     CopyWindowToVram(0, COPYWIN_FULL);

@@ -10,188 +10,78 @@ CeladonCity_GameCorner_PrizeRoom_EventScript_OldMan::
 	end
 
 CeladonCity_GameCorner_PrizeRoom_EventScript_PrizeClerkMons::
-	checkitem ITEM_COIN_CASE
-	goto_if_eq VAR_RESULT, FALSE, CeladonCity_GameCorner_PrizeRoom_EventScript_NeedCoinCase
 	lock
 	faceplayer
-	showcoinsbox 0, 0
-	msgbox CeladonCity_GameCorner_PrizeRoom_Text_WeExchangeCoinsForPrizes
-	goto CeladonCity_GameCorner_PrizeRoom_EventScript_ChoosePrizeMon
-	end
+	checkflag FLAG_BADGE04_GET
+	goto_if_eq VAR_RESULT, FALSE, ChaosArcadePrize_Construction
+	checkitem ITEM_COIN_CASE
+	goto_if_eq VAR_RESULT, FALSE, CeladonCity_GameCorner_PrizeRoom_EventScript_NeedCoinCase
+	showcoinsbox 20, 0
+	msgbox ChaosArcadePrize_Welcome
+	closemessage
+	special ChaosArcadePrizeMenu
+	goto_if_eq VAR_RESULT, 127, ChaosArcadePrize_Cancel
+	special ChaosArcadePrizePick
+	goto_if_eq VAR_RESULT, 2, ChaosArcadePrize_Cancel
+	goto_if_eq VAR_RESULT, 1, ChaosArcadePrize_Rotom
+	goto ChaosArcadePrize_Tier
 
-CeladonCity_GameCorner_PrizeRoom_EventScript_ChoosePrizeMon::
-	message CeladonCity_GameCorner_PrizeRoom_Text_WhichPrize
-	waitmessage
-	multichoice 11, 0, MULTI_GAME_CORNER_POKEMON_PRIZES, FALSE
-	switch VAR_RESULT
-	case 0, CeladonCity_GameCorner_PrizeRoom_EventScript_Abra
-	case 1, CeladonCity_GameCorner_PrizeRoom_EventScript_Clefairy
-	case 2, CeladonCity_GameCorner_PrizeRoom_EventScript_DratiniPinsir
-	case 3, CeladonCity_GameCorner_PrizeRoom_EventScript_ScytherDratini
-	case 4, CeladonCity_GameCorner_PrizeRoom_EventScript_Porygon
-	case 5, CeladonCity_GameCorner_PrizeRoom_EventScript_EndPrizeExchange
-	case 127, CeladonCity_GameCorner_PrizeRoom_EventScript_EndPrizeExchange
+ChaosArcadePrize_Rotom::
+	special ChaosArcadeRotomMenu
+	goto_if_eq VAR_RESULT, 127, ChaosArcadePrize_Cancel
+	special ChaosArcadeRotomPick
+	goto_if_eq VAR_RESULT, 2, ChaosArcadePrize_Cancel
+
+ChaosArcadePrize_Tier::
+	special ChaosArcadeTierMenu
+	goto_if_eq VAR_RESULT, 127, ChaosArcadePrize_Cancel
+	special ChaosArcadePrizePrepare
+	goto_if_eq VAR_RESULT, 2, ChaosArcadePrize_Cancel
+	goto_if_eq VAR_RESULT, 1, ChaosArcadePrize_FilterWarning
+	goto ChaosArcadePrize_Confirm
+
+ChaosArcadePrize_FilterWarning::
+	msgbox ChaosArcadePrize_FilterText
+
+ChaosArcadePrize_Confirm::
+	msgbox ChaosArcadePrize_Offer, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, ChaosArcadePrize_Cancel
+	special ChaosArcadePrizeBuy
+	updatecoinsbox
+	goto_if_eq VAR_RESULT, 0, ChaosArcadePrize_Party
+	goto_if_eq VAR_RESULT, 1, ChaosArcadePrize_PC
+	goto_if_eq VAR_RESULT, 2, CeladonCity_GameCorner_PrizeRoom_EventScript_NotEnoughCoins
+	goto_if_eq VAR_RESULT, 3, ChaosArcadePrize_Full
+	goto ChaosArcadePrize_Cancel
+
+ChaosArcadePrize_Party::
+	playfanfare MUS_LEVEL_UP
+	msgbox ChaosArcadePrize_ReceivedParty
+	waitfanfare
+	goto CeladonCity_GameCorner_PrizeRoom_EventScript_EndPrizeExchange
+
+ChaosArcadePrize_PC::
+	playfanfare MUS_LEVEL_UP
+	msgbox ChaosArcadePrize_ReceivedPC
+	waitfanfare
+	goto CeladonCity_GameCorner_PrizeRoom_EventScript_EndPrizeExchange
+
+ChaosArcadePrize_Full::
+	msgbox gText_NoMoreRoomForPokemon
+	goto CeladonCity_GameCorner_PrizeRoom_EventScript_EndPrizeExchange
+
+ChaosArcadePrize_Cancel::
+	special ChaosArcadePrizeCancel
+	goto CeladonCity_GameCorner_PrizeRoom_EventScript_EndPrizeExchange
+
+ChaosArcadePrize_Construction::
+	msgbox ChaosArcadePrize_ConstructionText
+	release
 	end
 
 CeladonCity_GameCorner_PrizeRoom_EventScript_EndPrizeExchange::
 	hidecoinsbox
 	release
-	end
-
-CeladonCity_GameCorner_PrizeRoom_EventScript_Abra::
-	#ifdef FIRERED
-	setvar VAR_TEMP_1, SPECIES_ABRA
-	setvar VAR_TEMP_2, 180
-	#else
-	#ifdef LEAFGREEN
-	setvar VAR_TEMP_1, SPECIES_ABRA
-	setvar VAR_TEMP_2, 120
-	#endif
-	#endif
-	goto CeladonCity_GameCorner_PrizeRoom_EventScript_ConfirmPrizeMon
-	end
-
-CeladonCity_GameCorner_PrizeRoom_EventScript_Clefairy::
-	#ifdef FIRERED
-	setvar VAR_TEMP_1, SPECIES_CLEFAIRY
-	setvar VAR_TEMP_2, 500
-	#else
-	#ifdef LEAFGREEN
-	setvar VAR_TEMP_1, SPECIES_CLEFAIRY
-	setvar VAR_TEMP_2, 750
-	#endif
-	#endif
-	goto CeladonCity_GameCorner_PrizeRoom_EventScript_ConfirmPrizeMon
-	end
-
-CeladonCity_GameCorner_PrizeRoom_EventScript_DratiniPinsir::
-	#ifdef FIRERED
-	setvar VAR_TEMP_1, SPECIES_DRATINI
-	setvar VAR_TEMP_2, 2800
-	#else
-	#ifdef LEAFGREEN
-	setvar VAR_TEMP_1, SPECIES_PINSIR
-	setvar VAR_TEMP_2, 2500
-	#endif
-	#endif
-	goto CeladonCity_GameCorner_PrizeRoom_EventScript_ConfirmPrizeMon
-	end
-
-CeladonCity_GameCorner_PrizeRoom_EventScript_ScytherDratini::
-	#ifdef FIRERED
-	setvar VAR_TEMP_1, SPECIES_SCYTHER
-	setvar VAR_TEMP_2, 5500
-	#else
-	#ifdef LEAFGREEN
-	setvar VAR_TEMP_1, SPECIES_DRATINI
-	setvar VAR_TEMP_2, 4600
-	#endif
-	#endif
-	goto CeladonCity_GameCorner_PrizeRoom_EventScript_ConfirmPrizeMon
-	end
-
-CeladonCity_GameCorner_PrizeRoom_EventScript_Porygon::
-	#ifdef FIRERED
-	setvar VAR_TEMP_1, SPECIES_PORYGON
-	setvar VAR_TEMP_2, 9999
-	#else
-	#ifdef LEAFGREEN
-	setvar VAR_TEMP_1, SPECIES_PORYGON
-	setvar VAR_TEMP_2, 6500
-	#endif
-	#endif
-	goto CeladonCity_GameCorner_PrizeRoom_EventScript_ConfirmPrizeMon
-	end
-
-CeladonCity_GameCorner_PrizeRoom_EventScript_ConfirmPrizeMon::
-	bufferspeciesname STR_VAR_1, VAR_TEMP_1
-	msgbox CeladonCity_GameCorner_PrizeRoom_Text_YouWantPrize, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, NO, CeladonCity_GameCorner_PrizeRoom_EventScript_EndPrizeExchange
-	checkcoins VAR_RESULT
-	goto_if_lt VAR_RESULT, VAR_TEMP_2, CeladonCity_GameCorner_PrizeRoom_EventScript_NotEnoughCoins
-	textcolor NPC_TEXT_COLOR_NEUTRAL
-	switch VAR_TEMP_1
-	case SPECIES_ABRA,     CeladonCity_GameCorner_PrizeRoom_EventScript_GiveAbra
-	case SPECIES_CLEFAIRY, CeladonCity_GameCorner_PrizeRoom_EventScript_GiveClefairy
-	case SPECIES_DRATINI,  CeladonCity_GameCorner_PrizeRoom_EventScript_GiveDratini
-	case SPECIES_SCYTHER,  CeladonCity_GameCorner_PrizeRoom_EventScript_GiveScyther
-	case SPECIES_PORYGON,  CeladonCity_GameCorner_PrizeRoom_EventScript_GivePorygon
-	case SPECIES_PINSIR,   CeladonCity_GameCorner_PrizeRoom_EventScript_GivePinsir
-	end
-
-CeladonCity_GameCorner_PrizeRoom_EventScript_GiveAbra::
-	#ifdef FIRERED
-	givemon VAR_TEMP_1, 9
-	#else
-	#ifdef LEAFGREEN
-	givemon VAR_TEMP_1, 7
-	#endif
-	#endif
-	goto CeladonCity_GameCorner_PrizeRoom_EventScript_CheckReceivedMon
-	end
-
-CeladonCity_GameCorner_PrizeRoom_EventScript_GiveClefairy::
-	#ifdef FIRERED
-	givemon VAR_TEMP_1, 8
-	#else
-	#ifdef LEAFGREEN
-	givemon VAR_TEMP_1, 12
-	#endif
-	#endif
-	goto CeladonCity_GameCorner_PrizeRoom_EventScript_CheckReceivedMon
-	end
-
-CeladonCity_GameCorner_PrizeRoom_EventScript_GiveDratini::
-	#ifdef FIRERED
-	givemon VAR_TEMP_1, 18
-	#else
-	#ifdef LEAFGREEN
-	givemon VAR_TEMP_1, 24
-	#endif
-	#endif
-	goto CeladonCity_GameCorner_PrizeRoom_EventScript_CheckReceivedMon
-	end
-
-CeladonCity_GameCorner_PrizeRoom_EventScript_GiveScyther::
-	givemon VAR_TEMP_1, 25
-	goto CeladonCity_GameCorner_PrizeRoom_EventScript_CheckReceivedMon
-	end
-
-CeladonCity_GameCorner_PrizeRoom_EventScript_GivePorygon::
-	#ifdef FIRERED
-	givemon VAR_TEMP_1, 26
-	#else
-	#ifdef LEAFGREEN
-	givemon VAR_TEMP_1, 18
-	#endif
-	#endif
-	goto CeladonCity_GameCorner_PrizeRoom_EventScript_CheckReceivedMon
-	end
-
-CeladonCity_GameCorner_PrizeRoom_EventScript_GivePinsir::
-	givemon VAR_TEMP_1, 18
-	goto CeladonCity_GameCorner_PrizeRoom_EventScript_CheckReceivedMon
-	end
-
-CeladonCity_GameCorner_PrizeRoom_EventScript_CheckReceivedMon::
-	goto_if_eq VAR_RESULT, 0, CeladonCity_GameCorner_PrizeRoom_EventScript_ReceivedMonParty
-	goto_if_eq VAR_RESULT, 1, CeladonCity_GameCorner_PrizeRoom_EventScript_ReceivedMonPC
-	goto_if_eq VAR_RESULT, 2, CeladonCity_GameCorner_PrizeRoom_EventScript_PartyFull
-	end
-
-CeladonCity_GameCorner_PrizeRoom_EventScript_PartyFull::
-	textcolor NPC_TEXT_COLOR_NEUTRAL
-	msgbox gText_NoMoreRoomForPokemon
-	hidecoinsbox
-	release
-	end
-
-CeladonCity_GameCorner_PrizeRoom_EventScript_NicknamePartyMon::
-	getpartysize
-	subvar VAR_RESULT, 1
-	copyvar VAR_0x8004, VAR_RESULT
-	call Common_EventScript_NameReceivedPartyMon
-	goto CeladonCity_GameCorner_PrizeRoom_EventScript_EndPrizeExchange
 	end
 
 CeladonCity_GameCorner_PrizeRoom_EventScript_NeedCoinCase::
@@ -202,38 +92,6 @@ CeladonCity_GameCorner_PrizeRoom_EventScript_NeedCoinCase::
 
 CeladonCity_GameCorner_PrizeRoom_EventScript_NotEnoughCoins::
 	msgbox CeladonCity_GameCorner_PrizeRoom_Text_NeedMoreCoins
-	goto CeladonCity_GameCorner_PrizeRoom_EventScript_EndPrizeExchange
-	end
-
-CeladonCity_GameCorner_PrizeRoom_EventScript_ReceivedMonParty::
-	removecoins VAR_TEMP_2
-	updatecoinsbox
-	bufferspeciesname STR_VAR_1, VAR_TEMP_TRANSFERRED_SPECIES
-	playfanfare MUS_LEVEL_UP
-	message gText_PlayerObtainedTheMon
-	waitmessage
-	waitfanfare
-	msgbox gText_NicknameThisPokemon, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, YES, CeladonCity_GameCorner_PrizeRoom_EventScript_NicknamePartyMon
-	goto CeladonCity_GameCorner_PrizeRoom_EventScript_EndPrizeExchange
-	end
-
-CeladonCity_GameCorner_PrizeRoom_EventScript_ReceivedMonPC::
-	removecoins VAR_TEMP_2
-	updatecoinsbox
-	bufferspeciesname STR_VAR_1, VAR_TEMP_TRANSFERRED_SPECIES
-	playfanfare MUS_LEVEL_UP
-	message gText_PlayerObtainedTheMon
-	waitmessage
-	waitfanfare
-	msgbox gText_NicknameThisPokemon, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, NO, CeladonCity_GameCorner_PrizeRoom_EventScript_TransferredToPC
-	call Common_EventScript_NameReceivedBoxMon
-	goto CeladonCity_GameCorner_PrizeRoom_EventScript_TransferredToPC
-	end
-
-CeladonCity_GameCorner_PrizeRoom_EventScript_TransferredToPC::
-	call Common_EventScript_TransferredToPC
 	goto CeladonCity_GameCorner_PrizeRoom_EventScript_EndPrizeExchange
 	end
 
@@ -419,3 +277,34 @@ CeladonCity_GameCorner_PrizeRoom_Text_OopsNotEnoughRoom::
 CeladonCity_GameCorner_PrizeRoom_Text_OhFineThen::
 	.string "あっ そう$"
 
+
+ChaosArcadePrize_Welcome:
+	.string "Welcome to the Pokémon prize counter!\n"
+	.string "Choose a partner, then a prize tier.\p"
+	.string "All our partners arrive at Lv. 20.\n"
+	.string "The menu shows the full Coin price.$"
+
+ChaosArcadePrize_Offer:
+	.string "{STR_VAR_1} - Lv. 20\n"
+	.string "ABILITY: {STR_VAR_2}\p"
+	.string "{STR_VAR_3}\n"
+	.string "Exchange your Coins for this prize?$"
+
+ChaosArcadePrize_FilterText:
+	.string "This Pokémon doesn't meet your run's\n"
+	.string "current filter.\p"
+	.string "Normal party restrictions still apply.\n"
+	.string "You can keep it in PC Storage.$"
+
+ChaosArcadePrize_ReceivedParty:
+	.string "{PLAYER} received {STR_VAR_1}!\n"
+	.string "Your new partner joined your party.$"
+
+ChaosArcadePrize_ReceivedPC:
+	.string "{PLAYER} received {STR_VAR_1}!\n"
+	.string "Your new partner went to PC Storage.$"
+
+ChaosArcadePrize_ConstructionText:
+	.string "We're under construction! Exciting\n"
+	.string "new games and prizes are coming.\p"
+	.string "Come back with ERIKA's RAINBOW BADGE!$"

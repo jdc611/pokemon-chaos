@@ -3133,6 +3133,14 @@ enum Ability GetAbilityBySpecies(enum Species species, u8 abilityNum)
 enum Ability GetBoxMonAbility(struct BoxPokemon *mon)
 {
     enum Ability ability = GetBoxMonData(mon, MON_DATA_CHAOS_STARTER_ABILITY);
+    if (ability == CHAOS_ABILITY_NATIVE_HIDDEN)
+    {
+        enum Species species = GetBoxMonData(mon, MON_DATA_SPECIES);
+        ability = gSpeciesInfo[species].abilities[2];
+        if (ability == ABILITY_NONE)
+            ability = gSpeciesInfo[species].abilities[0];
+        return gLastUsedAbility = ability;
+    }
     if (ability > ABILITY_NONE && ability < ABILITIES_COUNT)
     {
         gLastUsedAbility = ability;

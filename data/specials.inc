@@ -674,3 +674,12 @@ gSpecials::
 
 	def_special ChaosArcadeRefill
 	def_special ChaosArcadeCheckers, waitstate=1
+
+	def_special ChaosArcadePrizeMenu, waitstate=1
+	def_special ChaosArcadePrizePick
+	def_special ChaosArcadeRotomMenu, waitstate=1
+	def_special ChaosArcadeRotomPick
+	def_special ChaosArcadeTierMenu, waitstate=1
+	def_special ChaosArcadePrizePrepare
+	def_special ChaosArcadePrizeBuy
+	def_special ChaosArcadePrizeCancel

@@ -22,7 +22,6 @@
       ],
       "methods": [
         "Cave",
-        "Game Corner",
         "Grass"
       ],
       "sources": [
@@ -33,10 +32,6 @@
         {
           "method": "Cave",
           "evidence": "CeruleanCave_B1F_Frlg (sCeruleanCaveB1F_FireRed)"
-        },
-        {
-          "method": "Game Corner",
-          "evidence": "data/maps/CeladonCity_GameCorner_PrizeRoom_Frlg/scripts.inc: selected VAR_TEMP_1 -> givemon"
         },
         {
           "method": "Grass",
@@ -684,10 +679,17 @@
         "SPECIES_SALAMENCE_MEGA",
         "SPECIES_SHELGON"
       ],
-      "methods": [],
-      "sources": [],
+      "methods": [
+        "Game Corner"
+      ],
+      "sources": [
+        {
+          "method": "Game Corner",
+          "evidence": "src/chaos_arcade_prizes.c: selected prize -> GiveScriptedMonToPlayer"
+        }
+      ],
       "unresolved_sources": [],
-      "status": "no audited natural path"
+      "status": "covered"
     },
     {
       "family": "BALTOY/CLAYDOL",
@@ -853,10 +855,17 @@
         "SPECIES_METAGROSS_MEGA",
         "SPECIES_METANG"
       ],
-      "methods": [],
-      "sources": [],
+      "methods": [
+        "Game Corner"
+      ],
+      "sources": [
+        {
+          "method": "Game Corner",
+          "evidence": "src/chaos_arcade_prizes.c: selected prize -> GiveScriptedMonToPlayer"
+        }
+      ],
       "unresolved_sources": [],
-      "status": "no audited natural path"
+      "status": "covered"
     },
     {
       "family": "BELLIBOLT/TADBULB",
@@ -1727,8 +1736,7 @@
         "SPECIES_CLEFFA"
       ],
       "methods": [
-        "Cave",
-        "Game Corner"
+        "Cave"
       ],
       "sources": [
         {
@@ -1738,10 +1746,6 @@
         {
           "method": "Cave",
           "evidence": "MtMoon_B2F_Frlg (sMtMoonB2F_FireRed)"
-        },
-        {
-          "method": "Game Corner",
-          "evidence": "data/maps/CeladonCity_GameCorner_PrizeRoom_Frlg/scripts.inc: selected VAR_TEMP_1 -> givemon"
         }
       ],
       "unresolved_sources": [],
@@ -2723,10 +2727,17 @@
         "SPECIES_DRAKLOAK",
         "SPECIES_DREEPY"
       ],
-      "methods": [],
-      "sources": [],
+      "methods": [
+        "Game Corner"
+      ],
+      "sources": [
+        {
+          "method": "Game Corner",
+          "evidence": "src/chaos_arcade_prizes.c: selected prize -> GiveScriptedMonToPlayer"
+        }
+      ],
       "unresolved_sources": [],
-      "status": "no audited natural path"
+      "status": "covered"
     },
     {
       "family": "DRAGONAIR/DRAGONITE/DRATINI",
@@ -2759,7 +2770,7 @@
         },
         {
           "method": "Game Corner",
-          "evidence": "data/maps/CeladonCity_GameCorner_PrizeRoom_Frlg/scripts.inc: selected VAR_TEMP_1 -> givemon"
+          "evidence": "src/chaos_arcade_prizes.c: selected prize -> GiveScriptedMonToPlayer"
         }
       ],
       "unresolved_sources": [],
@@ -4948,10 +4959,17 @@
         "SPECIES_KOMMO_O",
         "SPECIES_KOMMO_O_TOTEM"
       ],
-      "methods": [],
-      "sources": [],
+      "methods": [
+        "Game Corner"
+      ],
+      "sources": [
+        {
+          "method": "Game Corner",
+          "evidence": "src/chaos_arcade_prizes.c: selected prize -> GiveScriptedMonToPlayer"
+        }
+      ],
       "unresolved_sources": [],
-      "status": "no audited natural path"
+      "status": "covered"
     },
     {
       "family": "HARIYAMA/MAKUHITA",
@@ -5786,14 +5804,9 @@
         "SPECIES_SCYTHER"
       ],
       "methods": [
-        "Game Corner",
         "Grass"
       ],
       "sources": [
-        {
-          "method": "Game Corner",
-          "evidence": "data/maps/CeladonCity_GameCorner_PrizeRoom_Frlg/scripts.inc: selected VAR_TEMP_1 -> givemon"
-        },
         {
           "method": "Grass",
           "evidence": "SafariZone_Center_Frlg (sSafariZoneCenter_FireRed)"
@@ -5972,10 +5985,17 @@
         "SPECIES_LARVESTA",
         "SPECIES_VOLCARONA"
       ],
-      "methods": [],
-      "sources": [],
+      "methods": [
+        "Game Corner"
+      ],
+      "sources": [
+        {
+          "method": "Game Corner",
+          "evidence": "src/chaos_arcade_prizes.c: selected prize -> GiveScriptedMonToPlayer"
+        }
+      ],
       "unresolved_sources": [],
-      "status": "no audited natural path"
+      "status": "covered"
     },
     {
       "family": "LARVITAR/PUPITAR/TYRANITAR",
@@ -7661,17 +7681,10 @@
         "SPECIES_PINSIR",
         "SPECIES_PINSIR_MEGA"
       ],
-      "methods": [
-        "Game Corner"
-      ],
-      "sources": [
-        {
-          "method": "Game Corner",
-          "evidence": "data/maps/CeladonCity_GameCorner_PrizeRoom_Frlg/scripts.inc: selected VAR_TEMP_1 -> givemon"
-        }
-      ],
+      "methods": [],
+      "sources": [],
       "unresolved_sources": [],
-      "status": "covered"
+      "status": "no audited natural path"
     },
     {
       "family": "PLUSLE",
@@ -7830,7 +7843,7 @@
       "sources": [
         {
           "method": "Game Corner",
-          "evidence": "data/maps/CeladonCity_GameCorner_PrizeRoom_Frlg/scripts.inc: selected VAR_TEMP_1 -> givemon"
+          "evidence": "src/chaos_arcade_prizes.c: selected prize -> GiveScriptedMonToPlayer"
         }
       ],
       "unresolved_sources": [],
@@ -8099,10 +8112,17 @@
         "SPECIES_ROTOM_MOW",
         "SPECIES_ROTOM_WASH"
       ],
-      "methods": [],
-      "sources": [],
+      "methods": [
+        "Game Corner"
+      ],
+      "sources": [
+        {
+          "method": "Game Corner",
+          "evidence": "src/chaos_arcade_prizes.c: selected prize -> GiveScriptedMonToPlayer"
+        }
+      ],
       "unresolved_sources": [],
-      "status": "no audited natural path"
+      "status": "covered"
     },
     {
       "family": "SABLEYE",
@@ -9065,10 +9085,17 @@
         "SPECIES_TOXTRICITY_LOW_KEY",
         "SPECIES_TOXTRICITY_LOW_KEY_GMAX"
       ],
-      "methods": [],
-      "sources": [],
+      "methods": [
+        "Game Corner"
+      ],
+      "sources": [
+        {
+          "method": "Game Corner",
+          "evidence": "src/chaos_arcade_prizes.c: selected prize -> GiveScriptedMonToPlayer"
+        }
+      ],
       "unresolved_sources": [],
-      "status": "no audited natural path"
+      "status": "covered"
     },
     {
       "family": "TROPIUS",
@@ -9514,10 +9541,17 @@
         "SPECIES_ZORUA",
         "SPECIES_ZORUA_HISUI"
       ],
-      "methods": [],
-      "sources": [],
+      "methods": [
+        "Game Corner"
+      ],
+      "sources": [
+        {
+          "method": "Game Corner",
+          "evidence": "src/chaos_arcade_prizes.c: selected prize -> GiveScriptedMonToPlayer"
+        }
+      ],
       "unresolved_sources": [],
-      "status": "no audited natural path"
+      "status": "covered"
     },
     {
       "family": "ZYGARDE",

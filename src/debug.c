@@ -1110,6 +1110,7 @@ static const struct DebugMenuOption sChaosDebugSupplies[] =
     { COMPOUND_STRING("Give item"), DebugAction_Selection_Init, &sGiveItemSelection },
     { COMPOUND_STRING("Fill Poké Balls"), DebugAction_PCBag_Fill_PocketPokeBalls },
     { COMPOUND_STRING("Max Money"), DebugAction_Give_MaxMoney },
+    { COMPOUND_STRING("Max Arcade Coins"), DebugAction_Give_MaxCoins },
     { NULL }
 };
 

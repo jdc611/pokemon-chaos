@@ -36,17 +36,17 @@
         {
           "ability": "ABILITY_NONE",
           "path": "src/pokemon.c",
-          "line": 3288
+          "line": 3296
         },
         {
           "ability": "ABILITY_NONE",
           "path": "src/pokemon.c",
-          "line": 3732
+          "line": 3740
         },
         {
           "ability": "ABILITY_NONE",
           "path": "src/pokemon.c",
-          "line": 3744
+          "line": 3752
         }
       ],
       "status": "source audit candidate"
@@ -2066,6 +2066,11 @@
       "species_or_form_check_sites": [
         {
           "ability": "ABILITY_DISGUISE",
+          "path": "src/battle_script_commands.c",
+          "line": 7707
+        },
+        {
+          "ability": "ABILITY_DISGUISE",
           "path": "src/battle_ai_util.c",
           "line": 4839
         },
@@ -2078,11 +2083,6 @@
           "ability": "ABILITY_DISGUISE",
           "path": "src/battle_move_resolution.c",
           "line": 2821
-        },
-        {
-          "ability": "ABILITY_DISGUISE",
-          "path": "src/battle_script_commands.c",
-          "line": 7707
         },
         {
           "ability": "ABILITY_DISGUISE",
@@ -2552,6 +2552,11 @@
       "species_or_form_check_sites": [
         {
           "ability": "ABILITY_ICE_FACE",
+          "path": "src/battle_script_commands.c",
+          "line": 7718
+        },
+        {
+          "ability": "ABILITY_ICE_FACE",
           "path": "src/battle_ai_util.c",
           "line": 1470
         },
@@ -2569,11 +2574,6 @@
           "ability": "ABILITY_ICE_FACE",
           "path": "src/battle_move_resolution.c",
           "line": 2823
-        },
-        {
-          "ability": "ABILITY_ICE_FACE",
-          "path": "src/battle_script_commands.c",
-          "line": 7718
         },
         {
           "ability": "ABILITY_ICE_FACE",
@@ -2841,6 +2841,16 @@
       "species_or_form_check_sites": [
         {
           "ability": "ABILITY_ZERO_TO_HERO",
+          "path": "src/battle_ai_util.c",
+          "line": 3522
+        },
+        {
+          "ability": "ABILITY_ZERO_TO_HERO",
+          "path": "src/battle_util.c",
+          "line": 3564
+        },
+        {
+          "ability": "ABILITY_ZERO_TO_HERO",
           "path": "src/battle_ai_switch.c",
           "line": 839
         },
@@ -2853,16 +2863,6 @@
           "ability": "ABILITY_ZERO_TO_HERO",
           "path": "src/battle_ai_switch.c",
           "line": 1522
-        },
-        {
-          "ability": "ABILITY_ZERO_TO_HERO",
-          "path": "src/battle_util.c",
-          "line": 3564
-        },
-        {
-          "ability": "ABILITY_ZERO_TO_HERO",
-          "path": "src/battle_ai_util.c",
-          "line": 3522
         }
       ],
       "status": "implemented Chaos fallback"
@@ -3216,6 +3216,111 @@
   ],
   "species_or_form_check_candidates": [
     {
+      "ability": "ABILITY_LEAF_GUARD",
+      "path": "src/battle_script_commands.c",
+      "line": 5031
+    },
+    {
+      "ability": "ABILITY_SHIELDS_DOWN",
+      "path": "src/battle_script_commands.c",
+      "line": 5038
+    },
+    {
+      "ability": "ABILITY_NUM",
+      "path": "src/battle_script_commands.c",
+      "line": 7562
+    },
+    {
+      "ability": "ABILITY_PICKUP",
+      "path": "src/battle_script_commands.c",
+      "line": 7564
+    },
+    {
+      "ability": "ABILITY_HONEY_GATHER",
+      "path": "src/battle_script_commands.c",
+      "line": 7591
+    },
+    {
+      "ability": "ABILITY_DISGUISE",
+      "path": "src/battle_script_commands.c",
+      "line": 7707
+    },
+    {
+      "ability": "ABILITY_ICE_FACE",
+      "path": "src/battle_script_commands.c",
+      "line": 7718
+    },
+    {
+      "ability": "ABILITY_SOUNDPROOF",
+      "path": "src/battle_script_commands.c",
+      "line": 10012
+    },
+    {
+      "ability": "ABILITY_STURDY",
+      "path": "src/battle_ai_util.c",
+      "line": 1466
+    },
+    {
+      "ability": "ABILITY_ICE_FACE",
+      "path": "src/battle_ai_util.c",
+      "line": 1470
+    },
+    {
+      "ability": "ABILITY_REGENERATOR",
+      "path": "src/battle_ai_util.c",
+      "line": 3519
+    },
+    {
+      "ability": "ABILITY_ZERO_TO_HERO",
+      "path": "src/battle_ai_util.c",
+      "line": 3522
+    },
+    {
+      "ability": "ABILITY_ICE_FACE",
+      "path": "src/battle_ai_util.c",
+      "line": 4834
+    },
+    {
+      "ability": "ABILITY_DISGUISE",
+      "path": "src/battle_ai_util.c",
+      "line": 4839
+    },
+    {
+      "ability": "ABILITY_DISGUISE",
+      "path": "src/battle_ai_util.c",
+      "line": 5237
+    },
+    {
+      "ability": "ABILITY_ICE_FACE",
+      "path": "src/battle_ai_util.c",
+      "line": 5241
+    },
+    {
+      "ability": "ABILITY_SKILL_LINK",
+      "path": "src/battle_move_resolution.c",
+      "line": 2338
+    },
+    {
+      "ability": "ABILITY_DISGUISE",
+      "path": "src/battle_move_resolution.c",
+      "line": 2821
+    },
+    {
+      "ability": "ABILITY_ICE_FACE",
+      "path": "src/battle_move_resolution.c",
+      "line": 2823
+    },
+    {
+      "ability": "ABILITY_GUARD_DOG",
+      "path": "src/battle_move_resolution.c",
+      "line": 4357
+    },
+    {
+      "ability": "ABILITY_GUARD_DOG",
+      "path": "src/battle_move_resolution.c",
+      "line": 4624
+    },
+    {
       "ability": "ABILITY_NONE",
       "path": "src/battle_main.c",
       "line": 3976
@@ -3231,34 +3336,9 @@
       "line": 5759
     },
     {
-      "ability": "ABILITY_POWER_CONSTRUCT",
-      "path": "src/battle_end_turn.c",
-      "line": 1411
-    },
-    {
-      "ability": "ABILITY_HUNGER_SWITCH",
-      "path": "src/battle_end_turn.c",
-      "line": 1414
-    },
-    {
-      "ability": "ABILITY_ZEN_MODE",
-      "path": "src/battle_end_turn.c",
-      "line": 1417
-    },
-    {
-      "ability": "ABILITY_ZERO_TO_HERO",
-      "path": "src/battle_ai_switch.c",
-      "line": 839
-    },
-    {
-      "ability": "ABILITY_ZERO_TO_HERO",
-      "path": "src/battle_ai_switch.c",
-      "line": 1047
-    },
-    {
-      "ability": "ABILITY_ZERO_TO_HERO",
-      "path": "src/battle_ai_switch.c",
-      "line": 1522
+      "ability": "ABILITY_NONE",
+      "path": "src/battle_dome.c",
+      "line": 5108
     },
     {
       "ability": "ABILITY_TERA_SHELL",
@@ -3346,69 +3426,19 @@
       "line": 10169
     },
     {
-      "ability": "ABILITY_STURDY",
-      "path": "src/battle_ai_util.c",
-      "line": 1466
+      "ability": "ABILITY_POWER_CONSTRUCT",
+      "path": "src/battle_end_turn.c",
+      "line": 1411
     },
     {
-      "ability": "ABILITY_ICE_FACE",
-      "path": "src/battle_ai_util.c",
-      "line": 1470
+      "ability": "ABILITY_HUNGER_SWITCH",
+      "path": "src/battle_end_turn.c",
+      "line": 1414
     },
     {
-      "ability": "ABILITY_REGENERATOR",
-      "path": "src/battle_ai_util.c",
-      "line": 3519
-    },
-    {
-      "ability": "ABILITY_ZERO_TO_HERO",
-      "path": "src/battle_ai_util.c",
-      "line": 3522
-    },
-    {
-      "ability": "ABILITY_ICE_FACE",
-      "path": "src/battle_ai_util.c",
-      "line": 4834
-    },
-    {
-      "ability": "ABILITY_DISGUISE",
-      "path": "src/battle_ai_util.c",
-      "line": 4839
-    },
-    {
-      "ability": "ABILITY_DISGUISE",
-      "path": "src/battle_ai_util.c",
-      "line": 5237
-    },
-    {
-      "ability": "ABILITY_ICE_FACE",
-      "path": "src/battle_ai_util.c",
-      "line": 5241
-    },
-    {
-      "ability": "ABILITY_SKILL_LINK",
-      "path": "src/battle_move_resolution.c",
-      "line": 2338
-    },
-    {
-      "ability": "ABILITY_DISGUISE",
-      "path": "src/battle_move_resolution.c",
-      "line": 2821
-    },
-    {
-      "ability": "ABILITY_ICE_FACE",
-      "path": "src/battle_move_resolution.c",
-      "line": 2823
-    },
-    {
-      "ability": "ABILITY_GUARD_DOG",
-      "path": "src/battle_move_resolution.c",
-      "line": 4357
-    },
-    {
-      "ability": "ABILITY_GUARD_DOG",
-      "path": "src/battle_move_resolution.c",
-      "line": 4624
+      "ability": "ABILITY_ZEN_MODE",
+      "path": "src/battle_end_turn.c",
+      "line": 1417
     },
     {
       "ability": "ABILITY_STANCE_CHANGE",
@@ -3416,69 +3446,39 @@
       "line": 4811
     },
     {
-      "ability": "ABILITY_LEAF_GUARD",
-      "path": "src/battle_script_commands.c",
-      "line": 5031
+      "ability": "ABILITY_ZERO_TO_HERO",
+      "path": "src/battle_ai_switch.c",
+      "line": 839
     },
     {
-      "ability": "ABILITY_SHIELDS_DOWN",
-      "path": "src/battle_script_commands.c",
-      "line": 5038
+      "ability": "ABILITY_ZERO_TO_HERO",
+      "path": "src/battle_ai_switch.c",
+      "line": 1047
     },
     {
-      "ability": "ABILITY_NUM",
-      "path": "src/battle_script_commands.c",
-      "line": 7562
-    },
-    {
-      "ability": "ABILITY_PICKUP",
-      "path": "src/battle_script_commands.c",
-      "line": 7564
-    },
-    {
-      "ability": "ABILITY_HONEY_GATHER",
-      "path": "src/battle_script_commands.c",
-      "line": 7591
-    },
-    {
-      "ability": "ABILITY_DISGUISE",
-      "path": "src/battle_script_commands.c",
-      "line": 7707
-    },
-    {
-      "ability": "ABILITY_ICE_FACE",
-      "path": "src/battle_script_commands.c",
-      "line": 7718
-    },
-    {
-      "ability": "ABILITY_SOUNDPROOF",
-      "path": "src/battle_script_commands.c",
-      "line": 10012
-    },
-    {
-      "ability": "ABILITY_NONE",
-      "path": "src/battle_dome.c",
-      "line": 5108
+      "ability": "ABILITY_ZERO_TO_HERO",
+      "path": "src/battle_ai_switch.c",
+      "line": 1522
     },
     {
       "ability": "ABILITY_SLOTS",
       "path": "src/pokemon.c",
-      "line": 3287
+      "line": 3295
     },
     {
       "ability": "ABILITY_NONE",
       "path": "src/pokemon.c",
-      "line": 3288
+      "line": 3296
     },
     {
       "ability": "ABILITY_NONE",
       "path": "src/pokemon.c",
-      "line": 3732
+      "line": 3740
     },
     {
       "ability": "ABILITY_NONE",
       "path": "src/pokemon.c",
-      "line": 3744
+      "line": 3752
     },
     {
       "ability": "ABILITY_FORECAST",

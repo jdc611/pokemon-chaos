@@ -18,6 +18,7 @@ enum Ability {ABILITY_NONE,ABILITY_ONE,ABILITY_TWO,ABILITY_FILTERED,ABILITIES_CO
 #define TRUE 1
 #define FALSE 0
 #define NUM_NORMAL_ABILITY_SLOTS 2
+#define CHAOS_ABILITY_NATIVE_HIDDEN 511
 #define RUN_STARTER_CHOOSE 1
 #define RUN_ABILITIES_RANDOM 1
 #define RUN_FILTER_NONE 0
@@ -41,7 +42,7 @@ enum Ability GetAbilityBySpecies(enum Species s,u8 slot){return gLastUsedAbility
 enum Ability GetActiveRunFilterAbility(void){return required;}
 enum Ability GetActiveRunFilterAbilityForMonChanges(void){return required;}
 bool32 TrySetMonAbilityToActiveRunFilter(struct Pokemon *m);
-struct {unsigned natDexNum;u8 types[2];} gSpeciesInfo[4]={ {0,{0,0}}, {1,{9,9}}, {2,{10,10}} };
+struct {unsigned natDexNum;u8 types[2];u16 abilities[3];} gSpeciesInfo[4]={ {0,{0,0},{0,0,0}}, {1,{9,9},{1,2,3}}, {2,{10,10},{2,1,300}} };
 u16 sCustomStarterCount,sCustomStarterList[4];
 bool32 IsCustomStarterBaseEligible(enum Species s){return s==SPECIES_ONE||s==SPECIES_TWO;}
 bool32 DoesSpeciesMatchRunFilterForSettings(enum Species s,u8 mode,u16 value,u8 abilities,unsigned seed){return mode==RUN_FILTER_TYPE?gSpeciesInfo[s].types[0]==value:slots[s][0]==value||slots[s][1]==value;}
@@ -62,6 +63,9 @@ int main(void){
  restored.box.species=SPECIES_TWO;assert(TrySetMonAbilityToActiveRunFilter(&restored));assert(GetMonAbility(&restored)==required);
  u8 slot=1;SetMonData(&restored,MON_DATA_ABILITY_NUM,&slot);assert(restored.box.override==0&&GetMonAbility(&restored)==ABILITY_ONE);
  required=300;ApplyCustomStarterRunAbility(&m);assert(GetMonAbility(&m)==300);
+ restored.box.override=CHAOS_ABILITY_NATIVE_HIDDEN;restored.box.species=SPECIES_ONE;assert(GetMonAbility(&restored)==3);
+ restored.box.species=SPECIES_TWO;assert(GetBoxMonAbility(&restored.box)==300);
+ SetMonData(&restored,MON_DATA_ABILITY_NUM,&slot);assert(restored.box.override==0);
  puts("PASS: normal abilities stay natural; custom random starter guarantee is individual, normal-slot, persistent through copying/boxing/evolution, and explicit ability changes replace it.");
 }
 '''

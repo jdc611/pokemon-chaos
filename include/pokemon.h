@@ -19,6 +19,9 @@
 #include "contest_effect.h"
 #include "constants/trainers.h"
 
+// Reserved individual-ability value: resolve the current species' native HA.
+#define CHAOS_ABILITY_NATIVE_HIDDEN 0x1FF
+
 #define GET_BASE_SPECIES_ID(speciesId) (GetFormSpeciesId(speciesId, 0))
 #define FORM_SPECIES_END (0xffff)
 

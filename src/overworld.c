@@ -1,4 +1,5 @@
 #include "global.h"
+#include "chaos_arcade.h"
 #include "run_settings.h"
 #include "challenge_reset.h"
 #include "overworld.h"
@@ -1883,6 +1884,7 @@ u8 UpdateSpritePaletteWithTime(u8 paletteNum)
 static void OverworldBasic(void)
 {
     ScriptContext_RunScript();
+    ChaosArcadeUpdateCoinBanner();
     RunTasks();
     AnimateSprites();
     CameraUpdate();

@@ -119,6 +119,13 @@ for name in maps:
         if received:
             source(received[1], 'NPC Trade', f'{path}: {trade}')
 
+# The native arcade counter constructs and atomically delivers these prizes.
+prize_path = Path('src/chaos_arcade_prizes.c')
+prize_text = prize_path.read_text()
+prize_table = prize_text.split('sPrizes[] = {', 1)[1].split('};', 1)[0]
+for key in re.findall(r'\{(SPECIES_\w+),', prize_table):
+    source(key, 'Game Corner', str(prize_path) + ': selected prize -> GiveScriptedMonToPlayer')
+
 # Standard Oak gifts are handed out by C through selected starter variables.
 for key in ['SPECIES_BULBASAUR', 'SPECIES_CHARMANDER', 'SPECIES_SQUIRTLE']:
     source(key, 'Gift / Static', 'src/chaos_progression.c: GiveChaosOakStarter (Standard mode)')
