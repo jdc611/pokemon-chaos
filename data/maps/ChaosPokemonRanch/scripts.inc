@@ -10,6 +10,7 @@ ChaosRanch_Populate::
 ChaosRanch_Door::
 	lockall
 	msgbox ChaosRanch_Text_Choose, MSGBOX_DEFAULT
+	closemessage
 	special ChaosRanchChooseBox
 	compare VAR_RESULT, 14
 	goto_if_ge ChaosRanch_Cancel
@@ -23,6 +24,7 @@ ChaosRanch_Door::
 ChaosRanch_Sign::
 	lockall
 	msgbox ChaosRanch_Text_Sign, MSGBOX_DEFAULT
+	closemessage
 	special ChaosRanchChooseBox
 	compare VAR_RESULT, 14
 	goto_if_ge ChaosRanch_Cancel

@@ -132,10 +132,12 @@ struct DexNavGUI
     MainCallback savedCallback;
     u8 state;
     u8 cursorSpriteId;
-    u8 fishingIconMatrix;
+    u8 waterCount;
+    u8 waterPage;
+    u8 waterIconIds[WATER_DISPLAY_CAPACITY];
     enum Species landSpecies[NUM_LAND_MONS_ENCOUNTER_SLOTS];
-    enum Species waterSpecies[WATER_DISPLAY_CAPACITY];
-    u8 waterMethods[WATER_DISPLAY_CAPACITY];
+    enum Species waterSpecies[WATER_ENCOUNTER_CAPACITY];
+    u8 waterMethods[WATER_ENCOUNTER_CAPACITY];
     u8 cursorRow;
     u8 cursorCol;
     u8 environment;
@@ -247,6 +249,28 @@ static const u32 sLandContentTopTile[] =
 #define FISHING_HEADER_TILE 0xB0
 #define FISHING_BOTTOM_TILE 0xB1
 
+// Preserve the R button bottom without the old WATER lettering below it.
+static const u32 sRegisterButtonBottomTiles[] =
+{
+    0x71117333,
+    0x71117333,
+    0x11117333,
+    0x7777B333,
+    0x33333333,
+    0x33333333,
+    0x33333333,
+    0x33333333,
+    0x111BB11B,
+    0x111BB11B,
+    0x11111111,
+    0x77777777,
+    0x33333333,
+    0x33333333,
+    0x33333333,
+    0x33333333,
+};
+#define REGISTER_BUTTON_BOTTOM_TILE 0xB7
+
 static const u32 sSelectionCursorGfx[] = INCGFX_U32("graphics/dexnav/cursor.png", ".4bpp.smol");
 static const u16 sSelectionCursorPal[] = INCGFX_U16("graphics/dexnav/cursor.png", ".gbapal");
 static const u32 sCapturedAllMonsTiles[] = INCGFX_U32("graphics/dexnav/captured_all.png", ".4bpp.smol");  //uses selection cursor pal
@@ -324,7 +348,7 @@ static const struct WindowTemplate sDexNavGuiWindowTemplates[] =
     },
     [WINDOW_WATER_LABEL] =
     {
-        .bg = 0, .tilemapLeft = 1, .tilemapTop = 10,
+        .bg = 0, .tilemapLeft = 1, .tilemapTop = 11,
         .width = 8, .height = 2, .paletteNum = 15, .baseBlock = 252,
     },
     [WINDOW_LAND_LABEL] =
@@ -1722,8 +1746,13 @@ static void PrepareFishingDexNavLayout(void)
     const u16 landStyle[] = {LAND_HEADER_TILE, LAND_CONTENT_TOP_TILE,
         tilemap[10 * 32 + 1], tilemap[10 * 32 + 5], tilemap[10 * 32 + 17],
         tilemap[14 * 32 + 1], tilemap[14 * 32 + 2], tilemap[14 * 32 + 17]};
-    DrawDexNavEncounterPanel(tilemap, 0, 2, 20, 9, landStyle);
-    DrawDexNavEncounterPanel(tilemap, 0, 10, 20, 19, waterStyle);
+    // Clear the baked-in old WATER header behind the registration strip.
+    for (u32 x = 0; x < 20; x++)
+        tilemap[32 + x] = 0;
+    tilemap[32 + 1] = REGISTER_BUTTON_BOTTOM_TILE;
+    tilemap[32 + 2] = REGISTER_BUTTON_BOTTOM_TILE + 1;
+    DrawDexNavEncounterPanel(tilemap, 0, 2, 20, 10, landStyle);
+    DrawDexNavEncounterPanel(tilemap, 0, 11, 20, 19, waterStyle);
 }
 
 static bool8 DexNav_LoadGraphics(void)
@@ -1738,6 +1767,7 @@ static bool8 DexNav_LoadGraphics(void)
     case 1:
         if (FreeTempTileDataBuffersIfPossible() != TRUE)
         {
+            LoadBgTiles(1, sRegisterButtonBottomTiles, sizeof(sRegisterButtonBottomTiles), REGISTER_BUTTON_BOTTOM_TILE);
             LoadBgTiles(1, sLandHeaderTile, sizeof(sLandHeaderTile), LAND_HEADER_TILE);
             LoadBgTiles(1, sLandContentTopTile, sizeof(sLandContentTopTile), LAND_CONTENT_TOP_TILE);
             LoadBgTiles(1, sFishingContentTopTile, sizeof(sFishingContentTopTile), FISHING_CONTENT_TOP_TILE);
@@ -1763,7 +1793,8 @@ static bool8 DexNav_LoadGraphics(void)
 
 static u32 SelectedWaterIndex(void)
 {
-    return (sDexNavUiDataPtr->cursorRow - ROW_WATER) * COL_WATER_COUNT + sDexNavUiDataPtr->cursorCol;
+    return sDexNavUiDataPtr->waterPage * WATER_DISPLAY_CAPACITY
+         + (sDexNavUiDataPtr->cursorRow - ROW_WATER) * COL_WATER_COUNT + sDexNavUiDataPtr->cursorCol;
 }
 
 static void UpdateCursorPosition(void)
@@ -1774,8 +1805,8 @@ static void UpdateCursorPosition(void)
     if (sDexNavUiDataPtr->cursorRow >= ROW_WATER)
     {
         cursor->x = ROW_WATER_ICON_X + 24 * sDexNavUiDataPtr->cursorCol;
-        cursor->y = ROW_WATER_ICON_Y + 18 * (sDexNavUiDataPtr->cursorRow - ROW_WATER);
-        sDexNavUiDataPtr->environment = sDexNavUiDataPtr->waterMethods[SelectedWaterIndex()] == 0
+        cursor->y = ROW_WATER_ICON_Y + 24 * (sDexNavUiDataPtr->cursorRow - ROW_WATER);
+        sDexNavUiDataPtr->environment = (SelectedWaterIndex() >= sDexNavUiDataPtr->waterCount || sDexNavUiDataPtr->waterMethods[SelectedWaterIndex()] == 0)
                                     ? ENCOUNTER_TYPE_WATER : ENCOUNTER_TYPE_FISHING;
     }
     else
@@ -1784,10 +1815,7 @@ static void UpdateCursorPosition(void)
         cursor->y = ROW_LAND_TOP_ICON_Y + 24 * sDexNavUiDataPtr->cursorRow;
         sDexNavUiDataPtr->environment = ENCOUNTER_TYPE_LAND;
     }
-    cursor->affineAnimBeginning = FALSE;
-    cursor->affineAnimPaused = TRUE;
-    cursor->oam.affineMode = ST_OAM_AFFINE_NORMAL;
-    cursor->oam.matrixNum = sDexNavUiDataPtr->fishingIconMatrix;
+    cursor->oam.affineMode = ST_OAM_AFFINE_OFF;
     PrintCurrentSpeciesInfo();
 }
 
@@ -1916,10 +1944,10 @@ static void DexNavLoadCapturedAllSymbols(void)
     LoadCompressedSpriteSheetUsingHeap(&sCapturedAllPokemonSpriteSheet);
 
     if (CapturedAllLandMons(headerId))
-        CreateSprite(&sCaptureAllMonsSpriteTemplate, 144, 17, 0);
+        CreateSprite(&sCaptureAllMonsSpriteTemplate, 144, 22, 0);
 
     if (CapturedAllWaterMons(headerId) && CapturedAllFishingMons(headerId))
-        CreateSprite(&sCaptureAllMonsSpriteTemplate, 144, 81, 0);
+        CreateSprite(&sCaptureAllMonsSpriteTemplate, 144, 94, 0);
 }
 
 //#define WIN_DETAILS_TILE        0x3a3
@@ -1933,7 +1961,8 @@ static void DexNav_InitWindows(void)
     for (i = 0; i < ARRAY_COUNT(labels); i++)
     {
         FillWindowPixelBuffer(labels[i], PIXEL_FILL(TEXT_COLOR_TRANSPARENT));
-        AddTextPrinterParameterized3(labels[i], FONT_SMALL_NARROW, 2, 0, sFontColor_White, TEXT_SKIP_DRAW, text[i]);
+        AddTextPrinterParameterized3(labels[i], FONT_SMALL_NARROW, 2, 0, sFontColor_White, TEXT_SKIP_DRAW, labels[i] == WINDOW_WATER_LABEL && sDexNavUiDataPtr->waterCount > WATER_DISPLAY_CAPACITY
+            ? COMPOUND_STRING("WATER 1/2 L") : text[i]);
         PutWindowTilemap(labels[i]);
         CopyWindowToVram(labels[i], COPYWIN_FULL);
     }
@@ -1942,7 +1971,6 @@ static void DexNav_InitWindows(void)
 
 static void DexNavGuiFreeResources(void)
 {
-    FreeOamMatrix(sDexNavUiDataPtr->fishingIconMatrix);
     Free(sDexNavUiDataPtr);
     Free(sBg1TilemapBuffer);
     FreeAllWindowBuffers();
@@ -2007,7 +2035,7 @@ static void AddWaterEncounter(enum Species species, u8 method, u8 *count)
     for (i = 0; i < *count; i++)
         if (sDexNavUiDataPtr->waterSpecies[i] == species && sDexNavUiDataPtr->waterMethods[i] == method)
             return;
-    if (*count < WATER_DISPLAY_CAPACITY)
+    if (*count < WATER_ENCOUNTER_CAPACITY)
     {
         sDexNavUiDataPtr->waterSpecies[*count] = species;
         sDexNavUiDataPtr->waterMethods[(*count)++] = method;
@@ -2052,7 +2080,7 @@ static void DexNavLoadEncounterData(void)
         }
     }
 
-    // Surf and rod encounters share WATER; each entry keeps its exact method.
+    // Retain all source entries, displaying twelve per page with exact methods.
     if (waterMonsInfo != NULL && waterMonsInfo->encounterRate != 0)
         for (i = 0; i < NUM_WATER_MONS_ENCOUNTER_SLOTS; i++)
             AddWaterEncounter(gSaveBlock3Ptr->randomizerEnabled
@@ -2065,6 +2093,7 @@ static void DexNavLoadEncounterData(void)
                 : fishingMonsInfo->wildPokemon[i].species,
                 i < 2 ? FISHING_ROD_OLD : i < 5 ? FISHING_ROD_GOOD : FISHING_ROD_SUPER, &waterIndex);
 
+    sDexNavUiDataPtr->waterCount = waterIndex;
 }
 
 static u8 TryDrawIconInSlot(enum Species species, s16 x, s16 y)
@@ -2080,8 +2109,6 @@ static void DrawSpeciesIcons(void)
     u8 spriteId;
     s16 x, y;
     LoadCompressedSpriteSheetUsingHeap(&sNoDataIconSpriteSheet);
-    sDexNavUiDataPtr->fishingIconMatrix = AllocOamMatrix();
-    SetOamMatrix(sDexNavUiDataPtr->fishingIconMatrix, 0x1A0, 0, 0, 0x1A0);
     for (i = 0; i < NUM_LAND_MONS_ENCOUNTER_SLOTS + WATER_DISPLAY_CAPACITY; i++)
     {
         enum Species species;
@@ -2096,22 +2123,44 @@ static void DrawSpeciesIcons(void)
             u32 index = i - NUM_LAND_MONS_ENCOUNTER_SLOTS;
             species = sDexNavUiDataPtr->waterSpecies[index];
             x = ROW_WATER_ICON_X + 24 * (index % COL_WATER_COUNT);
-            y = ROW_WATER_ICON_Y + 18 * (index / COL_WATER_COUNT);
+            y = ROW_WATER_ICON_Y + 24 * (index / COL_WATER_COUNT);
         }
         if (species == SPECIES_NONE)
             y -= 4;
         spriteId = TryDrawIconInSlot(species, x, y);
-        gSprites[spriteId].affineAnimBeginning = FALSE;
-        gSprites[spriteId].affineAnimPaused = TRUE;
-        gSprites[spriteId].oam.affineMode = ST_OAM_AFFINE_NORMAL;
-        gSprites[spriteId].oam.matrixNum = sDexNavUiDataPtr->fishingIconMatrix;
+        if (i >= NUM_LAND_MONS_ENCOUNTER_SLOTS)
+            sDexNavUiDataPtr->waterIconIds[i - NUM_LAND_MONS_ENCOUNTER_SLOTS] = spriteId;
     }
+}
+
+static void ChangeWaterPage(void)
+{
+    u32 oldStart = sDexNavUiDataPtr->waterPage * WATER_DISPLAY_CAPACITY;
+    sDexNavUiDataPtr->waterPage ^= 1;
+    for (u32 slot = 0; slot < WATER_DISPLAY_CAPACITY; slot++)
+    {
+        if (oldStart + slot < sDexNavUiDataPtr->waterCount)
+            FreeAndDestroyMonIconSprite(&gSprites[sDexNavUiDataPtr->waterIconIds[slot]]);
+        else
+            DestroySprite(&gSprites[sDexNavUiDataPtr->waterIconIds[slot]]);
+        u32 index = sDexNavUiDataPtr->waterPage * WATER_DISPLAY_CAPACITY + slot;
+        enum Species species = index < sDexNavUiDataPtr->waterCount ? sDexNavUiDataPtr->waterSpecies[index] : SPECIES_NONE;
+        s16 y = ROW_WATER_ICON_Y + 24 * (slot / COL_WATER_COUNT);
+        sDexNavUiDataPtr->waterIconIds[slot] = TryDrawIconInSlot(species,
+            ROW_WATER_ICON_X + 24 * (slot % COL_WATER_COUNT), y - (species == SPECIES_NONE ? 4 : 0));
+    }
+    FillWindowPixelBuffer(WINDOW_WATER_LABEL, PIXEL_FILL(TEXT_COLOR_TRANSPARENT));
+    AddTextPrinterParameterized3(WINDOW_WATER_LABEL, FONT_SMALL_NARROW, 2, 0, sFontColor_White, TEXT_SKIP_DRAW,
+        sDexNavUiDataPtr->waterPage ? COMPOUND_STRING("WATER 2/2 L") : COMPOUND_STRING("WATER 1/2 L"));
+    CopyWindowToVram(WINDOW_WATER_LABEL, COPYWIN_FULL);
+    UpdateCursorPosition();
 }
 
 static enum Species DexNavGetSpecies(void)
 {
     if (sDexNavUiDataPtr->cursorRow >= ROW_WATER)
-        return sDexNavUiDataPtr->waterSpecies[SelectedWaterIndex()];
+        return SelectedWaterIndex() < sDexNavUiDataPtr->waterCount
+             ? sDexNavUiDataPtr->waterSpecies[SelectedWaterIndex()] : SPECIES_NONE;
     return sDexNavUiDataPtr->landSpecies[sDexNavUiDataPtr->cursorRow * COL_LAND_COUNT + sDexNavUiDataPtr->cursorCol];
 }
 
@@ -2340,6 +2389,7 @@ static bool8 DexNav_DoGfxSetup(void)
             gMain.state++;
         break;
     case 6:
+        DexNavLoadEncounterData();
         DexNav_InitWindows();
         sDexNavUiDataPtr->cursorRow = ROW_LAND_TOP;
         sDexNavUiDataPtr->cursorCol = 0;
@@ -2348,7 +2398,6 @@ static bool8 DexNav_DoGfxSetup(void)
         break;
     case 7:
         PrintSearchableSpecies(VarGet(DN_VAR_SPECIES) & DEXNAV_MASK_SPECIES);
-        DexNavLoadEncounterData();
         gMain.state++;
         break;
     case 8:
@@ -2454,6 +2503,11 @@ static void Task_DexNavMain(u8 taskId)
             sDexNavUiDataPtr->cursorCol = (sDexNavUiDataPtr->cursorCol + 1) % COL_LAND_COUNT;
         PlaySE(SE_RG_BAG_CURSOR);
         UpdateCursorPosition();
+    }
+    else if (JOY_NEW(L_BUTTON) && sDexNavUiDataPtr->waterCount > WATER_DISPLAY_CAPACITY)
+    {
+        PlaySE(SE_RG_BAG_CURSOR);
+        ChangeWaterPage();
     }
     else if (JOY_NEW(R_BUTTON))
     {

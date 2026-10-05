@@ -37,8 +37,7 @@ gText_PlayerFoundItems::
 	.string "{PLAYER} found {STR_VAR_1} {STR_VAR_2}!$"
 
 gText_PutCoinsAwayInCoinCase::
-	.string "{PLAYER} put the COINS away in\n"
-	.string "the COIN CASE.$"
+	.string "The COINS were added to your total.$"
 
 gText_FoundXCoins::
 	.string "{PLAYER} found\n"
@@ -50,7 +49,7 @@ gText_FoundXItems::
 
 gText_CoinCaseIsFull::
 	.string "Too bad!\n"
-	.string "The COIN CASE is full…$"
+	.string "You can't carry more COINS…$"
 
 gText_NothingToPutThemIn::
 	.string "Too bad!\n"

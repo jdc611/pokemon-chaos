@@ -1,6 +1,15 @@
-# Chaos FireRed continuation — Build 215
+# Chaos FireRed continuation — Build 216
 
 Repository: jdc611/pokemon-chaos. Branch: master. Continue from actual current master; preserve existing systems and locked custom trainer rosters.
+
+## Latest changes — Build 216
+
+- User revised DexNav to exactly two rows of six visible entries for LAND and WATER. Full-size native Pokémon icons and cursor restored (no affine shrink). All baked-in old WATER pixels under the registration strip are cleared; the R button's bottom is rebuilt without old header lettering. Water retains all 15 possible source slots internally, using L to flip between twelve-slot pages only when more than twelve unique species/method entries exist. Empty page-two cells safely return no species. Existing wild tables, exact Surf/rod labels, R toggle registration and Nuzlocke view-only behavior remain intact.
+- Removed the shared Center wall poster/map above and beside the Ranch rear door. Door, warp and PC remain functional.
+- Ranch door and pasture-sign scripts close the message frame before opening the dynamic box menu; this prevents standard-menu graphics from overwriting a still-visible sign frame. The box menu now occupies the screen by itself, and Cancel leaves a clean field.
+- Removed Coin Case gates from coin sellers, gamblers, slot machines and all prize counters in native Celadon and the shared Hoenn Game Corner/roulette scripts, plus hidden coin pickups. Currency remains coins; existing prices, payment checks and MAX_COINS limits are unchanged. Coin collection and capacity messages no longer claim a required case. The optional Restaurant Coin Case gift remains available.
+
+Build 216 compiles successfully. All 12 host regression scripts passed. Native mGBA screenshots confirm two rows per panel, original icon scale, clean R/header background, cleared Center poster and clean Ranch selector/cancel. Native checks passed exact overflow identities, safely empty page-two selections and repeated L page redraws; ordinary Ranch exact-slot withdrawal, held-item handling, Grave guard and rear-door return still pass. On a native save without the Coin Case, coin purchase increased the balance from 0 to 50, the slot-machine callback started, and the Pokémon prize clerk opened the redemption menu. Existing starter override and Center return checks remain green.
 
 ## Latest changes — Build 215
 
