@@ -1,6 +1,16 @@
-# Chaos FireRed continuation — Chaos Arcade phase 2
+# Chaos FireRed continuation — Chaos Arcade phase 3
 
 Repository: jdc611/pokemon-chaos. Branch: master. Continue from actual current master; preserve existing systems and locked custom trainer rosters.
+
+## Latest changes — Chaos Arcade phase 3 (October 5)
+
+- Checkers now uses a small dedicated board table in the southeast arcade corner, with the existing gentleman opponent fixed facing south at a native chair. He asks whether you want to challenge him. The table's three front tiles also trigger that invitation. Declining leaves Coins untouched. This uses the existing gentleman sprite; it does not introduce a custom seated animation. The removed slot bank no longer has stale machine interactions. Rocket/poster progression and entrance/host tiles remain intact.
+- TM/battle-item clerks open separate Support TMs, Attack TMs and Battle Items lists. TMs show actual move names and prices; owned reusable TMs are labelled OWNED. Selection previews native type/category, power, accuracy, PP and the same move description used by the battle interface before confirmation. Equipment previews its native description.
+- Added TM51–TM67: Substitute, Thunder Wave, Defog, Will-O-Wisp, U-turn, Volt Switch, Energy Ball, Flash Cannon, Dark Pulse, Dragon Pulse, Roost, Trick Room, Tailwind, Encore, Earth Power, Moonblast and Aura Sphere. Existing TM/HM item IDs are preserved. Native teachable learnsets are regenerated from existing species move data, with normal compatibility restrictions. All TMs are reusable. Earthquake remains reserved for story placement.
+- Approved starting prices: support 1000–2000 Coins, attacks 1000–2200, equipment 250–1800. Equipment includes Air Balloon, White Herb, Power Herb, Focus Sash, Choice Band/Specs/Scarf, Life Orb and Assault Vest. Current battle configuration restores non-Berry held items after battle, so these are reusable equipment; repeat purchases equip additional Pokémon.
+- Purchases require Erika's badge/Coin Case, sufficient Coins and successful Bag delivery. Owned TMs cannot charge twice; replayed successful purchases are invalid. Cancel leaves Coins unchanged. No cosmetic counter or additional minigames are implemented in this phase. Memory Match and Type Match remain the next games.
+- Validation: successful native FireRed build, all 15 host regression scripts, native mGBA verification of all 17 TM records/reusable flags/HM identity, positive and negative teachable compatibility, actual named menus/category/detail/confirmation screens, cancellation/owned/replay/funds/badge transactions, repeat equipment purchases, front-table invitation and decline, Erika/host/RTC guards, all three Checkers win rewards, and existing 36 Pokémon tier/healthy delivery/MGM checks. The item transaction regression runs in CI.
+- ROM: `Chaos_FireRed_Arcade_Phase3.gba`. Includes the healthy prize generation, explicit ability tiers and Pre-Erika debug warp described below.
 
 ## Follow-up queued for the next implementation — prize health / debug gate test
 

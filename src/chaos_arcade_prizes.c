@@ -5,6 +5,10 @@
 #include "malloc.h"
 #include "pokemon.h"
 #include "random.h"
+#include "move.h"
+#include "battle_main.h"
+#include "party_menu.h"
+#include "text.h"
 #include "script.h"
 #include "script_menu.h"
 #include "string_util.h"
@@ -188,4 +192,127 @@ void ChaosArcadePrizeBuy(void)
     gSpecialVar_Result = delivered;
  done:
     ChaosArcadePrizeCancel();
+}
+
+// Reusable TM unlocks and battle equipment use ordinary bag delivery.
+struct ArcadeItemPrize {enum Item item; u16 price; bool8 support;};
+static const struct ArcadeItemPrize sTmPrizes[] = {
+    {ITEM_TM_REFLECT,1000,TRUE}, {ITEM_TM_LIGHT_SCREEN,1000,TRUE}, {ITEM_TM_SAFEGUARD,1000,TRUE},
+    {ITEM_TM_PROTECT,1000,TRUE}, {ITEM_TM_TAUNT,1200,TRUE}, {ITEM_TM_SUBSTITUTE,1200,TRUE},
+    {ITEM_TM_THUNDER_WAVE,1200,TRUE}, {ITEM_TM_DEFOG,1200,TRUE}, {ITEM_TM_WILL_O_WISP,1500,TRUE},
+    {ITEM_TM_ROOST,1800,TRUE}, {ITEM_TM_TRICK_ROOM,2000,TRUE}, {ITEM_TM_TAILWIND,2000,TRUE}, {ITEM_TM_ENCORE,2000,TRUE},
+    {ITEM_TM_AERIAL_ACE,1000,FALSE}, {ITEM_TM_BRICK_BREAK,1200,FALSE}, {ITEM_TM_THUNDERBOLT,1500,FALSE},
+    {ITEM_TM_ICE_BEAM,1500,FALSE}, {ITEM_TM_FLAMETHROWER,1500,FALSE}, {ITEM_TM_SHADOW_BALL,1500,FALSE},
+    {ITEM_TM_PSYCHIC,1500,FALSE}, {ITEM_TM_SLUDGE_BOMB,1500,FALSE}, {ITEM_TM_U_TURN,1500,FALSE},
+    {ITEM_TM_VOLT_SWITCH,1500,FALSE}, {ITEM_TM_ENERGY_BALL,1800,FALSE}, {ITEM_TM_FLASH_CANNON,1800,FALSE},
+    {ITEM_TM_DARK_PULSE,1800,FALSE}, {ITEM_TM_DRAGON_PULSE,1800,FALSE}, {ITEM_TM_EARTH_POWER,2200,FALSE},
+    {ITEM_TM_MOONBLAST,2200,FALSE}, {ITEM_TM_AURA_SPHERE,2200,FALSE},
+};
+static const struct ArcadeItemPrize sEquipment[] = {
+    {ITEM_AIR_BALLOON,250,FALSE}, {ITEM_WHITE_HERB,250,FALSE}, {ITEM_POWER_HERB,350,FALSE},
+    {ITEM_FOCUS_SASH,500,FALSE}, {ITEM_CHOICE_BAND,1500,FALSE}, {ITEM_CHOICE_SPECS,1500,FALSE},
+    {ITEM_CHOICE_SCARF,1500,FALSE}, {ITEM_LIFE_ORB,1800,FALSE}, {ITEM_ASSAULT_VEST,1800,FALSE},
+};
+static EWRAM_DATA u16 sItemChoice = 0;
+static EWRAM_DATA u8 sItemCategory = 0;
+
+void ChaosArcadeItemCategories(void)
+{
+    static const u8 *const names[] = {COMPOUND_STRING("SUPPORT TMs"),COMPOUND_STRING("ATTACK TMs"),COMPOUND_STRING("BATTLE ITEMS")};
+    struct ListMenuItem *items = NewItems(ARRAY_COUNT(names));
+    if (items != NULL) for (u32 i=0;i<ARRAY_COUNT(names);i++) StringCopy((u8 *)items[i].name,names[i]);
+    sItemChoice = 0xFFFF;
+    sItemCategory = 0xFF;
+    ShowItems(items,ARRAY_COUNT(names));
+}
+void ChaosArcadeItemMenu(void)
+{
+    sItemCategory = gSpecialVar_Result;
+    sItemChoice = 0xFFFF;
+    if (sItemCategory > 2) {ShowItems(NULL,0);return;}
+    u32 total = sItemCategory == 2 ? ARRAY_COUNT(sEquipment) : ARRAY_COUNT(sTmPrizes);
+    const struct ArcadeItemPrize *prizes = sItemCategory == 2 ? sEquipment : sTmPrizes;
+    struct ListMenuItem *items = NewItems(total);
+    u32 count = 0;
+    if (items != NULL)
+    {
+        for (u32 i=0;i<total;i++)
+        {
+            if (sItemCategory < 2 && prizes[i].support != (sItemCategory == 0)) continue;
+            const u8 *name = sItemCategory == 2 ? GetItemName(prizes[i].item) : GetMoveName(ItemIdToBattleMoveId(prizes[i].item));
+            u8 *label = (u8 *)items[count].name;
+            if (sItemCategory < 2 && CheckBagHasItem(prizes[i].item,1))
+                StringCopy(StringCopy(label,name),COMPOUND_STRING(" (OWNED)"));
+            else PriceLabel(label,name,prizes[i].price);
+            items[count++].id = i;
+        }
+        for (u32 i=count;i<total;i++) Free((void *)items[i].name);
+    }
+    ShowItems(items,count);
+}
+static const struct ArcadeItemPrize *ChosenItem(void)
+{
+    if (sItemCategory == 2 && sItemChoice < ARRAY_COUNT(sEquipment)) return &sEquipment[sItemChoice];
+    if (sItemCategory < 2 && sItemChoice < ARRAY_COUNT(sTmPrizes)) return &sTmPrizes[sItemChoice];
+    return NULL;
+}
+static u8 *DetailNumber(u8 *text,u32 value)
+{
+    return value ? ConvertIntToDecimalStringN(text,value,STR_CONV_MODE_LEFT_ALIGN,3) : StringCopy(text,COMPOUND_STRING("--"));
+}
+void ChaosArcadeItemPreview(void)
+{
+    sItemChoice = gSpecialVar_Result;
+    const struct ArcadeItemPrize *prize = ChosenItem();
+    gSpecialVar_Result = 2;
+    if (prize == NULL) return;
+    const u8 *description;
+    u8 *text;
+    if (sItemCategory == 2)
+    {
+        StringCopy(gStringVar1,GetItemName(prize->item));
+        description = GetItemDescription(prize->item);
+        text = StringCopy(gStringVar4,gStringVar1);
+        text = StringCopy(text,COMPOUND_STRING("\p"));
+    }
+    else
+    {
+        static const u8 *const categories[] = {
+            [DAMAGE_CATEGORY_NONE] = COMPOUND_STRING("--"),
+            [DAMAGE_CATEGORY_PHYSICAL] = COMPOUND_STRING("PHYSICAL"),
+            [DAMAGE_CATEGORY_SPECIAL] = COMPOUND_STRING("SPECIAL"),
+            [DAMAGE_CATEGORY_STATUS] = COMPOUND_STRING("STATUS"),
+        };
+        enum Move move = ItemIdToBattleMoveId(prize->item);
+        StringCopy(gStringVar1,GetMoveName(move));
+        text = StringCopy(gStringVar4,gStringVar1);
+        text = StringCopy(text,COMPOUND_STRING("\n"));
+        text = StringCopy(text,gTypesInfo[GetMoveType(move)].name);
+        text = StringCopy(text,COMPOUND_STRING(" / "));
+        text = StringCopy(text,categories[GetMoveCategory(move)]);
+        text = StringCopy(text,COMPOUND_STRING("\pPWR: "));
+        text = DetailNumber(text,GetMovePower(move));
+        text = StringCopy(text,COMPOUND_STRING("  ACC: "));
+        text = DetailNumber(text,GetMoveAccuracy(move));
+        text = StringCopy(text,COMPOUND_STRING("\nPP: "));
+        text = DetailNumber(text,GetMovePP(move));
+        text = StringCopy(text,COMPOUND_STRING("  Reusable TM\p"));
+        description = GetMoveDescription(move);
+    }
+    u8 *end = StringCopy(text,description);
+    WrapFontIdToFit(text,end,FONT_NORMAL,208);
+    ConvertIntToDecimalStringN(gStringVar2,prize->price,STR_CONV_MODE_LEFT_ALIGN,4);
+    gSpecialVar_Result = 0;
+}
+void ChaosArcadeItemBuy(void)
+{
+    const struct ArcadeItemPrize *prize = ChosenItem();
+    gSpecialVar_Result = 4;
+    if (prize == NULL || !FlagGet(FLAG_BADGE04_GET) || !CheckBagHasItem(ITEM_COIN_CASE,1)) return;
+    if (sItemCategory < 2 && CheckBagHasItem(prize->item,1)) {gSpecialVar_Result=5;return;}
+    if (GetCoins() < prize->price) {gSpecialVar_Result=2;return;}
+    if (!AddBagItem(prize->item,1)) {gSpecialVar_Result=3;return;}
+    RemoveCoins(prize->price);
+    gSpecialVar_Result=0;
+    sItemChoice=0xFFFF;
 }

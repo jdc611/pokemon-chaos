@@ -685,3 +685,8 @@ gSpecials::
 	def_special ChaosArcadePrizeCancel
 
 	def_special ChaosArcadePrizeHasHidden
+
+	def_special ChaosArcadeItemCategories, waitstate=1
+	def_special ChaosArcadeItemMenu, waitstate=1
+	def_special ChaosArcadeItemPreview
+	def_special ChaosArcadeItemBuy

@@ -2113,7 +2113,7 @@ const u16 gTilesetPalettes_HoennBuilding[][16] =
     INCGFX_U16("data/tilesets/secondary/hoenn_building_frlg/palettes/15.pal", ".gbapal"),
 };
 
-const u32 gTilesetTiles_GameCorner[] = INCGFX_U32("data/tilesets/secondary/game_corner_frlg/tiles.png", ".4bpp.fastSmol");
+const u32 gTilesetTiles_GameCorner[] = INCBIN_U32("data/tilesets/secondary/game_corner_frlg/chaos_checkers_tiles.4bpp");
 
 const u16 gTilesetPalettes_GameCorner[][16] =
 {

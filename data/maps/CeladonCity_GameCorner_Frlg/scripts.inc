@@ -771,9 +771,10 @@ ChaosArcade_Checkers::
 	goto_if_unset FLAG_BADGE04_GET, ChaosArcade_Construction
 	checkitem ITEM_COIN_CASE
 	goto_if_eq VAR_RESULT, FALSE, CeladonCity_GameCorner_EventScript_SlotMachineNoCoinCase
+	msgbox ChaosArcade_Text_CheckersChallenge, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, ChaosArcade_CheckersDecline
 	closemessage
 	special ChaosArcadeCheckers
-	waitstate
 	releaseall
 	end
 ChaosArcade_Text_RefillSuccess::
@@ -803,3 +804,10 @@ ChaosArcade_OneUp:
 	walk_up
 	face_down
 	step_end
+
+ChaosArcade_CheckersDecline::
+	releaseall
+	end
+ChaosArcade_Text_CheckersChallenge:
+	.string "Care for a game of Checkers?\n"
+	.string "Pull up a chair and challenge me!$"

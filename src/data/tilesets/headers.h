@@ -1104,7 +1104,7 @@ const struct Tileset gTileset_HoennBuilding =
 
 const struct Tileset gTileset_GameCorner =
 {
-    .isCompressed = TRUE,
+    .isCompressed = FALSE,
     .isSecondary = TRUE,
     .tiles = gTilesetTiles_GameCorner,
     .palettes = gTilesetPalettes_GameCorner,

@@ -51,7 +51,24 @@
     F(STEEL_WING) \
     F(SKILL_SWAP) \
     F(SNATCH) \
-    F(OVERHEAT)
+    F(OVERHEAT) \
+    F(SUBSTITUTE) \
+    F(THUNDER_WAVE) \
+    F(DEFOG) \
+    F(WILL_O_WISP) \
+    F(U_TURN) \
+    F(VOLT_SWITCH) \
+    F(ENERGY_BALL) \
+    F(FLASH_CANNON) \
+    F(DARK_PULSE) \
+    F(DRAGON_PULSE) \
+    F(ROOST) \
+    F(TRICK_ROOM) \
+    F(TAILWIND) \
+    F(ENCORE) \
+    F(EARTH_POWER) \
+    F(MOONBLAST) \
+    F(AURA_SPHERE)
 
 #define FOREACH_HM(F) \
     F(CUT) \

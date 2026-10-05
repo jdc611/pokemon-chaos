@@ -102,13 +102,7 @@ CeladonCity_GameCorner_PrizeRoom_EventScript_NotEnoughCoins::
 	end
 
 CeladonCity_GameCorner_PrizeRoom_EventScript_PrizeClerkTMs::
-	checkitem ITEM_COIN_CASE
-	goto_if_eq VAR_RESULT, FALSE, CeladonCity_GameCorner_PrizeRoom_EventScript_NeedCoinCase
-	lock
-	faceplayer
-	showcoinsbox 0, 0
-	msgbox CeladonCity_GameCorner_PrizeRoom_Text_WeExchangeCoinsForPrizes
-	goto CeladonCity_GameCorner_PrizeRoom_EventScript_ChoosePrizeTM
+	goto ChaosArcadeItemCounter
 	end
 
 CeladonCity_GameCorner_PrizeRoom_EventScript_ChoosePrizeTM::
@@ -193,13 +187,7 @@ CeladonCity_GameCorner_PrizeRoom_EventScript_BagFull::
 	end
 
 CeladonCity_GameCorner_PrizeRoom_EventScript_PrizeClerkItems::
-	checkitem ITEM_COIN_CASE
-	goto_if_eq VAR_RESULT, FALSE, CeladonCity_GameCorner_PrizeRoom_EventScript_NeedCoinCase
-	lock
-	faceplayer
-	showcoinsbox 0, 0
-	msgbox CeladonCity_GameCorner_PrizeRoom_Text_WeExchangeCoinsForPrizes
-	goto CeladonCity_GameCorner_PrizeRoom_EventScript_ChoosePrizeItem
+	goto ChaosArcadeItemCounter
 	end
 
 CeladonCity_GameCorner_PrizeRoom_EventScript_ChoosePrizeItem::
@@ -318,3 +306,56 @@ ChaosArcadePrize_ConstructionText:
 ChaosArcadePrize_NoHiddenText:
 	.string "This species has no separate Hidden\n"
 	.string "Ability. Choose Normal or Shiny.$"
+
+ChaosArcadeItemCounter::
+	lock
+	faceplayer
+	checkflag FLAG_BADGE04_GET
+	goto_if_eq VAR_RESULT, FALSE, ChaosArcadePrize_Construction
+	checkitem ITEM_COIN_CASE
+	goto_if_eq VAR_RESULT, FALSE, CeladonCity_GameCorner_PrizeRoom_EventScript_NeedCoinCase
+	showcoinsbox 20, 0
+	msgbox ChaosArcadeItem_Welcome
+ChaosArcadeItem_Category::
+	closemessage
+	special ChaosArcadeItemCategories
+	goto_if_eq VAR_RESULT, 127, CeladonCity_GameCorner_PrizeRoom_EventScript_EndPrizeExchange
+	special ChaosArcadeItemMenu
+	goto_if_eq VAR_RESULT, 127, CeladonCity_GameCorner_PrizeRoom_EventScript_EndPrizeExchange
+	special ChaosArcadeItemPreview
+	goto_if_eq VAR_RESULT, 2, CeladonCity_GameCorner_PrizeRoom_EventScript_EndPrizeExchange
+	msgbox gStringVar4
+	msgbox ChaosArcadeItem_Confirm, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, ChaosArcadeItem_Category
+	special ChaosArcadeItemBuy
+	updatecoinsbox
+	switch VAR_RESULT
+	case 0, ChaosArcadeItem_Received
+	case 2, CeladonCity_GameCorner_PrizeRoom_EventScript_NotEnoughCoins
+	case 3, ChaosArcadeItem_NoSpace
+	case 5, ChaosArcadeItem_Owned
+	goto CeladonCity_GameCorner_PrizeRoom_EventScript_EndPrizeExchange
+ChaosArcadeItem_Received::
+	playse SE_SHOP
+	msgbox ChaosArcadeItem_ReceivedText
+	goto ChaosArcadeItem_Category
+ChaosArcadeItem_NoSpace::
+	msgbox ChaosArcadeItem_NoSpaceText
+	goto ChaosArcadeItem_Category
+ChaosArcadeItem_Owned::
+	msgbox ChaosArcadeItem_OwnedText
+	goto ChaosArcadeItem_Category
+ChaosArcadeItem_Welcome:
+	.string "Our TMs are reusable! Pick a move\n"
+	.string "to see its details before buying.\p"
+	.string "We also stock useful battle items.$"
+ChaosArcadeItem_Confirm:
+	.string "{STR_VAR_1}: {STR_VAR_2} COINS\n"
+	.string "Exchange Coins for this prize?$"
+ChaosArcadeItem_ReceivedText:
+	.string "{PLAYER} received {STR_VAR_1}!$"
+ChaosArcadeItem_NoSpaceText:
+	.string "Your Bag is full. No Coins were used.$"
+ChaosArcadeItem_OwnedText:
+	.string "You already own this reusable TM!\n"
+	.string "No Coins were used.$"
