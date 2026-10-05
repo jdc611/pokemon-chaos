@@ -692,3 +692,10 @@ gSpecials::
 	def_special ChaosArcadeItemMenu, waitstate=1
 	def_special ChaosArcadeItemPreview
 	def_special ChaosArcadeItemBuy
+
+	def_special ChaosArcadeCosmeticMenu, waitstate=1
+	def_special ChaosArcadeCosmeticPreview
+	def_special ChaosArcadeCosmeticBuy
+
+	def_special ChaosArcadeRocketRisk, waitstate=1
+	def_special ChaosArcadeBerryTiming, waitstate=1

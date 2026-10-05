@@ -16,6 +16,20 @@
 #include "constants/flags.h"
 #include "constants/items.h"
 #include "constants/moves.h"
+#include "menu.h"
+#include "window.h"
+#include "bg.h"
+#include "main.h"
+#include "gpu_regs.h"
+#include "palette.h"
+#include "sprite.h"
+#include "overworld.h"
+#include "field_screen_effect.h"
+#include "field_weather.h"
+#include "constants/field_weather.h"
+#include "menu_helpers.h"
+#include "constants/rgb.h"
+#include "chaos_arcade.h"
 
 struct ArcadePrize {enum Species species; u16 price;};
 static const struct ArcadePrize sPrizes[] = {
@@ -188,6 +202,7 @@ void ChaosArcadePrizeBuy(void)
     if (GetCoins() < sPrizeDraft->price) {gSpecialVar_Result = 2; goto done;}
     u32 delivered = GiveScriptedMonToPlayer(&sPrizeDraft->mon, PARTY_SIZE);
     if (delivered == MON_CANT_GIVE) {gSpecialVar_Result = 3; goto done;}
+    StringCopy(gStringVar3,gSpeciesInfo[sPrizeDraft->species].speciesName);
     RemoveCoins(sPrizeDraft->price);
     gSpecialVar_Result = delivered;
  done:
@@ -225,30 +240,88 @@ void ChaosArcadeItemCategories(void)
     sItemCategory = 0xFF;
     ShowItems(items,ARRAY_COUNT(names));
 }
+struct ItemBrowser {u16 tilemap[1024];u8 left, right, cursor, count, ids[32];};
+static EWRAM_DATA struct ItemBrowser *sBrowser;
+static u8 *DetailNumber(u8 *,u32);
+static void BrowserPrint(u8 win,const u8 *text,u32 x,u32 y)
+{
+    static const u8 colors[]={1,2,3};
+    AddTextPrinterParameterized4(win,FONT_SMALL,x,y,0,0,colors,TEXT_SKIP_DRAW,text);
+}
+static void DrawBrowser(void)
+{
+    struct ItemBrowser *b=sBrowser;
+    const struct ArcadeItemPrize *prizes=sItemCategory==2?sEquipment:sTmPrizes;
+    const struct ArcadeItemPrize *p=&prizes[b->ids[b->cursor]];
+    u8 text[512];u8 *end;
+    FillWindowPixelBuffer(b->left,PIXEL_FILL(1));FillWindowPixelBuffer(b->right,PIXEL_FILL(1));
+    u32 start=b->cursor/4*4;
+    for(u32 row=0;row<4 && start+row<b->count;row++){
+        const struct ArcadeItemPrize *q=&prizes[b->ids[start+row]];
+        const u8 *name=sItemCategory==2?GetItemName(q->item):GetMoveName(ItemIdToBattleMoveId(q->item));
+        BrowserPrint(b->left,start+row==b->cursor?COMPOUND_STRING("> "):COMPOUND_STRING("  "),0,row*28);
+        BrowserPrint(b->left,name,8,row*28);
+        if(sItemCategory<2 && CheckBagHasItem(q->item,1))StringCopy(text,COMPOUND_STRING("OWNED"));
+        else ConvertIntToDecimalStringN(text,q->price,STR_CONV_MODE_LEFT_ALIGN,4);
+        BrowserPrint(b->left,text,8,row*28+12);
+        if(sItemCategory==2||!CheckBagHasItem(q->item,1))BrowserPrint(b->left,COMPOUND_STRING("COINS"),38,row*28+12);
+    }
+    BrowserPrint(b->left,COMPOUND_STRING("UP/DOWN  A: Buy"),0,116);
+    if(sItemCategory==2){StringCopy(text,GetItemDescription(p->item));end=text+StringLength(text);WrapFontIdToFit(text,end,FONT_SMALL,120);BrowserPrint(b->right,text,2,4);}
+    else{
+        static const u8 *const cats[]={[DAMAGE_CATEGORY_NONE]=COMPOUND_STRING("--"),[DAMAGE_CATEGORY_PHYSICAL]=COMPOUND_STRING("Physical"),[DAMAGE_CATEGORY_SPECIAL]=COMPOUND_STRING("Special"),[DAMAGE_CATEGORY_STATUS]=COMPOUND_STRING("Status")};
+        enum Move move=ItemIdToBattleMoveId(p->item);
+        end=StringCopy(text,gTypesInfo[GetMoveType(move)].name);StringCopy(StringCopy(end,COMPOUND_STRING(" / ")),cats[GetMoveCategory(move)]);BrowserPrint(b->right,text,2,2);
+        BrowserPrint(b->right,COMPOUND_STRING("PWR"),2,17);DetailNumber(text,GetMovePower(move));BrowserPrint(b->right,text,27,17);
+        BrowserPrint(b->right,COMPOUND_STRING("ACC"),62,17);DetailNumber(text,GetMoveAccuracy(move));BrowserPrint(b->right,text,87,17);
+        BrowserPrint(b->right,COMPOUND_STRING("PP"),2,32);DetailNumber(text,GetMovePP(move));BrowserPrint(b->right,text,18,32);BrowserPrint(b->right,COMPOUND_STRING("Reusable TM"),39,32);
+        StringCopy(text,GetMoveDescription(move));end=text+StringLength(text);WrapFontIdToFit(text,end,FONT_SMALL,120);BrowserPrint(b->right,text,2,51);
+    }
+    PutWindowTilemap(b->left);PutWindowTilemap(b->right);CopyWindowToVram(b->left,COPYWIN_FULL);CopyWindowToVram(b->right,COPYWIN_FULL);
+}
+static void Task_ItemBrowser(u8 task)
+{
+    if(gPaletteFade.active)return;
+    if(JOY_NEW(A_BUTTON|B_BUTTON)){
+        gSpecialVar_Result=JOY_NEW(B_BUTTON)?127:sBrowser->ids[sBrowser->cursor];
+        FreeAllWindowBuffers();UnsetBgTilemapBuffer(0);Free(sBrowser);sBrowser=NULL;
+        DestroyTask(task);SetMainCallback2(CB2_ReturnToFieldContinueScript);return;
+    }
+    if(JOY_NEW(DPAD_UP))sBrowser->cursor=(sBrowser->cursor+sBrowser->count-1)%sBrowser->count;
+    if(JOY_NEW(DPAD_DOWN))sBrowser->cursor=(sBrowser->cursor+1)%sBrowser->count;
+    if(JOY_NEW(DPAD_UP|DPAD_DOWN))DrawBrowser();
+}
+static void BrowserMain(void){RunTasks();AnimateSprites();BuildOamBuffer();UpdatePaletteFade();}
+static void BrowserVBlank(void){LoadOam();ProcessSpriteCopyRequests();TransferPlttBuffer();}
+static void InitBrowser(void)
+{
+    static const struct BgTemplate bgs[]={{.bg=0,.charBaseIndex=0,.mapBaseIndex=31,.priority=1}};
+    static const struct WindowTemplate windows[]={
+        {.bg=0,.tilemapLeft=1,.tilemapTop=3,.width=12,.height=16,.paletteNum=15,.baseBlock=1},
+        {.bg=0,.tilemapLeft=13,.tilemapTop=3,.width=16,.height=16,.paletteNum=15,.baseBlock=193},
+        {.bg=0,.tilemapLeft=1,.tilemapTop=0,.width=28,.height=2,.paletteNum=15,.baseBlock=449},DUMMY_WIN_TEMPLATE};
+    static const u16 colors[]={RGB(2,2,6),RGB(31,31,31),RGB(7,9,15),RGB(22,23,26)};
+    SetVBlankCallback(NULL);ResetVramOamAndBgCntRegs();ResetTasks();ResetSpriteData();FreeAllSpritePalettes();
+    ResetBgsAndClearDma3BusyFlags(0);InitBgsFromTemplates(0,bgs,ARRAY_COUNT(bgs));
+    SetBgTilemapBuffer(0,sBrowser->tilemap);InitWindows(windows);DeactivateAllTextPrinters();
+    LoadPalette(colors,BG_PLTT_ID(15),sizeof(colors));sBrowser->left=0;sBrowser->right=1;
+    FillWindowPixelBuffer(2,PIXEL_FILL(1));BrowserPrint(2,COMPOUND_STRING("CHAOS ARCADE - PRIZE DETAILS"),2,3);
+    PutWindowTilemap(2);CopyWindowToVram(2,COPYWIN_FULL);DrawBrowser();
+    SetGpuReg(REG_OFFSET_DISPCNT,0);ShowBg(0);ResetPaletteFade();
+    BeginNormalPaletteFade(PALETTES_ALL,0,16,0,RGB_BLACK);SetVBlankCallback(BrowserVBlank);CreateTask(Task_ItemBrowser,0);SetMainCallback2(BrowserMain);
+}
+static void Task_LaunchBrowser(u8 task){if(!gPaletteFade.active){DestroyTask(task);SetMainCallback2(InitBrowser);}}
 void ChaosArcadeItemMenu(void)
 {
-    sItemCategory = gSpecialVar_Result;
-    sItemChoice = 0xFFFF;
-    if (sItemCategory > 2) {ShowItems(NULL,0);return;}
-    u32 total = sItemCategory == 2 ? ARRAY_COUNT(sEquipment) : ARRAY_COUNT(sTmPrizes);
-    const struct ArcadeItemPrize *prizes = sItemCategory == 2 ? sEquipment : sTmPrizes;
-    struct ListMenuItem *items = NewItems(total);
-    u32 count = 0;
-    if (items != NULL)
-    {
-        for (u32 i=0;i<total;i++)
-        {
-            if (sItemCategory < 2 && prizes[i].support != (sItemCategory == 0)) continue;
-            const u8 *name = sItemCategory == 2 ? GetItemName(prizes[i].item) : GetMoveName(ItemIdToBattleMoveId(prizes[i].item));
-            u8 *label = (u8 *)items[count].name;
-            if (sItemCategory < 2 && CheckBagHasItem(prizes[i].item,1))
-                StringCopy(StringCopy(label,name),COMPOUND_STRING(" (OWNED)"));
-            else PriceLabel(label,name,prizes[i].price);
-            items[count++].id = i;
-        }
-        for (u32 i=count;i<total;i++) Free((void *)items[i].name);
-    }
-    ShowItems(items,count);
+    sItemCategory=gSpecialVar_Result;sItemChoice=0xFFFF;
+    if(sItemCategory>2){ShowItems(NULL,0);return;}
+    DeactivateAllTextPrinters();
+    sBrowser=AllocZeroed(sizeof(*sBrowser));
+    if(!sBrowser){ShowItems(NULL,0);return;}
+    u32 total=sItemCategory==2?ARRAY_COUNT(sEquipment):ARRAY_COUNT(sTmPrizes);
+    const struct ArcadeItemPrize *prizes=sItemCategory==2?sEquipment:sTmPrizes;
+    for(u32 i=0;i<total;i++)if(sItemCategory==2||prizes[i].support==(sItemCategory==0))sBrowser->ids[sBrowser->count++]=i;
+    FadeScreen(FADE_TO_BLACK,0);CreateTask(Task_LaunchBrowser,0);
 }
 static const struct ArcadeItemPrize *ChosenItem(void)
 {
@@ -301,6 +374,7 @@ void ChaosArcadeItemPreview(void)
     }
     u8 *end = StringCopy(text,description);
     WrapFontIdToFit(text,end,FONT_NORMAL,208);
+    StringCopy(gStringVar3,gStringVar1);
     ConvertIntToDecimalStringN(gStringVar2,prize->price,STR_CONV_MODE_LEFT_ALIGN,4);
     gSpecialVar_Result = 0;
 }
@@ -315,4 +389,53 @@ void ChaosArcadeItemBuy(void)
     RemoveCoins(prize->price);
     gSpecialVar_Result=0;
     sItemChoice=0xFFFF;
+}
+
+// Cosmetics are permanent unlocks; reapplying an owned choice costs nothing.
+struct ArcadeCosmetic {const u8 *name;u16 price;u8 category,value;};
+static const struct ArcadeCosmetic sCosmetics[]={
+ {COMPOUND_STRING("Ranch: Default"),0,0,0},
+ {COMPOUND_STRING("Ranch: Forest"),1000,0,1},
+ {COMPOUND_STRING("Ranch: Beach"),1000,0,2},
+ {COMPOUND_STRING("Ranch: Snow"),1000,0,3},
+ {COMPOUND_STRING("Ranch: Night"),1000,0,4},
+ {COMPOUND_STRING("Rider: Classic"),0,1,0},
+ {COMPOUND_STRING("Rider: Midnight"),750,1,1},
+ {COMPOUND_STRING("Rider: Rocket"),750,1,2},
+};
+static EWRAM_DATA u16 sCosmeticChoice;
+void ChaosArcadeCosmeticMenu(void)
+{
+    ChaosArcadeEnsureSave();sCosmeticChoice=0xFFFF;
+    struct ListMenuItem *items=NewItems(ARRAY_COUNT(sCosmetics));
+    if(items)for(u32 i=0;i<ARRAY_COUNT(sCosmetics);i++){
+        const struct ArcadeCosmetic *c=&sCosmetics[i];
+        if(!c->price || (gSaveBlock3Ptr->arcadeCosmeticsOwned[0]&(1u<<i)))StringCopy(StringCopy((u8 *)items[i].name,c->name),COMPOUND_STRING(" (OWNED)"));
+        else PriceLabel((u8 *)items[i].name,c->name,c->price);
+    }
+    ShowItems(items,ARRAY_COUNT(sCosmetics));
+}
+void ChaosArcadeCosmeticPreview(void)
+{
+    sCosmeticChoice=gSpecialVar_Result;gSpecialVar_Result=2;
+    if(sCosmeticChoice>=ARRAY_COUNT(sCosmetics))return;
+    const struct ArcadeCosmetic *c=&sCosmetics[sCosmeticChoice];
+    StringCopy(gStringVar1,c->name);
+    u32 price=(gSaveBlock3Ptr->arcadeCosmeticsOwned[0]&(1u<<sCosmeticChoice))?0:c->price;
+    ConvertIntToDecimalStringN(gStringVar2,price,STR_CONV_MODE_LEFT_ALIGN,4);
+    StringCopy(gStringVar3,c->category==0?COMPOUND_STRING("Changes the Ranch scenery colors.\nNo gameplay effects."):COMPOUND_STRING("Changes the PokeRider frame colors.\nNo gameplay effects."));
+    gSpecialVar_Result=0;
+}
+void ChaosArcadeCosmeticBuy(void)
+{
+    gSpecialVar_Result=4;
+    if(sCosmeticChoice>=ARRAY_COUNT(sCosmetics)||!FlagGet(FLAG_BADGE04_GET)||!CheckBagHasItem(ITEM_COIN_CASE,1))return;
+    const struct ArcadeCosmetic *c=&sCosmetics[sCosmeticChoice];
+    u32 bit=1u<<sCosmeticChoice;
+    u32 price=(gSaveBlock3Ptr->arcadeCosmeticsOwned[0]&bit)?0:c->price;
+    if(GetCoins()<price){gSpecialVar_Result=2;return;}
+    if(c->category==0)gSaveBlock3Ptr->arcadeRanchTheme=c->value;else gSaveBlock3Ptr->arcadeRiderTheme=c->value;
+    StringCopy(gStringVar3,c->name);
+    gSaveBlock3Ptr->arcadeCosmeticsOwned[0]|=bit;RemoveCoins(price);
+    sCosmeticChoice=0xFFFF;gSpecialVar_Result=0;
 }

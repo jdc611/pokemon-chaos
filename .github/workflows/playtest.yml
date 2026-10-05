@@ -67,6 +67,7 @@ jobs:
           python3 .github/scripts/check_chaos_arcade_prizes.py
           python3 .github/scripts/check_chaos_arcade_items.py
           python3 .github/scripts/check_chaos_arcade_games.py
+          python3 .github/scripts/check_chaos_arcade_phase5.py
           python3 .github/scripts/check_chaos_starter_ability.py
           python3 .github/scripts/check_chaos_abilities.py
           python3 .github/scripts/check_chaos_ranch.py

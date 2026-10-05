@@ -31,6 +31,7 @@ u32 GetCoins(void){return coins;}
 void AddCoins(u32 n){assert(coins+n<=9999);coins+=n;grants++;}
 u32 Random(void){static u32 rng=1;rng=rng*1664525+1013904223;return rng>>16;}
 '''+struct+r'''
+static void Task_NewGames(u8 task){}
 static void DrawGame(void){draws++;}
 static void LeaveGame(u8 task){free(sArcadeGame);sArcadeGame=NULL;}
 static void MakeQuestion(void){sArcadeGame->delay=0;sArcadeGame->answer=sArcadeGame->question%4;}
@@ -74,7 +75,7 @@ with tempfile.TemporaryDirectory() as d:
 # Regression for stale VAR_RESULT gates: checkflag does not assign VAR_RESULT.
 p=(root/'data/maps/CeladonCity_GameCorner_PrizeRoom_Frlg/scripts.inc').read_text()
 assert 'checkflag FLAG_BADGE04_GET' not in p
-assert p.count('goto_if_unset FLAG_BADGE04_GET, ChaosArcadePrize_Construction')==2
+assert p.count('goto_if_unset FLAG_BADGE04_GET, ChaosArcadePrize_Construction')==3
 
 # Protect the approved table art and Rocket/poster bindings during room rebuilds.
 import json, struct, hashlib

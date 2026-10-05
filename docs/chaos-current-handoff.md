@@ -1,6 +1,20 @@
-# Chaos FireRed continuation — Chaos Arcade phase 4
+# Chaos FireRed continuation — Chaos Arcade phase 5
 
 Repository: jdc611/pokemon-chaos. Branch: master. Continue from actual current master; preserve existing systems and locked custom trainer rosters.
+
+## Latest changes — Chaos Arcade phase 5 (October 5)
+
+- Left prize clerk now runs Cosmetics; center remains Pokemon; right remains TMs/Battle Items. All three use the corrected native badge comparison guard and Coin Case requirement.
+- TMs/equipment now use a dedicated two-column browser: four named/price-labelled entries at a time, directional highlighting, immediate type/category/power/accuracy/PP/native battle description on the same screen. Owned reusable TMs retain their guard. A opens the final price confirmation, without an intermediate details message; B leaves. Window buffers are released on select/cancel. Equipment descriptions also update on highlighting.
+- First cosmetic prize stage: Ranch Forest/Beach/Snow/Night scenery palettes at 1000 Coins each; PokeRider Midnight/Rocket frame palettes at 750 each; native Ranch Default/Rider Classic free. Unlocks immediately set the active theme, are permanently recorded in the existing save bitset, and can be freely reapplied from the OWNED choices with zero Coins. No repurchase, stat, movement, encounter or item effects. These are scenery/UI palette themes, not new terrain layouts. PC wallpapers, fixed Ranch props/statues, and all-model outfit recolors remain pending; do not sell already-free native wallpapers or ship recolors for only one player model.
+- Both Celadon exterior doors have native black/yellow striped timber boards before Erika. City MAP_SCRIPT_ON_LOAD updates the tiles (ON_TRANSITION is too early and gets overwritten). After Erika both original doors restore, preserving original native behavior/impassability and existing warp gates. Worker location (39,22) and Rocket/poster progression are unchanged.
+- Added Rocket Risk: 25-Coin round fee only on Start, independent 20% Voltorb bust chance per draw, bank totals 25/50/100/175/300 after 1–5 safe draws; fifth auto-banks. Bust/forfeit loses unbanked winnings, no duplicate reward. Rules/cost are visible before starting. Rapid rounds still need economy timing/playtest review; approved starting payouts do not establish a measured Coins/minute rate.
+- Added free Berry Timing: twenty moving-bar prompts, one A attempt per prompt or timeout, 5 Coins per correct catch plus 20 for a perfect round. Random green target position, visible success/miss feedback, B forfeits. Only the bar redraws while moving to preserve input responsiveness. Rewards pay only after all twenty, once, cap-safe.
+- Four full cabinets occupy the right machine bank: Rocket Risk (11/12,7), Memory (14/15,7), Type (16/17,7), Berry (11/12,11), with clear front tiles. Former scientist moves to clear floor (9,11), preserving dialogue/local ID. Old printer interaction and remaining bank footer are removed. Existing perfect Checkers table art, placement and opponent remain unchanged.
+- Current games: native slots, Checkers, Memory Match, Type Match, Rocket Risk and Berry Timing. Voltorb Flip, High-Low, Lucky Type Wheel, High-Roller/slot payout overhaul and Daily Challenge remain pending. No final common-wheel types/daily reset are invented.
+- Native Coin windows reuse STR_VAR_1/4. Show the Coin window before item preview, and keep receipt names in STR_VAR_3, so confirmations/receipts cannot become the current Coin number. Pokemon and cosmetic receipts use the same protection.
+- Validation: native FireRed build succeeds; all 17 host checks pass. Native mGBA verifies both construction/open doors, all eight cosmetic/default selections and free zero-Coin reapplication/persisted ownership, all Ranch/Rider palettes, actual left-clerk cosmetic purchase, highlight scrolling/detail buffers and matching VRAM, actual TM confirmation/purchase/name receipt, real A interactions at both new cabinets, Rocket Risk five-draw win/bust/no repeated payout, Berry perfect twenty-hit 120-Coin reward and clean field returns. Initial starter/filter regressions remain green.
+- No save layout changes. Shared magic initialization is exposed without changing existing refill/clock data semantics. ROM: `Chaos_FireRed_Arcade_Phase5.gba`.
 
 ## Latest changes — Chaos Arcade phase 4 (October 5)
 

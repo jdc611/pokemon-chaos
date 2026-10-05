@@ -1,4 +1,5 @@
 #include "global.h"
+#include "chaos_arcade.h"
 #include "battle_pyramid.h"
 #include "bg.h"
 #include "fieldmap.h"
@@ -1005,6 +1006,7 @@ static void LoadTilesetPalette(struct Tileset const *tileset, u16 destOffset, u1
             ApplyGlobalTintToPaletteEntries(destOffset, size >> 1);
         }
     }
+    ChaosArcadeRanchPalette(destOffset,size/2,skipFaded);
 }
 
 void CopyPrimaryTilesetToVram(struct MapLayout const *mapLayout)

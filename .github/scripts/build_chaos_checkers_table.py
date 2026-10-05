@@ -40,15 +40,15 @@ a+=bytes(6*4)
 # its existing metatile IDs, pixels and interaction area remain unchanged.
 raw=(p/'chaos_checkers_tiles.4bpp').read_bytes()
 metas=(p/'metatiles.bin').read_bytes();attrs=(p/'metatile_attributes.bin').read_bytes()
-for cabinet in range(2):
+for cabinet in range(4):
  def cabinet_pixel(x,y):
   if x<2 or x>29:return 0
   if y<2:return 0
-  if x in (2,29) or y in (2,44):return 8 if cabinet==0 else 15
+  if x in (2,29) or y in (2,44):return (8,15,6,9)[cabinet]
   if y<7:return 1
   if 5<=x<=26 and 9<=y<=27:
    if x in (5,26) or y in (9,27):return 4
-   if cabinet==0:
+   if cabinet in (0,2):
     return 15 if (x//5+y//5)%2 else 9
    return 9 if (x-15)**2+(y-18)**2<36 else 1
   if y<30:return 12

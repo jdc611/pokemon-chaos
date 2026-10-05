@@ -186,7 +186,7 @@ CeladonCity_GameCorner_PrizeRoom_EventScript_BagFull::
 	end
 
 CeladonCity_GameCorner_PrizeRoom_EventScript_PrizeClerkItems::
-	goto ChaosArcadeItemCounter
+	goto ChaosArcadeCosmeticCounter
 	end
 
 CeladonCity_GameCorner_PrizeRoom_EventScript_ChoosePrizeItem::
@@ -290,11 +290,11 @@ ChaosArcadePrize_FilterText:
 	.string "You can keep it in PC Storage.$"
 
 ChaosArcadePrize_ReceivedParty:
-	.string "{PLAYER} received {STR_VAR_1}!\n"
+	.string "{PLAYER} received {STR_VAR_3}!\n"
 	.string "Your new partner joined your party.$"
 
 ChaosArcadePrize_ReceivedPC:
-	.string "{PLAYER} received {STR_VAR_1}!\n"
+	.string "{PLAYER} received {STR_VAR_3}!\n"
 	.string "Your new partner went to PC Storage.$"
 
 ChaosArcadePrize_ConstructionText:
@@ -318,11 +318,12 @@ ChaosArcadeItem_Category::
 	closemessage
 	special ChaosArcadeItemCategories
 	goto_if_eq VAR_RESULT, 127, CeladonCity_GameCorner_PrizeRoom_EventScript_EndPrizeExchange
+	hidecoinsbox
 	special ChaosArcadeItemMenu
+	showcoinsbox 20, 0
 	goto_if_eq VAR_RESULT, 127, CeladonCity_GameCorner_PrizeRoom_EventScript_EndPrizeExchange
 	special ChaosArcadeItemPreview
 	goto_if_eq VAR_RESULT, 2, CeladonCity_GameCorner_PrizeRoom_EventScript_EndPrizeExchange
-	msgbox gStringVar4
 	msgbox ChaosArcadeItem_Confirm, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, ChaosArcadeItem_Category
 	special ChaosArcadeItemBuy
@@ -344,16 +345,53 @@ ChaosArcadeItem_Owned::
 	msgbox ChaosArcadeItem_OwnedText
 	goto ChaosArcadeItem_Category
 ChaosArcadeItem_Welcome:
-	.string "Our TMs are reusable! Pick a move\n"
-	.string "to see its details before buying.\p"
+	.string "Our TMs are reusable! Highlight a move\n"
+	.string "to see its details alongside the list.\p"
 	.string "We also stock useful battle items.$"
 ChaosArcadeItem_Confirm:
 	.string "{STR_VAR_1}: {STR_VAR_2} COINS\n"
 	.string "Exchange Coins for this prize?$"
 ChaosArcadeItem_ReceivedText:
-	.string "{PLAYER} received {STR_VAR_1}!$"
+	.string "{PLAYER} received {STR_VAR_3}!$"
 ChaosArcadeItem_NoSpaceText:
 	.string "Your Bag is full. No Coins were used.$"
 ChaosArcadeItem_OwnedText:
 	.string "You already own this reusable TM!\n"
 	.string "No Coins were used.$"
+
+ChaosArcadeCosmeticCounter::
+ lock
+ faceplayer
+ goto_if_unset FLAG_BADGE04_GET, ChaosArcadePrize_Construction
+ checkitem ITEM_COIN_CASE
+ goto_if_eq VAR_RESULT, FALSE, CeladonCity_GameCorner_PrizeRoom_EventScript_NeedCoinCase
+ showcoinsbox 20, 0
+ msgbox ChaosArcadeCosmetic_Welcome
+ChaosArcadeCosmetic_Root::
+ closemessage
+ special ChaosArcadeCosmeticMenu
+ goto_if_eq VAR_RESULT, 127, CeladonCity_GameCorner_PrizeRoom_EventScript_EndPrizeExchange
+ special ChaosArcadeCosmeticPreview
+ goto_if_eq VAR_RESULT, 2, CeladonCity_GameCorner_PrizeRoom_EventScript_EndPrizeExchange
+ msgbox ChaosArcadeCosmetic_Confirm, MSGBOX_YESNO
+ goto_if_eq VAR_RESULT, NO, ChaosArcadeCosmetic_Root
+ special ChaosArcadeCosmeticBuy
+ updatecoinsbox
+ goto_if_eq VAR_RESULT, 2, CeladonCity_GameCorner_PrizeRoom_EventScript_NotEnoughCoins
+ goto_if_ne VAR_RESULT, 0, CeladonCity_GameCorner_PrizeRoom_EventScript_EndPrizeExchange
+ playse SE_SHOP
+ msgbox ChaosArcadeCosmetic_Applied
+ goto ChaosArcadeCosmetic_Root
+ChaosArcadeCosmetic_Welcome:
+ .string "Welcome to the cosmetic counter!\n"
+ .string "Unlock themes once, change them free!\p"
+ .string "Your selection applies immediately.\n"
+ .string "Default themes are always free.$"
+ChaosArcadeCosmetic_Confirm:
+ .string "{STR_VAR_1}: {STR_VAR_2} COINS\n"
+ .string "{STR_VAR_3}\p"
+ .string "Unlock and apply this theme?\n"
+ .string "Owned themes can be applied free.$"
+ChaosArcadeCosmetic_Applied:
+ .string "{STR_VAR_3} applied!\n"
+ .string "Enjoy your new look!$"

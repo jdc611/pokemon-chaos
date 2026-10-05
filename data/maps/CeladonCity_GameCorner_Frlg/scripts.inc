@@ -844,3 +844,31 @@ ChaosArcade_TypeWelcome:
  .string "Choose a super-effective attack!\p"
  .string "Standard type chart, no abilities.\n"
  .string "Free entry! Want to play?$"
+
+ChaosArcade_RiskCabinet::
+ lockall
+ goto_if_unset FLAG_BADGE04_GET, ChaosArcade_Construction
+ checkitem ITEM_COIN_CASE
+ goto_if_eq VAR_RESULT, FALSE, CeladonCity_GameCorner_EventScript_SlotMachineNoCoinCase
+ msgbox ChaosArcade_RiskWelcome, MSGBOX_YESNO
+ goto_if_eq VAR_RESULT, NO, ChaosArcade_CheckersDecline
+ closemessage
+ special ChaosArcadeRocketRisk
+ releaseall
+ end
+ChaosArcade_RiskWelcome:
+ .string "ROCKET RISK! 25 COINS per round.\nRisk your winnings or bank them!\pEach draw has a 20% bust chance.\nWant to play?$"
+
+ChaosArcade_BerryCabinet::
+ lockall
+ goto_if_unset FLAG_BADGE04_GET, ChaosArcade_Construction
+ checkitem ITEM_COIN_CASE
+ goto_if_eq VAR_RESULT, FALSE, CeladonCity_GameCorner_EventScript_SlotMachineNoCoinCase
+ msgbox ChaosArcade_BerryWelcome, MSGBOX_YESNO
+ goto_if_eq VAR_RESULT, NO, ChaosArcade_CheckersDecline
+ closemessage
+ special ChaosArcadeBerryTiming
+ releaseall
+ end
+ChaosArcade_BerryWelcome:
+ .string "BERRY TIMING! Catch twenty berries.\nPress A in the green window!\pFree entry! Timing earns COINS.\nWant to play?$"

@@ -28,7 +28,7 @@
 #include "constants/rgb.h"
 
 #define ARCADE_SAVE_MAGIC 0x43415231
-static void EnsureArcadeSave(void)
+void ChaosArcadeEnsureSave(void)
 {
     if (gSaveBlock3Ptr->arcadeMagic != ARCADE_SAVE_MAGIC)
     {
@@ -64,7 +64,7 @@ static u32 ArcadeRealTime(void)
 // Result: 0 awarded, 1 waiting, 2 no RTC, 3 full, 4 no case/badge.
 void ChaosArcadeRefill(void)
 {
-    EnsureArcadeSave();
+    ChaosArcadeEnsureSave();
     gSpecialVar_Result = 4;
     if (!FlagGet(FLAG_BADGE04_GET) || !CheckBagHasItem(ITEM_COIN_CASE, 1))
         return;

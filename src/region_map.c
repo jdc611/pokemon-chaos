@@ -1,4 +1,5 @@
 #include "global.h"
+#include "chaos_arcade.h"
 #include "main.h"
 #include "text.h"
 #include "menu.h"
@@ -2077,6 +2078,7 @@ void CB2_OpenFlyMap(void)
         break;
     case 7:
         LoadPalette(sRegionMapFramePal, BG_PLTT_ID(1), sizeof(sRegionMapFramePal));
+        ChaosArcadeRiderPalette();
         PutWindowTilemap(WIN_FLY_TO_WHERE);
         FillWindowPixelBuffer(WIN_FLY_TO_WHERE, PIXEL_FILL(0));
         AddTextPrinterParameterized(WIN_FLY_TO_WHERE, FONT_NORMAL, gText_FlyToWhere, 0, 1, 0, NULL);

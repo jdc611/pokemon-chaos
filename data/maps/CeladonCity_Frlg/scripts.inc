@@ -1,5 +1,6 @@
 CeladonCity_Frlg_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, CeladonCity_OnTransition
+	map_script MAP_SCRIPT_ON_LOAD, ChaosArcade_ConstructionDoors
 	.byte 0
 
 CeladonCity_OnTransition::
@@ -236,3 +237,14 @@ ChaosArcade_Text_Construction::
 	.string "are coming soon!\p"
 	.string "Come back with ERIKA's\n"
 	.string "RAINBOW BADGE!$"
+
+ChaosArcade_RestoreDoors::
+	setmetatile 34, 21, 0x15B, 1
+	setmetatile 39, 20, 0x15B, 1
+	return
+
+ChaosArcade_ConstructionDoors::
+	setmetatile 34, 21, 0x370, 1
+	setmetatile 39, 20, 0x371, 1
+	call_if_set FLAG_BADGE04_GET, ChaosArcade_RestoreDoors
+	end
