@@ -1,6 +1,6 @@
 # Pokémon Chaos FireRed — Game Corner balance proposal
 
-Updated October 5, 2026. **Review draft. Prices, odds, payouts and timings below are proposals, not approved implementation values.** Build 216 remains the current ROM; this document does not change runtime behavior.
+Updated October 5, 2026. **Starting economy accepted by the user on October 5, 2026. Prices/payouts/odds are approved starting targets; actual timing and measured returns still require prototype testing.** Build 216 remains the current ROM; this document does not change runtime behavior.
 
 ## Locked decisions carried forward
 
@@ -155,7 +155,7 @@ Ownership is permanent. Buy previews an unowned choice, shows its cost, confirms
 
 ## Review and validation still required
 
-1. Approve/revise the numerical proposal and resolve Voltorb Flip entry, refill interval and Daily Challenge reset details.
+1. Starting numerical balance accepted October 5. Confirm technical refill/clock recovery and Daily Challenge reset behavior before implementation; verify prototype economics and revise with playtest evidence.
 2. Prototype games and measure net coins per active minute at realistic accuracy/win rates. Verify exact slot odds from actual reel logic, not just target table arithmetic.
 3. Audit native TMs, new TM compatibility and alternate acquisition paths before locking the final list.
 4. Preview the arcade layout and each cosmetic in all applicable themes/models. Preserve Rocket story tiles/events, entrance movement and Ranch object limits.

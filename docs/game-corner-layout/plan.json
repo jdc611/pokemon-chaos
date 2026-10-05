@@ -1,0 +1,40 @@
+{
+  "status": "layout proposal awaiting review; approved starting economy is separate",
+  "arcade": {
+    "width": 18, "height": 15,
+    "protected_story": [10, 0, 8, 4],
+    "entrances": [[9, 13], [10, 13], [11, 13]],
+    "zones": [
+      {"id": "daily", "name": "Daily Challenge", "short": "Challenge", "rect": [1, 2, 3, 2], "color": "#7356ab"},
+      {"id": "coins", "name": "Coin refill / small purchase", "short": "Coin desk", "rect": [5, 2, 3, 2], "color": "#4c79a8"},
+      {"id": "1", "name": "Standard Slots (four)", "short": "1 · Slots", "rect": [1, 5, 4, 2], "color": "#4c79a8"},
+      {"id": "2", "name": "High-Roller Slots (two)", "short": "2 · High-Roller", "rect": [1, 8, 4, 2], "color": "#b48428"},
+      {"id": "3", "name": "Voltorb Flip", "short": "3 · Flip", "rect": [6, 5, 2, 2], "color": "#458b75"},
+      {"id": "4", "name": "Memory Match", "short": "4 · Memory", "rect": [6, 8, 2, 2], "color": "#458b75"},
+      {"id": "5", "name": "Berry Timing", "short": "5 · Timing", "rect": [6, 11, 2, 2], "color": "#458b75"},
+      {"id": "6", "name": "Lucky Type Wheel", "short": "6 · Wheel", "rect": [12, 5, 2, 2], "color": "#b48428"},
+      {"id": "7", "name": "Rocket Risk", "short": "7 · Risk", "rect": [15, 5, 2, 2], "color": "#b48428"},
+      {"id": "8", "name": "Type Match", "short": "8 · Types", "rect": [12, 8, 2, 2], "color": "#458b75"},
+      {"id": "9", "name": "High-Low", "short": "9 · High-Low", "rect": [15, 8, 2, 2], "color": "#b48428"},
+      {"id": "10", "name": "Pokémon Checkers", "short": "10 · Checkers", "rect": [12, 11, 4, 2], "color": "#7356ab"}
+    ]
+  },
+  "ranch": {
+    "width": 48, "height": 40,
+    "building": [21, 0, 7, 7], "door": [24, 6], "sign": [22, 8],
+    "path": [24, 7, 2, 32],
+    "decorations": [
+      {"id": "rhydon", "name": "Rhydon statue", "short": "Rhydon", "rect": [4, 3, 2, 2], "color": "#707c87"},
+      {"id": "lapras", "name": "Lapras statue", "short": "Lapras", "rect": [10, 3, 2, 2], "color": "#707c87"},
+      {"id": "snorlax", "name": "Snorlax statue", "short": "Snorlax", "rect": [16, 3, 2, 2], "color": "#707c87"},
+      {"id": "venusaur", "name": "Venusaur statue", "short": "Venusaur", "rect": [30, 3, 2, 2], "color": "#707c87"},
+      {"id": "charizard", "name": "Charizard statue", "short": "Charizard", "rect": [36, 3, 2, 2], "color": "#707c87"},
+      {"id": "blastoise", "name": "Blastoise statue", "short": "Blastoise", "rect": [42, 3, 2, 2], "color": "#707c87"},
+      {"id": "bench_pair", "name": "Bench pair, one unlock", "short": "Bench", "rect": [21, 13, 2, 1], "color": "#997143"},
+      {"id": "bench_pair", "name": "Bench pair, one unlock", "short": "Bench", "rect": [26, 13, 2, 1], "color": "#997143"},
+      {"id": "flowers", "name": "Flower beds, one unlock", "short": "Flowers", "rect": [16, 13, 2, 2], "color": "#bc6093"},
+      {"id": "flowers", "name": "Flower beds, one unlock", "short": "Flowers", "rect": [30, 13, 2, 2], "color": "#bc6093"},
+      {"id": "fountain", "name": "Small fountain", "short": "Fountain", "rect": [7, 24, 4, 4], "color": "#4c93be"}
+    ]
+  }
+}
