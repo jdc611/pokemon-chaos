@@ -18,6 +18,7 @@ code=r'''
 #include <stdlib.h>
 #include <string.h>
 typedef unsigned char u8,bool8;typedef unsigned short u16;typedef unsigned u32;typedef int bool32;
+#define USE_RANDOM_IVS 32
 #define TRUE 1
 #define FALSE 0
 #define EWRAM_DATA
@@ -45,7 +46,10 @@ bool32 CheckBagHasItem(int i,int n){return coinCase;}
 u16 GetCoins(void){return coins;}
 void RemoveCoins(u16 n){assert(coins>=n);coins-=n;charges++;}
 u32 GiveScriptedMonToPlayer(struct Pokemon *p,u8 slot){assert(slot==6);deliveries++;if(delivery!=2)received=*p;return delivery;}
-void CreateMon(struct Pokemon *p,int species,u8 level,u32 personality,int ot){memset(p,0,sizeof(*p));p->species=species;p->level=level;p->ability=ABILITY_NORMAL;}
+u32 Random32(void){return 12345;}
+void GiveMonInitialMoveset(struct Pokemon *p){p->move=1;}
+void HealPokemon(struct Pokemon *p){}
+void CreateMonWithIVs(struct Pokemon *p,int species,u8 level,u32 personality,int ot,u8 iv){memset(p,0,sizeof(*p));p->species=species;p->level=level;p->ability=ABILITY_NORMAL;}
 void SetMonData(struct Pokemon *p,int field,const void *v){if(field==1){p->slot=*(const u8 *)v;p->marker=0;}else if(field==2)p->marker=*(const u16 *)v;else p->shiny=*(const u8 *)v;}
 void SetMonMoveSlot(struct Pokemon *p,int m,int slot){p->move=m;}
 bool32 TrySetMonAbilityToActiveRunFilter(struct Pokemon *p){return legal;}

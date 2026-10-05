@@ -4,6 +4,7 @@
 #include "item.h"
 #include "malloc.h"
 #include "pokemon.h"
+#include "random.h"
 #include "script.h"
 #include "script_menu.h"
 #include "string_util.h"
@@ -22,7 +23,7 @@ static const enum Species sRotomForms[] = {SPECIES_ROTOM, SPECIES_ROTOM_HEAT, SP
 static const u8 *const sRotomNames[] = {COMPOUND_STRING("ROTOM"), COMPOUND_STRING("ROTOM (HEAT)"), COMPOUND_STRING("ROTOM (WASH)"), COMPOUND_STRING("ROTOM (FROST)"), COMPOUND_STRING("ROTOM (FAN)"), COMPOUND_STRING("ROTOM (MOW)")};
 static const enum Move sRotomMoves[] = {MOVE_NONE, MOVE_OVERHEAT, MOVE_HYDRO_PUMP, MOVE_BLIZZARD, MOVE_AIR_SLASH, MOVE_LEAF_STORM};
 static const u16 sSurcharges[] = {0, 1000, 3000, 4000};
-static const u8 *const sTiers[] = {COMPOUND_STRING("NORMAL"), COMPOUND_STRING("HIDDEN ABILITY"), COMPOUND_STRING("SHINY"), COMPOUND_STRING("SHINY + HA")};
+static const u8 *const sTiers[] = {COMPOUND_STRING("NORMAL ABILITY"), COMPOUND_STRING("HIDDEN ABILITY"), COMPOUND_STRING("SHINY"), COMPOUND_STRING("SHINY + HA")};
 struct PrizeDraft {struct Pokemon mon; enum Species species; u16 price; u8 prize, form; bool8 prepared;};
 static EWRAM_DATA struct PrizeDraft *sPrizeDraft = NULL;
 
@@ -121,6 +122,11 @@ void ChaosArcadeRotomPick(void)
     sPrizeDraft->form = form;
     gSpecialVar_Result = 0;
 }
+void ChaosArcadePrizeHasHidden(void)
+{
+    gSpecialVar_Result = sPrizeDraft != NULL && HasHidden(sPrizeDraft->species);
+}
+
 void ChaosArcadeTierMenu(void)
 {
     if (sPrizeDraft == NULL || sPrizeDraft->prize >= ARRAY_COUNT(sPrizes)) {ShowItems(NULL, 0); return;}
@@ -142,7 +148,8 @@ void ChaosArcadePrizePrepare(void)
     gSpecialVar_Result = 2;
     if (sPrizeDraft == NULL || sPrizeDraft->prize >= ARRAY_COUNT(sPrizes) || tier >= ARRAY_COUNT(sTiers) || ((tier & 1) && !HasHidden(sPrizeDraft->species))) return;
     struct Pokemon *mon = &sPrizeDraft->mon;
-    CreateMon(mon, sPrizeDraft->species, 20, 0, OTID_STRUCT_PLAYER_ID);
+    CreateMonWithIVs(mon, sPrizeDraft->species, 20, Random32(), OTID_STRUCT_PLAYER_ID, USE_RANDOM_IVS);
+    GiveMonInitialMoveset(mon);
     if (tier & 1)
     {
         u8 slot = 2;
@@ -159,6 +166,7 @@ void ChaosArcadePrizePrepare(void)
     }
     if (sPrizeDraft->form != 0)
         SetMonMoveSlot(mon, sRotomMoves[sPrizeDraft->form], 0);
+    HealPokemon(mon);
     sPrizeDraft->price = sPrizes[sPrizeDraft->prize].price + sSurcharges[tier];
     sPrizeDraft->prepared = TRUE;
     StringCopy(gStringVar1, sPrizes[sPrizeDraft->prize].species == SPECIES_ROTOM ? sRotomNames[sPrizeDraft->form] : gSpeciesInfo[sPrizeDraft->species].speciesName);

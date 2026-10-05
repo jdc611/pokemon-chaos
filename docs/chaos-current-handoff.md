@@ -2,6 +2,13 @@
 
 Repository: jdc611/pokemon-chaos. Branch: master. Continue from actual current master; preserve existing systems and locked custom trainer rosters.
 
+## Follow-up queued for the next implementation — prize health / debug gate test
+
+- Fixed raw prize creation: use native `CreateMonWithIVs` with random personality/random IVs, learn the level-appropriate initial moveset, then heal HP/status/PP. The previous raw `CreateMon` call left HP/stats/IVs/moves uninitialized. MGM still applies its existing rules at delivery; premium ability/shiny/form properties remain preserved.
+- Label the base tier NORMAL ABILITY. Supported distinct HAs remain an explicit premium choice. Species without a distinct HA (Rotom/Zorua) now explain why only Normal/Shiny are offered before the menu; no fake HA is invented.
+- Debug -> Kanto Warps -> Celadon (Pre-Erika): removes only Erika's badge, restores the construction worker, and lands outside the arcade at (34,22). Other badges, Coin Case and welcome ownership remain intact. This intentionally changes the badge for construction testing; Toggle All Badges can restore access afterward.
+- Local native build and prize/shortcut host tests pass. Native mGBA verifies full positive HP and initial moves across all 36 supported prize tiers, the actual eligible HA menu/purchase preview, correct MGM/ordinary stats and existing safe transactions. Actual debug menu warp preserves other badges and confirms the visible worker blocks entry.
+
 ## Latest changes — Chaos Arcade phase 2 (October 5)
 
 User tested Checkers successfully and requested visual polish plus a persistent corner Coin banner. This phase also implements the approved Pokémon prize counter. Local test ROM: `Chaos_FireRed_Arcade_Phase2.gba`. This remains an incremental arcade release.

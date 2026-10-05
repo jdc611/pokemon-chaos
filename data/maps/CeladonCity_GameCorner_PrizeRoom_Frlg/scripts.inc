@@ -33,6 +33,12 @@ ChaosArcadePrize_Rotom::
 	goto_if_eq VAR_RESULT, 2, ChaosArcadePrize_Cancel
 
 ChaosArcadePrize_Tier::
+	special ChaosArcadePrizeHasHidden
+	goto_if_eq VAR_RESULT, TRUE, ChaosArcadePrize_TierMenu
+	msgbox ChaosArcadePrize_NoHiddenText
+	closemessage
+
+ChaosArcadePrize_TierMenu::
 	special ChaosArcadeTierMenu
 	goto_if_eq VAR_RESULT, 127, ChaosArcadePrize_Cancel
 	special ChaosArcadePrizePrepare
@@ -308,3 +314,7 @@ ChaosArcadePrize_ConstructionText:
 	.string "We're under construction! Exciting\n"
 	.string "new games and prizes are coming.\p"
 	.string "Come back with ERIKA's RAINBOW BADGE!$"
+
+ChaosArcadePrize_NoHiddenText:
+	.string "This species has no separate Hidden\n"
+	.string "Ability. Choose Normal or Shiny.$"

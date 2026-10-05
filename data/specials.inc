@@ -683,3 +683,5 @@ gSpecials::
 	def_special ChaosArcadePrizePrepare
 	def_special ChaosArcadePrizeBuy
 	def_special ChaosArcadePrizeCancel
+
+	def_special ChaosArcadePrizeHasHidden

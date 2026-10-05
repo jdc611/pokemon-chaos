@@ -293,6 +293,7 @@ static void DebugAction_Util_Fly(u8 taskId);
 static void DebugAction_Util_WatchCredits(u8 taskId);
 static void DebugAction_Util_CheatStart(u8 taskId);
 static void DebugAction_Util_StarterTest(u8 taskId);
+
 static void DebugAction_Util_FieldMoveCut(u8 taskId);
 static void DebugAction_Util_FieldMoveRockSmash(u8 taskId);
 static void DebugAction_Util_FieldMoveStrength(u8 taskId);
@@ -302,6 +303,7 @@ static void DebugAction_Util_FieldMoveDive(u8 taskId);
 static void DebugAction_Util_FieldMoveFlash(u8 taskId);
 static void DebugAction_Util_MirageTowerWarp(u8 taskId);
 static void DebugAction_KantoWarp(u8 taskId, const void *params);
+static void DebugAction_CeladonPreErika(u8 taskId);
 
 static void DebugAction_TimeMenu_ChangeTimeOfDay(u8 taskId);
 static void DebugAction_TimeMenu_ChangeWeekdays(u8 taskId);
@@ -431,6 +433,18 @@ static void DebugAction_KantoWarp(u8 taskId, const void *params)
     DoWarp();
     ResetInitialPlayerAvatarState();
 }
+
+// Explicit test shortcut: remove only Erika's badge and restore the worker.
+static void DebugAction_CeladonPreErika(u8 taskId)
+{
+    FlagClear(FLAG_BADGE04_GET);
+    FlagClear(FLAG_HIDE_CHAOS_ARCADE_WORKER);
+    Debug_DestroyMenu_Full(taskId);
+    SetWarpDestination(MAP_GROUP(MAP_CELADON_CITY), MAP_NUM(MAP_CELADON_CITY), WARP_ID_NONE, 34, 22);
+    DoWarp();
+    ResetInitialPlayerAvatarState();
+}
+
 
 static void DebugAction_Util_FieldMoveCut(u8 taskId)
 {
@@ -726,6 +740,7 @@ static const struct KantoDebugWarp sKantoWarp_Route3       = { MAP_ROUTE3, 2, 7 
 
 static const struct DebugMenuOption sDebugMenu_Actions_KantoWarps[] __attribute__((unused)) =
 {
+    { COMPOUND_STRING("Celadon (Pre-Erika)"), DebugAction_CeladonPreErika },
     { COMPOUND_STRING("Pallet Town"),       DebugAction_KantoWarp, &sKantoWarp_Pallet },
     { COMPOUND_STRING("Route 1"),           DebugAction_KantoWarp, &sKantoWarp_Route1 },
     { COMPOUND_STRING("Viridian City"),     DebugAction_KantoWarp, &sKantoWarp_Viridian },
