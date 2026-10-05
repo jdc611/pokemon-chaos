@@ -557,6 +557,18 @@ struct PartyState
     u32 isKnockedOff:1;
     u32 freezeTurns:2;
     u32 padding:3;
+    u16 chaosBaseMaxHp;
+    u16 chaosHeroic:1;
+    u16 chaosBond:1;
+    u16 chaosShieldBroken:1;
+    u16 chaosDisguiseBroken:1;
+    u16 chaosIceBroken:1;
+    u16 chaosIceRestored:1;
+    u16 chaosComplete:1;
+    u16 chaosBlade:1;
+    u16 chaosHangry:1;
+    u16 chaosEntryApplied:1;
+    u16 chaosHitPopup:1;
     enum Item usedHeldItem;
 };
 

@@ -6449,3 +6449,10 @@ BattleScript_BelchFails::
 	printstring STRINGID_BELCHCANTSELECT
 	waitmessage B_WAIT_TIME_LONG
 	goto BattleScript_MoveEnd
+
+BattleScript_ChaosAbilityState::
+	call BattleScript_AbilityPopUpScripting
+	printstring STRINGID_CHAOSABILITYSTATE
+	waitmessage B_WAIT_TIME_LONG
+	trystatchanges BS_EFFECT_BATTLER, STAT_CHANGE_IGNORE_SELF
+	return

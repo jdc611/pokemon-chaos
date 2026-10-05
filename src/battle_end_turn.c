@@ -1,4 +1,5 @@
 #include "global.h"
+#include "chaos_abilities.h"
 #include "chaos_mega.h"
 #include "battle.h"
 #include "battle_hold_effects.h"
@@ -1396,6 +1397,9 @@ static bool32 HandleEndTurnFormChange(enum BattlerId battler)
         return FALSE;
 
     enum Ability ability = GetBattlerAbility(battler);
+
+    if (ChaosAbilityEndTurn(battler))
+        return TRUE;
 
     if (TryBattleFormChange(battler, FORM_CHANGE_BATTLE_TURN_END, ability)
         || TryBattleFormChange(battler, FORM_CHANGE_BATTLE_HP_PERCENT_TURN_END, ability))

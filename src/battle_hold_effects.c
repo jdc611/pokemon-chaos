@@ -1,4 +1,5 @@
 #include "global.h"
+#include "chaos_abilities.h"
 #include "battle.h"
 #include "battle_anim.h"
 #include "battle_ai_record.h"
@@ -810,7 +811,7 @@ static enum ItemEffect ItemHealHp(enum BattlerId battler, enum Item itemId, enum
         if (ability == ABILITY_RIPEN && GetItemPocket(itemId) == POCKET_BERRIES)
             healAmount *= 2;
 
-        SetHealAmount(battler, healAmount);
+        SetHealAmount(battler, GetItemPocket(itemId) == POCKET_BERRIES ? ChaosAbilityHealing(battler, healAmount) : healAmount);
         if (GetItemPocket(itemId) == POCKET_BERRIES)
             BattleScriptCall(BattleScript_ItemHealHP_RemoveBerry);
         else
@@ -899,7 +900,7 @@ static enum ItemEffect HealConfuseBerry(enum BattlerId battler, enum Item itemId
         s32 healAmount = GetNonDynamaxMaxHP(battler) / GetItemHoldEffectParam(itemId);
         if (ability == ABILITY_RIPEN)
             healAmount *= 2;
-        SetHealAmount(battler, healAmount);
+        SetHealAmount(battler, ChaosAbilityHealing(battler, healAmount));
         if (GetFlavorRelationByPersonality(gBattleMons[battler].personality, flavorId) < 0)
             BattleScriptCall(BattleScript_BerryConfuseHeal);
         else

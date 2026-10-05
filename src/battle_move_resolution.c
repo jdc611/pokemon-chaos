@@ -1,4 +1,5 @@
 #include "global.h"
+#include "chaos_abilities.h"
 #include "battle.h"
 #include "battle_arena.h"
 #include "battle_environment.h"
@@ -60,6 +61,9 @@ static enum CancelerResult CancelerClearFlags(struct BattleCalcValues *cv)
 static bool32 TryFormChangeBeforeMove(void)
 {
     enum Ability ability = GetBattlerAbility(gBattlerAttacker);
+
+    if (ChaosAbilityBeforeMove(gBattlerAttacker, gCurrentMove))
+        return TRUE;
 
     if (TryBattleFormChange(gBattlerAttacker, FORM_CHANGE_BATTLE_BEFORE_MOVE, ability)
         || TryBattleFormChange(gBattlerAttacker, FORM_CHANGE_BATTLE_BEFORE_MOVE_CATEGORY, ability))
@@ -3006,6 +3010,9 @@ static bool32 TryMoveDamageUpdate(struct BattleCalcValues *cv)
 
             gBideDmg[cv->battlerDef] += gBattleStruct->moveDamage[cv->battlerDef];
             gBideTarget[cv->battlerDef] = cv->battlerAtk;
+
+            if (gBattleStruct->moveDamage[cv->battlerDef] > 0)
+                ChaosAbilityCommitHit(cv->battlerDef, cv->move);
 
             // Deal damage to the battler
             hpBefore = gBattleMons[cv->battlerDef].hp;

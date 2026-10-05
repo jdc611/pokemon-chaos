@@ -1152,6 +1152,15 @@ static bool8 TryDoorWarp(struct MapPosition *position, u16 metatileBehavior, enu
             warpEventId = GetWarpEventAtMapPosition(&gMapHeader, position);
             if (warpEventId != WARP_ID_NONE && IsWarpMetatileBehavior(metatileBehavior) == TRUE)
             {
+                // Choose the actual PC-box pasture before entering the Ranch.
+                // The script performs the same native door animation after selection.
+                const struct WarpEvent *door = &gMapHeader.events->warps[warpEventId];
+                if (door->mapGroup == MAP_GROUP(MAP_CHAOS_POKEMON_RANCH) && door->mapNum == MAP_NUM(MAP_CHAOS_POKEMON_RANCH))
+                {
+                    extern const u8 ChaosRanch_Door[];
+                    ScriptContext_SetupScript(ChaosRanch_Door);
+                    return TRUE;
+                }
                 StoreInitialPlayerAvatarState();
                 SetupWarp(&gMapHeader, warpEventId, position);
                 DoDoorWarp();

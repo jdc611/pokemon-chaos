@@ -661,3 +661,13 @@ gSpecials::
 	def_special ChaosPrepareSilphSelection
 	def_special ChaosCancelSilphSelection
 	def_special ChaosBeginSilphPartnerBattle
+
+	def_special ChaosRanchChooseBox, waitstate=1
+	def_special ChaosRanchEnter
+	def_special ChaosRanchChangeBox
+	def_special ChaosRanchPopulate
+	def_special ChaosRanchMenu, waitstate=1
+	def_special ChaosRanchSummary, waitstate=1
+	def_special ChaosRanchWithdraw
+	def_special ChaosRanchTakeItem
+	def_special ChaosRanchReturn, waitstate=1

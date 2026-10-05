@@ -1,4 +1,5 @@
 #include "global.h"
+#include "chaos_abilities.h"
 #include "malloc.h"
 #include "battle.h"
 #include "pokemon.h"
@@ -2021,6 +2022,19 @@ void UpdateNickInHealthbox(u8 healthboxSpriteId, struct Pokemon *mon)
     case MON_FEMALE:
         StringCopy(ptr, gText_HealthboxGender_Female);
         break;
+    }
+
+    const u8 *chaosMarker = ChaosAbilityMarker(gSprites[healthboxSpriteId].hMain_Battler);
+    if (chaosMarker != NULL)
+    {
+        u32 nameLen = StringLength(nickname);
+        do
+        {
+            nickname[nameLen] = EOS;
+            StringCopy(gDisplayedStringBattle, nickname);
+            StringAppend(gDisplayedStringBattle, COMPOUND_STRING(" "));
+            StringAppend(gDisplayedStringBattle, chaosMarker);
+        } while (GetStringWidth(FONT_SMALL_NARROWER, gDisplayedStringBattle, 0) > 55 && nameLen-- != 0);
     }
 
     //  Don't assume that healthbox sprites don't have data in the fields used for sprite printing

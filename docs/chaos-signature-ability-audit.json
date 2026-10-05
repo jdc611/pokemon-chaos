@@ -1,0 +1,4099 @@
+{
+  "pending_deliberate_review": [
+    "FORECAST",
+    "FLOWER_GIFT",
+    "GULP_MISSILE",
+    "COMMANDER",
+    "EMBODY_ASPECT_TEAL_MASK",
+    "EMBODY_ASPECT_HEARTHFLAME_MASK",
+    "EMBODY_ASPECT_WELLSPRING_MASK",
+    "EMBODY_ASPECT_CORNERSTONE_MASK",
+    "MULTITYPE",
+    "RKS_SYSTEM",
+    "TERA_SHIFT",
+    "TERA_SHELL",
+    "TERAFORM_ZERO",
+    "ZEN_MODE"
+  ],
+  "full_ability_table": [
+    {
+      "ability": "ABILITY_NONE",
+      "flags": [
+        "cantBeSwapped",
+        "cantBeTraced"
+      ],
+      "species_or_form_check_sites": [
+        {
+          "ability": "ABILITY_NONE",
+          "path": "src/battle_main.c",
+          "line": 3976
+        },
+        {
+          "ability": "ABILITY_NONE",
+          "path": "src/battle_dome.c",
+          "line": 5108
+        },
+        {
+          "ability": "ABILITY_NONE",
+          "path": "src/pokemon.c",
+          "line": 3288
+        },
+        {
+          "ability": "ABILITY_NONE",
+          "path": "src/pokemon.c",
+          "line": 3732
+        },
+        {
+          "ability": "ABILITY_NONE",
+          "path": "src/pokemon.c",
+          "line": 3744
+        }
+      ],
+      "status": "source audit candidate"
+    },
+    {
+      "ability": "ABILITY_STENCH",
+      "flags": [
+        "aiRating"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_DRIZZLE",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_SPEED_BOOST",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_BATTLE_ARMOR",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_STURDY",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [
+        {
+          "ability": "ABILITY_STURDY",
+          "path": "src/battle_ai_util.c",
+          "line": 1466
+        }
+      ],
+      "status": "source audit candidate"
+    },
+    {
+      "ability": "ABILITY_DAMP",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_LIMBER",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_SAND_VEIL",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_STATIC",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_VOLT_ABSORB",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_WATER_ABSORB",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_OBLIVIOUS",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_CLOUD_NINE",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_COMPOUND_EYES",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_INSOMNIA",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_COLOR_CHANGE",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_IMMUNITY",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_FLASH_FIRE",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_SHIELD_DUST",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_OWN_TEMPO",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_SUCTION_CUPS",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_INTIMIDATE",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_SHADOW_TAG",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_ROUGH_SKIN",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_WONDER_GUARD",
+      "flags": [
+        "breakable",
+        "cantBeCopied",
+        "cantBeSwapped"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_LEVITATE",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_EFFECT_SPORE",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_SYNCHRONIZE",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_CLEAR_BODY",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_NATURAL_CURE",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_LIGHTNING_ROD",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_SERENE_GRACE",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_SWIFT_SWIM",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_CHLOROPHYLL",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_ILLUMINATE",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_TRACE",
+      "flags": [
+        "cantBeCopied",
+        "cantBeTraced"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_HUGE_POWER",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_POISON_POINT",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_INNER_FOCUS",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_MAGMA_ARMOR",
+      "flags": [
+        "aiRating",
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_WATER_VEIL",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_MAGNET_PULL",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_SOUNDPROOF",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [
+        {
+          "ability": "ABILITY_SOUNDPROOF",
+          "path": "src/battle_script_commands.c",
+          "line": 10012
+        }
+      ],
+      "status": "source audit candidate"
+    },
+    {
+      "ability": "ABILITY_RAIN_DISH",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_SAND_STREAM",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_PRESSURE",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_THICK_FAT",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_EARLY_BIRD",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_FLAME_BODY",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_RUN_AWAY",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_KEEN_EYE",
+      "flags": [
+        "aiRating",
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_HYPER_CUTTER",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_PICKUP",
+      "flags": [
+        "aiRating"
+      ],
+      "species_or_form_check_sites": [
+        {
+          "ability": "ABILITY_PICKUP",
+          "path": "src/battle_script_commands.c",
+          "line": 7564
+        }
+      ],
+      "status": "source audit candidate"
+    },
+    {
+      "ability": "ABILITY_TRUANT",
+      "flags": [
+        "cantBeOverwritten"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_HUSTLE",
+      "flags": [],
+      "species_or_form_check_sites": [
+        {
+          "ability": "ABILITY_HUSTLE",
+          "path": "src/battle_util.c",
+          "line": 6994
+        }
+      ],
+      "status": "source audit candidate"
+    },
+    {
+      "ability": "ABILITY_CUTE_CHARM",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_PLUS",
+      "flags": [],
+      "species_or_form_check_sites": [
+        {
+          "ability": "ABILITY_PLUS",
+          "path": "src/battle_util.c",
+          "line": 6984
+        }
+      ],
+      "status": "source audit candidate"
+    },
+    {
+      "ability": "ABILITY_MINUS",
+      "flags": [],
+      "species_or_form_check_sites": [
+        {
+          "ability": "ABILITY_MINUS",
+          "path": "src/battle_util.c",
+          "line": 6985
+        }
+      ],
+      "status": "source audit candidate"
+    },
+    {
+      "ability": "ABILITY_FORECAST",
+      "flags": [
+        "cantBeCopied"
+      ],
+      "species_or_form_check_sites": [
+        {
+          "ability": "ABILITY_FORECAST",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 679
+        },
+        {
+          "ability": "ABILITY_FORECAST",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 680
+        },
+        {
+          "ability": "ABILITY_FORECAST",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 681
+        },
+        {
+          "ability": "ABILITY_FORECAST",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 682
+        },
+        {
+          "ability": "ABILITY_FORECAST",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 683
+        }
+      ],
+      "status": "requires deliberate review"
+    },
+    {
+      "ability": "ABILITY_STICKY_HOLD",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_SHED_SKIN",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_GUTS",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_MARVEL_SCALE",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_LIQUID_OOZE",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_OVERGROW",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_BLAZE",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_TORRENT",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_SWARM",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_ROCK_HEAD",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_DROUGHT",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_ARENA_TRAP",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_VITAL_SPIRIT",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_WHITE_SMOKE",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_PURE_POWER",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_SHELL_ARMOR",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_AIR_LOCK",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_TANGLED_FEET",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_MOTOR_DRIVE",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_RIVALRY",
+      "flags": [
+        "aiRating"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_STEADFAST",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_SNOW_CLOAK",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_GLUTTONY",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_ANGER_POINT",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_UNBURDEN",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_HEATPROOF",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_SIMPLE",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_DRY_SKIN",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_DOWNLOAD",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_IRON_FIST",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_POISON_HEAL",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_ADAPTABILITY",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_SKILL_LINK",
+      "flags": [],
+      "species_or_form_check_sites": [
+        {
+          "ability": "ABILITY_SKILL_LINK",
+          "path": "src/battle_move_resolution.c",
+          "line": 2338
+        }
+      ],
+      "status": "source audit candidate"
+    },
+    {
+      "ability": "ABILITY_HYDRATION",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_SOLAR_POWER",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_QUICK_FEET",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_NORMALIZE",
+      "flags": [],
+      "species_or_form_check_sites": [
+        {
+          "ability": "ABILITY_NORMALIZE",
+          "path": "src/battle_main.c",
+          "line": 5759
+        }
+      ],
+      "status": "source audit candidate"
+    },
+    {
+      "ability": "ABILITY_SNIPER",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_MAGIC_GUARD",
+      "flags": [],
+      "species_or_form_check_sites": [
+        {
+          "ability": "ABILITY_MAGIC_GUARD",
+          "path": "src/battle_util.c",
+          "line": 4455
+        }
+      ],
+      "status": "source audit candidate"
+    },
+    {
+      "ability": "ABILITY_NO_GUARD",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_STALL",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_TECHNICIAN",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_LEAF_GUARD",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [
+        {
+          "ability": "ABILITY_LEAF_GUARD",
+          "path": "src/battle_script_commands.c",
+          "line": 5031
+        }
+      ],
+      "status": "source audit candidate"
+    },
+    {
+      "ability": "ABILITY_KLUTZ",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_MOLD_BREAKER",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_SUPER_LUCK",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_AFTERMATH",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_ANTICIPATION",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_FOREWARN",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_UNAWARE",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_TINTED_LENS",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_FILTER",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_SLOW_START",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_SCRAPPY",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_STORM_DRAIN",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_ICE_BODY",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_SOLID_ROCK",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_SNOW_WARNING",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_HONEY_GATHER",
+      "flags": [],
+      "species_or_form_check_sites": [
+        {
+          "ability": "ABILITY_HONEY_GATHER",
+          "path": "src/battle_script_commands.c",
+          "line": 7591
+        }
+      ],
+      "status": "source audit candidate"
+    },
+    {
+      "ability": "ABILITY_FRISK",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_RECKLESS",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_MULTITYPE",
+      "flags": [
+        "cantBeCopied",
+        "cantBeOverwritten",
+        "cantBeSuppressed",
+        "cantBeSwapped",
+        "cantBeTraced"
+      ],
+      "species_or_form_check_sites": [
+        {
+          "ability": "ABILITY_MULTITYPE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 990
+        },
+        {
+          "ability": "ABILITY_MULTITYPE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 991
+        },
+        {
+          "ability": "ABILITY_MULTITYPE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 992
+        },
+        {
+          "ability": "ABILITY_MULTITYPE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 993
+        },
+        {
+          "ability": "ABILITY_MULTITYPE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 994
+        },
+        {
+          "ability": "ABILITY_MULTITYPE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 995
+        },
+        {
+          "ability": "ABILITY_MULTITYPE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 996
+        },
+        {
+          "ability": "ABILITY_MULTITYPE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 997
+        },
+        {
+          "ability": "ABILITY_MULTITYPE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 998
+        },
+        {
+          "ability": "ABILITY_MULTITYPE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 999
+        },
+        {
+          "ability": "ABILITY_MULTITYPE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1000
+        },
+        {
+          "ability": "ABILITY_MULTITYPE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1001
+        },
+        {
+          "ability": "ABILITY_MULTITYPE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1002
+        },
+        {
+          "ability": "ABILITY_MULTITYPE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1003
+        },
+        {
+          "ability": "ABILITY_MULTITYPE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1004
+        },
+        {
+          "ability": "ABILITY_MULTITYPE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1005
+        },
+        {
+          "ability": "ABILITY_MULTITYPE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1006
+        },
+        {
+          "ability": "ABILITY_MULTITYPE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1007
+        },
+        {
+          "ability": "ABILITY_MULTITYPE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1008
+        },
+        {
+          "ability": "ABILITY_MULTITYPE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1009
+        },
+        {
+          "ability": "ABILITY_MULTITYPE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1010
+        },
+        {
+          "ability": "ABILITY_MULTITYPE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1011
+        },
+        {
+          "ability": "ABILITY_MULTITYPE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1012
+        },
+        {
+          "ability": "ABILITY_MULTITYPE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1013
+        },
+        {
+          "ability": "ABILITY_MULTITYPE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1014
+        },
+        {
+          "ability": "ABILITY_MULTITYPE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1015
+        },
+        {
+          "ability": "ABILITY_MULTITYPE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1016
+        },
+        {
+          "ability": "ABILITY_MULTITYPE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1017
+        },
+        {
+          "ability": "ABILITY_MULTITYPE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1018
+        },
+        {
+          "ability": "ABILITY_MULTITYPE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1019
+        },
+        {
+          "ability": "ABILITY_MULTITYPE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1020
+        },
+        {
+          "ability": "ABILITY_MULTITYPE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1021
+        },
+        {
+          "ability": "ABILITY_MULTITYPE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1022
+        },
+        {
+          "ability": "ABILITY_MULTITYPE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1023
+        },
+        {
+          "ability": "ABILITY_MULTITYPE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1024
+        }
+      ],
+      "status": "requires deliberate review"
+    },
+    {
+      "ability": "ABILITY_FLOWER_GIFT",
+      "flags": [
+        "breakable",
+        "cantBeCopied"
+      ],
+      "species_or_form_check_sites": [
+        {
+          "ability": "ABILITY_FLOWER_GIFT",
+          "path": "src/battle_util.c",
+          "line": 6989
+        },
+        {
+          "ability": "ABILITY_FLOWER_GIFT",
+          "path": "src/battle_util.c",
+          "line": 7094
+        },
+        {
+          "ability": "ABILITY_FLOWER_GIFT",
+          "path": "src/battle_util.c",
+          "line": 7251
+        },
+        {
+          "ability": "ABILITY_FLOWER_GIFT",
+          "path": "src/battle_util.c",
+          "line": 7280
+        },
+        {
+          "ability": "ABILITY_FLOWER_GIFT",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 842
+        },
+        {
+          "ability": "ABILITY_FLOWER_GIFT",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 843
+        },
+        {
+          "ability": "ABILITY_FLOWER_GIFT",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 844
+        }
+      ],
+      "status": "requires deliberate review"
+    },
+    {
+      "ability": "ABILITY_BAD_DREAMS",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_PICKPOCKET",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_SHEER_FORCE",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_CONTRARY",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_UNNERVE",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_DEFIANT",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_DEFEATIST",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_CURSED_BODY",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_HEALER",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_FRIEND_GUARD",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_WEAK_ARMOR",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_HEAVY_METAL",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_LIGHT_METAL",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_MULTISCALE",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_TOXIC_BOOST",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_FLARE_BOOST",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_HARVEST",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_TELEPATHY",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_MOODY",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_OVERCOAT",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_POISON_TOUCH",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_REGENERATOR",
+      "flags": [],
+      "species_or_form_check_sites": [
+        {
+          "ability": "ABILITY_REGENERATOR",
+          "path": "src/battle_ai_util.c",
+          "line": 3519
+        }
+      ],
+      "status": "source audit candidate"
+    },
+    {
+      "ability": "ABILITY_BIG_PECKS",
+      "flags": [
+        "aiRating",
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_SAND_RUSH",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_WONDER_SKIN",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_ANALYTIC",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_ILLUSION",
+      "flags": [
+        "cantBeCopied",
+        "cantBeSwapped",
+        "cantBeTraced"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_IMPOSTER",
+      "flags": [
+        "cantBeCopied",
+        "cantBeTraced"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_INFILTRATOR",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_MUMMY",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_MOXIE",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_JUSTIFIED",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_RATTLED",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_MAGIC_BOUNCE",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_SAP_SIPPER",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_PRANKSTER",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_SAND_FORCE",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_IRON_BARBS",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_ZEN_MODE",
+      "flags": [
+        "cantBeCopied",
+        "cantBeTraced",
+        "failsOnImposter"
+      ],
+      "species_or_form_check_sites": [
+        {
+          "ability": "ABILITY_ZEN_MODE",
+          "path": "src/battle_end_turn.c",
+          "line": 1417
+        },
+        {
+          "ability": "ABILITY_ZEN_MODE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1080
+        },
+        {
+          "ability": "ABILITY_ZEN_MODE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1081
+        },
+        {
+          "ability": "ABILITY_ZEN_MODE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1082
+        },
+        {
+          "ability": "ABILITY_ZEN_MODE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1091
+        },
+        {
+          "ability": "ABILITY_ZEN_MODE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1092
+        },
+        {
+          "ability": "ABILITY_ZEN_MODE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1093
+        }
+      ],
+      "status": "requires deliberate review"
+    },
+    {
+      "ability": "ABILITY_VICTORY_STAR",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_TURBOBLAZE",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_TERAVOLT",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_AROMA_VEIL",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_FLOWER_VEIL",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_CHEEK_POUCH",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_PROTEAN",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_FUR_COAT",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_MAGICIAN",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_BULLETPROOF",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_COMPETITIVE",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_STRONG_JAW",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_REFRIGERATE",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_SWEET_VEIL",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_STANCE_CHANGE",
+      "flags": [
+        "cantBeCopied",
+        "cantBeOverwritten",
+        "cantBeSuppressed",
+        "cantBeSwapped",
+        "cantBeTraced",
+        "failsOnImposter"
+      ],
+      "species_or_form_check_sites": [
+        {
+          "ability": "ABILITY_STANCE_CHANGE",
+          "path": "src/battle_ai_main.c",
+          "line": 4811
+        },
+        {
+          "ability": "ABILITY_STANCE_CHANGE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1328
+        },
+        {
+          "ability": "ABILITY_STANCE_CHANGE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1329
+        },
+        {
+          "ability": "ABILITY_STANCE_CHANGE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1330
+        }
+      ],
+      "status": "implemented Chaos fallback"
+    },
+    {
+      "ability": "ABILITY_GALE_WINGS",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_MEGA_LAUNCHER",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_GRASS_PELT",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [
+        {
+          "ability": "ABILITY_GRASS_PELT",
+          "path": "src/battle_util.c",
+          "line": 7248
+        }
+      ],
+      "status": "source audit candidate"
+    },
+    {
+      "ability": "ABILITY_SYMBIOSIS",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_TEMPERED",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_RAMPAGE",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_TOUGH_CLAWS",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_PIXILATE",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_GOOEY",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_AERILATE",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_PARENTAL_BOND",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_DARK_AURA",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_FAIRY_AURA",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_AURA_BREAK",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_PRIMORDIAL_SEA",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_DESOLATE_LAND",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_DELTA_STREAM",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_STAMINA",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_WIMP_OUT",
+      "flags": [],
+      "species_or_form_check_sites": [
+        {
+          "ability": "ABILITY_WIMP_OUT",
+          "path": "src/battle_util.c",
+          "line": 10169
+        }
+      ],
+      "status": "source audit candidate"
+    },
+    {
+      "ability": "ABILITY_EMERGENCY_EXIT",
+      "flags": [],
+      "species_or_form_check_sites": [
+        {
+          "ability": "ABILITY_EMERGENCY_EXIT",
+          "path": "src/battle_util.c",
+          "line": 10169
+        }
+      ],
+      "status": "source audit candidate"
+    },
+    {
+      "ability": "ABILITY_WATER_COMPACTION",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_MERCILESS",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_SHIELDS_DOWN",
+      "flags": [
+        "cantBeCopied",
+        "cantBeOverwritten",
+        "cantBeSuppressed",
+        "cantBeSwapped",
+        "cantBeTraced",
+        "failsOnImposter"
+      ],
+      "species_or_form_check_sites": [
+        {
+          "ability": "ABILITY_SHIELDS_DOWN",
+          "path": "src/battle_script_commands.c",
+          "line": 5038
+        },
+        {
+          "ability": "ABILITY_SHIELDS_DOWN",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1535
+        },
+        {
+          "ability": "ABILITY_SHIELDS_DOWN",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1536
+        },
+        {
+          "ability": "ABILITY_SHIELDS_DOWN",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1537
+        },
+        {
+          "ability": "ABILITY_SHIELDS_DOWN",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1538
+        },
+        {
+          "ability": "ABILITY_SHIELDS_DOWN",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1548
+        },
+        {
+          "ability": "ABILITY_SHIELDS_DOWN",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1549
+        },
+        {
+          "ability": "ABILITY_SHIELDS_DOWN",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1550
+        },
+        {
+          "ability": "ABILITY_SHIELDS_DOWN",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1551
+        },
+        {
+          "ability": "ABILITY_SHIELDS_DOWN",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1561
+        },
+        {
+          "ability": "ABILITY_SHIELDS_DOWN",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1562
+        },
+        {
+          "ability": "ABILITY_SHIELDS_DOWN",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1563
+        },
+        {
+          "ability": "ABILITY_SHIELDS_DOWN",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1564
+        },
+        {
+          "ability": "ABILITY_SHIELDS_DOWN",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1574
+        },
+        {
+          "ability": "ABILITY_SHIELDS_DOWN",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1575
+        },
+        {
+          "ability": "ABILITY_SHIELDS_DOWN",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1576
+        },
+        {
+          "ability": "ABILITY_SHIELDS_DOWN",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1577
+        },
+        {
+          "ability": "ABILITY_SHIELDS_DOWN",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1587
+        },
+        {
+          "ability": "ABILITY_SHIELDS_DOWN",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1588
+        },
+        {
+          "ability": "ABILITY_SHIELDS_DOWN",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1589
+        },
+        {
+          "ability": "ABILITY_SHIELDS_DOWN",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1590
+        },
+        {
+          "ability": "ABILITY_SHIELDS_DOWN",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1600
+        },
+        {
+          "ability": "ABILITY_SHIELDS_DOWN",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1601
+        },
+        {
+          "ability": "ABILITY_SHIELDS_DOWN",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1602
+        },
+        {
+          "ability": "ABILITY_SHIELDS_DOWN",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1603
+        },
+        {
+          "ability": "ABILITY_SHIELDS_DOWN",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1613
+        },
+        {
+          "ability": "ABILITY_SHIELDS_DOWN",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1614
+        },
+        {
+          "ability": "ABILITY_SHIELDS_DOWN",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1615
+        },
+        {
+          "ability": "ABILITY_SHIELDS_DOWN",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1616
+        }
+      ],
+      "status": "implemented Chaos fallback"
+    },
+    {
+      "ability": "ABILITY_STAKEOUT",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_WATER_BUBBLE",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_STEELWORKER",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_BERSERK",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_SLUSH_RUSH",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_LONG_REACH",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_LIQUID_VOICE",
+      "flags": [],
+      "species_or_form_check_sites": [
+        {
+          "ability": "ABILITY_LIQUID_VOICE",
+          "path": "src/battle_main.c",
+          "line": 5753
+        }
+      ],
+      "status": "source audit candidate"
+    },
+    {
+      "ability": "ABILITY_TRIAGE",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_GALVANIZE",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_SURGE_SURFER",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_SCHOOLING",
+      "flags": [
+        "cantBeCopied",
+        "cantBeOverwritten",
+        "cantBeSuppressed",
+        "cantBeSwapped",
+        "cantBeTraced",
+        "failsOnImposter"
+      ],
+      "species_or_form_check_sites": [
+        {
+          "ability": "ABILITY_SCHOOLING",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1484
+        },
+        {
+          "ability": "ABILITY_SCHOOLING",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1485
+        },
+        {
+          "ability": "ABILITY_SCHOOLING",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1486
+        },
+        {
+          "ability": "ABILITY_SCHOOLING",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1487
+        }
+      ],
+      "status": "implemented Chaos fallback"
+    },
+    {
+      "ability": "ABILITY_DISGUISE",
+      "flags": [
+        "breakable",
+        "cantBeCopied",
+        "cantBeOverwritten",
+        "cantBeSuppressed",
+        "cantBeSwapped",
+        "cantBeTraced",
+        "failsOnImposter"
+      ],
+      "species_or_form_check_sites": [
+        {
+          "ability": "ABILITY_DISGUISE",
+          "path": "src/battle_ai_util.c",
+          "line": 4839
+        },
+        {
+          "ability": "ABILITY_DISGUISE",
+          "path": "src/battle_ai_util.c",
+          "line": 5237
+        },
+        {
+          "ability": "ABILITY_DISGUISE",
+          "path": "src/battle_move_resolution.c",
+          "line": 2821
+        },
+        {
+          "ability": "ABILITY_DISGUISE",
+          "path": "src/battle_script_commands.c",
+          "line": 7707
+        },
+        {
+          "ability": "ABILITY_DISGUISE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1627
+        },
+        {
+          "ability": "ABILITY_DISGUISE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1628
+        },
+        {
+          "ability": "ABILITY_DISGUISE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1629
+        },
+        {
+          "ability": "ABILITY_DISGUISE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1636
+        },
+        {
+          "ability": "ABILITY_DISGUISE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1637
+        },
+        {
+          "ability": "ABILITY_DISGUISE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1638
+        }
+      ],
+      "status": "implemented Chaos fallback"
+    },
+    {
+      "ability": "ABILITY_BATTLE_BOND",
+      "flags": [
+        "cantBeCopied",
+        "cantBeOverwritten",
+        "cantBeSuppressed",
+        "cantBeSwapped",
+        "cantBeTraced",
+        "failsOnImposter"
+      ],
+      "species_or_form_check_sites": [
+        {
+          "ability": "ABILITY_BATTLE_BOND",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1265
+        }
+      ],
+      "status": "implemented Chaos fallback"
+    },
+    {
+      "ability": "ABILITY_POWER_CONSTRUCT",
+      "flags": [
+        "cantBeCopied",
+        "cantBeOverwritten",
+        "cantBeSuppressed",
+        "cantBeSwapped",
+        "cantBeTraced",
+        "failsOnImposter"
+      ],
+      "species_or_form_check_sites": [
+        {
+          "ability": "ABILITY_POWER_CONSTRUCT",
+          "path": "src/battle_end_turn.c",
+          "line": 1411
+        },
+        {
+          "ability": "ABILITY_POWER_CONSTRUCT",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1414
+        },
+        {
+          "ability": "ABILITY_POWER_CONSTRUCT",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1422
+        }
+      ],
+      "status": "implemented Chaos fallback"
+    },
+    {
+      "ability": "ABILITY_CORROSION",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_COMATOSE",
+      "flags": [
+        "cantBeCopied",
+        "cantBeOverwritten",
+        "cantBeSuppressed",
+        "cantBeSwapped",
+        "cantBeTraced"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_QUEENLY_MAJESTY",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_INNARDS_OUT",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_DANCER",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_BATTERY",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_FLUFFY",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_DAZZLING",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_SOUL_HEART",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_TANGLING_HAIR",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_RECEIVER",
+      "flags": [
+        "cantBeCopied",
+        "cantBeTraced"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_POWER_OF_ALCHEMY",
+      "flags": [
+        "cantBeCopied",
+        "cantBeTraced"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_BEAST_BOOST",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_RKS_SYSTEM",
+      "flags": [
+        "cantBeCopied",
+        "cantBeOverwritten",
+        "cantBeSuppressed",
+        "cantBeSwapped",
+        "cantBeTraced",
+        "failsOnImposter"
+      ],
+      "species_or_form_check_sites": [
+        {
+          "ability": "ABILITY_RKS_SYSTEM",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1509
+        },
+        {
+          "ability": "ABILITY_RKS_SYSTEM",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1510
+        },
+        {
+          "ability": "ABILITY_RKS_SYSTEM",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1511
+        },
+        {
+          "ability": "ABILITY_RKS_SYSTEM",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1512
+        },
+        {
+          "ability": "ABILITY_RKS_SYSTEM",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1513
+        },
+        {
+          "ability": "ABILITY_RKS_SYSTEM",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1514
+        },
+        {
+          "ability": "ABILITY_RKS_SYSTEM",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1515
+        },
+        {
+          "ability": "ABILITY_RKS_SYSTEM",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1516
+        },
+        {
+          "ability": "ABILITY_RKS_SYSTEM",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1517
+        },
+        {
+          "ability": "ABILITY_RKS_SYSTEM",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1518
+        },
+        {
+          "ability": "ABILITY_RKS_SYSTEM",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1519
+        },
+        {
+          "ability": "ABILITY_RKS_SYSTEM",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1520
+        },
+        {
+          "ability": "ABILITY_RKS_SYSTEM",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1521
+        },
+        {
+          "ability": "ABILITY_RKS_SYSTEM",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1522
+        },
+        {
+          "ability": "ABILITY_RKS_SYSTEM",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1523
+        },
+        {
+          "ability": "ABILITY_RKS_SYSTEM",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1524
+        },
+        {
+          "ability": "ABILITY_RKS_SYSTEM",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1525
+        },
+        {
+          "ability": "ABILITY_RKS_SYSTEM",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1526
+        }
+      ],
+      "status": "requires deliberate review"
+    },
+    {
+      "ability": "ABILITY_ELECTRIC_SURGE",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_PSYCHIC_SURGE",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_MISTY_SURGE",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_GRASSY_SURGE",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_FULL_METAL_BODY",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_SHADOW_SHIELD",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_PRISM_ARMOR",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_NEUROFORCE",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_INTREPID_SWORD",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_DAUNTLESS_SHIELD",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_LIBERO",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_BALL_FETCH",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_COTTON_DOWN",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_PROPELLER_TAIL",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_MIRROR_ARMOR",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_GULP_MISSILE",
+      "flags": [
+        "cantBeOverwritten",
+        "cantBeSuppressed",
+        "failsOnImposter"
+      ],
+      "species_or_form_check_sites": [
+        {
+          "ability": "ABILITY_GULP_MISSILE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1853
+        },
+        {
+          "ability": "ABILITY_GULP_MISSILE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1854
+        },
+        {
+          "ability": "ABILITY_GULP_MISSILE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1855
+        },
+        {
+          "ability": "ABILITY_GULP_MISSILE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1856
+        },
+        {
+          "ability": "ABILITY_GULP_MISSILE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1862
+        },
+        {
+          "ability": "ABILITY_GULP_MISSILE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1863
+        }
+      ],
+      "status": "requires deliberate review"
+    },
+    {
+      "ability": "ABILITY_STALWART",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_STEAM_ENGINE",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_PUNK_ROCK",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_SAND_SPIT",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_ICE_SCALES",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_RIPEN",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_ICE_FACE",
+      "flags": [
+        "breakable",
+        "cantBeCopied",
+        "cantBeOverwritten",
+        "cantBeSuppressed",
+        "cantBeSwapped",
+        "cantBeTraced",
+        "failsOnImposter"
+      ],
+      "species_or_form_check_sites": [
+        {
+          "ability": "ABILITY_ICE_FACE",
+          "path": "src/battle_ai_util.c",
+          "line": 1470
+        },
+        {
+          "ability": "ABILITY_ICE_FACE",
+          "path": "src/battle_ai_util.c",
+          "line": 4834
+        },
+        {
+          "ability": "ABILITY_ICE_FACE",
+          "path": "src/battle_ai_util.c",
+          "line": 5241
+        },
+        {
+          "ability": "ABILITY_ICE_FACE",
+          "path": "src/battle_move_resolution.c",
+          "line": 2823
+        },
+        {
+          "ability": "ABILITY_ICE_FACE",
+          "path": "src/battle_script_commands.c",
+          "line": 7718
+        },
+        {
+          "ability": "ABILITY_ICE_FACE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1956
+        },
+        {
+          "ability": "ABILITY_ICE_FACE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1957
+        },
+        {
+          "ability": "ABILITY_ICE_FACE",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1958
+        }
+      ],
+      "status": "implemented Chaos fallback"
+    },
+    {
+      "ability": "ABILITY_POWER_SPOT",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_MIMICRY",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_SCREEN_CLEANER",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_STEELY_SPIRIT",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_PERISH_BODY",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_WANDERING_SPIRIT",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_GORILLA_TACTICS",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_NEUTRALIZING_GAS",
+      "flags": [
+        "cantBeCopied",
+        "cantBeSwapped",
+        "cantBeTraced",
+        "failsOnImposter"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_PASTEL_VEIL",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_HUNGER_SWITCH",
+      "flags": [
+        "cantBeCopied",
+        "cantBeSwapped",
+        "cantBeTraced",
+        "failsOnImposter"
+      ],
+      "species_or_form_check_sites": [
+        {
+          "ability": "ABILITY_HUNGER_SWITCH",
+          "path": "src/battle_end_turn.c",
+          "line": 1414
+        },
+        {
+          "ability": "ABILITY_HUNGER_SWITCH",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1967
+        },
+        {
+          "ability": "ABILITY_HUNGER_SWITCH",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 1968
+        }
+      ],
+      "status": "implemented Chaos fallback"
+    },
+    {
+      "ability": "ABILITY_QUICK_DRAW",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_UNSEEN_FIST",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_CURIOUS_MEDICINE",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_TRANSISTOR",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_DRAGONS_MAW",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_CHILLING_NEIGH",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_GRIM_NEIGH",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_AS_ONE_ICE_RIDER",
+      "flags": [
+        "cantBeCopied",
+        "cantBeOverwritten",
+        "cantBeSuppressed",
+        "cantBeSwapped",
+        "cantBeTraced"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_AS_ONE_SHADOW_RIDER",
+      "flags": [
+        "cantBeCopied",
+        "cantBeOverwritten",
+        "cantBeSuppressed",
+        "cantBeSwapped",
+        "cantBeTraced"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_LINGERING_AROMA",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_SEED_SOWER",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_THERMAL_EXCHANGE",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_ANGER_SHELL",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_PURIFYING_SALT",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_WELL_BAKED_BODY",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_WIND_RIDER",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_GUARD_DOG",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [
+        {
+          "ability": "ABILITY_GUARD_DOG",
+          "path": "src/battle_move_resolution.c",
+          "line": 4357
+        },
+        {
+          "ability": "ABILITY_GUARD_DOG",
+          "path": "src/battle_move_resolution.c",
+          "line": 4624
+        }
+      ],
+      "status": "source audit candidate"
+    },
+    {
+      "ability": "ABILITY_ROCKY_PAYLOAD",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_WIND_POWER",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_ZERO_TO_HERO",
+      "flags": [
+        "cantBeCopied",
+        "cantBeOverwritten",
+        "cantBeSuppressed",
+        "cantBeSwapped",
+        "cantBeTraced",
+        "failsOnImposter"
+      ],
+      "species_or_form_check_sites": [
+        {
+          "ability": "ABILITY_ZERO_TO_HERO",
+          "path": "src/battle_ai_switch.c",
+          "line": 839
+        },
+        {
+          "ability": "ABILITY_ZERO_TO_HERO",
+          "path": "src/battle_ai_switch.c",
+          "line": 1047
+        },
+        {
+          "ability": "ABILITY_ZERO_TO_HERO",
+          "path": "src/battle_ai_switch.c",
+          "line": 1522
+        },
+        {
+          "ability": "ABILITY_ZERO_TO_HERO",
+          "path": "src/battle_util.c",
+          "line": 3564
+        },
+        {
+          "ability": "ABILITY_ZERO_TO_HERO",
+          "path": "src/battle_ai_util.c",
+          "line": 3522
+        }
+      ],
+      "status": "implemented Chaos fallback"
+    },
+    {
+      "ability": "ABILITY_COMMANDER",
+      "flags": [
+        "cantBeCopied",
+        "cantBeSwapped",
+        "cantBeTraced"
+      ],
+      "species_or_form_check_sites": [
+        {
+          "ability": "ABILITY_COMMANDER",
+          "path": "src/battle_util.c",
+          "line": 4731
+        }
+      ],
+      "status": "requires deliberate review"
+    },
+    {
+      "ability": "ABILITY_ELECTROMORPHOSIS",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_PROTOSYNTHESIS",
+      "flags": [
+        "cantBeCopied",
+        "cantBeSwapped",
+        "cantBeTraced",
+        "failsOnImposter"
+      ],
+      "species_or_form_check_sites": [
+        {
+          "ability": "ABILITY_PROTOSYNTHESIS",
+          "path": "src/battle_util.c",
+          "line": 7255
+        }
+      ],
+      "status": "source audit candidate"
+    },
+    {
+      "ability": "ABILITY_QUARK_DRIVE",
+      "flags": [
+        "cantBeCopied",
+        "cantBeSwapped",
+        "cantBeTraced",
+        "failsOnImposter"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_GOOD_AS_GOLD",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_VESSEL_OF_RUIN",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_SWORD_OF_RUIN",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_TABLETS_OF_RUIN",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [
+        {
+          "ability": "ABILITY_TABLETS_OF_RUIN",
+          "path": "src/battle_util.c",
+          "line": 7106
+        }
+      ],
+      "status": "source audit candidate"
+    },
+    {
+      "ability": "ABILITY_BEADS_OF_RUIN",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [
+        {
+          "ability": "ABILITY_BEADS_OF_RUIN",
+          "path": "src/battle_util.c",
+          "line": 7293
+        }
+      ],
+      "status": "source audit candidate"
+    },
+    {
+      "ability": "ABILITY_ORICHALCUM_PULSE",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_HADRON_ENGINE",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_OPPORTUNIST",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_CUD_CHEW",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_SHARPNESS",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_SUPREME_OVERLORD",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_COSTAR",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_TOXIC_DEBRIS",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_ARMOR_TAIL",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_EARTH_EATER",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_MYCELIUM_MIGHT",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_HOSPITALITY",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_MINDS_EYE",
+      "flags": [
+        "breakable"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_EMBODY_ASPECT_TEAL_MASK",
+      "flags": [
+        "cantBeCopied",
+        "cantBeSwapped",
+        "cantBeTraced",
+        "failsOnImposter"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "requires deliberate review"
+    },
+    {
+      "ability": "ABILITY_EMBODY_ASPECT_HEARTHFLAME_MASK",
+      "flags": [
+        "cantBeCopied",
+        "cantBeSwapped",
+        "cantBeTraced",
+        "failsOnImposter"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "requires deliberate review"
+    },
+    {
+      "ability": "ABILITY_EMBODY_ASPECT_WELLSPRING_MASK",
+      "flags": [
+        "cantBeCopied",
+        "cantBeSwapped",
+        "cantBeTraced",
+        "failsOnImposter"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "requires deliberate review"
+    },
+    {
+      "ability": "ABILITY_EMBODY_ASPECT_CORNERSTONE_MASK",
+      "flags": [
+        "cantBeCopied",
+        "cantBeSwapped",
+        "cantBeTraced",
+        "failsOnImposter"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "requires deliberate review"
+    },
+    {
+      "ability": "ABILITY_TOXIC_CHAIN",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_SUPERSWEET_SYRUP",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_TERA_SHIFT",
+      "flags": [
+        "cantBeCopied",
+        "cantBeOverwritten",
+        "cantBeSuppressed",
+        "cantBeSwapped",
+        "cantBeTraced",
+        "failsOnImposter"
+      ],
+      "species_or_form_check_sites": [
+        {
+          "ability": "ABILITY_TERA_SHIFT",
+          "path": "src/data/pokemon/form_change_tables.h",
+          "line": 2183
+        }
+      ],
+      "status": "requires deliberate review"
+    },
+    {
+      "ability": "ABILITY_TERA_SHELL",
+      "flags": [
+        "breakable",
+        "cantBeCopied",
+        "cantBeSwapped",
+        "cantBeTraced"
+      ],
+      "species_or_form_check_sites": [
+        {
+          "ability": "ABILITY_TERA_SHELL",
+          "path": "src/battle_util.c",
+          "line": 434
+        }
+      ],
+      "status": "requires deliberate review"
+    },
+    {
+      "ability": "ABILITY_TERAFORM_ZERO",
+      "flags": [
+        "cantBeCopied",
+        "cantBeSwapped",
+        "cantBeTraced"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "requires deliberate review"
+    },
+    {
+      "ability": "ABILITY_POISON_PUPPETEER",
+      "flags": [
+        "cantBeCopied",
+        "cantBeSwapped",
+        "cantBeTraced"
+      ],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_PIERCING_DRILL",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_DRAGONIZE",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_EELEVATE",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_314",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_MEGA_SOL",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_FIRE_MANE",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_317",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    },
+    {
+      "ability": "ABILITY_SPICY_SPRAY",
+      "flags": [],
+      "species_or_form_check_sites": [],
+      "status": "no species/form guard found in audited files"
+    }
+  ],
+  "species_or_form_check_candidates": [
+    {
+      "ability": "ABILITY_NONE",
+      "path": "src/battle_main.c",
+      "line": 3976
+    },
+    {
+      "ability": "ABILITY_LIQUID_VOICE",
+      "path": "src/battle_main.c",
+      "line": 5753
+    },
+    {
+      "ability": "ABILITY_NORMALIZE",
+      "path": "src/battle_main.c",
+      "line": 5759
+    },
+    {
+      "ability": "ABILITY_POWER_CONSTRUCT",
+      "path": "src/battle_end_turn.c",
+      "line": 1411
+    },
+    {
+      "ability": "ABILITY_HUNGER_SWITCH",
+      "path": "src/battle_end_turn.c",
+      "line": 1414
+    },
+    {
+      "ability": "ABILITY_ZEN_MODE",
+      "path": "src/battle_end_turn.c",
+      "line": 1417
+    },
+    {
+      "ability": "ABILITY_ZERO_TO_HERO",
+      "path": "src/battle_ai_switch.c",
+      "line": 839
+    },
+    {
+      "ability": "ABILITY_ZERO_TO_HERO",
+      "path": "src/battle_ai_switch.c",
+      "line": 1047
+    },
+    {
+      "ability": "ABILITY_ZERO_TO_HERO",
+      "path": "src/battle_ai_switch.c",
+      "line": 1522
+    },
+    {
+      "ability": "ABILITY_TERA_SHELL",
+      "path": "src/battle_util.c",
+      "line": 434
+    },
+    {
+      "ability": "ABILITY_ZERO_TO_HERO",
+      "path": "src/battle_util.c",
+      "line": 3564
+    },
+    {
+      "ability": "ABILITY_MAGIC_GUARD",
+      "path": "src/battle_util.c",
+      "line": 4455
+    },
+    {
+      "ability": "ABILITY_COMMANDER",
+      "path": "src/battle_util.c",
+      "line": 4731
+    },
+    {
+      "ability": "ABILITY_PLUS",
+      "path": "src/battle_util.c",
+      "line": 6984
+    },
+    {
+      "ability": "ABILITY_MINUS",
+      "path": "src/battle_util.c",
+      "line": 6985
+    },
+    {
+      "ability": "ABILITY_FLOWER_GIFT",
+      "path": "src/battle_util.c",
+      "line": 6989
+    },
+    {
+      "ability": "ABILITY_HUSTLE",
+      "path": "src/battle_util.c",
+      "line": 6994
+    },
+    {
+      "ability": "ABILITY_FLOWER_GIFT",
+      "path": "src/battle_util.c",
+      "line": 7094
+    },
+    {
+      "ability": "ABILITY_TABLETS_OF_RUIN",
+      "path": "src/battle_util.c",
+      "line": 7106
+    },
+    {
+      "ability": "ABILITY_GRASS_PELT",
+      "path": "src/battle_util.c",
+      "line": 7248
+    },
+    {
+      "ability": "ABILITY_FLOWER_GIFT",
+      "path": "src/battle_util.c",
+      "line": 7251
+    },
+    {
+      "ability": "ABILITY_PROTOSYNTHESIS",
+      "path": "src/battle_util.c",
+      "line": 7255
+    },
+    {
+      "ability": "ABILITY_FLOWER_GIFT",
+      "path": "src/battle_util.c",
+      "line": 7280
+    },
+    {
+      "ability": "ABILITY_BEADS_OF_RUIN",
+      "path": "src/battle_util.c",
+      "line": 7293
+    },
+    {
+      "ability": "ABILITY_EMERGENCY_EXIT",
+      "path": "src/battle_util.c",
+      "line": 10169
+    },
+    {
+      "ability": "ABILITY_WIMP_OUT",
+      "path": "src/battle_util.c",
+      "line": 10169
+    },
+    {
+      "ability": "ABILITY_STURDY",
+      "path": "src/battle_ai_util.c",
+      "line": 1466
+    },
+    {
+      "ability": "ABILITY_ICE_FACE",
+      "path": "src/battle_ai_util.c",
+      "line": 1470
+    },
+    {
+      "ability": "ABILITY_REGENERATOR",
+      "path": "src/battle_ai_util.c",
+      "line": 3519
+    },
+    {
+      "ability": "ABILITY_ZERO_TO_HERO",
+      "path": "src/battle_ai_util.c",
+      "line": 3522
+    },
+    {
+      "ability": "ABILITY_ICE_FACE",
+      "path": "src/battle_ai_util.c",
+      "line": 4834
+    },
+    {
+      "ability": "ABILITY_DISGUISE",
+      "path": "src/battle_ai_util.c",
+      "line": 4839
+    },
+    {
+      "ability": "ABILITY_DISGUISE",
+      "path": "src/battle_ai_util.c",
+      "line": 5237
+    },
+    {
+      "ability": "ABILITY_ICE_FACE",
+      "path": "src/battle_ai_util.c",
+      "line": 5241
+    },
+    {
+      "ability": "ABILITY_SKILL_LINK",
+      "path": "src/battle_move_resolution.c",
+      "line": 2338
+    },
+    {
+      "ability": "ABILITY_DISGUISE",
+      "path": "src/battle_move_resolution.c",
+      "line": 2821
+    },
+    {
+      "ability": "ABILITY_ICE_FACE",
+      "path": "src/battle_move_resolution.c",
+      "line": 2823
+    },
+    {
+      "ability": "ABILITY_GUARD_DOG",
+      "path": "src/battle_move_resolution.c",
+      "line": 4357
+    },
+    {
+      "ability": "ABILITY_GUARD_DOG",
+      "path": "src/battle_move_resolution.c",
+      "line": 4624
+    },
+    {
+      "ability": "ABILITY_STANCE_CHANGE",
+      "path": "src/battle_ai_main.c",
+      "line": 4811
+    },
+    {
+      "ability": "ABILITY_LEAF_GUARD",
+      "path": "src/battle_script_commands.c",
+      "line": 5031
+    },
+    {
+      "ability": "ABILITY_SHIELDS_DOWN",
+      "path": "src/battle_script_commands.c",
+      "line": 5038
+    },
+    {
+      "ability": "ABILITY_NUM",
+      "path": "src/battle_script_commands.c",
+      "line": 7562
+    },
+    {
+      "ability": "ABILITY_PICKUP",
+      "path": "src/battle_script_commands.c",
+      "line": 7564
+    },
+    {
+      "ability": "ABILITY_HONEY_GATHER",
+      "path": "src/battle_script_commands.c",
+      "line": 7591
+    },
+    {
+      "ability": "ABILITY_DISGUISE",
+      "path": "src/battle_script_commands.c",
+      "line": 7707
+    },
+    {
+      "ability": "ABILITY_ICE_FACE",
+      "path": "src/battle_script_commands.c",
+      "line": 7718
+    },
+    {
+      "ability": "ABILITY_SOUNDPROOF",
+      "path": "src/battle_script_commands.c",
+      "line": 10012
+    },
+    {
+      "ability": "ABILITY_NONE",
+      "path": "src/battle_dome.c",
+      "line": 5108
+    },
+    {
+      "ability": "ABILITY_SLOTS",
+      "path": "src/pokemon.c",
+      "line": 3287
+    },
+    {
+      "ability": "ABILITY_NONE",
+      "path": "src/pokemon.c",
+      "line": 3288
+    },
+    {
+      "ability": "ABILITY_NONE",
+      "path": "src/pokemon.c",
+      "line": 3732
+    },
+    {
+      "ability": "ABILITY_NONE",
+      "path": "src/pokemon.c",
+      "line": 3744
+    },
+    {
+      "ability": "ABILITY_FORECAST",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 679
+    },
+    {
+      "ability": "ABILITY_FORECAST",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 680
+    },
+    {
+      "ability": "ABILITY_FORECAST",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 681
+    },
+    {
+      "ability": "ABILITY_FORECAST",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 682
+    },
+    {
+      "ability": "ABILITY_FORECAST",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 683
+    },
+    {
+      "ability": "ABILITY_FLOWER_GIFT",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 842
+    },
+    {
+      "ability": "ABILITY_FLOWER_GIFT",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 843
+    },
+    {
+      "ability": "ABILITY_FLOWER_GIFT",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 844
+    },
+    {
+      "ability": "ABILITY_MULTITYPE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 990
+    },
+    {
+      "ability": "ABILITY_MULTITYPE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 991
+    },
+    {
+      "ability": "ABILITY_MULTITYPE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 992
+    },
+    {
+      "ability": "ABILITY_MULTITYPE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 993
+    },
+    {
+      "ability": "ABILITY_MULTITYPE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 994
+    },
+    {
+      "ability": "ABILITY_MULTITYPE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 995
+    },
+    {
+      "ability": "ABILITY_MULTITYPE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 996
+    },
+    {
+      "ability": "ABILITY_MULTITYPE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 997
+    },
+    {
+      "ability": "ABILITY_MULTITYPE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 998
+    },
+    {
+      "ability": "ABILITY_MULTITYPE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 999
+    },
+    {
+      "ability": "ABILITY_MULTITYPE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1000
+    },
+    {
+      "ability": "ABILITY_MULTITYPE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1001
+    },
+    {
+      "ability": "ABILITY_MULTITYPE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1002
+    },
+    {
+      "ability": "ABILITY_MULTITYPE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1003
+    },
+    {
+      "ability": "ABILITY_MULTITYPE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1004
+    },
+    {
+      "ability": "ABILITY_MULTITYPE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1005
+    },
+    {
+      "ability": "ABILITY_MULTITYPE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1006
+    },
+    {
+      "ability": "ABILITY_MULTITYPE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1007
+    },
+    {
+      "ability": "ABILITY_MULTITYPE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1008
+    },
+    {
+      "ability": "ABILITY_MULTITYPE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1009
+    },
+    {
+      "ability": "ABILITY_MULTITYPE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1010
+    },
+    {
+      "ability": "ABILITY_MULTITYPE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1011
+    },
+    {
+      "ability": "ABILITY_MULTITYPE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1012
+    },
+    {
+      "ability": "ABILITY_MULTITYPE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1013
+    },
+    {
+      "ability": "ABILITY_MULTITYPE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1014
+    },
+    {
+      "ability": "ABILITY_MULTITYPE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1015
+    },
+    {
+      "ability": "ABILITY_MULTITYPE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1016
+    },
+    {
+      "ability": "ABILITY_MULTITYPE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1017
+    },
+    {
+      "ability": "ABILITY_MULTITYPE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1018
+    },
+    {
+      "ability": "ABILITY_MULTITYPE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1019
+    },
+    {
+      "ability": "ABILITY_MULTITYPE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1020
+    },
+    {
+      "ability": "ABILITY_MULTITYPE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1021
+    },
+    {
+      "ability": "ABILITY_MULTITYPE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1022
+    },
+    {
+      "ability": "ABILITY_MULTITYPE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1023
+    },
+    {
+      "ability": "ABILITY_MULTITYPE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1024
+    },
+    {
+      "ability": "ABILITY_ZEN_MODE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1080
+    },
+    {
+      "ability": "ABILITY_ZEN_MODE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1081
+    },
+    {
+      "ability": "ABILITY_ZEN_MODE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1082
+    },
+    {
+      "ability": "ABILITY_ZEN_MODE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1091
+    },
+    {
+      "ability": "ABILITY_ZEN_MODE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1092
+    },
+    {
+      "ability": "ABILITY_ZEN_MODE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1093
+    },
+    {
+      "ability": "ABILITY_BATTLE_BOND",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1265
+    },
+    {
+      "ability": "ABILITY_STANCE_CHANGE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1328
+    },
+    {
+      "ability": "ABILITY_STANCE_CHANGE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1329
+    },
+    {
+      "ability": "ABILITY_STANCE_CHANGE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1330
+    },
+    {
+      "ability": "ABILITY_POWER_CONSTRUCT",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1414
+    },
+    {
+      "ability": "ABILITY_POWER_CONSTRUCT",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1422
+    },
+    {
+      "ability": "ABILITY_SCHOOLING",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1484
+    },
+    {
+      "ability": "ABILITY_SCHOOLING",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1485
+    },
+    {
+      "ability": "ABILITY_SCHOOLING",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1486
+    },
+    {
+      "ability": "ABILITY_SCHOOLING",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1487
+    },
+    {
+      "ability": "ABILITY_RKS_SYSTEM",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1509
+    },
+    {
+      "ability": "ABILITY_RKS_SYSTEM",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1510
+    },
+    {
+      "ability": "ABILITY_RKS_SYSTEM",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1511
+    },
+    {
+      "ability": "ABILITY_RKS_SYSTEM",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1512
+    },
+    {
+      "ability": "ABILITY_RKS_SYSTEM",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1513
+    },
+    {
+      "ability": "ABILITY_RKS_SYSTEM",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1514
+    },
+    {
+      "ability": "ABILITY_RKS_SYSTEM",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1515
+    },
+    {
+      "ability": "ABILITY_RKS_SYSTEM",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1516
+    },
+    {
+      "ability": "ABILITY_RKS_SYSTEM",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1517
+    },
+    {
+      "ability": "ABILITY_RKS_SYSTEM",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1518
+    },
+    {
+      "ability": "ABILITY_RKS_SYSTEM",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1519
+    },
+    {
+      "ability": "ABILITY_RKS_SYSTEM",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1520
+    },
+    {
+      "ability": "ABILITY_RKS_SYSTEM",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1521
+    },
+    {
+      "ability": "ABILITY_RKS_SYSTEM",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1522
+    },
+    {
+      "ability": "ABILITY_RKS_SYSTEM",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1523
+    },
+    {
+      "ability": "ABILITY_RKS_SYSTEM",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1524
+    },
+    {
+      "ability": "ABILITY_RKS_SYSTEM",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1525
+    },
+    {
+      "ability": "ABILITY_RKS_SYSTEM",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1526
+    },
+    {
+      "ability": "ABILITY_SHIELDS_DOWN",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1535
+    },
+    {
+      "ability": "ABILITY_SHIELDS_DOWN",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1536
+    },
+    {
+      "ability": "ABILITY_SHIELDS_DOWN",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1537
+    },
+    {
+      "ability": "ABILITY_SHIELDS_DOWN",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1538
+    },
+    {
+      "ability": "ABILITY_SHIELDS_DOWN",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1548
+    },
+    {
+      "ability": "ABILITY_SHIELDS_DOWN",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1549
+    },
+    {
+      "ability": "ABILITY_SHIELDS_DOWN",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1550
+    },
+    {
+      "ability": "ABILITY_SHIELDS_DOWN",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1551
+    },
+    {
+      "ability": "ABILITY_SHIELDS_DOWN",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1561
+    },
+    {
+      "ability": "ABILITY_SHIELDS_DOWN",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1562
+    },
+    {
+      "ability": "ABILITY_SHIELDS_DOWN",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1563
+    },
+    {
+      "ability": "ABILITY_SHIELDS_DOWN",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1564
+    },
+    {
+      "ability": "ABILITY_SHIELDS_DOWN",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1574
+    },
+    {
+      "ability": "ABILITY_SHIELDS_DOWN",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1575
+    },
+    {
+      "ability": "ABILITY_SHIELDS_DOWN",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1576
+    },
+    {
+      "ability": "ABILITY_SHIELDS_DOWN",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1577
+    },
+    {
+      "ability": "ABILITY_SHIELDS_DOWN",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1587
+    },
+    {
+      "ability": "ABILITY_SHIELDS_DOWN",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1588
+    },
+    {
+      "ability": "ABILITY_SHIELDS_DOWN",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1589
+    },
+    {
+      "ability": "ABILITY_SHIELDS_DOWN",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1590
+    },
+    {
+      "ability": "ABILITY_SHIELDS_DOWN",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1600
+    },
+    {
+      "ability": "ABILITY_SHIELDS_DOWN",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1601
+    },
+    {
+      "ability": "ABILITY_SHIELDS_DOWN",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1602
+    },
+    {
+      "ability": "ABILITY_SHIELDS_DOWN",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1603
+    },
+    {
+      "ability": "ABILITY_SHIELDS_DOWN",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1613
+    },
+    {
+      "ability": "ABILITY_SHIELDS_DOWN",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1614
+    },
+    {
+      "ability": "ABILITY_SHIELDS_DOWN",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1615
+    },
+    {
+      "ability": "ABILITY_SHIELDS_DOWN",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1616
+    },
+    {
+      "ability": "ABILITY_DISGUISE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1627
+    },
+    {
+      "ability": "ABILITY_DISGUISE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1628
+    },
+    {
+      "ability": "ABILITY_DISGUISE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1629
+    },
+    {
+      "ability": "ABILITY_DISGUISE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1636
+    },
+    {
+      "ability": "ABILITY_DISGUISE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1637
+    },
+    {
+      "ability": "ABILITY_DISGUISE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1638
+    },
+    {
+      "ability": "ABILITY_GULP_MISSILE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1853
+    },
+    {
+      "ability": "ABILITY_GULP_MISSILE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1854
+    },
+    {
+      "ability": "ABILITY_GULP_MISSILE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1855
+    },
+    {
+      "ability": "ABILITY_GULP_MISSILE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1856
+    },
+    {
+      "ability": "ABILITY_GULP_MISSILE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1862
+    },
+    {
+      "ability": "ABILITY_GULP_MISSILE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1863
+    },
+    {
+      "ability": "ABILITY_ICE_FACE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1956
+    },
+    {
+      "ability": "ABILITY_ICE_FACE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1957
+    },
+    {
+      "ability": "ABILITY_ICE_FACE",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1958
+    },
+    {
+      "ability": "ABILITY_HUNGER_SWITCH",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1967
+    },
+    {
+      "ability": "ABILITY_HUNGER_SWITCH",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 1968
+    },
+    {
+      "ability": "ABILITY_TERA_SHIFT",
+      "path": "src/data/pokemon/form_change_tables.h",
+      "line": 2183
+    }
+  ]
+}

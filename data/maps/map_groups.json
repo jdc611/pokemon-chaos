@@ -917,8 +917,7 @@
   ],
   "gMapGroup_IndoorPallet_Frlg": [],
   "gMapGroup_IndoorViridian_Frlg": [],
-  "gMapGroup_IndoorPewter_Frlg": [
-  ],
+  "gMapGroup_IndoorPewter_Frlg": [],
   "gMapGroup_IndoorCerulean_Frlg": [
     "CeruleanCity_House1_Frlg",
     "CeruleanCity_House2_Frlg",
@@ -1159,6 +1158,7 @@
     "PewterCity_House1_Frlg",
     "PewterCity_PokemonCenter_1F_Frlg",
     "PewterCity_PokemonCenter_2F_Frlg",
-    "PewterCity_House2_Frlg"
+    "PewterCity_House2_Frlg",
+    "ChaosPokemonRanch"
   ]
 }

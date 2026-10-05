@@ -1,4 +1,5 @@
 #include "global.h"
+#include "chaos_abilities.h"
 #include "malloc.h"
 #include "apprentice.h"
 #include "battle.h"
@@ -1381,6 +1382,7 @@ void CalculateMonStats(struct Pokemon *mon)
 
 void CalculateMonStatsCont(struct Pokemon *mon, bool32 updateSpeedStat)
 {
+    ChaosAbilityBeforeStats(mon);
     s32 oldMaxHP = GetMonData(mon, MON_DATA_MAX_HP);
     s32 currentHP = GetMonData(mon, MON_DATA_HP);
     enum Species species = GetMonData(mon, MON_DATA_SPECIES);
@@ -1423,7 +1425,7 @@ void CalculateMonStatsCont(struct Pokemon *mon, bool32 updateSpeedStat)
 
 #if TESTING
     if (hyperTrained[STAT_HP] && gMain.inBattle)
-        return;
+        { ChaosAbilityAfterStats(mon); return; }
 #endif
 
     if (HasShedinjaHPHandling(species))
@@ -1445,7 +1447,7 @@ void CalculateMonStatsCont(struct Pokemon *mon, bool32 updateSpeedStat)
     // been initialized at this point or this Pokémon is
     // just fainted, the check for oldMaxHP is important.
     if (currentHP == 0 && oldMaxHP != 0)
-        return;
+        { ChaosAbilityAfterStats(mon); return; }
 
     // Only add to currentHP if newMaxHP went up.
     if (newMaxHP > oldMaxHP)
@@ -1456,6 +1458,7 @@ void CalculateMonStatsCont(struct Pokemon *mon, bool32 updateSpeedStat)
         currentHP = newMaxHP;
 
     SetMonData(mon, MON_DATA_HP, &currentHP);
+    ChaosAbilityAfterStats(mon);
 }
 
 void BoxMonToMon(const struct BoxPokemon *src, struct Pokemon *dest)

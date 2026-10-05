@@ -1,4 +1,5 @@
 #include "global.h"
+#include "chaos_abilities.h"
 #include "chaos_mega.h"
 #include "battle.h"
 #include "battle_anim.h"
@@ -3099,6 +3100,8 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, enum BattlerId battler, enum
         }
         break;
     case ABILITYEFFECT_ON_SWITCHIN:
+        if (shouldAbilityTrigger && ChaosAbilitySwitchIn(battler))
+            return TRUE;
         gBattleScripting.battler = battler;
         switch (gLastUsedAbility)
         {
@@ -3869,6 +3872,8 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, enum BattlerId battler, enum
         }
         break;
     case ABILITYEFFECT_MOVE_END: // Think contact abilities.
+        if (ChaosAbilityMoveEnd(battler))
+            return TRUE;
         switch (gLastUsedAbility)
         {
         case ABILITY_JUSTIFIED:
@@ -4590,6 +4595,12 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, enum BattlerId battler, enum
                 if (NoAliveMonsForEitherParty()
                  || NumFaintedBattlersByAttacker(battler) == 0)
                     break;
+
+                if (ChaosAbilityIsFallback(battler, ability))
+                {
+                    effect = ChaosAbilityBond(battler);
+                    break;
+                }
 
                 if (GetBattlerPartyState(battler)->battleBondBoost || gBattleMons[battler].species != SPECIES_GRENINJA_BATTLE_BOND)
                     break;
@@ -6897,6 +6908,10 @@ static inline u32 CalcAttackStat(struct DamageContext *ctx)
         }
     }
 
+    atkStat = ChaosAbilityStat(moveEffect == EFFECT_FOUL_PLAY ? battlerDef : battlerAtk,
+        ctx->abilities[moveEffect == EFFECT_FOUL_PLAY ? battlerDef : battlerAtk],
+        moveEffect == EFFECT_BODY_PRESS ? (IsBattleMovePhysical(move) ? STAT_DEF : STAT_SPDEF) : (IsBattleMovePhysical(move) ? STAT_ATK : STAT_SPATK), atkStat);
+
     // critical hits ignore attack stat's stage drops
     if (ctx->isCrit && atkStage < DEFAULT_STAT_STAGE)
         atkStage = DEFAULT_STAT_STAGE;
@@ -7180,6 +7195,8 @@ static inline u32 CalcDefenseStat(struct DamageContext *ctx)
         }
         defStage = gBattleMons[battlerDef].statStages[STAT_SPDEF];
     }
+
+    defStat = ChaosAbilityStat(battlerDef, ctx->abilities[battlerDef], usesDefStat ? STAT_DEF : STAT_SPDEF, defStat);
 
     // Self-destruct / Explosion cut defense in half
     if (GetConfig(B_EXPLOSION_DEFENSE) < GEN_5 && IsExplosionMove(ctx->move))
@@ -8095,6 +8112,7 @@ static bool32 IsCriticalHit(struct DamageContext *ctx)
 
 s32 GetAdjustedDamage(struct DamageContext *ctx, s32 damage)
 {
+    damage = ChaosAbilityDamage(ctx->battlerAtk, ctx->battlerDef, ctx->move, damage);
     if (DoesSubstituteBlockMove(ctx->battlerAtk, ctx->battlerDef, ctx->move)
      || DoesDisguiseBlockMove(ctx->battlerDef, ctx->move)
      || DoesIceFaceBlockMove(ctx->battlerDef, ctx->move))

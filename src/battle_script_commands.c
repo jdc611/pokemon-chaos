@@ -1,4 +1,5 @@
 #include "global.h"
+#include "chaos_abilities.h"
 #include "chaos_mega.h"
 #include "battle.h"
 #include "battle_hold_effects.h"
@@ -5204,7 +5205,7 @@ static void Cmd_tryhealhalfhealth(void)
     if (cmd->battler == BS_ATTACKER)
         gBattlerTarget = gBattlerAttacker;
 
-    SetHealAmount(gBattlerTarget, GetNonDynamaxMaxHP(gBattlerTarget) / 2);
+    SetHealAmount(gBattlerTarget, ChaosAbilityHealing(gBattlerTarget, GetNonDynamaxMaxHP(gBattlerTarget) / 2));
     if (gBattleMons[gBattlerTarget].hp == gBattleMons[gBattlerTarget].maxHP)
         gBattlescriptCurrInstr = failInstr;
     else
@@ -5283,7 +5284,7 @@ static void Cmd_trysetrest(void)
     CMD_ARGS();
 
     gBattlerTarget = gBattlerAttacker;
-    SetHealAmount(gBattlerTarget, gBattleMons[gBattlerTarget].maxHP);
+    SetHealAmount(gBattlerTarget, ChaosAbilityHealing(gBattlerTarget, gBattleMons[gBattlerTarget].maxHP));
     enum Ability ability = GetBattlerAbility(gBattlerTarget);
     enum HoldEffect holdEffect = GetBattlerHoldEffect(gBattlerTarget);
 
@@ -5363,7 +5364,7 @@ static void Cmd_stockpiletohpheal(void)
     {
         if (gBattleMons[gBattlerAttacker].volatiles.stockpileCounter > 0)
         {
-            SetHealAmount(gBattlerAttacker, GetNonDynamaxMaxHP(gBattlerAttacker) / (1 << (3 - gBattleMons[gBattlerAttacker].volatiles.stockpileCounter)));
+            SetHealAmount(gBattlerAttacker, ChaosAbilityHealing(gBattlerAttacker, GetNonDynamaxMaxHP(gBattlerAttacker) / (1 << (3 - gBattleMons[gBattlerAttacker].volatiles.stockpileCounter))));
             gBattleScripting.animTurn = gBattleMons[gBattlerAttacker].volatiles.stockpileCounter;
         }
         else // Snatched move
@@ -6837,7 +6838,7 @@ static void Cmd_recoverbasedonsunlight(void)
                 recoverAmount = healingModifier * GetNonDynamaxMaxHP(gBattlerAttacker) / 8;
         }
 
-        SetHealAmount(gBattlerAttacker, recoverAmount);
+        SetHealAmount(gBattlerAttacker, ChaosAbilityHealing(gBattlerAttacker, recoverAmount));
         if (isAffectedByMegaSol)
             gBattlescriptCurrInstr = BattleScript_MegaSolActivatesHealing;
         else
@@ -7470,6 +7471,9 @@ static void Cmd_switchoutabilities(void)
 
     enum BattlerId battler = GetBattlerForBattleScript(cmd->battler);
 
+    if (ChaosAbilitySwitchOut(battler))
+        return;
+
     if (GetActiveGimmick(battler) == GIMMICK_Z_MOVE)
         SetActiveGimmick(battler, GIMMICK_NONE);
 
@@ -7805,6 +7809,7 @@ static void FinalizeCapture(void)
     MarkBattlerForControllerExec(gBattlerAttacker);
     TryBattleFormChange(gBattlerTarget, FORM_CHANGE_END_BATTLE, GetBattlerAbility(gBattlerTarget));
     gBattlescriptCurrInstr = BattleScript_SuccessBallThrow;
+    ChaosAbilityPrepareCapture(gBattlerTarget);
     struct Pokemon *caughtMon = GetBattlerMon(gBattlerTarget);
     SetMonData(caughtMon, MON_DATA_POKEBALL, &ballId);
 

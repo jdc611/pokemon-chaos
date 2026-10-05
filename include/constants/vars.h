@@ -3,6 +3,7 @@
 
 #include "constants/vars_frlg.h"
 
+#define VAR_CHAOS_RANCH_BOX 0x40E0 // Pasture selection; formerly unused Hoenn gift counter.
 #define VAR_CHAOS_BIKE_SHOP_SCENE 0x40E4 // One-time millionth-customer greeting, independent of bike ownership.
 #define VAR_CHAOS_REMATCHES 0x40F9 // Brock/Misty/Surge completion bits.
 #define VAR_CHAOS_OAK_MEGA_REWARD 0x40FA // 0=waiting, 1=ready, 2=received.

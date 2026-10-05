@@ -118,6 +118,13 @@
       "elevation": 4,
       "dest_map": "MAP_ONE_ISLAND_POKEMON_CENTER_2F",
       "dest_warp_id": "0"
+    },
+    {
+      "x": 17,
+      "y": 1,
+      "elevation": 0,
+      "dest_map": "MAP_CHAOS_POKEMON_RANCH",
+      "dest_warp_id": "0"
     }
   ],
   "coord_events": [
@@ -230,6 +237,14 @@
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
       "script": "OneIsland_PokemonCenter_1F_EventScript_NetworkMachine"
+    },
+    {
+      "type": "sign",
+      "x": 17,
+      "y": 1,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "ChaosRanch_Door"
     }
   ]
 }
