@@ -6022,13 +6022,17 @@ bool8 CheckAddCoins(void)
 void ReturnPlayerToLastPokemonCenter(void)
 {
     // This is invoked only after the player is fully outside and the warning
-    // message has been dismissed. Use the engine's ordinary warp machinery.
+    // message has been dismissed and closed, and the player faces the door.
     if (gLastUsedWarp.mapGroup >= 0 && gLastUsedWarp.mapNum >= 0
      && IsPokemonCenterLayout(Overworld_GetMapHeaderByGroupAndId(gLastUsedWarp.mapGroup, gLastUsedWarp.mapNum)->mapLayoutId))
     {
         // Withdrawal is allowed before healing. Return to the actual Center
         // just left, even when the recorded whiteout destination is still Mom.
         SetWarpDestinationToMapWarp(gLastUsedWarp.mapGroup, gLastUsedWarp.mapNum, 0);
+        // Walk through the door just used, including its open/close animation.
+        // DoDoorWarp consumes the upward step itself; do not pre-walk onto it.
+        DoDoorWarp();
+        return;
     }
     else if (GetHealLocationIndexByWarpData(&gSaveBlock1Ptr->lastHealLocation) == HEAL_LOCATION_NONE
           || IsLastHealLocationPlayerHouse())

@@ -29,7 +29,7 @@ struct WarpData {int mapGroup,mapNum;} gLastUsedWarp;
 struct {struct WarpData lastHealLocation;} save1,*gSaveBlock1Ptr=&save1;
 struct {int startRegion;} save3,*gSaveBlock3Ptr=&save3;
 struct {int active;} gPaletteFade;
-int pending, destroyed, scripts, preview, standing=1, legal=1, healIndex=1, home, dest=-1,warps;
+int pending, destroyed, scripts, preview, standing=1, legal=1, healIndex=1, home, dest=-1,warps,doorWarps;
 const u8 EventScript_RunFilterReturnToCenter[]={0};
 const struct MapHeader *Overworld_GetMapHeaderByGroupAndId(int group,int num){return &from;}
 int IsPokemonCenterLayout(int layout){return layout==1;}
@@ -38,6 +38,7 @@ int IsLastHealLocationPlayerHouse(void){return home;}
 void SetWarpDestinationToMapWarp(int group,int num,int warp){assert(warp==0);dest=group<<8|num;}
 void SetWarpDestinationToLastHealLocation(void){dest=999;}
 void DoWarp(void){warps++;}
+void DoDoorWarp(void){doorWarps++;}
 int FadeInMapPreviewScreenIsRunning(void){return preview;}
 int IsPlayerStandingStill(void){return standing;}
 int IsPlayerPartyLegalForRun(u8 *index,u8 *reason){return legal;}
@@ -65,11 +66,11 @@ int main(void){
  gMapHeader.mapType=MAP_TYPE_ROUTE;from.mapType=MAP_TYPE_ROUTE;from.mapLayoutId=0;assert(!ShouldValidatePartyAfterBuildingExit());
  gLastUsedWarp.mapGroup=-1;assert(!ShouldValidatePartyAfterBuildingExit());
  // PC withdrawal before healing returns to the Center actually just left.
- gLastUsedWarp=(struct WarpData){38,11};from.mapLayoutId=1;home=1;healIndex=0;ReturnPlayerToLastPokemonCenter();assert(dest==0x260b&&warps==1);
+ gLastUsedWarp=(struct WarpData){38,11};from.mapLayoutId=1;home=1;healIndex=0;ReturnPlayerToLastPokemonCenter();assert(dest==0x260b&&warps==0&&doorWarps==1);
  // Mart/home departures with no Center record return to an accessible PC,
  // rather than looping through Mom's house with an unrepairable bad type.
- from.mapLayoutId=0;gLastUsedWarp.mapNum=10;ReturnPlayerToLastPokemonCenter();assert(dest==0x260b&&warps==2);
- healIndex=1;home=0;ReturnPlayerToLastPokemonCenter();assert(dest==999&&warps==3);
+ from.mapLayoutId=0;gLastUsedWarp.mapNum=10;ReturnPlayerToLastPokemonCenter();assert(dest==0x260b&&warps==1&&doorWarps==1);
+ healIndex=1;home=0;ReturnPlayerToLastPokemonCenter();assert(dest==999&&warps==2&&doorWarps==1);
  puts("PASS: native Center-only departure checks wait for warp completion, allow repairs indoors, block illegal parties, and return to a usable PC before the first heal.");
 }
 '''
@@ -80,3 +81,8 @@ with tempfile.TemporaryDirectory() as d:
 for name in ['Task_ExitDoor','Task_ExitNonAnimDoor','Task_ExitNonDoor','Task_ExitStairs']:
  assert 'FinishWarpExit(taskId)' in function('src/field_screen_effect.c',name),name
 print('PASS: animated doors, non-animated doors, ordinary exits and stairs all use the same completed-warp validation hook.')
+
+script=(root/"data/scripts/pc.inc").read_text().split("EventScript_RunFilterReturnToCenter::",1)[1]
+assert script.index("closemessage") < script.index("applymovement") < script.index("waitmovement") < script.index("special ReturnPlayerToLastPokemonCenter")
+assert "face_up" in script
+print("PASS: rejection closes the dialogue before turning and entering the animated door.")

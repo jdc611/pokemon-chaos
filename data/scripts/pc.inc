@@ -426,7 +426,14 @@ EventScript_Text_FemaleOnly:
 EventScript_RunFilterReturnToCenter::
     lockall
     msgbox gText_RunFilterReturnToCenter, MSGBOX_DEFAULT
+    closemessage
+    applymovement LOCALID_PLAYER, Movement_RunFilterFaceCenter
+    waitmovement 0
     special ReturnPlayerToLastPokemonCenter
     waitstate
     end
+
+Movement_RunFilterFaceCenter:
+    face_up
+    step_end
 

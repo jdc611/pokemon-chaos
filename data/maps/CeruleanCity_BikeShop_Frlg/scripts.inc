@@ -4,16 +4,10 @@ CeruleanCity_BikeShop_Frlg_MapScripts::
 	.byte 0
 
 CeruleanCity_BikeShop_OnTransition::
-	setvar VAR_TEMP_1, 0
-	checkitem ITEM_BICYCLE
-	goto_if_eq VAR_RESULT, FALSE, CeruleanCity_BikeShop_EventScript_ReadyGift
-	setflag FLAG_GOT_BICYCLE
-	setvar VAR_TEMP_1, 1
-CeruleanCity_BikeShop_EventScript_ReadyGift::
 	end
 
 CeruleanCity_BikeShop_OnFrame::
-	map_script_2 VAR_TEMP_1, 0, CeruleanCity_BikeShop_EventScript_EntryGift
+	map_script_2 VAR_CHAOS_BIKE_SHOP_SCENE, 0, CeruleanCity_BikeShop_EventScript_EntryGift
 	.2byte 0
 
 CeruleanCity_BikeShop_EventScript_EntryGift::
@@ -29,8 +23,10 @@ CeruleanCity_BikeShop_EventScript_Clerk::
 	goto CeruleanCity_BikeShop_EventScript_FreeBicycle
 
 CeruleanCity_BikeShop_EventScript_FreeBicycle::
-	setvar VAR_TEMP_1, 1
+	setvar VAR_CHAOS_BIKE_SHOP_SCENE, 1
 	msgbox CeruleanCity_BikeShop_Text_MillionthCustomer
+	checkitem ITEM_BICYCLE
+	goto_if_eq VAR_RESULT, TRUE, CeruleanCity_BikeShop_EventScript_FreeRide
 	additem ITEM_BICYCLE
 	goto_if_eq VAR_RESULT, FALSE, CeruleanCity_BikeShop_EventScript_NoRoomForBicycle
 	setflag FLAG_GOT_BICYCLE
@@ -39,6 +35,8 @@ CeruleanCity_BikeShop_EventScript_FreeBicycle::
 	removeitem ITEM_BIKE_VOUCHER
 CeruleanCity_BikeShop_EventScript_ReceiveFreeBicycle::
 	msgreceiveditem CeruleanCity_BikeShop_Text_ReceivedFreeBicycle, ITEM_BICYCLE, 1, MUS_RG_OBTAIN_KEY_ITEM
+CeruleanCity_BikeShop_EventScript_FreeRide::
+	setflag FLAG_GOT_BICYCLE
 	msgbox CeruleanCity_BikeShop_Text_FreeRide
 	releaseall
 	end
