@@ -304,6 +304,18 @@ struct SaveBlock3
     // Nuzlocke lifecycle record. Incremented when no living party or boxed
     // Pokémon remain and the run reaches a true failure state.
     u16 nuzlockeFailureCount;
+
+    // Appended/versioned: preserve all existing run-setting save offsets.
+    u32 arcadeMagic;
+    u32 arcadeRefillAt;
+    u32 arcadeClockSeen;
+    u32 arcadeDailyAt;
+    u32 arcadeCosmeticsOwned[2];
+    u32 arcadeDecorations;
+    u8 arcadeWallpaper;
+    u8 arcadeRiderTheme;
+    u8 arcadeRanchTheme;
+    u8 arcadeOutfit;
 }; /* max size 1624 bytes */
 
 extern struct SaveBlock3 *gSaveBlock3Ptr;

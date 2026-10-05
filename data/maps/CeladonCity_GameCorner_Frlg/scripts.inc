@@ -1,4 +1,6 @@
 CeladonCity_GameCorner_Frlg_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, ChaosArcade_OnTransition
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, ChaosArcade_OnFrame
 	map_script MAP_SCRIPT_ON_LOAD, CeladonCity_GameCorner_OnLoad
 	.byte 0
 
@@ -23,39 +25,33 @@ CeladonCity_GameCorner_EventScript_CoinsClerk::
 	faceplayer
 	showmoneybox 0, 0
 	showcoinsbox 0, 5
+	checkitem ITEM_COIN_CASE
+	goto_if_eq VAR_RESULT, FALSE, CeladonCity_GameCorner_EventScript_ClerkNoCoinCase
 	message CeladonCity_GameCorner_Text_WelcomeBuySomeCoins
 	waitmessage
 	multichoice 13, 0, MULTI_GAME_CORNER_COIN_PURCHASE_COUNTER, FALSE
 	copyvar VAR_0x8009, VAR_RESULT
 	switch VAR_RESULT
-	case 0, CeladonCity_GameCorner_EventScript_BuyCoins
-	case 1, CeladonCity_GameCorner_EventScript_BuyCoins
+	case 0, ChaosArcade_Refill
+	case 1, CeladonCity_GameCorner_EventScript_Buy50Coins
 	case 2, CeladonCity_GameCorner_EventScript_ClerkDeclineBuy
 	case 127, CeladonCity_GameCorner_EventScript_ClerkDeclineBuy
 	end
 
 CeladonCity_GameCorner_EventScript_BuyCoins::
+	checkitem ITEM_COIN_CASE
+	goto_if_eq VAR_RESULT, FALSE, CeladonCity_GameCorner_EventScript_ClerkNoCoinCase
 	goto_if_eq VAR_0x8009, 0, CeladonCity_GameCorner_EventScript_Buy50Coins
-	goto_if_eq VAR_0x8009, 1, CeladonCity_GameCorner_EventScript_Buy500Coins
-	end
-
-CeladonCity_GameCorner_EventScript_Buy500Coins::
-	checkcoins VAR_TEMP_1
-	goto_if_ge VAR_TEMP_1, (MAX_COINS + 1) - 500, CeladonCity_GameCorner_EventScript_ClerkNoRoomForCoins
-	checkmoney 10000
-	goto_if_eq VAR_RESULT, FALSE, CeladonCity_GameCorner_EventScript_ClerkNotEnoughMoney
-	addcoins 500
-	removemoney 10000
-	goto CeladonCity_GameCorner_EventScript_BoughtCoins
+	goto_if_eq VAR_0x8009, 1, CeladonCity_GameCorner_EventScript_Buy50Coins
 	end
 
 CeladonCity_GameCorner_EventScript_Buy50Coins::
 	checkcoins VAR_TEMP_1
 	goto_if_ge VAR_TEMP_1, (MAX_COINS + 1) - 50, CeladonCity_GameCorner_EventScript_ClerkNoRoomForCoins
-	checkmoney 1000
+	checkmoney 5000
 	goto_if_eq VAR_RESULT, FALSE, CeladonCity_GameCorner_EventScript_ClerkNotEnoughMoney
 	addcoins 50
-	removemoney 1000
+	removemoney 5000
 	goto CeladonCity_GameCorner_EventScript_BoughtCoins
 	end
 
@@ -236,6 +232,8 @@ CeladonCity_GameCorner_EventScript_DontPlaySlotMachine::
 	end
 
 CeladonCity_GameCorner_EventScript_SlotMachine::
+	checkitem ITEM_COIN_CASE
+	goto_if_eq VAR_RESULT, FALSE, CeladonCity_GameCorner_EventScript_SlotMachineNoCoinCase
 	msgbox CeladonCity_GameCorner_Text_SlotMachineWantToPlay, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, CeladonCity_GameCorner_EventScript_DontPlaySlotMachine
 	setfieldeffectargument 0, LOCALID_PLAYER
@@ -465,7 +463,7 @@ CeladonCity_GameCorner_Text_CanExchangeCoinsNextDoor::
 	.string "fabulous prizes next door.$"
 
 CeladonCity_GameCorner_Text_WelcomeBuySomeCoins::
-	.string "Welcome to ROCKET GAME CORNER!\p"
+	.string "Welcome to ROCKET CHAOS ARCADE!\p"
 	.string "Do you need some game COINS?\n"
 	.string "Would you like to buy some?$"
 
@@ -607,3 +605,201 @@ CeladonCity_GameCorner_Text_SomeonesKeys::
 	.string "Someone's keys!\n"
 	.string "They'll be back.$"
 
+
+ChaosArcade_OnTransition::
+	setvar VAR_CHAOS_ARCADE_SCENE, 1
+	goto_if_set FLAG_CHAOS_ARCADE_WELCOME, ChaosArcade_TransitionEnd
+	goto_if_unset FLAG_BADGE04_GET, ChaosArcade_TransitionEnd
+	setvar VAR_CHAOS_ARCADE_SCENE, 0
+ChaosArcade_TransitionEnd::
+	end
+
+ChaosArcade_OnFrame::
+	map_script_2 VAR_CHAOS_ARCADE_SCENE, 0, ChaosArcade_Welcome
+	.2byte 0
+
+ChaosArcade_Welcome::
+	lockall
+	setvar VAR_CHAOS_ARCADE_SCENE, 1
+	getplayerxy VAR_0x8008, VAR_0x8009
+	goto_if_lt VAR_0x8009, 12, ChaosArcade_WelcomeRemote
+	goto_if_gt VAR_0x8009, 13, ChaosArcade_WelcomeRemote
+	goto_if_lt VAR_0x8008, 9, ChaosArcade_WelcomeRemote
+	goto_if_gt VAR_0x8008, 11, ChaosArcade_WelcomeRemote
+	call_if_eq VAR_0x8009, 13, ChaosArcade_HostExtraStep
+	goto_if_eq VAR_0x8008, 9, ChaosArcade_Walk9
+	goto_if_eq VAR_0x8008, 10, ChaosArcade_Walk10
+	goto_if_eq VAR_0x8008, 11, ChaosArcade_Walk11
+ChaosArcade_WelcomeRemote::
+	msgbox ChaosArcade_Text_Welcome
+	goto ChaosArcade_GiveCase
+ChaosArcade_Walk9::
+	applymovement LOCALID_CHAOS_ARCADE_HOST, ChaosArcade_Movement9
+	waitmovement 0
+	goto ChaosArcade_HostSpeech
+ChaosArcade_Walk10::
+	applymovement LOCALID_CHAOS_ARCADE_HOST, ChaosArcade_Movement10
+	waitmovement 0
+	goto ChaosArcade_HostSpeech
+ChaosArcade_Walk11::
+	applymovement LOCALID_CHAOS_ARCADE_HOST, ChaosArcade_Movement11
+	waitmovement 0
+ChaosArcade_HostSpeech::
+	turnobject OBJ_EVENT_ID_PLAYER, DIR_WEST
+	msgbox ChaosArcade_Text_Welcome
+ChaosArcade_GiveCase::
+	checkitem ITEM_COIN_CASE
+	goto_if_eq VAR_RESULT, TRUE, ChaosArcade_AlreadyHasCase
+	additem ITEM_COIN_CASE
+	goto_if_eq VAR_RESULT, FALSE, ChaosArcade_NoRoom
+	msgreceiveditem ChaosArcade_Text_ReceivedCase, ITEM_COIN_CASE, 1, MUS_RG_OBTAIN_KEY_ITEM
+ChaosArcade_AlreadyHasCase::
+	setflag FLAG_CHAOS_ARCADE_WELCOME
+	setflag FLAG_GOT_COIN_CASE
+	msgbox ChaosArcade_Text_ShadyFellow
+	closemessage
+ChaosArcade_ReturnHost::
+	goto_if_lt VAR_0x8009, 12, ChaosArcade_WelcomeEnd
+	goto_if_gt VAR_0x8009, 13, ChaosArcade_WelcomeEnd
+	goto_if_eq VAR_0x8008, 9, ChaosArcade_Return9
+	goto_if_eq VAR_0x8008, 10, ChaosArcade_Return10
+	goto_if_eq VAR_0x8008, 11, ChaosArcade_Return11
+	goto ChaosArcade_WelcomeEnd
+ChaosArcade_NoRoom::
+	msgbox ChaosArcade_Text_NoRoom
+	closemessage
+	goto ChaosArcade_ReturnHost
+ChaosArcade_Return9::
+	applymovement LOCALID_CHAOS_ARCADE_HOST, ChaosArcade_MovementReturn9
+	waitmovement 0
+	goto ChaosArcade_HostReset
+ChaosArcade_Return10::
+	applymovement LOCALID_CHAOS_ARCADE_HOST, ChaosArcade_MovementReturn10
+	waitmovement 0
+	goto ChaosArcade_HostReset
+ChaosArcade_Return11::
+	applymovement LOCALID_CHAOS_ARCADE_HOST, ChaosArcade_MovementReturn11
+	waitmovement 0
+ChaosArcade_HostReset::
+	call_if_eq VAR_0x8009, 13, ChaosArcade_HostExtraReturn
+ChaosArcade_WelcomeEnd::
+	releaseall
+	end
+
+ChaosArcade_Host::
+	lock
+	faceplayer
+	setvar VAR_0x8009, 0
+	goto_if_unset FLAG_CHAOS_ARCADE_WELCOME, ChaosArcade_WelcomeRemote
+	msgbox ChaosArcade_Text_Host
+	release
+	end
+
+ChaosArcade_Movement9:
+	walk_down
+	face_right
+	step_end
+ChaosArcade_Movement10:
+	walk_down
+	walk_right
+	face_right
+	step_end
+ChaosArcade_Movement11:
+	walk_down
+	walk_right
+	walk_right
+	face_right
+	step_end
+ChaosArcade_MovementReturn9:
+	walk_up
+	face_down
+	step_end
+ChaosArcade_MovementReturn10:
+	walk_left
+	walk_up
+	face_down
+	step_end
+ChaosArcade_MovementReturn11:
+	walk_left
+	walk_left
+	walk_up
+	face_down
+	step_end
+
+ChaosArcade_Text_Welcome::
+	.string "Welcome to the CHAOS ARCADE!\p"
+	.string "New games, better prizes, and\n"
+	.string "plenty of ways to win COINS!\p"
+	.string "You'll need a COIN CASE\n"
+	.string "if you want to play.$"
+ChaosArcade_Text_ReceivedCase::
+	.string "{PLAYER} received\n"
+	.string "the COIN CASE!$"
+ChaosArcade_Text_ShadyFellow::
+	.string "Oh, don't mind that shady\n"
+	.string "fellow in the back.\p"
+	.string "I'm sure standing by a poster\n"
+	.string "all day is completely normal.$"
+ChaosArcade_Text_NoRoom::
+	.string "Your KEY ITEMS pocket is full!\n"
+	.string "Make room, then speak to me.$"
+ChaosArcade_Text_Host::
+	.string "Have fun! Prizes are next door.\p"
+	.string "Your COIN CASE works at every\n"
+	.string "game and prize counter.$"
+
+ChaosArcade_Refill::
+	special ChaosArcadeRefill
+	goto_if_eq VAR_RESULT, 0, ChaosArcade_RefillSuccess
+	goto_if_eq VAR_RESULT, 1, ChaosArcade_RefillWait
+	goto_if_eq VAR_RESULT, 2, ChaosArcade_RefillClock
+	goto_if_eq VAR_RESULT, 3, CeladonCity_GameCorner_EventScript_ClerkNoRoomForCoins
+	goto CeladonCity_GameCorner_EventScript_ClerkNoCoinCase
+ChaosArcade_RefillSuccess::
+	updatecoinsbox
+	playse SE_SHOP
+	msgbox ChaosArcade_Text_RefillSuccess
+	goto CeladonCity_GameCorner_EventScript_ClerkEnd
+ChaosArcade_RefillWait::
+	msgbox ChaosArcade_Text_RefillWait
+	goto CeladonCity_GameCorner_EventScript_ClerkEnd
+ChaosArcade_RefillClock::
+	msgbox ChaosArcade_Text_RefillClock
+	goto CeladonCity_GameCorner_EventScript_ClerkEnd
+ChaosArcade_Checkers::
+	lockall
+	goto_if_unset FLAG_BADGE04_GET, ChaosArcade_Construction
+	checkitem ITEM_COIN_CASE
+	goto_if_eq VAR_RESULT, FALSE, CeladonCity_GameCorner_EventScript_SlotMachineNoCoinCase
+	closemessage
+	special ChaosArcadeCheckers
+	waitstate
+	releaseall
+	end
+ChaosArcade_Text_RefillSuccess::
+	.string "Here are 100 free COINS!\p"
+	.string "Come back in two hours\n"
+	.string "for another refill.$"
+ChaosArcade_Text_RefillWait::
+	.string "Your next free refill is in\n"
+	.string "{STR_VAR_1} real-world minutes.$"
+ChaosArcade_Text_RefillClock::
+	.string "I can't read the real clock.\p"
+	.string "Enable the cartridge clock\n"
+	.string "in your emulator for refills.$"
+
+ChaosArcade_HostExtraStep::
+	applymovement LOCALID_CHAOS_ARCADE_HOST, ChaosArcade_OneDown
+	waitmovement 0
+	return
+ChaosArcade_HostExtraReturn::
+	applymovement LOCALID_CHAOS_ARCADE_HOST, ChaosArcade_OneUp
+	waitmovement 0
+	return
+ChaosArcade_OneDown:
+	walk_down
+	step_end
+ChaosArcade_OneUp:
+	walk_up
+	face_down
+	step_end

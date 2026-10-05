@@ -3,6 +3,7 @@
 
 #include "constants/vars_frlg.h"
 
+#define VAR_CHAOS_ARCADE_SCENE 0x40DB // First-entry event eligibility, refreshed on transition.
 #define VAR_CHAOS_RANCH_BOX 0x40E0 // Pasture selection; formerly unused Hoenn gift counter.
 #define VAR_CHAOS_BIKE_SHOP_SCENE 0x40E4 // One-time millionth-customer greeting, independent of bike ownership.
 #define VAR_CHAOS_REMATCHES 0x40F9 // Brock/Misty/Surge completion bits.

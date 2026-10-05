@@ -1,6 +1,6 @@
 # Game Corner and Ranch layout proposal — October 5, 2026
 
-**For visual review, not implemented map art.** The user approved the starting economy before requesting these layouts. No new ROM is produced by this planning change.
+**Arrangement approved October 5; cabinet and decoration map art is not implemented yet.** The user approved the starting economy before requesting these layouts. No new ROM is produced by this planning change.
 
 ![Arcade proposal](arcade-proposal.png)
 
@@ -51,4 +51,4 @@ Every decoration footprint is clear of all Pokémon's current ±1 roaming area. 
 
 `plan.json` is the coordinate source. Run `.github/scripts/render_chaos_arcade_layout.py` to regenerate both SVG and PNG diagrams. Its design validator checks that arcade zones do not overlap one another or protected story scenery, activities have a reachable adjacent interaction tile, the Rocket/stair approach is reachable in the proposed floor graph, and decorations avoid every native pasture roaming footprint, building, sign and central path.
 
-This is a conceptual footprint check, not an emulator test of finished collision tiles or NPC movement. Final native tile art/palettes, interactive facing tiles, city badge gate, host walk, Rocket exit, hidden coins, sprite culling and all themes require implementation and emulator verification. Review this arrangement before using it as the final map.
+This is a conceptual footprint check, not an emulator test of finished collision tiles or NPC movement. Final native tile art/palettes, interactive facing tiles, city badge gate, host walk, Rocket exit, hidden coins, sprite culling and all themes require implementation and emulator verification. The user approved this arrangement. Implement and verify native art/collision before a final release.

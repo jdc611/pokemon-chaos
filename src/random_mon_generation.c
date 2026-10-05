@@ -468,24 +468,45 @@ u32 CountEligibleRandomSpecies(u32 optionId, const struct FilterFuncArgs *filter
     return count;
 }
 
+// Build in one roster pass, rather than an O(roster^2) pre-evolution scan
+// during new-game setup. This uses natural evolution stages, even in Chaos.
+static void BuildStarterEvolutionMask(u8 *mask)
+{
+    memset(mask, 0, (NUM_SPECIES + 7) / 8);
+    for (enum Species species = SPECIES_BULBASAUR; species < NUM_SPECIES; species++)
+    {
+        if (!IsSpeciesEnabled(species)) continue;
+        const struct Evolution *evolutions = GetSpeciesEvolutions(species);
+        if (evolutions == NULL) continue;
+        for (u32 i = 0; evolutions[i].method != EVOLUTIONS_END; i++)
+        {
+            enum Species target = SanitizeSpeciesId(evolutions[i].targetSpecies);
+            if (target != SPECIES_NONE && target < NUM_SPECIES)
+                mask[target / 8] |= 1 << (target % 8);
+        }
+    }
+}
+
 // Pick distinct starters in one bounded pass through the same eligible pool
 // used by setup. In particular, retain evolution-line-aware filter matches.
 u32 PickRandomStarterSpecies(u32 optionId, const struct FilterFuncArgs *filterFuncArgs, u16 starters[3])
 {
     const struct RandomSpeciesGeneratorOptions *options;
     u32 poolSize, eligibleCount = 0;
+    u8 evolved[(NUM_SPECIES + 7) / 8];
     for (u32 i = 0; i < 3; i++)
         starters[i] = SPECIES_NONE;
     if (optionId >= RANDOM_SPECIES_OPTIONS_COUNT)
         return 0;
     options = &sRandomSpeciesGeneratorOptions[optionId];
+    BuildStarterEvolutionMask(evolved);
     poolSize = options->speciesPoolCount != 0 ? options->speciesPoolCount
         : options->dexMode == RANDOM_MON_DEX_HOENN ? HOENN_DEX_COUNT - 1 : NATIONAL_DEX_COUNT;
     for (u32 i = 0; i < poolSize; i++)
     {
         enum Species species = GetRandomSpeciesAtIndex(options, i);
         species = GetSpeciesCandidateForm(species, options, filterFuncArgs);
-        if (species == SPECIES_NONE)
+        if (species == SPECIES_NONE || (evolved[species / 8] & (1 << (species % 8))))
             continue;
         eligibleCount++;
         if (eligibleCount <= 3)

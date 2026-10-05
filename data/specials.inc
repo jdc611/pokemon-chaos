@@ -671,3 +671,6 @@ gSpecials::
 	def_special ChaosRanchWithdraw
 	def_special ChaosRanchTakeItem
 	def_special ChaosRanchReturn, waitstate=1
+
+	def_special ChaosArcadeRefill
+	def_special ChaosArcadeCheckers, waitstate=1

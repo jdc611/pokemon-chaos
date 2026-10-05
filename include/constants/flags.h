@@ -6,6 +6,10 @@
 #include "constants/rematches.h"
 
 
+// Reserved after checking both native and shared map scripts.
+#define FLAG_CHAOS_ARCADE_WELCOME 0x4F8
+#define FLAG_HIDE_CHAOS_ARCADE_WORKER 0x4F9
+
 // Temporary Flags
 // These temporary flags are are cleared every time a map is loaded. They are used
 // for things like shortening an NPCs introduction text if the player already spoke

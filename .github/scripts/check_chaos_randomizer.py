@@ -238,6 +238,8 @@ run(base+r'''
 #define RNG_NONE 0
 struct RandomSpeciesGeneratorOptions {u32 speciesPoolCount,dexMode;} sRandomSpeciesGeneratorOptions[2];
 u32 checks;
+#define NUM_SPECIES 20
+void BuildStarterEvolutionMask(u8 *mask){memset(mask,0,(NUM_SPECIES+7)/8);mask[0]=1<<5;}
 enum Species GetRandomSpeciesAtIndex(const struct RandomSpeciesGeneratorOptions *o,u32 i){return i+1;}
 enum Species GetSpeciesCandidateForm(enum Species s,const struct RandomSpeciesGeneratorOptions *o,const struct FilterFuncArgs *a){checks++;return a->arg1==0||s==1||s==4||s==9?s:SPECIES_NONE;}
 u32 RandomUniform(u32 stream,u32 lo,u32 hi){return lo+Random()%(hi-lo+1);}
@@ -246,6 +248,7 @@ int main(void){u16 starters[3],again[3];struct FilterFuncArgs a={1,0};
  assert(PickRandomStarterSpecies(0,&a,starters)==3);assert(checks==NATIONAL_DEX_COUNT);
  assert(starters[0]==1&&starters[1]==4&&starters[2]==9);
  a.arg1=0;SeedRng(123);assert(PickRandomStarterSpecies(0,&a,starters)==3);
+ for(u32 i=0;i<3;i++)assert(starters[i]!=5);
  assert(starters[0]!=starters[1]&&starters[0]!=starters[2]&&starters[1]!=starters[2]);
  SeedRng(123);assert(PickRandomStarterSpecies(0,&a,again)==3);assert(memcmp(starters,again,sizeof(starters))==0);
  assert(PickRandomStarterSpecies(99,&a,starters)==0);assert(starters[0]==0&&starters[1]==0&&starters[2]==0);

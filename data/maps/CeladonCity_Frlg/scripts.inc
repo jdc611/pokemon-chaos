@@ -4,6 +4,8 @@ CeladonCity_Frlg_MapScripts::
 
 CeladonCity_OnTransition::
 	setworldmapflag FLAG_WORLD_MAP_CELADON_CITY
+	clearflag FLAG_HIDE_CHAOS_ARCADE_WORKER
+	call_if_set FLAG_BADGE04_GET, ChaosArcade_RemoveWorker
 	end
 
 CeladonCity_EventScript_LittleGirl::
@@ -114,7 +116,7 @@ CeladonCity_Text_GymIsGreatFullOfWomen::
 CeladonCity_Text_GameCornerIsBadForCitysImage::
 	.string "CELADON takes pride in its efforts\n"
 	.string "to keep the city beautiful.\p"
-	.string "That's why the new GAME CORNER is\n"
+	.string "That's why the new CHAOS ARCADE is\n"
 	.string "bad for our city's image.$"
 
 CeladonCity_Text_BlewItAllAtSlots::
@@ -176,7 +178,7 @@ CeladonCity_Text_PrizeExchangeSign::
 	.string "PRIZE EXCHANGE$"
 
 CeladonCity_Text_GameCornerSign::
-	.string "ROCKET GAME CORNER\n"
+	.string "ROCKET CHAOS ARCADE\n"
 	.string "The playground for grown-ups!$"
 
 CeladonCity_Text_ScaldedTongueOnTea::
@@ -216,3 +218,21 @@ CeladonCity_Text_SomeoneStoleSilphScope::
 	.string "But I lost sight of him!\n"
 	.string "Where'd he go?$"
 
+
+ChaosArcade_RemoveWorker::
+	setflag FLAG_HIDE_CHAOS_ARCADE_WORKER
+	return
+
+ChaosArcade_Construction::
+	lockall
+	msgbox ChaosArcade_Text_Construction
+	releaseall
+	end
+
+ChaosArcade_Text_Construction::
+	.string "Sorry! The CHAOS ARCADE is\n"
+	.string "under construction.\p"
+	.string "Exciting new games and prizes\n"
+	.string "are coming soon!\p"
+	.string "Come back with ERIKA's\n"
+	.string "RAINBOW BADGE!$"

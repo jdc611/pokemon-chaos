@@ -10,6 +10,8 @@ CeladonCity_GameCorner_PrizeRoom_EventScript_OldMan::
 	end
 
 CeladonCity_GameCorner_PrizeRoom_EventScript_PrizeClerkMons::
+	checkitem ITEM_COIN_CASE
+	goto_if_eq VAR_RESULT, FALSE, CeladonCity_GameCorner_PrizeRoom_EventScript_NeedCoinCase
 	lock
 	faceplayer
 	showcoinsbox 0, 0
@@ -236,6 +238,8 @@ CeladonCity_GameCorner_PrizeRoom_EventScript_TransferredToPC::
 	end
 
 CeladonCity_GameCorner_PrizeRoom_EventScript_PrizeClerkTMs::
+	checkitem ITEM_COIN_CASE
+	goto_if_eq VAR_RESULT, FALSE, CeladonCity_GameCorner_PrizeRoom_EventScript_NeedCoinCase
 	lock
 	faceplayer
 	showcoinsbox 0, 0
@@ -325,6 +329,8 @@ CeladonCity_GameCorner_PrizeRoom_EventScript_BagFull::
 	end
 
 CeladonCity_GameCorner_PrizeRoom_EventScript_PrizeClerkItems::
+	checkitem ITEM_COIN_CASE
+	goto_if_eq VAR_RESULT, FALSE, CeladonCity_GameCorner_PrizeRoom_EventScript_NeedCoinCase
 	lock
 	faceplayer
 	showcoinsbox 0, 0

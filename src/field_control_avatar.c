@@ -1161,6 +1161,19 @@ static bool8 TryDoorWarp(struct MapPosition *position, u16 metatileBehavior, enu
                     ScriptContext_SetupScript(ChaosRanch_Door);
                     return TRUE;
                 }
+                // Gate both arcade buildings, including the separate prize door.
+                // Apply only to incoming city doors so existing saves can leave.
+                if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_CELADON_CITY)
+                 && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_CELADON_CITY)
+                 && door->mapGroup == MAP_GROUP(MAP_CELADON_CITY_GAME_CORNER)
+                 && (door->mapNum == MAP_NUM(MAP_CELADON_CITY_GAME_CORNER)
+                  || door->mapNum == MAP_NUM(MAP_CELADON_CITY_GAME_CORNER_PRIZE_ROOM))
+                 && !FlagGet(FLAG_BADGE04_GET))
+                {
+                    extern const u8 ChaosArcade_Construction[];
+                    ScriptContext_SetupScript(ChaosArcade_Construction);
+                    return TRUE;
+                }
                 StoreInitialPlayerAvatarState();
                 SetupWarp(&gMapHeader, warpEventId, position);
                 DoDoorWarp();
