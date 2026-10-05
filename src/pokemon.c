@@ -2237,6 +2237,10 @@ u32 GetBoxMonData3(struct BoxPokemon *boxMon, s32 field, u8 *data)
         case MON_DATA_IS_EGG:
             retVal = IsEggOrBadEgg(boxMon);
             break;
+        case MON_DATA_CHAOS_STARTER_ABILITY:
+            retVal = GetSubstruct0(boxMon)->chaosStarterAbilityLow
+                   | (GetSubstruct0(boxMon)->chaosStarterAbilityHigh << 6);
+            break;
         case MON_DATA_ABILITY_NUM:
             retVal = GetSubstruct3(boxMon)->abilityNum;
             break;
@@ -2753,7 +2757,18 @@ void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg)
             SET8(GetSubstruct3(boxMon)->isEgg);
             SET8(boxMon->isEgg);
             break;
+        case MON_DATA_CHAOS_STARTER_ABILITY:
+        {
+            u16 ability;
+            SET16(ability);
+            GetSubstruct0(boxMon)->chaosStarterAbilityLow = ability & 63;
+            GetSubstruct0(boxMon)->chaosStarterAbilityHigh = ability >> 6;
+            break;
+        }
         case MON_DATA_ABILITY_NUM:
+            // An explicit ability change replaces the individual starter guarantee.
+            GetSubstruct0(boxMon)->chaosStarterAbilityLow = 0;
+            GetSubstruct0(boxMon)->chaosStarterAbilityHigh = 0;
             SET8(GetSubstruct3(boxMon)->abilityNum);
             break;
         case MON_DATA_COOL_RIBBON:
@@ -3112,11 +3127,34 @@ enum Ability GetAbilityBySpecies(enum Species species, u8 abilityNum)
     return gLastUsedAbility;
 }
 
+enum Ability GetBoxMonAbility(struct BoxPokemon *mon)
+{
+    enum Ability ability = GetBoxMonData(mon, MON_DATA_CHAOS_STARTER_ABILITY);
+    if (ability > ABILITY_NONE && ability < ABILITIES_COUNT)
+    {
+        gLastUsedAbility = ability;
+        return ability;
+    }
+    return GetAbilityBySpecies(GetBoxMonData(mon, MON_DATA_SPECIES), GetBoxMonData(mon, MON_DATA_ABILITY_NUM));
+}
+
 enum Ability GetMonAbility(struct Pokemon *mon)
 {
-    enum Species species = GetMonData(mon, MON_DATA_SPECIES);
-    u8 abilityNum = GetMonData(mon, MON_DATA_ABILITY_NUM);
-    return GetAbilityBySpecies(species, abilityNum);
+    return GetBoxMonAbility(&mon->box);
+}
+
+void ApplyCustomStarterRunAbility(struct Pokemon *mon)
+{
+    enum Ability ability = GetActiveRunFilterAbilityForMonChanges();
+    if (gSaveBlock3Ptr->starterMode == RUN_STARTER_CHOOSE
+     && gSaveBlock3Ptr->abilityMode == RUN_ABILITIES_RANDOM && ability != ABILITY_NONE)
+    {
+        u8 slot = 0;
+        SetMonData(mon, MON_DATA_ABILITY_NUM, &slot);
+        SetMonData(mon, MON_DATA_CHAOS_STARTER_ABILITY, &ability);
+    }
+    else
+        TrySetMonAbilityToActiveRunFilter(mon);
 }
 
 void CreateSecretBaseEnemyParty(struct SecretBase *secretBaseRecord)
@@ -3639,9 +3677,17 @@ enum Ability GetActiveRunFilterAbilityForMonChanges(void)
 
 static bool32 DoesSpeciesLineMatchActiveRunFilter(enum Species species)
 {
+    // Actual ability legality is checked on the individual Pokémon below.
+    // Keep this second check exclusively about species/type eligibility.
+    u8 mode = gSaveBlock3Ptr->filterMode;
+    u16 value = gSaveBlock3Ptr->filterValue;
+    if (mode == RUN_FILTER_TYPE_ABILITY)
+    {
+        mode = RUN_FILTER_TYPE;
+        value &= 31;
+    }
     return DoesSpeciesOrReachableFormMatchRunFilterForSettings(species,
-        gSaveBlock3Ptr->filterMode, gSaveBlock3Ptr->filterValue,
-        gSaveBlock3Ptr->abilityMode, gSaveBlock3Ptr->evolutionMode,
+        mode, value, gSaveBlock3Ptr->abilityMode, gSaveBlock3Ptr->evolutionMode,
         gSaveBlock3Ptr->runDifficulty, gSaveBlock3Ptr->worldSeed);
 }
 
@@ -3672,19 +3718,18 @@ bool32 DoesBoxMonMatchActiveRunFilter(struct BoxPokemon *boxMon)
 {
     enum Species species = GetBoxMonData(boxMon, MON_DATA_SPECIES_OR_EGG);
     enum Ability requiredAbility;
-    u8 abilityNum;
 
     if (species == SPECIES_NONE || species == SPECIES_EGG)
         return TRUE;
-    if (gSaveBlock3Ptr != NULL && !DoesSpeciesLineMatchActiveRunFilter(species))
+    if (gSaveBlock3Ptr != NULL && gSaveBlock3Ptr->filterMode != RUN_FILTER_ABILITY
+     && !DoesSpeciesLineMatchActiveRunFilter(species))
         return FALSE;
 
     requiredAbility = GetActiveRunFilterAbility();
     if (requiredAbility == ABILITY_NONE)
         return TRUE;
 
-    abilityNum = GetBoxMonData(boxMon, MON_DATA_ABILITY_NUM);
-    return GetAbilityBySpecies(species, abilityNum) == requiredAbility;
+    return GetBoxMonAbility(boxMon) == requiredAbility;
 }
 
 bool32 TrySetMonAbilityToActiveRunFilter(struct Pokemon *mon)
@@ -3694,6 +3739,9 @@ bool32 TrySetMonAbilityToActiveRunFilter(struct Pokemon *mon)
     u8 slot;
 
     if (requiredAbility == ABILITY_NONE || species == SPECIES_NONE || species == SPECIES_EGG)
+        return TRUE;
+
+    if (GetMonData(mon, MON_DATA_CHAOS_STARTER_ABILITY) == requiredAbility)
         return TRUE;
 
     // Ability filters must never silently grant a Hidden Ability. The setup
@@ -4092,7 +4140,7 @@ void PokemonToBattleMon(struct Pokemon *src, struct BattlePokemon *dst)
     dst->types[2] = TYPE_MYSTERY;
     dst->isShiny = IsMonShiny(src);
     dst->affectionHearts = GetMonAffectionHearts(src);
-    dst->ability = GetAbilityBySpecies(dst->species, dst->abilityNum);
+    dst->ability = GetMonAbility(src);
     GetMonData(src, MON_DATA_NICKNAME, nickname);
     StringCopy_Nickname(dst->nickname, nickname);
     GetMonData(src, MON_DATA_OT_NAME, dst->otName);
@@ -6610,7 +6658,7 @@ enum Species GetFormChangeTargetSpeciesBoxMon(struct BoxPokemon *boxMon, enum Fo
         .method = method,
         .currentSpecies = species,
         .heldItem = GetBoxMonData(boxMon, MON_DATA_HELD_ITEM),
-        .ability = GetAbilityBySpecies(species, GetBoxMonData(boxMon, MON_DATA_ABILITY_NUM)),
+        .ability = GetBoxMonAbility(boxMon),
         .partyItemUsed = gSpecialVar_ItemId,
         .multichoiceSelection = gSpecialVar_Result,
         .status = GetBoxMonData(boxMon, MON_DATA_STATUS),

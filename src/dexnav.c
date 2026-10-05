@@ -134,9 +134,8 @@ struct DexNavGUI
     u8 cursorSpriteId;
     u8 fishingIconMatrix;
     enum Species landSpecies[NUM_LAND_MONS_ENCOUNTER_SLOTS];
-    enum Species waterSpecies[NUM_WATER_MONS_ENCOUNTER_SLOTS];
-    enum Species fishingSpecies[COL_FISHING_COUNT];
-    u8 fishingRodMasks[COL_FISHING_COUNT];
+    enum Species waterSpecies[WATER_DISPLAY_CAPACITY];
+    u8 waterMethods[WATER_DISPLAY_CAPACITY];
     u8 cursorRow;
     u8 cursorCol;
     u8 environment;
@@ -232,6 +231,18 @@ static const u32 sFishingContentTopTile[] =
     0xDDDDDDDD, 0x11111111, 0x11111111, 0x11111111,
 };
 
+static const u32 sLandHeaderTile[] =
+{
+    0x66666666, 0x66666666, 0x66666666, 0x66666666,
+    0x66666666, 0xCCCCCCCC, 0x66666666, 0x66666666,
+};
+static const u32 sLandContentTopTile[] =
+{
+    0x66666666, 0x66666666, 0x66666666, 0x66666666,
+    0xAAAAAAAA, 0x11111111, 0x11111111, 0x11111111,
+};
+#define LAND_HEADER_TILE 0xB5
+#define LAND_CONTENT_TOP_TILE 0xB6
 #define FISHING_CONTENT_TOP_TILE 0xB4
 #define FISHING_HEADER_TILE 0xB0
 #define FISHING_BOTTOM_TILE 0xB1
@@ -271,11 +282,8 @@ static const u8 sText_MethodHidden[] = _("HIDDEN");
 static const u8 sText_MethodOldRod[] = _("OLD");
 static const u8 sText_MethodGoodRod[] = _("GOOD");
 static const u8 sText_MethodSuperRod[] = _("SUPER");
-static const u8 sText_MethodOldGood[] = _("O+G");
-static const u8 sText_MethodOldSuper[] = _("O+S");
-static const u8 sText_MethodGoodSuper[] = _("G+S");
-static const u8 sText_MethodAllRods[] = _("ALL RODS");
-static const u8 sText_Fishing[] = _("FISHING");
+static const u8 sText_WaterPanel[] = _("WATER");
+static const u8 sText_LandPanel[] = _("LAND");
 
 static const u8 sText_ArrowLeft[] = _("{LEFT_ARROW}");
 static const u8 sText_ArrowRight[] = _("{RIGHT_ARROW}");
@@ -316,12 +324,12 @@ static const struct WindowTemplate sDexNavGuiWindowTemplates[] =
     },
     [WINDOW_WATER_LABEL] =
     {
-        .bg = 0, .tilemapLeft = 1, .tilemapTop = 2,
+        .bg = 0, .tilemapLeft = 1, .tilemapTop = 10,
         .width = 8, .height = 2, .paletteNum = 15, .baseBlock = 252,
     },
     [WINDOW_LAND_LABEL] =
     {
-        .bg = 0, .tilemapLeft = 1, .tilemapTop = 7,
+        .bg = 0, .tilemapLeft = 1, .tilemapTop = 2,
         .width = 8, .height = 2, .paletteNum = 15, .baseBlock = 268,
     },
     DUMMY_WIN_TEMPLATE
@@ -1708,16 +1716,14 @@ static void DrawDexNavEncounterPanel(u16 *tilemap, u32 left, u32 top, u32 width,
 static void PrepareFishingDexNavLayout(void)
 {
     u16 *tilemap = (u16 *)sBg1TilemapBuffer;
-    // Retain the original Water and Land panels, including their baked labels.
-    // The Hidden label shares Land's bottom row: replace its lettering with
-    // the existing clean Land border before replacing Hidden with Fishing.
-    u32 x;
-    const u16 style[] = {FISHING_HEADER_TILE, FISHING_CONTENT_TOP_TILE,
+    const u16 waterStyle[] = {FISHING_HEADER_TILE, FISHING_CONTENT_TOP_TILE,
         tilemap[4 * 32 + 1], tilemap[4 * 32 + 5], tilemap[4 * 32 + 17],
         FISHING_BOTTOM_TILE, FISHING_BOTTOM_TILE + 1, FISHING_BOTTOM_TILE + 2};
-    for (x = 4; x <= 14; x++)
-        tilemap[14 * 32 + x] = tilemap[14 * 32 + 1];
-    DrawDexNavEncounterPanel(tilemap, 0, 15, 20, 19, style);
+    const u16 landStyle[] = {LAND_HEADER_TILE, LAND_CONTENT_TOP_TILE,
+        tilemap[10 * 32 + 1], tilemap[10 * 32 + 5], tilemap[10 * 32 + 17],
+        tilemap[14 * 32 + 1], tilemap[14 * 32 + 2], tilemap[14 * 32 + 17]};
+    DrawDexNavEncounterPanel(tilemap, 0, 2, 20, 9, landStyle);
+    DrawDexNavEncounterPanel(tilemap, 0, 10, 20, 19, waterStyle);
 }
 
 static bool8 DexNav_LoadGraphics(void)
@@ -1732,6 +1738,8 @@ static bool8 DexNav_LoadGraphics(void)
     case 1:
         if (FreeTempTileDataBuffersIfPossible() != TRUE)
         {
+            LoadBgTiles(1, sLandHeaderTile, sizeof(sLandHeaderTile), LAND_HEADER_TILE);
+            LoadBgTiles(1, sLandContentTopTile, sizeof(sLandContentTopTile), LAND_CONTENT_TOP_TILE);
             LoadBgTiles(1, sFishingContentTopTile, sizeof(sFishingContentTopTile), FISHING_CONTENT_TOP_TILE);
             LoadBgTiles(1, sFishingHeaderTile, sizeof(sFishingHeaderTile), FISHING_HEADER_TILE);
             LoadBgTiles(1, sFishingBottomTiles, sizeof(sFishingBottomTiles), FISHING_BOTTOM_TILE);
@@ -1753,49 +1761,33 @@ static bool8 DexNav_LoadGraphics(void)
     return FALSE;
 }
 
+static u32 SelectedWaterIndex(void)
+{
+    return (sDexNavUiDataPtr->cursorRow - ROW_WATER) * COL_WATER_COUNT + sDexNavUiDataPtr->cursorCol;
+}
+
 static void UpdateCursorPosition(void)
 {
-    u16 x, y;
-
-    u8 columnCount = sDexNavUiDataPtr->cursorRow == ROW_WATER ? COL_WATER_COUNT
-                   : sDexNavUiDataPtr->cursorRow == ROW_FISHING ? COL_FISHING_COUNT : COL_LAND_COUNT;
-    if (sDexNavUiDataPtr->cursorCol >= columnCount)
-        sDexNavUiDataPtr->cursorCol = columnCount - 1;
-
-    switch (sDexNavUiDataPtr->cursorRow)
-    {
-    case ROW_WATER:
-        x = ROW_WATER_ICON_X + (24 * sDexNavUiDataPtr->cursorCol);
-        y = ROW_WATER_ICON_Y;
-        sDexNavUiDataPtr->environment = ENCOUNTER_TYPE_WATER;
-        break;
-    case ROW_LAND_TOP: //land 1
-        x = ROW_LAND_ICON_X + (24 * sDexNavUiDataPtr->cursorCol);
-        y = ROW_LAND_TOP_ICON_Y;
-        sDexNavUiDataPtr->environment = ENCOUNTER_TYPE_LAND;
-        break;
-    case ROW_LAND_BOT: //land 2
-        x = ROW_LAND_ICON_X + (24 * sDexNavUiDataPtr->cursorCol);
-        y = ROW_LAND_BOT_ICON_Y;
-        sDexNavUiDataPtr->environment = ENCOUNTER_TYPE_LAND;
-        break;
-    case ROW_FISHING:
-        x = ROW_FISHING_ICON_X + (21 * sDexNavUiDataPtr->cursorCol);
-        y = ROW_FISHING_ICON_Y;
-        sDexNavUiDataPtr->environment = ENCOUNTER_TYPE_FISHING;
-        break;
-    default:
-        return;
-    }
-
     struct Sprite *cursor = &gSprites[sDexNavUiDataPtr->cursorSpriteId];
+    if (sDexNavUiDataPtr->cursorCol >= COL_LAND_COUNT)
+        sDexNavUiDataPtr->cursorCol = COL_LAND_MAX;
+    if (sDexNavUiDataPtr->cursorRow >= ROW_WATER)
+    {
+        cursor->x = ROW_WATER_ICON_X + 24 * sDexNavUiDataPtr->cursorCol;
+        cursor->y = ROW_WATER_ICON_Y + 18 * (sDexNavUiDataPtr->cursorRow - ROW_WATER);
+        sDexNavUiDataPtr->environment = sDexNavUiDataPtr->waterMethods[SelectedWaterIndex()] == 0
+                                    ? ENCOUNTER_TYPE_WATER : ENCOUNTER_TYPE_FISHING;
+    }
+    else
+    {
+        cursor->x = ROW_LAND_ICON_X + 24 * sDexNavUiDataPtr->cursorCol;
+        cursor->y = ROW_LAND_TOP_ICON_Y + 24 * sDexNavUiDataPtr->cursorRow;
+        sDexNavUiDataPtr->environment = ENCOUNTER_TYPE_LAND;
+    }
     cursor->affineAnimBeginning = FALSE;
     cursor->affineAnimPaused = TRUE;
-    cursor->oam.affineMode = sDexNavUiDataPtr->cursorRow == ROW_FISHING ? ST_OAM_AFFINE_NORMAL : ST_OAM_AFFINE_OFF;
-    cursor->oam.matrixNum = sDexNavUiDataPtr->cursorRow == ROW_FISHING ? sDexNavUiDataPtr->fishingIconMatrix : 0;
-    gSprites[sDexNavUiDataPtr->cursorSpriteId].x = x;
-    gSprites[sDexNavUiDataPtr->cursorSpriteId].y = y;
-
+    cursor->oam.affineMode = ST_OAM_AFFINE_NORMAL;
+    cursor->oam.matrixNum = sDexNavUiDataPtr->fishingIconMatrix;
     PrintCurrentSpeciesInfo();
 }
 
@@ -1924,13 +1916,10 @@ static void DexNavLoadCapturedAllSymbols(void)
     LoadCompressedSpriteSheetUsingHeap(&sCapturedAllPokemonSpriteSheet);
 
     if (CapturedAllLandMons(headerId))
-        CreateSprite(&sCaptureAllMonsSpriteTemplate, 152, 58, 0);
+        CreateSprite(&sCaptureAllMonsSpriteTemplate, 144, 17, 0);
 
-    if (CapturedAllWaterMons(headerId))
-        CreateSprite(&sCaptureAllMonsSpriteTemplate, 139, 17, 0);
-
-    if (CapturedAllFishingMons(headerId))
-        CreateSprite(&sCaptureAllMonsSpriteTemplate, 152, 123, 0);
+    if (CapturedAllWaterMons(headerId) && CapturedAllFishingMons(headerId))
+        CreateSprite(&sCaptureAllMonsSpriteTemplate, 144, 81, 0);
 }
 
 //#define WIN_DETAILS_TILE        0x3a3
@@ -1938,8 +1927,8 @@ static void DexNav_InitWindows(void)
 {
     InitWindows(sDexNavGuiWindowTemplates);
     DeactivateAllTextPrinters();
-    const u8 labels[] = {WINDOW_FISHING_LABEL};
-    const u8 *const text[] = {sText_Fishing};
+    const u8 labels[] = {WINDOW_LAND_LABEL, WINDOW_WATER_LABEL};
+    const u8 *const text[] = {sText_LandPanel, sText_WaterPanel};
     u32 i;
     for (i = 0; i < ARRAY_COUNT(labels); i++)
     {
@@ -2004,42 +1993,31 @@ static bool8 SpeciesInArray(enum Species species, u8 section)
 {
     u32 i;
     enum NationalDexOrder dexNum = SpeciesToNationalPokedexNum(species);
-
-    switch (section)
-    {
-    case 0: //land
-        for (i = 0; i < NUM_LAND_MONS_ENCOUNTER_SLOTS; i++)
-        {
-            if (SpeciesToNationalPokedexNum(sDexNavUiDataPtr->landSpecies[i]) == dexNum)
-                return TRUE;
-        }
-        break;
-    case 1: //water
-        for (i = 0; i < NUM_WATER_MONS_ENCOUNTER_SLOTS; i++)
-        {
-            if (SpeciesToNationalPokedexNum(sDexNavUiDataPtr->waterSpecies[i]) == dexNum)
-                return TRUE;
-        }
-        break;
-    case 2: //fishing
-        for (i = 0; i < COL_FISHING_COUNT; i++)
-        {
-            if (SpeciesToNationalPokedexNum(sDexNavUiDataPtr->fishingSpecies[i]) == dexNum)
-                return TRUE;
-        }
-        break;
-    default:
-        break;
-    }
-
+    for (i = 0; i < NUM_LAND_MONS_ENCOUNTER_SLOTS; i++)
+        if (SpeciesToNationalPokedexNum(sDexNavUiDataPtr->landSpecies[i]) == dexNum)
+            return TRUE;
     return FALSE;
+}
+
+static void AddWaterEncounter(enum Species species, u8 method, u8 *count)
+{
+    u32 i;
+    if (species == SPECIES_NONE || species >= NUM_SPECIES)
+        return;
+    for (i = 0; i < *count; i++)
+        if (sDexNavUiDataPtr->waterSpecies[i] == species && sDexNavUiDataPtr->waterMethods[i] == method)
+            return;
+    if (*count < WATER_DISPLAY_CAPACITY)
+    {
+        sDexNavUiDataPtr->waterSpecies[*count] = species;
+        sDexNavUiDataPtr->waterMethods[(*count)++] = method;
+    }
 }
 // get unique wild encounters on current map
 static void DexNavLoadEncounterData(void)
 {
     u8 grassIndex = 0;
     u8 waterIndex = 0;
-    u8 fishingIndex = 0;
     enum Species species;
     u32 i;
     u32 headerId = GetCurrentMapWildMonHeaderId();
@@ -2058,8 +2036,7 @@ static void DexNavLoadEncounterData(void)
     // nop struct data
     memset(sDexNavUiDataPtr->landSpecies, 0, sizeof(sDexNavUiDataPtr->landSpecies));
     memset(sDexNavUiDataPtr->waterSpecies, 0, sizeof(sDexNavUiDataPtr->waterSpecies));
-    memset(sDexNavUiDataPtr->fishingSpecies, 0, sizeof(sDexNavUiDataPtr->fishingSpecies));
-    memset(sDexNavUiDataPtr->fishingRodMasks, 0, sizeof(sDexNavUiDataPtr->fishingRodMasks));
+    memset(sDexNavUiDataPtr->waterMethods, 0, sizeof(sDexNavUiDataPtr->waterMethods));
 
     // land mons
     if (landMonsInfo != NULL && landMonsInfo->encounterRate != 0)
@@ -2075,46 +2052,19 @@ static void DexNavLoadEncounterData(void)
         }
     }
 
-    // water mons
+    // Surf and rod encounters share WATER; each entry keeps its exact method.
     if (waterMonsInfo != NULL && waterMonsInfo->encounterRate != 0)
-    {
         for (i = 0; i < NUM_WATER_MONS_ENCOUNTER_SLOTS; i++)
-        {
-            if (gSaveBlock3Ptr->randomizerEnabled)
-                species = GetRandomizedWildSpecies(waterMonsInfo, WILD_AREA_WATER, i);
-            else
-                species = waterMonsInfo->wildPokemon[i].species;
-            if (species != SPECIES_NONE && !SpeciesInArray(species, 1))
-                sDexNavUiDataPtr->waterSpecies[waterIndex++] = species;
-        }
-    }
-
-    // fishing mons. Duplicate species share a slot and list every rod that can catch them.
+            AddWaterEncounter(gSaveBlock3Ptr->randomizerEnabled
+                ? GetRandomizedWildSpecies(waterMonsInfo, WILD_AREA_WATER, i)
+                : waterMonsInfo->wildPokemon[i].species, 0, &waterIndex);
     if (fishingMonsInfo != NULL && fishingMonsInfo->encounterRate != 0)
-    {
         for (i = 0; i < NUM_FISHING_MONS_ENCOUNTER_SLOTS; i++)
-        {
-            u8 rodMask = (i < 2) ? FISHING_ROD_OLD : (i < 5) ? FISHING_ROD_GOOD : FISHING_ROD_SUPER;
-            u8 existingIndex;
+            AddWaterEncounter(gSaveBlock3Ptr->randomizerEnabled
+                ? GetRandomizedWildSpecies(fishingMonsInfo, WILD_AREA_FISHING, i)
+                : fishingMonsInfo->wildPokemon[i].species,
+                i < 2 ? FISHING_ROD_OLD : i < 5 ? FISHING_ROD_GOOD : FISHING_ROD_SUPER, &waterIndex);
 
-            species = gSaveBlock3Ptr->randomizerEnabled
-                    ? GetRandomizedWildSpecies(fishingMonsInfo, WILD_AREA_FISHING, i)
-                    : fishingMonsInfo->wildPokemon[i].species;
-            for (existingIndex = 0; existingIndex < fishingIndex; existingIndex++)
-            {
-                if (SpeciesToNationalPokedexNum(sDexNavUiDataPtr->fishingSpecies[existingIndex]) == SpeciesToNationalPokedexNum(species))
-                    break;
-            }
-
-            if (species != SPECIES_NONE && existingIndex < fishingIndex)
-                sDexNavUiDataPtr->fishingRodMasks[existingIndex] |= rodMask;
-            else if (species != SPECIES_NONE && fishingIndex < COL_FISHING_COUNT)
-            {
-                sDexNavUiDataPtr->fishingSpecies[fishingIndex] = species;
-                sDexNavUiDataPtr->fishingRodMasks[fishingIndex++] = rodMask;
-            }
-        }
-    }
 }
 
 static u8 TryDrawIconInSlot(enum Species species, s16 x, s16 y)
@@ -2126,39 +2076,31 @@ static u8 TryDrawIconInSlot(enum Species species, s16 x, s16 y)
 
 static void DrawSpeciesIcons(void)
 {
-    s16 x, y;
     u32 i;
-    enum Species species;
-
+    u8 spriteId;
+    s16 x, y;
     LoadCompressedSpriteSheetUsingHeap(&sNoDataIconSpriteSheet);
-    for (i = 0; i < NUM_LAND_MONS_ENCOUNTER_SLOTS; i++)
-    {
-        species = sDexNavUiDataPtr->landSpecies[i];
-        x = ROW_LAND_ICON_X + (24 * (i % COL_LAND_COUNT));
-        y = ROW_LAND_TOP_ICON_Y + (i > COL_LAND_MAX ? 28 : 0);
-        TryDrawIconInSlot(species, x, y);
-    }
-
-    for (i = 0; i < NUM_WATER_MONS_ENCOUNTER_SLOTS; i++)
-    {
-        species = sDexNavUiDataPtr->waterSpecies[i];
-        x = ROW_WATER_ICON_X + 24 * i;
-        y = ROW_WATER_ICON_Y;
-        TryDrawIconInSlot(species, x, y);
-    }
-
-    // A single shared matrix keeps every fishing icon inside the short panel.
     sDexNavUiDataPtr->fishingIconMatrix = AllocOamMatrix();
     SetOamMatrix(sDexNavUiDataPtr->fishingIconMatrix, 0x1A0, 0, 0, 0x1A0);
-    for (i = 0; i < COL_FISHING_COUNT; i++)
+    for (i = 0; i < NUM_LAND_MONS_ENCOUNTER_SLOTS + WATER_DISPLAY_CAPACITY; i++)
     {
-        species = sDexNavUiDataPtr->fishingSpecies[i];
-        x = ROW_FISHING_ICON_X + 21 * i;
-        y = ROW_FISHING_ICON_Y;
-        // The X artwork sits below its sprite center; compensate before scaling.
+        enum Species species;
+        if (i < NUM_LAND_MONS_ENCOUNTER_SLOTS)
+        {
+            species = sDexNavUiDataPtr->landSpecies[i];
+            x = ROW_LAND_ICON_X + 24 * (i % COL_LAND_COUNT);
+            y = ROW_LAND_TOP_ICON_Y + 24 * (i / COL_LAND_COUNT);
+        }
+        else
+        {
+            u32 index = i - NUM_LAND_MONS_ENCOUNTER_SLOTS;
+            species = sDexNavUiDataPtr->waterSpecies[index];
+            x = ROW_WATER_ICON_X + 24 * (index % COL_WATER_COUNT);
+            y = ROW_WATER_ICON_Y + 18 * (index / COL_WATER_COUNT);
+        }
         if (species == SPECIES_NONE)
             y -= 4;
-        u8 spriteId = TryDrawIconInSlot(species, x, y);
+        spriteId = TryDrawIconInSlot(species, x, y);
         gSprites[spriteId].affineAnimBeginning = FALSE;
         gSprites[spriteId].affineAnimPaused = TRUE;
         gSprites[spriteId].oam.affineMode = ST_OAM_AFFINE_NORMAL;
@@ -2168,30 +2110,9 @@ static void DrawSpeciesIcons(void)
 
 static enum Species DexNavGetSpecies(void)
 {
-    enum Species species;
-
-    switch (sDexNavUiDataPtr->cursorRow)
-    {
-    case ROW_WATER:
-        species = sDexNavUiDataPtr->waterSpecies[sDexNavUiDataPtr->cursorCol];
-        break;
-    case ROW_LAND_TOP:
-        species = sDexNavUiDataPtr->landSpecies[sDexNavUiDataPtr->cursorCol];
-        break;
-    case ROW_LAND_BOT:
-        species = sDexNavUiDataPtr->landSpecies[sDexNavUiDataPtr->cursorCol + COL_LAND_COUNT];
-        break;
-    case ROW_FISHING:
-        species = sDexNavUiDataPtr->fishingSpecies[sDexNavUiDataPtr->cursorCol];
-        break;
-    default:
-        return SPECIES_NONE;
-    }
-
-    if (FALSE)
-        return SPECIES_NONE;
-
-    return species;
+    if (sDexNavUiDataPtr->cursorRow >= ROW_WATER)
+        return sDexNavUiDataPtr->waterSpecies[SelectedWaterIndex()];
+    return sDexNavUiDataPtr->landSpecies[sDexNavUiDataPtr->cursorRow * COL_LAND_COUNT + sDexNavUiDataPtr->cursorCol];
 }
 
 static void SetSpriteInvisibility(u8 spriteArrayId, bool8 invisible)
@@ -2239,22 +2160,12 @@ static void SetTypeIconPosAndPal(u8 typeId, u8 x, u8 y, u8 spriteArrayId)
 
 static const u8 *GetSelectedFishingMethodText(void)
 {
-    switch (sDexNavUiDataPtr->fishingRodMasks[sDexNavUiDataPtr->cursorCol])
+    switch (sDexNavUiDataPtr->waterMethods[SelectedWaterIndex()])
     {
-    case FISHING_ROD_OLD:
-        return sText_MethodOldRod;
-    case FISHING_ROD_GOOD:
-        return sText_MethodGoodRod;
-    case FISHING_ROD_SUPER:
-        return sText_MethodSuperRod;
-    case FISHING_ROD_OLD | FISHING_ROD_GOOD:
-        return sText_MethodOldGood;
-    case FISHING_ROD_OLD | FISHING_ROD_SUPER:
-        return sText_MethodOldSuper;
-    case FISHING_ROD_GOOD | FISHING_ROD_SUPER:
-        return sText_MethodGoodSuper;
-    default:
-        return sText_MethodAllRods;
+    case FISHING_ROD_OLD: return sText_MethodOldRod;
+    case FISHING_ROD_GOOD: return sText_MethodGoodRod;
+    case FISHING_ROD_SUPER: return sText_MethodSuperRod;
+    default: return sText_MethodSurf;
     }
 }
 
@@ -2531,95 +2442,16 @@ static void Task_DexNavMain(u8 taskId)
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB_BLACK);
         task->func = Task_DexNavFadeAndExit;
     }
-    else if (JOY_NEW(DPAD_UP))
+    else if (JOY_NEW(DPAD_UP | DPAD_DOWN | DPAD_LEFT | DPAD_RIGHT))
     {
-        if (sDexNavUiDataPtr->cursorRow == ROW_WATER)
-        {
-            sDexNavUiDataPtr->cursorRow = ROW_FISHING;
-            if (sDexNavUiDataPtr->cursorCol >= COL_FISHING_COUNT)
-                sDexNavUiDataPtr->cursorCol = COL_FISHING_MAX;
-        }
+        if (JOY_NEW(DPAD_UP))
+            sDexNavUiDataPtr->cursorRow = (sDexNavUiDataPtr->cursorRow + ROWS_COUNT - 1) % ROWS_COUNT;
+        else if (JOY_NEW(DPAD_DOWN))
+            sDexNavUiDataPtr->cursorRow = (sDexNavUiDataPtr->cursorRow + 1) % ROWS_COUNT;
+        else if (JOY_NEW(DPAD_LEFT))
+            sDexNavUiDataPtr->cursorCol = (sDexNavUiDataPtr->cursorCol + COL_LAND_COUNT - 1) % COL_LAND_COUNT;
         else
-        {
-            if (sDexNavUiDataPtr->cursorRow == ROW_LAND_TOP && sDexNavUiDataPtr->cursorCol == COL_LAND_MAX)
-                sDexNavUiDataPtr->cursorCol = COL_WATER_MAX;
-
-            sDexNavUiDataPtr->cursorRow--;
-        }
-
-        PlaySE(SE_RG_BAG_CURSOR);
-        UpdateCursorPosition();
-    }
-    else if (JOY_NEW(DPAD_DOWN))
-    {
-        if (sDexNavUiDataPtr->cursorRow == ROW_FISHING)
-        {
-            sDexNavUiDataPtr->cursorRow = ROW_WATER;
-        }
-        else if (sDexNavUiDataPtr->cursorRow == ROW_LAND_BOT)
-        {
-            if (sDexNavUiDataPtr->cursorCol >= COL_FISHING_COUNT)
-                sDexNavUiDataPtr->cursorCol = COL_FISHING_MAX;
-
-            sDexNavUiDataPtr->cursorRow++;
-        }
-        else
-        {
-            sDexNavUiDataPtr->cursorRow++;
-        }
-
-        PlaySE(SE_RG_BAG_CURSOR);
-        UpdateCursorPosition();
-    }
-    else if (JOY_NEW(DPAD_LEFT))
-    {
-        if (sDexNavUiDataPtr->cursorCol == 0)
-        {
-            switch (sDexNavUiDataPtr->cursorRow)
-            {
-            case ROW_WATER:
-                sDexNavUiDataPtr->cursorCol = COL_WATER_MAX;
-                break;
-            case ROW_FISHING:
-                sDexNavUiDataPtr->cursorCol = COL_FISHING_MAX;
-                break;
-            default:
-                sDexNavUiDataPtr->cursorCol = COL_LAND_MAX;
-                break;
-            }
-        }
-        else
-        {
-            sDexNavUiDataPtr->cursorCol--;
-        }
-
-        PlaySE(SE_RG_BAG_CURSOR);
-        UpdateCursorPosition();
-    }
-    else if (JOY_NEW(DPAD_RIGHT))
-    {
-        switch (sDexNavUiDataPtr->cursorRow)
-        {
-        case ROW_WATER:
-            if (sDexNavUiDataPtr->cursorCol == COL_WATER_MAX)
-                sDexNavUiDataPtr->cursorCol = 0;
-            else
-                sDexNavUiDataPtr->cursorCol++;
-            break;
-        case ROW_FISHING:
-            if (sDexNavUiDataPtr->cursorCol == COL_FISHING_MAX)
-                sDexNavUiDataPtr->cursorCol = 0;
-            else
-                sDexNavUiDataPtr->cursorCol++;
-            break;
-        default:
-            if (sDexNavUiDataPtr->cursorCol == COL_LAND_MAX)
-                sDexNavUiDataPtr->cursorCol = 0;
-            else
-                sDexNavUiDataPtr->cursorCol++;
-            break;
-        }
-
+            sDexNavUiDataPtr->cursorCol = (sDexNavUiDataPtr->cursorCol + 1) % COL_LAND_COUNT;
         PlaySE(SE_RG_BAG_CURSOR);
         UpdateCursorPosition();
     }

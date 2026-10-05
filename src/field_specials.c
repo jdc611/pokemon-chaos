@@ -6028,7 +6028,18 @@ void ReturnPlayerToLastPokemonCenter(void)
     {
         // Withdrawal is allowed before healing. Return to the actual Center
         // just left, even when the recorded whiteout destination is still Mom.
-        SetWarpDestinationToMapWarp(gLastUsedWarp.mapGroup, gLastUsedWarp.mapNum, 0);
+        u32 i;
+        s8 entranceWarp = 0;
+        for (i = 0; i < gMapHeader.events->warpCount; i++)
+        {
+            const struct WarpEvent *door = &gMapHeader.events->warps[i];
+            if (door->mapGroup == gLastUsedWarp.mapGroup && door->mapNum == gLastUsedWarp.mapNum)
+            {
+                entranceWarp = door->warpId;
+                break;
+            }
+        }
+        SetWarpDestinationToMapWarp(gLastUsedWarp.mapGroup, gLastUsedWarp.mapNum, entranceWarp);
         // Walk through the door just used, including its open/close animation.
         // DoDoorWarp consumes the upward step itself; do not pre-walk onto it.
         DoDoorWarp();

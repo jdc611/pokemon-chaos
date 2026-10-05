@@ -219,10 +219,15 @@ ViridianCity_EventScript_TutorialTriggerRight::
 	end
 
 ViridianCity_EventScript_DoTutorialBattle::
+    checkitem ITEM_TEACHY_TV
+    goto_if_eq VAR_RESULT, TRUE, ViridianCity_EventScript_TutorialGiftAlreadyOwned
+    goto_if_ge VAR_MAP_SCENE_VIRIDIAN_CITY_OLD_MAN, 2, ViridianCity_EventScript_TutorialGiftDone
 	giveitem ITEM_TEACHY_TV
 	goto_if_eq VAR_RESULT, FALSE, ViridianCity_EventScript_TutorialGiftDone
 	setvar VAR_MAP_SCENE_VIRIDIAN_CITY_OLD_MAN, 2
 	msgbox ViridianCity_Text_AutoRepelGift, MSGBOX_DEFAULT
+ViridianCity_EventScript_TutorialGiftAlreadyOwned::
+    setvar VAR_MAP_SCENE_VIRIDIAN_CITY_OLD_MAN, 2
 ViridianCity_EventScript_TutorialGiftDone::
 	return
 

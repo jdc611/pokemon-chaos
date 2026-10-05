@@ -1,22 +1,26 @@
-# Chaos FireRed continuation — Build 213
+# Chaos FireRed continuation — Build 214
 
 Repository: jdc611/pokemon-chaos. Branch: master. Continue from actual current master; preserve existing systems and locked custom trainer rosters.
 
-## Latest changes
+## Latest changes — Build 214
 
-Build 213 code commit: a8cbc56c8608e396a3f238e3d5e4928b487e37c2.
-Workflow: https://github.com/jdc611/pokemon-chaos/actions/runs/37252547866 — green.
+- Custom starters with Random Abilities and an Ability filter can choose any otherwise eligible species. Type restrictions still apply. The individual starter receives the filtered ability in normal slot 0, and keeps it through boxing, saving/copying and evolution. Ordinary members of its species retain the seeded ability table. Normal Abilities keep the natural normal-slot eligibility rule; Hidden Abilities are not granted by filters.
+- The individual ability uses nine previously unused encrypted Pokémon bits; no Pokémon or save structure grew. Party/box legality, battle entry/switching and Summary resolve that individual ability. Explicit Ability changes replace the override.
+- Center rejection hides the map-name popup before opening dialogue. The popup had been scrolling the shared BG0 layer while the warning printed. Animated return follows the exterior doorway's actual interior warp ID instead of always selecting warp 0, so native Kanto return lands centered on the exit mat (7,8 in Cerulean).
+- Teachy TV gift scene checks ownership and completion before displaying the gift. Older saves owning the TV with a stale scene value are repaired to completed state.
+- DexNav displays only LAND and WATER panels. WATER contains Surf and each rod method with one exact method per displayed entry, not combined rod labels. There is space for all 15 source slots as needed (18 display positions), so previously truncated water/fishing choices are retained. LAND stays green; WATER stays cyan; right info panel, R register/toggle and Nuzlocke view-only behavior are preserved. This is display consolidation; existing wild tables and randomized encounter generation were not rewritten. Broader aquatic availability/non-overlap audit remains pending.
 
-- Center-only illegal-party departure rejection now explicitly closes the message, faces the player north, then calls DoDoorWarp for the normal upward step and door open/close animation. It no longer uses the instant DoWarp in the normal just-left-Center path. Fallback recovery paths remain available. First warning line wrapped to fit dialogue box. Host regression check passes.
-- Bike Shop greeting now uses its own persistent VAR_CHAOS_BIKE_SHOP_SCENE (0x40E4), rather than skipping its scene based on Bicycle ownership. Entry greeting should occur once even on an existing/debug save already owning a Bicycle, without adding a duplicate. No voucher or money requirement. Previous source skipped entry scene when bike already owned; whether this explains the user's exact failed save has NOT been reproduced.
+## Validation
 
-## Verification still required before calling these visually confirmed
+Local FireRed ROM compiled successfully. All ten existing/new host regression scripts pass.
+Native mGBA checks passed:
+- Actual Cerulean Center exit with an illegal current ability: full readable warning, popup removed, turn/door return and centered (7,8) arrival on the red mat.
+- Actual Oak acquisition: selected custom Pikachu with Random Abilities + Huge Power filter is given to party slot 0 with Huge Power immediately.
+- Encrypted starter override resolves in party and box, survives copying and species evolution, retains normal slot 0 and passes filter legality.
+- Teachy TV ownership guard repairs stale scene state without repeating the gift/dialogue.
+- DexNav two-panel rendering visually inspected; five-row/six-column cursor navigation wraps; R registration toggles off; Nuzlocke A remains blocked within DexNav.
 
-Build 213 compiled successfully and host Center departure tests pass. Native emulator runtime was unavailable in this resumed workspace and was being restored when the user requested saving/handoff. Do NOT claim these latest paths have had emulator verification yet.
-
-1. Actual Center animated exit with illegal type/current ability party: full message fits, no text bump/artifact; dismiss; face north; walk back through door; enter same Center; controls usable and PC accessible. Valid-party exit stays normal. Only Center exits enforce rules; Labs/Marts do not. Test before first heal, Hard and Nuzlocke.
-2. Actual Cerulean Bike Shop doorway entry, both no-bike and already-own-bike saves: forced greeting once, Bicycle acquisition if missing, no duplication, no repeat on reentry, no lockup.
-3. If rejection still has visual bumps, inspect normal message window rendering/timing rather than assuming wrapping alone fixes it.
+Bike Shop Build 213 ordinary doorway greeting still needs verification for both no-bike and already-own-bike saves. No new Bike Shop changes in Build 214. Keep the Random Items user-reported pickup bug pending until native pickup behavior is traced and verified; source regression success alone is not proof of the user's runtime case.
 
 ## Previously verified work to preserve
 

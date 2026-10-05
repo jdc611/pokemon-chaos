@@ -21,6 +21,7 @@
 #include "load_save.h"
 #include "main.h"
 #include "map_preview_screen.h"
+#include "map_name_popup.h"
 #include "menu.h"
 #include "mirage_tower.h"
 #include "metatile_behavior.h"
@@ -372,7 +373,10 @@ static void Task_ValidatePartyAfterBuildingExit(u8 taskId)
         return;
 
     if (!IsPlayerPartyLegalForRun(&badPartyIndex, &reason))
+    {
+        HideMapNamePopUpWindow();
         ScriptContext_SetupScript(EventScript_RunFilterReturnToCenter);
+    }
 
     DestroyTask(taskId);
 }

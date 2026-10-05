@@ -1109,7 +1109,7 @@ static void CB2_GiveStarter(void)
     }
     // Species eligibility guarantees the filtered ability exists in one of
     // this starter's real/randomized slots. Make that slot active immediately.
-    TrySetMonAbilityToActiveRunFilter(&gParties[B_TRAINER_PLAYER][0]);
+    ApplyCustomStarterRunAbility(&gParties[B_TRAINER_PLAYER][0]);
     ResetTasks();
     PlayBattleBGM();
     SetMainCallback2(CB2_StartFirstBattle);

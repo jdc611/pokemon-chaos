@@ -6,22 +6,19 @@
 // GUI Info
 enum RowGUIInfo
 {
-    ROW_WATER,
     ROW_LAND_TOP,
     ROW_LAND_BOT,
-    ROW_FISHING,
+    ROW_WATER,
+    ROW_WATER_MID,
+    ROW_WATER_BOT,
     ROWS_COUNT
 };
-
-#define ROW_WATER_ICON_X        30
-#define ROW_WATER_ICON_Y        35
-
-#define ROW_LAND_ICON_X         20
-#define ROW_LAND_TOP_ICON_Y     72
-#define ROW_LAND_BOT_ICON_Y     (ROW_LAND_TOP_ICON_Y + 28)
-
-#define ROW_FISHING_ICON_X      17
-#define ROW_FISHING_ICON_Y      143
+#define ROW_LAND_ICON_X 20
+#define ROW_LAND_TOP_ICON_Y 36
+#define ROW_LAND_BOT_ICON_Y 60
+#define ROW_WATER_ICON_X 20
+#define ROW_WATER_ICON_Y 106
+#define WATER_DISPLAY_CAPACITY 18
 
 enum EncounterType
 {
@@ -31,7 +28,7 @@ enum EncounterType
     ENCOUNTER_TYPE_FISHING,
 };
 
-#define COL_WATER_COUNT         5
+#define COL_WATER_COUNT         6
 #define COL_LAND_COUNT          6
 #define COL_FISHING_COUNT       7
 

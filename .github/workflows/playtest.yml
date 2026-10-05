@@ -63,6 +63,7 @@ jobs:
           python3 .github/scripts/check_chaos_mega.py
           python3 .github/scripts/check_chaos_shortcuts.py
           python3 .github/scripts/check_chaos_randomizer.py
+          python3 .github/scripts/check_chaos_starter_ability.py
 
       - name: Build native FireRed target
         run: |

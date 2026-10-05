@@ -612,7 +612,7 @@ void GiveChaosOakStarter(void)
     for (u32 i = 0; i < MAX_MON_MOVES; i++)
         starter.moves[i] = MOVE_DEFAULT;
     ScriptGiveMonParameterized(B_SIDE_PLAYER, PARTY_SIZE, &starter);
-    TrySetMonAbilityToActiveRunFilter(&gParties[B_TRAINER_PLAYER][0]);
+    ApplyCustomStarterRunAbility(&gParties[B_TRAINER_PLAYER][0]);
 }
 
 void ResolveChaosOakStarters(void)
@@ -923,8 +923,20 @@ static bool32 IsCustomStarterEligible(enum Species species)
 
     if (!IsCustomStarterBaseEligible(species))
         return FALSE;
-    if (gSaveBlock3Ptr->filterMode != RUN_FILTER_NONE
-     && !DoesSpeciesMatchRunFilterForSettings(species, gSaveBlock3Ptr->filterMode, gSaveBlock3Ptr->filterValue,
+    u8 filterMode = gSaveBlock3Ptr->filterMode;
+    u16 filterValue = gSaveBlock3Ptr->filterValue;
+    if (gSaveBlock3Ptr->abilityMode == RUN_ABILITIES_RANDOM)
+    {
+        if (filterMode == RUN_FILTER_ABILITY)
+            filterMode = RUN_FILTER_NONE;
+        else if (filterMode == RUN_FILTER_TYPE_ABILITY)
+        {
+            filterMode = RUN_FILTER_TYPE;
+            filterValue &= 31;
+        }
+    }
+    if (filterMode != RUN_FILTER_NONE
+     && !DoesSpeciesMatchRunFilterForSettings(species, filterMode, filterValue,
                                               gSaveBlock3Ptr->abilityMode, gSaveBlock3Ptr->worldSeed))
         return FALSE;
 

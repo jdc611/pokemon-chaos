@@ -262,6 +262,7 @@ struct BoxPokemon {u16 species,ability;};
 bool32 hasCurrentAbility;
 u32 GetMonData(struct Pokemon *m,u32 f){return m->species;}
 u32 GetMonAbility(struct Pokemon *m){return m->ability;}
+u32 GetBoxMonAbility(struct BoxPokemon *m){return m->ability;}
 u32 GetBoxMonData(struct BoxPokemon *m,u32 f){return f==MON_DATA_ABILITY_NUM?m->ability:m->species;}
 u32 GetSpeciesAbility(enum Species s,u8 slot){return slot;}
 u32 GetAbilityBySpecies(enum Species s,u8 slot){return slot;}
