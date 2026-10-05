@@ -674,6 +674,8 @@ gSpecials::
 
 	def_special ChaosArcadeRefill
 	def_special ChaosArcadeCheckers, waitstate=1
+	def_special ChaosArcadeMemoryMatch, waitstate=1
+	def_special ChaosArcadeTypeMatch, waitstate=1
 
 	def_special ChaosArcadePrizeMenu, waitstate=1
 	def_special ChaosArcadePrizePick

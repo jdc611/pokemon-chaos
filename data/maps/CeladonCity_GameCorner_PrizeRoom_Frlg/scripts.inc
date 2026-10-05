@@ -12,8 +12,7 @@ CeladonCity_GameCorner_PrizeRoom_EventScript_OldMan::
 CeladonCity_GameCorner_PrizeRoom_EventScript_PrizeClerkMons::
 	lock
 	faceplayer
-	checkflag FLAG_BADGE04_GET
-	goto_if_eq VAR_RESULT, FALSE, ChaosArcadePrize_Construction
+	goto_if_unset FLAG_BADGE04_GET, ChaosArcadePrize_Construction
 	checkitem ITEM_COIN_CASE
 	goto_if_eq VAR_RESULT, FALSE, CeladonCity_GameCorner_PrizeRoom_EventScript_NeedCoinCase
 	showcoinsbox 20, 0
@@ -310,8 +309,7 @@ ChaosArcadePrize_NoHiddenText:
 ChaosArcadeItemCounter::
 	lock
 	faceplayer
-	checkflag FLAG_BADGE04_GET
-	goto_if_eq VAR_RESULT, FALSE, ChaosArcadePrize_Construction
+	goto_if_unset FLAG_BADGE04_GET, ChaosArcadePrize_Construction
 	checkitem ITEM_COIN_CASE
 	goto_if_eq VAR_RESULT, FALSE, CeladonCity_GameCorner_PrizeRoom_EventScript_NeedCoinCase
 	showcoinsbox 20, 0

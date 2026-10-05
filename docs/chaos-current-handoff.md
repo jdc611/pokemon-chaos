@@ -1,6 +1,19 @@
-# Chaos FireRed continuation — Chaos Arcade phase 3
+# Chaos FireRed continuation — Chaos Arcade phase 4
 
 Repository: jdc611/pokemon-chaos. Branch: master. Continue from actual current master; preserve existing systems and locked custom trainer rosters.
+
+## Latest changes — Chaos Arcade phase 4 (October 5)
+
+- Construction worker moved from (33,22) to the user's screenshot location (39,22), facing south in the prize-room approach. Native pre-Erika entry guards remain in force for both buildings; worker disappears on the City transition after Erika's badge. Construction dialogue is unchanged.
+- Fixed both Pokémon/item clerk badge gates. `checkflag` sets the script comparison state, not `VAR_RESULT`; the old `goto_if_eq VAR_RESULT,FALSE` reused a previous menu value. Gates now use `goto_if_unset FLAG_BADGE04_GET`, so an old zero no longer falsely locks badge owners and an old one cannot bypass the gate without a badge.
+- Added fully playable Pokémon Memory Match: Easy/Normal/Hard boards have 6/8/10 pairs with real Pokémon icons, shuffled exactly twice per species. Clear rewards are 30/50/75 Coins; completing in at most 8/11/14 turns adds 10/15/25. Free entry, directional cursor/A flips, brief mismatch reveal, B forfeits. No per-pair farming/payout.
+- Added Type Match: 10 questions using 18 varied native species and the native standard type chart. Each question has four distinct choices, exactly one super-effective answer, three neutral/resisted/immune alternatives. Dual types are combined correctly; no abilities/items or inverse-chart assumptions. Free entry, 10 Coins/correct plus 30 for 10/10, paid only after finishing all ten. Incorrect answers show the correct type before advancing.
+- New shared small-game UI uses dark blue/cyan/magenta; completed rounds pay once, clip at 9999 with a clear limit message, and free their icons/windows/heap on return. MGM does not alter rewards. Forfeit/partial rounds pay zero.
+- Rebuilt the complete southeast machine bank as two distinguishable 2×3-tile cabinets above the Checkers table, with front interactions for Memory Match and Type Match. Removed stale slot/printer interactions and the final printer fragment below the table. The table's existing pixels, palette, placement and invitation remain unchanged. Upper Rocket/poster map tiles and object/event bindings are preserved.
+- Local Game Corner secondary palettes give the arcade/prize room a dark purple floor, neon slot banks and cyan cabinet accents; shared building/NPC palettes are unchanged. No global palette recolor.
+- Current scope: Checkers + Memory Match + Type Match and native slots. Other proposed arcade games, cosmetic ownership/prizes and remaining story work are still pending. This phase does not claim the complete eleven-game lineup.
+- Validation: native FireRed build passes; all 16 host checks pass, including production Memory/Type input/completion/forfeit/cap/replay logic and protected table art/Rocket bindings. Native mGBA checks both clerks with stale zero/one results before/after Erika, the relocated physical blocker, both cabinet A interactions, all Memory board sizes and rewards, Type Match 0/8/10 correct outcomes and unique chart-valid choices, Coin cap/forfeit/no-repeat payment and clean field returns. Actual walking/A access to TM clerk and move details was checked separately, and neon room/cards/question/result screenshots inspected. No save layout changes.
+- ROM: `Chaos_FireRed_Arcade_Phase4.gba`.
 
 ## Latest changes — Chaos Arcade phase 3 (October 5)
 

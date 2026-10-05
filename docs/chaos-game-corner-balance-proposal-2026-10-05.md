@@ -116,7 +116,7 @@ A reusable TM is a permanent move unlock, so duplicate purchases should be disab
 | Trick Room, Tailwind, Encore | 2,000 | Needs TM additions |
 | Earth Power, Moonblast, Aura Sphere | 2,200 | Needs TM additions |
 
-The expanded list is **not implemented**. Current master has 50 native TMs; a safe extension must preserve existing item/save IDs, HM/story progression, learned-move legality and per-species compatibility. Do not teach everything to every species. Surf stays an HM/story acquisition rather than being duplicated as an arcade TM. Earthquake, Close Combat, Draco Meteor and similar top-tier options are reserved for strategic world/story sources, not this draft prize counter.
+The expanded list is implemented in Phase 3: current master has 67 TMs with existing item/HM IDs preserved and native per-species compatibility. Do not teach everything to every species. Surf stays an HM/story acquisition rather than being duplicated as an arcade TM. Earthquake, Close Combat, Draco Meteor and similar top-tier options are reserved for strategic world/story sources, not this draft prize counter.
 
 | Battle item | Proposed coins | Purchase behavior |
 |---|---:|---|

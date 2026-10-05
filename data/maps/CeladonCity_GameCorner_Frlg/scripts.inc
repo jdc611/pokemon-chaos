@@ -811,3 +811,36 @@ ChaosArcade_CheckersDecline::
 ChaosArcade_Text_CheckersChallenge:
 	.string "Care for a game of Checkers?\n"
 	.string "Pull up a chair and challenge me!$"
+
+ChaosArcade_MemoryCabinet::
+ lockall
+ goto_if_unset FLAG_BADGE04_GET, ChaosArcade_Construction
+ checkitem ITEM_COIN_CASE
+ goto_if_eq VAR_RESULT, FALSE, CeladonCity_GameCorner_EventScript_SlotMachineNoCoinCase
+ msgbox ChaosArcade_MemoryWelcome, MSGBOX_YESNO
+ goto_if_eq VAR_RESULT, NO, ChaosArcade_CheckersDecline
+ closemessage
+ special ChaosArcadeMemoryMatch
+ releaseall
+ end
+ChaosArcade_TypeCabinet::
+ lockall
+ goto_if_unset FLAG_BADGE04_GET, ChaosArcade_Construction
+ checkitem ITEM_COIN_CASE
+ goto_if_eq VAR_RESULT, FALSE, CeladonCity_GameCorner_EventScript_SlotMachineNoCoinCase
+ msgbox ChaosArcade_TypeWelcome, MSGBOX_YESNO
+ goto_if_eq VAR_RESULT, NO, ChaosArcade_CheckersDecline
+ closemessage
+ special ChaosArcadeTypeMatch
+ releaseall
+ end
+ChaosArcade_MemoryWelcome:
+ .string "POKEMON MEMORY MATCH!\n"
+ .string "Clear every pair to win COINS.\p"
+ .string "Free entry! Three board sizes.\n"
+ .string "Want to play?$"
+ChaosArcade_TypeWelcome:
+ .string "TYPE MATCH! Ten questions.\n"
+ .string "Choose a super-effective attack!\p"
+ .string "Standard type chart, no abilities.\n"
+ .string "Free entry! Want to play?$"
