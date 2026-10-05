@@ -2,6 +2,12 @@
 
 Repository: jdc611/pokemon-chaos. Branch: master. Continue from actual current master; preserve existing systems and locked custom trainer rosters.
 
+## New Game Corner direction — October 5 (design only)
+
+Read `docs/chaos-game-corner-balance-proposal-2026-10-05.md` for the full locked discussion and numerical REVIEW DRAFT. Entire arcade is blocked by a construction NPC until Erika; everything opens together afterward. Restore Coin Case checks alongside an automatic permanent first-entry gift/intro, preserving Rocket/poster story. Build 216 is still the runtime ROM and still has case checks removed; do not describe the new event or games as implemented. Cosmetic purchases immediately apply, permanently unlock and can be freely reselected through Buy/Owned with Default. TMs are reusable (already TRUE); tutor service rejected. HA premiums give actual native HA even with randomized abilities; all prize tiers follow MGM. Checkers uses approved standard forced-capture/multi-jump/promotion rules. Current working coin cap is 9,999.
+
+User reported Kingdra from Random starters with NO filters: these must use base-stage species. Trace and fix this separately without restricting explicit Custom choices or reverting established filtered behavior. Pricing, payouts, odds, detailed RTC protections, visual layouts and new TM assignments are not approved by the drafting request.
+
 ## Latest changes — Build 216
 
 - User revised DexNav to exactly two rows of six visible entries for LAND and WATER. Full-size native Pokémon icons and cursor restored (no affine shrink). All baked-in old WATER pixels under the registration strip are cleared; the R button's bottom is rebuilt without old header lettering. Water retains all 15 possible source slots internally, using L to flip between twelve-slot pages only when more than twelve unique species/method entries exist. Empty page-two cells safely return no species. Existing wild tables, exact Surf/rod labels, R toggle registration and Nuzlocke view-only behavior remain intact.
