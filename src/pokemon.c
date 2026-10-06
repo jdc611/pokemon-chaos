@@ -3372,6 +3372,21 @@ static bool32 IsRunSpecialLegendary(enum Species species)
     return info->isRestrictedLegendary || info->isSubLegendary || info->isMythical || info->isUltraBeast || info->isParadox;
 }
 
+static void GetRunBaseStatsForSettings(enum Species species, u8 stats[NUM_STATS], u32 mode, u32 seed);
+
+static u32 GetEvolutionRunBst(enum Species species, u32 seed)
+{
+    u8 stats[NUM_STATS];
+    u32 total = 0;
+    u32 i;
+    u32 mode = gSaveBlock3Ptr == NULL ? RUN_BST_OFF : gSaveBlock3Ptr->bstMode;
+
+    GetRunBaseStatsForSettings(species, stats, mode, seed);
+    for (i = 0; i < NUM_STATS; i++)
+        total += stats[i];
+    return total;
+}
+
 static u32 RunEvolutionHash(u32 value)
 {
     value ^= value >> 16;
@@ -3468,7 +3483,8 @@ static void BuildRandomEvolutionPools(void)
     {
         const struct Evolution *evolutions;
 
-        if (sRandomEvolutionClass[candidate] & RANDOM_EVO_CLASS_HAS_PREV)
+        if (!IsSpeciesEnabled(candidate)
+         || (sRandomEvolutionClass[candidate] & RANDOM_EVO_CLASS_HAS_PREV))
             continue;
         evolutions = GetSpeciesEvolutions(candidate);
         if (evolutions == NULL)
@@ -3525,6 +3541,10 @@ enum Species GetRandomEvolutionTargetForSettings(enum Species species, u8 diffic
     bool32 wantSpecial;
     u32 hash;
     u32 pick;
+    u32 offset;
+    u32 sourceBst;
+    u32 bestBst = 0;
+    enum Species best = SPECIES_NONE;
 
     species = SanitizeSpeciesId(species);
     BuildRandomEvolutionPools();
@@ -3560,13 +3580,27 @@ enum Species GetRandomEvolutionTargetForSettings(enum Species species, u8 diffic
         return SPECIES_NONE;
 
     pick = RunEvolutionHash(hash ^ 0xC2B2AE35) % count;
-    if (pool[pick] == species)
+    sourceBst = GetEvolutionRunBst(species, seed);
+    // Check the seeded pool against this run's actual power budget. A species
+    // with a higher canonical BST can still be a downgrade in Random BST mode.
+    // Prefer an upgrade; a bounded scan also handles an unusually strong source
+    // without an endless reroll or blocking evolution entirely.
+    for (offset = 0; offset < count; offset++)
     {
-        if (count == 1)
-            return SPECIES_NONE;
-        pick = (pick + 1) % count;
+        enum Species candidate = pool[(pick + offset) % count];
+        u32 candidateBst;
+        if (candidate == species)
+            continue;
+        candidateBst = GetEvolutionRunBst(candidate, seed);
+        if (candidateBst >= sourceBst)
+            return candidate;
+        if (candidateBst > bestBst)
+        {
+            best = candidate;
+            bestBst = candidateBst;
+        }
     }
-    return pool[pick];
+    return best;
 }
 
 static bool32 DoesSpeciesOrReachableFormMatchRunFilterInternal(enum Species species, u8 filterMode, u16 filterValue,
@@ -3867,11 +3901,9 @@ static u32 RunBstHash(u32 value)
     return value;
 }
 
-static void GetRunRandomizedBaseStats(enum Species species, u8 stats[NUM_STATS])
+static void GetRunBaseStatsForSettings(enum Species species, u8 stats[NUM_STATS], u32 mode, u32 seed)
 {
     u32 i;
-    u32 mode = gSaveBlock3Ptr == NULL ? RUN_BST_OFF : gSaveBlock3Ptr->bstMode;
-    u32 seed = gSaveBlock3Ptr == NULL ? 0 : gSaveBlock3Ptr->worldSeed;
     u32 rawTotal = 0;
 
     species = SanitizeSpeciesId(species);
@@ -3951,6 +3983,13 @@ static void GetRunRandomizedBaseStats(enum Species species, u8 stats[NUM_STATS])
                 stats[i] = 5 + (valueRoll % 156);
         }
     }
+}
+
+static void GetRunRandomizedBaseStats(enum Species species, u8 stats[NUM_STATS])
+{
+    GetRunBaseStatsForSettings(species, stats,
+        gSaveBlock3Ptr == NULL ? RUN_BST_OFF : gSaveBlock3Ptr->bstMode,
+        gSaveBlock3Ptr == NULL ? 0 : gSaveBlock3Ptr->worldSeed);
 }
 
 u32 GetSpeciesBaseHP(enum Species species)
