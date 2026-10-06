@@ -1,5 +1,7 @@
 # Chaos FireRed continuation — Chaos Arcade polish
 
+Authoritative latest design: [October 5 master addendum](chaos-latest-master-addendum.md). Its Chaossal naming, simulator trial, post-Sabrina Nidokingite reveal and reserved story rewards supersede conflicting older directions below. Design requirements are distinct from currently implemented behavior.
+
 Repository: jdc611/pokemon-chaos. Branch: master. Continue from actual current master; preserve existing systems and locked custom trainer rosters.
 
 ## Latest changes — PokeRider route gaps (October 5)

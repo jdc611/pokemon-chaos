@@ -1,5 +1,7 @@
 # Chaos Kanto battle and story master
 
+Authoritative latest design: [October 5 master addendum](chaos-latest-master-addendum.md). Its Chaossal naming, simulator trial, post-Sabrina Nidokingite reveal and reserved story rewards supersede conflicting older directions below. Design requirements are distinct from currently implemented behavior.
+
 Chaos is FireRed/Kanto first. Major teams draw from all generations. Ordinary
 random encounters retain each route's native number of species; type/ability
 filter behavior remains a separate future decision.
