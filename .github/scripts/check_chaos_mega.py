@@ -52,9 +52,11 @@ assert 'ChaosRampageStart(gBattlerAttacker, gChosenMove)' in (root/'src/battle_s
 assert 'GetBattlerAbility(se->effectBattler) == ABILITY_RAMPAGE' in (root/'src/battle_set_effect.c').read_text()
 assert 'ChaosRampageEndTurn(i)' in (root/'src/battle_end_turn.c').read_text()
 assert 'chaosRampageTurns > 0' in (root/'src/battle_main.c').read_text()
-f=(root/'data/maps/CinnabarIsland_PokemonLab_ExperimentRoom_Frlg/scripts.inc').read_text()
-s=f[f.index('Chaos_EventScript_GiveNidokingite::'):]
-assert s.index('giveitem ITEM_NIDOKINGITE') < s.index('goto_if_eq VAR_RESULT, FALSE') < s.index('removeitem ITEM_STRANGE_FOSSIL') < s.index('setvar VAR_CHAOS_STRANGE_FOSSIL, 2')
+f=(root/'data/maps/SaffronCity_Frlg/scripts.inc').read_text()
+s=f[f.index('EventScript_ChaosOakGiveNidokingite::'):f.index('EventScript_ChaosOakRewardEnd::')]
+assert s.index('checkitem ITEM_NIDOKINGITE') < s.index('goto_if_eq VAR_RESULT, FALSE') < s.index('removeitem ITEM_STRANGE_FOSSIL') < s.index('setvar VAR_CHAOS_STRANGE_FOSSIL, 2')
+assert 'giveitem ITEM_NIDOKINGITE' in f
+assert 'ITEM_NIDOKINGITE' not in (root/'data/maps/CinnabarIsland_PokemonLab_ExperimentRoom_Frlg/scripts.inc').read_text()
 assert '&& forms[i].param1 != ITEM_NIDOKINGITE' in (root/'src/chaos_progression.c').read_text()
 assert 'Nidoking @ Nidokingite\nLevel: 58' in (root/'src/data/trainers_frlg.party').read_text()
 print('PASS: battle integration, protected fossil transaction and Giovanni stone.')

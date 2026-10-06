@@ -4,6 +4,22 @@ Authoritative latest design: [October 5 master addendum](chaos-latest-master-add
 
 Repository: jdc611/pokemon-chaos. Branch: master. Continue from actual current master; preserve existing systems and locked custom trainer rosters.
 
+## Playable Kanto alpha — October 6
+
+New alpha work supersedes the old Cinnabar Nidokingite reveal:
+- After Marsh Badge, Oak waits outside Sabrina's Gym and gives Mega Ring plus Nidokingite together. The original exit landing trigger remains, with additional triggers on the first south/right steps away from the animated doorway. Speaking to Oak also works.
+- Strange Fossil is consumed only after successful Nidokingite delivery. A full bag leaves the event pending; Ring delivery and existing stone ownership are checked before retrying. Missing the optional fossil does not block progression: Oak explains the museum sent the stone. Older Ring-only saves are made eligible again when entering Saffron.
+- Removed only the Strange Fossil/Nidokingite reveal from Cinnabar's native fossil scientist. Ordinary fossil revival remains.
+- Nidokingite uses existing purple Gengarite item art. New Arcanite uses existing red Houndoominite item art; these are visible native icons, not newly commissioned artwork.
+- Normal Arcanine holding Arcanite can use the player's ordinary Mega system once Mega Ring is owned. Mega Arcanine retains its existing Fire/Steel stats, Tempered ability, front/back/shiny art, and reverts on faint/battle end. Hisuian Arcanine is unaffected.
+- ASHBY and a normal Arcanine overworld sprite are in Fuji's volunteer house in Lavender. Optional one-on-one challenge: choose one healthy hatched party member against level-38 Mega Arcanine. Trainer ID 633, reward variable 0x40DC (0 available, 1 won/unclaimed, 2 claimed). Full-bag claims retry without re-battling; rewards cannot be duplicated.
+- Selected-mon HP, EXP, PP and held-item changes are restored to its original party slot; the other five identities are preserved. Party restoration runs before Nuzlocke death processing and whiteout. This is an ordinary trainer battle with ordinary difficulty consequences.
+- Item/trainer IDs are appended within existing reserved ranges. Save/Pokemon layouts and the MAX_TRAINERS_COUNT reservation are unchanged. Both custom stones are protected from Random Items and reserved-shop stock.
+
+Verification: native FireRed build succeeds; all 18 prior host suites, the new alpha transaction suite and BST suite pass. Native mGBA tests cover quick-start settings, Oak's two-item reward, successful fossil exchange, full-bag retry, Ring-only save migration, every real party slot, player Mega eligibility/activation/end reversion, the actual Lavender invitation/party chooser/battle, native win/loss outcomes and party restoration, duplicate prevention, automatic Bike Shop gift, ordinary item-ball and hidden pickup script paths with Random Items on/off, and actual flash save/load of run seed/settings, quest flags, stones and six party identities. Outcome tests use fixture HP/moves to reach engine win/loss paths; they do not establish challenge balance.
+
+Scope: this is a start-to-Champion playthrough alpha, not a completed postgame story. The Mewtwo/Giovanni partner revival event, Pallet/Chaossal crisis, Gym succession/simulator, Scyther variants and full availability placement remain deferred designs. No new unfinished story entrances or placeholders were exposed. A human full playthrough is still needed for pacing, event sequencing and bugs not reached by these checks. BST redesign from the preceding master checkpoint is included.
+
 ## Latest changes — PokeRider route gaps (October 5)
 
 - Fixed background cutting gaps into the gold/red land-route bands. This is an artwork correction, not a destination/cursor change. All three Kanto charts share the repair.

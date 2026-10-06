@@ -147,3 +147,93 @@ LavenderTown_VolunteerPokemonHouse_Text_PokemonMagazinesLineShelf::
 	.string "POKéMON INSIDER…\p"
 	.string "POKéMON FAN…$"
 
+
+Chaos_EventScript_ArcanineSpecialist::
+	lock
+	faceplayer
+	goto_if_eq VAR_CHAOS_ARCANITE_REWARD, 2, Chaos_EventScript_ArcanineAlreadyRewarded
+	goto_if_eq VAR_CHAOS_ARCANITE_REWARD, 1, Chaos_EventScript_ArcanineClaim
+	checktrainerflag TRAINER_CHAOS_ARCANINE_SPECIALIST
+	goto_if TRUE, Chaos_EventScript_ArcanineWon
+	msgbox Chaos_Text_ArcanineInvitation, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, Chaos_EventScript_ArcanineDeclined
+	special ChoosePartyMon
+	goto_if_ge VAR_0x8004, PARTY_SIZE, Chaos_EventScript_ArcanineDeclined
+	special ChaosBeginArcanineChallenge
+	goto_if_eq VAR_RESULT, FALSE, Chaos_EventScript_ArcanineInvalid
+	trainerbattle_single TRAINER_CHAOS_ARCANINE_SPECIALIST, Chaos_Text_ArcanineBattleIntro, Chaos_Text_ArcanineDefeat, Chaos_EventScript_ArcanineWon, NO_MUSIC
+	special ChaosRestoreArcanineChallengeParty
+	goto Chaos_EventScript_ArcanineDeclined
+
+Chaos_EventScript_ArcanineWon::
+	special ChaosRestoreArcanineChallengeParty
+	setvar VAR_CHAOS_ARCANITE_REWARD, 1
+Chaos_EventScript_ArcanineClaim::
+	msgbox Chaos_Text_ArcanineReward
+	giveitem ITEM_ARCANITE
+	goto_if_eq VAR_RESULT, FALSE, Chaos_EventScript_ArcanineBagFull
+	setvar VAR_CHAOS_ARCANITE_REWARD, 2
+	msgbox Chaos_Text_ArcanineRing
+	release
+	end
+
+Chaos_EventScript_ArcanineBagFull::
+	msgbox Chaos_Text_ArcanineMakeRoom
+	release
+	end
+
+Chaos_EventScript_ArcanineAlreadyRewarded::
+	msgbox Chaos_Text_ArcanineRing
+	release
+	end
+
+Chaos_EventScript_ArcanineInvalid::
+	msgbox Chaos_Text_ArcanineChooseLiving
+	release
+	end
+
+Chaos_EventScript_ArcanineDeclined::
+	msgbox Chaos_Text_ArcanineComeBack
+	release
+	end
+
+Chaos_EventScript_ArcaninePartner::
+	lock
+	faceplayer
+	playmoncry SPECIES_ARCANINE, CRY_MODE_NORMAL
+	msgbox Chaos_Text_ArcanineCry
+	waitmoncry
+	release
+	end
+
+Chaos_Text_ArcanineInvitation::
+	.string "These unusual stones have been\n"
+	.string "turning up all over KANTO.\p"
+	.string "My ARCANINE can Mega Evolve!\p"
+	.string "Care for a one-on-one challenge?\n"
+	.string "Choose one healthy POKéMON.\p"
+	.string "Win, and I'll give you ARCANITE!$"
+Chaos_Text_ArcanineBattleIntro::
+	.string "One partner each. Let's see\n"
+	.string "what your bond can do!$"
+Chaos_Text_ArcanineDefeat::
+	.string "Splendid! A well-earned victory!$"
+Chaos_Text_ArcanineReward::
+	.string "As promised, this is ARCANITE.\n"
+	.string "You've earned it!$"
+Chaos_Text_ArcanineRing::
+	.string "Let ARCANINE hold ARCANITE.\p"
+	.string "With a MEGA RING, it can Mega\n"
+	.string "Evolve in battle!\p"
+	.string "PROF. OAK may know more about\n"
+	.string "those rings after SABRINA's test.$"
+Chaos_Text_ArcanineMakeRoom::
+	.string "Your prize is safe with me!\n"
+	.string "Make room in your BAG and return.$"
+Chaos_Text_ArcanineChooseLiving::
+	.string "Choose a healthy POKéMON that\n"
+	.string "has hatched from its EGG.$"
+Chaos_Text_ArcanineComeBack::
+	.string "Come back whenever you're ready!$"
+Chaos_Text_ArcanineCry::
+	.string "ARCANINE: Arooo!$"

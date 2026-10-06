@@ -3193,8 +3193,22 @@ const struct ItemInfo gItemsInfo[] =
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
         .flingPower = 80,
-        .iconPic = gItemIcon_Beedrillite,
-        .iconPalette = gItemIconPalette_Beedrillite,
+        .iconPic = gItemIcon_Gengarite,
+        .iconPalette = gItemIconPalette_Gengarite,
+    },
+    [ITEM_ARCANITE] =
+    {
+        .name = ITEM_NAME("Arcanite"),
+        .price = 0,
+        .holdEffect = HOLD_EFFECT_MEGA_STONE,
+        .description = COMPOUND_STRING("Enables Arcanine to\nMega Evolve during\nbattle."),
+        .pocket = POCKET_ITEMS,
+        .sortType = ITEM_TYPE_MEGA_STONE,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .flingPower = 80,
+        .iconPic = gItemIcon_Houndoominite,
+        .iconPalette = gItemIconPalette_Houndoominite,
     },
     [ITEM_STRANGE_FOSSIL] =
     {

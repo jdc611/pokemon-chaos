@@ -380,6 +380,24 @@
       "var": "VAR_CHAOS_OAK_MEGA_REWARD",
       "var_value": "1",
       "script": "EventScript_ChaosOakMegaReward"
+    },
+    {
+      "type": "trigger",
+      "x": 46,
+      "y": 14,
+      "elevation": 0,
+      "var": "VAR_CHAOS_OAK_MEGA_REWARD",
+      "var_value": "1",
+      "script": "EventScript_ChaosOakMegaReward"
+    },
+    {
+      "type": "trigger",
+      "x": 47,
+      "y": 13,
+      "elevation": 0,
+      "var": "VAR_CHAOS_OAK_MEGA_REWARD",
+      "var_value": "1",
+      "script": "EventScript_ChaosOakMegaReward"
     }
   ],
   "bg_events": [

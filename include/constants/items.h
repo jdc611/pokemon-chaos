@@ -1054,6 +1054,7 @@ enum __attribute__((packed)) Item
 
     ITEM_NIDOKINGITE,
     ITEM_STRANGE_FOSSIL,
+    ITEM_ARCANITE,
     ITEMS_COUNT,
     ITEM_FIELD_ARROW = ITEMS_COUNT,
 };

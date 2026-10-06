@@ -1,3 +1,14 @@
+#if P_FAMILY_GROWLITHE
+static const struct FormChange sArcanineFormChangeTable[] = {
+#if P_MEGA_EVOLUTIONS
+    {FORM_CHANGE_BATTLE_MEGA_EVOLUTION_ITEM, SPECIES_ARCANINE_MEGA, ITEM_ARCANITE},
+#endif
+    {FORM_CHANGE_FAINT, SPECIES_ARCANINE},
+    {FORM_CHANGE_END_BATTLE, SPECIES_ARCANINE},
+    {FORM_CHANGE_TERMINATOR},
+};
+#endif
+
 #if P_FAMILY_NIDORAN
 static const struct FormChange sNidokingFormChangeTable[] = {
 #if P_MEGA_EVOLUTIONS

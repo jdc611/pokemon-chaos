@@ -707,3 +707,6 @@ gSpecials::
 	def_special ChaosRanchApplyCosmetic
 
 	def_special ChaosArcadeCosmeticCategories, waitstate=1
+
+	def_special ChaosBeginArcanineChallenge
+	def_special ChaosRestoreArcanineChallengeParty

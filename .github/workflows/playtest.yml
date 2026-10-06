@@ -61,6 +61,8 @@ jobs:
           python3 .github/scripts/check_chaos_early_pool.py
           python3 .github/scripts/check_chaos_field.py
           python3 .github/scripts/check_chaos_mega.py
+          python3 .github/scripts/check_chaos_alpha.py
+          python3 tools/chaos/check_bst.py
           python3 .github/scripts/check_chaos_shortcuts.py
           python3 .github/scripts/check_chaos_randomizer.py
           python3 .github/scripts/check_chaos_arcade.py

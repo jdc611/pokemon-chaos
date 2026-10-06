@@ -3,5 +3,6 @@
 
 u16 ChaosGetRivalCounter(u8 level);
 void ChaosRestoreSilphPartnerParty(void);
+void ChaosRestoreArcanineChallengeParty(void);
 
 #endif

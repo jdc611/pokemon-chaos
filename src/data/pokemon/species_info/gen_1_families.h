@@ -8181,6 +8181,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .levelUpLearnset = sArcanineLevelUpLearnset,
         .teachableLearnset = sArcanineTeachableLearnset,
         .formSpeciesIdTable = sArcanineFormSpeciesIdTable,
+        .formChangeTable = sArcanineFormChangeTable,
     },
 
 #if P_MEGA_EVOLUTIONS
@@ -8251,6 +8252,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .teachableLearnset = sArcanineTeachableLearnset,
         .isMegaEvolution = TRUE,
         .formSpeciesIdTable = sArcanineFormSpeciesIdTable,
+        .formChangeTable = sArcanineFormChangeTable,
     },
 #endif
 

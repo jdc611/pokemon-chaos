@@ -829,7 +829,7 @@ u32 GetItemPrice(enum Item itemId)
         if(gItemsInfo[SanitizeItemId(itemId)].sortType==ITEM_TYPE_MEGA_STONE){
             // Reserved quest/rematch stones keep their native unsellable price.
             switch(itemId){
-            case ITEM_NIDOKINGITE:case ITEM_STEELIXITE:case ITEM_GYARADOSITE:
+            case ITEM_NIDOKINGITE:case ITEM_ARCANITE:case ITEM_STEELIXITE:case ITEM_GYARADOSITE:
             case ITEM_MANECTITE:case ITEM_ALAKAZITE:case ITEM_BEEDRILLITE:
             case ITEM_VENUSAURITE:case ITEM_GARCHOMPITE:case ITEM_HOUNDOOMINITE:
             case ITEM_PIDGEOTITE:break;

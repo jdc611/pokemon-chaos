@@ -256,10 +256,20 @@ EventScript_ChaosOakMegaReward::
 	call_if_eq VAR_RESULT, FALSE, EventScript_ChaosOakGiveMegaRing
 	checkitem ITEM_MEGA_RING
 	goto_if_eq VAR_RESULT, FALSE, EventScript_ChaosOakBagFull
-	special ChaosChooseOakMegaStone
-	call_if_eq VAR_RESULT, FALSE, EventScript_ChaosOakFallbackStone
-	giveitem VAR_0x8004
+	checkitem ITEM_STRANGE_FOSSIL
+	goto_if_eq VAR_RESULT, FALSE, EventScript_ChaosOakMuseumStone
+	msgbox Text_ChaosOakStrangeFossil
+	goto EventScript_ChaosOakGiveNidokingite
+EventScript_ChaosOakMuseumStone::
+	msgbox Text_ChaosOakMuseumStone
+EventScript_ChaosOakGiveNidokingite::
+	checkitem ITEM_NIDOKINGITE
+	call_if_eq VAR_RESULT, FALSE, EventScript_ChaosOakGiveNidokingiteItem
+	checkitem ITEM_NIDOKINGITE
 	goto_if_eq VAR_RESULT, FALSE, EventScript_ChaosOakBagFull
+	removeitem ITEM_STRANGE_FOSSIL, 1
+	setvar VAR_CHAOS_STRANGE_FOSSIL, 2
+	msgbox Text_ChaosOakNidokingite
 	setvar VAR_CHAOS_OAK_MEGA_REWARD, 2
 	msgbox Text_ChaosOakRematchChallenge
 	removeobject LOCALID_CHAOS_SAFFRON_OAK
@@ -267,6 +277,10 @@ EventScript_ChaosOakMegaReward::
 EventScript_ChaosOakRewardEnd::
 	releaseall
 	end
+
+EventScript_ChaosOakGiveNidokingiteItem::
+	giveitem ITEM_NIDOKINGITE
+	return
 
 EventScript_ChaosOakGiveMegaRing::
 	giveitem ITEM_MEGA_RING
@@ -336,4 +350,29 @@ EventScript_ChaosFuchsiaGateLocked::
 
 EventScript_ChaosCheckOakRewardReady::
 	call_if_eq VAR_CHAOS_OAK_MEGA_REWARD, 0, EventScript_ChaosReadyOakMegaReward
+	goto_if_ne VAR_CHAOS_OAK_MEGA_REWARD, 2, EventScript_ChaosOakReadyReturn
+	call_if_ne VAR_CHAOS_STRANGE_FOSSIL, 2, EventScript_ChaosReadyOakMegaReward
+EventScript_ChaosOakReadyReturn::
 	return
+
+Text_ChaosOakStrangeFossil::
+	.string "OAK: I've studied that unusual\n"
+	.string "stone from MT. MOON.\p"
+	.string "The museum couldn't revive it...\n"
+	.string "because it was never a fossil!$"
+
+Text_ChaosOakMuseumStone::
+	.string "OAK: The museum sent me an odd\n"
+	.string "stone discovered near MT. MOON.\p"
+	.string "They couldn't revive it. Now I\n"
+	.string "understand why!$"
+
+Text_ChaosOakNidokingite::
+	.string "It's NIDOKINGITE, a MEGA STONE!\p"
+	.string "Nobody thought NIDOKING could\n"
+	.string "Mega Evolve. Even I am surprised!\p"
+	.string "Let NIDOKING hold it. With your\n"
+	.string "MEGA RING, its power can awaken.\p"
+	.string "More and more things are appearing\n"
+	.string "that shouldn't exist...\p"
+	.string "I need to keep investigating.$"

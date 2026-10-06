@@ -1677,6 +1677,7 @@ static void HandleBattleVariantEndParty(void)
 
 static void CB2_EndTrainerBattle(void)
 {
+    ChaosRestoreArcanineChallengeParty();
     ChaosRestoreSilphPartnerParty();
     HandleBattleVariantEndParty();
     Nuzlocke_ProcessBattleDeaths();
