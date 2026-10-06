@@ -3886,73 +3886,69 @@ static void GetRunRandomizedBaseStats(enum Species species, u8 stats[NUM_STATS])
 
     if (mode == RUN_BST_SHUFFLE)
     {
-        for (i = NUM_STATS - 1; i > 0; i--)
+        // Preserve the species' exact canonical BST, but completely redistribute
+        // those points. This is not a permutation of its existing six stats:
+        // a normally balanced Pokemon can become a glass cannon, wall, speedster,
+        // etc. Strong species keep their overall power budget while weak species
+        // cannot become legendary-tier from BST alone.
+        u32 weights[NUM_STATS];
+        u32 weightTotal = 0;
+        u32 assigned = 0;
+        u32 minimum = rawTotal >= NUM_STATS * 5 ? 5 : 1;
+        u32 remaining = rawTotal - minimum * NUM_STATS;
+        u32 counter = 0;
+
+        for (i = 0; i < NUM_STATS; i++)
         {
-            u32 j = RunBstHash(seed ^ ((u32)species * 0x9E3779B9) ^ (i * 0x85EBCA6B)) % (i + 1);
-            u8 temp = stats[i];
-            stats[i] = stats[j];
-            stats[j] = temp;
+            weights[i] = 1 + (RunBstHash(seed
+                                      ^ ((u32)species * 0x9E3779B9)
+                                      ^ (i * 0x85EBCA6B)) % 255);
+            weightTotal += weights[i];
+        }
+
+        for (i = 0; i < NUM_STATS; i++)
+        {
+            u32 value = minimum + (remaining * weights[i]) / weightTotal;
+            if (value > 220)
+                value = 220;
+            stats[i] = value;
+            assigned += value;
+        }
+
+        // Integer division and the per-stat ceiling can leave points unassigned.
+        // Feed every remaining point back into a seeded random stat so the final
+        // total is always exactly the original BST.
+        while (assigned < rawTotal)
+        {
+            u32 j = RunBstHash(seed
+                             ^ ((u32)species * 0xA24BAED5)
+                             ^ (counter++ * 0x27D4EB2D)) % NUM_STATS;
+            if (stats[j] < 220)
+            {
+                stats[j]++;
+                assigned++;
+            }
         }
         return;
     }
 
     if (mode == RUN_BST_RANDOM)
     {
-        u32 minTotal;
-        u32 maxTotal;
-        u32 targetTotal;
-        u32 weights[NUM_STATS];
-        u32 weightTotal = 0;
-        u32 assigned = 0;
-
-        if (rawTotal < 350)
-        {
-            minTotal = 280;
-            maxTotal = 380;
-        }
-        else if (rawTotal < 450)
-        {
-            minTotal = 350;
-            maxTotal = 480;
-        }
-        else if (rawTotal < 550)
-        {
-            minTotal = 430;
-            maxTotal = 580;
-        }
-        else
-        {
-            minTotal = 500;
-            maxTotal = 650;
-        }
-
-        targetTotal = minTotal + (RunBstHash(seed ^ ((u32)species * 0xA24BAED5)) % (maxTotal - minTotal + 1));
+        // True Chaos mode: every base stat is rolled independently. Most rolls
+        // are 5-160, with a 5% chance for an extreme 161-220 value. The resulting
+        // BST is whatever those six independent rolls produce and has no link to
+        // the species' canonical BST.
         for (i = 0; i < NUM_STATS; i++)
         {
-            weights[i] = 35 + (RunBstHash(seed ^ ((u32)species * 0x9E3779B9) ^ (i * 0x27D4EB2D)) % 66);
-            weightTotal += weights[i];
-        }
+            u32 roll = RunBstHash(seed
+                                ^ ((u32)species * 0x9E3779B9)
+                                ^ (i * 0x85EBCA6B));
+            u32 valueRoll = RunBstHash(roll ^ 0xC2B2AE35);
 
-        for (i = 0; i < NUM_STATS; i++)
-        {
-            u32 remainingStats = NUM_STATS - i - 1;
-            u32 value;
-
-            if (i == NUM_STATS - 1)
-                value = targetTotal - assigned;
+            if (roll % 100 < 5)
+                stats[i] = 161 + (valueRoll % 60);
             else
-            {
-                value = (targetTotal * weights[i]) / weightTotal;
-                if (value < 20)
-                    value = 20;
-                if (value > 200)
-                    value = 200;
-                if (targetTotal - assigned - value < remainingStats * 20)
-                    value = targetTotal - assigned - remainingStats * 20;
-            }
-
-            stats[i] = value;
-            assigned += value;
+                stats[i] = 5 + (valueRoll % 156);
         }
     }
 }
