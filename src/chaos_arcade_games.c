@@ -139,9 +139,10 @@ static void DrawGame(void)
         static const u16 banks[]={0,25,50,100,175,300};
         end=StringCopy(text,COMPOUND_STRING("Haul: "));Number(end,banks[g->draws]);Print(text,132,22);
         DrawRiskCards();
-        FillWindowPixelRect(0,g->cursor==0?6:4,4,103,106,23);Print(COMPOUND_STRING("DRAW"),9,107);
-        FillWindowPixelRect(0,g->cursor==1?6:4,114,103,106,23);Print(COMPOUND_STRING("BANK"),119,107);
-        Print(g->delay?COMPOUND_STRING("Safe! Your haul grows."):COMPOUND_STRING("A: Choose  B: Forfeit (no refund)"),4,133);
+        FillWindowPixelRect(0,g->cursor==0?6:4,4,99,106,19);Print(COMPOUND_STRING("DRAW"),9,102);
+        FillWindowPixelRect(0,g->cursor==1?6:4,114,99,106,19);Print(COMPOUND_STRING("BANK"),119,102);
+        Print(COMPOUND_STRING("Avoid VOLTORB! BANK to keep coins."),4,120);
+        Print(g->delay?COMPOUND_STRING("Safe! Your haul grows."):COMPOUND_STRING("A: Choose   B: Forfeit"),4,132);
     }else if(g->game==3){
         end=StringCopy(text,COMPOUND_STRING("Prompt "));Number(end,g->question+1);Print(text,4,28);
         end=StringCopy(text,COMPOUND_STRING("Hits: "));Number(end,g->correct);Print(text,130,28);

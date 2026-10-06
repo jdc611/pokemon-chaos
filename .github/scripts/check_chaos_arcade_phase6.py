@@ -29,6 +29,8 @@ typedef uint8_t u8;typedef uint16_t u16;typedef uint32_t u32;typedef unsigned bo
 struct {struct {u8 mapGroup,mapNum;} location;} save1,*gSaveBlock1Ptr=&save1;
 struct {u8 arcadeRanchTheme,arcadeOutfit;u32 arcadeDecorations;} save3,*gSaveBlock3Ptr=&save3;
 u16 grid[54][62],gPlttBufferUnfaded[512],gPlttBufferFaded[512];
+enum {WEATHER_NONE,WEATHER_DROUGHT,WEATHER_SNOW};
+unsigned weather;void SetWeather(unsigned w){weather=w;}
 void ChaosArcadeEnsureSave(void){}
 void MapGridSetMetatileIdAt(u32 x,u32 y,u16 v){assert(x>=7&&x<55&&y>=7&&y<47);grid[y][x]=v;}
 '''+header+'\n'.join('#define '+k+' '+v for k,v in tags.items())+'\nstatic const u16 sRanchBase[]={'+','.join(map(str,raw))+'};\n'+s[start:end]+fn(s,'ChaosArcadeRanchScenery')+fn(s,'ChaosArcadeOutfitPalette')+'''
@@ -36,9 +38,11 @@ int main(void){
  save1.location.mapGroup=38;save1.location.mapNum=28;
  for(u32 theme=0;theme<5;theme++)for(u32 bits=0;bits<512;bits++){
   save3.arcadeRanchTheme=theme;save3.arcadeDecorations=bits;ChaosArcadeRanchScenery();
+  assert(weather==(theme==2?WEATHER_DROUGHT:theme==3?WEATHER_SNOW:WEATHER_NONE));
   const u16 ids[]={8,RANCH_TILE_FOREST,RANCH_TILE_BEACH,RANCH_TILE_SNOW,RANCH_TILE_NIGHT};
   for(u32 y=0;y<40;y++)for(u32 x=0;x<48;x++){
    u16 expected=sRanchBase[y*48+x];if((expected&1023)==8)expected=(expected&~1023)|ids[theme];
+   if(theme)for(u32 i=0;i<ARRAY_COUNT(sRanchComposites);i++)if((expected&1023)==sRanchComposites[i].original){expected=(expected&~1023)|sRanchComposites[i].themes[theme-1];break;}
    for(u32 i=0;i<ARRAY_COUNT(sRanchProps);i++){
     const struct RanchProp *p=&sRanchProps[i];
     if((bits&(1u<<p->bit))&&x>=p->x&&x<p->x+p->w&&y>=p->y&&y<p->y+p->h)expected=0x3C00|(p->tile+(y-p->y)*p->w+x-p->x+(theme?RANCH_THEME_PROP_OFFSET+(theme-1)*RANCH_THEME_PROP_STRIDE:0));
@@ -83,3 +87,18 @@ props=[(4,3,2,2),(10,3,2,2),(16,3,2,2),(30,3,2,2),(36,3,2,2),(42,3,2,2),(21,13,2
 for x,y,w,h in props:
  for o in objs:assert not(x<=o['x']+1 and x+w>o['x']-1 and y<=o['y']+1 and y+h>o['y']-1)
 print('PASS sign ownership menus, native Marsh Badge gate/reserved stock, terrain attributes and sprite-free decoration footprint safety.')
+
+# Every custom furniture cell blocks entry, and foreground art stays behind
+# an avatar standing on the reachable floor in front of it.
+arcade=struct.unpack('<270H',(root/'data/layouts/CeladonCity_GameCorner_Frlg/map.bin').read_bytes())
+furniture_attrs=(root/'data/tilesets/secondary/game_corner_frlg/metatile_attributes.bin').read_bytes()
+for cell in arcade:
+ id=cell&1023
+ if 792<=id<=821:
+  assert cell&0x0C00==0x0C00
+  assert struct.unpack_from('<I',furniture_attrs,(id-640)*4)[0]&0x60000000==0x20000000
+from PIL import Image
+for theme in ['midnight','rocket']:
+ im=Image.open(root/f'graphics/pokenav/region_map/map_kanto_{theme}.png')
+ assert im.tobytes()==Image.open(root/'graphics/pokenav/region_map/map_kanto.png').tobytes()
+print('PASS furniture collision/layer coverage and clean native chart geometry without grid or star artifacts.')

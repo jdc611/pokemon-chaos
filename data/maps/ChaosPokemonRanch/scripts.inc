@@ -9,6 +9,7 @@ ChaosRanch_Scenery::
 	end
 
 ChaosRanch_Populate::
+	special ChaosArcadeRanchScenery
 	special ChaosRanchPopulate
 	end
 

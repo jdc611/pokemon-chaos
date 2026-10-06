@@ -45,6 +45,8 @@ void ChaosArcadeRiderPalette(void)
 
 static const u16 sRanchBase[] = INCBIN_U16("data/layouts/ChaosPokemonRanch/map.bin");
 struct RanchProp {u8 x,y,w,h;u16 tile;u8 bit;};
+struct RanchComposite {u16 original, themes[4];};
+static const struct RanchComposite sRanchComposites[] = RANCH_THEME_COMPOSITES;
 static const struct RanchProp sRanchProps[] = {
  {4,3,2,2,RANCH_TILE_RHYDON,0},{10,3,2,2,RANCH_TILE_LAPRAS,1},
  {16,3,2,2,RANCH_TILE_SNORLAX,2},{30,3,2,2,RANCH_TILE_VENUSAUR,3},
@@ -60,11 +62,14 @@ void ChaosArcadeRanchScenery(void)
     const u16 themes[]={8,RANCH_TILE_FOREST,RANCH_TILE_BEACH,RANCH_TILE_SNOW,RANCH_TILE_NIGHT};
     u32 theme=gSaveBlock3Ptr->arcadeRanchTheme;
     if(theme>=ARRAY_COUNT(themes))theme=0;
+    SetWeather(theme==2?WEATHER_DROUGHT:theme==3?WEATHER_SNOW:WEATHER_NONE);
     // Restore the complete immutable pasture before applying owned scenery.
     // This handles ordinary entry, saved views, PC summaries and free toggles.
     for(u32 y=0;y<40;y++)for(u32 x=0;x<48;x++){
         u16 base=sRanchBase[y*48+x];
         if((base&0x3FF)==8)base=(base&~0x3FF)|themes[theme];
+        if(theme)for(u32 i=0;i<ARRAY_COUNT(sRanchComposites);i++)
+            if((base&0x3FF)==sRanchComposites[i].original){base=(base&~0x3FF)|sRanchComposites[i].themes[theme-1];break;}
         MapGridSetMetatileIdAt(x+7,y+7,base);
     }
     for(u32 i=0;i<ARRAY_COUNT(sRanchProps);i++){

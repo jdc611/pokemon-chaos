@@ -480,7 +480,7 @@ void ChaosArcadeCosmeticPreview(void)
     StringCopy(gStringVar1,c->name);
     u32 price=CosmeticOwned(sCosmeticChoice)?0:c->price;
     ConvertIntToDecimalStringN(gStringVar2,price,STR_CONV_MODE_LEFT_ALIGN,4);
-    static const u8 *const details[]={COMPOUND_STRING("Changes the Ranch scenery.\nChange it at the Ranch sign."),COMPOUND_STRING("A chart skin with stars or a grid.\nChange owned skins freely."),COMPOUND_STRING("Installs a fixed Ranch decoration.\nToggle it at the Ranch sign."),COMPOUND_STRING("Recolors your outfit immediately.\nKeeps your face and hair colors.")};
+    static const u8 *const details[]={COMPOUND_STRING("Changes the Ranch scenery.\nChange it at the Ranch sign."),COMPOUND_STRING("A custom map chart and frame.\nChange owned skins freely."),COMPOUND_STRING("Installs a fixed Ranch decoration.\nToggle it at the Ranch sign."),COMPOUND_STRING("Recolors your outfit immediately.\nKeeps your face and hair colors.")};
     StringCopy(gStringVar3,details[c->category]);
     gSpecialVar_Result=0;
 }

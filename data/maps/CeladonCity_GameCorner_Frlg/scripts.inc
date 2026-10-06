@@ -857,7 +857,7 @@ ChaosArcade_RiskCabinet::
  releaseall
  end
 ChaosArcade_RiskWelcome:
- .string "ROCKET RISK! 25 COINS per round.\nRisk your winnings or bank them!\pEach draw has a 20% bust chance.\nWant to play?$"
+ .string "ROCKET RISK! 25 COINS per round.\nDraw POKéMON to grow your haul.\pAvoid VOLTORB! It takes all your\nunbanked winnings.\pBANK keeps your haul safely.\nEach draw: 20% VOLTORB chance.\pFive safe draws win 300 COINS!\nWant to play?$"
 
 ChaosArcade_BerryCabinet::
  lockall

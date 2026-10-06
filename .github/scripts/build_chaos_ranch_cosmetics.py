@@ -56,25 +56,39 @@ for theme in range(4):
  ground=struct.unpack_from('<8H',metas,(meta_base+46+theme)*16)[:4]
  for art in prop_entries:
   metas.extend(struct.pack('<8H',*ground,*art));attrs.extend(primary[8*4:9*4])
+# Theme the grass under the sign and around all Center wall/roof edges.
+# Reuse unused native secondary metatile slots; preserve the five roof tiles
+# actually referenced by the Ranch. This stays inside the GBA 384-meta limit.
+primary_metas=(r/'data/tilesets/primary/general_frlg/metatiles.bin').read_bytes()
+composites=[1,3,72,73,74,75,80,88,91,96,97,390,391,399,407,415]
+free_slots=iter(i for i in range(meta_base) if i not in range(48,53))
+theme_composites=[]
+for original in composites:
+ original_words=list(struct.unpack_from('<8H',primary_metas,original*16))
+ variants=[]
+ for theme in range(4):
+  ground=struct.unpack_from('<8H',metas,(meta_base+46+theme)*16)[:4]
+  words=list(original_words)
+  for q in range(4):
+   if original==1 or words[q] in (0x13,0x27f):words[q]=ground[q]
+  slot=next(free_slots);variants.append(640+slot)
+  struct.pack_into('<8H',metas,slot*16,*words)
+  attrs[slot*4:slot*4+4]=primary[original*4:original*4+4]
+ theme_composites.append((original,variants))
 out=Image.new('P',(128,((len(tiles)+15)//16)*8));out.putpalette(im.getpalette())
 for i,t in enumerate(tiles):out.paste(t,(i%16*8,i//16*8))
 out.save(p/'tiles.png');(p/'metatiles.bin').write_bytes(metas);(p/'metatile_attributes.bin').write_bytes(attrs)
 print('ranch tiles',len(tiles),'metas',len(metas)//16,'spec',spec)
-# Six original frame tiles retain native tilemap orientation. Patterned rails,
-# star constellations / Rocket hazard panels replace the former plain frame.
+# Quiet beveled rails preserve native corner shapes and legible UI borders.
 f=Image.open(r/'graphics/pokenav/region_map/frame.png')
 for theme in ['midnight','rocket']:
  o=f.copy()
- for y in range(16):
-  for x in range(24):
-   if o.getpixel((x,y))==0:continue
-   if theme=='midnight':v=2 if (x*5+y*3)%17==0 else (3 if y%4==0 else 1)
-   else:v=3 if ((x+y)//3)%2 else 1
-   o.putpixel((x,y),v)
- pal=[(0,0,0),(18,27,65),(180,213,255),(65,106,180)] if theme=='midnight' else [(0,0,0),(28,24,38),(255,74,90),(98,32,45)]
+ pal=[(0,0,0),(18,27,52),(106,164,222),(42,65,104)] if theme=='midnight' else [(0,0,0),(30,27,38),(230,72,88),(88,43,56)]
+ for yy in range(o.height):
+  for xx in range(o.width):o.putpixel((xx,yy),{0:0,3:1,4:2,15:3}[f.getpixel((xx,yy))])
  o.putpalette(sum((list(c) for c in pal),[])+[0]*(768-len(pal)*3));o.save(r/f'graphics/pokenav/region_map/frame_{theme}.png')
 # Generated C metatile constants are stable when script is rerun.
-h=r/'include/constants/chaos_ranch_cosmetics.h';h.write_text('#ifndef GUARD_CHAOS_RANCH_COSMETICS_H\n#define GUARD_CHAOS_RANCH_COSMETICS_H\n'+''.join(f'#define RANCH_TILE_{name.upper()} {640+idx}\n' for name,idx,*_ in spec)+'#define RANCH_THEME_PROP_OFFSET 50\n#define RANCH_THEME_PROP_STRIDE 46\n#endif\n')
+h=r/'include/constants/chaos_ranch_cosmetics.h';h.write_text('#ifndef GUARD_CHAOS_RANCH_COSMETICS_H\n#define GUARD_CHAOS_RANCH_COSMETICS_H\n'+''.join(f'#define RANCH_TILE_{name.upper()} {640+idx}\n' for name,idx,*_ in spec)+'#define RANCH_THEME_PROP_OFFSET 50\n#define RANCH_THEME_PROP_STRIDE 46\n#define RANCH_THEME_COMPOSITES {'+','.join('{'+str(original)+',{'+','.join(map(str,variants))+'}}' for original,variants in theme_composites)+'}\n#endif\n')
 
 # Distinct map skins keep route geometry and destination coordinates intact.
 map_image=Image.open(r/'graphics/pokenav/region_map/map_kanto.png')
@@ -90,15 +104,8 @@ for theme in ['midnight','rocket']:
    if bb>rr and bb>gg:colors[i]=(24+rr//10,22+gg//10,37+bb//8)
    elif gg>rr and gg>bb:colors[i]=(45+rr//7,35+gg//8,49+bb//7)
    elif rr>gg and rr>bb:colors[i]=(min(255,rr),55+gg//6,64+bb//6)
- colors[35]=(105,156,222) if theme=='midnight' else (86,54,90)
+ # Keep the original coastline, roads and water textures. A restrained
+ # chart palette is readable without the old full-screen grid/star noise.
  out=map_image.copy()
- for yy in range(out.height):
-  for xx in range(out.width):
-   idx=out.getpixel((xx,yy))-112
-   if idx>=0 and idx<len(base_colors):
-    rr,gg,bb=base_colors[idx]
-    if bb>rr and bb>gg:
-     mark=(xx*7+yy*11)%83==0 if theme=='midnight' else (xx%8==0 or yy%8==0)
-     if mark:out.putpixel((xx,yy),147)
  out.save(r/f'graphics/pokenav/region_map/map_kanto_{theme}.png')
  (r/f'graphics/pokenav/region_map/map_kanto_{theme}.pal').write_text('JASC-PAL\n0100\n48\n'+'\n'.join(' '.join(map(str,c)) for c in colors)+'\n')

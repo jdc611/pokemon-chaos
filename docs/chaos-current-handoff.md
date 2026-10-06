@@ -1,6 +1,16 @@
-# Chaos FireRed continuation — Chaos Arcade phase 6
+# Chaos FireRed continuation — Chaos Arcade polish
 
 Repository: jdc611/pokemon-chaos. Branch: master. Continue from actual current master; preserve existing systems and locked custom trainer rosters.
+
+## Latest changes — Chaos Arcade polish (October 5)
+
+- Rocket Risk explains that drawing VOLTORB loses the round's unbanked winnings, BANK keeps the current haul, and five safe draws award 300 Coins. The live screen retains an explicit "Avoid VOLTORB!" reminder. Existing fee, odds, bank amounts and cap-safe payment remain unchanged.
+- Every custom arcade cabinet and all six Checkers table cells now have full impassable collision. Custom furniture uses the covered map layer so its art cannot erase the avatar's head on the reachable floor in front. Interaction coordinates and the approved table art remain unchanged.
+- PokeRider skins preserve native coastlines/routes/water detail with quiet beveled frames. Removed the noisy full-screen star/grid/hazard patterns; kept distinct Midnight and Rocket palettes, native destination locks and cursor/marker behavior.
+- Ranch environments now replace embedded grass under the sign and around all Center edges, including the four small border-grass cells. Composite variants reuse unused slots in the dedicated Ranch secondary tileset, retaining the same 312 tiles / 329 metatiles and no global tileset edits.
+- Beach has visible native sunlight (WEATHER_DROUGHT); Snow has native falling snow (WEATHER_SNOW). Other themes clear those effects. Both map load and transition/resume refresh scenery/weather; changing themes at the Ranch sign updates immediately, and leaving restores the destination map's normal weather. These remain flavor-only Ranch environments with no encounters or rewards.
+
+Validation: native FireRed build and all 18 host suites pass. Native mGBA checks cover every furniture collision/approach, game interaction screens, themed Center/sign ground, sunlight/snow, on-sign weather changes, clearing weather on Center return, Risk warning and final PokeRider graphics. Preserve all phase-6 purchase/ownership/shop behavior below.
 
 ## Latest changes — Chaos Arcade phase 6 (October 5)
 
