@@ -1,4 +1,5 @@
 #include "global.h"
+#include "chaos_arcade.h"
 #include "malloc.h"
 #include "battle_anim.h"
 #include "battle_pyramid.h"
@@ -3083,11 +3084,14 @@ static u8 UpdateSpritePalette(const struct SpritePalette *spritePalette, struct 
     if (IndexOfSpritePaletteTag(spritePalette->tag) == 0xFF)
     {
         sprite->oam.paletteNum = LoadSpritePalette(spritePalette);
+    ChaosArcadeOutfitPalette(spritePalette->tag,sprite->oam.paletteNum);
         UpdateSpritePaletteWithWeather(sprite->oam.paletteNum, FALSE);
     }
     else
     {
         sprite->oam.paletteNum = LoadSpritePalette(spritePalette);
+        ChaosArcadeOutfitPalette(spritePalette->tag,sprite->oam.paletteNum);
+        UpdateSpritePaletteWithWeather(sprite->oam.paletteNum,FALSE);
     }
 
     return sprite->oam.paletteNum;
@@ -3346,6 +3350,7 @@ static u8 LoadSpritePaletteIfTagExists(const struct SpritePalette *spritePalette
     if (paletteNum != 0xFF) // don't load twice; return
         return paletteNum;
     paletteNum = LoadSpritePalette(spritePalette);
+    ChaosArcadeOutfitPalette(spritePalette->tag,paletteNum);
     if (paletteNum != 0xFF)
         UpdateSpritePaletteWithWeather(paletteNum, FALSE);
     return paletteNum;
@@ -3357,6 +3362,7 @@ void PatchObjectPalette(u16 paletteTag, u8 paletteSlot)
     u8 paletteIndex = FindObjectEventPaletteIndexByTag(paletteTag);
 
     LoadPalette(sObjectEventSpritePalettes[paletteIndex].data, OBJ_PLTT_ID(paletteSlot), PLTT_SIZE_4BPP);
+    ChaosArcadeOutfitPalette(paletteTag,paletteSlot);
 }
 
 void PatchObjectPaletteRange(const u16 *paletteTags, u8 minSlot, u8 maxSlot)

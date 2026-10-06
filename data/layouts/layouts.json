@@ -9332,7 +9332,7 @@
       "border_width": 2,
       "border_height": 2,
       "primary_tileset": "gTileset_General_Frlg",
-      "secondary_tileset": "gTileset_ViridianCity",
+      "secondary_tileset": "gTileset_ChaosRanch",
       "border_filepath": "data/layouts/ChaosPokemonRanch/border.bin",
       "blockdata_filepath": "data/layouts/ChaosPokemonRanch/map.bin",
       "layout_version": "frlg"

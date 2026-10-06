@@ -1,7 +1,12 @@
 ChaosPokemonRanch_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, ChaosRanch_Populate
 	map_script MAP_SCRIPT_ON_RESUME, ChaosRanch_Populate
+	map_script MAP_SCRIPT_ON_LOAD, ChaosRanch_Scenery
 	.byte 0
+
+ChaosRanch_Scenery::
+	special ChaosArcadeRanchScenery
+	end
 
 ChaosRanch_Populate::
 	special ChaosRanchPopulate
@@ -24,16 +29,34 @@ ChaosRanch_Door::
 ChaosRanch_Sign::
 	lockall
 	msgbox ChaosRanch_Text_Sign, MSGBOX_DEFAULT
+ChaosRanch_Options::
 	closemessage
+	special ChaosRanchOptions
+	compare VAR_RESULT, 0
+	goto_if_eq ChaosRanch_BoxSelect
+	compare VAR_RESULT, 1
+	goto_if_eq ChaosRanch_ThemeSelect
+	compare VAR_RESULT, 2
+	goto_if_eq ChaosRanch_DecorationSelect
+	goto ChaosRanch_Cancel
+ChaosRanch_BoxSelect::
 	special ChaosRanchChooseBox
 	compare VAR_RESULT, 14
-	goto_if_ge ChaosRanch_Cancel
+	goto_if_ge ChaosRanch_Options
 	special ChaosRanchChangeBox
 	closemessage
 	warp MAP_CHAOS_POKEMON_RANCH, 0
 	waitstate
 	releaseall
 	end
+ChaosRanch_ThemeSelect::
+	special ChaosRanchThemeMenu
+	special ChaosRanchApplyCosmetic
+	goto ChaosRanch_Options
+ChaosRanch_DecorationSelect::
+	special ChaosRanchDecorationMenu
+	special ChaosRanchApplyCosmetic
+	goto ChaosRanch_Options
 
 ChaosRanch_Interact::
 	lock
@@ -96,7 +119,7 @@ ChaosRanch_Cancel::
 ChaosRanch_Text_Choose::
 	.string "Visit the POKéMON RANCH?\nChoose a PC Box pasture.$"
 ChaosRanch_Text_Sign::
-	.string "POKéMON RANCH\pPOKéMON stored in your PC Boxes\ncan roam freely here.\pChoose a pasture to visit.$"
+	.string "POKéMON RANCH\pPOKéMON stored in your PC Boxes\ncan roam freely here.\pChoose a pasture or decorate.$"
 ChaosRanch_Text_Withdrawn::
 	.string "The POKéMON joined your party!$"
 ChaosRanch_Text_Full::

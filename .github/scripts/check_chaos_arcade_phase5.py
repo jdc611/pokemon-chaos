@@ -54,13 +54,13 @@ int main(void){
  coins=24;init(2);tick(A_BUTTON);assert(coins==24&&sArcadeGame->phase==0);tick(B_BUTTON);assert(!sArcadeGame);
  for(u32 bank=1;bank<=5;bank++){
   coins=100;init(2);tick(A_BUTTON);assert(coins==75&&sArcadeGame->phase==1);u32 c=charges;
-  randomValue=1;for(u32 n=0;n<bank;n++)tick(A_BUTTON);
+  randomValue=1;for(u32 n=0;n<bank;n++){tick(A_BUTTON);while(sArcadeGame->delay)tick(0);}
   if(bank<5){tick(DPAD_RIGHT);tick(A_BUTTON);}
   assert(coins==75+ChaosArcadeRiskBank(bank)&&charges==c&&sArcadeGame->phase==3);
   u32 paid=grants;FinishGame(9999);assert(grants==paid);tick(A_BUTTON);assert(!sArcadeGame);
  }
  for(u32 draw=0;draw<5;draw++){
-  coins=100;init(2);tick(A_BUTTON);randomValue=1;for(u32 n=0;n<draw;n++)tick(A_BUTTON);
+  coins=100;init(2);tick(A_BUTTON);randomValue=1;for(u32 n=0;n<draw;n++){tick(A_BUTTON);while(sArcadeGame->delay)tick(0);}
   randomValue=0;tick(A_BUTTON);assert(coins==75&&sArcadeGame->phase==3&&sArcadeGame->awarded==0);tick(B_BUTTON);
  }
  coins=100;init(2);tick(A_BUTTON);randomValue=1;tick(A_BUTTON);u32 paid=grants;tick(B_BUTTON);assert(coins==75&&grants==paid&&!sArcadeGame);
@@ -82,22 +82,26 @@ def run(code):
  with tempfile.TemporaryDirectory() as d:
   p=Path(d)/'test.c';p.write_text(code);subprocess.run(['cc','-std=gnu11','-Wall','-Werror',str(p),'-o',d+'/test'],check=True);subprocess.run([d+'/test'],check=True)
 run(code)
-s=(root/'src/chaos_arcade_prizes.c').read_text();start=s.index('struct ArcadeCosmetic');end=s.index('void ChaosArcadeCosmeticMenu',start)
+s=(root/'src/chaos_arcade_prizes.c').read_text();start=s.index('struct ArcadeCosmetic');end=s.index('static bool32 CosmeticOwned',start)
 code=common+s[start:end]+r'''
 #define FLAG_BADGE04_GET 1
 #define ITEM_COIN_CASE 1
 u8 gStringVar3[128];
 u8 *StringCopy(u8 *d,const u8 *s){return (u8 *)strcpy((char *)d,(const char *)s);}
-struct Save {u32 arcadeCosmeticsOwned[2];u8 arcadeRanchTheme,arcadeRiderTheme;} save,*gSaveBlock3Ptr=&save;
+struct Save {u32 arcadeCosmeticsOwned[2];u8 arcadeRanchTheme,arcadeRiderTheme,arcadeOutfit;u32 arcadeDecorations;} save,*gSaveBlock3Ptr=&save;
 int badge=1,coinCase=1;
 int FlagGet(int f){return badge;}
 int CheckBagHasItem(int i,int n){return coinCase;}
-'''+fn(s,'ChaosArcadeCosmeticBuy')+r'''
+void ChaosArcadeRefreshOutfit(void){}
+'''+fn(s,'CosmeticOwned')+fn(s,'ChaosArcadeCosmeticBuy')+r'''
 int main(void){
  for(u32 i=0;i<ARRAY_COUNT(sCosmetics);i++){
   memset(&save,0,sizeof(save));coins=9999;sCosmeticChoice=i;ChaosArcadeCosmeticBuy();
   assert(gSpecialVar_Result==0&&coins==9999-sCosmetics[i].price&&(save.arcadeCosmeticsOwned[0]&(1u<<i)));
-  assert((sCosmetics[i].category==0?save.arcadeRanchTheme:save.arcadeRiderTheme)==sCosmetics[i].value);
+  if(sCosmetics[i].category==0)assert(save.arcadeRanchTheme==sCosmetics[i].value);
+  if(sCosmetics[i].category==1)assert(save.arcadeRiderTheme==sCosmetics[i].value);
+  if(sCosmetics[i].category==2)assert(save.arcadeDecorations==(1u<<sCosmetics[i].value));
+  if(sCosmetics[i].category==3)assert(save.arcadeOutfit==sCosmetics[i].value);
   u32 balance=coins;ChaosArcadeCosmeticBuy();assert(gSpecialVar_Result==4&&coins==balance);
   sCosmeticChoice=i;coins=0;ChaosArcadeCosmeticBuy();assert(gSpecialVar_Result==0&&coins==0);
   for(u32 failure=0;failure<3;failure++){

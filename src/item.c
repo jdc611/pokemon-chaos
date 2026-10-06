@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/maps.h"
 #include "item.h"
 #include "berry.h"
 #include "pokeball.h"
@@ -819,6 +820,23 @@ const u8 *GetItemName(enum Item itemId)
 
 u32 GetItemPrice(enum Item itemId)
 {
+    // Local Celadon utility economy. Native resale prices remain unchanged
+    // outside the store, and zero-price Mega items cannot become free stock.
+    if(gSaveBlock1Ptr->location.mapGroup==MAP_GROUP(MAP_CELADON_CITY_DEPARTMENT_STORE_4F)
+    && gSaveBlock1Ptr->location.mapNum==MAP_NUM(MAP_CELADON_CITY_DEPARTMENT_STORE_4F)){
+        if(itemId==ITEM_ABILITY_PATCH)return 50000;
+        if(itemId==ITEM_ABILITY_CAPSULE)return 20000;
+        if(gItemsInfo[SanitizeItemId(itemId)].sortType==ITEM_TYPE_MEGA_STONE){
+            // Reserved quest/rematch stones keep their native unsellable price.
+            switch(itemId){
+            case ITEM_NIDOKINGITE:case ITEM_STEELIXITE:case ITEM_GYARADOSITE:
+            case ITEM_MANECTITE:case ITEM_ALAKAZITE:case ITEM_BEEDRILLITE:
+            case ITEM_VENUSAURITE:case ITEM_GARCHOMPITE:case ITEM_HOUNDOOMINITE:
+            case ITEM_PIDGEOTITE:break;
+            default:return 20000;
+            }
+        }
+    }
     return gItemsInfo[SanitizeItemId(itemId)].price;
 }
 

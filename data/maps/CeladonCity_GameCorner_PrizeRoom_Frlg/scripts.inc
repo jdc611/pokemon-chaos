@@ -369,6 +369,9 @@ ChaosArcadeCosmeticCounter::
  msgbox ChaosArcadeCosmetic_Welcome
 ChaosArcadeCosmetic_Root::
  closemessage
+ special ChaosArcadeCosmeticCategories
+ compare VAR_RESULT, 4
+ goto_if_ge CeladonCity_GameCorner_PrizeRoom_EventScript_EndPrizeExchange
  special ChaosArcadeCosmeticMenu
  goto_if_eq VAR_RESULT, 127, CeladonCity_GameCorner_PrizeRoom_EventScript_EndPrizeExchange
  special ChaosArcadeCosmeticPreview
@@ -390,8 +393,8 @@ ChaosArcadeCosmetic_Welcome:
 ChaosArcadeCosmetic_Confirm:
  .string "{STR_VAR_1}: {STR_VAR_2} COINS\n"
  .string "{STR_VAR_3}\p"
- .string "Unlock and apply this theme?\n"
- .string "Owned themes can be applied free.$"
+ .string "Unlock and apply this cosmetic?\n"
+ .string "Owned cosmetics can be applied free.$"
 ChaosArcadeCosmetic_Applied:
  .string "{STR_VAR_3} applied!\n"
  .string "Enjoy your new look!$"

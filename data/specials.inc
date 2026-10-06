@@ -699,3 +699,11 @@ gSpecials::
 
 	def_special ChaosArcadeRocketRisk, waitstate=1
 	def_special ChaosArcadeBerryTiming, waitstate=1
+
+	def_special ChaosArcadeRanchScenery
+	def_special ChaosRanchOptions, waitstate=1
+	def_special ChaosRanchThemeMenu, waitstate=1
+	def_special ChaosRanchDecorationMenu, waitstate=1
+	def_special ChaosRanchApplyCosmetic
+
+	def_special ChaosArcadeCosmeticCategories, waitstate=1

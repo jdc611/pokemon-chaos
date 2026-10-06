@@ -30,6 +30,8 @@
 #include "menu_helpers.h"
 #include "constants/rgb.h"
 #include "chaos_arcade.h"
+#include "fieldmap.h"
+#include "field_camera.h"
 
 struct ArcadePrize {enum Species species; u16 price;};
 static const struct ArcadePrize sPrizes[] = {
@@ -402,18 +404,73 @@ static const struct ArcadeCosmetic sCosmetics[]={
  {COMPOUND_STRING("Rider: Classic"),0,1,0},
  {COMPOUND_STRING("Rider: Midnight"),750,1,1},
  {COMPOUND_STRING("Rider: Rocket"),750,1,2},
+ {COMPOUND_STRING("Statue: Rhydon"),750,2,0},
+ {COMPOUND_STRING("Statue: Lapras"),750,2,1},
+ {COMPOUND_STRING("Statue: Snorlax"),750,2,2},
+ {COMPOUND_STRING("Statue: Venusaur"),750,2,3},
+ {COMPOUND_STRING("Statue: Charizard"),750,2,4},
+ {COMPOUND_STRING("Statue: Blastoise"),750,2,5},
+ {COMPOUND_STRING("Ranch: Bench pair"),300,2,6},
+ {COMPOUND_STRING("Ranch: Flower beds"),300,2,7},
+ {COMPOUND_STRING("Ranch: Fountain"),1200,2,8},
+ {COMPOUND_STRING("Outfit: Default"),0,3,0},
+ {COMPOUND_STRING("Outfit: Black-red"),750,3,1},
+ {COMPOUND_STRING("Outfit: Blue-white"),750,3,2},
+ {COMPOUND_STRING("Outfit: Purple-gold"),750,3,3},
+ {COMPOUND_STRING("Outfit: White"),1000,3,4},
+ {COMPOUND_STRING("Outfit: Black"),1000,3,5},
+ {COMPOUND_STRING("Outfit: Gold"),6000,3,6},
 };
 static EWRAM_DATA u16 sCosmeticChoice;
-void ChaosArcadeCosmeticMenu(void)
+static bool32 CosmeticOwned(u32 i)
+{
+    return i<ARRAY_COUNT(sCosmetics)&&(!sCosmetics[i].price||(gSaveBlock3Ptr->arcadeCosmeticsOwned[i/32]&(1u<<(i%32))));
+}
+static void CosmeticMenu(u32 category,bool32 ownedOnly)
 {
     ChaosArcadeEnsureSave();sCosmeticChoice=0xFFFF;
-    struct ListMenuItem *items=NewItems(ARRAY_COUNT(sCosmetics));
-    if(items)for(u32 i=0;i<ARRAY_COUNT(sCosmetics);i++){
+    u32 count=0;
+    for(u32 i=0;i<ARRAY_COUNT(sCosmetics);i++)if(sCosmetics[i].category==category&&(!ownedOnly||CosmeticOwned(i)))count++;
+    if(!count){struct ListMenuItem *items=NewItems(1);if(items){StringCopy((u8 *)items[0].name,COMPOUND_STRING("No decorations owned"));items[0].id=0xFFFF;}ShowItems(items,1);return;}
+    struct ListMenuItem *items=NewItems(count);
+    if(items)for(u32 i=0,j=0;i<ARRAY_COUNT(sCosmetics);i++){
         const struct ArcadeCosmetic *c=&sCosmetics[i];
-        if(!c->price || (gSaveBlock3Ptr->arcadeCosmeticsOwned[0]&(1u<<i)))StringCopy(StringCopy((u8 *)items[i].name,c->name),COMPOUND_STRING(" (OWNED)"));
-        else PriceLabel((u8 *)items[i].name,c->name,c->price);
+        if(c->category!=category||(ownedOnly&&!CosmeticOwned(i)))continue;
+        items[j].id=i;
+        if(ownedOnly&&category==2)StringCopy(StringCopy((u8 *)items[j].name,c->name),(gSaveBlock3Ptr->arcadeDecorations&(1u<<c->value))?COMPOUND_STRING(" (ON)"):COMPOUND_STRING(" (OFF)"));
+        else if(CosmeticOwned(i))StringCopy(StringCopy((u8 *)items[j].name,c->name),COMPOUND_STRING(" (OWNED)"));
+        else PriceLabel((u8 *)items[j].name,c->name,c->price);
+        j++;
     }
-    ShowItems(items,ARRAY_COUNT(sCosmetics));
+    ShowItems(items,count);
+}
+void ChaosArcadeCosmeticCategories(void)
+{
+    static const u8 *const labels[]={COMPOUND_STRING("RANCH THEMES"),COMPOUND_STRING("POKERIDER SKINS"),COMPOUND_STRING("RANCH DECORATIONS"),COMPOUND_STRING("OUTFIT COLORS")};
+    struct ListMenuItem *items=NewItems(4);
+    if(items)for(u32 i=0;i<4;i++)StringCopy((u8 *)items[i].name,labels[i]);
+    ShowItems(items,4);
+}
+void ChaosArcadeCosmeticMenu(void){CosmeticMenu(gSpecialVar_Result,FALSE);}
+void ChaosRanchOptions(void)
+{
+    static const u8 *const labels[]={COMPOUND_STRING("CHOOSE PASTURE"),COMPOUND_STRING("CHANGE THEME"),COMPOUND_STRING("TOGGLE DECORATIONS"),COMPOUND_STRING("CANCEL")};
+    struct ListMenuItem *items=NewItems(4);
+    if(items)for(u32 i=0;i<4;i++)StringCopy((u8 *)items[i].name,labels[i]);
+    ShowItems(items,4);
+}
+void ChaosRanchThemeMenu(void){CosmeticMenu(0,TRUE);}
+void ChaosRanchDecorationMenu(void){CosmeticMenu(2,TRUE);}
+void ChaosRanchApplyCosmetic(void)
+{
+    u32 i=gSpecialVar_Result;
+    if(!CosmeticOwned(i))return;
+    const struct ArcadeCosmetic *c=&sCosmetics[i];
+    if(c->category==0)gSaveBlock3Ptr->arcadeRanchTheme=c->value;
+    else if(c->category==2)gSaveBlock3Ptr->arcadeDecorations^=1u<<c->value;
+    else return;
+    ChaosArcadeRanchScenery();LoadMapTilesetPalettes(gMapHeader.mapLayout);
+    ApplyWeatherColorMapToPals(0,13);DrawWholeMapView();
 }
 void ChaosArcadeCosmeticPreview(void)
 {
@@ -421,9 +478,10 @@ void ChaosArcadeCosmeticPreview(void)
     if(sCosmeticChoice>=ARRAY_COUNT(sCosmetics))return;
     const struct ArcadeCosmetic *c=&sCosmetics[sCosmeticChoice];
     StringCopy(gStringVar1,c->name);
-    u32 price=(gSaveBlock3Ptr->arcadeCosmeticsOwned[0]&(1u<<sCosmeticChoice))?0:c->price;
+    u32 price=CosmeticOwned(sCosmeticChoice)?0:c->price;
     ConvertIntToDecimalStringN(gStringVar2,price,STR_CONV_MODE_LEFT_ALIGN,4);
-    StringCopy(gStringVar3,c->category==0?COMPOUND_STRING("Changes the Ranch scenery colors.\nNo gameplay effects."):COMPOUND_STRING("Changes the PokeRider frame colors.\nNo gameplay effects."));
+    static const u8 *const details[]={COMPOUND_STRING("Changes the Ranch scenery.\nChange it at the Ranch sign."),COMPOUND_STRING("A chart skin with stars or a grid.\nChange owned skins freely."),COMPOUND_STRING("Installs a fixed Ranch decoration.\nToggle it at the Ranch sign."),COMPOUND_STRING("Recolors your outfit immediately.\nKeeps your face and hair colors.")};
+    StringCopy(gStringVar3,details[c->category]);
     gSpecialVar_Result=0;
 }
 void ChaosArcadeCosmeticBuy(void)
@@ -431,11 +489,14 @@ void ChaosArcadeCosmeticBuy(void)
     gSpecialVar_Result=4;
     if(sCosmeticChoice>=ARRAY_COUNT(sCosmetics)||!FlagGet(FLAG_BADGE04_GET)||!CheckBagHasItem(ITEM_COIN_CASE,1))return;
     const struct ArcadeCosmetic *c=&sCosmetics[sCosmeticChoice];
-    u32 bit=1u<<sCosmeticChoice;
-    u32 price=(gSaveBlock3Ptr->arcadeCosmeticsOwned[0]&bit)?0:c->price;
+    u32 bit=1u<<(sCosmeticChoice%32);
+    u32 price=CosmeticOwned(sCosmeticChoice)?0:c->price;
     if(GetCoins()<price){gSpecialVar_Result=2;return;}
-    if(c->category==0)gSaveBlock3Ptr->arcadeRanchTheme=c->value;else gSaveBlock3Ptr->arcadeRiderTheme=c->value;
+    if(c->category==0)gSaveBlock3Ptr->arcadeRanchTheme=c->value;
+    else if(c->category==1)gSaveBlock3Ptr->arcadeRiderTheme=c->value;
+    else if(c->category==2)gSaveBlock3Ptr->arcadeDecorations|=1u<<c->value;
+    else {gSaveBlock3Ptr->arcadeOutfit=c->value;ChaosArcadeRefreshOutfit();}
     StringCopy(gStringVar3,c->name);
-    gSaveBlock3Ptr->arcadeCosmeticsOwned[0]|=bit;RemoveCoins(price);
+    gSaveBlock3Ptr->arcadeCosmeticsOwned[sCosmeticChoice/32]|=bit;RemoveCoins(price);
     sCosmeticChoice=0xFFFF;gSpecialVar_Result=0;
 }

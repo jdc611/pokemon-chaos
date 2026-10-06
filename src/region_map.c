@@ -294,6 +294,10 @@ static const mapsec_u8_t sMapSecIdsOffMap[] =
 };
 
 static const u16 sRegionMapFramePal[] = INCGFX_U16("graphics/pokenav/region_map/frame.png", ".gbapal");
+static const u32 sMidnightFrame[] = INCGFX_U32("graphics/pokenav/region_map/frame_midnight.png", ".4bpp.smol");
+static const u32 sRocketFrame[] = INCGFX_U32("graphics/pokenav/region_map/frame_rocket.png", ".4bpp.smol");
+static const u16 sMidnightFramePal[] = INCGFX_U16("graphics/pokenav/region_map/frame_midnight.png", ".gbapal");
+static const u16 sRocketFramePal[] = INCGFX_U16("graphics/pokenav/region_map/frame_rocket.png", ".gbapal");
 static const u32 sRegionMapFrameGfxLZ[] = INCGFX_U32("graphics/pokenav/region_map/frame.png", ".4bpp.smol");
 static const u32 sRegionMapFrameTilemapLZ[] = INCGFX_U32("graphics/pokenav/region_map/frame.bin", ".smolTM");
 static const u16 sFlyTargetIcons_Pal[] = INCGFX_U16("graphics/pokenav/region_map/fly_target_icons.png", ".gbapal");
@@ -307,6 +311,10 @@ static const u16 ALIGNED(4) sPokedexAreaMapKanto_Pal[] = INCGFX_U16("graphics/po
 static const u32 sPokedexAreaMapKanto_Gfx[] = INCGFX_U32("graphics/pokedex/region_map_kanto.png", ".8bpp.smol");
 static const u32 sPokedexAreaMapKanto_Tilemap[] = INCGFX_U32("graphics/pokedex/region_map_kanto.bin", ".smolTM");
 static const u16 ALIGNED(4) sRegionMapKanto_Pal[] = INCGFX_U16("graphics/pokenav/region_map/map_kanto.pal", ".gbapal");
+static const u32 sRiderMidnightMap[] = INCGFX_U32("graphics/pokenav/region_map/map_kanto_midnight.png", ".8bpp.smol");
+static const u32 sRiderRocketMap[] = INCGFX_U32("graphics/pokenav/region_map/map_kanto_rocket.png", ".8bpp.smol");
+static const u16 sRiderMidnightPal[] = INCGFX_U16("graphics/pokenav/region_map/map_kanto_midnight.pal", ".gbapal");
+static const u16 sRiderRocketPal[] = INCGFX_U16("graphics/pokenav/region_map/map_kanto_rocket.pal", ".gbapal");
 static const u32 sRegionMapKanto_Gfx[] = INCGFX_U32("graphics/pokenav/region_map/map_kanto.png", ".8bpp.smol");
 static const u32 sRegionMapKanto_Tilemap[] = INCGFX_U32("graphics/pokenav/region_map/map_kanto.bin", ".smolTM");
 
@@ -741,6 +749,18 @@ void ShowRegionMapForPokedexAreaScreen(struct RegionMap *regionMap)
     sRegionMap->playerIconSpritePosY = sRegionMap->cursorPosY;
 }
 
+static const void *RiderMapAsset(enum RegionMapType type,bool32 palette)
+{
+    // Other map interfaces retain native assets; only the live Fly/PokeRider
+    // screen uses an owned skin. Sevii keeps its native map geometry/colors.
+    if(sFlyMap&&type==REGION_MAP_KANTO){
+        ChaosArcadeEnsureSave();
+        if(gSaveBlock3Ptr->arcadeRiderTheme==1)return palette?(const void *)sRiderMidnightPal:(const void *)sRiderMidnightMap;
+        if(gSaveBlock3Ptr->arcadeRiderTheme==2)return palette?(const void *)sRiderRocketPal:(const void *)sRiderRocketMap;
+    }
+    return palette?(const void *)gRegionMapInfos[type].regionMapPalette:(const void *)gRegionMapInfos[type].regionMapGfx;
+}
+
 bool8 LoadRegionMapGfx(void)
 {
     enum RegionMapType regionMapType;
@@ -749,9 +769,9 @@ bool8 LoadRegionMapGfx(void)
     case 0:
         regionMapType = GetRegionMapType(gMapHeader.regionMapSectionId);
         if (sRegionMap->bgManaged)
-            DecompressAndCopyTileDataToVram(sRegionMap->bgNum, gRegionMapInfos[regionMapType].regionMapGfx, 0, 0, 0);
+            DecompressAndCopyTileDataToVram(sRegionMap->bgNum, RiderMapAsset(regionMapType,FALSE), 0, 0, 0);
         else
-            DecompressDataWithHeaderVram(gRegionMapInfos[regionMapType].regionMapGfx, (u16 *)BG_CHAR_ADDR(2));
+            DecompressDataWithHeaderVram(RiderMapAsset(regionMapType,FALSE), (u16 *)BG_CHAR_ADDR(2));
         break;
     case 1:
         regionMapType = GetRegionMapType(gMapHeader.regionMapSectionId);
@@ -768,7 +788,7 @@ bool8 LoadRegionMapGfx(void)
     case 2:
         regionMapType = GetRegionMapType(gMapHeader.regionMapSectionId);
         if (!FreeTempTileDataBuffersIfPossible())
-            LoadPalette(gRegionMapInfos[regionMapType].regionMapPalette, BG_PLTT_ID(7), 3 * PLTT_SIZE_4BPP);
+            LoadPalette(RiderMapAsset(regionMapType,TRUE), BG_PLTT_ID(7), 3 * PLTT_SIZE_4BPP);
         break;
     case 3:
         DecompressDataWithHeaderWram(sRegionMapCursorSmallGfxLZ, sRegionMap->cursorSmallImage);
@@ -2069,7 +2089,8 @@ void CB2_OpenFlyMap(void)
         gMain.state++;
         break;
     case 5:
-        DecompressDataWithHeaderVram(sRegionMapFrameGfxLZ, (u16 *)BG_CHAR_ADDR(3));
+        ChaosArcadeEnsureSave();
+        DecompressDataWithHeaderVram(gSaveBlock3Ptr->arcadeRiderTheme==1?sMidnightFrame:gSaveBlock3Ptr->arcadeRiderTheme==2?sRocketFrame:sRegionMapFrameGfxLZ, (u16 *)BG_CHAR_ADDR(3));
         gMain.state++;
         break;
     case 6:
@@ -2077,8 +2098,7 @@ void CB2_OpenFlyMap(void)
         gMain.state++;
         break;
     case 7:
-        LoadPalette(sRegionMapFramePal, BG_PLTT_ID(1), sizeof(sRegionMapFramePal));
-        ChaosArcadeRiderPalette();
+        LoadPalette(gSaveBlock3Ptr->arcadeRiderTheme==1?sMidnightFramePal:gSaveBlock3Ptr->arcadeRiderTheme==2?sRocketFramePal:sRegionMapFramePal, BG_PLTT_ID(1), sizeof(sRegionMapFramePal));
         PutWindowTilemap(WIN_FLY_TO_WHERE);
         FillWindowPixelBuffer(WIN_FLY_TO_WHERE, PIXEL_FILL(0));
         AddTextPrinterParameterized(WIN_FLY_TO_WHERE, FONT_NORMAL, gText_FlyToWhere, 0, 1, 0, NULL);

@@ -1544,3 +1544,9 @@ const struct Tileset gTileset_HallOfFame =
 
 #endif // IS_FRLG
 
+
+const struct Tileset gTileset_ChaosRanch = {
+ .isCompressed=TRUE, .isSecondary=TRUE, .tiles=gTilesetTiles_ChaosRanch,
+ .palettes=gTilesetPalettes_ChaosRanch, .metatiles=gMetatiles_ChaosRanch,
+ .metatileAttributes=gMetatileAttributes_ChaosRanch, .callback=NULL,
+};

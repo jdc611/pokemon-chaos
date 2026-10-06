@@ -1,6 +1,6 @@
 # Game Corner and Ranch layout proposal — October 5, 2026
 
-**Arrangement approved October 5; cabinet and decoration map art is not implemented yet.** The user approved the starting economy before requesting these layouts. No new ROM is produced by this planning change.
+**Arrangement approved October 5. Phase 6 implements fixed Ranch props and themes; the four current arcade cabinets are implemented.** The diagrams retain the full future arcade proposal. Other proposed cabinets remain pending.
 
 ![Arcade proposal](arcade-proposal.png)
 

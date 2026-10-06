@@ -76,3 +76,7 @@ Still undecided: quiz bank, coin prices, Game Corner TM list/prices, Celadon ite
 ### Auto Repel acquisition
 
 The Viridian Teachy TV old man equips Auto Repel in the same short handoff, without a catching tutorial. It becomes available in the tools menu after the gift; the toggle remains off until the player enables it. Completed older saves retain access through the existing old-man scene state. A failed Teachy TV gift does not advance the handoff.
+
+### October 5 phase-6 follow-through
+
+Celadon 4F utility stock and the Marsh Badge specialist are now implemented. See current handoff for the exact reserved-stone list and best-judgment starting prices authorized by the user. Later deliberate Mega placements/rematch assignments must update the special stock; do not duplicate reserved acquisitions. Ranch fixed props, outfit colors and owned-only sign controls are now implemented. PokeRider prizes now have patterned chart/frame graphics, not just recolored borders.

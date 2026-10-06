@@ -82,6 +82,28 @@ static void DrawBerryBar(void)
     FillWindowPixelRect(0,8,12+(g->target-7)*2,78,30,20);
     FillWindowPixelRect(0,7,12+min(99,g->clock*100/180)*2,75,2,26);
 }
+static void DrawRiskCards(void)
+{
+    struct ArcadeGamesUi *g=sArcadeGame;
+    static const enum Species rewards[]={SPECIES_MEOWTH,SPECIES_PIKACHU,SPECIES_EEVEE,SPECIES_SNORLAX,SPECIES_DRAGONITE};
+    static const u16 banks[]={25,50,100,175,300};
+    for(u32 i=0;i<5;i++){
+        u32 x=4+i*44;bool32 safe=i<g->draws,bust=g->phase==3&&!g->feedback&&i==g->draws;
+        u32 color=bust?9:safe?8:4;
+        if(g->delay&&safe&&i+1==g->draws&&(g->delay/6)%2)color=7;
+        FillWindowPixelRect(0,color,x,44,40,53);
+        FillWindowPixelRect(0,1,x+2,46,36,49);
+        if(safe||bust){
+            u8 id=CreateMonIcon(bust?SPECIES_VOLTORB:rewards[i],SpriteCallbackDummy,x+28,70,0,0);
+            g->icons[i]=id;if(id!=MAX_SPRITES)gSprites[id].oam.priority=0;
+        }else {
+            FillWindowPixelRect(0,6,x+8,54,24,24);
+            FillWindowPixelRect(0,4,x+10,56,20,20);
+            Print(COMPOUND_STRING("?"),x+17,58);
+        }
+        u8 text[8];Number(text,banks[i]);Print(text,x+7,80);
+    }
+}
 static void DrawGame(void)
 {
     struct ArcadeGamesUi *g=sArcadeGame;
@@ -99,19 +121,27 @@ static void DrawGame(void)
         if(g->game==2)Print(COMPOUND_STRING("25 COINS per round.\nEach draw: 20% chance of a bust.\nBank after any safe draw.\n5 safe draws bank 300 COINS.\nA: Pay and play   B: Leave"),4,29);
         else Print(COMPOUND_STRING("20 timing prompts. Free entry.\nPress A while the marker is green.\nOne attempt per prompt.\n5 COINS per hit + 20 if perfect!\nA: Start   B: Leave"),4,29);
     }else if(g->phase==3){
-        Print(g->game==2&&g->feedback==0?COMPOUND_STRING("VOLTORB! Round winnings lost."):COMPOUND_STRING("Round complete!"),4,30);
-        end=StringCopy(text,COMPOUND_STRING("COINS earned: "));Number(end,g->awarded);Print(text,4,53);
-        if(g->game==1){end=StringCopy(text,COMPOUND_STRING("Correct: "));Number(end,g->correct);StringCopy(text+StringLength(text),COMPOUND_STRING(" / 10"));Print(text,4,74);}
-        if(g->capped)Print(COMPOUND_STRING("Coin Case limit: reward reduced."),4,92);
-        Print(COMPOUND_STRING("A/B: Return to the arcade"),4,110);
+        if(g->game==2){
+            Print(!g->feedback?COMPOUND_STRING("VOLTORB! Your haul was lost."):g->draws==5?COMPOUND_STRING("JACKPOT! Five safe cards!"):COMPOUND_STRING("Your haul is safely banked!"),4,23);
+            DrawRiskCards();
+            end=StringCopy(text,COMPOUND_STRING("COINS banked: "));Number(end,g->awarded);Print(text,4,103);
+            if(g->capped)Print(COMPOUND_STRING("Coin Case limit: reward reduced."),4,119);
+            Print(COMPOUND_STRING("A/B: Return to the arcade"),4,133);
+        }else{
+            Print(COMPOUND_STRING("Round complete!"),4,30);
+            end=StringCopy(text,COMPOUND_STRING("COINS earned: "));Number(end,g->awarded);Print(text,4,53);
+            if(g->game==1){end=StringCopy(text,COMPOUND_STRING("Correct: "));Number(end,g->correct);StringCopy(text+StringLength(text),COMPOUND_STRING(" / 10"));Print(text,4,74);}
+            if(g->capped)Print(COMPOUND_STRING("Coin Case limit: reward reduced."),4,92);
+            Print(COMPOUND_STRING("A/B: Return to the arcade"),4,110);
+        }
     }else if(g->game==2){
-        end=StringCopy(text,COMPOUND_STRING("Safe draws: "));Number(end,g->draws);Print(text,4,28);
+        end=StringCopy(text,COMPOUND_STRING("Safe cards: "));Number(end,g->draws);Print(text,4,22);
         static const u16 banks[]={0,25,50,100,175,300};
-        end=StringCopy(text,COMPOUND_STRING("Unbanked COINS: "));Number(end,banks[g->draws]);Print(text,4,49);
-        Print(COMPOUND_STRING("Risk another draw, or bank?"),4,70);
-        FillWindowPixelRect(0,g->cursor==0?6:4,4,90,106,23);Print(COMPOUND_STRING("DRAW"),9,94);
-        FillWindowPixelRect(0,g->cursor==1?6:4,114,90,106,23);Print(COMPOUND_STRING("BANK"),119,94);
-        Print(COMPOUND_STRING("A: Choose  B: Forfeit (no refund)"),4,133);
+        end=StringCopy(text,COMPOUND_STRING("Haul: "));Number(end,banks[g->draws]);Print(text,132,22);
+        DrawRiskCards();
+        FillWindowPixelRect(0,g->cursor==0?6:4,4,103,106,23);Print(COMPOUND_STRING("DRAW"),9,107);
+        FillWindowPixelRect(0,g->cursor==1?6:4,114,103,106,23);Print(COMPOUND_STRING("BANK"),119,107);
+        Print(g->delay?COMPOUND_STRING("Safe! Your haul grows."):COMPOUND_STRING("A: Choose  B: Forfeit (no refund)"),4,133);
     }else if(g->game==3){
         end=StringCopy(text,COMPOUND_STRING("Prompt "));Number(end,g->question+1);Print(text,4,28);
         end=StringCopy(text,COMPOUND_STRING("Hits: "));Number(end,g->correct);Print(text,130,28);
@@ -198,11 +228,12 @@ static void Task_NewGames(u8 taskId)
         }return;
     }
     if(g->game==2){
+        if(g->delay){if(--g->delay%6==0)DrawGame();return;}
         if(JOY_NEW(DPAD_LEFT|DPAD_RIGHT|DPAD_UP|DPAD_DOWN)){g->cursor^=1;DrawGame();}
         if(JOY_NEW(A_BUTTON)){
             if(g->cursor==1){if(g->draws)FinishGame(ChaosArcadeRiskBank(g->draws));return;}
             if(Random()%5==0){g->feedback=0;FinishGame(0);return;}
-            if(++g->draws==5){FinishGame(300);return;}DrawGame();
+            if(++g->draws==5){FinishGame(300);return;}g->delay=24;DrawGame();
         }return;
     }
     if(g->delay){
