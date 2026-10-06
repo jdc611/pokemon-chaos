@@ -102,3 +102,19 @@ for theme in ['midnight','rocket']:
  im=Image.open(root/f'graphics/pokenav/region_map/map_kanto_{theme}.png')
  assert im.tobytes()==Image.open(root/'graphics/pokenav/region_map/map_kanto.png').tobytes()
 print('PASS furniture collision/layer coverage and clean native chart geometry without grid or star artifacts.')
+
+# Decode shipped affine charts and verify complete land-route bands.
+import runpy
+shipped=Image.open(root/'graphics/pokenav/region_map/map_kanto.png')
+chart=Image.new('P',(512,512))
+for i,t in enumerate((root/'graphics/pokenav/region_map/map_kanto.bin').read_bytes()):
+ assert t//16*8 < shipped.height
+ chart.paste(shipped.crop((t%16*8,t//16*8,t%16*8+8,t//16*8+8)),(i%64*8,i//64*8))
+chart_data=runpy.run_path(str(root/'.github/scripts/clean_chaos_kanto_chart.py'))
+original=chart_data['original']; mask=chart_data['mask']
+assert all(chart.getpixel(pos) not in chart_data['terrain'] for pos in mask)
+assert all(chart.getpixel((x,y))==original.getpixel((x,y))
+           for y in range(160) for x in range(240) if (x,y) not in mask)
+assert all(chart.getpixel(pos)==original.getpixel(pos) for pos in mask
+           if original.getpixel(pos) not in chart_data['terrain'])
+print('PASS continuous route bands; original markers, road shading and surrounding terrain preserved.')

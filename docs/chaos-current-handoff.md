@@ -2,6 +2,13 @@
 
 Repository: jdc611/pokemon-chaos. Branch: master. Continue from actual current master; preserve existing systems and locked custom trainer rosters.
 
+## Latest changes — PokeRider route gaps (October 5)
+
+- Fixed background cutting gaps into the gold/red land-route bands. This is an artwork correction, not a destination/cursor change. All three Kanto charts share the repair.
+- Keep original road shading and every native city/Center marker pixel; fill terrain-colored holes only within the actual logical land-route cells. Surrounding terrain, sea routes and destination coordinates stay unchanged.
+- Immutable `map_kanto_source.png/.bin` retain the original atlas/map. Run `.github/scripts/clean_chaos_kanto_chart.py` before the cosmetics generator when rebuilding chart assets. The affine map uses one-byte tile IDs, not 16-bit entries.
+- Native emulator verified Classic, Midnight and Rocket charts, cursor movement and closing. Host regression decodes route cells and checks continuity plus preservation outside the route mask. Native build passes.
+
 ## Latest changes — Chaos Arcade polish (October 5)
 
 - Rocket Risk explains that drawing VOLTORB loses the round's unbanked winnings, BANK keeps the current haul, and five safe draws award 300 Coins. The live screen retains an explicit "Avoid VOLTORB!" reminder. Existing fee, odds, bank amounts and cap-safe payment remain unchanged.
