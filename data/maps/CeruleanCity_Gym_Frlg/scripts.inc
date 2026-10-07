@@ -167,6 +167,8 @@ CeruleanCity_Gym_Text_GymStatuePlayerWon::
 
 CeruleanCity_Gym_EventScript_MistyChaosRematch::
 	trainerbattle_single TRAINER_LEADER_MISTY_REMATCH, Text_ChaosRematchIntro, Text_ChaosRematchDefeat, CeruleanCity_Gym_EventScript_MistyChaosRematchWon, NO_MUSIC
+	setvar VAR_0x8004, 1
+	call EventScript_ChaosClaimGymStone
 	msgbox Text_ChaosRematchAlreadyWon
 	release
 	end
@@ -174,6 +176,8 @@ CeruleanCity_Gym_EventScript_MistyChaosRematch::
 CeruleanCity_Gym_EventScript_MistyChaosRematchWon::
 	setvar VAR_0x8004, 2
 	special ChaosMarkGymRematch
+	setvar VAR_0x8004, 1
+	call EventScript_ChaosClaimGymStone
 	msgbox Text_ChaosRematchWon
 	release
 	end

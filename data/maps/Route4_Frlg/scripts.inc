@@ -114,7 +114,8 @@ EventScript_ChaosMtMoonRockets::
 	specialvar VAR_RESULT, CountPartyAliveNonEggMons
 	goto_if_lt VAR_RESULT, 2, EventScript_ChaosMoonNeedTwo
 	msgbox Text_ChaosMoonRocketIntro
-	trainerbattle_two_trainers TRAINER_CHAOS_JESSIE_MOON, Text_ChaosJessieDefeat, TRAINER_CHAOS_JAMES_MOON, Text_ChaosJamesDefeat
+	closemessage
+	trainerbattle OBJ_ID_NONE, TRAINER_CHAOS_JESSIE_MOON, NULL, Text_ChaosJessieDefeat, NULL, OBJ_ID_NONE, TRAINER_CHAOS_JAMES_MOON, NULL, Text_ChaosJamesDefeat, NULL, NULL, NULL, TRUE, TRUE, FALSE, FALSE, TRUE, FALSE, FALSE, TRUE
 	settrainerflag TRAINER_CHAOS_JESSIE_MOON
 	settrainerflag TRAINER_CHAOS_JAMES_MOON
 	setvar VAR_TEMP_0, 1

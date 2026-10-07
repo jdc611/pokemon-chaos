@@ -121,62 +121,51 @@ EventScript_ExplosionTaught::
 Route4_EventScript_MegaPunchTutor::
 	lock
 	faceplayer
-.if I_REUSABLE_TMS == FALSE
-	goto_if_set FLAG_TUTOR_MEGA_PUNCH, EventScript_MegaPunchTaught
-.endif
-	msgbox Text_MegaPunchTeach, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, NO, EventScript_MegaPunchDeclined
-	call EventScript_CanOnlyBeLearnedOnce
-	goto_if_eq VAR_RESULT, NO, EventScript_MegaPunchDeclined
-	msgbox Text_MegaPunchWhichMon
-	setvar VAR_0x8005, MOVE_MEGA_PUNCH
-	call EventScript_ChooseMoveTutorMon
-	goto_if_eq VAR_RESULT, FALSE, EventScript_MegaPunchDeclined
-.if I_REUSABLE_TMS == FALSE
+	goto_if_set FLAG_TUTOR_MEGA_PUNCH, EventScript_ChaosMachPunchBanter
+	msgbox Text_ChaosMachPunchIntro
+	checkitemspace ITEM_TM_MACH_PUNCH
+	goto_if_eq VAR_RESULT, FALSE, EventScript_ChaosKarateBagFull
+	giveitem ITEM_TM_MACH_PUNCH
 	setflag FLAG_TUTOR_MEGA_PUNCH
-.endif
-	goto EventScript_MegaPunchTaught
-	end
-
-EventScript_MegaPunchDeclined::
-	msgbox Text_MegaPunchDeclined
-	release
-	end
-
-EventScript_MegaPunchTaught::
-	msgbox Text_MegaPunchTaught
+EventScript_ChaosMachPunchBanter::
+	msgbox Text_ChaosMachPunchBanter
 	release
 	end
 
 Route4_EventScript_MegaKickTutor::
 	lock
 	faceplayer
-.if I_REUSABLE_TMS == FALSE
-	goto_if_set FLAG_TUTOR_MEGA_KICK, EventScript_MegaKickTaught
-.endif
-	msgbox Text_MegaKickTeach, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, NO, EventScript_MegaKickDeclined
-	call EventScript_CanOnlyBeLearnedOnce
-	goto_if_eq VAR_RESULT, NO, EventScript_MegaKickDeclined
-	msgbox Text_MegaKickWhichMon
-	setvar VAR_0x8005, MOVE_MEGA_KICK
-	call EventScript_ChooseMoveTutorMon
-	goto_if_eq VAR_RESULT, FALSE, EventScript_MegaKickDeclined
-.if I_REUSABLE_TMS == FALSE
+	goto_if_set FLAG_TUTOR_MEGA_KICK, EventScript_ChaosVacuumWaveBanter
+	msgbox Text_ChaosVacuumWaveIntro
+	checkitemspace ITEM_TM_VACUUM_WAVE
+	goto_if_eq VAR_RESULT, FALSE, EventScript_ChaosKarateBagFull
+	giveitem ITEM_TM_VACUUM_WAVE
 	setflag FLAG_TUTOR_MEGA_KICK
-.endif
-	goto EventScript_MegaKickTaught
-	end
-
-EventScript_MegaKickDeclined::
-	msgbox Text_MegaKickDeclined
+EventScript_ChaosVacuumWaveBanter::
+	msgbox Text_ChaosVacuumWaveBanter
 	release
 	end
 
-EventScript_MegaKickTaught::
-	msgbox Text_MegaKickTaught
+EventScript_ChaosKarateBagFull::
+	msgbox Text_ChaosKarateBagFull
 	release
 	end
+
+Text_ChaosMachPunchIntro::
+	.string "A fighter uses FISTS!\nStrike first with MACH PUNCH!\p"
+	.string "Take this reusable TM.\nThe first punch is on me!$"
+Text_ChaosMachPunchBanter::
+	.string "Special attacks? In a FIGHTING\ndojo? Ridiculous!\p"
+	.string "My neighbor says shouting won't\nraise my Special Attack. Hmph!$"
+Text_ChaosVacuumWaveIntro::
+	.string "A true master strikes without\ntouching the opponent!\p"
+	.string "Try VACUUM WAVE. This reusable\nTM puts technique before fists!$"
+Text_ChaosVacuumWaveBanter::
+	.string "My neighbor keeps shouting.\nPerhaps his Special Attack will rise.\p"
+	.string "...No, it doesn't work that way.\nPlease don't tell him I said that.$"
+Text_ChaosKarateBagFull::
+	.string "Make room for my TM first!$"
+
 
 EventScript_DreamEaterTutor::
 	lock
@@ -575,5 +564,5 @@ Movement_JumpInPlaceRight:
 	step_end
 
 Text_MoveCanOnlyBeLearnedOnce::
-	.string "This move can be learned only\n"
-	.string "once. Is that okay?$"
+	.string "You can return for another lesson.\n"
+	.string "Would you like to learn this move?$"

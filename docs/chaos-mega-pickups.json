@@ -1,0 +1,107 @@
+[
+  {
+    "map": "DiglettsCave_B1F_Frlg",
+    "stone": "EXCADRITE",
+    "x": 42,
+    "y": 41,
+    "flag": "0x4e0"
+  },
+  {
+    "map": "Route16_Frlg",
+    "stone": "STARAPTITE",
+    "x": 14,
+    "y": 7,
+    "flag": "0x4e1"
+  },
+  {
+    "map": "PowerPlant_Frlg",
+    "stone": "AMPHAROSITE",
+    "x": 46,
+    "y": 38,
+    "flag": "0x4e2"
+  },
+  {
+    "map": "SeafoamIslands_B3F_Frlg",
+    "stone": "GLALITITE",
+    "x": 13,
+    "y": 17,
+    "flag": "0x4e3"
+  },
+  {
+    "map": "SeafoamIslands_B4F_Frlg",
+    "stone": "FROSLASSITE",
+    "x": 22,
+    "y": 20,
+    "flag": "0x4e4"
+  },
+  {
+    "map": "VictoryRoad_2F_Frlg",
+    "stone": "TYRANITARITE",
+    "x": 25,
+    "y": 14,
+    "flag": "0x4e5"
+  },
+  {
+    "map": "VictoryRoad_3F_Frlg",
+    "stone": "SALAMENCITE",
+    "x": 12,
+    "y": 8,
+    "flag": "0x4e6"
+  },
+  {
+    "map": "SilphCo_11F_Frlg",
+    "stone": "METAGROSSITE",
+    "x": 15,
+    "y": 18,
+    "flag": "0x4e7"
+  },
+  {
+    "map": "PokemonTower_7F_Frlg",
+    "stone": "GENGARITE",
+    "x": 9,
+    "y": 11,
+    "flag": "0x4e8"
+  },
+  {
+    "map": "FiveIsland_LostCave_Room1_Frlg",
+    "stone": "BANETTITE",
+    "x": 5,
+    "y": 5,
+    "flag": "0x4e9"
+  },
+  {
+    "map": "PokemonMansion_B1F_Frlg",
+    "stone": "CAMERUPTITE",
+    "x": 2,
+    "y": 30,
+    "flag": "0x4ea"
+  },
+  {
+    "map": "SafariZone_Center_Frlg",
+    "stone": "SCEPTILITE",
+    "x": 24,
+    "y": 16,
+    "flag": "0x4eb"
+  },
+  {
+    "map": "SSAnne_CaptainsOffice_Frlg",
+    "stone": "PIDGEOTITE",
+    "x": 7,
+    "y": 5,
+    "flag": "0x4ec"
+  },
+  {
+    "map": "RocketHideout_B4F_Frlg",
+    "stone": "HOUNDOOMINITE",
+    "x": 1,
+    "y": 7,
+    "flag": "0x4ed"
+  },
+  {
+    "map": "CeladonCity_Frlg",
+    "stone": "VENUSAURITE",
+    "x": 6,
+    "y": 31,
+    "flag": "0x4ee"
+  }
+]

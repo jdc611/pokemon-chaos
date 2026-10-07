@@ -1,0 +1,8 @@
+PASS native usable city habitat / unique named-area first encounter ViridianCity_Frlg 187
+PASS native usable city habitat / unique named-area first encounter PewterCity_Frlg 438
+PASS native missing rod feedback EventScript_FishOldRod
+PASS native missing rod feedback EventScript_FishGoodRod
+PASS native missing rod feedback EventScript_FishSuperRod
+PASS native karate TM award / saved one-time receipt Route4_EventScript_MegaPunchTutor 649
+PASS native karate TM award / saved one-time receipt Route4_EventScript_MegaKickTutor 650
+PASS native Oak starter + five Balls immediately.

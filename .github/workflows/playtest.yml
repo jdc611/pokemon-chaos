@@ -74,6 +74,7 @@ jobs:
           python3 .github/scripts/check_chaos_starter_ability.py
           python3 .github/scripts/check_chaos_abilities.py
           python3 .github/scripts/check_chaos_ranch.py
+          python3 .github/scripts/check_chaos_stabilization.py
 
       - name: Build native FireRed target
         run: |

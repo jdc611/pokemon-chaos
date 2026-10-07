@@ -1,4 +1,5 @@
 #include "global.h"
+#include "chaos_records.h"
 #include "malloc.h"
 #include "bg.h"
 #include "data.h"
@@ -9567,14 +9568,14 @@ static void SpriteCB_ItemIcon_HideParty(struct Sprite *sprite)
 
 bool8 Nuzlocke_IsGraveBox(u8 boxId)
 {
-    return gSaveBlock3Ptr->runDifficulty == RUN_DIFFICULTY_NUZLOCKE
+    return IsNuzlockeRun()
         && boxId == NUZLOCKE_GRAVE_BOX;
 }
 
 void Nuzlocke_InitializeGraveBox(void)
 {
     static const u8 sGraveName[] = _("GRAVE");
-    if (gSaveBlock3Ptr->runDifficulty == RUN_DIFFICULTY_NUZLOCKE)
+    if (IsNuzlockeRun())
         StringCopy(gPokemonStoragePtr->boxNames[NUZLOCKE_GRAVE_BOX], sGraveName);
 }
 
@@ -9583,7 +9584,7 @@ bool8 Nuzlocke_ProcessBattleDeaths(void)
     s32 i;
     bool8 movedAny = FALSE;
 
-    if (gSaveBlock3Ptr->runDifficulty != RUN_DIFFICULTY_NUZLOCKE)
+    if (!IsNuzlockeRun())
         return FALSE;
 
     Nuzlocke_InitializeGraveBox();
@@ -9600,6 +9601,8 @@ bool8 Nuzlocke_ProcessBattleDeaths(void)
             if (gravePos < 0)
                 continue;
 
+            ChaosEnsureRunRecords();
+            gSaveBlock3Ptr->runCounters[7]++;
             SetBoxMonAt(NUZLOCKE_GRAVE_BOX, gravePos, &gParties[B_TRAINER_PLAYER][i].box);
             ZeroMonData(&gParties[B_TRAINER_PLAYER][i]);
             movedAny = TRUE;
@@ -9618,7 +9621,7 @@ bool8 Nuzlocke_HasLivingPokemon(void)
 {
     u32 i, box, pos;
 
-    if (gSaveBlock3Ptr->runDifficulty != RUN_DIFFICULTY_NUZLOCKE)
+    if (!IsNuzlockeRun())
         return TRUE;
 
     for (i = 0; i < PARTY_SIZE; i++)
@@ -9647,7 +9650,7 @@ bool8 Nuzlocke_RebuildPartyFromStorage(void)
 {
     u32 box, pos;
 
-    if (gSaveBlock3Ptr->runDifficulty != RUN_DIFFICULTY_NUZLOCKE)
+    if (!IsNuzlockeRun())
         return FALSE;
 
     Nuzlocke_ProcessBattleDeaths();

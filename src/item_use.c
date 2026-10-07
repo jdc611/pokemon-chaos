@@ -1,6 +1,7 @@
 #include "global.h"
 #include "item_use.h"
 #include "battle.h"
+#include "battle_setup.h"
 #include "challenge_reset.h"
 #include "battle_anim.h"
 #include "battle_stat_change.h"
@@ -1139,8 +1140,7 @@ static u32 GetBallThrowableState(void)
         return BALL_THROW_UNABLE_SEMI_INVULNERABLE;
     else if (FlagGet(WE_FLAG_NO_CATCHING) || !IsAllowedToUseBag())
         return BALL_THROW_UNABLE_DISABLED_FLAG;
-    else if (gSaveBlock3Ptr->runDifficulty == RUN_DIFFICULTY_NUZLOCKE
-          && !gSaveBlock3Ptr->nuzlockeCurrentEncounterCatchable)
+    else if (!NuzlockeCanCatchMon(GetBattlerMon(GetCatchingBattler())))
         return BALL_THROW_UNABLE_NUZLOCKE_ENCOUNTER_USED;
 
     return BALL_THROW_ABLE;

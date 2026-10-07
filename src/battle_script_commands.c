@@ -1,4 +1,5 @@
 #include "global.h"
+#include "chaos_records.h"
 #include "chaos_abilities.h"
 #include "chaos_mega.h"
 #include "battle.h"
@@ -1038,6 +1039,7 @@ static void Cmd_printattackstring(void)
     if (gBattleControllerExecFlags)
         return;
 
+    ChaosRecordMove();
     PrepareStringBattle(STRINGID_USEDMOVE, gBattlerAttacker);
     gBattleCommunication[MSG_DISPLAY] = MSG_DISPLAY_CONTINUE;
     gBattlescriptCurrInstr = cmd->nextInstr;
@@ -1264,6 +1266,11 @@ static void Cmd_critmessage(void)
     {
         if (gSpecialStatuses[gBattlerTarget].criticalHit && !IsBattlerUnaffectedByMove(gBattlerTarget))
         {
+            if (GetBattlerSide(gBattlerAttacker) == B_SIDE_PLAYER)
+            {
+                ChaosEnsureRunRecords();
+                gSaveBlock3Ptr->runCounters[8]++;
+            }
             if (IsDoubleSpreadMove())
                 PrepareStringBattleWithWait(STRINGID_CRITICALHITONDEF, gBattlerTarget);
             else
@@ -1696,6 +1703,11 @@ void TrySynchronizeActivation(enum BattlerId battlerAtk, enum BattlerId effectBa
 void SetNonVolatileStatus(enum BattlerId battlerAtk, enum BattlerId effectBattler, enum MoveEffect effect, const u8 *battleScript, enum StatusTrigger trigger)
 {
     gEffectBattler = effectBattler;
+    if (GetBattlerSide(battlerAtk) == B_SIDE_PLAYER && GetBattlerSide(effectBattler) == B_SIDE_OPPONENT)
+    {
+        ChaosEnsureRunRecords();
+        gSaveBlock3Ptr->runCounters[10]++;
+    }
 
     if (effect == MOVE_EFFECT_SLEEP || effect == MOVE_EFFECT_FREEZE)
         CancelMultiTurnMoves(effectBattler);
@@ -8164,7 +8176,7 @@ static void SetBallThrowShakes(void)
 {
     gBallToDisplay = gLastThrownBall = gLastUsedItem;
 
-    u32 odds = ComputeCaptureOdds(gBattlerTarget, gBattlerAttacker);
+    u32 odds = VarGet(VAR_CHAOS_EZ_CATCH) ? 255 : ComputeCaptureOdds(gBattlerTarget, gBattlerAttacker);
     if (gTestRunnerEnabled)
         TestRunner_Battle_RecordCatchChance(odds);
 
@@ -8255,9 +8267,7 @@ static void Cmd_handleballthrow(void)
         MarkBattlerForControllerExec(gBattlerAttacker);
         gBattlescriptCurrInstr = BattleScript_WallyBallThrow;
     }
-    else if (gSaveBlock3Ptr->runDifficulty == RUN_DIFFICULTY_NUZLOCKE
-          && !(gBattleTypeFlags & (BATTLE_TYPE_LEGENDARY | BATTLE_TYPE_ROAMER))
-          && !gSaveBlock3Ptr->nuzlockeCurrentEncounterCatchable)
+    else if (FlagGet(WE_FLAG_NO_CATCHING) || !NuzlockeCanCatchMon(GetBattlerMon(GetCatchingBattler())))
     {
         // This ordinary wild battle began after the named area's encounter was
         // already spent. Shiny/duplicate exemptions were resolved at battle
@@ -8422,6 +8432,8 @@ static void Cmd_givecaughtmon(void)
             gBattleStruct->partyState[B_SIDE_PLAYER][emptySlot].changedSpecies = GetBattlerPartyState(GetCatchingBattler())->changedSpecies;
 
         gBattleResults.caughtMonSpecies = GetMonData(caughtMon, MON_DATA_SPECIES);
+        NuzlockeRecordCapture(caughtMon);
+        if (IsMonShiny(caughtMon)) gSaveBlock3Ptr->runCounters[6]++;
         GetMonData(caughtMon, MON_DATA_NICKNAME, gBattleResults.caughtMonNick);
         gBattleResults.caughtMonBall = GetMonData(caughtMon, MON_DATA_POKEBALL);
 

@@ -2,6 +2,7 @@ ViridianCity_Gym_Frlg_MapScripts::
 	.byte 0
 
 ViridianCity_Gym_EventScript_Giovanni::
+	call_if_set FLAG_BADGE08_GET, ViridianCity_Gym_EventScript_ClaimChaosStone
 	famechecker FAMECHECKER_GIOVANNI, FCPICKSTATE_COLORED, UpdatePickStateFromSpecialVar8005
 	trainerbattle_single TRAINER_LEADER_GIOVANNI, ViridianCity_Gym_Text_GiovanniIntro, ViridianCity_Gym_Text_GiovanniDefeat, ViridianCity_Gym_EventScript_DefeatedGiovanni, NO_MUSIC
 	goto_if_unset FLAG_GOT_TM26_FROM_GIOVANNI, ViridianCity_Gym_EventScript_GiveTM26
@@ -18,6 +19,8 @@ ViridianCity_Gym_EventScript_DefeatedGiovanni::
 	setflag FLAG_HIDE_MISC_KANTO_ROCKETS
 	setflag FLAG_DEFEATED_LEADER_GIOVANNI
 	setflag FLAG_BADGE08_GET
+	setvar VAR_0x8004, 5
+	call EventScript_ChaosClaimGymStone
 	setvar VAR_MAP_SCENE_ROUTE22, 3
 	set_gym_trainers_frlg 8
 	goto ViridianCity_Gym_EventScript_GiveTM26
@@ -275,3 +278,8 @@ ViridianCity_Gym_Text_GymStatuePlayerWon::
 	.string "WINNING TRAINERS:\n"
 	.string "{RIVAL}, {PLAYER}$"
 
+
+ViridianCity_Gym_EventScript_ClaimChaosStone::
+	setvar VAR_0x8004, 5
+	call EventScript_ChaosClaimGymStone
+	return

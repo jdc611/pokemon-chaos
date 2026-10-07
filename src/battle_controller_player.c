@@ -2624,20 +2624,32 @@ static u32 CheckTypeEffectiveness(enum BattlerId battlerAtk, enum BattlerId batt
 
 static u32 CheckTargetTypeEffectiveness(enum BattlerId battler)
 {
-    enum BattlerId battlerFoe = GetOppositeBattler(battler);
-    u32 foeEffectiveness = CheckTypeEffectiveness(battler, battlerFoe);
+    enum BattlerId foe = GetOppositeBattler(battler);
+    if (!IsBattlerAlive(foe) && IsDoubleBattle()) foe = GetPartnerBattler(foe);
+    return CheckTypeEffectiveness(battler, foe);
+}
 
-    if (IsDoubleBattle())
+static const u8 *ChaosEffectivenessHint(u32 effectiveness, bool32 right)
+{
+    switch (effectiveness)
     {
-        enum BattlerId partnerFoe = GetPartnerBattler(battlerFoe);
-        u32 partnerFoeEffectiveness = CheckTypeEffectiveness(battler, partnerFoe);
-        if (!IsBattlerAlive(battlerFoe))
-            return partnerFoeEffectiveness;
-        if (IsBattlerAlive(battlerFoe) && IsBattlerAlive(partnerFoe)
-         && partnerFoeEffectiveness > foeEffectiveness)
-            return partnerFoeEffectiveness;
+    case EFFECTIVENESS_EXTREMELY_EFFECTIVE:
+    case EFFECTIVENESS_SUPER_EFFECTIVE:
+        return right ? COMPOUND_STRING("{COLOR GREEN}{UP_ARROW}") : COMPOUND_STRING("{COLOR DYNAMIC_COLOR1}{UP_ARROW}");
+    case EFFECTIVENESS_NOT_VERY_EFFECTIVE:
+    case EFFECTIVENESS_MOSTLY_INEFFECTIVE:
+        return right ? COMPOUND_STRING("{COLOR GREEN}{DOWN_ARROW}") : COMPOUND_STRING("{COLOR DYNAMIC_COLOR1}{DOWN_ARROW}");
+    case EFFECTIVENESS_NO_EFFECT:
+        return right ? COMPOUND_STRING("{COLOR GREEN}X") : COMPOUND_STRING("{COLOR DYNAMIC_COLOR1}X");
+    case EFFECTIVENESS_CANNOT_VIEW: return COMPOUND_STRING("?");
+    default: return COMPOUND_STRING("-");
     }
-    return foeEffectiveness; // fallthrough for any other circumstance
+}
+static u16 ChaosHintColor(u32 effect)
+{
+    if (effect == EFFECTIVENESS_NO_EFFECT) return RGB(31, 0, 0);
+    if (effect >= EFFECTIVENESS_SUPER_EFFECTIVE) return RGB(0,31,0);
+    return RGB(31,24,0);
 }
 
 static void MoveSelectionDisplayMoveEffectiveness(u32 foeEffectiveness, enum BattlerId battler)
@@ -2651,6 +2663,27 @@ static void MoveSelectionDisplayMoveEffectiveness(u32 foeEffectiveness, enum Bat
     static const u8 immuneIcon[] =  _("{COLOR DYNAMIC_COLOR1}X");
     struct ChooseMoveStruct *moveInfo = (struct ChooseMoveStruct *)(&gBattleResources->bufferA[battler][4]);
     u8 *txtPtr;
+
+    enum MoveTarget target = GetBattlerMoveTargetType(battler, moveInfo->moves[gMoveSelectionCursor[battler]]);
+    if (IsDoubleBattle() && (target == TARGET_BOTH || target == TARGET_FOES_AND_ALLY)
+     && !IsBattleMoveStatus(moveInfo->moves[gMoveSelectionCursor[battler]]))
+    {
+        enum BattlerId left = GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT);
+        enum BattlerId right = GetBattlerAtPosition(B_POSITION_OPPONENT_RIGHT);
+        u32 l = IsBattlerAlive(left) ? CheckTypeEffectiveness(battler, left) : EFFECTIVENESS_CANNOT_VIEW;
+        u32 r = IsBattlerAlive(right) ? CheckTypeEffectiveness(battler, right) : EFFECTIVENESS_CANNOT_VIEW;
+        // The PP caption is 32 pixels wide: two arrows in screen order fit.
+        StringCopy(gDisplayedStringBattle, ChaosEffectivenessHint(l, FALSE));
+        StringAppend(gDisplayedStringBattle, COMPOUND_STRING(" "));
+        StringAppend(gDisplayedStringBattle, ChaosEffectivenessHint(r, TRUE));
+        u16 colors[2] = {ChaosHintColor(l), ChaosHintColor(r)};
+        u32 palette = GetWindowAttribute(B_WIN_PP, WINDOW_PALETTE_NUM);
+        LoadPalette(&colors[0], BG_PLTT_ID(palette) + TEXT_DYNAMIC_COLOR_1, 2);
+        // PP number shading owns palette slots 11/12; reserve slot 6 for the right hint.
+        LoadPalette(&colors[1], BG_PLTT_ID(palette) + TEXT_COLOR_GREEN, 2);
+        BattlePutTextOnWindow(gDisplayedStringBattle, B_WIN_PP);
+        return;
+    }
 
     txtPtr = StringCopy(gDisplayedStringBattle, gText_MoveInterfacePP);
 

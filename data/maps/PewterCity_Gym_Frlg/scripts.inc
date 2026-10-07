@@ -128,7 +128,8 @@ PewterCity_Gym_Text_ExplainTM39::
 	.string "technique for POKéMON.\p"
 	.string "Using a TM teaches the move it\n"
 	.string "contains to a POKéMON.\p"
-	.string "A TM is good for only one use.\p"
+	.string "You can reuse a TM as often\n"
+	.string "as you like.\p"
 	.string "So, when you use one, pick the\n"
 	.string "POKéMON carefully.\p"
 	.string "Anyways…\n"
@@ -206,6 +207,8 @@ PewterCity_Gym_Text_GymStatuePlayerWon::
 
 PewterCity_Gym_EventScript_BrockChaosRematch::
 	trainerbattle_single TRAINER_LEADER_BROCK_REMATCH, Text_ChaosRematchIntro, Text_ChaosRematchDefeat, PewterCity_Gym_EventScript_BrockChaosRematchWon, NO_MUSIC
+	setvar VAR_0x8004, 0
+	call EventScript_ChaosClaimGymStone
 	msgbox Text_ChaosRematchAlreadyWon
 	release
 	end
@@ -213,6 +216,8 @@ PewterCity_Gym_EventScript_BrockChaosRematch::
 PewterCity_Gym_EventScript_BrockChaosRematchWon::
 	setvar VAR_0x8004, 1
 	special ChaosMarkGymRematch
+	setvar VAR_0x8004, 0
+	call EventScript_ChaosClaimGymStone
 	msgbox Text_ChaosRematchWon
 	release
 	end

@@ -1,4 +1,5 @@
 #include "global.h"
+#include "chaos_records.h"
 #include "data.h"
 #include "main.h"
 #include "battle.h"
@@ -104,10 +105,65 @@ EWRAM_DATA TrainerBattleParameter gTrainerBattleParameter = {0};
 EWRAM_DATA u16 gPartnerTrainerId = 0;
 EWRAM_DATA static u8 *sTrainerBattleEndScript = NULL;
 
+EWRAM_DATA static u16 sNuzlockeFamily[NUM_SPECIES];
+EWRAM_DATA static bool8 sNuzlockeFamiliesReady;
+EWRAM_DATA static s16 sNuzlockeEligibleSection;
+
+static u16 NuzlockeFamilyRoot(u16 species)
+{
+    while (sNuzlockeFamily[species] != species)
+    {
+        sNuzlockeFamily[species] = sNuzlockeFamily[sNuzlockeFamily[species]];
+        species = sNuzlockeFamily[species];
+    }
+    return species;
+}
+
+static void NuzlockeBuildFamilies(void)
+{
+    if (sNuzlockeFamiliesReady) return;
+    for (u32 i = 0; i < NUM_SPECIES; i++) sNuzlockeFamily[i] = i;
+    for (u32 i = 1; i < NUM_SPECIES; i++)
+    {
+        if (!IsSpeciesEnabled(i)) continue;
+        u16 dex = SpeciesToNationalPokedexNum(i);
+        u16 canonical = NationalPokedexNumToSpecies(dex);
+        if (canonical > 0 && canonical < NUM_SPECIES)
+            sNuzlockeFamily[NuzlockeFamilyRoot(i)] = NuzlockeFamilyRoot(canonical);
+        const struct Evolution *evo = GetSpeciesEvolutions(i);
+        for (u32 j = 0; evo != NULL && evo[j].method != EVOLUTIONS_END; j++)
+            if (evo[j].targetSpecies > 0 && evo[j].targetSpecies < NUM_SPECIES)
+                sNuzlockeFamily[NuzlockeFamilyRoot(evo[j].targetSpecies)] = NuzlockeFamilyRoot(i);
+    }
+    sNuzlockeFamiliesReady = TRUE;
+}
+
 static bool8 NuzlockeSpeciesWasCaught(enum Species species)
 {
-    enum NationalDexOrder dexNum = SpeciesToNationalPokedexNum(species);
-    return dexNum != NATIONAL_DEX_NONE && GetSetPokedexFlag(dexNum, FLAG_GET_CAUGHT);
+    NuzlockeBuildFamilies();
+    u16 family = NuzlockeFamilyRoot(species);
+    for (u32 i = 1; i < NUM_SPECIES; i++)
+    {
+        if (IsSpeciesEnabled(i) && NuzlockeFamilyRoot(i) == family)
+        {
+            enum NationalDexOrder dexNum = SpeciesToNationalPokedexNum(i);
+            if (dexNum != NATIONAL_DEX_NONE && GetSetPokedexFlag(dexNum, FLAG_GET_CAUGHT)) return TRUE;
+        }
+    }
+    // Starter/gifts may precede the Dex. Actual owned boxed/party Pokémon
+    // count even before their caught flag becomes visible.
+    for (u32 i = 0; i < PARTY_SIZE; i++)
+    {
+        u16 owned = GetMonData(&gParties[B_TRAINER_PLAYER][i], MON_DATA_SPECIES);
+        if (owned > 0 && owned < NUM_SPECIES && NuzlockeFamilyRoot(owned) == family) return TRUE;
+    }
+    for (u32 box = 0; box < TOTAL_BOXES_COUNT; box++)
+        for (u32 slot = 0; slot < IN_BOX_COUNT; slot++)
+        {
+            u16 owned = GetBoxMonDataAt(box, slot, MON_DATA_SPECIES);
+            if (owned > 0 && owned < NUM_SPECIES && NuzlockeFamilyRoot(owned) == family) return TRUE;
+        }
+    return FALSE;
 }
 
 static bool8 NuzlockeMonIsShiny(struct Pokemon *mon)
@@ -134,32 +190,44 @@ static void NuzlockeMarkAreaEncounterUsed(void)
         gSaveBlock3Ptr->nuzlockeEncounterUsed[section >> 3] |= 1 << (section & 7);
 }
 
-static void NuzlockeAccountStandardEncounter(void)
+static void NuzlockeAccountStandardEncounter(bool32 isDouble)
 {
     enum Species species;
 
-    // Default open outside Nuzlocke. Scripted/static battles never call this
-    // helper, so their normal capture behavior is unchanged.
+    // All legal wild entry paths share the named-area allowance.
+    ChaosEnsureRunRecords();
+    sNuzlockeEligibleSection = -1;
     gSaveBlock3Ptr->nuzlockeCurrentEncounterCatchable = TRUE;
-    if (gSaveBlock3Ptr->runDifficulty != RUN_DIFFICULTY_NUZLOCKE)
-        return;
-
-    species = GetMonData(&gParties[B_TRAINER_OPPONENT_A][0], MON_DATA_SPECIES);
-    if (species == SPECIES_NONE)
-        return;
-
-    // Shiny Clause is always free and catchable, regardless of area state.
-    if (NuzlockeMonIsShiny(&gParties[B_TRAINER_OPPONENT_A][0]))
-        return;
-
-    // Species Clause makes a previously caught species a skippable encounter,
-    // not a free extra catch. It does not spend an unused area's encounter,
-    // but the duplicate itself cannot be caught.
-    if (NuzlockeSpeciesWasCaught(species))
+    for (u32 slot = 0; slot < (isDouble ? 2 : 1); slot++)
     {
-        gSaveBlock3Ptr->nuzlockeCurrentEncounterCatchable = FALSE;
-        return;
+        struct Pokemon *mon = &gParties[B_TRAINER_OPPONENT_A][slot];
+        if (GetMonData(mon, MON_DATA_SPECIES) != SPECIES_NONE)
+        {
+            gSaveBlock3Ptr->runCounters[2]++;
+            if (NuzlockeMonIsShiny(mon)) gSaveBlock3Ptr->runCounters[5]++;
+        }
     }
+    if (!IsNuzlockeRun())
+        return;
+
+    gSaveBlock3Ptr->nuzlockeCurrentEncounterCatchable = FALSE;
+    if (FlagGet(WE_FLAG_NO_CATCHING)) return;
+    species = SPECIES_NONE;
+    for (u32 slot = 0; slot < (isDouble ? 2 : 1); slot++)
+    {
+        struct Pokemon *mon = &gParties[B_TRAINER_OPPONENT_A][slot];
+        enum Species candidate = GetMonData(mon, MON_DATA_SPECIES);
+        if (candidate == SPECIES_NONE || NuzlockeMonIsShiny(mon)) continue;
+        if (NuzlockeSpeciesWasCaught(candidate))
+        {
+            gSaveBlock3Ptr->runCounters[4]++;
+            continue;
+        }
+        species = candidate;
+        break;
+    }
+    if (species == SPECIES_NONE) return;
+    gSaveBlock3Ptr->nuzlockeCurrentEncounterCatchable = TRUE;
 
     // A non-duplicate, non-shiny wild mon is catchable only if this named area
     // still has its encounter. Spend it as soon as that valid battle begins so
@@ -171,6 +239,30 @@ static void NuzlockeAccountStandardEncounter(void)
     }
 
     NuzlockeMarkAreaEncounterUsed();
+    u16 section = gMapHeader.regionMapSectionId;
+    if (section < 256)
+    {
+        sNuzlockeEligibleSection = section;
+        gSaveBlock3Ptr->encounterSpecies[section] = species;
+        gSaveBlock3Ptr->encounterFailed[section >> 3] |= 1 << (section & 7);
+    }
+}
+
+bool32 NuzlockeCanCatchMon(struct Pokemon *mon)
+{
+    if (!IsNuzlockeRun() || NuzlockeMonIsShiny(mon)) return TRUE;
+    return gSaveBlock3Ptr->nuzlockeCurrentEncounterCatchable
+        && !NuzlockeSpeciesWasCaught(GetMonData(mon, MON_DATA_SPECIES));
+}
+void NuzlockeRecordCapture(struct Pokemon *mon)
+{
+    if (sNuzlockeEligibleSection >= 0 && !NuzlockeMonIsShiny(mon))
+    {
+        u16 section = sNuzlockeEligibleSection;
+        gSaveBlock3Ptr->encounterFailed[section >> 3] &= ~(1 << (section & 7));
+        gSaveBlock3Ptr->encounterSpecies[section] = GetMonData(mon, MON_DATA_SPECIES);
+    }
+    sNuzlockeEligibleSection = -1;
 }
 
 EWRAM_DATA static bool8 sShouldCheckTrainerBScript = FALSE;
@@ -449,6 +541,7 @@ void BattleSetup_StartMultiBattle(void)
 
     if (gSpecialVar_0x8005 & MULTI_BATTLE_2_VS_WILD)
     {
+        NuzlockeAccountStandardEncounter(FALSE);
         CreateBattleStartTask(GetWildBattleTransition(), 0);
         IncrementGameStat(GAME_STAT_TOTAL_BATTLES);
         IncrementGameStat(GAME_STAT_WILD_BATTLES);
@@ -469,7 +562,7 @@ void BattleSetup_StartBattlePikeWildBattle(void)
 
 static void DoStandardWildBattle(bool32 isDouble)
 {
-    NuzlockeAccountStandardEncounter();
+    NuzlockeAccountStandardEncounter(isDouble);
     LockPlayerFieldControls();
     FreezeObjectEvents();
     StopPlayerAvatar();
@@ -514,6 +607,7 @@ void DoStandardWildBattle_Debug(void)
 
 void BattleSetup_StartRoamerBattle(void)
 {
+    NuzlockeAccountStandardEncounter(FALSE);
     LockPlayerFieldControls();
     FreezeObjectEvents();
     StopPlayerAvatar();
@@ -597,6 +691,7 @@ void StartOldManTutorialBattle(void)
 
 void BattleSetup_StartScriptedWildBattle(void)
 {
+    NuzlockeAccountStandardEncounter(FALSE);
     LockPlayerFieldControls();
     gMain.savedCallback = CB2_EndScriptedWildBattle;
     gBattleTypeFlags = 0;
@@ -609,6 +704,7 @@ void BattleSetup_StartScriptedWildBattle(void)
 
 void BattleSetup_StartScriptedDoubleWildBattle(void)
 {
+    NuzlockeAccountStandardEncounter(TRUE);
     LockPlayerFieldControls();
     gMain.savedCallback = CB2_EndScriptedWildBattle;
     gBattleTypeFlags = BATTLE_TYPE_DOUBLE;
@@ -640,6 +736,7 @@ void StartMarowakBattle(void)
 
 void BattleSetup_StartLatiBattle(void)
 {
+    NuzlockeAccountStandardEncounter(FALSE);
     LockPlayerFieldControls();
     gMain.savedCallback = CB2_EndScriptedWildBattle;
     gBattleTypeFlags = BATTLE_TYPE_LEGENDARY;
@@ -652,6 +749,7 @@ void BattleSetup_StartLatiBattle(void)
 
 void BattleSetup_StartLegendaryBattle(void)
 {
+    NuzlockeAccountStandardEncounter(FALSE);
     LockPlayerFieldControls();
     gMain.savedCallback = CB2_EndScriptedWildBattle;
     gBattleTypeFlags = BATTLE_TYPE_LEGENDARY;
@@ -694,6 +792,7 @@ void BattleSetup_StartLegendaryBattle(void)
 
 void StartGroudonKyogreBattle(void)
 {
+    NuzlockeAccountStandardEncounter(FALSE);
     LockPlayerFieldControls();
     gMain.savedCallback = CB2_EndScriptedWildBattle;
     gBattleTypeFlags = BATTLE_TYPE_LEGENDARY;
@@ -714,6 +813,7 @@ void StartRegiBattle(void)
     enum BattleTransition transitionId;
     enum Species species;
 
+    NuzlockeAccountStandardEncounter(FALSE);
     LockPlayerFieldControls();
     gMain.savedCallback = CB2_EndScriptedWildBattle;
     gBattleTypeFlags = BATTLE_TYPE_LEGENDARY;
@@ -757,6 +857,8 @@ static void DowngradeBadPoison(void)
 
 static void CB2_EndWildBattle(void)
 {
+    ChaosRecordBattleEnd();
+    sNuzlockeEligibleSection = -1;
     Nuzlocke_ProcessBattleDeaths();
     if (IsPlayerDefeated(gBattleOutcome))
         Nuzlocke_RebuildPartyFromStorage();
@@ -787,6 +889,8 @@ static void CB2_EndWildBattle(void)
 
 static void CB2_EndScriptedWildBattle(void)
 {
+    ChaosRecordBattleEnd();
+    sNuzlockeEligibleSection = -1;
     Nuzlocke_ProcessBattleDeaths();
     if (IsPlayerDefeated(gBattleOutcome))
         Nuzlocke_RebuildPartyFromStorage();
@@ -1677,6 +1781,7 @@ static void HandleBattleVariantEndParty(void)
 
 static void CB2_EndTrainerBattle(void)
 {
+    ChaosRecordBattleEnd();
     ChaosRestoreArcanineChallengeParty();
     ChaosRestoreSilphPartnerParty();
     HandleBattleVariantEndParty();
@@ -1743,6 +1848,7 @@ static void CB2_EndTrainerBattle(void)
 
 static void CB2_EndRematchBattle(void)
 {
+    ChaosRecordBattleEnd();
     Nuzlocke_ProcessBattleDeaths();
     if (IsPlayerDefeated(gBattleOutcome))
         Nuzlocke_RebuildPartyFromStorage();
@@ -1831,6 +1937,8 @@ const u8 *BattleSetup_GetTrainerPostBattleScript(void)
         }
     }
 
+    if (TRAINER_BATTLE_PARAM.continueScript && sTrainerBattleEndScript != NULL)
+        return sTrainerBattleEndScript;
     return EventScript_TryGetTrainerScript;
 }
 

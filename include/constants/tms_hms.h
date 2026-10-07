@@ -68,7 +68,22 @@
     F(ENCORE) \
     F(EARTH_POWER) \
     F(MOONBLAST) \
-    F(AURA_SPHERE)
+    F(AURA_SPHERE) \
+    F(MACH_PUNCH) \
+    F(VACUUM_WAVE) \
+    F(BODY_PRESS) \
+    F(ACROBATICS) \
+    F(KNOCK_OFF) \
+    F(WILD_CHARGE) \
+    F(PSYSHOCK) \
+    F(ELECTRIC_TERRAIN) \
+    F(GRASSY_TERRAIN) \
+    F(MISTY_TERRAIN) \
+    F(DRAINING_KISS) \
+    F(CHILLING_WATER) \
+    F(TRAILBLAZE) \
+    F(FOUL_PLAY) \
+    F(GUNK_SHOT)
 
 #define FOREACH_HM(F) \
     F(CUT) \

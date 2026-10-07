@@ -1,3 +1,13 @@
+# Latest master — October 6 stabilization directive
+
+Completed October 7: all 26 items are in one verified native FireRed playtest build. See [implementation and verification](chaos-stabilization-verification.md) for item-by-item evidence, exact ROM hash, acquisition audits and practical testing limits. All 21 host suites and native integration checks passed. The next full Delta playthrough is the primary balance/progression QA pass.
+
+New independent settings: Nuzlocke, EZ Catch and Care Packages. Normal/Hard AI remains separate. Post-Brock aide gates Train to Cap/Move Relearner; Cerulean rival gates PokéRider. Saved encounter/run/League tracking fits the existing SaveBlock3 reservation. Protected stone rewards are retained, Blaine's approved reward is Pyroarite, and shop/overworld/reward sets are disjoint. Scizorite and Mewtwonite X/Y remain deliberately reserved.
+
+Native harness and text results: `tools/chaos/native/`. Regenerate its states after rebuilding. Continue from current master and preserve this stabilization work. Unfinished late-game story is outside this batch.
+
+---
+
 # Chaos FireRed continuation — Chaos Arcade polish
 
 Authoritative latest design: [October 5 master addendum](chaos-latest-master-addendum.md). Its Chaossal naming, simulator trial, post-Sabrina Nidokingite reveal and reserved story rewards supersede conflicting older directions below. Design requirements are distinct from currently implemented behavior.

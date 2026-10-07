@@ -191,6 +191,9 @@ EWRAM_DATA u8 gRunSetupBstMode;
 EWRAM_DATA u8 gRunSetupAbilityMode;
 EWRAM_DATA bool8 gRunSetupMinimalGrindingMode;
 EWRAM_DATA u8 gRunSetupDifficulty;
+EWRAM_DATA bool8 gRunSetupNuzlocke;
+EWRAM_DATA bool8 gRunSetupEzCatch;
+EWRAM_DATA bool8 gRunSetupCarePackages;
 EWRAM_DATA u8 gRunSetupMovesetMode;
 EWRAM_DATA u8 gRunSetupEvolutionMode;
 EWRAM_DATA bool8 gRunSetupItemRandomization;
@@ -208,6 +211,9 @@ static EWRAM_DATA bool8 sRunSetupEmptySeed;
 static EWRAM_DATA u32 sRunSetupSeed;
 static EWRAM_DATA u8 sRunSetupPage;
 static EWRAM_DATA u8 sRunSetupDifficulty;
+static EWRAM_DATA bool8 sRunSetupNuzlocke;
+static EWRAM_DATA bool8 sRunSetupEzCatch;
+static EWRAM_DATA bool8 sRunSetupCarePackages;
 static EWRAM_DATA bool8 sRunSetupMinimalGrinding;
 static EWRAM_DATA u8 sRunSetupMovesets;
 static EWRAM_DATA u8 sRunSetupEvolutions;
@@ -2072,6 +2078,9 @@ static void RunSetup_ResetDefaults(void)
     sRunSetupEmptySeed = FALSE;
     sRunSetupPage = RUN_SETUP_PAGE_PLAY_STYLE;
     sRunSetupDifficulty = RUN_DIFFICULTY_NORMAL;
+    sRunSetupNuzlocke = FALSE;
+    sRunSetupEzCatch = FALSE;
+    sRunSetupCarePackages = FALSE;
     sRunSetupMinimalGrinding = FALSE;
     sRunSetupMovesets = RUN_MOVESETS_NORMAL;
     sRunSetupEvolutions = RUN_EVOLUTIONS_NORMAL;
@@ -2400,6 +2409,19 @@ static void RunSetup_BuildAbilityChoices(void)
         if (RunSetup_CountEligibleSelection(sRunSetupType, ability, 3) >= 3)
             sRunSetupAbilityChoices[sRunSetupAbilityChoiceCount++] = ability;
     }
+    // Keep Any pinned at index zero; sort all native and Chaos names together.
+    for (u32 i = 2; i < sRunSetupAbilityChoiceCount; i++)
+    {
+        u16 value = sRunSetupAbilityChoices[i];
+        u32 j = i;
+        while (j > 1 && StringCompare(gAbilitiesInfo[value].name,
+                    gAbilitiesInfo[sRunSetupAbilityChoices[j - 1]].name) < 0)
+        {
+            sRunSetupAbilityChoices[j] = sRunSetupAbilityChoices[j - 1];
+            j--;
+        }
+        sRunSetupAbilityChoices[j] = value;
+    }
 }
 
 static void RunSetup_InvalidateSeedFilters(void)
@@ -2609,6 +2631,18 @@ static void RunSetup_DrawConfirmLine(u8 row, u8 y)
         ConvertIntToDecimalStringN(gStringVar1, sRunSetupFinalEligible, STR_CONV_MODE_LEFT_ALIGN, 4);
         value = gStringVar1;
         break;
+    case 12:
+        label = COMPOUND_STRING("Nuzlocke");
+        value = sRunSetupNuzlocke ? sText_RunSetupOn : sText_RunSetupOff;
+        break;
+    case 13:
+        label = COMPOUND_STRING("EZ Catch");
+        value = sRunSetupEzCatch ? sText_RunSetupOn : sText_RunSetupOff;
+        break;
+    case 14:
+        label = COMPOUND_STRING("Care Packages");
+        value = sRunSetupCarePackages ? sText_RunSetupOn : sText_RunSetupOff;
+        break;
     }
 
     AddTextPrinterParameterized3(0, FONT_SMALL, 8, y, sTextColor_Headers, TEXT_SKIP_DRAW, label);
@@ -2643,13 +2677,21 @@ static void RunSetup_Draw(u8 cursor)
         titleX = GetStringCenterAlignXOffset(FONT_NORMAL, sText_RunSetupPlayStyle, 208);
         AddTextPrinterParameterized3(0, FONT_NORMAL, titleX, 3, sTextColor_Headers, TEXT_SKIP_DRAW, sText_RunSetupPlayStyle);
         FillWindowPixelRect(0, PIXEL_FILL(TEXT_DYNAMIC_COLOR_3), 48, 25, 112, 1);
-        AddTextPrinterParameterized3(0, FONT_NORMAL, 12, 42, sTextColor_Headers, TEXT_SKIP_DRAW, sText_RunSetupDifficulty);
-        RunSetup_DrawWideChoice(difficulty, 105, 39, 93, cursor == 0);
-        AddTextPrinterParameterized3(0, FONT_NORMAL, 12, 69, sTextColor_Headers, TEXT_SKIP_DRAW, sText_RunSetupMinimalGrinding);
-        RunSetup_DrawWideChoice(sRunSetupMinimalGrinding ? sText_RunSetupOn : sText_RunSetupOff, 135, 66, 63, cursor == 1);
-        RunSetup_DrawWideChoice(sText_RunSetupNext, 72, 106, 64, cursor == 2);
-        if (cursor < 2)
-            AddTextPrinterParameterized3(0, FONT_NORMAL, 2, 42 + 27 * cursor, sTextColor_Headers, TEXT_SKIP_DRAW, gText_SelectorArrow2);
+        const u8 *labels[] = {sText_RunSetupDifficulty, sText_RunSetupMinimalGrinding,
+            COMPOUND_STRING("NUZLOCKE"), COMPOUND_STRING("EZ CATCH"), COMPOUND_STRING("CARE PACKAGES")};
+        const u8 *values[] = {difficulty, sRunSetupMinimalGrinding ? sText_RunSetupOn : sText_RunSetupOff,
+            sRunSetupNuzlocke ? sText_RunSetupOn : sText_RunSetupOff,
+            sRunSetupEzCatch ? sText_RunSetupOn : sText_RunSetupOff,
+            sRunSetupCarePackages ? sText_RunSetupOn : sText_RunSetupOff};
+        for (u32 row = 0; row < 5; row++)
+        {
+            u8 y = 30 + row * 17;
+            AddTextPrinterParameterized3(0, FONT_SMALL, 10, y + 2, sTextColor_Headers, TEXT_SKIP_DRAW, labels[row]);
+            RunSetup_DrawWideChoice(values[row], 135, y, 63, cursor == row);
+            if (cursor == row)
+                AddTextPrinterParameterized3(0, FONT_NORMAL, 1, y, sTextColor_Headers, TEXT_SKIP_DRAW, gText_SelectorArrow2);
+        }
+        RunSetup_DrawWideChoice(sText_RunSetupNext, 72, 119, 64, cursor == 5);
         PutWindowTilemap(0);
         CopyWindowToVram(0, COPYWIN_FULL);
         return;
@@ -2740,12 +2782,12 @@ static void RunSetup_Draw(u8 cursor)
     {
         u8 row;
 
-        for (row = sRunSetupConfirmScroll; row < sRunSetupConfirmScroll + 5 && row < 12; row++)
+        for (row = sRunSetupConfirmScroll; row < sRunSetupConfirmScroll + 5 && row < 15; row++)
             RunSetup_DrawConfirmLine(row, 31 + 15 * (row - sRunSetupConfirmScroll));
 
         if (sRunSetupConfirmScroll > 0)
             AddTextPrinterParameterized3(0, FONT_SMALL, 198, 29, sTextColor_Headers, TEXT_SKIP_DRAW, sText_RunSetupScrollUp);
-        if (sRunSetupConfirmScroll < 7)
+        if (sRunSetupConfirmScroll < 10)
             AddTextPrinterParameterized3(0, FONT_SMALL, 198, 91, sTextColor_Headers, TEXT_SKIP_DRAW, sText_RunSetupScrollDown);
 
         if (sRunSetupFilter != RUN_FILTER_NONE && sRunSetupFinalEligible <= 5 && cursor == 1)
@@ -2972,25 +3014,23 @@ static void Task_RunSetup_Input(u8 taskId)
 
     if (sRunSetupPage == RUN_SETUP_PAGE_PLAY_STYLE && !sRunSetupConfirm)
     {
-        if (JOY_NEW(DPAD_UP))
-            *cursor = (*cursor + 2) % 3;
-        else if (JOY_NEW(DPAD_DOWN))
-            *cursor = (*cursor + 1) % 3;
-        else if (JOY_NEW(DPAD_LEFT) && *cursor == 0)
-            sRunSetupDifficulty = sRunSetupDifficulty == RUN_DIFFICULTY_EASY ? RUN_DIFFICULTY_NUZLOCKE : sRunSetupDifficulty - 1;
-        else if (JOY_NEW(DPAD_RIGHT) && *cursor == 0)
-            sRunSetupDifficulty = sRunSetupDifficulty == RUN_DIFFICULTY_NUZLOCKE ? RUN_DIFFICULTY_EASY : sRunSetupDifficulty + 1;
-        else if (JOY_NEW(A_BUTTON) && *cursor == 0)
-            sRunSetupDifficulty = sRunSetupDifficulty == RUN_DIFFICULTY_NUZLOCKE ? RUN_DIFFICULTY_EASY : sRunSetupDifficulty + 1;
-        else if (JOY_NEW(DPAD_LEFT | DPAD_RIGHT | A_BUTTON) && *cursor == 1)
-            sRunSetupMinimalGrinding ^= 1;
-        else if (JOY_NEW(A_BUTTON) && *cursor == 2)
+        if (JOY_NEW(DPAD_UP)) *cursor = (*cursor + 5) % 6;
+        else if (JOY_NEW(DPAD_DOWN)) *cursor = (*cursor + 1) % 6;
+        else if (JOY_NEW(DPAD_LEFT | DPAD_RIGHT | A_BUTTON) && *cursor < 5)
+        {
+            if (*cursor == 0)
+                sRunSetupDifficulty = JOY_NEW(DPAD_LEFT) ? (sRunSetupDifficulty + 2) % 3 : (sRunSetupDifficulty + 1) % 3;
+            else if (*cursor == 1) sRunSetupMinimalGrinding ^= 1;
+            else if (*cursor == 2) sRunSetupNuzlocke ^= 1;
+            else if (*cursor == 3) sRunSetupEzCatch ^= 1;
+            else sRunSetupCarePackages ^= 1;
+        }
+        else if (JOY_NEW(A_BUTTON) && *cursor == 5)
         {
             sRunSetupPage = RUN_SETUP_PAGE_RANDOMIZER;
             *cursor = 0;
         }
-        else
-            return;
+        else return;
         PlaySE(SE_SELECT);
         RunSetup_Draw(*cursor);
         return;
@@ -3094,7 +3134,7 @@ static void Task_RunSetup_Input(u8 taskId)
         }
         else if (JOY_NEW(DPAD_DOWN))
         {
-            if (sRunSetupConfirmScroll < 7)
+            if (sRunSetupConfirmScroll < 10)
                 sRunSetupConfirmScroll++;
         }
         else if (JOY_NEW(DPAD_LEFT | DPAD_RIGHT))
@@ -3133,6 +3173,9 @@ static void Task_RunSetup_Input(u8 taskId)
             gRunSetupAbilityMode = sRunSetupAbilityMode;
             gRunSetupMinimalGrindingMode = sRunSetupMinimalGrinding;
             gRunSetupDifficulty = sRunSetupDifficulty;
+            gRunSetupNuzlocke = sRunSetupNuzlocke;
+            gRunSetupEzCatch = sRunSetupEzCatch;
+            gRunSetupCarePackages = sRunSetupCarePackages;
             gRunSetupMovesetMode = sRunSetupMovesets;
             gRunSetupEvolutionMode = sRunSetupEvolutions;
             gRunSetupItemRandomization = sRunSetupItemRandomization;

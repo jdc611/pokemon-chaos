@@ -254,6 +254,18 @@ struct NPCFollower
 #include "constants/items.h"
 #define ITEM_FLAGS_COUNT ((ITEMS_COUNT / 8) + ((ITEMS_COUNT % 8) ? 1 : 0))
 
+struct ChaosRunMonRecord
+{
+    u32 personality;
+    u32 score;
+    u16 species;
+    u16 item;
+    u16 moves[4];
+    u16 ability;
+    u8 nature;
+    u8 nickname[11];
+};
+
 struct SaveBlock3
 {
 #if OW_USE_FAKE_RTC
@@ -316,6 +328,28 @@ struct SaveBlock3
     u8 arcadeRiderTheme;
     u8 arcadeRanchTheme;
     u8 arcadeOutfit;
+    u32 recordsMagic;
+    u16 encounterSpecies[256];
+    u8 encounterFailed[32];
+    u32 runCounters[16];
+    struct ChaosRunMonRecord journeyMons[12];
+    struct ChaosRunMonRecord leagueTeam[6];
+    u32 leagueCounters[16];
+    u32 leagueSeed;
+    u16 leagueHours;
+    u8 leagueMinutes;
+    u8 leagueDifficulty;
+    u8 leagueNuzlocke;
+    u8 leagueComplete;
+    u32 highestDamage;
+    u32 leagueHighestDamage;
+    u16 moveRecords[6][2]; // bounded heavy-hitter counters: move, uses
+    u16 typeRecords[NUMBER_OF_MON_TYPES];
+    u16 leagueSeen, leagueCaught, leagueUsed, leagueFailed, leagueAvailable, leagueSurvivors;
+    u16 leagueMostMove;
+    u8 leagueMostType, leagueCap, leagueBadges, leagueEzCatch;
+    u8 leagueBestNickname[11];
+
 }; /* max size 1624 bytes */
 
 extern struct SaveBlock3 *gSaveBlock3Ptr;

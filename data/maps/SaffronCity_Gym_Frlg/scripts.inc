@@ -2,6 +2,7 @@ SaffronCity_Gym_Frlg_MapScripts::
 	.byte 0
 
 SaffronCity_Gym_EventScript_Sabrina::
+	call_if_set FLAG_BADGE06_GET, SaffronCity_Gym_EventScript_ClaimChaosStone
 	famechecker FAMECHECKER_SABRINA, FCPICKSTATE_COLORED, UpdatePickStateFromSpecialVar8005
 	trainerbattle_single TRAINER_LEADER_SABRINA, SaffronCity_Gym_Text_SabrinaIntro, SaffronCity_Gym_Text_SabrinaDefeat, SaffronCity_Gym_EventScript_DefeatedSabrina, NO_MUSIC
 	goto_if_unset FLAG_GOT_TM04_FROM_SABRINA, SaffronCity_Gym_EventScript_GiveTM04
@@ -15,6 +16,8 @@ SaffronCity_Gym_EventScript_DefeatedSabrina::
 	clearflag FLAG_HIDE_SAFFRON_CITY_POKECENTER_SABRINA_JOURNALS
 	setflag FLAG_DEFEATED_SABRINA
 	setflag FLAG_BADGE06_GET
+	setvar VAR_0x8004, 4
+	call EventScript_ChaosClaimGymStone
 	call_if_eq VAR_CHAOS_OAK_MEGA_REWARD, 0, EventScript_ChaosReadyOakMegaReward
 	set_gym_trainers_frlg 6
 	goto SaffronCity_Gym_EventScript_GiveTM04
@@ -259,4 +262,9 @@ SaffronCity_Gym_Text_GymStatuePlayerWon::
 
 EventScript_ChaosReadyOakMegaReward::
 	setvar VAR_CHAOS_OAK_MEGA_REWARD, 1
+	return
+
+SaffronCity_Gym_EventScript_ClaimChaosStone::
+	setvar VAR_0x8004, 4
+	call EventScript_ChaosClaimGymStone
 	return

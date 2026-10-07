@@ -1139,6 +1139,13 @@ static const struct MenuAction MultichoiceList_Gender[] =
     {COMPOUND_STRING("FEMALE")},
 };
 
+static const struct MenuAction MultichoiceList_ChaosTrainToCap[] =
+{
+    {COMPOUND_STRING("WHOLE PARTY")},
+    {COMPOUND_STRING("ONE POKéMON")},
+    {COMPOUND_STRING("CANCEL")},
+};
+
 static const struct MenuAction MultichoiceList_SurfFishBack[] =
 {
     {COMPOUND_STRING("SURF")},
@@ -1324,6 +1331,7 @@ static const struct MultichoiceListStruct sMultichoiceLists[] =
     [MULTI_EGGS_VICTORIES_QUIT]                        = MULTICHOICE(sMultichoiceList_Eggs_Victories_Quit),
     [MULTI_HOF_EGGS_VICTORIES_QUIT]                    = MULTICHOICE(sMultichoiceList_HOF_Eggs_Victories_Quit),
     [MULTI_GENDER]                                     = MULTICHOICE(MultichoiceList_Gender),
+    [MULTI_CHAOS_TRAIN_TO_CAP] = MULTICHOICE(MultichoiceList_ChaosTrainToCap),
     [MULTI_FISHING_RODS]               = MULTICHOICE(MultichoiceList_FishingRods),
     [MULTI_SURF_FISH_BACK]                             = MULTICHOICE(MultichoiceList_SurfFishBack),
 };

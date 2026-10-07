@@ -1088,7 +1088,7 @@ bool32 TryStartDexNavSearch(void)
 
     // Nuzlocke keeps DexNav as a scouting tool, but selected encounters may
     // not be forced. Registered one-button searches are blocked here too.
-    if (gSaveBlock3Ptr->runDifficulty == RUN_DIFFICULTY_NUZLOCKE)
+    if (IsNuzlockeRun())
         return FALSE;
 
     if (FlagGet(DN_FLAG_SEARCHING) && sDexNavSearchDataPtr->hiddenSearch)
@@ -2540,7 +2540,7 @@ static void Task_DexNavMain(u8 taskId)
     {
         // Species/route information remains visible in Nuzlocke, but A may
         // not turn that information into a chosen encounter.
-        if (gSaveBlock3Ptr->runDifficulty == RUN_DIFFICULTY_NUZLOCKE)
+        if (IsNuzlockeRun())
         {
             // Stay entirely inside DexNav's own window system. A field message
             // here survives the DexNav callback transition and corrupts the
@@ -2585,7 +2585,7 @@ bool32 TryFindHiddenPokemon(void)
 
     // Automatic/hidden DexNav spawns would bypass the first-random-encounter
     // rule, so disable them entirely while Nuzlocke is active.
-    if (gSaveBlock3Ptr->runDifficulty == RUN_DIFFICULTY_NUZLOCKE)
+    if (IsNuzlockeRun())
     {
         if (stepPtr != NULL)
             (*stepPtr) = 0;

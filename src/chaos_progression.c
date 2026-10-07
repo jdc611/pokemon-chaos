@@ -1,4 +1,5 @@
 #include "global.h"
+#include "run_settings.h"
 #include "event_data.h"
 #include "chaos_progression.h"
 #include "load_save.h"
@@ -127,4 +128,11 @@ u16 ChaosGetRivalCounter(u8 level)
         SetMonData(&mon, MON_DATA_SPECIES, &species);
     }
     return species;
+}
+
+// Retain the old NUZLOCKE enum only as a migration source. New runs select
+// difficulty and challenge rules separately.
+bool32 IsNuzlockeRun(void)
+{
+    return VarGet(VAR_CHAOS_NUZLOCKE) || gSaveBlock3Ptr->runDifficulty == RUN_DIFFICULTY_NUZLOCKE;
 }

@@ -19,7 +19,7 @@ EWRAM_DATA static bool8 sChallengeActive = FALSE;
 static bool8 ChallengeResetEnabled(void)
 {
     return gSaveBlock3Ptr->runDifficulty == RUN_DIFFICULTY_HARD
-        || gSaveBlock3Ptr->runDifficulty == RUN_DIFFICULTY_NUZLOCKE;
+        || IsNuzlockeRun();
 }
 
 static bool8 IsCaveCompleted(mapsec_u16_t section);

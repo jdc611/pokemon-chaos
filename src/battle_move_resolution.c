@@ -1,4 +1,5 @@
 #include "global.h"
+#include "chaos_records.h"
 #include "chaos_abilities.h"
 #include "battle.h"
 #include "battle_arena.h"
@@ -3031,6 +3032,12 @@ static bool32 TryMoveDamageUpdate(struct BattleCalcValues *cv)
             }
 
             hpLost = hpBefore - gBattleMons[cv->battlerDef].hp;
+            if (hpLost && GetBattlerSide(cv->battlerAtk) == B_SIDE_PLAYER && GetBattlerSide(cv->battlerDef) == B_SIDE_OPPONENT)
+            {
+                ChaosEnsureRunRecords();
+                if (hpLost > gSaveBlock3Ptr->highestDamage) gSaveBlock3Ptr->highestDamage = hpLost;
+                if (gBattleStruct->moveResultFlags[cv->battlerDef] & MOVE_RESULT_HIGH_EFFECTIVENESS) gSaveBlock3Ptr->runCounters[9]++;
+            }
             if (hpLost != 0)
                 gBattleStruct->innardsOutHpLost[cv->battlerDef] += hpLost;
 

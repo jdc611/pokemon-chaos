@@ -111,7 +111,7 @@ CeladonCity_DepartmentStore_Roof_EventScript_AskGiveAllDrinks::
 
 CeladonCity_DepartmentStore_Roof_EventScript_GiveFreshWater::
 	setvar VAR_0x8008, ITEM_FRESH_WATER
-	setvar VAR_0x8009, ITEM_TM16
+	setvar VAR_0x8009, ITEM_TM_ELECTRIC_TERRAIN
 	goto_if_set FLAG_GOT_TM16_FROM_THIRSTY_GIRL, CeladonCity_DepartmentStore_Roof_EventScript_NotThirstyAfterAll
 	msgbox CeladonCity_DepartmentStore_Roof_Text_YayFreshWaterHaveThis
 	goto CeladonCity_DepartmentStore_Roof_EventScript_GiveDrink
@@ -119,7 +119,7 @@ CeladonCity_DepartmentStore_Roof_EventScript_GiveFreshWater::
 
 CeladonCity_DepartmentStore_Roof_EventScript_GiveSodaPop::
 	setvar VAR_0x8008, ITEM_SODA_POP
-	setvar VAR_0x8009, ITEM_TM20
+	setvar VAR_0x8009, ITEM_TM_MISTY_TERRAIN
 	goto_if_set FLAG_GOT_TM20_FROM_THIRSTY_GIRL, CeladonCity_DepartmentStore_Roof_EventScript_NotThirstyAfterAll
 	msgbox CeladonCity_DepartmentStore_Roof_Text_YaySodaPopHaveThis
 	goto CeladonCity_DepartmentStore_Roof_EventScript_GiveDrink
@@ -127,7 +127,7 @@ CeladonCity_DepartmentStore_Roof_EventScript_GiveSodaPop::
 
 CeladonCity_DepartmentStore_Roof_EventScript_GiveLemonade::
 	setvar VAR_0x8008, ITEM_LEMONADE
-	setvar VAR_0x8009, ITEM_TM33
+	setvar VAR_0x8009, ITEM_TM_GRASSY_TERRAIN
 	goto_if_set FLAG_GOT_TM33_FROM_THIRSTY_GIRL, CeladonCity_DepartmentStore_Roof_EventScript_NotThirstyAfterAll
 	msgbox CeladonCity_DepartmentStore_Roof_Text_YayLemonadeHaveThis
 	goto CeladonCity_DepartmentStore_Roof_EventScript_GiveDrink
@@ -136,9 +136,9 @@ CeladonCity_DepartmentStore_Roof_EventScript_GiveLemonade::
 CeladonCity_DepartmentStore_Roof_EventScript_GiveDrink::
 	bufferitemname STR_VAR_1, VAR_0x8008
 	bufferitemname STR_VAR_2, VAR_0x8009
-	removeitem VAR_0x8008
 	checkitemspace VAR_0x8009
 	goto_if_eq VAR_RESULT, FALSE, CeladonCity_DepartmentStore_Roof_EventScript_NoRoomForReward
+	removeitem VAR_0x8008
 	additem VAR_0x8009
 	textcolor NPC_TEXT_COLOR_NEUTRAL
 	playfanfare MUS_LEVEL_UP
@@ -299,9 +299,8 @@ Text_ReceivedItemFromLittleGirl::
 	.string "from the little girl.$"
 
 CeladonCity_DepartmentStore_Roof_Text_ExplainTM16::
-	.string "TM16 contains LIGHT SCREEN.\p"
-	.string "It's a move that weakens the power\n"
-	.string "of special attacks by your foe.$"
+	.string "A reusable ELECTRIC TERRAIN TM!\p"
+	.string "Grounded POKéMON cannot fall asleep.\nElectric moves get a boost!$"
 
 CeladonCity_DepartmentStore_Roof_Text_YaySodaPopHaveThis::
 	.string "Yay!\p"
@@ -310,9 +309,8 @@ CeladonCity_DepartmentStore_Roof_Text_YaySodaPopHaveThis::
 	.string "You can have this from me!$"
 
 CeladonCity_DepartmentStore_Roof_Text_ExplainTM20::
-	.string "TM20 contains SAFEGUARD.\p"
-	.string "It's a move that prevents status\n"
-	.string "problems among your POKéMON.$"
+	.string "A reusable MISTY TERRAIN TM!\p"
+	.string "Grounded POKéMON resist status.\nDragon attacks get weaker!$"
 
 CeladonCity_DepartmentStore_Roof_Text_YayLemonadeHaveThis::
 	.string "Yay!\p"
@@ -321,9 +319,8 @@ CeladonCity_DepartmentStore_Roof_Text_YayLemonadeHaveThis::
 	.string "You can have this from me!$"
 
 CeladonCity_DepartmentStore_Roof_Text_ExplainTM33::
-	.string "TM33 contains REFLECT.\p"
-	.string "It's a move that weakens the power\n"
-	.string "of physical attacks by your foe.$"
+	.string "A reusable GRASSY TERRAIN TM!\p"
+	.string "Grounded POKéMON recover HP.\nGrass moves get a boost!$"
 
 CeladonCity_DepartmentStore_Roof_Text_DontHaveSpaceForThis::
 	.string "You don't have space for this!$"
@@ -361,4 +358,3 @@ CeladonCity_DepartmentStore_Roof_Text_NoMoreRoomForStuff::
 
 CeladonCity_DepartmentStore_Roof_Text_NotThirsty::
 	.string "Not thirsty!$"
-

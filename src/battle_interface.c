@@ -903,6 +903,14 @@ static void SpriteCB_StatStageMarker(struct Sprite *sprite)
     sprite->invisible = state == 0;
 }
 
+static void ChaosDrawInfinity(u8 sprite, u8 y)
+{
+    static const u8 rows[] = {0x66,0x99,0x99,0x66};
+    for (u32 row = 0; row < 4; row++)
+        for (u32 col = 0; col < 8; col++)
+            if (rows[row] & (1 << col)) FillSpriteRectColor(sprite, 51 + col, y + row, 1, 1, 5);
+}
+
 static void SpriteCB_WeatherTurnLabel(struct Sprite *sprite)
 {
     static const u8 sSun[] = _("SUN ");
@@ -912,12 +920,12 @@ static void SpriteCB_WeatherTurnLabel(struct Sprite *sprite)
     static const u8 sSnow[] = _("SNOW ");
     static const u8 sFog[] = _("FOG ");
     static const u8 sWind[] = _("WIND ");
-    static const u8 sPermanent[] = _("--");
+    static const u8 sPermanent[] = _("   ");
     const u8 *name;
     u8 label[16];
     u8 labelLeft;
 
-    if (gBattleWeather == B_WEATHER_NONE)
+    if (gBattleWeather == B_WEATHER_NONE && gFieldTimers.terrain == B_TERRAIN_NONE)
     {
         sprite->data[0] = -1;
         sprite->data[1] = -1;
@@ -925,7 +933,8 @@ static void SpriteCB_WeatherTurnLabel(struct Sprite *sprite)
         return;
     }
 
-    if (sprite->data[0] == gBattleWeather && sprite->data[1] == gBattleStruct->weatherDuration)
+    if (sprite->data[0] == gBattleWeather && sprite->data[1] == gBattleStruct->weatherDuration
+     && sprite->data[2] == gFieldTimers.terrain && sprite->data[3] == gFieldTimers.terrainTimer)
         return;
 
     if (gBattleWeather & B_WEATHER_SUN)
@@ -942,11 +951,7 @@ static void SpriteCB_WeatherTurnLabel(struct Sprite *sprite)
         name = sFog;
     else if (gBattleWeather & B_WEATHER_STRONG_WINDS)
         name = sWind;
-    else
-    {
-        sprite->invisible = TRUE;
-        return;
-    }
+    else name = COMPOUND_STRING("");
 
     u8 *end = StringCopy(label, name);
     if (gBattleStruct->weatherDuration == 0)
@@ -962,8 +967,35 @@ static void SpriteCB_WeatherTurnLabel(struct Sprite *sprite)
     FillSpriteRectColor(sprite - gSprites, labelLeft, 0, 64 - labelLeft, 16, 5);
     FillSpriteRectColor(sprite - gSprites, labelLeft + 1, 0, 63 - labelLeft, 15, 4);
     AddSpriteTextPrinterParameterized6(sprite - gSprites, FONT_SMALL, labelLeft + 3, 1, 0, 0, sWeatherTurnTextColor, 0, label);
+    if (gBattleStruct->weatherDuration == 0) ChaosDrawInfinity(sprite - gSprites, 6);
     // The text printer clears its background; redraw the bottom edge last.
     FillSpriteRectColor(sprite - gSprites, labelLeft, 15, 64 - labelLeft, 1, 5);
+    if (gBattleWeather == B_WEATHER_NONE)
+        FillSpriteRectColor(sprite - gSprites, 0, 0, 64, 16, 0);
+    if (gFieldTimers.terrain != B_TERRAIN_NONE)
+    {
+        const u8 *terrain = COMPOUND_STRING("TERR ");
+        switch (gFieldTimers.terrain)
+        {
+        case B_TERRAIN_ELECTRIC: terrain = COMPOUND_STRING("ELEC "); break;
+        case B_TERRAIN_GRASSY: terrain = COMPOUND_STRING("GRASS "); break;
+        case B_TERRAIN_MISTY: terrain = COMPOUND_STRING("MIST "); break;
+        case B_TERRAIN_PSYCHIC: terrain = COMPOUND_STRING("PSYCH "); break;
+        default: break;
+        }
+        u8 *terrainEnd = StringCopy(label, terrain);
+        if (gFieldTimers.terrainTimer == 0) StringAppend(label, sPermanent);
+        else ConvertIntToDecimalStringN(terrainEnd, gFieldTimers.terrainTimer, STR_CONV_MODE_LEFT_ALIGN, 2);
+        u16 width = GetStringWidth(FONT_SMALL, label, 0);
+        u8 left = width <= 58 ? 58 - width : 0;
+        FillSpriteRectColor(sprite - gSprites, left, 16, 64 - left, 16, 5);
+        FillSpriteRectColor(sprite - gSprites, left + 1, 16, 63 - left, 15, 4);
+        AddSpriteTextPrinterParameterized6(sprite - gSprites, FONT_SMALL, left + 3, 17, 0, 0, sWeatherTurnTextColor, 0, label);
+        if (gFieldTimers.terrainTimer == 0) ChaosDrawInfinity(sprite - gSprites, 22);
+        FillSpriteRectColor(sprite - gSprites, left, 31, 64 - left, 1, 5);
+    }
+    sprite->data[2] = gFieldTimers.terrain;
+    sprite->data[3] = gFieldTimers.terrainTimer;
     sprite->data[0] = gBattleWeather;
     sprite->data[1] = gBattleStruct->weatherDuration;
     sprite->invisible = FALSE;

@@ -425,6 +425,8 @@ VermilionCity_Gym_Text_OnlyTrashLocksWereReset::
 
 VermilionCity_Gym_EventScript_LtSurgeChaosRematch::
 	trainerbattle_single TRAINER_LEADER_LT_SURGE_REMATCH, Text_ChaosRematchIntro, Text_ChaosRematchDefeat, VermilionCity_Gym_EventScript_LtSurgeChaosRematchWon, NO_MUSIC
+	setvar VAR_0x8004, 2
+	call EventScript_ChaosClaimGymStone
 	msgbox Text_ChaosRematchAlreadyWon
 	release
 	end
@@ -432,6 +434,8 @@ VermilionCity_Gym_EventScript_LtSurgeChaosRematch::
 VermilionCity_Gym_EventScript_LtSurgeChaosRematchWon::
 	setvar VAR_0x8004, 4
 	special ChaosMarkGymRematch
+	setvar VAR_0x8004, 2
+	call EventScript_ChaosClaimGymStone
 	msgbox Text_ChaosRematchWon
 	release
 	end

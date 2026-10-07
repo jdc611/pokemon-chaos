@@ -696,19 +696,11 @@ PewterCity_EventScript_AideGiveRunningShoes::
 	call_if_eq VAR_TEMP_1, 1, PewterCity_EventScript_AideApproachPlayer1
 	call_if_eq VAR_TEMP_1, 2, PewterCity_EventScript_AideApproachPlayer2
 	call_if_eq VAR_TEMP_1, 3, PewterCity_EventScript_AideApproachPlayer3
-	msgbox PewterCity_Text_AskedToDeliverThis
-	textcolor NPC_TEXT_COLOR_NEUTRAL
+	msgbox Text_ChaosAideAlreadyRunning
+	setvar VAR_CHAOS_TRAINING_UNLOCKED, 1
 	playfanfare MUS_RG_OBTAIN_KEY_ITEM
-	message PewterCity_Text_ReceivedRunningShoesFromAide
-	waitmessage
+	msgbox Text_ChaosTrainingUnlocked
 	waitfanfare
-	msgbox PewterCity_Text_SwitchedShoesWithRunningShoes
-	special DisableMsgBoxWalkaway
-	signmsg
-	msgbox PewterCity_Text_ExplainRunningShoes
-	normalmsg
-	call EventScript_RestorePrevTextColor
-	msgbox PewterCity_Text_MustBeGoingBackToLab
 	closemessage
 	call_if_eq VAR_TEMP_1, 0, PewterCity_EventScript_AideExit0
 	call_if_eq VAR_TEMP_1, 1, PewterCity_EventScript_AideExit1
@@ -716,7 +708,7 @@ PewterCity_EventScript_AideGiveRunningShoes::
 	call_if_eq VAR_TEMP_1, 3, PewterCity_EventScript_AideExit3
 	delay 30
 	textcolor NPC_TEXT_COLOR_NEUTRAL
-	msgbox PewterCity_Text_RunningShoesLetterFromMom
+	msgbox Text_ChaosMomSaysHi
 	closemessage
 	removeobject LOCALID_PEWTER_AIDE
 	setflag FLAG_SYS_B_DASH
@@ -974,3 +966,15 @@ PewterCity_Text_RunningShoesLetterFromMom::
 	.string "you! Don't ever give up!\p"
 	.string "From Mom$"
 
+
+Text_ChaosAideAlreadyRunning::
+ .string "You already have RUNNING SHOES?\n"
+ .string "Huh… let me see what else I have.$"
+Text_ChaosTrainingUnlocked::
+ .string "TRAIN TO CAP and MOVE RELEARNER\n"
+ .string "are now in your START menu!\p"
+ .string "Train your team, then choose its\n"
+ .string "moves with MOVE RELEARNER.$"
+Text_ChaosMomSaysHi::
+ .string "Oh, and your mom says hi.\n"
+ .string "Yes, that was in my job description.$"

@@ -243,7 +243,7 @@ void ChaosRandomizeOverworldItem(void)
     // TM spots always remain TM spots. HMs are protected above.
     if (original >= ITEM_TM01 && original <= ITEM_TM100)
     {
-        gSpecialVar_Result = ITEM_TM01 + (roll % 100);
+        gSpecialVar_Result = ITEM_TM01 + (roll % NUM_TECHNICAL_MACHINES);
         return;
     }
 

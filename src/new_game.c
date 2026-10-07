@@ -66,6 +66,7 @@ extern EWRAM_DATA u8 gRunSetupBstMode;
 extern EWRAM_DATA u8 gRunSetupAbilityMode;
 extern EWRAM_DATA bool8 gRunSetupMinimalGrindingMode;
 extern EWRAM_DATA u8 gRunSetupDifficulty;
+extern EWRAM_DATA bool8 gRunSetupNuzlocke, gRunSetupEzCatch, gRunSetupCarePackages;
 extern EWRAM_DATA u8 gRunSetupMovesetMode;
 extern EWRAM_DATA u8 gRunSetupEvolutionMode;
 extern EWRAM_DATA bool8 gRunSetupItemRandomization;
@@ -310,7 +311,10 @@ gSaveBlock3Ptr->playerModel = selectedPlayerModel;
 // to select the correct first-field callback.
 gRunSetupStartRegion = startInKanto;
 gRunSetupPlayerModel = selectedPlayerModel;
-SetCurrentDifficultyLevel(gRunSetupDifficulty == RUN_DIFFICULTY_NUZLOCKE ? DIFFICULTY_HARD : gRunSetupDifficulty);
+SetCurrentDifficultyLevel(gRunSetupDifficulty == RUN_DIFFICULTY_NUZLOCKE ? DIFFICULTY_NORMAL : gRunSetupDifficulty);
+VarSet(VAR_CHAOS_NUZLOCKE, gRunSetupNuzlocke);
+VarSet(VAR_CHAOS_EZ_CATCH, gRunSetupEzCatch);
+VarSet(VAR_CHAOS_CARE_PACKAGES, gRunSetupCarePackages);
 gSaveBlock3Ptr->futureEvolutionEligible = FALSE;
     ClearFollowerNPCData();
 }

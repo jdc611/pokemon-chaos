@@ -1,0 +1,942 @@
+[
+  {
+    "number": 1,
+    "move": "FOCUS_PUNCH",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "data/scripts/item_ball_scripts_frlg.inc",
+        "label": "SilphCo_5F_EventScript_ItemTM01"
+      }
+    ]
+  },
+  {
+    "number": 2,
+    "move": "DRAGON_CLAW",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "data/scripts/item_ball_scripts_frlg.inc",
+        "label": "VictoryRoad_1F_EventScript_ItemTM02"
+      }
+    ]
+  },
+  {
+    "number": 3,
+    "move": "WATER_PULSE",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "data/maps/CeruleanCity_Gym_Frlg/scripts.inc",
+        "label": "CeruleanCity_Gym_EventScript_GiveTM03"
+      },
+      {
+        "path": "data/maps/CeruleanCity_Gym_Frlg/scripts.inc",
+        "label": "CeruleanCity_Gym_EventScript_GiveTM03"
+      }
+    ]
+  },
+  {
+    "number": 4,
+    "move": "CALM_MIND",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "data/maps/SaffronCity_Gym_Frlg/scripts.inc",
+        "label": "SaffronCity_Gym_EventScript_GiveTM04"
+      },
+      {
+        "path": "data/maps/SaffronCity_Gym_Frlg/scripts.inc",
+        "label": "SaffronCity_Gym_EventScript_GiveTM04"
+      }
+    ]
+  },
+  {
+    "number": 5,
+    "move": "ROAR",
+    "decision": "No deliberate native acquisition; random TM pool only",
+    "sources": []
+  },
+  {
+    "number": 6,
+    "move": "TOXIC",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "data/maps/FuchsiaCity_Gym_Frlg/scripts.inc",
+        "label": "FuchsiaCity_Gym_EventScript_GiveTM06"
+      },
+      {
+        "path": "data/maps/FuchsiaCity_Gym_Frlg/scripts.inc",
+        "label": "FuchsiaCity_Gym_EventScript_GiveTM06"
+      }
+    ]
+  },
+  {
+    "number": 7,
+    "move": "HAIL",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "data/scripts/item_ball_scripts_frlg.inc",
+        "label": "VictoryRoad_2F_EventScript_ItemTM07"
+      }
+    ]
+  },
+  {
+    "number": 8,
+    "move": "BULK_UP",
+    "decision": "RELOCATE \u2014 S.S. Anne 1F Room 2",
+    "sources": [
+      {
+        "path": "data/scripts/item_ball_scripts_frlg.inc",
+        "label": "SSAnne_1F_Room2_EventScript_ItemTM31"
+      }
+    ]
+  },
+  {
+    "number": 9,
+    "move": "BULLET_SEED",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "data/scripts/item_ball_scripts_frlg.inc",
+        "label": "MtMoon_1F_EventScript_ItemTM09"
+      }
+    ]
+  },
+  {
+    "number": 10,
+    "move": "HIDDEN_POWER",
+    "decision": "No deliberate native acquisition; random TM pool only",
+    "sources": []
+  },
+  {
+    "number": 11,
+    "move": "SUNNY_DAY",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "data/scripts/item_ball_scripts_frlg.inc",
+        "label": "SafariZone_East_EventScript_ItemTM11"
+      }
+    ]
+  },
+  {
+    "number": 12,
+    "move": "TAUNT",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "src/chaos_arcade_prizes.c",
+        "label": "Chaos Arcade"
+      }
+    ]
+  },
+  {
+    "number": 13,
+    "move": "ICE_BEAM",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "src/chaos_arcade_prizes.c",
+        "label": "Chaos Arcade"
+      }
+    ]
+  },
+  {
+    "number": 14,
+    "move": "BLIZZARD",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "data/scripts/item_ball_scripts_frlg.inc",
+        "label": "PokemonMansion_B1F_EventScript_ItemTM14"
+      }
+    ]
+  },
+  {
+    "number": 15,
+    "move": "HYPER_BEAM",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "data/maps/CeladonCity_DepartmentStore_2F_Frlg/scripts.inc",
+        "label": "CeladonCity_DepartmentStore_2F_TMs"
+      }
+    ]
+  },
+  {
+    "number": 16,
+    "move": "LIGHT_SCREEN",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "src/chaos_arcade_prizes.c",
+        "label": "Chaos Arcade"
+      }
+    ]
+  },
+  {
+    "number": 17,
+    "move": "PROTECT",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "src/chaos_arcade_prizes.c",
+        "label": "Chaos Arcade"
+      }
+    ]
+  },
+  {
+    "number": 18,
+    "move": "RAIN_DANCE",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "data/scripts/item_ball_scripts_frlg.inc",
+        "label": "Route15_EventScript_ItemTM18"
+      }
+    ]
+  },
+  {
+    "number": 19,
+    "move": "GIGA_DRAIN",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "data/maps/CeladonCity_Gym_Frlg/scripts.inc",
+        "label": "CeladonCity_Gym_EventScript_GiveTM19"
+      },
+      {
+        "path": "data/maps/CeladonCity_Gym_Frlg/scripts.inc",
+        "label": "CeladonCity_Gym_EventScript_GiveTM19"
+      }
+    ]
+  },
+  {
+    "number": 20,
+    "move": "SAFEGUARD",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "src/chaos_arcade_prizes.c",
+        "label": "Chaos Arcade"
+      }
+    ]
+  },
+  {
+    "number": 21,
+    "move": "FRUSTRATION",
+    "decision": "No deliberate native acquisition; random TM pool only",
+    "sources": []
+  },
+  {
+    "number": 22,
+    "move": "SOLAR_BEAM",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "data/scripts/item_ball_scripts_frlg.inc",
+        "label": "PokemonMansion_B1F_EventScript_ItemTM22"
+      }
+    ]
+  },
+  {
+    "number": 23,
+    "move": "IRON_TAIL",
+    "decision": "No deliberate native acquisition; random TM pool only",
+    "sources": []
+  },
+  {
+    "number": 24,
+    "move": "THUNDERBOLT",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "src/chaos_arcade_prizes.c",
+        "label": "Chaos Arcade"
+      }
+    ]
+  },
+  {
+    "number": 25,
+    "move": "THUNDER",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "data/scripts/item_ball_scripts_frlg.inc",
+        "label": "PowerPlant_EventScript_ItemTM25"
+      }
+    ]
+  },
+  {
+    "number": 26,
+    "move": "EARTHQUAKE",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "data/maps/ViridianCity_Gym_Frlg/scripts.inc",
+        "label": "ViridianCity_Gym_EventScript_GiveTM26"
+      },
+      {
+        "path": "data/maps/ViridianCity_Gym_Frlg/scripts.inc",
+        "label": "ViridianCity_Gym_EventScript_GiveTM26"
+      }
+    ]
+  },
+  {
+    "number": 27,
+    "move": "RETURN",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "data/maps/Route12_NorthEntrance_2F_Frlg/scripts.inc",
+        "label": "Route12_NorthEntrance_2F_EventScript_Lass"
+      },
+      {
+        "path": "data/maps/Route12_NorthEntrance_2F_Frlg/scripts.inc",
+        "label": "Route12_NorthEntrance_2F_EventScript_Lass"
+      }
+    ]
+  },
+  {
+    "number": 28,
+    "move": "DIG",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "data/maps/CeruleanCity_Frlg/scripts.inc",
+        "label": "CeruleanCity_EventScript_GruntDefeated"
+      },
+      {
+        "path": "data/maps/CeruleanCity_Frlg/scripts.inc",
+        "label": "CeruleanCity_EventScript_GruntDefeated"
+      }
+    ]
+  },
+  {
+    "number": 29,
+    "move": "PSYCHIC",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "src/chaos_arcade_prizes.c",
+        "label": "Chaos Arcade"
+      }
+    ]
+  },
+  {
+    "number": 30,
+    "move": "SHADOW_BALL",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "src/chaos_arcade_prizes.c",
+        "label": "Chaos Arcade"
+      }
+    ]
+  },
+  {
+    "number": 31,
+    "move": "BRICK_BREAK",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "src/chaos_arcade_prizes.c",
+        "label": "Chaos Arcade"
+      }
+    ]
+  },
+  {
+    "number": 32,
+    "move": "DOUBLE_TEAM",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "data/scripts/item_ball_scripts_frlg.inc",
+        "label": "SafariZone_West_EventScript_ItemTM32"
+      }
+    ]
+  },
+  {
+    "number": 33,
+    "move": "REFLECT",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "src/chaos_arcade_prizes.c",
+        "label": "Chaos Arcade"
+      }
+    ]
+  },
+  {
+    "number": 34,
+    "move": "SHOCK_WAVE",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "data/maps/VermilionCity_Gym_Frlg/scripts.inc",
+        "label": "VermilionCity_Gym_EventScript_GiveTM34"
+      },
+      {
+        "path": "data/maps/VermilionCity_Gym_Frlg/scripts.inc",
+        "label": "VermilionCity_Gym_EventScript_GiveTM34"
+      }
+    ]
+  },
+  {
+    "number": 35,
+    "move": "FLAMETHROWER",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "src/chaos_arcade_prizes.c",
+        "label": "Chaos Arcade"
+      }
+    ]
+  },
+  {
+    "number": 36,
+    "move": "SLUDGE_BOMB",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "src/chaos_arcade_prizes.c",
+        "label": "Chaos Arcade"
+      }
+    ]
+  },
+  {
+    "number": 37,
+    "move": "SANDSTORM",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "data/scripts/item_ball_scripts_frlg.inc",
+        "label": "VictoryRoad_2F_EventScript_ItemTM37"
+      }
+    ]
+  },
+  {
+    "number": 38,
+    "move": "FIRE_BLAST",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "data/maps/CinnabarIsland_Gym_Frlg/scripts.inc",
+        "label": "CinnabarIsland_Gym_EventScript_GiveTM38"
+      },
+      {
+        "path": "data/maps/CinnabarIsland_Gym_Frlg/scripts.inc",
+        "label": "CinnabarIsland_Gym_EventScript_GiveTM38"
+      }
+    ]
+  },
+  {
+    "number": 39,
+    "move": "ROCK_TOMB",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "data/maps/PewterCity_Gym_Frlg/scripts.inc",
+        "label": "PewterCity_Gym_EventScript_GiveTM39"
+      },
+      {
+        "path": "data/maps/PewterCity_Gym_Frlg/scripts.inc",
+        "label": "PewterCity_Gym_EventScript_GiveTM39"
+      }
+    ]
+  },
+  {
+    "number": 40,
+    "move": "AERIAL_ACE",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "src/chaos_arcade_prizes.c",
+        "label": "Chaos Arcade"
+      }
+    ]
+  },
+  {
+    "number": 41,
+    "move": "TORMENT",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "data/scripts/item_ball_scripts_frlg.inc",
+        "label": "SilphCo_4F_EventScript_ItemTM41"
+      }
+    ]
+  },
+  {
+    "number": 42,
+    "move": "FACADE",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "data/maps/FiveIsland_MemorialPillar_Frlg/scripts.inc",
+        "label": "FiveIsland_MemorialPillar_EventScript_PlaceLemonade"
+      },
+      {
+        "path": "data/maps/FiveIsland_MemorialPillar_Frlg/scripts.inc",
+        "label": "FiveIsland_MemorialPillar_EventScript_ReturnedForTM42"
+      }
+    ]
+  },
+  {
+    "number": 43,
+    "move": "SECRET_POWER",
+    "decision": "No deliberate native acquisition; random TM pool only",
+    "sources": []
+  },
+  {
+    "number": 44,
+    "move": "REST",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "data/scripts/item_ball_scripts_frlg.inc",
+        "label": "SSAnne_B1F_Room2_EventScript_ItemTM44"
+      }
+    ]
+  },
+  {
+    "number": 45,
+    "move": "ATTRACT",
+    "decision": "No deliberate native acquisition; random TM pool only",
+    "sources": []
+  },
+  {
+    "number": 46,
+    "move": "THIEF",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "data/scripts/item_ball_scripts_frlg.inc",
+        "label": "MtMoon_B2F_EventScript_ItemTM46"
+      }
+    ]
+  },
+  {
+    "number": 47,
+    "move": "STEEL_WING",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "data/scripts/item_ball_scripts_frlg.inc",
+        "label": "SafariZone_North_EventScript_ItemTM47"
+      }
+    ]
+  },
+  {
+    "number": 48,
+    "move": "SKILL_SWAP",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "data/scripts/item_ball_scripts_frlg.inc",
+        "label": "Route12_EventScript_ItemTM48"
+      }
+    ]
+  },
+  {
+    "number": 49,
+    "move": "SNATCH",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "data/scripts/item_ball_scripts_frlg.inc",
+        "label": "RocketHideout_B4F_EventScript_ItemTM49"
+      }
+    ]
+  },
+  {
+    "number": 50,
+    "move": "OVERHEAT",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "data/scripts/item_ball_scripts_frlg.inc",
+        "label": "VictoryRoad_3F_EventScript_ItemTM50"
+      }
+    ]
+  },
+  {
+    "number": 51,
+    "move": "SUBSTITUTE",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "src/chaos_arcade_prizes.c",
+        "label": "Chaos Arcade"
+      }
+    ]
+  },
+  {
+    "number": 52,
+    "move": "THUNDER_WAVE",
+    "decision": "REPLACE \u2014 Attract on Route 24; no longer Arcade stock",
+    "sources": [
+      {
+        "path": "data/maps/CeladonCity_DepartmentStore_2F_Frlg/scripts.inc",
+        "label": "CeladonCity_DepartmentStore_2F_TMs"
+      },
+      {
+        "path": "data/scripts/item_ball_scripts_frlg.inc",
+        "label": "Route24_EventScript_ItemTM45"
+      }
+    ]
+  },
+  {
+    "number": 53,
+    "move": "DEFOG",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "src/chaos_arcade_prizes.c",
+        "label": "Chaos Arcade"
+      }
+    ]
+  },
+  {
+    "number": 54,
+    "move": "WILL_O_WISP",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "src/chaos_arcade_prizes.c",
+        "label": "Chaos Arcade"
+      }
+    ]
+  },
+  {
+    "number": 55,
+    "move": "U_TURN",
+    "decision": "REPLACE \u2014 Roar on Route 4; no longer Arcade stock",
+    "sources": [
+      {
+        "path": "data/maps/CeladonCity_DepartmentStore_2F_Frlg/scripts.inc",
+        "label": "CeladonCity_DepartmentStore_2F_TMs"
+      },
+      {
+        "path": "data/scripts/item_ball_scripts_frlg.inc",
+        "label": "Route4_EventScript_ItemTM05"
+      }
+    ]
+  },
+  {
+    "number": 56,
+    "move": "VOLT_SWITCH",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "src/chaos_arcade_prizes.c",
+        "label": "Chaos Arcade"
+      }
+    ]
+  },
+  {
+    "number": 57,
+    "move": "ENERGY_BALL",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "src/chaos_arcade_prizes.c",
+        "label": "Chaos Arcade"
+      }
+    ]
+  },
+  {
+    "number": 58,
+    "move": "FLASH_CANNON",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "src/chaos_arcade_prizes.c",
+        "label": "Chaos Arcade"
+      }
+    ]
+  },
+  {
+    "number": 59,
+    "move": "DARK_PULSE",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "src/chaos_arcade_prizes.c",
+        "label": "Chaos Arcade"
+      }
+    ]
+  },
+  {
+    "number": 60,
+    "move": "DRAGON_PULSE",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "src/chaos_arcade_prizes.c",
+        "label": "Chaos Arcade"
+      }
+    ]
+  },
+  {
+    "number": 61,
+    "move": "ROOST",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "src/chaos_arcade_prizes.c",
+        "label": "Chaos Arcade"
+      }
+    ]
+  },
+  {
+    "number": 62,
+    "move": "TRICK_ROOM",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "src/chaos_arcade_prizes.c",
+        "label": "Chaos Arcade"
+      }
+    ]
+  },
+  {
+    "number": 63,
+    "move": "TAILWIND",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "src/chaos_arcade_prizes.c",
+        "label": "Chaos Arcade"
+      }
+    ]
+  },
+  {
+    "number": 64,
+    "move": "ENCORE",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "src/chaos_arcade_prizes.c",
+        "label": "Chaos Arcade"
+      }
+    ]
+  },
+  {
+    "number": 65,
+    "move": "EARTH_POWER",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "src/chaos_arcade_prizes.c",
+        "label": "Chaos Arcade"
+      }
+    ]
+  },
+  {
+    "number": 66,
+    "move": "MOONBLAST",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "src/chaos_arcade_prizes.c",
+        "label": "Chaos Arcade"
+      }
+    ]
+  },
+  {
+    "number": 67,
+    "move": "AURA_SPHERE",
+    "decision": "KEEP",
+    "sources": [
+      {
+        "path": "src/chaos_arcade_prizes.c",
+        "label": "Chaos Arcade"
+      }
+    ]
+  },
+  {
+    "number": 68,
+    "move": "MACH_PUNCH",
+    "decision": "REPLACE \u2014 physical karate tutor, reusable TM",
+    "sources": [
+      {
+        "path": "data/scripts/move_tutors_frlg.inc",
+        "label": "Route4_EventScript_MegaPunchTutor"
+      },
+      {
+        "path": "data/scripts/move_tutors_frlg.inc",
+        "label": "Route4_EventScript_MegaPunchTutor"
+      }
+    ]
+  },
+  {
+    "number": 69,
+    "move": "VACUUM_WAVE",
+    "decision": "REPLACE \u2014 special karate tutor, reusable TM",
+    "sources": [
+      {
+        "path": "data/scripts/move_tutors_frlg.inc",
+        "label": "Route4_EventScript_MegaKickTutor"
+      },
+      {
+        "path": "data/scripts/move_tutors_frlg.inc",
+        "label": "Route4_EventScript_MegaKickTutor"
+      }
+    ]
+  },
+  {
+    "number": 70,
+    "move": "BODY_PRESS",
+    "decision": "REPLACE \u2014 Bulk Up in Silph 7F",
+    "sources": [
+      {
+        "path": "data/scripts/item_ball_scripts_frlg.inc",
+        "label": "SilphCo_7F_EventScript_ItemTM08"
+      }
+    ]
+  },
+  {
+    "number": 71,
+    "move": "ACROBATICS",
+    "decision": "REPLACE \u2014 Aerial Ace on Route 9",
+    "sources": [
+      {
+        "path": "data/scripts/item_ball_scripts_frlg.inc",
+        "label": "Route9_EventScript_ItemTM40"
+      }
+    ]
+  },
+  {
+    "number": 72,
+    "move": "KNOCK_OFF",
+    "decision": "REPLACE \u2014 Taunt in Rocket Hideout B2F",
+    "sources": [
+      {
+        "path": "data/scripts/item_ball_scripts_frlg.inc",
+        "label": "RocketHideout_B2F_EventScript_ItemTM12"
+      }
+    ]
+  },
+  {
+    "number": 73,
+    "move": "WILD_CHARGE",
+    "decision": "REPLACE \u2014 Protect in Power Plant",
+    "sources": [
+      {
+        "path": "data/scripts/item_ball_scripts_frlg.inc",
+        "label": "PowerPlant_EventScript_ItemTM17"
+      }
+    ]
+  },
+  {
+    "number": 74,
+    "move": "PSYSHOCK",
+    "decision": "REPLACE \u2014 Mr. Psychic reward",
+    "sources": [
+      {
+        "path": "data/maps/SaffronCity_MrPsychicsHouse_Frlg/scripts.inc",
+        "label": "SaffronCity_MrPsychicsHouse_EventScript_MrPsychic"
+      },
+      {
+        "path": "data/maps/SaffronCity_MrPsychicsHouse_Frlg/scripts.inc",
+        "label": "SaffronCity_MrPsychicsHouse_EventScript_MrPsychic"
+      }
+    ]
+  },
+  {
+    "number": 75,
+    "move": "ELECTRIC_TERRAIN",
+    "decision": "REPLACE \u2014 Fresh Water/Light Screen reward",
+    "sources": [
+      {
+        "path": "data/maps/CeladonCity_DepartmentStore_Roof_Frlg/scripts.inc",
+        "label": "CeladonCity_DepartmentStore_Roof_EventScript_GiveFreshWater"
+      }
+    ]
+  },
+  {
+    "number": 76,
+    "move": "GRASSY_TERRAIN",
+    "decision": "REPLACE \u2014 Lemonade/Reflect reward",
+    "sources": [
+      {
+        "path": "data/maps/CeladonCity_DepartmentStore_Roof_Frlg/scripts.inc",
+        "label": "CeladonCity_DepartmentStore_Roof_EventScript_GiveLemonade"
+      }
+    ]
+  },
+  {
+    "number": 77,
+    "move": "MISTY_TERRAIN",
+    "decision": "REPLACE \u2014 Soda Pop/Safeguard reward",
+    "sources": [
+      {
+        "path": "data/maps/CeladonCity_DepartmentStore_Roof_Frlg/scripts.inc",
+        "label": "CeladonCity_DepartmentStore_Roof_EventScript_GiveSodaPop"
+      }
+    ]
+  },
+  {
+    "number": 78,
+    "move": "DRAINING_KISS",
+    "decision": "REPLACE \u2014 Celadon 2F Brick Break stock",
+    "sources": [
+      {
+        "path": "data/maps/CeladonCity_DepartmentStore_2F_Frlg/scripts.inc",
+        "label": "CeladonCity_DepartmentStore_2F_TMs"
+      }
+    ]
+  },
+  {
+    "number": 79,
+    "move": "CHILLING_WATER",
+    "decision": "REPLACE \u2014 Celadon 2F Dig stock",
+    "sources": [
+      {
+        "path": "data/maps/CeladonCity_DepartmentStore_2F_Frlg/scripts.inc",
+        "label": "CeladonCity_DepartmentStore_2F_TMs"
+      }
+    ]
+  },
+  {
+    "number": 80,
+    "move": "TRAILBLAZE",
+    "decision": "REPLACE \u2014 Secret Power",
+    "sources": [
+      {
+        "path": "data/maps/CeladonCity_DepartmentStore_2F_Frlg/scripts.inc",
+        "label": "CeladonCity_DepartmentStore_2F_TMs"
+      },
+      {
+        "path": "data/scripts/item_ball_scripts_frlg.inc",
+        "label": "Route25_EventScript_ItemTM43"
+      }
+    ]
+  },
+  {
+    "number": 81,
+    "move": "FOUL_PLAY",
+    "decision": "REPLACE \u2014 Frustration in Rocket Hideout B3F",
+    "sources": [
+      {
+        "path": "data/scripts/item_ball_scripts_frlg.inc",
+        "label": "RocketHideout_B3F_EventScript_ItemTM21"
+      }
+    ]
+  },
+  {
+    "number": 82,
+    "move": "GUNK_SHOT",
+    "decision": "REPLACE \u2014 Sludge Bomb in Sevii Rocket Warehouse",
+    "sources": [
+      {
+        "path": "data/scripts/item_ball_scripts_frlg.inc",
+        "label": "FiveIsland_RocketWarehouse_EventScript_ItemTM36"
+      }
+    ]
+  }
+]

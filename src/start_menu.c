@@ -1,4 +1,5 @@
 #include "global.h"
+extern const u8 EventScript_ChaosTrainToCap[];
 #include "config/save.h"
 #include "battle_main.h"
 #include "battle_pike.h"
@@ -448,7 +449,8 @@ static void BuildNormalStartMenu(void)
                 AddStartMenuAction(MENU_ACTION_POKEVIAL);
                 AddStartMenuAction(MENU_ACTION_PC_STORAGE);
             }
-            AddStartMenuAction(MENU_ACTION_POKERIDER);
+            if (!IS_FRLG || (VarGet(VAR_CHAOS_POKERIDER_UNLOCKED) || VarGet(VAR_MAP_SCENE_CERULEAN_CITY_RIVAL) >= 1))
+                AddStartMenuAction(MENU_ACTION_POKERIDER);
             if (!IS_FRLG || VarGet(VAR_CHAOS_TIME_CHANGER_UNLOCKED))
                 AddStartMenuAction(MENU_ACTION_TIME_CHANGER);
             // Teachy TV handoff also equips Auto Repel; completed older saves
@@ -489,8 +491,11 @@ static void BuildNormalStartMenu(void)
     }
     else
     {
-        AddStartMenuAction(MENU_ACTION_TRAIN_TO_CAP);
-        AddStartMenuAction(MENU_ACTION_MOVE_RELEARNER);
+        if (!IS_FRLG || (VarGet(VAR_CHAOS_TRAINING_UNLOCKED) || VarGet(VAR_MAP_SCENE_PEWTER_CITY) >= 2))
+        {
+            AddStartMenuAction(MENU_ACTION_TRAIN_TO_CAP);
+            AddStartMenuAction(MENU_ACTION_MOVE_RELEARNER);
+        }
         AddStartMenuAction(MENU_ACTION_GAME_OPTIONS);
         AddStartMenuAction(MENU_ACTION_GAME_INFO);
         AddStartMenuAction(MENU_ACTION_GAME_RULES);
@@ -1910,7 +1915,7 @@ static void BuildGameInfoLine(u8 row)
         StringCopy(gStringVar4, sText_GameInfoDifficulty);
         StringAppend(gStringVar4, gSaveBlock3Ptr->runDifficulty == RUN_DIFFICULTY_EASY ? sText_GameInfoEasy
                                 : gSaveBlock3Ptr->runDifficulty == RUN_DIFFICULTY_HARD ? sText_GameInfoHard
-                                : gSaveBlock3Ptr->runDifficulty == RUN_DIFFICULTY_NUZLOCKE ? sText_GameInfoNuzlocke
+                                : IsNuzlockeRun() ? sText_GameInfoNuzlocke
                                 : sText_GameInfoNormal);
         break;
     case 1:
@@ -2180,7 +2185,7 @@ static bool8 StartMenuTrainToCap(void)
     {
         RemoveExtraStartMenuWindows();
         HideStartMenu();
-        ChooseMonForTrainToCap();
+        ScriptContext_SetupScript(EventScript_ChaosTrainToCap);
         return TRUE;
     }
     return FALSE;

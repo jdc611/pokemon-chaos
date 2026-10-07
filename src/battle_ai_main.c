@@ -1,4 +1,5 @@
 #include "global.h"
+#include "run_settings.h"
 #include "main.h"
 #include "malloc.h"
 #include "battle.h"
@@ -284,6 +285,23 @@ static u64 GetAiFlags(u16 trainerId, enum BattlerId battler)
             flags = AI_FLAG_CHECK_BAD_MOVE | AI_FLAG_CHECK_VIABILITY | AI_FLAG_TRY_TO_FAINT;
         else
             flags = GetTrainerAIFlagsFromId(trainerId);
+    }
+
+    if (trainerId != 0xFFFF && !IsSpecialTrainer(trainerId)
+     && !(gBattleTypeFlags & (BATTLE_TYPE_FIRST_BATTLE | BATTLE_TYPE_SAFARI | BATTLE_TYPE_ROAMER | BATTLE_TYPE_LINK)))
+    {
+        u8 difficulty = gSaveBlock3Ptr->runDifficulty;
+        if (difficulty == RUN_DIFFICULTY_NUZLOCKE) difficulty = RUN_DIFFICULTY_NORMAL;
+        if (difficulty >= RUN_DIFFICULTY_NORMAL)
+            flags |= AI_FLAG_CHECK_BAD_MOVE | AI_FLAG_CHECK_VIABILITY | AI_FLAG_TRY_TO_FAINT
+                   | AI_FLAG_HP_AWARE | AI_FLAG_SMART_MON_CHOICES | AI_FLAG_SMART_SWITCHING;
+        if (difficulty == RUN_DIFFICULTY_HARD)
+            flags |= AI_FLAG_TRY_TO_2HKO | AI_FLAG_POWERFUL_STATUS | AI_FLAG_CONSERVATIVE
+                   | AI_FLAG_PP_STALL_PREVENTION | AI_FLAG_WEIGH_ABILITY_PREDICTION
+                   | AI_FLAG_PREDICT_SWITCH | AI_FLAG_PREDICT_INCOMING_MON | AI_FLAG_PREDICT_MOVE;
+        // Never grant omniscience through a difficulty tier.
+        flags &= ~(AI_FLAG_OMNISCIENT | AI_FLAG_MOVE_OMNISCIENCE
+                 | AI_FLAG_ITEM_OMNISCIENCE | AI_FLAG_ABILITY_OMNISCIENCE);
     }
 
     if (IsDoubleBattle() && flags != 0)

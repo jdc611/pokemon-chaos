@@ -1,0 +1,472 @@
+[
+  {
+    "stone": "NIDOKINGITE",
+    "acquisition": "Protected reward: Oak after Sabrina",
+    "reserved": false
+  },
+  {
+    "stone": "ARCANITE",
+    "acquisition": "Protected reward: Ashby in Lavender",
+    "reserved": false
+  },
+  {
+    "stone": "VENUSAURITE",
+    "acquisition": "Overworld: CeladonCity_Frlg",
+    "reserved": false
+  },
+  {
+    "stone": "CHARIZARDITE_X",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "CHARIZARDITE_Y",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "BLASTOISINITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "BEEDRILLITE",
+    "acquisition": "Protected reward: Koga",
+    "reserved": false
+  },
+  {
+    "stone": "PIDGEOTITE",
+    "acquisition": "Overworld: SSAnne_CaptainsOffice_Frlg",
+    "reserved": false
+  },
+  {
+    "stone": "ALAKAZITE",
+    "acquisition": "Protected reward: Sabrina",
+    "reserved": false
+  },
+  {
+    "stone": "SLOWBRONITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "GENGARITE",
+    "acquisition": "Overworld: PokemonTower_7F_Frlg",
+    "reserved": false
+  },
+  {
+    "stone": "KANGASKHANITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "PINSIRITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "GYARADOSITE",
+    "acquisition": "Protected reward: Misty rematch",
+    "reserved": false
+  },
+  {
+    "stone": "AERODACTYLITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "MEWTWONITE_X",
+    "acquisition": "Reserved for unfinished Giovanni/Mewtwo story (outside this batch)",
+    "reserved": true
+  },
+  {
+    "stone": "MEWTWONITE_Y",
+    "acquisition": "Reserved for unfinished Giovanni/Mewtwo story (outside this batch)",
+    "reserved": true
+  },
+  {
+    "stone": "AMPHAROSITE",
+    "acquisition": "Overworld: PowerPlant_Frlg",
+    "reserved": false
+  },
+  {
+    "stone": "STEELIXITE",
+    "acquisition": "Protected reward: Brock rematch",
+    "reserved": false
+  },
+  {
+    "stone": "SCIZORITE",
+    "acquisition": "Intentionally unassigned until Scyther specialist design",
+    "reserved": true
+  },
+  {
+    "stone": "HERACRONITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "HOUNDOOMINITE",
+    "acquisition": "Overworld: RocketHideout_B4F_Frlg",
+    "reserved": false
+  },
+  {
+    "stone": "TYRANITARITE",
+    "acquisition": "Overworld: VictoryRoad_2F_Frlg",
+    "reserved": false
+  },
+  {
+    "stone": "SCEPTILITE",
+    "acquisition": "Overworld: SafariZone_Center_Frlg",
+    "reserved": false
+  },
+  {
+    "stone": "BLAZIKENITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "SWAMPERTITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "GARDEVOIRITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "SABLENITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "MAWILITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "AGGRONITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "MEDICHAMITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "MANECTITE",
+    "acquisition": "Protected reward: Surge rematch",
+    "reserved": false
+  },
+  {
+    "stone": "SHARPEDONITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "CAMERUPTITE",
+    "acquisition": "Overworld: PokemonMansion_B1F_Frlg",
+    "reserved": false
+  },
+  {
+    "stone": "ALTARIANITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "BANETTITE",
+    "acquisition": "Overworld: FiveIsland_LostCave_Room1_Frlg",
+    "reserved": false
+  },
+  {
+    "stone": "ABSOLITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "GLALITITE",
+    "acquisition": "Overworld: SeafoamIslands_B3F_Frlg",
+    "reserved": false
+  },
+  {
+    "stone": "SALAMENCITE",
+    "acquisition": "Overworld: VictoryRoad_3F_Frlg",
+    "reserved": false
+  },
+  {
+    "stone": "METAGROSSITE",
+    "acquisition": "Overworld: SilphCo_11F_Frlg",
+    "reserved": false
+  },
+  {
+    "stone": "LATIASITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "LATIOSITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "LOPUNNITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "GARCHOMPITE",
+    "acquisition": "Protected reward: Giovanni",
+    "reserved": false
+  },
+  {
+    "stone": "LUCARIONITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "ABOMASITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "GALLADITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "AUDINITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "DIANCITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "CLEFABLITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "VICTREEBELITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "STARMINITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "DRAGONINITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "MEGANIUMITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "FERALIGITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "SKARMORITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "FROSLASSITE",
+    "acquisition": "Overworld: SeafoamIslands_B4F_Frlg",
+    "reserved": false
+  },
+  {
+    "stone": "EMBOARITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "EXCADRITE",
+    "acquisition": "Overworld: DiglettsCave_B1F_Frlg",
+    "reserved": false
+  },
+  {
+    "stone": "SCOLIPITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "SCRAFTINITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "EELEKTROSSITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "CHANDELURITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "CHESNAUGHTITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "DELPHOXITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "GRENINJITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "PYROARITE",
+    "acquisition": "Protected reward: Blaine (approved)",
+    "reserved": false
+  },
+  {
+    "stone": "FLOETTITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "MALAMARITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "BARBARACITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "DRAGALGITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "HAWLUCHANITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "ZYGARDITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "DRAMPANITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "FALINKSITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "HEATRANITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "DARKRANITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "ZERAORITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "RAICHUNITE_X",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "RAICHUNITE_Y",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "CHIMECHITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "ABSOLITE_Z",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "STARAPTITE",
+    "acquisition": "Overworld: Route16_Frlg",
+    "reserved": false
+  },
+  {
+    "stone": "GARCHOMPITE_Z",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "LUCARIONITE_Z",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "GOLURKITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "MEOWSTICITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "CRABOMINITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "GOLISOPITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "MAGEARNITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "SCOVILLAINITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "BAXCALIBRITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "TATSUGIRINITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  },
+  {
+    "stone": "GLIMMORANITE",
+    "acquisition": "Celadon special-stock shop after Marsh Badge",
+    "reserved": false
+  }
+]

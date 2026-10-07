@@ -86,6 +86,7 @@ static EWRAM_DATA struct {
 static bool32 sDrawFlyDestTextWindow;
 static const u8 sText_NuzlockeEncounterAvailable[] = _("Encounter: AVAILABLE");
 static const u8 sText_NuzlockeEncounterUsed[] = _("Encounter: USED");
+static const u8 sText_NuzlockeEncounterFailed[] = _("Encounter: FAILED");
 
 static u8 ProcessRegionMapInput_Full(void);
 static u8 MoveRegionMapCursor_Full(void);
@@ -2189,10 +2190,10 @@ static void DrawFlyDestTextWindow(void)
                 FillWindowPixelBuffer(WIN_MAPSEC_NAME, PIXEL_FILL(1));
             }
             AddTextPrinterParameterized(WIN_MAPSEC_NAME, FONT_NORMAL, sFlyMap->regionMap.mapSecName, 0, 1, 0, NULL);
-            if (gSaveBlock3Ptr->runDifficulty == RUN_DIFFICULTY_NUZLOCKE)
+            if (IsNuzlockeRun())
             {
                 const u8 *encounterText = NuzlockeMapSectionEncounterUsed(sFlyMap->regionMap.mapSecId)
-                                        ? sText_NuzlockeEncounterUsed
+                                        ? NuzlockeMapSectionEncounterFailed(sFlyMap->regionMap.mapSecId) ? sText_NuzlockeEncounterFailed : sText_NuzlockeEncounterUsed
                                         : sText_NuzlockeEncounterAvailable;
                 ClearStdWindowAndFrameToTransparent(WIN_MAPSEC_NAME, FALSE);
                 DrawStdFrameWithCustomTileAndPalette(WIN_MAPSEC_NAME_TALL, FALSE, 101, 13);
@@ -2201,7 +2202,7 @@ static void DrawFlyDestTextWindow(void)
                 sDrawFlyDestTextWindow = TRUE;
             }
             ScheduleBgCopyTilemapToVram(0);
-            sDrawFlyDestTextWindow = FALSE;
+            sDrawFlyDestTextWindow = IsNuzlockeRun();
         }
     }
     else

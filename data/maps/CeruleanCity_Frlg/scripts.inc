@@ -54,8 +54,10 @@ CeruleanCity_EventScript_Rival::
 	call_if_eq VAR_TEMP_1, 2, CeruleanCity_EventScript_RivalStartExitRight
 	msgbox CeruleanCity_Text_OhRightLittlePresentAsFavor
 	setvar VAR_MAP_SCENE_CERULEAN_CITY_RIVAL, 1
-	setflag FLAG_GOT_FAME_CHECKER
-	giveitem ITEM_FAME_CHECKER
+	setvar VAR_CHAOS_POKERIDER_UNLOCKED, 1
+	playfanfare MUS_RG_OBTAIN_KEY_ITEM
+	msgbox Text_ChaosRiderReceived
+	waitfanfare
 	msgbox CeruleanCity_Text_ExplainFameCheckerSmellYa
 	closemessage
 	applymovement LOCALID_CERULEAN_RIVAL, CeruleanCity_Movement_RivalExit
@@ -394,12 +396,9 @@ CeruleanCity_Text_OhRightLittlePresentAsFavor::
 	.string "present as a favor.$"
 
 CeruleanCity_Text_ExplainFameCheckerSmellYa::
-	.string "A chatty gossip like you…\n"
-	.string "That thing's perfect.\p"
-	.string "I don't need it because I don't\n"
-	.string "give a hoot about others.\p"
-	.string "All right, this time I really am\n"
-	.string "gone. Smell ya!$"
+ .string "Use POKéRIDER from your tools menu.\n"
+ .string "Now you might actually keep up!\p"
+ .string "Smell ya later!$"
 
 CeruleanCity_Text_GruntIntro::
 	.string "COLE: That DIG TM is mine now!\pYou want it? Come and take it!$"
@@ -528,3 +527,6 @@ CeruleanCity_Text_GymSign::
 	.string "LEADER: MISTY\l"
 	.string "The Tomboyish Mermaid!$"
 
+
+Text_ChaosRiderReceived::
+ .string "{PLAYER} unlocked POKéRIDER!$"

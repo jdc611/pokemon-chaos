@@ -86,4 +86,7 @@ enum RunAbilityMode
 #define RUN_SETUP_PAGE_CONFIRM     3
 #define RUN_SETUP_PAGE_COUNT       4
 
+bool32 IsNuzlockeRun(void);
+bool32 ChaosTrainToCapActive(void);
+
 #endif // GUARD_RUN_SETTINGS_H

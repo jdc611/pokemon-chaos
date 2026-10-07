@@ -50,6 +50,8 @@ struct Pokemon { u16 species, egg, hp, level, exp; };
 struct FormChange { u16 method, targetSpecies, param1; };
 struct SaveBlock2 { struct { u8 selectedPartyMons[3]; } frontier; } save2;
 struct SaveBlock2 *gSaveBlock2Ptr = &save2;
+#define RUN_DIFFICULTY_NUZLOCKE 3
+struct {u8 runDifficulty;} save3,*gSaveBlock3Ptr=&save3;
 struct Pokemon gParties[4][6], backup[6], boxes[2][3];
 u8 gSelectedOrderFromParty[3];
 u16 gSpecialVar_0x8004, gSpecialVar_Result;

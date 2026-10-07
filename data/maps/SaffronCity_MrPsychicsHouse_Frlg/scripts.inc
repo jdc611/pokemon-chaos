@@ -6,9 +6,9 @@ SaffronCity_MrPsychicsHouse_EventScript_MrPsychic::
 	faceplayer
 	goto_if_set FLAG_GOT_TM29_FROM_MR_PSYCHIC, SaffronCity_MrPsychicsHouse_EventScript_AlreadyGotTM29
 	msgbox SaffronCity_MrPsychicsHouse_Text_YouWantedThis
-	checkitemspace ITEM_TM29
+	checkitemspace ITEM_TM_PSYSHOCK
 	goto_if_eq VAR_RESULT, FALSE, SaffronCity_MrPsychicsHouse_EventScript_NoRoomForTM29
-	giveitem_msg SaffronCity_MrPsychicsHouse_Text_ReceivedTM29FromMrPsychic, ITEM_TM29
+	giveitem ITEM_TM_PSYSHOCK
 	msgbox SaffronCity_MrPsychicsHouse_Text_ExplainTM29
 	setflag FLAG_GOT_TM29_FROM_MR_PSYCHIC
 	release
@@ -33,10 +33,8 @@ SaffronCity_MrPsychicsHouse_Text_ReceivedTM29FromMrPsychic::
 	.string "from MR. PSYCHIC.$"
 
 SaffronCity_MrPsychicsHouse_Text_ExplainTM29::
-	.string "You already know, don't you?\n"
-	.string "TM29 is PSYCHIC.\p"
-	.string "It's an attack that may also lower\n"
-	.string "the target's special stats.$"
+	.string "This TM teaches PSYSHOCK.\p"
+	.string "A special attack that strikes the\nopponent's physical Defense!$"
 
 SaffronCity_MrPsychicsHouse_Text_YouveNoRoom::
 	.string "Where do you plan to put this?\n"

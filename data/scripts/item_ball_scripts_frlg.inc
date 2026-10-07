@@ -51,19 +51,19 @@ MtMoon_B2F_EventScript_ItemTM46::
 	end
 
 Route4_EventScript_ItemTM05::
-	finditem ITEM_TM05
+	finditem ITEM_TM_U_TURN
 	end
 
 Route24_EventScript_ItemTM45::
-	finditem ITEM_TM45
+	finditem ITEM_TM_THUNDER_WAVE
 	end
 
 Route25_EventScript_ItemTM43::
-	finditem ITEM_TM43
+	finditem ITEM_TM_TRAILBLAZE
 	end
 
 SSAnne_1F_Room2_EventScript_ItemTM31::
-	finditem ITEM_TM31
+	finditem ITEM_TM_BULK_UP
 	end
 
 SSAnne_2F_Room2_EventScript_ItemStardust::
@@ -91,7 +91,7 @@ SSAnne_Kitchen_EventScript_ItemGreatBall::
 	end
 
 Route9_EventScript_ItemTM40::
-	finditem ITEM_TM40
+	finditem ITEM_TM_ACROBATICS
 	end
 
 RocketHideout_B1F_EventScript_ItemEscapeRope::
@@ -111,7 +111,7 @@ RocketHideout_B2F_EventScript_ItemMoonStone::
 	end
 
 RocketHideout_B2F_EventScript_ItemTM12::
-	finditem ITEM_TM12
+	finditem ITEM_TM_KNOCK_OFF
 	end
 
 RocketHideout_B2F_EventScript_ItemSuperPotion::
@@ -123,7 +123,7 @@ RocketHideout_B3F_EventScript_ItemRareCandy::
 	end
 
 RocketHideout_B3F_EventScript_ItemTM21::
-	finditem ITEM_TM21
+	finditem ITEM_TM_FOUL_PLAY
 	end
 
 RocketHideout_B4F_EventScript_ItemTM49::
@@ -262,7 +262,7 @@ SilphCo_7F_EventScript_ItemCalcium::
 	end
 
 SilphCo_7F_EventScript_ItemTM08::
-	finditem ITEM_TM08
+	finditem ITEM_TM_BODY_PRESS
 	end
 
 SilphCo_10F_EventScript_ItemCarbos::
@@ -282,7 +282,7 @@ PowerPlant_EventScript_ItemMaxPotion::
 	end
 
 PowerPlant_EventScript_ItemTM17::
-	finditem ITEM_TM17
+	finditem ITEM_TM_WILD_CHARGE
 	end
 
 PowerPlant_EventScript_ItemTM25::
@@ -630,7 +630,7 @@ FiveIsland_RocketWarehouse_EventScript_ItemBigPearl::
 	end
 
 FiveIsland_RocketWarehouse_EventScript_ItemTM36::
-	finditem ITEM_TM36
+	finditem ITEM_TM_GUNK_SHOT
 	end
 
 FiveIsland_RocketWarehouse_EventScript_ItemPearl::
@@ -667,4 +667,64 @@ SevenIsland_SevaultCanyon_House_EventScript_ItemLuckyPunch::
 
 SilphCo_4F_EventScript_ItemTM41::
 	finditem ITEM_TM41
+	end
+
+EventScript_ChaosMegaPickup0::
+	finditem ITEM_EXCADRITE
+	end
+
+EventScript_ChaosMegaPickup1::
+	finditem ITEM_STARAPTITE
+	end
+
+EventScript_ChaosMegaPickup2::
+	finditem ITEM_AMPHAROSITE
+	end
+
+EventScript_ChaosMegaPickup3::
+	finditem ITEM_GLALITITE
+	end
+
+EventScript_ChaosMegaPickup4::
+	finditem ITEM_FROSLASSITE
+	end
+
+EventScript_ChaosMegaPickup5::
+	finditem ITEM_TYRANITARITE
+	end
+
+EventScript_ChaosMegaPickup6::
+	finditem ITEM_SALAMENCITE
+	end
+
+EventScript_ChaosMegaPickup7::
+	finditem ITEM_METAGROSSITE
+	end
+
+EventScript_ChaosMegaPickup8::
+	finditem ITEM_GENGARITE
+	end
+
+EventScript_ChaosMegaPickup9::
+	finditem ITEM_BANETTITE
+	end
+
+EventScript_ChaosMegaPickup10::
+	finditem ITEM_CAMERUPTITE
+	end
+
+EventScript_ChaosMegaPickup11::
+	finditem ITEM_SCEPTILITE
+	end
+
+EventScript_ChaosMegaPickup12::
+	finditem ITEM_PIDGEOTITE
+	end
+
+EventScript_ChaosMegaPickup13::
+	finditem ITEM_HOUNDOOMINITE
+	end
+
+EventScript_ChaosMegaPickup14::
+	finditem ITEM_VENUSAURITE
 	end

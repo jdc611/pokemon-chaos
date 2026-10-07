@@ -1,0 +1,25 @@
+PASS native world item event EXCADRITE DiglettsCave_B1F_Frlg
+PASS native world item event STARAPTITE Route16_Frlg
+PASS native world item event AMPHAROSITE PowerPlant_Frlg
+PASS native world item event GLALITITE SeafoamIslands_B3F_Frlg
+PASS native world item event FROSLASSITE SeafoamIslands_B4F_Frlg
+PASS native world item event TYRANITARITE VictoryRoad_2F_Frlg
+PASS native world item event SALAMENCITE VictoryRoad_3F_Frlg
+PASS native world item event METAGROSSITE SilphCo_11F_Frlg
+PASS native world item event GENGARITE PokemonTower_7F_Frlg
+PASS native world item event BANETTITE FiveIsland_LostCave_Room1_Frlg
+PASS native world item event CAMERUPTITE PokemonMansion_B1F_Frlg
+PASS native world item event SCEPTILITE SafariZone_Center_Frlg
+PASS native world item event PIDGEOTITE SSAnne_CaptainsOffice_Frlg
+PASS native world item event HOUNDOOMINITE RocketHideout_B4F_Frlg
+PASS native world item event VENUSAURITE CeladonCity_Frlg
+PASS native victory continuation / one-time reward PewterCity_Gym_EventScript_BrockChaosRematchWon 308
+PASS native victory continuation / one-time reward CeruleanCity_Gym_EventScript_MistyChaosRematchWon 303
+PASS native victory continuation / one-time reward VermilionCity_Gym_EventScript_LtSurgeChaosRematchWon 321
+PASS native victory continuation / one-time reward FuchsiaCity_Gym_EventScript_DefeatedKoga 296
+PASS native victory continuation / one-time reward SaffronCity_Gym_EventScript_DefeatedSabrina 298
+PASS native victory continuation / one-time reward ViridianCity_Gym_EventScript_DefeatedGiovanni 333
+PASS native victory continuation / one-time reward CinnabarIsland_Gym_EventScript_DefeatedBlaine 846
+save result 1
+load result 1
+PASS native flash save/reload of full 1564-byte run records, encounter state, league snapshot and independent settings.

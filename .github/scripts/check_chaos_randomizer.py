@@ -108,6 +108,8 @@ u16 *sRunSetupPoolCounts;
 u16 sRunSetupStarterAbilities[NUM_NORMAL_ABILITY_SLOTS];
 u32 sRunSetupLineSeen[NUMBER_OF_MON_TYPES][(ABILITIES_COUNT+31)/32];
 int baseCalls;
+struct {const char *name;} gAbilitiesInfo[5]={{""},{"A"},{"B"},{"C"},{"D"}};
+int StringCompare(const char *a,const char *b){return strcmp(a,b);}
 u8 GetSpeciesType(enum Species s,u32 slot){return slot==0?s%3+1:3;}
 u16 GetRandomizedAbilityForSeed(enum Species s,u8 slot,u32 seed){return seed%2?3:2;}
 void VisitRunFilterReachableSpeciesForSettings(enum Species s,u8 ev,u8 diff,u32 seed,void(*v)(enum Species)){gSpeciesInfo[s].abilities[0]=seed%2?3:2;gSpeciesInfo[s].abilities[1]=0;v(s);}
@@ -134,6 +136,7 @@ items=(root/'include/constants/items.h').read_text()
 # Header contains only enum/constants and no dependencies on the engine.
 code=base+'\n'+items+r'''
 #define POCKET_KEY_ITEMS 99
+#define NUM_TECHNICAL_MACHINES 82
 u32 GetItemPocket(enum Item item){return item==ITEM_OLD_ROD?POCKET_KEY_ITEMS:0;}
 u16 gSpecialVar_Result;
 '''+function(source,'ChaosFieldItemHash')+function(source,'ChaosFieldItemIsProtected')+function(source,'ChaosRandomizeOverworldItem')+r'''
@@ -145,7 +148,7 @@ int main(void){
  int different=0;for(u32 seed=0;seed<30;seed++){save3.worldSeed=seed;gSpecialVar_Result=ITEM_POTION;ChaosRandomizeOverworldItem();different|=gSpecialVar_Result!=ITEM_POTION;}assert(different);
  u16 protected[]={ITEM_HM01,ITEM_NIDOKINGITE,ITEM_STRANGE_FOSSIL,ITEM_OLD_ROD,ITEM_VENUSAURITE};
  for(int i=0;i<5;i++){gSpecialVar_Result=protected[i];ChaosRandomizeOverworldItem();assert(gSpecialVar_Result==protected[i]);}
- gSpecialVar_Result=ITEM_TM01;ChaosRandomizeOverworldItem();assert(gSpecialVar_Result>=ITEM_TM01&&gSpecialVar_Result<=ITEM_TM100);
+ gSpecialVar_Result=ITEM_TM01;ChaosRandomizeOverworldItem();assert(gSpecialVar_Result>=ITEM_TM01&&gSpecialVar_Result<ITEM_TM01+NUM_TECHNICAL_MACHINES);
  puts("PASS: actual weighted item mapping, multiple pickup inputs, saved world seeds, repeatability, TM category and progression protection.");
 }
 '''

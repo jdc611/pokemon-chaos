@@ -6645,7 +6645,8 @@ Music: Male
 Double Battle: No
 AI: Check Bad Move / Try To Faint / Check Viability / Smart Switching / HP Aware / Ace Pokemon
 
-Excadrill
+Excadrill @ Focus Sash
+Ability: Mold Breaker
 Level: 58
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Earthquake
@@ -6653,7 +6654,8 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Rock Slide
 - Swords Dance
 
-Krookodile
+Krookodile @ Yache Berry
+Ability: Intimidate
 Level: 58
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Earthquake
@@ -6661,7 +6663,8 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Brick Break
 - Stone Edge
 
-Ursaluna
+Ursaluna @ Flame Orb
+Ability: Guts
 Level: 58
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Headlong Rush
@@ -6678,7 +6681,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Ice Beam
 - Recover
 
-Great Tusk
+Great Tusk @ Assault Vest
 Level: 58
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Headlong Rush
@@ -9137,7 +9140,8 @@ Music: Male
 Double Battle: No
 AI: Check Bad Move / Try To Faint / Check Viability
 
-Geodude
+Geodude @ Oran Berry
+Ability: Sturdy
 Level: 15
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Rock Tomb
@@ -9145,15 +9149,17 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Defense Curl
 - Rollout
 
-Rockruff
+Lileep @ Oran Berry
+Ability: Storm Drain
 Level: 15
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Rock Tomb
-- Bite
-- Sand Attack
-- Howl
+- Mega Drain
+- Confuse Ray
+- Recover
 
 Nacli
+Ability: Purifying Salt
 Level: 15
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Smack Down
@@ -9161,7 +9167,8 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Recover
 - Headbutt
 
-Onix
+Onix @ Oran Berry
+Ability: Sturdy
 Level: 15
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Rock Tomb
@@ -9186,23 +9193,26 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Fury Cutter
 - Focus Energy
 
-Lombre
+Lombre @ Damp Rock
+Ability: Swift Swim
 Level: 22
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Bubble Beam
 - Mega Drain
 - Fake Out
-- Nature Power
+- Rain Dance
 
-Finizen
+Chinchou @ Oran Berry
+Ability: Volt Absorb
 Level: 22
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Aqua Jet
+- Spark
 - Water Pulse
 - Icy Wind
-- Acrobatics
+- Confuse Ray
 
-Starmie
+Starmie @ Sitrus Berry
+Ability: Natural Cure
 Level: 22
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Water Pulse
@@ -9227,7 +9237,8 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Mud Slap
 - Thunder Wave
 
-Luxio
+Luxio @ Sitrus Berry
+Ability: Intimidate
 Level: 28
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Spark
@@ -9235,15 +9246,17 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Ice Fang
 - Thunder Wave
 
-Toxtricity
+Rotom Mow @ Sitrus Berry
+Ability: Levitate
 Level: 28
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Shock Wave
-- Acid
-- Snarl
-- Nuzzle
+- Mega Drain
+- Will O Wisp
+- Light Screen
 
-Raichu
+Raichu @ Shuca Berry
+Ability: Static
 Level: 28
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Thunder Punch
@@ -9260,7 +9273,8 @@ Music: Female
 Double Battle: No
 AI: Check Bad Move / Try To Faint / Check Viability
 
-Roserade
+Roserade @ Coba Berry
+Ability: Natural Cure
 Level: 34
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Giga Drain
@@ -9276,7 +9290,8 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Brick Break
 - Synthesis
 
-Arboliva
+Arboliva @ Sitrus Berry
+Ability: Seed Sower
 Level: 34
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Giga Drain
@@ -9292,7 +9307,8 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Sleep Powder
 - Moonlight
 
-Tsareena
+Tsareena @ Occa Berry
+Ability: Queenly Majesty
 Level: 34
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Trop Kick
@@ -9309,7 +9325,7 @@ Music: Male
 Double Battle: Yes
 AI: Check Bad Move / Try To Faint / Check Viability
 
-Glimmora
+Glimmora @ Air Balloon
 Level: 46
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Ability: Toxic Debris
@@ -9327,7 +9343,7 @@ Ability: Inner Focus
 - U Turn
 - Tailwind
 
-Toxicroak
+Toxicroak @ Black Sludge
 Level: 46
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Ability: Dry Skin
@@ -9336,7 +9352,7 @@ Ability: Dry Skin
 - Sucker Punch
 - Protect
 
-Revavroom
+Revavroom @ Shuca Berry
 Level: 46
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Ability: Filter
@@ -9380,7 +9396,8 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Body Press
 - Stealth Rock
 
-Ceruledge
+Ceruledge @ Sitrus Berry
+Ability: Flash Fire
 Level: 52
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Bitter Blade
@@ -9388,7 +9405,8 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Psycho Cut
 - Swords Dance
 
-Skeledirge
+Skeledirge @ Leftovers
+Ability: Unaware
 Level: 52
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Torch Song
@@ -9396,7 +9414,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Earth Power
 - Slack Off
 
-Volcarona
+Volcarona @ Charti Berry
 Level: 52
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Flamethrower
@@ -9404,7 +9422,8 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Giga Drain
 - Quiver Dance
 
-Houndoom
+Houndoom @ Shuca Berry
+Ability: Flash Fire
 Level: 52
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Flamethrower
@@ -9429,7 +9448,7 @@ Music: Female
 Double Battle: No
 AI: Check Bad Move / Try To Faint / Check Viability
 
-Indeedee F
+Indeedee F @ Light Clay
 Level: 40
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Ability: Psychic Surge
@@ -9456,7 +9475,7 @@ Ability: Magic Bounce
 - Mystical Fire
 - Calm Mind
 
-Espeon
+Espeon @ Light Clay
 Level: 40
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Ability: Magic Bounce
@@ -9465,7 +9484,8 @@ Ability: Magic Bounce
 - Light Screen
 - Morning Sun
 
-Alakazam
+Alakazam @ Focus Sash
+Ability: Magic Guard
 Level: 40
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Psychic
@@ -18227,7 +18247,8 @@ Music: Male
 Double Battle: No
 AI: Check Bad Move / Try To Faint / Check Viability
 
-Glimmora
+Glimmora @ Focus Sash
+Ability: Toxic Debris
 Level: 42
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Power Gem
@@ -18235,7 +18256,8 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Stealth Rock
 - Earth Power
 
-Lycanroc Dusk
+Lycanroc Dusk @ Life Orb
+Ability: Tough Claws
 Level: 42
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Rock Slide
@@ -18243,7 +18265,8 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Crunch
 - Brick Break
 
-Coalossal
+Coalossal @ Passho Berry
+Ability: Steam Engine
 Level: 42
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Rock Slide
@@ -18269,15 +18292,17 @@ Music: Female
 Double Battle: No
 AI: Check Bad Move / Try To Faint / Check Viability
 
-Barraskewda
+Pelipper @ Damp Rock
+Ability: Drizzle
 Level: 43
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-- Liquidation
-- Aqua Jet
-- Crunch
-- Ice Fang
+- Surf
+- Hurricane
+- Roost
+- U Turn
 
-Ludicolo
+Ludicolo @ Life Orb
+Ability: Swift Swim
 Level: 43
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Surf
@@ -18285,7 +18310,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Ice Beam
 - Fake Out
 
-Azumarill
+Azumarill @ Sitrus Berry
 Level: 43
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Ability: Huge Power
@@ -18312,7 +18337,8 @@ Music: Male
 Double Battle: No
 AI: Check Bad Move / Try To Faint / Check Viability
 
-Kilowattrel
+Kilowattrel @ Sitrus Berry
+Ability: Volt Absorb
 Level: 44
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Discharge
@@ -18320,7 +18346,8 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Volt Switch
 - Roost
 
-Magnezone
+Magnezone @ Air Balloon
+Ability: Sturdy
 Level: 44
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Thunderbolt
@@ -18328,7 +18355,8 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Volt Switch
 - Thunder Wave
 
-Electivire
+Electivire @ Expert Belt
+Ability: Motor Drive
 Level: 44
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Thunder Punch

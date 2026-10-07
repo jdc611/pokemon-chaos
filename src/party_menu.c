@@ -1,4 +1,5 @@
 #include "global.h"
+#include "run_settings.h"
 #include "malloc.h"
 #include "battle.h"
 #include "battle_anim.h"
@@ -8154,52 +8155,96 @@ static void Task_ChoosePartyMon(u8 taskId)
     }
 }
 
-static EWRAM_DATA bool8 sTrainEntireParty = FALSE;
+static EWRAM_DATA bool8 sChaosTrainingActive;
+static EWRAM_DATA u8 sChaosTrainingMask;
+static EWRAM_DATA u8 sChaosTrainingSlot;
+static EWRAM_DATA u8 sChaosTrainingCap;
+static EWRAM_DATA u16 sChaosTrainingEvoSpecies;
+static EWRAM_DATA bool8 sChaosTrainingCheckEvo;
+static EWRAM_DATA u8 sChaosTrainingChainCount;
 
-static void TrainPartyMonToCurrentCap(struct Pokemon *mon)
+bool32 ChaosTrainToCapActive(void) { return sChaosTrainingActive; }
+
+static void CB2_ChaosTrainingStep(void)
 {
-    enum Species species = GetMonData(mon, MON_DATA_SPECIES);
-    u8 level = GetMonData(mon, MON_DATA_LEVEL);
-    u8 cap = GetCurrentLevelCap();
-    u32 exp;
-
-    if (species == SPECIES_NONE || GetMonData(mon, MON_DATA_IS_EGG) || level >= cap)
-        return;
-
-    exp = gExperienceTables[gSpeciesInfo[species].growthRate][cap];
-    SetMonData(mon, MON_DATA_EXP, &exp);
-    SetMonData(mon, MON_DATA_LEVEL, &cap);
-    CalculateMonStats(mon);
-    if (IsMinimalGrindingMode())
-        ApplyMinimalGrindingModeToMon(mon);
-}
-
-static void CB2_TrainMonToCapReturn(void)
-{
-    u8 slot = GetCursorSelectionMonId();
-
-    if (!sTrainEntireParty && slot < PARTY_SIZE)
-        TrainPartyMonToCurrentCap(&gParties[B_TRAINER_PLAYER][slot]);
-
+    while (sChaosTrainingSlot < PARTY_SIZE)
+    {
+        struct Pokemon *mon = &gParties[B_TRAINER_PLAYER][sChaosTrainingSlot];
+        enum Species species = GetMonData(mon, MON_DATA_SPECIES);
+        u8 level = GetMonData(mon, MON_DATA_LEVEL);
+        if (!(sChaosTrainingMask & (1 << sChaosTrainingSlot)) || species == SPECIES_NONE
+         || GetMonData(mon, MON_DATA_IS_EGG) || (IsNuzlockeRun() && GetMonData(mon, MON_DATA_HP) == 0))
+        {
+            sChaosTrainingSlot++;
+            sChaosTrainingCheckEvo = FALSE;
+            sChaosTrainingChainCount = 0;
+            continue;
+        }
+        if (sChaosTrainingCheckEvo)
+        {
+            // Cancellation keeps the old species. Do not ask again at this
+            // level; a later level may offer it again, just like normal play.
+            if (species != sChaosTrainingEvoSpecies && sChaosTrainingChainCount < 10)
+            {
+                bool32 canStop = TRUE;
+                enum Species target = GetEvolutionTargetSpecies(mon, EVO_MODE_NORMAL, ITEM_NONE, NULL, &canStop, CHECK_EVO);
+                if (target != SPECIES_NONE && target != species)
+                {
+                    sChaosTrainingChainCount++;
+                    sChaosTrainingEvoSpecies = species;
+                    GetEvolutionTargetSpecies(mon, EVO_MODE_NORMAL, ITEM_NONE, NULL, &canStop, DO_EVO);
+                    gCB2_AfterEvolution = CB2_ChaosTrainingStep;
+                    BeginEvolutionScene(mon, target, canStop, sChaosTrainingSlot);
+                    return;
+                }
+            }
+            sChaosTrainingCheckEvo = FALSE;
+        }
+        if (level >= sChaosTrainingCap)
+        {
+            sChaosTrainingSlot++;
+            continue;
+        }
+        level++;
+        sChaosTrainingChainCount = 0;
+        u32 exp = gExperienceTables[gSpeciesInfo[species].growthRate][level];
+        SetMonData(mon, MON_DATA_EXP, &exp);
+        SetMonData(mon, MON_DATA_LEVEL, &level);
+        CalculateMonStats(mon);
+        if (IsMinimalGrindingMode()) ApplyMinimalGrindingModeToMon(mon);
+        bool32 canStop = TRUE;
+        enum Species target = GetEvolutionTargetSpecies(mon, EVO_MODE_NORMAL, ITEM_NONE, NULL, &canStop, CHECK_EVO);
+        if (target != SPECIES_NONE && target != species)
+        {
+            sChaosTrainingEvoSpecies = species;
+            sChaosTrainingCheckEvo = TRUE;
+            GetEvolutionTargetSpecies(mon, EVO_MODE_NORMAL, ITEM_NONE, NULL, &canStop, DO_EVO);
+            gCB2_AfterEvolution = CB2_ChaosTrainingStep;
+            BeginEvolutionScene(mon, target, canStop, sChaosTrainingSlot);
+            return;
+        }
+    }
+    sChaosTrainingActive = FALSE;
     PlaySE(SE_EXP_MAX);
     gFieldCallback2 = CB2_FadeFromPartyMenu;
     SetMainCallback2(CB2_ReturnToField);
 }
 
-static void Task_HandleTrainToCapInput(u8 taskId)
+static void ChaosStartTraining(u8 mask)
 {
-    if (JOY_NEW(START_BUTTON))
-    {
-        u8 i;
-        sTrainEntireParty = TRUE;
-        for (i = 0; i < gPartiesCount[B_TRAINER_PLAYER]; i++)
-            TrainPartyMonToCurrentCap(&gParties[B_TRAINER_PLAYER][i]);
-        PlaySE(SE_SELECT);
-        Task_ClosePartyMenu(taskId);
-        return;
-    }
+    sChaosTrainingActive = TRUE;
+    sChaosTrainingMask = mask;
+    sChaosTrainingSlot = 0;
+    sChaosTrainingCap = GetCurrentLevelCap();
+    sChaosTrainingCheckEvo = FALSE;
+    sChaosTrainingChainCount = 0;
+    SetMainCallback2(CB2_ChaosTrainingStep);
+}
 
-    Task_HandleChooseMonInput(taskId);
+static void CB2_TrainMonToCapReturn(void)
+{
+    u8 slot = GetCursorSelectionMonId();
+    ChaosStartTraining(slot < PARTY_SIZE ? (1 << slot) : 0);
 }
 
 static void Task_ChooseMonForTrainToCap(u8 taskId)
@@ -8207,8 +8252,7 @@ static void Task_ChooseMonForTrainToCap(u8 taskId)
     if (!gPaletteFade.active)
     {
         CleanupOverworldWindowsAndTilemaps();
-        sTrainEntireParty = FALSE;
-        InitPartyMenu(PARTY_MENU_TYPE_CHOOSE_MON, PARTY_LAYOUT_SINGLE, PARTY_ACTION_CHOOSE_AND_CLOSE, FALSE, PARTY_MSG_CHOOSE_MON, Task_HandleTrainToCapInput, CB2_TrainMonToCapReturn);
+        InitPartyMenu(PARTY_MENU_TYPE_CHOOSE_MON, PARTY_LAYOUT_SINGLE, PARTY_ACTION_CHOOSE_AND_CLOSE, FALSE, PARTY_MSG_CHOOSE_MON, Task_HandleChooseMonInput, CB2_TrainMonToCapReturn);
         DestroyTask(taskId);
     }
 }
@@ -8218,6 +8262,28 @@ void ChooseMonForTrainToCap(void)
     LockPlayerFieldControls();
     FadeScreen(FADE_TO_BLACK, 0);
     CreateTask(Task_ChooseMonForTrainToCap, 10);
+}
+
+static void Task_TrainWholeParty(u8 taskId)
+{
+    if (!gPaletteFade.active)
+    {
+        CleanupOverworldWindowsAndTilemaps();
+        DestroyTask(taskId);
+        ChaosStartTraining((1 << PARTY_SIZE) - 1);
+    }
+}
+
+void ChaosTrainWholeParty(void)
+{
+    LockPlayerFieldControls();
+    FadeScreen(FADE_TO_BLACK, 0);
+    CreateTask(Task_TrainWholeParty, 10);
+}
+
+void ChaosBufferLevelCap(void)
+{
+    ConvertIntToDecimalStringN(gStringVar1, GetCurrentLevelCap(), STR_CONV_MODE_LEFT_ALIGN, 3);
 }
 
 void ChooseMonForMoveRelearner(void)

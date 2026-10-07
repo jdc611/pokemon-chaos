@@ -1,0 +1,3 @@
+battleCB 0x80848a1 flags 0xc enemy 1
+lossCB 0x81a707d partyhp 19 badge 0
+PASS Brock genuine loss / whiteout / re-entry / second battle initialization.

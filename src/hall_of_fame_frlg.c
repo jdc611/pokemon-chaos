@@ -1,4 +1,5 @@
 #include "global.h"
+#include "chaos_records.h"
 #include "bg.h"
 #include "credits_frlg.h"
 #include "data.h"
@@ -118,8 +119,8 @@ static const struct WindowTemplate sWindowTemplate = {
     .bg = 0,
     .tilemapLeft = 2,
     .tilemapTop = 2,
-    .width = 17,
-    .height = 6,
+    .width = 19,
+    .height = 7,
     .paletteNum = 13,
     .baseBlock = 0x001
 };
@@ -420,6 +421,7 @@ static void Task_Hof_InitMonData(u8 taskId)
 
 static void Task_Hof_InitTeamSaveData(u8 taskId)
 {
+    ChaosSnapshotLeague();
     u16 i;
     struct HallofFameTeam *lastSavedTeam = gHoFSaveBuffer;
 
@@ -645,15 +647,32 @@ static void Task_Hof_WaitAndPrintPlayerInfo(u8 taskId)
         FillBgTilemapBufferRect_Palette0(0, 0, 0, 0, 0x20, 0x20);
         HallOfFame_PrintPlayerInfo(1, 2);
         DrawDialogueFrame(0, 0);
-        AddTextPrinterParameterized2(0, FONT_NORMAL, gText_LeagueChamp, 0, NULL, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_WHITE, TEXT_COLOR_LIGHT_GRAY);
+        StringCopy(gStringVar4, COMPOUND_STRING("LEAGUE SUMMARY\nA: Next page   B: Continue"));
+        AddTextPrinterParameterized2(0, FONT_SMALL, gStringVar4, 0, NULL, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_WHITE, TEXT_COLOR_LIGHT_GRAY);
         CopyWindowToVram(0, COPYWIN_FULL);
+        gTasks[taskId].data[3] = 0;
+        gSpecialVar_0x8004 = 0;
+        gSpecialVar_0x8005 = 1;
+        ChaosBuildRecordsPage();
+        FillWindowPixelBuffer(1, PIXEL_FILL(1));
+        AddTextPrinterParameterized3(1, FONT_SMALL, 3, 1, sTextColors[1], 0, gStringVar4);
+        CopyWindowToVram(1, COPYWIN_FULL);
         gTasks[taskId].func = Task_Hof_ExitOnKeyPressed;
     }
 }
 
 static void Task_Hof_ExitOnKeyPressed(u8 taskId)
 {
-    if (JOY_NEW(A_BUTTON))
+    if (JOY_NEW(A_BUTTON) && gTasks[taskId].data[3] < 9)
+    {
+        gSpecialVar_0x8004 = ++gTasks[taskId].data[3];
+        gSpecialVar_0x8005 = 1;
+        ChaosBuildRecordsPage();
+        FillWindowPixelBuffer(1, PIXEL_FILL(1));
+        AddTextPrinterParameterized3(1, FONT_SMALL, 3, 1, sTextColors[1], 0, gStringVar4);
+        CopyWindowToVram(1, COPYWIN_FULL);
+    }
+    else if (JOY_NEW(A_BUTTON | B_BUTTON))
     {
         FadeOutBGM(4);
         gTasks[taskId].func = Task_Hof_HandlePaletteOnExit;

@@ -146,4 +146,10 @@ void CreateNPCTrainerPartyFromTrainer(struct Pokemon *party, const struct Traine
 
 bool8 NuzlockeAreaEncounterUsed(void);
 bool8 NuzlockeMapSectionEncounterUsed(u16 mapSecId);
+bool8 NuzlockeMapSectionEncounterFailed(u16 section);
+void ChaosEnsureRunRecords(void);
+
+bool32 NuzlockeCanCatchMon(struct Pokemon *mon);
+void NuzlockeRecordCapture(struct Pokemon *mon);
+
 #endif // GUARD_BATTLE_SETUP_H

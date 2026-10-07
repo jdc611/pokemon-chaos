@@ -87,6 +87,7 @@ static const u16 sMapSecInfoWindow_Pal[] = INCGFX_U16("graphics/pokenav/region_m
 static const u32 sRegionMapCityZoomTiles_Gfx[] = INCGFX_U32("graphics/pokenav/region_map/zoom_tiles.png", ".4bpp.smol");
 static const u8 sText_NuzlockeEncounterAvailable[] = _("Encounter: AVAILABLE");
 static const u8 sText_NuzlockeEncounterUsed[] = _("Encounter: USED");
+static const u8 sText_NuzlockeEncounterFailed[] = _("Encounter: FAILED");
 
 #include "data/region_map/city_map_tilemaps.h"
 
@@ -566,8 +567,8 @@ static void UpdateMapSecInfoWindow(struct Pokenav_RegionMapGfx *state)
     struct RegionMap *regionMap = GetSubstructPtr(POKENAV_SUBSTRUCT_REGION_MAP);
     const u8 *encounterText = NULL;
 
-    if (gSaveBlock3Ptr->runDifficulty == RUN_DIFFICULTY_NUZLOCKE && regionMap->mapSecType != MAPSECTYPE_NONE)
-        encounterText = NuzlockeMapSectionEncounterUsed(regionMap->mapSecId) ? sText_NuzlockeEncounterUsed : sText_NuzlockeEncounterAvailable;
+    if (IsNuzlockeRun() && regionMap->mapSecType != MAPSECTYPE_NONE)
+        encounterText = NuzlockeMapSectionEncounterUsed(regionMap->mapSecId) ? NuzlockeMapSectionEncounterFailed(regionMap->mapSecId) ? sText_NuzlockeEncounterFailed : sText_NuzlockeEncounterUsed : sText_NuzlockeEncounterAvailable;
     switch (regionMap->mapSecType)
     {
     case MAPSECTYPE_CITY_CANFLY:

@@ -2,6 +2,7 @@ FuchsiaCity_Gym_Frlg_MapScripts::
 	.byte 0
 
 FuchsiaCity_Gym_EventScript_Koga::
+	call_if_set FLAG_BADGE05_GET, FuchsiaCity_Gym_EventScript_ClaimChaosStone
 	goto_if_unset FLAG_BADGE06_GET, EventScript_ChaosKogaLocked
 	specialvar VAR_RESULT, ChaosAllGymRematchesCleared
 	goto_if_eq VAR_RESULT, FALSE, EventScript_ChaosKogaLocked
@@ -19,6 +20,8 @@ FuchsiaCity_Gym_EventScript_DefeatedKoga::
 	clearflag FLAG_HIDE_FAME_CHECKER_KOGA_JOURNAL
 	setflag FLAG_DEFEATED_KOGA
 	setflag FLAG_BADGE05_GET
+	setvar VAR_0x8004, 3
+	call EventScript_ChaosClaimGymStone
 	set_gym_trainers_frlg 5
 	goto FuchsiaCity_Gym_EventScript_GiveTM06
 	end
@@ -267,3 +270,8 @@ Text_ChaosKogaRematchRequirement::
 Text_ChaosKogaNeedTwo::
 	.string "Bring two battle-ready POKéMON.\n"
 	.string "My challenge is a Double Battle!$"
+
+FuchsiaCity_Gym_EventScript_ClaimChaosStone::
+	setvar VAR_0x8004, 3
+	call EventScript_ChaosClaimGymStone
+	return

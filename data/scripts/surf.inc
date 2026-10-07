@@ -36,18 +36,24 @@ EventScript_UseFishSelected::
 	goto EventScript_ReleaseUseSurf
 
 EventScript_FishOldRod::
+	checkitem ITEM_OLD_ROD
+	goto_if_eq VAR_RESULT, FALSE, EventScript_ChaosMissingRod
 	closemessage
 	releaseall
 	callnative StartFishingOldRodFromWaterMenu
 	end
 
 EventScript_FishGoodRod::
+	checkitem ITEM_GOOD_ROD
+	goto_if_eq VAR_RESULT, FALSE, EventScript_ChaosMissingRod
 	closemessage
 	releaseall
 	callnative StartFishingGoodRodFromWaterMenu
 	end
 
 EventScript_FishSuperRod::
+	checkitem ITEM_SUPER_ROD
+	goto_if_eq VAR_RESULT, FALSE, EventScript_ChaosMissingRod
 	closemessage
 	releaseall
 	callnative StartFishingSuperRodFromWaterMenu
@@ -67,3 +73,105 @@ EventScript_CurrentTooFast::
 EventScript_CurrentTooFastEndMsg::
 	releaseall
 	end
+
+EventScript_ChaosMissingRod::
+ checkitem ITEM_OLD_ROD
+ goto_if_eq VAR_RESULT, TRUE, EventScript_ChaosBetterRod
+ checkitem ITEM_GOOD_ROD
+ goto_if_eq VAR_RESULT, TRUE, EventScript_ChaosBetterRod
+ checkitem ITEM_SUPER_ROD
+ goto_if_eq VAR_RESULT, TRUE, EventScript_ChaosBetterRod
+ msgbox Text_ChaosNoRod
+ goto EventScript_ReleaseUseSurf
+EventScript_ChaosBetterRod::
+ msgbox Text_ChaosBetterRod
+ goto EventScript_ReleaseUseSurf
+Text_ChaosNoRod::
+ .string "You don't have a fishing rod yet!$"
+Text_ChaosBetterRod::
+ .string "You need a better fishing rod\n"
+ .string "to fish here.$"
+
+EventScript_ChaosTrainToCap::
+ lockall
+ callnative ChaosBufferLevelCap
+ msgbox Text_ChaosCurrentCap
+ closemessage
+ multichoice 0, 0, MULTI_CHAOS_TRAIN_TO_CAP, FALSE
+ goto_if_eq VAR_RESULT, 0, EventScript_ChaosTrainWhole
+ goto_if_eq VAR_RESULT, 1, EventScript_ChaosTrainOne
+ releaseall
+ end
+EventScript_ChaosTrainWhole::
+ callnative ChaosTrainWholeParty
+ waitstate
+ releaseall
+ end
+EventScript_ChaosTrainOne::
+ callnative ChooseMonForTrainToCap
+ waitstate
+ releaseall
+ end
+Text_ChaosCurrentCap::
+ .string "Current level cap: {STR_VAR_1}\p"
+ .string "Train freely, then use MOVE\n"
+ .string "RELEARNER to choose your moves.$"
+
+EventScript_ChaosRecordsNurse::
+ lock
+ faceplayer
+ msgbox Text_ChaosRecordsWelcome, MSGBOX_YESNO
+ goto_if_eq VAR_RESULT, NO, EventScript_ChaosRecordsCare
+ setvar VAR_0x8005, 0
+ checkflag FLAG_SYS_GAME_CLEAR
+ goto_if FALSE, EventScript_ChaosRecordsCurrent
+ msgbox Text_ChaosRecordsLeague, MSGBOX_YESNO
+ goto_if_eq VAR_RESULT, NO, EventScript_ChaosRecordsCurrent
+ setvar VAR_0x8005, 1
+EventScript_ChaosRecordsCurrent::
+ callnative ChaosOpenRunRecords
+ waitstate
+EventScript_ChaosRecordsCare::
+ callnative ChaosClaimCarePackage
+ goto_if_eq VAR_RESULT, 1, EventScript_ChaosCareReceived
+ goto_if_eq VAR_RESULT, 2, EventScript_ChaosCareBagFull
+ release
+ end
+EventScript_ChaosCareReceived::
+ playfanfare MUS_OBTAIN_ITEM
+ msgbox Text_ChaosCareReceived
+ waitfanfare
+ release
+ end
+EventScript_ChaosCareBagFull::
+ msgbox Text_ChaosCareBagFull
+ release
+ end
+Text_ChaosRecordsWelcome::
+ .string "I keep your RUN RECORDS!\nWould you like to see them?$"
+Text_ChaosRecordsLeague::
+ .string "Open your completed LEAGUE record?\nNO shows your current run.$"
+Text_ChaosCareReceived::
+ .string "A CHAOS CARE PACKAGE for you!\nBalls, berries, and useful supplies.\p"
+ .string "This bundle is yours to keep.\nCome back as your journey grows!$"
+Text_ChaosCareBagFull::
+ .string "Please make room in your BAG.\nI'll hold your CARE PACKAGE here.$"
+
+EventScript_ChaosClaimGymStone::
+	lock
+	faceplayer
+	callnative ChaosClaimGymStone
+	goto_if_eq VAR_RESULT, 2, EventScript_ChaosGymStoneBagFull
+	goto_if_ne VAR_RESULT, 1, EventScript_ChaosGymStoneDone
+	playfanfare MUS_OBTAIN_ITEM
+	msgbox Text_ChaosGymStoneReceived
+	waitfanfare
+EventScript_ChaosGymStoneDone::
+	return
+EventScript_ChaosGymStoneBagFull::
+	msgbox Text_ChaosGymStoneBagFull
+	return
+Text_ChaosGymStoneReceived::
+	.string "{PLAYER} received {STR_VAR_1}!\pA Mega Stone to honor your victory!$"
+Text_ChaosGymStoneBagFull::
+	.string "Your Bag has no room for my stone.\nCome back after making room!$"
