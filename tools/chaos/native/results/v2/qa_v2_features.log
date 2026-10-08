@@ -1,0 +1,14 @@
+PASS MGM perfect IVs, zero battle/direct-write EVs, vitamin rejection; normal vitamin use.
+PASS EXP All default ON and independent OFF/ON setting.
+PASS egg vendor 0 one delivery, one charge, own receipt and full-party PC handling
+PASS egg vendor 1 one delivery, one charge, own receipt and full-party PC handling
+PASS egg vendor 2 one delivery, one charge, own receipt and full-party PC handling
+PASS care package 1 all item quantities, 999 candies and replay guard
+PASS care package 2 all item quantities, 999 candies and replay guard
+PASS care package 3 all item quantities, 999 candies and replay guard
+EVO 64 0 796 -> 65
+EVO 123 441 796 -> 212
+EVO 79 465 796 -> 199
+EVO 133 0 215 -> 471
+EVO 102 0 216 -> 972
+PASS representative Link Cable, held-item, stone and regional single-player evolutions.

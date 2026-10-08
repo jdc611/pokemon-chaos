@@ -475,6 +475,8 @@ void DrawMultichoiceMenuInternal(u8 left, u8 top, u8 multichoiceId, bool8 ignore
 
     newWidth = ConvertPixelWidthToTileWidth(width);
     left = ScriptMenu_AdjustLeftCoordFromWidth(left, newWidth);
+    // Custom menus may have replaced the standard border palette since entry.
+    LoadMessageBoxAndBorderGfx();
     windowId = CreateWindowFromRect(left, top, newWidth, count * 2);
     SetStandardWindowBorderStyle(windowId, FALSE);
     PrintMenuTable(windowId, count, actions);

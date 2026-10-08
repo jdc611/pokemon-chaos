@@ -494,7 +494,7 @@ static void BuildNormalStartMenu(void)
         if (!IS_FRLG || (VarGet(VAR_CHAOS_TRAINING_UNLOCKED) || VarGet(VAR_MAP_SCENE_PEWTER_CITY) >= 2))
         {
             AddStartMenuAction(MENU_ACTION_TRAIN_TO_CAP);
-            AddStartMenuAction(MENU_ACTION_MOVE_RELEARNER);
+
         }
         AddStartMenuAction(MENU_ACTION_GAME_OPTIONS);
         AddStartMenuAction(MENU_ACTION_GAME_INFO);
@@ -874,6 +874,7 @@ static bool8 HandleStartMenuInput(void)
             && gMenuCallback != StartMenuTimeChanger
             && gMenuCallback != StartMenuAutoRepel
             && gMenuCallback != StartMenuMoveRelearner
+            && gMenuCallback != StartMenuTrainToCap
             && gMenuCallback != StartMenuGameOptions
             && gMenuCallback != StartMenuGameInfo
             && gMenuCallback != StartMenuGameRules

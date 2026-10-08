@@ -31,6 +31,8 @@
 #include "constants/rgb.h"
 #include "chaos_arcade.h"
 #include "fieldmap.h"
+#include "naming_screen.h"
+#include "run_settings.h"
 #include "field_camera.h"
 
 struct ArcadePrize {enum Species species; u16 price;};
@@ -196,6 +198,26 @@ void ChaosArcadePrizePrepare(void)
     text = ConvertIntToDecimalStringN(text, sPrizeDraft->price, STR_CONV_MODE_LEFT_ALIGN, 4);
     StringCopy(text, COMPOUND_STRING(" COINS"));
     gSpecialVar_Result = DoesMonMatchActiveRunFilter(mon) ? 0 : 1;
+}
+void ChaosArcadePrizeNeedsNickname(void)
+{
+    gSpecialVar_Result = IsNuzlockeRun();
+}
+static void PrizeNicknameDone(void)
+{
+    CB2_ReturnToFieldContinueScript();
+}
+void ChaosArcadePrizeNickname(void)
+{
+    if (sPrizeDraft == NULL || !sPrizeDraft->prepared) return;
+    GetMonData(&sPrizeDraft->mon, MON_DATA_NICKNAME, gStringVar3);
+    DoNamingScreen(NAMING_SCREEN_NICKNAME, gStringVar3, sPrizeDraft->species,
+                   GetMonGender(&sPrizeDraft->mon), GetMonData(&sPrizeDraft->mon, MON_DATA_PERSONALITY), PrizeNicknameDone);
+}
+void ChaosArcadePrizeSetNickname(void)
+{
+    if (sPrizeDraft != NULL && sPrizeDraft->prepared)
+        SetMonData(&sPrizeDraft->mon, MON_DATA_NICKNAME, gStringVar3);
 }
 void ChaosArcadePrizeBuy(void)
 {

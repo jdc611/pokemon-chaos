@@ -441,14 +441,6 @@ u32 MapGridGetMetatileAttributeAt(s16 x, s16 y, u8 attributeType)
 
 u32 MapGridGetMetatileBehaviorAt(s32 x, s32 y)
 {
-    // Keep the native animated flowers. Only this accessible fenced garden
-    // gains encounters; other flower beds retain their ordinary behavior.
-    u32 tile = MapGridGetMetatileIdAt(x, y);
-    if (IS_FRLG && gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_PEWTER_CITY)
-     && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_PEWTER_CITY)
-     && x >= 27 + MAP_OFFSET && x <= 35 + MAP_OFFSET
-     && y >= 26 + MAP_OFFSET && y <= 29 + MAP_OFFSET
-     && (tile == 0x10 || tile == 0x11)) return MB_TALL_GRASS;
     return MapGridGetMetatileAttributeAt(x, y, METATILE_ATTRIBUTE_BEHAVIOR);
 }
 

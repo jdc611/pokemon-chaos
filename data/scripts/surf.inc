@@ -175,3 +175,71 @@ Text_ChaosGymStoneReceived::
 	.string "{PLAYER} received {STR_VAR_1}!\pA Mega Stone to honor your victory!$"
 Text_ChaosGymStoneBagFull::
 	.string "Your Bag has no room for my stone.\nCome back after making room!$"
+
+EventScript_ChaosV2CareReceived::
+ lockall
+ playfanfare MUS_OBTAIN_ITEM
+ msgbox Text_ChaosV2CareReceived
+ waitfanfare
+EventScript_ChaosV2CarePages::
+ callnative ChaosCareNextPage
+ goto_if_eq VAR_RESULT, FALSE, EventScript_ChaosV2CareDone
+ msgbox gStringVar4
+ goto EventScript_ChaosV2CarePages
+EventScript_ChaosV2CareDone::
+ releaseall
+ end
+EventScript_ChaosV2CareFull::
+ lockall
+ msgbox Text_ChaosV2CareFull
+ releaseall
+ end
+Text_ChaosV2CareReceived::
+ .string "CARE PACKAGE RECEIVED!$"
+Text_ChaosV2CareFull::
+ .string "Your CARE PACKAGE is waiting!\nPlease make room in your BAG.\p"
+ .string "Return to this area to receive it.$"
+ChaosMysteryEggVendor0::
+ setvar VAR_0x8004, 0
+ goto ChaosMysteryEggVendor
+ChaosMysteryEggVendor1::
+ setvar VAR_0x8004, 1
+ goto ChaosMysteryEggVendor
+ChaosMysteryEggVendor2::
+ setvar VAR_0x8004, 2
+ goto ChaosMysteryEggVendor
+ChaosMysteryEggVendor::
+ lock
+ faceplayer
+ msgbox Text_ChaosMysteryEggOffer, MSGBOX_YESNO
+ goto_if_eq VAR_RESULT, NO, ChaosMysteryEggVendorDone
+ callnative ChaosBuyMysteryEgg
+ goto_if_eq VAR_RESULT, 1, ChaosMysteryEggVendorMoney
+ goto_if_eq VAR_RESULT, 2, ChaosMysteryEggVendorSpace
+ goto_if_eq VAR_RESULT, 3, ChaosMysteryEggVendorSold
+ playfanfare MUS_OBTAIN_ITEM
+ msgbox Text_ChaosMysteryEggReceived
+ waitfanfare
+ChaosMysteryEggVendorDone::
+ release
+ end
+ChaosMysteryEggVendorMoney::
+ msgbox Text_ChaosMysteryEggMoney
+ goto ChaosMysteryEggVendorDone
+ChaosMysteryEggVendorSpace::
+ msgbox Text_ChaosMysteryEggSpace
+ goto ChaosMysteryEggVendorDone
+ChaosMysteryEggVendorSold::
+ msgbox Text_ChaosMysteryEggSold
+ goto ChaosMysteryEggVendorDone
+Text_ChaosMysteryEggOffer::
+ .string "One MYSTERY EGG, only $5,000!\nA surprise with great potential.\p"
+ .string "I can offer just one per trainer.\nWould you like to buy it?$"
+Text_ChaosMysteryEggReceived::
+ .string "You received a MYSTERY EGG!\nIf your party is full, check your PC.$"
+Text_ChaosMysteryEggMoney::
+ .string "Not quite enough money yet.\nCome back whenever you're ready!$"
+Text_ChaosMysteryEggSpace::
+ .string "Your party and PC need some room.\nI haven't charged you a thing!$"
+Text_ChaosMysteryEggSold::
+ .string "That's my one EGG for you!\nTake good care of the little one.$"

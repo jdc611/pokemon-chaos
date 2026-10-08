@@ -261,7 +261,7 @@ static bool32 Fishing_ShowDots(struct Task *task)
 
     AlignFishingAnimationFrames();
     task->tFrameCounter++;
-    if (JOY_NEW(A_BUTTON))
+    if (FALSE) // Auto-hooking ignores premature A presses.
     {
         if (!DoesFishingMinigameAllowCancel())
             return FALSE;
@@ -562,7 +562,7 @@ static u32 CalculateFishingBiteOdds(u32 rod, bool32 isStickyHold)
     if (isStickyHold && I_FISHING_STICKY_BOOST >= GEN_4)
         odds *= 2;
 
-    odds = min(100, odds);
+    odds = min(95, max(85, odds));
     return odds;
 }
 

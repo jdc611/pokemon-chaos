@@ -232,10 +232,9 @@ EventScript_ChangeAbility::
     goto_if_ge VAR_0x8004, PARTY_SIZE, EventScript_ChangeAbility_Close
     specialvar VAR_RESULT, ScriptGetPartyMonSpecies
     goto_if_eq VAR_RESULT, SPECIES_EGG, EventScript_ChangeAbility_Close
-    special ToggleSelectedMonNormalAbility
-    goto_if_eq VAR_RESULT, 1, EventScript_ChangeAbility_NoAlternate
-    goto_if_eq VAR_RESULT, 2, EventScript_ChangeAbility_Hidden
-    goto_if_eq VAR_RESULT, 3, EventScript_ChangeAbility_FilterBlocked
+    callnative ChaosOpenAbilityMenu
+    waitstate
+    goto_if_eq VAR_RESULT, FALSE, EventScript_ChangeAbility_Close
     msgbox EventScript_Text_AbilityChanged, MSGBOX_DEFAULT
     goto EventScript_ChangeAbility_Close
 

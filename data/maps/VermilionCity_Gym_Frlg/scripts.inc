@@ -44,6 +44,7 @@ VermilionCity_Gym_OnTransition::
 	end
 
 VermilionCity_Gym_EventScript_InitTrashCans::
+	goto_if_eq VAR_CHAOS_SURGE_FIRST_FOUND, 1, VermilionCity_Gym_EventScript_RestoreFirst
 	goto_if_set FLAG_FOUND_BOTH_VERMILION_GYM_SWITCHES, Common_EventScript_NopReturn
 	special SetVermilionTrashCans
 	copyvar VAR_TEMP_0, SWITCH1_ID
@@ -157,18 +158,15 @@ VermilionCity_Gym_EventScript_FoundSwitchOne::
 	call VermilionCity_Gym_EventScript_SetOneBeamOff
 	special DrawWholeMapView
 	setflag FOUND_FIRST_SWITCH
+	setvar VAR_CHAOS_SURGE_FIRST_FOUND, 1
+	copyvar VAR_CHAOS_SURGE_SWITCH1, SWITCH1_ID
+	copyvar VAR_CHAOS_SURGE_SWITCH2, SWITCH2_ID
 	releaseall
 	end
 
 VermilionCity_Gym_EventScript_TrySwitchTwo::
 	goto_if_eq SWITCH2_ID, TRASH_CAN_ID, VermilionCity_Gym_EventScript_FoundSwitchTwo
 	msgbox VermilionCity_Gym_Text_OnlyTrashLocksWereReset
-	clearflag FOUND_FIRST_SWITCH
-	special SetVermilionTrashCans
-	copyvar VAR_TEMP_0, SWITCH1_ID
-	copyvar VAR_TEMP_1, SWITCH2_ID
-	call VermilionCity_Gym_EventScript_SetBeamsOn
-	special DrawWholeMapView
 	releaseall
 	end
 
@@ -420,7 +418,7 @@ VermilionCity_Gym_Text_OnlyTrashLocksWereReset::
 	.string "Nope!\n"
 	.string "There's only trash here.\p"
 	.string "Hey!\n"
-	.string "The electric locks were reset!$"
+	.string "The first lock stays open!$"
 
 
 VermilionCity_Gym_EventScript_LtSurgeChaosRematch::
@@ -439,3 +437,9 @@ VermilionCity_Gym_EventScript_LtSurgeChaosRematchWon::
 	msgbox Text_ChaosRematchWon
 	release
 	end
+
+VermilionCity_Gym_EventScript_RestoreFirst::
+	setflag FOUND_FIRST_SWITCH
+	copyvar VAR_TEMP_0, VAR_CHAOS_SURGE_SWITCH1
+	copyvar VAR_TEMP_1, VAR_CHAOS_SURGE_SWITCH2
+	return

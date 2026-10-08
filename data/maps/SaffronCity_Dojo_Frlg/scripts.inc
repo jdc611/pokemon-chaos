@@ -72,6 +72,7 @@ SaffronCity_Dojo_EventScript_ReceivedHitmonParty::
 	waitfanfare
 	setflag FLAG_GOT_HITMON_FROM_DOJO
 	msgbox gText_NicknameThisPokemon, MSGBOX_YESNO
+	callnative ChaosRequireNickname
 	goto_if_eq VAR_RESULT, NO, SaffronCity_Dojo_EventScript_EndGiveMon
 	call Common_EventScript_GetGiftMonPartySlot
 	call Common_EventScript_NameReceivedPartyMon
@@ -87,6 +88,7 @@ SaffronCity_Dojo_EventScript_ReceivedHitmonPC::
 	waitfanfare
 	setflag FLAG_GOT_HITMON_FROM_DOJO
 	msgbox gText_NicknameThisPokemon, MSGBOX_YESNO
+	callnative ChaosRequireNickname
 	goto_if_eq VAR_RESULT, NO, SaffronCity_Dojo_EventScript_TransferredHitmonToPC
 	call Common_EventScript_NameReceivedBoxMon
 	goto SaffronCity_Dojo_EventScript_TransferredHitmonToPC

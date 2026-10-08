@@ -1136,6 +1136,7 @@ PalletTown_ProfessorOaksLab_EventScript_ChoseStarter::
 	playfanfare MUS_RG_OBTAIN_KEY_ITEM
 	waitfanfare
 	msgbox gText_NicknameThisPokemon, MSGBOX_YESNO
+	callnative ChaosRequireNickname
 	goto_if_eq VAR_RESULT, YES, EventScript_GiveNicknameToStarter
 	goto_if_eq VAR_RESULT, NO, PalletTown_ProfessorOaksLab_EventScript_RivalPicksStarter
 	end

@@ -1,3 +1,15 @@
+# Latest master — October 8 V2 playtest
+
+V2 implementation is in one final compiled FireRed ROM. See [V2 implementation and verification](chaos-v2-verification.md) for all directive sections, exact artifact hash, test evidence and unresolved limitations. All 21 host suites and 27 final native suites passed, plus branch and actual Ranch/menu supplementary tests. Preserve this work when continuing from master.
+
+Important: the intermittent Mt. Moon exterior Center black screen did not reproduce in 24 native transition cycles; its cause is still unconfirmed. Do not describe it as definitively fixed. No full Delta playthrough, audio/backgrounding verification, or supplied old-save migration test has been performed.
+
+New V2 systems: default-ON EXP All, party Rename/Relearn with legitimate Egg Moves, species ability chooser with filter restrictions, native six-icon TM details, Evolution & Growth with current-form Chaos Rating, three one-time Mystery Egg vendors, exactly three automatic Care Packages, postbattle held-berry restoration, accessible evolution methods and count-free Oak aides. Full-party capture restoration/order, strict cap zero EXP, MGM EV suppression and Summary final-stage/63-branch safety are regression-tested. SaveBlock3 remains 1,564 bytes.
+
+The deferred Viridian Forest expansion and unfinished Mewtwo/Pallet/Chaossal/succession endgame remain out of scope. Scyther placeholder art is not promoted. Protected Mega/TM placements and prior V1 unlocks remain intact. Native test states must be regenerated after any build.
+
+---
+
 # Latest master — October 6 stabilization directive
 
 Completed October 7: all 26 items are in one verified native FireRed playtest build. See [implementation and verification](chaos-stabilization-verification.md) for item-by-item evidence, exact ROM hash, acquisition audits and practical testing limits. All 21 host suites and native integration checks passed. The next full Delta playthrough is the primary balance/progression QA pass.

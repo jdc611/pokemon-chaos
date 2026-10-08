@@ -2232,7 +2232,7 @@ static void Cmd_getexp(void)
             if (GetConfig(B_TRAINER_EXP_MULTIPLIER) <= GEN_7 && gBattleTypeFlags & BATTLE_TYPE_TRAINER)
                 calculatedExp = (calculatedExp * 150) / 100;
 
-            if (GetConfig(B_SPLIT_EXP) < GEN_6)
+            if (GetConfig(B_SPLIT_EXP) < GEN_6 && !IsGen6ExpShareEnabled())
             {
                 if (viaExpShare) // at least one mon is getting exp via exp share
                 {
@@ -2307,7 +2307,7 @@ static void Cmd_getexp(void)
                         gBattleStruct->battlerExpReward = 0;
 
                     if ((holdEffect == HOLD_EFFECT_EXP_SHARE || IsGen6ExpShareEnabled())
-                        && (B_SPLIT_EXP < GEN_6 || gBattleStruct->battlerExpReward == 0)) // only give exp share bonus in later gens if the mon wasn't sent out
+                        && ((B_SPLIT_EXP < GEN_6 && !IsGen6ExpShareEnabled()) || gBattleStruct->battlerExpReward == 0)) // only give exp share bonus in later gens if the mon wasn't sent out
                     {
                         gBattleStruct->battlerExpReward += GetSoftLevelCapExpValue(gParties[B_TRAINER_PLAYER][*expMonId].level, gBattleStruct->expShareExpValue);
                     }
@@ -2321,7 +2321,7 @@ static void Cmd_getexp(void)
                         u32 levelCap = GetCurrentLevelCap();
 
                         if (GetMonData(&gParties[B_TRAINER_PLAYER][*expMonId], MON_DATA_LEVEL) >= levelCap)
-                            gBattleStruct->battlerExpReward = 1;
+                            gBattleStruct->battlerExpReward = 0;
                         else if (gExperienceTables[growthRate][levelCap] < currentExp + gBattleStruct->battlerExpReward)
                             gBattleStruct->battlerExpReward = gExperienceTables[growthRate][levelCap] - currentExp;
                     }
@@ -4425,6 +4425,12 @@ static void Cmd_removeitem(void)
      && GetMoveEffect(gCurrentMove) != EFFECT_CORROSIVE_GAS)
         GetBattlerPartyState(battler)->usedHeldItem = itemId; // Remember if switched out
 
+    if (GetItemPocket(itemId) == POCKET_BERRIES && GetBattlerPartyState(battler)->ateBerry)
+    {
+        GetBattlerPartyState(battler)->chaosBerryConsumed = TRUE;
+        if (itemId == gBattleStruct->itemLost[GetBattlerTrainer(battler)][gBattlerPartyIndexes[battler]].originalItem)
+            GetBattlerPartyState(battler)->chaosOriginalBerryConsumed = TRUE;
+    }
     gBattleMons[battler].item = ITEM_NONE;
     gBattleStruct->battlerState[battler].canPickupItem = TRUE;
     gBattleStruct->adrenalineOrbActivated = FALSE;
@@ -8347,6 +8353,8 @@ static void Cmd_givecaughtmon(void)
     case GIVECAUGHTMON_DO_CHOOSE_MON:
         if (!gPaletteFade.active)
         {
+            BufferBattlePartyCurrentOrderBySide(gBattlerAttacker, 0);
+            gSelectedMonPartyId = PARTY_SIZE;
             BtlController_EmitChoosePokemon(gBattlerAttacker, B_COMM_TO_CONTROLLER, PARTY_ACTION_SEND_MON_TO_BOX, PARTY_SIZE, ABILITY_NONE, 0, gBattleStruct->battlerPartyOrders[gBattlerAttacker]);
             MarkBattlerForControllerExec(gBattlerAttacker);
             gBattleCommunication[MULTIUSE_STATE] = GIVECAUGHTMON_HANDLE_CHOSEN_MON;
@@ -8634,13 +8642,15 @@ static void Cmd_trygivecaughtmonnick(void)
             }
             else
             {
-                gBattleCommunication[MULTIUSE_STATE] = 4;
+                gBattleCommunication[MULTIUSE_STATE] = IsNuzlockeRun() ? 2 : 4;
+                if (IsNuzlockeRun()) BeginFastPaletteFade(3);
             }
         }
         else if (JOY_NEW(B_BUTTON))
         {
             PlaySE(SE_SELECT);
-            gBattleCommunication[MULTIUSE_STATE] = 4;
+            gBattleCommunication[MULTIUSE_STATE] = IsNuzlockeRun() ? 2 : 4;
+                if (IsNuzlockeRun()) BeginFastPaletteFade(3);
         }
         break;
     case 2:
@@ -8649,7 +8659,7 @@ static void Cmd_trygivecaughtmonnick(void)
             struct Pokemon *caughtMon = GetBattlerMon(gBattlerTarget);
             GetMonData(caughtMon, MON_DATA_NICKNAME, gBattleStruct->caughtMonNick);
             CloseMainBattleScreen();
-            MainCallback callback = CalculatePlayerPartyCount() == PARTY_SIZE ? ReshowBlankBattleScreenAfterMenu : BattleMainCB2;
+            MainCallback callback = ReshowBlankBattleScreenAfterMenu;
 
             DoNamingScreen(NAMING_SCREEN_CAUGHT_MON, gBattleStruct->caughtMonNick,
                            GetMonData(caughtMon, MON_DATA_SPECIES),

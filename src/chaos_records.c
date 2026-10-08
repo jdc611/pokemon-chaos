@@ -367,37 +367,9 @@ void ChaosBuildLeagueBanner(void)
     AddNumber(COMPOUND_STRING("Seed: "), gSaveBlock3Ptr->leagueSeed, FALSE);
 }
 
-// Four curated one-time bundles. Adding every item is transactional: on a
-// full pocket, roll back and leave the bundle available for the next visit.
-void ChaosClaimCarePackage(void)
-{
-    static const u16 items[4][5] = {
-        {ITEM_POKE_BALL, ITEM_PREMIER_BALL, ITEM_ORAN_BERRY, ITEM_CHERI_BERRY, ITEM_RARE_CANDY},
-        {ITEM_GREAT_BALL, ITEM_NET_BALL, ITEM_SITRUS_BERRY, ITEM_PECHA_BERRY, ITEM_MOON_STONE},
-        {ITEM_ULTRA_BALL, ITEM_DUSK_BALL, ITEM_LUM_BERRY, ITEM_WATER_STONE, ITEM_RARE_CANDY},
-        {ITEM_ULTRA_BALL, ITEM_TIMER_BALL, ITEM_SITRUS_BERRY, ITEM_FIRE_STONE, ITEM_RARE_CANDY}
-    };
-    static const u16 quantities[4][5] = {{25,10,8,5,3},{25,15,8,5,1},{30,15,5,1,5},{35,20,12,1,8}};
-    static const u8 badges[] = {1,2,4,6};
-    ChaosEnsureRunRecords();
-    gSpecialVar_Result = 0;
-    if (!VarGet(VAR_CHAOS_CARE_PACKAGES)) return;
-    for (u32 bundle = 0; bundle < 4; bundle++)
-    {
-        if (BadgeCount() < badges[bundle] || gSaveBlock3Ptr->runCounters[15] & (1 << bundle)) continue;
-        u32 i;
-        for (i = 0; i < 5; i++) if (!AddBagItem(items[bundle][i], quantities[bundle][i])) break;
-        if (i < 5)
-        {
-            while (i > 0) {i--; RemoveBagItem(items[bundle][i], quantities[bundle][i]);}
-            gSpecialVar_Result = 2;
-            return;
-        }
-        gSaveBlock3Ptr->runCounters[15] |= 1 << bundle;
-        gSpecialVar_Result = 1;
-        return;
-    }
-}
+// Superseded by the three automatic V2 milestones. Keep the native symbol
+// for old script references; nurses no longer award packages.
+void ChaosClaimCarePackage(void) { gSpecialVar_Result = 0; }
 
 // Reward claims remain retryable after a win when the Items pocket is full.
 void ChaosClaimGymStone(void)

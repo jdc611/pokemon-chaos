@@ -28,6 +28,7 @@
 #define tButtonMode data[5]
 #define tWindowFrameType data[6]
 #define tTypeHints data[7]
+#define tExpAll data[8]
 
 enum
 {
@@ -38,6 +39,7 @@ enum
     MENUITEM_BUTTONMODE,
     MENUITEM_FRAMETYPE,
     MENUITEM_TYPEHINTS,
+    MENUITEM_EXPALL,
     MENUITEM_CANCEL,
     MENUITEM_COUNT,
 };
@@ -48,7 +50,7 @@ enum
     WIN_OPTIONS
 };
 
-#define OPTION_ROW_HEIGHT 14
+#define OPTION_ROW_HEIGHT 12
 #define YPOS_TEXTSPEED    (MENUITEM_TEXTSPEED * OPTION_ROW_HEIGHT)
 #define YPOS_BATTLESCENE  (MENUITEM_BATTLESCENE * OPTION_ROW_HEIGHT)
 #define YPOS_BATTLESTYLE  (MENUITEM_BATTLESTYLE * OPTION_ROW_HEIGHT)
@@ -76,6 +78,7 @@ static u8 ButtonMode_ProcessInput(u8 selection);
 static void ButtonMode_DrawChoices(u8 selection);
 static u8 TypeHints_ProcessInput(u8 selection);
 static void TypeHints_DrawChoices(u8 selection);
+static void ExpAll_DrawChoices(u8 selection);
 static void DrawHeaderText(void);
 static void DrawOptionMenuTexts(void);
 static void DrawBgWindowFrames(void);
@@ -115,6 +118,7 @@ static const u8 *const sOptionMenuItemsNames[MENUITEM_COUNT] =
     [MENUITEM_BUTTONMODE]  = COMPOUND_STRING("BUTTON MODE"),
     [MENUITEM_FRAMETYPE]   = COMPOUND_STRING("FRAME"),
     [MENUITEM_TYPEHINTS]   = COMPOUND_STRING("TYPE HINTS"),
+    [MENUITEM_EXPALL] = COMPOUND_STRING("EXP ALL"),
     [MENUITEM_CANCEL]      = COMPOUND_STRING("CANCEL"),
 };
 
@@ -268,6 +272,7 @@ void CB2_InitOptionMenu(void)
         gTasks[taskId].tButtonMode = gSaveBlock2Ptr->optionsButtonMode;
         gTasks[taskId].tWindowFrameType = gSaveBlock2Ptr->optionsWindowFrameType;
         gTasks[taskId].tTypeHints = VarGet(VAR_TYPE_HINTS_MODE);
+        gTasks[taskId].tExpAll = VarGet(VAR_CHAOS_EXP_ALL) != 2;
 
         TextSpeed_DrawChoices(gTasks[taskId].tTextSpeed);
         BattleScene_DrawChoices(gTasks[taskId].tBattleSceneOff);
@@ -276,6 +281,7 @@ void CB2_InitOptionMenu(void)
         ButtonMode_DrawChoices(gTasks[taskId].tButtonMode);
         FrameType_DrawChoices(gTasks[taskId].tWindowFrameType);
         TypeHints_DrawChoices(gTasks[taskId].tTypeHints);
+        ExpAll_DrawChoices(gTasks[taskId].tExpAll);
         HighlightOptionMenuItem(gTasks[taskId].tMenuSelection);
 
         CopyWindowToVram(WIN_OPTIONS, COPYWIN_FULL);
@@ -329,6 +335,14 @@ static void Task_OptionMenuProcessInput(u8 taskId)
 
         switch (gTasks[taskId].tMenuSelection)
         {
+        case MENUITEM_EXPALL:
+            if (JOY_NEW(DPAD_LEFT | DPAD_RIGHT))
+            {
+                gTasks[taskId].tExpAll ^= 1;
+                ExpAll_DrawChoices(gTasks[taskId].tExpAll);
+                CopyWindowToVram(WIN_OPTIONS, COPYWIN_GFX);
+            }
+            break;
         case MENUITEM_TEXTSPEED:
             previousOption = gTasks[taskId].tTextSpeed;
             gTasks[taskId].tTextSpeed = TextSpeed_ProcessInput(gTasks[taskId].tTextSpeed);
@@ -398,6 +412,7 @@ static void Task_OptionMenuSave(u8 taskId)
     gSaveBlock2Ptr->optionsButtonMode = gTasks[taskId].tButtonMode;
     gSaveBlock2Ptr->optionsWindowFrameType = gTasks[taskId].tWindowFrameType;
     VarSet(VAR_TYPE_HINTS_MODE, gTasks[taskId].tTypeHints);
+    VarSet(VAR_CHAOS_EXP_ALL, gTasks[taskId].tExpAll ? 1 : 2);
 
     BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
     gTasks[taskId].func = Task_OptionMenuFadeOut;
@@ -416,7 +431,7 @@ static void Task_OptionMenuFadeOut(u8 taskId)
 static void HighlightOptionMenuItem(u8 index)
 {
     SetGpuReg(REG_OFFSET_WIN0H, WIN_RANGE(16, DISPLAY_WIDTH - 16));
-    SetGpuReg(REG_OFFSET_WIN0V, WIN_RANGE(index * OPTION_ROW_HEIGHT + 40, index * OPTION_ROW_HEIGHT + 54));
+    SetGpuReg(REG_OFFSET_WIN0V, WIN_RANGE(index * OPTION_ROW_HEIGHT + 40, index * OPTION_ROW_HEIGHT + 52));
 }
 
 static void DrawOptionMenuChoice(const u8 *text, u8 x, u8 y, u8 style)
@@ -733,4 +748,10 @@ static void DrawBgWindowFrames(void)
     FillBgTilemapBufferRect(1, TILE_BOT_CORNER_R, 28, 19,  1,  1,  7);
 
     CopyBgTilemapBufferToVram(1);
+}
+
+static void ExpAll_DrawChoices(u8 selection)
+{
+    FillWindowPixelRect(WIN_OPTIONS, PIXEL_FILL(1), 100, MENUITEM_EXPALL * OPTION_ROW_HEIGHT, 108, OPTION_ROW_HEIGHT);
+    DrawOptionMenuChoice(selection ? gText_BattleSceneOn : gText_BattleSceneOff, 100, MENUITEM_EXPALL * OPTION_ROW_HEIGHT, 0);
 }

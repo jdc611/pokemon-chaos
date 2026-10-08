@@ -1014,6 +1014,11 @@ enum ItemEffect ItemBattleEffects(enum BattlerId itemBattler, enum BattlerId bat
     else
         item = gBattleMons[itemBattler].item;
 
+    if (GetBattlerPartyState(itemBattler)->chaosBerryConsumed
+        && GetItemPocket(item) == POCKET_BERRIES && !gBattleScripting.overrideBerryRequirements
+        && timing != IsOnFlingActivation)
+        return effect;
+
     if (holdEffect == HOLD_EFFECT_NONE
      || !timing(holdEffect)
      || IsUnnerveBlocked(itemBattler, item))

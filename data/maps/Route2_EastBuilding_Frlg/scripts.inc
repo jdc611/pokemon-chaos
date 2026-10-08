@@ -8,13 +8,11 @@ Route2_EastBuilding_EventScript_Aide::
 	faceplayer
 	call Route2_EastBuilding_EventScript_GetAideRequestInfo
 	goto_if_set FLAG_GOT_HM05, Route2_EastBuilding_EventScript_AlreadyGotHM05
-	msgbox Route2_EastBuilding_Text_GiveHM05IfSeen10Mons, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, NO, Aide_EventScript_DeclineCheckMons
+	msgbox Text_ChaosAideJoke4
 	setvar VAR_0x8004, 0
 	specialvar VAR_RESULT, GetFrlgPokedexCount
 	buffernumberstring STR_VAR_3, VAR_0x8006
 	call Route2_EastBuilding_EventScript_GetAideRequestInfo
-	goto_if_lt VAR_0x8006, REQUIRED_SEEN_MONS, Aide_EventScript_HaventCaughtEnough
 	msgbox Route2_EastBuilding_Text_GreatHereYouGo
 	checkitemspace ITEM_HM05
 	goto_if_eq VAR_RESULT, FALSE, Aide_EventScript_NoRoomForItem
@@ -70,3 +68,6 @@ Route2_EastBuilding_Text_CanGetThroughRockTunnel::
 	.string "Once a POKéMON learns FLASH, you\n"
 	.string "can get through ROCK TUNNEL.$"
 
+
+Text_ChaosAideJoke4::
+	.string "The old quota? A filing error.\nPlease do not tell the professor!$"

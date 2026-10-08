@@ -556,7 +556,9 @@ struct PartyState
     u32 sentOut:1;
     u32 isKnockedOff:1;
     u32 freezeTurns:2;
-    u32 padding:3;
+    u32 chaosBerryConsumed:1;
+    u32 chaosOriginalBerryConsumed:1;
+    u32 padding:1;
     u16 chaosBaseMaxHp;
     u16 chaosHeroic:1;
     u16 chaosBond:1;

@@ -793,6 +793,11 @@ struct
     TaskFunc func;
 } static const sCursorOptions[MENU_FIELD_MOVES] =
 {
+    [MENU_RENAME]          = {COMPOUND_STRING("RENAME"), CursorCb_Rename},
+    [MENU_RELEARN]         = {COMPOUND_STRING("RELEARN"), CursorCb_Relearn},
+    [MENU_RELEARN_LEVEL]   = {COMPOUND_STRING("LEVEL UP"), CursorCb_RelearnType},
+    [MENU_RELEARN_TM]      = {COMPOUND_STRING("TM"), CursorCb_RelearnType},
+    [MENU_RELEARN_EGG]     = {COMPOUND_STRING("EGG MOVES"), CursorCb_RelearnType},
     [MENU_SUMMARY]         = {COMPOUND_STRING("SUMMARY"),         CursorCb_Summary},
     [MENU_SWITCH]          = {COMPOUND_STRING("SWITCH"),          CursorCb_Switch},
     [MENU_CANCEL1]         = {gText_Cancel2,                      CursorCb_Cancel1},

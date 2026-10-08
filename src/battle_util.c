@@ -5782,6 +5782,9 @@ enum HoldEffect GetBattlerHoldEffectInternal(enum BattlerId battler, enum Abilit
     }
 
     gPotentialItemEffectBattler = battler;
+    if (GetItemPocket(gBattleMons[battler].item) == POCKET_BERRIES
+        && GetBattlerPartyState(battler)->chaosBerryConsumed)
+        return HOLD_EFFECT_NONE;
     if (gBattleMons[battler].item == ITEM_ENIGMA_BERRY_E_READER)
         return gEnigmaBerries[battler].holdEffect;
     else
@@ -9334,6 +9337,18 @@ void SortBattlersBySpeed(enum BattlerId *battlers, bool32 slowToFast)
 
 void TryRestoreHeldItems(void)
 {
+    // Only a consumed original berry is restored. Theft, Knock Off and changed
+    // holders are not refunds, and an existing held item is never overwritten.
+    for (u32 i = 0; i < PARTY_SIZE; i++)
+    {
+        struct PartyState *state = &gBattleStruct->partyState[B_TRAINER_PLAYER][i];
+        enum Item original = gBattleStruct->itemLost[B_TRAINER_PLAYER][i].originalItem;
+        if (state->chaosOriginalBerryConsumed && !state->isKnockedOff
+            && !gBattleStruct->itemLost[B_TRAINER_PLAYER][i].stolen
+            && GetItemPocket(original) == POCKET_BERRIES
+            && GetMonData(&gParties[B_TRAINER_PLAYER][i], MON_DATA_HELD_ITEM) == ITEM_NONE)
+            SetMonData(&gParties[B_TRAINER_PLAYER][i], MON_DATA_HELD_ITEM, &original);
+    }
     if (!B_TRAINERS_KNOCK_OFF_ITEMS && B_RESTORE_HELD_BATTLE_ITEMS < GEN_9)
         return;
 
@@ -9345,8 +9360,8 @@ void TryRestoreHeldItems(void)
         {
             enum Item lostItem = gBattleStruct->itemLost[B_TRAINER_PLAYER][i].originalItem;
 
-            if (GetItemPocket(lostItem) == POCKET_BERRIES && GetMonData(&gParties[B_TRAINER_PLAYER][i], MON_DATA_HELD_ITEM) != lostItem)
-                lostItem = ITEM_NONE;
+            if (GetItemPocket(lostItem) == POCKET_BERRIES)
+                continue; // V2 berry refund above never clears a legitimately changed item.
 
             if ((lostItem != ITEM_NONE || returnNPCItems) && GetItemPocket(lostItem) != POCKET_BERRIES)
                 SetMonData(&gParties[B_TRAINER_PLAYER][i], MON_DATA_HELD_ITEM, &lostItem);
@@ -9671,6 +9686,7 @@ bool32 MoveEffectIsGuaranteed(enum BattlerId battler, enum Ability battlerAbilit
 
 bool32 IsGen6ExpShareEnabled(void)
 {
+    if (IS_FRLG) return VarGet(VAR_CHAOS_EXP_ALL) != 2;
     if (I_EXP_SHARE_FLAG <= TEMP_FLAGS_END)
         return FALSE;
 

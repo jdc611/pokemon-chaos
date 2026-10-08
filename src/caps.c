@@ -88,7 +88,7 @@ u32 GetSoftLevelCapExpValue(u32 level, u32 expValue)
     }
     else if (B_EXP_CAP_TYPE == EXP_CAP_HARD)
     {
-        return 1;
+        return 0;
     }
     else if (B_EXP_CAP_TYPE == EXP_CAP_SOFT)
     {
@@ -146,9 +146,8 @@ bool32 IsMinimalGrindingMode(void)
 void ApplyMinimalGrindingModeToMon(struct Pokemon *mon)
 {
     u8 perfectIv = MAX_PER_STAT_IVS;
-    // 85 in all six stats uses the full legal 510 EV budget with no grinding
-    // and keeps MGM neutral rather than forcing one competitive EV spread.
-    u8 neutralEv = MAX_TOTAL_EVS / NUM_STATS;
+    // MGM uses perfect IVs and zero EVs in every acquisition/training path.
+    u8 neutralEv = 0;
 
     if (mon == NULL || GetMonData(mon, MON_DATA_SPECIES) == SPECIES_NONE || GetMonData(mon, MON_DATA_IS_EGG))
         return;

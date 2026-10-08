@@ -1,4 +1,5 @@
 #include "global.h"
+#include "chaos_v2.h"
 #include "battle_setup.h"
 #include "bike.h"
 #include "coord_event_weather.h"
@@ -711,6 +712,8 @@ static bool32 TrySetupDiveEmergeScript(void)
 
 bool8 TryStartStepBasedScript(struct MapPosition *position, u16 metatileBehavior, enum Direction direction)
 {
+    if (ChaosTryCareMilestone(position->x - MAP_OFFSET, position->y - MAP_OFFSET))
+        return TRUE;
     // Light eligible dark caves automatically once Flash HM and badge are owned.
     if (gMapHeader.cave && !FlagGet(FLAG_SYS_USE_FLASH)
      && IsFieldMoveUnlocked(FIELD_MOVE_FLASH) && CheckBagHasItem(ITEM_HM_FLASH, 1))

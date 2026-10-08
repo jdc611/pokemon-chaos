@@ -1,4 +1,5 @@
 #include "global.h"
+#include "run_settings.h"
 #include "pokemon.h"
 #include "egg_hatch.h"
 #include "pokedex.h"
@@ -654,7 +655,10 @@ static void CB2_EggHatch(void)
         break;
     case 10:
         // Handle the nickname prompt input
-        switch (Menu_ProcessInputNoWrapClearOnChoose())
+        s16 nicknameChoice = Menu_ProcessInputNoWrapClearOnChoose();
+        if (IsNuzlockeRun() && (nicknameChoice == 1 || nicknameChoice == MENU_B_PRESSED))
+            nicknameChoice = 0;
+        switch (nicknameChoice)
         {
         case 0: // Yes
             GetMonNickname(&gParties[B_TRAINER_PLAYER][sEggHatchData->eggPartyId], gStringVar3);

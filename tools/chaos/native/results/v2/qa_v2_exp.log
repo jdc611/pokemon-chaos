@@ -1,0 +1,6 @@
+EXP 1 MGM 0 gains [30, 15, 0] EVs [[0, 0, 0, 1, 0, 0], [0, 0, 0, 1, 0, 0], [0, 0, 0, 0, 0, 0]]
+EXP 2 MGM 0 gains [30, 0, 0] EVs [[0, 0, 0, 1, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]]
+EXP 1 MGM 1 gains [30, 15, 0] EVs [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]]
+EXP 1 MGM 0 gains [0, 0, 0] EVs [[0, 0, 0, 1, 0, 0], [0, 0, 0, 1, 0, 0], [0, 0, 0, 0, 0, 0]]
+PASS strict-cap participants/nonparticipants receive zero EXP.
+PASS native EXP All full participant / half nonparticipant / fainted exclusion / OFF / normal EVs / MGM.

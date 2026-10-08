@@ -51,6 +51,13 @@ ChaosArcadePrize_FilterWarning::
 ChaosArcadePrize_Confirm::
 	msgbox ChaosArcadePrize_Offer, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, ChaosArcadePrize_Cancel
+	callnative ChaosArcadePrizeNeedsNickname
+	goto_if_eq VAR_RESULT, FALSE, ChaosArcadePrize_Deliver
+	closemessage
+	callnative ChaosArcadePrizeNickname
+	waitstate
+	callnative ChaosArcadePrizeSetNickname
+ChaosArcadePrize_Deliver::
 	special ChaosArcadePrizeBuy
 	updatecoinsbox
 	goto_if_eq VAR_RESULT, 0, ChaosArcadePrize_Party

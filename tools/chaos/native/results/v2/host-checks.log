@@ -1,0 +1,96 @@
+.github/scripts/check_chaos_abilities.py
+PASS: nine Chaos fallbacks, native form guards, thresholds, switch persistence, first-hit protection, weather restoration and temporary HP cleanup.
+
+.github/scripts/check_chaos_alpha.py
+PASS: all six challenge selections, exact party identity, faint/EXP/item persistence, double-restore and invalid/cancel/egg/fainted rejection.
+PASS: restore-before-death/whiteout ordering, recoverable prize claim and player Mega/reversion integration.
+
+.github/scripts/check_chaos_arcade.py
+PASS checkers mandatory captures, multi-jumps, promotion, kings, terminal states and 30 complete legal AI games.
+
+.github/scripts/check_chaos_arcade_games.py
+PASS actual Memory/Type Match: all boards, distinct pairs, self-flip/mismatch guards, scores, completion-only capped single payouts and forfeits.
+
+.github/scripts/check_chaos_arcade_items.py
+PASS all 30 TMs/9 equipment: exact charges, failed Bag/funds/badge/Case atomicity, owned TM and replay guards.
+
+.github/scripts/check_chaos_arcade_phase5.py
+PASS Rocket Risk: insufficient funds, all banks/busts, fee once, forfeits, replay/caps. Berry: all 21 scores, timeout and completion-only payouts.
+PASS cosmetics: permanent ownership, immediate apply, free owned/default, replay, funds/badge/Case atomicity.
+PASS separate clerks and live highlight details.
+PASS construction uses map-load/native door behavior; both new cabinets have clear interaction tiles; no stale printer.
+PASS Coin-window scratch variables cannot replace prize/receipt names.
+
+.github/scripts/check_chaos_arcade_phase6.py
+PASS all 2,560 theme/decoration combinations, full removal/restoration, clothing-only transforms for all nine avatar/reflection/underwater tags.
+PASS sign ownership menus, native Marsh Badge gate/reserved stock, terrain attributes and sprite-free decoration footprint safety.
+PASS furniture collision/layer coverage and clean native chart geometry without grid or star artifacts.
+Clean chart: 179 tiles; all land routes have continuous edges.
+PASS continuous route bands; original markers, road shading and surrounding terrain preserved.
+
+.github/scripts/check_chaos_arcade_prizes.py
+PASS: all 40 prize/tier totals; native HA marker; shiny flags; five Rotom moves; party/PC delivery; full storage, funds, badge/Case, cancel and replay guards; filter warning.
+
+.github/scripts/check_chaos_early_pool.py
+PASS: actual early Kanto allocation shares at most three wild choices across four land areas and Old Rod, with stable seeds, Scaled tier zero, all filter modes, RNG restoration and cache invalidation.
+PASS: early pacing applies to filtered Kanto land/Old Rod; unfiltered, later areas, Surf and upgraded rods retain their existing paths.
+
+.github/scripts/check_chaos_field.py
+PASS: all eight HM checks require acquisition plus badge; no learned HM needed, and known HMs cannot bypass acquisition.
+PASS: Kanto Safari entrance has ordinary bidirectional doors, no forced fee/ball/timer entry, and clears legacy Safari state.
+
+.github/scripts/check_chaos_gym_reset.py
+PASS: all eight native Kanto gyms in Normal/Hard/Nuzlocke; unfinished exits reset regular trainers, internal warps preserve the attempt, leader clears preserve completion.
+
+.github/scripts/check_chaos_kanto.py
+PASS: cap progression, all rematch orders, compatible stone priority/fallback, party restoration with fainted mons, and rival evolution.
+PASS: native event and party-restoration hooks.
+PASS: original badges remain obtainable before optional rematches.
+
+.github/scripts/check_chaos_mega.py
+PASS: actual Rampage state machine, status/Struggle exclusion, three turns, spread target stability, PP exhaustion, fainting and ability loss.
+PASS: actual Tempered damage/AI modifier, neutral/resisted/immune/2x/4x hits and ability recording.
+PASS: actual permanent Mega notice for either side; base forms are silent.
+PASS: battle integration, protected fossil transaction and Giovanni stone.
+
+.github/scripts/check_chaos_party_exit.py
+PASS: native Center-only departure checks wait for warp completion, allow repairs indoors, block illegal parties, and return to a usable PC before the first heal.
+PASS: animated doors, non-animated doors, ordinary exits and stairs all use the same completed-warp validation hook.
+PASS: rejection closes the dialogue before turning and entering the animated door.
+
+.github/scripts/check_chaos_ranch.py
+PASS: exact boxed identity/HP/ability copied without healing, neighboring slots preserved, full party/bag atomic, no item duplication and Grave/mail guards.
+PASS: all native Centers have a Ranch door; 30 real slots fit the viewport budget (at most 12 pasture objects plus player/follower).
+
+.github/scripts/check_chaos_randomizer.py
+PASS: native gift/static replacement, Normal/Random/Scaled, deterministic retry, RNG restoration, legendary BST boundaries, evolution-stage gate, fixed custom species and empty-filter fallback.
+PASS: actual Type/Ability builders, either selection order, seeded viability, only valid options, base-pool caching and seed invalidation.
+PASS: actual weighted item mapping, multiple pickup inputs, saved world seeds, repeatability, TM category and progression protection.
+PASS: cached traversal agrees with native reachable-line predicate across branches, Megas, random evolutions, seeds and combined filters.
+PASS: actual shared chrome preserves title, dividers and footer after frame drawing.
+PASS: native full-page menu allocation preserves blank, dialogue and frame tiles.
+PASS: actual starter selection is bounded, seeded, distinct and retains sparse evolution-line-eligible candidates.
+PASS: encounter pools retain future-line matches while party/PC legality requires the current selected ability.
+PASS: actual Center detection includes native Kanto, One Island and League centers while excluding other rooms.
+PASS: bounded starter sampler requires the current normal ability and retains sparse legal candidates.
+PASS: ordinary/hidden pickup script entry points and gift creation hook.
+
+.github/scripts/check_chaos_respawn.py
+PASS: native recovery validation repairs unset/malformed pre-Center warps, preserves recorded Centers, and retains region/gender home fallback.
+PASS: Kanto home recovery is initialized before either new-game path enters the map.
+
+.github/scripts/check_chaos_shortcuts.py
+PASS: all 23 shortcut dispatches, native trainer IDs/levels/party sizes, singles/doubles settings, Rocket script selection, usable test teams, oversized menus, long labels, idle/cancel/invalid inputs.
+PASS: uninterrupted Cole/Vesper format, Silph selection/cancel format and restoration before death processing.
+PASS: debug launch clears stale battle parameters/partner state and input checks precede menu indexing.
+
+.github/scripts/check_chaos_stabilization.py
+PASS production family union/alternate forms, past and boxed ownership, named-area first opportunity, capture transition, shiny and uncatchable exceptions, doubles and independent difficulty.
+PASS native FireRed variable isolation, gift bindings, AI input boundary, TM Arcade uniqueness, and protected/nonduplicated Mega acquisition bindings.
+
+.github/scripts/check_chaos_starter_ability.py
+PASS: normal abilities stay natural; custom random starter guarantee is individual, normal-slot, persistent through copying/boxing/evolution, and explicit ability changes replace it.
+
+tools/chaos/check_bst.py
+PASS: 25,200 species/seed stat profiles; extremes 4.93%; 7,560 evolution selections.
+

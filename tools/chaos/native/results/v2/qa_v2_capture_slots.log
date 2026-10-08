@@ -1,0 +1,7 @@
+PASS native full-party swap slot 0 actual six species, exact identities, PC transfer and field return
+PASS native full-party swap slot 1 actual six species, exact identities, PC transfer and field return
+PASS native full-party swap slot 2 actual six species, exact identities, PC transfer and field return
+PASS native full-party swap slot 3 actual six species, exact identities, PC transfer and field return
+PASS native full-party swap slot 4 actual six species, exact identities, PC transfer and field return
+PASS native full-party swap slot 5 actual six species, exact identities, PC transfer and field return
+PASS cancel party replacement stores caught Pokemon without changing party.

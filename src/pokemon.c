@@ -1382,6 +1382,15 @@ void CalculateMonStats(struct Pokemon *mon)
 
 void CalculateMonStatsCont(struct Pokemon *mon, bool32 updateSpeedStat)
 {
+    if (IsMinimalGrindingMode())
+    {
+        u8 iv = 31, ev = 0;
+        for (u32 stat = 0; stat < NUM_STATS; stat++)
+        {
+            SetMonData(mon, MON_DATA_HP_IV + stat, &iv);
+            SetMonData(mon, MON_DATA_HP_EV + stat, &ev);
+        }
+    }
     ChaosAbilityBeforeStats(mon);
     s32 oldMaxHP = GetMonData(mon, MON_DATA_MAX_HP);
     s32 currentHP = GetMonData(mon, MON_DATA_HP);
@@ -2596,6 +2605,8 @@ void SetMonData(struct Pokemon *mon, s32 field, const void *dataArg)
 
 void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg)
 {
+    u8 zeroEv = 0;
+    if (IsMinimalGrindingMode() && field >= MON_DATA_HP_EV && field <= MON_DATA_SPDEF_EV) dataArg = &zeroEv;
     const u8 *data = dataArg;
 
     if (field > MON_DATA_ENCRYPT_SEPARATOR)
@@ -4376,6 +4387,8 @@ bool8 PokemonUseItemEffects(struct Pokemon *mon, enum Item item, u8 partyIndex, 
                         dataSigned = GetMonData(mon, sGetMonDataEVConstants[temp1]);
                         evChange = temp2;
 
+                        if (IsMinimalGrindingMode() && evChange > 0)
+                            return TRUE; // MGM cannot consume EV-increasing items.
                         if (evChange > 0) // Increasing EV (HP or Atk)
                         {
                             // Check if the total EV limit is reached
@@ -4570,6 +4583,8 @@ bool8 PokemonUseItemEffects(struct Pokemon *mon, enum Item item, u8 partyIndex, 
                         temp2 = itemEffect[itemEffectParam];
                         dataSigned = GetMonData(mon, sGetMonDataEVConstants[temp1 + 2]);
                         evChange = temp2;
+                        if (IsMinimalGrindingMode() && evChange > 0)
+                            return TRUE; // MGM cannot consume EV-increasing items.
                         if (evChange > 0) // Increasing EV
                         {
                             // Check if the total EV limit is reached
@@ -5691,6 +5706,7 @@ s32 CalculateFriendshipBonuses(struct Pokemon *mon, s32 modifier, enum HoldEffec
 
 void MonGainEVs(struct Pokemon *mon, enum Species defeatedSpecies)
 {
+    if (IsMinimalGrindingMode()) return;
     u8 evs[NUM_STATS];
     u16 evIncrease = 0;
     u16 totalEVs = 0;

@@ -1,4 +1,5 @@
 #include "global.h"
+#include "run_settings.h"
 #include "naming_screen.h"
 #include "malloc.h"
 #include "palette.h"
@@ -696,6 +697,21 @@ static bool8 MainState_MoveToOKButton(void)
 
 static bool8 MainState_PressedOKButton(void)
 {
+    if (IsNuzlockeRun() && (sNamingScreen->templateNum == NAMING_SCREEN_CAUGHT_MON
+        || sNamingScreen->templateNum == NAMING_SCREEN_NICKNAME))
+    {
+        bool32 hasName = FALSE;
+        for (u32 i = 0; i < sNamingScreen->template->maxChars; i++)
+            if (sNamingScreen->textBuffer[i] != CHAR_SPACE && sNamingScreen->textBuffer[i] != EOS)
+                hasName = TRUE;
+        if (!hasName)
+        {
+            PlaySE(SE_FAILURE);
+            SetInputState(INPUT_STATE_ENABLED);
+            sNamingScreen->state = STATE_HANDLE_INPUT;
+            return FALSE;
+        }
+    }
     SaveInputText();
     SetInputState(INPUT_STATE_DISABLED);
     SetCursorFlashing(FALSE);
@@ -717,11 +733,8 @@ static bool8 MainState_Exit(void)
     {
         if (sNamingScreen->templateNum == NAMING_SCREEN_PLAYER)
             SeedRngAndSetTrainerId();
-        if (sNamingScreen->templateNum == NAMING_SCREEN_CAUGHT_MON
-         && CalculatePlayerPartyCount() < PARTY_SIZE)
-            SetMainCallback2(BattleMainCB2);
-        else
-            SetMainCallback2(sNamingScreen->returnCallback);
+        // The caller owns graphics restoration; naming has destroyed battle VRAM.
+        SetMainCallback2(sNamingScreen->returnCallback);
         DestroyTask(FindTaskIdByFunc(Task_NamingScreen));
         FreeAllWindowBuffers();
         FREE_AND_SET_NULL(sNamingScreen);

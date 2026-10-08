@@ -45,6 +45,7 @@
 #include "menu_specialized.h"
 #include "metatile_behavior.h"
 #include "move_relearner.h"
+#include "naming_screen.h"
 #include "overworld.h"
 #include "palette.h"
 #include "party_menu.h"
@@ -111,6 +112,11 @@ enum {
     MENU_CATALOG_MOWER,
     MENU_CHANGE_FORM,
     MENU_CHANGE_ABILITY,
+    MENU_RENAME,
+    MENU_RELEARN,
+    MENU_RELEARN_LEVEL,
+    MENU_RELEARN_TM,
+    MENU_RELEARN_EGG,
     MENU_FIELD_MOVES
 };
 
@@ -186,7 +192,7 @@ struct PartyMenuInternal
     u32 spriteIdCancelPokeball:7;
     u32 messageId:14;
     u8 windowId[3];
-    u8 actions[8];
+    u8 actions[12];
     u8 numActions;
     // In vanilla Emerald, only the first 0xB0 hwords (0x160 bytes) are actually used.
     // However, a full 0x100 hwords (0x200 bytes) are allocated.
@@ -456,6 +462,9 @@ static void ShiftMoveSlot(struct BoxPokemon *, u8, u8);
 static void BlitBitmapToPartyWindow_LeftColumn(u8, u8, u8, u8, u8, bool8);
 static void BlitBitmapToPartyWindow_RightColumn(u8, u8, u8, u8, u8, bool8);
 static void CursorCb_Summary(u8);
+static void CursorCb_Rename(u8);
+static void CursorCb_Relearn(u8);
+static void CursorCb_RelearnType(u8);
 static void CursorCb_Switch(u8);
 static void CursorCb_Cancel1(u8);
 static void CursorCb_Item(u8);
@@ -2876,7 +2885,8 @@ static u8 DisplaySelectionWindow(u8 windowType)
     switch (windowType)
     {
     case SELECTWINDOW_ACTIONS:
-        SetWindowTemplateFields(&window, 2, 19, 19 - (sPartyMenuInternal->numActions * 2), 10, sPartyMenuInternal->numActions * 2, 14, 0x2E9);
+        u32 height = (sPartyMenuInternal->numActions * 12 + 7) / 8;
+        SetWindowTemplateFields(&window, 2, 19, 19 - height, 10, height, 14, 0x2E9);
         break;
     case SELECTWINDOW_ITEM:
         window = sItemGiveTakeWindowTemplate;
@@ -2915,10 +2925,10 @@ static u8 DisplaySelectionWindow(u8 windowType)
         else
             text = sCursorOptions[sPartyMenuInternal->actions[i]].text;
 
-        AddTextPrinterParameterized4(sPartyMenuInternal->windowId[0], FONT_NORMAL, cursorDimension, (i * 16) + 1, letterSpacing, 0, sFontColorTable[fontColorsId], 0, text);
+        AddTextPrinterParameterized4(sPartyMenuInternal->windowId[0], FONT_SMALL, cursorDimension, (i * 12) + 1, letterSpacing, 0, sFontColorTable[fontColorsId], 0, text);
     }
 
-    InitMenuInUpperLeftCorner(sPartyMenuInternal->windowId[0], sPartyMenuInternal->numActions, 0, TRUE);
+    InitMenuNormal(sPartyMenuInternal->windowId[0], FONT_SMALL, 0, 1, 12, sPartyMenuInternal->numActions, 0);
     ScheduleBgCopyTilemapToVram(2);
 
     return sPartyMenuInternal->windowId[0];
@@ -2971,6 +2981,9 @@ static void SetPartyMonFieldSelectionActions(struct Pokemon *mons, u8 slotId)
 
     sPartyMenuInternal->numActions = 0;
     AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_SUMMARY);
+    AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_RENAME);
+    if (!IS_FRLG || VarGet(VAR_CHAOS_TRAINING_UNLOCKED) || VarGet(VAR_MAP_SCENE_PEWTER_CITY) >= 2)
+        AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_RELEARN);
 
     // Add field moves to action list
     for (i = 0; i < MAX_MON_MOVES; i++)
@@ -3124,6 +3137,12 @@ static void Task_HandleSelectionMenuInput(u8 taskId)
             break;
         case MENU_B_PRESSED:
             PlaySE(SE_SELECT);
+            if (sPartyMenuInternal->actions[0] == MENU_RELEARN_LEVEL)
+            {
+                PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[0]);
+                CreateSelectionWindow(taskId);
+                break;
+            }
             PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[2]);
             if (sPartyMenuInternal->actions[sPartyMenuInternal->numActions - 1] >= MENU_FIELD_MOVES)
                 CursorCb_FieldMove(taskId);
@@ -3139,6 +3158,57 @@ static void Task_HandleSelectionMenuInput(u8 taskId)
             break;
         }
     }
+}
+
+static void CB2_ChaosRenameDone(void)
+{
+    SetMonData(&gParties[B_TRAINER_PLAYER][gPartyMenu.slotId], MON_DATA_NICKNAME, gStringVar3);
+    gLastViewedMonIndex = gPartyMenu.slotId;
+    CB2_ReturnToPartyMenuFromSummaryScreen();
+}
+
+static void CB2_ChaosRename(void)
+{
+    struct Pokemon *mon = &gParties[B_TRAINER_PLAYER][gPartyMenu.slotId];
+    GetMonNickname(mon, gStringVar3);
+    DoNamingScreen(NAMING_SCREEN_NICKNAME, gStringVar3, GetMonData(mon, MON_DATA_SPECIES),
+        GetMonGender(mon), GetMonData(mon, MON_DATA_PERSONALITY), CB2_ChaosRenameDone);
+}
+
+static void CursorCb_Rename(u8 taskId)
+{
+    PlaySE(SE_SELECT);
+    sPartyMenuInternal->exitCallback = CB2_ChaosRename;
+    Task_ClosePartyMenu(taskId);
+}
+
+static void CursorCb_Relearn(u8 taskId)
+{
+    PlaySE(SE_SELECT);
+    PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[0]);
+    sPartyMenuInternal->numActions = 3;
+    sPartyMenuInternal->actions[0] = MENU_RELEARN_LEVEL;
+    sPartyMenuInternal->actions[1] = MENU_RELEARN_TM;
+    sPartyMenuInternal->actions[2] = MENU_RELEARN_EGG;
+    DisplaySelectionWindow(SELECTWINDOW_ACTIONS);
+}
+
+static void CB2_ChaosPartyRelearn(void)
+{
+    gSpecialVar_0x8004 = gPartyMenu.slotId;
+    gLastViewedMonIndex = gPartyMenu.slotId;
+    gRelearnMode = RELEARN_MODE_SCRIPT;
+    gChaosPartyRelearn = TRUE;
+    SetMainCallback2(CB2_InitLearnMove);
+}
+
+static void CursorCb_RelearnType(u8 taskId)
+{
+    u32 action = sPartyMenuInternal->actions[Menu_GetCursorPos()];
+    gMoveRelearnerState = action == MENU_RELEARN_TM ? MOVE_RELEARNER_TM_MOVES
+        : action == MENU_RELEARN_EGG ? MOVE_RELEARNER_EGG_MOVES : MOVE_RELEARNER_LEVEL_UP_MOVES;
+    sPartyMenuInternal->exitCallback = CB2_ChaosPartyRelearn;
+    Task_ClosePartyMenu(taskId);
 }
 
 static void CursorCb_Summary(u8 taskId)
@@ -7873,6 +7943,8 @@ static void UpdatePartyToBattleOrder(void)
     struct Pokemon *partyBuffer = Alloc(sizeof(gParties[B_TRAINER_PLAYER]));
     u8 i;
     const u8 *multiBattlePartyIdToMenuId = sMultiBattlePartyIdToMenuId_Left;
+    if (partyBuffer == NULL)
+        return;
 
     if ((gBattleTypeFlags & BATTLE_TYPE_LINK) && ((gBattlerInMenuId & BIT_FLANK) != B_FLANK_LEFT))
         multiBattlePartyIdToMenuId = sMultiBattlePartyIdToMenuId_Right;
@@ -7907,6 +7979,8 @@ static void UpdatePartyToFieldOrder(void)
     u8 i;
 
     const u8 *multiBattlePartyIdToMenuId = sMultiBattlePartyIdToMenuId_Left;
+    if (partyBuffer == NULL)
+        return;
 
     if ((gBattleTypeFlags & BATTLE_TYPE_LINK)
      && ((gBattlerInMenuId & BIT_FLANK) != B_FLANK_LEFT))

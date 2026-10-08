@@ -1,0 +1,3 @@
+PASS Jessie/James genuine loss -> whiteout -> no completion flag.
+Win fixture frames/loops 873 outcome 1
+PASS clean retry -> win -> automatic blast-off/completion -> return control -> no re-entry retrigger.

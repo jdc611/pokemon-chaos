@@ -286,6 +286,12 @@
 #define VAR_CHAOS_CARE_PACKAGES                          0x408E
 #define VAR_CHAOS_TRAINING_UNLOCKED                      0x408F
 #define VAR_CHAOS_POKERIDER_UNLOCKED                     0x4090
+#define VAR_CHAOS_EXP_ALL 0x4091 // 0/1 enabled, 2 disabled (legacy saves default ON)
+#define VAR_CHAOS_V2_CARE 0x4092 // Three receipt bits, independent of V1 bundle claims
+#define VAR_CHAOS_EGG_VENDORS 0x4093 // Three purchase bits
+#define VAR_CHAOS_SURGE_SWITCH1 0x4094
+#define VAR_CHAOS_SURGE_SWITCH2 0x4095
+#define VAR_CHAOS_SURGE_FIRST_FOUND 0x4096
 #define VAR_UNUSED_0x40FE                                0x40FE // Unused Var
 #define VAR_UNUSED_0x40FF                                0x40FF // Unused Var
 

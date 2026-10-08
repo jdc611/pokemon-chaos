@@ -24,13 +24,11 @@ Route16_NorthEntrance_2F_EventScript_Aide::
 	faceplayer
 	call Route16_NorthEntrance_2F_EventScript_GetAideRequestInfo
 	goto_if_set FLAG_GOT_AMULET_COIN_FROM_OAKS_AIDE, Route16_NorthEntrance_2F_EventScript_AlreadyGotAmuletCoin
-	msgbox Route16_NorthEntrance_2F_Text_GiveAmuletCoinIfCaught40, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, NO, Aide_EventScript_DeclineCheckMons
+	msgbox Text_ChaosAideJoke3
 	setvar VAR_0x8004, 0
 	specialvar VAR_RESULT, GetFrlgPokedexCount
 	buffernumberstring STR_VAR_3, VAR_0x8006
 	call Route16_NorthEntrance_2F_EventScript_GetAideRequestInfo
-	goto_if_lt VAR_0x8006, REQUIRED_CAUGHT_MONS, Aide_EventScript_HaventCaughtEnough
 	msgbox Route16_NorthEntrance_2F_Text_GreatHereYouGo
 	checkitemspace ITEM_AMULET_COIN
 	goto_if_eq VAR_RESULT, FALSE, Aide_EventScript_NoRoomForItem
@@ -97,3 +95,6 @@ Route16_NorthEntrance_2F_Text_ExplainAmuletCoin::
 	.string "If the POKéMON appears in a winning\n"
 	.string "battle, you will earn more money.$"
 
+
+Text_ChaosAideJoke3::
+	.string "OAK says helping beats paperwork.\nFinally, a study I can finish!$"

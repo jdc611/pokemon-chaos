@@ -1,0 +1,137 @@
+[
+  {
+    "test": "qa_pass_jj",
+    "exit": 0,
+    "log": "qa_pass_jj.log"
+  },
+  {
+    "test": "qa_pass_training",
+    "exit": 0,
+    "log": "qa_pass_training.log"
+  },
+  {
+    "test": "qa_pass_core",
+    "exit": 0,
+    "log": "qa_pass_core.log"
+  },
+  {
+    "test": "qa_pass_battle",
+    "exit": 0,
+    "log": "qa_pass_battle.log"
+  },
+  {
+    "test": "qa_pass_doubles",
+    "exit": 0,
+    "log": "qa_pass_doubles.log"
+  },
+  {
+    "test": "qa_v2_berry",
+    "exit": 0,
+    "log": "qa_v2_berry.log"
+  },
+  {
+    "test": "qa_v2_berry_activation",
+    "exit": 0,
+    "log": "qa_v2_berry_activation.log"
+  },
+  {
+    "test": "qa_v2_capture_control",
+    "exit": 0,
+    "log": "qa_v2_capture_control.log"
+  },
+  {
+    "test": "qa_v2_capture_swap",
+    "exit": 0,
+    "log": "qa_v2_capture_swap.log"
+  },
+  {
+    "test": "qa_v2_capture_slots",
+    "exit": 0,
+    "log": "qa_v2_capture_slots.log"
+  },
+  {
+    "test": "qa_v2_nuz_capture",
+    "exit": 0,
+    "log": "qa_v2_nuz_capture.log"
+  },
+  {
+    "test": "qa_v2_exp",
+    "exit": 0,
+    "log": "qa_v2_exp.log"
+  },
+  {
+    "test": "qa_v2_features",
+    "exit": 0,
+    "log": "qa_v2_features.log"
+  },
+  {
+    "test": "qa_v2_audit",
+    "exit": 0,
+    "log": "qa_v2_audit.log"
+  },
+  {
+    "test": "qa_v2_tms",
+    "exit": 0,
+    "log": "qa_v2_tms.log"
+  },
+  {
+    "test": "qa_v2_growth_audit",
+    "exit": 0,
+    "log": "qa_v2_growth_audit.log"
+  },
+  {
+    "test": "qa_v2_ui",
+    "exit": 0,
+    "log": "qa_v2_ui.log"
+  },
+  {
+    "test": "qa_v2_visual",
+    "exit": 0,
+    "log": "qa_v2_visual.log"
+  },
+  {
+    "test": "qa_v2_fishing",
+    "exit": 0,
+    "log": "qa_v2_fishing.log"
+  },
+  {
+    "test": "qa_v2_integration",
+    "exit": 0,
+    "log": "qa_v2_integration.log"
+  },
+  {
+    "test": "qa_v2_centers",
+    "exit": 0,
+    "log": "qa_v2_centers.log"
+  },
+  {
+    "test": "qa_pass_retry",
+    "exit": 0,
+    "log": "qa_pass_retry.log"
+  },
+  {
+    "test": "qa_pass_rewards",
+    "exit": 0,
+    "log": "qa_pass_rewards.log"
+  },
+  {
+    "test": "qa_pass_gym_battles",
+    "exit": 0,
+    "log": "qa_pass_gym_battles.log"
+  },
+  {
+    "test": "qa_pass_hof",
+    "exit": 0,
+    "log": "qa_pass_hof.log"
+  },
+  {
+    "test": "qa_pass_progression",
+    "exit": 0,
+    "log": "qa_pass_progression.log"
+  },
+  {
+    "test": "qa_pass_rider",
+    "exit": 0,
+    "log": "qa_pass_rider.log"
+  }
+]

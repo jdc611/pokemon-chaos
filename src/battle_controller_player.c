@@ -2398,7 +2398,9 @@ void PlayerHandleExpUpdate(enum BattlerId battler)
     u8 monId = gBattleResources->bufferA[battler][1];
     s32 taskId, expPointsToGive;
 
-    if (GetMonData(&gParties[B_TRAINER_PLAYER][monId], MON_DATA_LEVEL) >= MAX_LEVEL)
+    if (GetMonData(&gParties[B_TRAINER_PLAYER][monId], MON_DATA_LEVEL) >= MAX_LEVEL
+        || (B_EXP_CAP_TYPE == EXP_CAP_HARD
+            && GetMonData(&gParties[B_TRAINER_PLAYER][monId], MON_DATA_LEVEL) >= GetCurrentLevelCap()))
     {
         BtlController_Complete(battler);
     }
@@ -2406,8 +2408,6 @@ void PlayerHandleExpUpdate(enum BattlerId battler)
     {
         LoadBattleBarGfx(1);
         expPointsToGive = T1_READ_32(&gBattleResources->bufferA[battler][2]);
-        if (GetMonData(&gParties[B_TRAINER_PLAYER][monId], MON_DATA_LEVEL) >= GetCurrentLevelCap())
-            expPointsToGive = 1;
         taskId = CreateTask(Task_GiveExpToMon, 10);
         gTasks[taskId].tExpTask_monId = monId;
         gTasks[taskId].tExpTask_gainedExp_1 = expPointsToGive;

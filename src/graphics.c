@@ -2135,3 +2135,5 @@ const u16 gBattleIcons_Pal2[] = INCGFX_U16("graphics/types/battle_icons2.pal", "
 
 const u16 gGhostPalette[] = INCGFX_U16("graphics/pokemon/ghost/front.png", ".gbapal");
 const u32 gGhostFrontPic[] = INCGFX_U32("graphics/pokemon/ghost/front.png", ".4bpp.smol");
+
+const u32 gSummaryPage_Growth_Tilemap[] = INCGFX_U32("graphics/summary_screen/page_growth.bin", ".smolTM");

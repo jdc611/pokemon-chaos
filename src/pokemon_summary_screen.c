@@ -1,4 +1,8 @@
 #include "global.h"
+#include "chaos_v2.h"
+#include "pokemon_icon.h"
+#include "run_settings.h"
+extern const u32 gSummaryPage_Growth_Tilemap[];
 #include "main.h"
 #include "battle.h"
 #include "battle_anim.h"
@@ -176,6 +180,8 @@ static EWRAM_DATA struct PokemonSummaryScreenData
     u8 currPageIndex;
     u8 minPageIndex;
     u8 maxPageIndex;
+    u8 chaosBranch;
+    u8 chaosNextSprite;
     bool8 lockMonFlag; // This is used to prevent the player from changing Pokémon in the move deleter select, etc, but it is not needed because the input is handled differently there
     u16 newMove;
     u8 firstMoveIndex;
@@ -253,6 +259,8 @@ static void PutPageWindowTilemaps(u8);
 static void ClearPageWindowTilemaps(u8);
 static void RemoveWindowByIndex(u8);
 static void PrintPageSpecificText(u8);
+static void PrintChaosGrowthPage(void);
+static void Task_PrintChaosGrowthPage(u8);
 static void CreateTextPrinterTask(u8);
 static void PrintInfoPageText(void);
 static void Task_PrintInfoPage(u8);
@@ -338,7 +346,7 @@ static void UpdateMoveRelearnerState();
 static void UpdateRelearnPrompt(void);
 static struct BoxPokemon *GetCurrentBoxmon(void);
 
-#define IS_MOVE_PAGE(page) (page == PSS_PAGE_BATTLE_MOVES || page == PSS_PAGE_CONTEST_MOVES)
+#define IS_MOVE_PAGE(page) (page == PSS_PAGE_BATTLE_MOVES || (!IS_FRLG && page == PSS_PAGE_CONTEST_MOVES))
 
 static const struct BgTemplate sBgTemplates[] =
 {
@@ -756,7 +764,7 @@ static void (*const sTextPrinterFunctions[])(void) =
     [PSS_PAGE_INFO] = PrintInfoPageText,
     [PSS_PAGE_SKILLS] = PrintSkillsPageText,
     [PSS_PAGE_BATTLE_MOVES] = PrintBattleMoves,
-    [PSS_PAGE_CONTEST_MOVES] = PrintContestMoves
+    [PSS_PAGE_CONTEST_MOVES] = IS_FRLG ? PrintChaosGrowthPage : PrintContestMoves
 };
 
 static const TaskFunc sTextPrinterTasks[] =
@@ -764,7 +772,7 @@ static const TaskFunc sTextPrinterTasks[] =
     [PSS_PAGE_INFO] = Task_PrintInfoPage,
     [PSS_PAGE_SKILLS] = Task_PrintSkillsPage,
     [PSS_PAGE_BATTLE_MOVES] = Task_PrintBattleMoves,
-    [PSS_PAGE_CONTEST_MOVES] = Task_PrintContestMoves
+    [PSS_PAGE_CONTEST_MOVES] = IS_FRLG ? Task_PrintChaosGrowthPage : Task_PrintContestMoves
 };
 
 static const u8 sText_Relearn[] = _("{START_BUTTON} RELEARN"); // future note: don't decap this, because it mimics the summary screen BG graphics which will not get decapped
@@ -1179,6 +1187,7 @@ static void DestroyCategoryIcon(void)
 {
     if (sMonSummaryScreen->categoryIconSpriteId != 0xFF)
         DestroySprite(&gSprites[sMonSummaryScreen->categoryIconSpriteId]);
+    sMonSummaryScreen->chaosNextSprite = SPRITE_NONE;
     sMonSummaryScreen->categoryIconSpriteId = 0xFF;
 }
 
@@ -1214,7 +1223,7 @@ void ShowPokemonSummaryScreen(u8 mode, void *mons, u8 monIndex, u8 maxMonIndex, 
     else
         sMonSummaryScreen->isBoxMon = FALSE;
 
-    u32 maxPageIndex = PSS_PAGE_COUNT - (C_HIDE_CONTEST_DATA) ? 2 : 1;
+    u32 maxPageIndex = IS_FRLG ? 3 : (C_HIDE_CONTEST_DATA ? 2 : 3);
     switch (mode)
     {
     case SUMMARY_MODE_NORMAL:
@@ -1232,7 +1241,7 @@ void ShowPokemonSummaryScreen(u8 mode, void *mons, u8 monIndex, u8 maxMonIndex, 
         break;
     case SUMMARY_MODE_SELECT_MOVE:
         sMonSummaryScreen->minPageIndex = PSS_PAGE_BATTLE_MOVES;
-        sMonSummaryScreen->maxPageIndex = maxPageIndex;
+        sMonSummaryScreen->maxPageIndex = IS_FRLG ? PSS_PAGE_BATTLE_MOVES : maxPageIndex;
         sMonSummaryScreen->lockMonFlag = TRUE;
         break;
     }
@@ -1459,7 +1468,7 @@ static bool8 DecompressGraphics(void)
         sMonSummaryScreen->switchCounter++;
         break;
     case 5:
-        DecompressDataWithHeaderWram(gSummaryPage_ContestMoves_Tilemap, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_CONTEST_MOVES][1]);
+        DecompressDataWithHeaderWram(IS_FRLG ? gSummaryPage_Growth_Tilemap : gSummaryPage_ContestMoves_Tilemap, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_CONTEST_MOVES][1]);
         sMonSummaryScreen->switchCounter++;
         break;
     case 6:
@@ -1758,6 +1767,13 @@ static void Task_HandleInput(u8 taskId)
         }
         else if (JOY_NEW(A_BUTTON))
         {
+            if (IS_FRLG && sMonSummaryScreen->currPageIndex == PSS_PAGE_CONTEST_MOVES)
+            {
+                sMonSummaryScreen->chaosBranch++;
+                PrintChaosGrowthPage();
+                PlaySE(SE_SELECT);
+                return;
+            }
             if (sMonSummaryScreen->currPageIndex != PSS_PAGE_SKILLS)
             {
                 if (sMonSummaryScreen->currPageIndex == PSS_PAGE_INFO)
@@ -3271,7 +3287,10 @@ static void PrintPageNamesAndStats(void)
     PrintTextOnWindow(PSS_LABEL_WINDOW_POKEMON_INFO_TITLE, gText_PkmnInfo, 2, 1, 0, 1);
     PrintTextOnWindow(PSS_LABEL_WINDOW_POKEMON_SKILLS_TITLE, gText_PkmnSkills, 2, 1, 0, 1);
     PrintTextOnWindow(PSS_LABEL_WINDOW_BATTLE_MOVES_TITLE, gText_BattleMoves, 2, 1, 0, 1);
-    PrintTextOnWindow(PSS_LABEL_WINDOW_CONTEST_MOVES_TITLE, gText_ContestMoves, 2, 1, 0, 1);
+    if (IS_FRLG)
+        PrintTextOnWindowWithFont(PSS_LABEL_WINDOW_CONTEST_MOVES_TITLE, COMPOUND_STRING("EVO & GROWTH"), 0, 1, 0, 1, FONT_SMALL);
+    else
+        PrintTextOnWindow(PSS_LABEL_WINDOW_CONTEST_MOVES_TITLE, gText_ContestMoves, 2, 1, 0, 1);
 
     ShowUtilityPrompt(SUMMARY_MODE_NORMAL);
 
@@ -3340,6 +3359,7 @@ static void PutPageWindowTilemaps(u8 page)
         break;
     case PSS_PAGE_CONTEST_MOVES:
         PutWindowTilemap(PSS_LABEL_WINDOW_CONTEST_MOVES_TITLE);
+        if (IS_FRLG) {PutWindowTilemap(PSS_LABEL_WINDOW_PROMPT_UTILITY);break;}
         PutWindowTilemap(PSS_LABEL_WINDOW_PROMPT_UTILITY);
         if (sMonSummaryScreen->mode == SUMMARY_MODE_SELECT_MOVE)
         {
@@ -3363,6 +3383,11 @@ static void PutPageWindowTilemaps(u8 page)
 static void ClearPageWindowTilemaps(u8 page)
 {
     u8 i;
+    if (sMonSummaryScreen->chaosNextSprite != SPRITE_NONE)
+    {
+        FreeAndDestroyMonIconSprite(&gSprites[sMonSummaryScreen->chaosNextSprite]);
+        sMonSummaryScreen->chaosNextSprite = SPRITE_NONE;
+    }
 
     switch (page)
     {
@@ -3435,6 +3460,12 @@ static void RemoveWindowByIndex(u8 windowIndex)
 static void PrintPageSpecificText(u8 pageIndex)
 {
     u16 i;
+    if (sMonSummaryScreen->chaosNextSprite != SPRITE_NONE)
+    {
+        FreeAndDestroyMonIconSprite(&gSprites[sMonSummaryScreen->chaosNextSprite]);
+        sMonSummaryScreen->chaosNextSprite = SPRITE_NONE;
+    }
+    sMonSummaryScreen->chaosBranch = 0;
     for (i = 0; i < ARRAY_COUNT(sMonSummaryScreen->windowIds); i++)
     {
         if (sMonSummaryScreen->windowIds[i] != WINDOW_NONE)
@@ -3447,6 +3478,66 @@ static void CreateTextPrinterTask(u8 pageIndex)
 {
     CreateTask(sTextPrinterTasks[pageIndex], 16);
 }
+
+static const u8 *const sChaosGrowthNames[] = {
+ COMPOUND_STRING("Medium Fast"), COMPOUND_STRING("Erratic"), COMPOUND_STRING("Fluctuating"),
+ COMPOUND_STRING("Medium Slow"), COMPOUND_STRING("Fast"), COMPOUND_STRING("Slow")};
+static const u8 *const sChaosEggNames[] = {
+ COMPOUND_STRING("None"),COMPOUND_STRING("Monster"),COMPOUND_STRING("Water 1"),COMPOUND_STRING("Bug"),COMPOUND_STRING("Flying"),COMPOUND_STRING("Field"),COMPOUND_STRING("Fairy"),COMPOUND_STRING("Grass"),COMPOUND_STRING("Human-Like"),COMPOUND_STRING("Water 3"),COMPOUND_STRING("Mineral"),COMPOUND_STRING("Amorphous"),COMPOUND_STRING("Water 2"),COMPOUND_STRING("Ditto"),COMPOUND_STRING("Dragon"),COMPOUND_STRING("Undiscovered")};
+static void PrintChaosGrowthPage(void)
+{
+ struct Pokemon *mon=&sMonSummaryScreen->currentMon;
+ enum Species species=GetMonData(mon,MON_DATA_SPECIES);
+ static const struct WindowTemplate templates[]={{.bg=0,.tilemapLeft=11,.tilemapTop=4,.width=18,.height=15,.paletteNum=6,.baseBlock=467}};
+ u8 window=AddWindowFromTemplateList(templates,0);
+ FillWindowPixelBuffer(window,PIXEL_FILL(0));
+ if(sMonSummaryScreen->chaosNextSprite!=SPRITE_NONE){FreeAndDestroyMonIconSprite(&gSprites[sMonSummaryScreen->chaosNextSprite]);sMonSummaryScreen->chaosNextSprite=SPRITE_NONE;}
+ const struct Evolution *evos=GetSpeciesEvolutions(species);u32 count=0;
+ if(evos!=NULL)while(evos[count].method!=EVOLUTIONS_END)count++;
+ struct Evolution randomEvo;
+ if(gSaveBlock3Ptr->evolutionMode==RUN_EVOLUTIONS_RANDOM)
+ {
+  randomEvo=(struct Evolution){.method=EVO_LEVEL,.param=GetRandomEvolutionLevelForSettings(species,gSaveBlock3Ptr->worldSeed),.targetSpecies=GetRandomEvolutionTargetForSettings(species,gSaveBlock3Ptr->runDifficulty,gSaveBlock3Ptr->worldSeed)};
+  evos=&randomEvo;count=randomEvo.targetSpecies!=SPECIES_NONE && randomEvo.targetSpecies!=species;
+ }
+ if(count)
+ {
+  u32 branchIds[64], visible=0;
+  for(u32 i=0;i<count && visible<ARRAY_COUNT(branchIds);i++)
+  {
+   if(evos[i].method==EVO_NONE)continue;
+   bool32 redundant=FALSE;
+   if(evos[i].method==EVO_TRADE)for(u32 j=0;j<count;j++)
+    if(evos[j].targetSpecies==evos[i].targetSpecies && evos[j].method==EVO_ITEM)redundant=TRUE;
+   if(!redundant)branchIds[visible++]=i;
+  }
+  if(!visible){PrintTextOnWindowWithFont(window,COMPOUND_STRING("FINAL EVOLUTION"),0,8,0,1,FONT_SMALL);goto growth;}
+  sMonSummaryScreen->chaosBranch%=visible;const struct Evolution *evo=&evos[branchIds[sMonSummaryScreen->chaosBranch]];
+  PrintTextOnWindowWithFont(window,COMPOUND_STRING("NEXT EVOLUTION"),0,0,0,1,FONT_SMALL);
+  PrintTextOnWindowWithFont(window,GetSpeciesName(evo->targetSpecies),0,12,0,0,FONT_SMALL);
+  ChaosFormatEvolution(evo,gStringVar4);
+  WrapFontIdToFit(gStringVar4,gStringVar4+StringLength(gStringVar4),FONT_SMALL,144);
+  PrintTextOnWindowWithFont(window,gStringVar4,0,32,-2,0,FONT_SMALL);
+  LoadMonIconPalette(evo->targetSpecies);
+  sMonSummaryScreen->chaosNextSprite=CreateMonIconNoPersonality(evo->targetSpecies,SpriteCB_MonIcon,213,48,0);
+ }
+ else PrintTextOnWindowWithFont(window,COMPOUND_STRING("FINAL EVOLUTION"),0,8,0,1,FONT_SMALL);
+growth:
+ StringCopy(gStringVar4,COMPOUND_STRING("Growth: "));StringAppend(gStringVar4,sChaosGrowthNames[gSpeciesInfo[species].growthRate]);
+ PrintTextOnWindowWithFont(window,gStringVar4,0,66,0,0,FONT_SMALL);
+ u32 level=GetMonData(mon,MON_DATA_LEVEL),exp=GetMonData(mon,MON_DATA_EXP);
+ u32 next=level<MAX_LEVEL?gExperienceTables[gSpeciesInfo[species].growthRate][level+1]-exp:0;
+ StringCopy(gStringVar4,COMPOUND_STRING("Next EXP: "));ConvertIntToDecimalStringN(gStringVar1,next,STR_CONV_MODE_LEFT_ALIGN,7);StringAppend(gStringVar4,gStringVar1);
+ PrintTextOnWindowWithFont(window,gStringVar4,0,78,0,0,FONT_SMALL);
+ StringCopy(gStringVar4,COMPOUND_STRING("Egg: "));StringAppend(gStringVar4,sChaosEggNames[gSpeciesInfo[species].eggGroups[0]]);
+ if(gSpeciesInfo[species].eggGroups[1]!=gSpeciesInfo[species].eggGroups[0]){StringAppend(gStringVar4,COMPOUND_STRING(" / "));StringAppend(gStringVar4,sChaosEggNames[gSpeciesInfo[species].eggGroups[1]]);}
+ PrintTextOnWindowToFitPx(window,gStringVar4,0,90,0,0,144);
+ u32 rating=ChaosCurrentStageRating(mon);
+ StringCopy(gStringVar4,COMPOUND_STRING("CHAOS RATING: "));ConvertIntToDecimalStringN(gStringVar1,rating/10,STR_CONV_MODE_LEFT_ALIGN,2);StringAppend(gStringVar4,gStringVar1);StringAppend(gStringVar4,COMPOUND_STRING("."));ConvertIntToDecimalStringN(gStringVar1,rating%10,STR_CONV_MODE_LEFT_ALIGN,1);StringAppend(gStringVar4,gStringVar1);StringAppend(gStringVar4,COMPOUND_STRING(" (est.)"));
+ PrintTextOnWindowWithFont(window,gStringVar4,0,104,0,0,FONT_SMALL);
+ PutWindowTilemap(window);CopyWindowToVram(window,COPYWIN_FULL);
+}
+static void Task_PrintChaosGrowthPage(u8 taskId){PrintChaosGrowthPage();DestroyTask(taskId);}
 
 static void PrintInfoPageText(void)
 {
@@ -4302,6 +4393,7 @@ static void SetTypeIcons(void)
         SetNewMoveTypeIcon();
         break;
     case PSS_PAGE_CONTEST_MOVES:
+        if (IS_FRLG) break;
         SetContestMoveTypeIcons();
         SetNewMoveTypeIcon();
         break;
@@ -4811,6 +4903,8 @@ static inline void ShowUtilityPrompt(s16 mode)
             }
         }
     }
+    else if (IS_FRLG && sMonSummaryScreen->currPageIndex == PSS_PAGE_CONTEST_MOVES)
+        promptText = COMPOUND_STRING("BRANCH");
     else if (sMonSummaryScreen->currPageIndex == PSS_PAGE_BATTLE_MOVES
              || sMonSummaryScreen->currPageIndex == PSS_PAGE_CONTEST_MOVES)
     {

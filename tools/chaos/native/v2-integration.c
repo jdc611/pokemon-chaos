@@ -1,0 +1,7 @@
+#include "global.h"
+#include "constants/items.h"
+#include "constants/flags.h"
+#include "constants/map_groups.h"
+#include "constants/vars.h"
+const unsigned ids[]={FLAG_FOUND_BOTH_VERMILION_GYM_SWITCHES,FLAG_TEMP_1,VAR_TEMP_0,VAR_TEMP_1,
+ITEM_HM05,FLAG_GOT_HM05,ITEM_ITEMFINDER,FLAG_GOT_ITEMFINDER,ITEM_EVERSTONE,FLAG_GOT_EVERSTONE_FROM_OAKS_AIDE,ITEM_EXP_SHARE,FLAG_GOT_EXP_SHARE_FROM_OAKS_AIDE,ITEM_AMULET_COIN,FLAG_GOT_AMULET_COIN_FROM_OAKS_AIDE};

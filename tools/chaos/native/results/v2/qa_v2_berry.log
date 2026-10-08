@@ -1,0 +1,5 @@
+PASS berry restoration/no overwrite/idempotence current item 0
+PASS berry restoration/no overwrite/idempotence current item 472
+PASS no berry refund for knocked
+PASS no berry refund for stolen
+PASS no berry refund for unused

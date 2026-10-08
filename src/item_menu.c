@@ -92,6 +92,7 @@ enum {
     ACTION_BY_TYPE,
     ACTION_BY_AMOUNT,
     ACTION_BY_INDEX,
+    ACTION_TM_DETAILS,
     ACTION_DUMMY,
 };
 
@@ -138,6 +139,8 @@ static void CreatePocketScrollArrowPair(void);
 static void CreatePocketSwitchArrowPair(void);
 static void DestroyPocketSwitchArrowPair(void);
 static void PrepareTMHMMoveWindow(void);
+extern void CB2_ChaosTmDetails(void);
+static void ItemMenu_TmDetails(u8);
 static bool8 IsWallysBag(void);
 static void Task_WallyTutorialBagMenu(u8);
 static void Task_BagMenu_HandleInput(u8);
@@ -308,6 +311,7 @@ static const struct MenuAction sItemMenuActions[] = {
     [ACTION_BY_TYPE]           = {COMPOUND_STRING("Type"),      {ItemMenu_SortByType}},
     [ACTION_BY_AMOUNT]         = {COMPOUND_STRING("Amount"),    {ItemMenu_SortByAmount}},
     [ACTION_BY_INDEX]          = {COMPOUND_STRING("Index"),     {ItemMenu_SortByIndex}},
+    [ACTION_TM_DETAILS]        = {COMPOUND_STRING("DETAILS"), {ItemMenu_TmDetails}},
     [ACTION_DUMMY]             = {gText_EmptyString2, {NULL}}
 };
 
@@ -330,7 +334,7 @@ static const u8 sContextMenuItems_BallsPocket[] = {
 
 static const u8 sContextMenuItems_TmHmPocket[] = {
     ACTION_USE,         ACTION_GIVE,
-    ACTION_DUMMY,       ACTION_CANCEL
+    ACTION_TM_DETAILS,  ACTION_CANCEL
 };
 
 static const u8 sContextMenuItems_BerriesPocket[] = {
@@ -1873,6 +1877,12 @@ static void RemoveContextWindow(void)
         BagMenu_RemoveWindow(ITEMWIN_2x2);
     else
         BagMenu_RemoveWindow(ITEMWIN_2x3);
+}
+
+static void ItemMenu_TmDetails(u8 taskId)
+{
+    gBagMenu->newScreenCallback = CB2_ChaosTmDetails;
+    Task_FadeAndCloseBagMenu(taskId);
 }
 
 static void ItemMenu_UseOutOfBattle(u8 taskId)

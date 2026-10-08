@@ -37,11 +37,9 @@ for item in range(2,500):call('AddBagItem',item,1)
 call('ChaosClaimGymStone');assert rd('gSpecialVar_Result',2)==2
 call('ClearBag');call('ChaosClaimGymStone');assert rd('gSpecialVar_Result',2)==1
 print('PASS native all seven protected gym/rematch reward claims, eligibility, one-time receipt and full-bag retry.',flush=True)
-# Optional bundles, including transaction rollback.
-reset();call('ClearBag');call('FlagSet',0x820);call('ChaosClaimCarePackage');assert rd('gSpecialVar_Result',2)==0
-call('VarSet',0x408e,1);call('ChaosClaimCarePackage');assert rd('gSpecialVar_Result',2)==1 and call('CheckBagHasItem',1,25)
-call('ChaosClaimCarePackage');assert rd('gSpecialVar_Result',2)==0
-print('PASS native care OFF/ON, curated first-badge bundle and one-time claim.',flush=True)
+# V2 explicitly replaces interactive bundles with exactly three automatic milestones.
+reset();call('ClearBag');call('FlagSet',0x820);call('VarSet',0x408e,1);call('ChaosClaimCarePackage');assert rd('gSpecialVar_Result',2)==0
+print('PASS removed legacy interactive care reward; V2 milestone transactions are covered separately.',flush=True)
 # Records presentation can open, navigate and return without a text overflow.
 reset();call('VarSet',0x408c,0);call('ScriptContext_SetupScript',symbols['EventScript_ChaosRecordsNurse']);frames(60)
 for _ in range(9):frames(2,1);frames(30)

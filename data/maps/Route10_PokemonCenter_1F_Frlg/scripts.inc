@@ -34,13 +34,11 @@ Route10_PokemonCenter_1F_EventScript_Aide::
 	faceplayer
 	call Route10_PokemonCenter_1F_EventScript_GetAideRequestInfo
 	goto_if_set FLAG_GOT_EVERSTONE_FROM_OAKS_AIDE, Route10_PokemonCenter_1F_EventScript_AlreadyGotEverstone
-	msgbox Route10_PokemonCenter_1F_Text_GiveEverstoneIfCaught20Mons, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, NO, Aide_EventScript_DeclineCheckMons
+	msgbox Text_ChaosAideJoke1
 	setvar VAR_0x8004, 0
 	specialvar VAR_RESULT, GetFrlgPokedexCount
 	buffernumberstring STR_VAR_3, VAR_0x8006
 	call Route10_PokemonCenter_1F_EventScript_GetAideRequestInfo
-	goto_if_lt VAR_0x8006, REQUIRED_OWNED_MONS, Aide_EventScript_HaventCaughtEnough
 	msgbox Route10_PokemonCenter_1F_Text_GreatHereYouGo
 	checkitemspace ITEM_EVERSTONE
 	goto_if_eq VAR_RESULT, FALSE, Aide_EventScript_NoRoomForItem
@@ -108,3 +106,6 @@ Route10_PokemonCenter_1F_Text_ExplainEverstone::
 	.string "It will prevent evolution according\n"
 	.string "to the PROFESSOR.$"
 
+
+Text_ChaosAideJoke1::
+	.string "OAK retired the species quota!\nMy paycheck is still endangered.$"

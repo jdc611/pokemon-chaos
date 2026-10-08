@@ -1,0 +1,10 @@
+Switches 3 4
+PASS actual Surge wrong second/re-entry/correct second switch scripts.
+PASS aide reward/replay guard Route2_EastBuilding_EventScript_Aide 686
+PASS aide reward/replay guard Route11_EastEntrance_2F_EventScript_Aide 712
+PASS aide reward/replay guard Route10_PokemonCenter_1F_EventScript_Aide 245
+PASS aide reward/replay guard Route15_WestEntrance_2F_EventScript_Aide 461
+PASS aide reward/replay guard Route16_NorthEntrance_2F_EventScript_Aide 466
+PASS full-party/full-PC egg rejected without money loss or receipt.
+PASS care OFF milestone / later ON claim / candy maximum.
+PASS final-stage Growth Summary opens/cycles/exits; Play Style screenshot.

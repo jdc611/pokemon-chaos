@@ -2691,7 +2691,7 @@ static void RunSetup_Draw(u8 cursor)
             if (cursor == row)
                 AddTextPrinterParameterized3(0, FONT_NORMAL, 1, y, sTextColor_Headers, TEXT_SKIP_DRAW, gText_SelectorArrow2);
         }
-        RunSetup_DrawWideChoice(sText_RunSetupNext, 72, 119, 64, cursor == 5);
+        RunSetup_DrawWideChoice(sText_RunSetupNext, 72, 110, 64, cursor == 5);
         PutWindowTilemap(0);
         CopyWindowToVram(0, COPYWIN_FULL);
         return;

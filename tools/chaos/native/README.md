@@ -17,3 +17,9 @@ Run from this directory, in order:
 Regenerate every state after rebuilding the ROM. Code addresses are embedded in native save states. The fixture memory at `0x0203e000` must remain outside allocated EWRAM; inspect the linker map if future features change RAM usage. Private controller function names can repeat across translation units, so the helper selects the Player controller rather than the Oak/Safari controller.
 
 Logs and reviewed screenshots from the October 6 stabilization directive are described in `docs/chaos-stabilization-verification.md`.
+
+## V2 checks (October 8)
+
+Compile the five new `v2-*-layout.c`/`v2-layout.c`/`v2-ids.c`/`v2-integration.c`/`v2-tms.c` constant tables as above, using `-iquote include` rather than `-I include` so the project's `strings.h` cannot shadow newlib's header. Output matching `.bin` files into `CHAOS_QA_DIR`. Regenerate `qa_pass_boot.py` and `qa_pass_events.py`, then run `run_v2.py`. It runs the 27 native suites in three independent groups, in dependency order within each group, and records exit codes. Run `qa_v2_growth_branches.py` and `qa_v2_ranch_training.py` afterward for the 63-branch cycle and actual Center/Ranch/Train menu paths.
+
+`emulator.c` now supports six-argument APCS calls for the evolution getter. Both direct native calls and genuine UI/script paths are used; individual assertions/logs indicate which. Center cycling uses emulator state save/load; separate reward fixtures exercise real flash save/load. The tests do not emulate iOS backgrounding or provide a complete playthrough. V2 results live in `results/v2`; the implementation/test limits are in `docs/chaos-v2-verification.md`.
