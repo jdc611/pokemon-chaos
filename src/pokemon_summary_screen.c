@@ -1192,7 +1192,6 @@ static void DestroyCategoryIcon(void)
 {
     if (sMonSummaryScreen->categoryIconSpriteId != 0xFF)
         DestroySprite(&gSprites[sMonSummaryScreen->categoryIconSpriteId]);
-    sMonSummaryScreen->chaosNextSprite = SPRITE_NONE;
     sMonSummaryScreen->categoryIconSpriteId = 0xFF;
 }
 
@@ -1206,6 +1205,7 @@ u32 GetAdjustedIvData(struct Pokemon *mon, u32 stat)
 void ShowPokemonSummaryScreen(u8 mode, void *mons, u8 monIndex, u8 maxMonIndex, void (*callback)(void))
 {
     sMonSummaryScreen = AllocZeroed(sizeof(*sMonSummaryScreen));
+    sMonSummaryScreen->chaosNextSprite = SPRITE_NONE;
     sMonSummaryScreen->mode = mode;
     if (monIndex == PC_MON_CHOSEN)
     {
@@ -3566,12 +3566,16 @@ static void PrintChaosGrowthPage(void)
   StringAppend(gStringVar4,COMPOUND_STRING(" / "));
   ConvertIntToDecimalStringN(gStringVar1,visible,STR_CONV_MODE_LEFT_ALIGN,2);StringAppend(gStringVar4,gStringVar1);
   PrintTextOnWindowWithFont(window,gStringVar4,0,0,0,0,FONT_SMALL);
-  PrintTextOnWindowWithFont(window,GetSpeciesName(evo->targetSpecies),0,12,0,0,FONT_SMALL);
+  bool32 hideEvolution = gSaveBlock3Ptr->evolutionMode == RUN_EVOLUTIONS_RANDOM;
+  PrintTextOnWindowWithFont(window,hideEvolution ? COMPOUND_STRING("???") : GetSpeciesName(evo->targetSpecies),0,12,0,0,FONT_SMALL);
   ChaosFormatEvolution(evo,gStringVar4);
   WrapFontIdToFit(gStringVar4,gStringVar4+StringLength(gStringVar4),FONT_SMALL,144);
   PrintTextOnWindowWithFont(window,gStringVar4,0,32,-2,0,FONT_SMALL);
-  LoadMonIconPalette(evo->targetSpecies);
-  sMonSummaryScreen->chaosNextSprite=CreateMonIconNoPersonality(evo->targetSpecies,SpriteCB_MonIcon,213,48,0);
+  if (!hideEvolution)
+  {
+   LoadMonIconPalette(evo->targetSpecies);
+   sMonSummaryScreen->chaosNextSprite=CreateMonIconNoPersonality(evo->targetSpecies,SpriteCB_MonIcon,213,48,0);
+  }
  }
  else PrintTextOnWindowWithFont(window,COMPOUND_STRING("FINAL EVOLUTION"),0,8,0,0,FONT_SMALL);
 growth:

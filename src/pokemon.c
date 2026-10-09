@@ -1,5 +1,6 @@
 #include "global.h"
 #include "chaos_abilities.h"
+#include "chaos_moves.h"
 #include "malloc.h"
 #include "apprentice.h"
 #include "battle.h"
@@ -4081,7 +4082,7 @@ const struct LevelUpMove *GetSpeciesLevelUpLearnset(enum Species species)
     const struct LevelUpMove *learnset = gSpeciesInfo[SanitizeSpeciesId(species)].levelUpLearnset;
     if (learnset == NULL)
         return gSpeciesInfo[SPECIES_NONE].levelUpLearnset;
-    return learnset;
+    return ChaosGetLevelUpLearnset(SanitizeSpeciesId(species), learnset);
 }
 
 const u16 *GetSpeciesTeachableLearnset(enum Species species)
@@ -4097,7 +4098,7 @@ const u16 *GetSpeciesEggMoves(enum Species species)
     const u16 *learnset = gSpeciesInfo[SanitizeSpeciesId(species)].eggMoveLearnset;
     if (learnset == NULL)
         return gSpeciesInfo[SPECIES_NONE].eggMoveLearnset;
-    return learnset;
+    return ChaosGetEggLearnset(SanitizeSpeciesId(species), learnset);
 }
 
 //only used in test assumptions at the moment

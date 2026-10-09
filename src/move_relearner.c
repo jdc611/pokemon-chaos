@@ -248,9 +248,20 @@ static const struct BgTemplate sMoveRelearnerMenuBackgroundTemplates[] =
 
 static void StoreMoveText(void);
 static void CreateLearnableMovesList(void);
+static void ClampMoveListCursor(void);
 static void CreateUISprites(void);
 static void CB2_MoveRelearnerMain(void);
 static void Task_WaitForFadeOut(u8 taskId);
+// Private battle-independent handoff; Summary must not overwrite script slots
+// or change the category selected by the player while choosing a replacement.
+static EWRAM_DATA struct
+{
+    u16 partyIndex;
+    u16 move;
+    u16 category;
+    u8 relearnState;
+} sReplacementContext = {0};
+
 static void CB2_InitLearnMoveReturnFromSelectMove(void);
 static void InitMoveRelearnerBackgroundLayers(void);
 static void AddScrollArrows(void);
@@ -381,6 +392,7 @@ static void CB2_InitLearnMove_Basic(void)
     case 3:
         StoreMoveText();
         CreateLearnableMovesList();
+        ClampMoveListCursor();
         sMoveRelearnerStruct->moveListMenuTask = ListMenuInit(&gMultiuseListMenuTemplate, sMoveRelearnerScrollState.listOffset, sMoveRelearnerScrollState.listRow);
         gMain.state++;
         break;
@@ -439,9 +451,11 @@ static void CB2_InitLearnMoveReturnFromSelectMove(void)
     sMoveRelearnerStruct = AllocZeroed(sizeof(*sMoveRelearnerStruct));
     sMoveRelearnerStruct->mainTask = CreateTask(TaskDummy, 1);
     gTasks[sMoveRelearnerStruct->mainTask].tState = GetLearnMoveResumeAfterSummaryScreenState();
-    gTasks[sMoveRelearnerStruct->mainTask].tPartyIndex = gSpecialVar_0x8008;
-    gTasks[sMoveRelearnerStruct->mainTask].tMove = gSpecialVar_0x8009;
-    gTasks[sMoveRelearnerStruct->mainTask].tCategory = gSpecialVar_0x800A;
+    gTasks[sMoveRelearnerStruct->mainTask].tPartyIndex = sReplacementContext.partyIndex;
+    gTasks[sMoveRelearnerStruct->mainTask].tMove = sReplacementContext.move;
+    gTasks[sMoveRelearnerStruct->mainTask].tCategory = sReplacementContext.category;
+    gSpecialVar_0x8004 = sReplacementContext.partyIndex;
+    gMoveRelearnerState = sReplacementContext.relearnState;
     SetMainCallback2(CB2_InitLearnMove_Basic);
 }
 
@@ -529,19 +543,30 @@ static void UIPlayFanfare(u32 songId)
 
 static void UIShowMoveList(u8 taskId)
 {
-    gSpecialVar_0x8008 = gTasks[taskId].tPartyIndex;
-    gSpecialVar_0x8009 = gTasks[taskId].tMove;
-    gSpecialVar_0x800A = gTasks[taskId].tCategory;
-    ShowSelectMovePokemonSummaryScreen(gParties[B_TRAINER_PLAYER], gTasks[taskId].tPartyIndex, CB2_InitLearnMoveReturnFromSelectMove, gTasks[taskId].tMove);
-    DestroyTask(taskId);
+    sReplacementContext.partyIndex = gTasks[taskId].tPartyIndex;
+    sReplacementContext.move = gTasks[taskId].tMove;
+    sReplacementContext.category = gTasks[taskId].tCategory;
+    sReplacementContext.relearnState = gMoveRelearnerState;
+    // Tear down the old UI before allocating its replacement.
+    SetVBlankCallback(NULL);
     FreeMoveRelearnerResources();
+    DestroyTask(taskId);
+    ShowSelectMovePokemonSummaryScreen(gParties[B_TRAINER_PLAYER], sReplacementContext.partyIndex, CB2_InitLearnMoveReturnFromSelectMove, sReplacementContext.move);
+}
+
+static void ClampMoveListCursor(void)
+{
+    u16 maxOffset = sMoveRelearnerStruct->numMenuChoices - sMoveRelearnerStruct->numToShowAtOnce;
+    if (sMoveRelearnerScrollState.listOffset > maxOffset)
+        sMoveRelearnerScrollState.listOffset = maxOffset;
+    if (sMoveRelearnerScrollState.listRow >= sMoveRelearnerStruct->numToShowAtOnce)
+        sMoveRelearnerScrollState.listRow = sMoveRelearnerStruct->numToShowAtOnce - 1;
 }
 
 static void RedrawMoveList(void)
 {
     CreateLearnableMovesList();
-    if (sMoveRelearnerScrollState.listOffset > sMoveRelearnerStruct->numMenuChoices - sMoveRelearnerStruct->numToShowAtOnce)
-        sMoveRelearnerScrollState.listOffset = sMoveRelearnerStruct->numMenuChoices - sMoveRelearnerStruct->numToShowAtOnce;
+    ClampMoveListCursor();
     DestroyListMenuTask(sMoveRelearnerStruct->moveListMenuTask, NULL, NULL);
     sMoveRelearnerStruct->moveListMenuTask = ListMenuInit(&gMultiuseListMenuTemplate, sMoveRelearnerScrollState.listOffset, sMoveRelearnerScrollState.listRow);
     ShowTeachMoveText();
@@ -584,26 +609,28 @@ static void Task_MoveRelearner_Quit(u8 taskId)
     if (gPaletteFade.active)
         return;
 
+    u16 partyIndex = gTasks[taskId].tPartyIndex;
+    u8 relearnMode = gRelearnMode;
+    void (*summaryCallback)(void) = gInitialSummaryScreenCallback;
+    SetVBlankCallback(NULL);
+    FreeMoveRelearnerResources();
+    gRelearnMode = RELEARN_MODE_NONE;
+    DestroyTask(taskId);
+
     if (gChaosPartyRelearn)
     {
         gChaosPartyRelearn = FALSE;
         SetMainCallback2(CB2_ReturnToPartyMenuFromSummaryScreen);
     }
-    else if (gInitialSummaryScreenCallback != NULL)
+    else if (summaryCallback != NULL)
     {
-        if (gRelearnMode == RELEARN_MODE_PSS_PAGE_CONTEST_MOVES)
-            ShowPokemonSummaryScreen(SUMMARY_MODE_RELEARNER_CONTEST, gParties[B_TRAINER_PLAYER], gTasks[taskId].tPartyIndex, gPartiesCount[B_TRAINER_PLAYER] - 1, gInitialSummaryScreenCallback);
-        else
-            ShowPokemonSummaryScreen(SUMMARY_MODE_RELEARNER_BATTLE, gParties[B_TRAINER_PLAYER], gTasks[taskId].tPartyIndex, gPartiesCount[B_TRAINER_PLAYER] - 1, gInitialSummaryScreenCallback);
+        u8 mode = relearnMode == RELEARN_MODE_PSS_PAGE_CONTEST_MOVES ? SUMMARY_MODE_RELEARNER_CONTEST : SUMMARY_MODE_RELEARNER_BATTLE;
+        ShowPokemonSummaryScreen(mode, gParties[B_TRAINER_PLAYER], partyIndex, gPartiesCount[B_TRAINER_PLAYER] - 1, summaryCallback);
     }
     else
     {
         SetMainCallback2(CB2_ReturnToField);
     }
-
-    FreeMoveRelearnerResources();
-    gRelearnMode = RELEARN_MODE_NONE;
-    DestroyTask(taskId);
 }
 
 static void Task_MoveRelearner_Giveup_Answer(u8 taskId)
@@ -641,7 +668,10 @@ static void Task_MoveRelearner_LearnMove(u8 taskId)
 {
     if (IsTextPrinterActiveOnWindow(RELEARNERWIN_MSG))
         return;
-    gTasks[taskId].tState = LearnMove(&sMoveLearnUI, taskId);
+    s32 nextState = LearnMove(&sMoveLearnUI, taskId);
+    // showMoveList destroys this task; do not write into a retired task slot.
+    if (gTasks[taskId].isActive && gTasks[taskId].func == Task_MoveRelearner_LearnMove)
+        gTasks[taskId].tState = nextState;
 }
 
 static bool32 UpdateMoveRelearnerState(void)
@@ -1149,7 +1179,7 @@ static bool32 IsLevelUpMoveRelearnerActive(void)
 
 static bool32 IsEggMoveRelearnerActive(void)
 {
-    return (FlagGet(P_FLAG_EGG_MOVES) || P_ENABLE_MOVE_RELEARNERS);
+    return IS_FRLG || FlagGet(P_FLAG_EGG_MOVES) || P_ENABLE_MOVE_RELEARNERS;
 }
 
 static bool32 IsTMMoveRelearnerActive(void)

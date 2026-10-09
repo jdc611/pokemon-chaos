@@ -211,6 +211,16 @@ ChaosMysteryEggVendor2::
 ChaosMysteryEggVendor::
  lock
  faceplayer
+ goto_if_eq VAR_0x8004, 0, ChaosMysteryEggVendorBaby
+ goto_if_eq VAR_0x8004, 1, ChaosMysteryEggVendorStarter
+ msgbox Text_ChaosMysteryEggRegional
+ goto ChaosMysteryEggVendorOffer
+ChaosMysteryEggVendorBaby::
+ msgbox Text_ChaosMysteryEggBaby
+ goto ChaosMysteryEggVendorOffer
+ChaosMysteryEggVendorStarter::
+ msgbox Text_ChaosMysteryEggStarter
+ChaosMysteryEggVendorOffer::
  msgbox Text_ChaosMysteryEggOffer, MSGBOX_YESNO
  goto_if_eq VAR_RESULT, NO, ChaosMysteryEggVendorDone
  callnative ChaosBuyMysteryEgg
@@ -232,9 +242,19 @@ ChaosMysteryEggVendorSpace::
 ChaosMysteryEggVendorSold::
  msgbox Text_ChaosMysteryEggSold
  goto ChaosMysteryEggVendorDone
+Text_ChaosMysteryEggBaby::
+ .string "I raise BABY POKéMON EGGS!\nThey're chosen from these seven:\p"
+ .string "TOGEPI, PICHU, AZURILL, RIOLU,\nBUDEW, CLEFFA, and IGGLYBUFF.\p"
+ .string "Which one hatches is a surprise.\nA little partner with big potential!$"
+Text_ChaosMysteryEggStarter::
+ .string "I raise STARTER POKéMON EGGS!\nMy pool includes all 27 starters,\lfrom KANTO through PALDEA.\p"
+ .string "A BULBASAUR? A SCORBUNNY?\nYou won't know until it hatches!$"
+Text_ChaosMysteryEggRegional::
+ .string "My EGGS hatch REGIONAL FORMS!\nEight special forms from ALOLA,\lGALAR, HISUI, and PALDEA.\p"
+ .string "A HISUIAN ZORUA? A PALDEAN\nWOOPER? Each has its own style.\lThe exact one is a surprise!$"
 Text_ChaosMysteryEggOffer::
- .string "One MYSTERY EGG, only $5,000!\nA surprise with great potential.\p"
- .string "I can offer just one per trainer.\nWould you like to buy it?$"
+ .string "Each MYSTERY EGG costs ¥5,000.\nOne EGG per trainer from my pool.\p"
+ .string "Want to take one home?$"
 Text_ChaosMysteryEggReceived::
  .string "You received a MYSTERY EGG!\nIf your party is full, check your PC.$"
 Text_ChaosMysteryEggMoney::
