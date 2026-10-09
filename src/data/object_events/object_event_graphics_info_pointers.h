@@ -1,3 +1,4 @@
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ChaosEggDisplay;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ChaosCole;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ChaosVesper;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ChaosJessie;
@@ -407,6 +408,7 @@ extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_UnusedMauvi
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ApricornTree;
 
 const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM_OBJ_EVENT_GFX] = {
+    [OBJ_EVENT_GFX_CHAOS_EGG_DISPLAY] = &gObjectEventGraphicsInfo_ChaosEggDisplay,
     [OBJ_EVENT_GFX_BRENDAN_NORMAL] =           &gObjectEventGraphicsInfo_BrendanNormal,
     [OBJ_EVENT_GFX_BRENDAN_MACH_BIKE] =        &gObjectEventGraphicsInfo_BrendanMachBike,
     [OBJ_EVENT_GFX_BRENDAN_SURFING] =          &gObjectEventGraphicsInfo_BrendanSurfing,

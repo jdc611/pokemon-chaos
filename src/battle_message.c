@@ -1,4 +1,5 @@
 #include "global.h"
+#include "chaos_abilities.h"
 #include "battle.h"
 #include "battle_anim.h"
 #include "battle_ai_record.h"
@@ -2891,6 +2892,14 @@ static void GetBattlerNick(enum BattlerId battler, u8 *dst)
         mon = illusionMon;
     GetMonData(mon, MON_DATA_NICKNAME, dst);
     StringGet_Nickname(dst);
+    const u8 *prefix = illusionMon == NULL ? ChaosAbilityNamePrefix(battler) : NULL;
+    if (prefix != NULL)
+    {
+        u8 name[POKEMON_NAME_LENGTH + 1];
+        StringCopy(name, dst);
+        StringCopy(dst, prefix);
+        StringAppend(dst, name);
+    }
 }
 
 #define HANDLE_NICKNAME_STRING_CASE(battler)                            \

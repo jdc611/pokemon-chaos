@@ -1601,6 +1601,7 @@ void StealTargetItem(enum BattlerId battlerStealer, enum BattlerId itemBattler, 
     {
         RecordItemEffectBattle(battlerStealer, GetItemHoldEffect(gLastUsedItem));
         gBattleMons[battlerStealer].item = gLastUsedItem;
+        GetBattlerPartyState(battlerStealer)->chaosBerryConsumed = FALSE;
 
         gBattleMons[battlerStealer].volatiles.unburdenActive = FALSE;
         BtlController_EmitSetMonData(battlerStealer, B_COMM_TO_CONTROLLER, REQUEST_HELDITEM_BATTLE, 0, sizeof(gLastUsedItem), &gLastUsedItem); // set attacker item
@@ -5053,6 +5054,8 @@ u32 IsLeafGuardProtected(enum BattlerId battler, enum Ability ability)
 
 bool32 IsShieldsDownProtected(enum BattlerId battler, enum Ability ability)
 {
+    if (ability == ABILITY_SHIELDS_DOWN && ChaosAbilityIsFallback(battler, ability))
+        return gBattleMons[battler].hp * 2 > gBattleMons[battler].maxHP;
     return (ability == ABILITY_SHIELDS_DOWN
             && GetFormIdFromFormSpeciesId(gBattleMons[battler].species) < GetFormIdFromFormSpeciesId(SPECIES_MINIOR_CORE_RED)); // Minior is not in core form
 }
@@ -7103,6 +7106,8 @@ static void Cmd_tryswapitems(void)
 
             gBattleMons[gBattlerAttacker].item = oldItemDef;
             gBattleMons[gBattlerTarget].item = oldItemAtk;
+            GetBattlerPartyState(gBattlerAttacker)->chaosBerryConsumed = FALSE;
+            GetBattlerPartyState(gBattlerTarget)->chaosBerryConsumed = FALSE;
 
             RecordItemEffectBattle(gBattlerAttacker, GetItemHoldEffect(oldItemDef));
             RecordItemEffectBattle(gBattlerTarget, GetItemHoldEffect(oldItemAtk));
@@ -7719,7 +7724,8 @@ bool32 DoesSubstituteBlockMove(enum BattlerId battlerAtk, enum BattlerId battler
 
 bool32 DoesDisguiseBlockMove(enum BattlerId battler, enum Move move)
 {
-    if (!IsMimikyuDisguised(battler)
+    if ((!IsMimikyuDisguised(battler)
+         && !(ChaosAbilityIsFallback(battler, ABILITY_DISGUISE) && !GetBattlerPartyState(battler)->chaosDisguiseBroken))
      || gBattleMons[battler].volatiles.transformed
      || IsBattleMoveStatus(move)
      || !IsAbilityAndRecord(battler, GetBattlerAbility(battler), ABILITY_DISGUISE))
@@ -7730,7 +7736,8 @@ bool32 DoesDisguiseBlockMove(enum BattlerId battler, enum Move move)
 
 bool32 DoesIceFaceBlockMove(enum BattlerId battler, enum Move move)
 {
-    if (gBattleMons[battler].species != SPECIES_EISCUE_ICE
+    if ((gBattleMons[battler].species != SPECIES_EISCUE_ICE
+         && !(ChaosAbilityIsFallback(battler, ABILITY_ICE_FACE) && !GetBattlerPartyState(battler)->chaosIceBroken))
      || gBattleMons[battler].volatiles.transformed
      || !IsBattleMovePhysical(move)
      || !IsAbilityAndRecord(battler, GetBattlerAbility(battler), ABILITY_ICE_FACE))
@@ -7754,6 +7761,7 @@ static void Cmd_tryrecycleitem(void)
         gLastUsedItem = *usedHeldItem;
         *usedHeldItem = ITEM_NONE;
         gBattleMons[gBattlerAttacker].item = gLastUsedItem;
+        GetBattlerPartyState(gBattlerAttacker)->chaosBerryConsumed = FALSE;
         gBattleMons[gBattlerAttacker].volatiles.unburdenActive = FALSE;
 
         BtlController_EmitSetMonData(gBattlerAttacker, B_COMM_TO_CONTROLLER, REQUEST_HELDITEM_BATTLE, 0, sizeof(gBattleMons[gBattlerAttacker].item), &gBattleMons[gBattlerAttacker].item);
@@ -9255,6 +9263,11 @@ void BS_TrySymbiosis(void)
     enum BattlerId battler = GetBattlerForBattleScript(cmd->battler);
     //called by Bestow, Fling, and Bug Bite, which don't work with Cmd_removeitem.
     enum BattlerId partner = GetPartnerBattler(battler);
+    if (ChaosBenchSymbiosis(battler))
+    {
+        BattleScriptCall(BattleScript_SymbiosisActivates);
+        return;
+    }
     if (TryTriggerSymbiosis(battler, partner))
     {
         BestowItem(partner, battler);
@@ -10317,6 +10330,7 @@ void BS_TryRecycleBerry(void)
         gLastUsedItem = *usedHeldItem;
         *usedHeldItem = ITEM_NONE;
         gBattleMons[gBattlerTarget].item = gLastUsedItem;
+        GetBattlerPartyState(gBattlerTarget)->chaosBerryConsumed = FALSE;
         gBattleMons[gBattlerTarget].volatiles.unburdenActive = FALSE;
 
         BtlController_EmitSetMonData(gBattlerTarget, B_COMM_TO_CONTROLLER, REQUEST_HELDITEM_BATTLE, 0, sizeof(gBattleMons[gBattlerTarget].item), &gBattleMons[gBattlerTarget].item);

@@ -4377,7 +4377,7 @@ void SwapTurnOrder(u8 id1, u8 id2)
 // For AI, so it doesn't 'cheat' by knowing player's ability
 u32 GetBattlerTotalSpeedStat(enum BattlerId battler, enum Ability ability, enum HoldEffect holdEffect)
 {
-    u32 speed = gBattleMons[battler].speed;
+    u32 speed = ChaosAbilityStat(battler, ability, STAT_SPEED, gBattleMons[battler].speed);
 
     // stat stages
     speed *= gStatStageRatios[gBattleMons[battler].statStages[STAT_SPEED]][0];

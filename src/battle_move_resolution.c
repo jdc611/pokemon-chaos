@@ -2234,6 +2234,8 @@ static enum CancelerResult CancelerTargetFailure(struct BattleCalcValues *cv)
 
             ctx.typeEffectivenessModifier = CalcTypeEffectivenessMultiplier(&ctx);
             gSpecialStatuses[cv->battlerDef].storedTypeEffectiveness = ctx.typeEffectivenessModifier;
+            if (ctx.typeEffectivenessModifier == UQ_4_12(0.0))
+                ChaosRevealBattleTypes(cv->battlerAtk, cv->battlerDef, cv->move, UQ_4_12(0.0));
 
             if (ctx.abilityBlocked)
             {
@@ -2987,6 +2989,7 @@ static bool32 TryMoveDamageUpdate(struct BattleCalcValues *cv)
     }
     else if (DoesDisguiseBlockMove(cv->battlerDef, cv->move) || DoesIceFaceBlockMove(cv->battlerDef, cv->move))
     {
+        ChaosAbilityCommitHit(cv->battlerDef, cv->move);
         // Damage deals typeless 0 HP.
         gBattleStruct->moveResultFlags[cv->battlerDef] &= ~(MOVE_RESULT_HIGH_EFFECTIVENESS | MOVE_RESULT_LOW_EFFECTIVENESS);
         gBattleStruct->moveDamage[cv->battlerDef] = 0;
@@ -3013,7 +3016,10 @@ static bool32 TryMoveDamageUpdate(struct BattleCalcValues *cv)
             gBideTarget[cv->battlerDef] = cv->battlerAtk;
 
             if (gBattleStruct->moveDamage[cv->battlerDef] > 0)
+            {
                 ChaosAbilityCommitHit(cv->battlerDef, cv->move);
+                ChaosRevealBattleTypes(cv->battlerAtk, cv->battlerDef, cv->move, gSpecialStatuses[cv->battlerDef].storedTypeEffectiveness);
+            }
 
             // Deal damage to the battler
             hpBefore = gBattleMons[cv->battlerDef].hp;
@@ -4691,7 +4697,10 @@ static enum MoveEndResult MoveEndFormChange(struct BattleCalcValues *cv)
 {
     enum MoveEndResult result = MOVEEND_RESULT_CONTINUE;
 
-    if (gBattleStruct->battlerState[cv->battlerAtk].originalBattlerPartyId == PARTY_SIZE
+    if (gBattleStruct->battlerState[cv->battlerAtk].originalBattlerPartyId==PARTY_SIZE
+     && !gBattleStruct->unableToUseMove && ChaosAbilityLoadGulp(cv->battlerAtk,cv->move))
+        result=MOVEEND_RESULT_RUN_SCRIPT;
+    else if (gBattleStruct->battlerState[cv->battlerAtk].originalBattlerPartyId == PARTY_SIZE
      && TryBattleFormChange(cv->battlerAtk, FORM_CHANGE_BATTLE_AFTER_MOVE, cv->abilities[cv->battlerAtk]))
     {
         result = MOVEEND_RESULT_RUN_SCRIPT;

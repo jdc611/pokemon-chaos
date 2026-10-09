@@ -1,4 +1,5 @@
 #include "global.h"
+#include "chaos_abilities.h"
 #include "battle.h"
 #include "battle_anim.h"
 #include "battle_arena.h"
@@ -2573,6 +2574,8 @@ static bool32 ShouldShowTypeEffectiveness(u32 targetId)
 
     if (IsGhostBattleWithoutScope())
         return FALSE;
+    if (IS_FRLG)
+        return mode != TYPE_HINTS_OFF && GetIllusionMonPtr(targetId) == NULL && ChaosBattleTypesKnown(targetId);
 
     switch (mode)
     {
@@ -2604,7 +2607,18 @@ static u32 CheckTypeEffectiveness(enum BattlerId battlerAtk, enum BattlerId batt
     ctx.holdEffects[ctx.battlerAtk] = GetBattlerHoldEffect(battlerAtk);
     ctx.holdEffects[ctx.battlerDef] = GetBattlerHoldEffect(battlerDef);
 
+    // Preview defensive ability bypass without activating the ability.
+    if (ctx.holdEffects[battlerDef] != HOLD_EFFECT_ABILITY_SHIELD
+     && gAbilitiesInfo[ctx.abilities[battlerDef]].breakable
+     && (ctx.abilities[battlerAtk] == ABILITY_MOLD_BREAKER || ctx.abilities[battlerAtk] == ABILITY_TERAVOLT
+      || ctx.abilities[battlerAtk] == ABILITY_TURBOBLAZE || MoveIgnoresTargetAbility(ctx.move)))
+        ctx.abilities[battlerDef] = ABILITY_NONE;
     uq4_12_t modifier = CalcTypeEffectivenessMultiplier(&ctx);
+    u32 chooser = gBattleCommunication[MULTISTRING_CHOOSER];
+    if (CanAbilityAbsorbMove(&ctx)) modifier = UQ_4_12(0.0);
+    gBattleCommunication[MULTISTRING_CHOOSER] = chooser;
+    if (modifier > UQ_4_12(0.0) && ctx.abilities[battlerDef] == ABILITY_PURIFYING_SALT && ctx.moveType == TYPE_GHOST)
+        modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(0.5));
 
     if (!ShouldShowTypeEffectiveness(battlerDef))
         return EFFECTIVENESS_CANNOT_VIEW;

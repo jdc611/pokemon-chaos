@@ -1,3 +1,4 @@
+#include "chaos_input.h"
 #include "global.h"
 #include "run_settings.h"
 #include "naming_screen.h"
@@ -2128,6 +2129,7 @@ static void PrintControls(void)
 
 static void CB2_NamingScreen(void)
 {
+    ChaosFilterMenuInput();
     RunTasks();
     AnimateSprites();
     BuildOamBuffer();

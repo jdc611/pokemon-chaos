@@ -571,6 +571,13 @@ struct PartyState
     u16 chaosHangry:1;
     u16 chaosEntryApplied:1;
     u16 chaosHitPopup:1;
+    u16 chaosTera:1;
+    u16 chaosCommander:1;
+    u16 chaosHospitality:1;
+    u16 chaosGulpLoaded:1;
+    u16 chaosGulpGorging:1;
+    u16 chaosIceWeather:1;
+    u16 chaosTypesRevealed:1;
     enum Item usedHeldItem;
 };
 

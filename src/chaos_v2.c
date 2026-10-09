@@ -1,4 +1,5 @@
 #include "global.h"
+#include "random_mon_generation.h"
 #include "chaos_v2.h"
 #include "battle.h"
 #include "battle_main.h"
@@ -317,3 +318,10 @@ void ChaosFormatEvolution(const struct Evolution *evo,u8 *dest)
 }
 
 void ChaosRequireNickname(void) { if (IsNuzlockeRun()) gSpecialVar_Result = TRUE; }
+
+// Preview the same deterministic gifted species as the purchase, without
+// creating a Pokemon or changing the selected party/storage destination.
+void ChaosPreviewMagikarpGift(void)
+{
+    StringCopy(gStringVar1, GetSpeciesName(GetRandomizedScriptedSpecies(SPECIES_MAGIKARP, 5, 0)));
+}

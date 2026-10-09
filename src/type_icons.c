@@ -1,4 +1,5 @@
 #include "global.h"
+#include "chaos_abilities.h"
 #include "battle.h"
 #include "battle_anim.h"
 #include "battle_controllers.h"
@@ -18,7 +19,6 @@ static enum Type GetMonPublicType(enum BattlerId, u32);
 static bool32 ShouldHideUncaughtType(enum Species species);
 static bool32 ShouldHideUnseenType(enum Species species);
 static enum Type GetMonDefensiveTeraType(struct Pokemon *, struct Pokemon *, enum BattlerId, u32, enum Species, enum Species);
-static bool32 IsIllusionActiveAndTypeUnchanged(struct Pokemon *, enum Species, enum BattlerId);
 
 static void CreateSpriteFromType(u32, bool32, enum Type[], u32, enum BattlerId);
 static bool32 ShouldSkipSecondType(enum Type[], u32);
@@ -239,8 +239,8 @@ void LoadTypeIcons(enum BattlerId battler)
     struct Pokemon* mon = GetBattlerMon(battler);
     enum Species species = GetMonData(mon, MON_DATA_SPECIES);
 
-    if (B_SHOW_TYPES == SHOW_TYPES_NEVER
-        || (B_SHOW_TYPES == SHOW_TYPES_SEEN && !GetSetPokedexFlag(SpeciesToNationalPokedexNum(species), FLAG_GET_SEEN)))
+    if (!IS_FRLG && (B_SHOW_TYPES == SHOW_TYPES_NEVER
+        || (B_SHOW_TYPES == SHOW_TYPES_SEEN && !GetSetPokedexFlag(SpeciesToNationalPokedexNum(species), FLAG_GET_SEEN))))
         return;
 
     LoadTypeSpritesAndPalettes();
@@ -298,19 +298,21 @@ static enum Type GetMonPublicType(enum BattlerId battlerId, u32 typeNum)
     struct Pokemon *monIllusion;
     enum Species illusionSpecies;
 
-    if (ShouldHideUncaughtType(monSpecies) || ShouldHideUnseenType(monSpecies))
+    monIllusion = GetIllusionMonPtr(battlerId);
+    illusionSpecies = monIllusion != NULL ? GetMonData(monIllusion, MON_DATA_SPECIES, NULL) : monSpecies;
+    enum Species visibleSpecies = monIllusion != NULL ? illusionSpecies : monSpecies;
+    if ((IS_FRLG && !ChaosBattleTypesKnown(battlerId))
+     || (!IS_FRLG && (ShouldHideUncaughtType(visibleSpecies) || ShouldHideUnseenType(visibleSpecies))))
         return TYPE_MYSTERY;
 
-    monIllusion = GetIllusionMonPtr(battlerId);
-    illusionSpecies = GetMonData(monIllusion,MON_DATA_SPECIES,NULL);
-
-    if (GetActiveGimmick(battlerId) == GIMMICK_TERA)
-        return GetMonDefensiveTeraType(mon,monIllusion,battlerId,typeNum,illusionSpecies,monSpecies);
-
-    if (IsIllusionActiveAndTypeUnchanged(monIllusion,monSpecies, battlerId))
+    if (monIllusion != NULL)
         return GetSpeciesType(illusionSpecies, typeNum);
+    if (GetActiveGimmick(battlerId) == GIMMICK_TERA)
+        return GetMonDefensiveTeraType(mon, NULL, battlerId, typeNum, monSpecies, monSpecies);
 
-    return gBattleMons[battlerId].types[typeNum];
+    enum Type actualTypes[3];
+    GetBattlerTypes(battlerId, FALSE, actualTypes);
+    return actualTypes[typeNum];
 }
 
 static bool32 ShouldHideUncaughtType(enum Species species)
@@ -348,23 +350,10 @@ static enum Type GetMonDefensiveTeraType(struct Pokemon *mon, struct Pokemon *mo
     return GetSpeciesType(targetSpecies, typeNum);
 }
 
-static bool32 IsIllusionActiveAndTypeUnchanged(struct Pokemon *monIllusion, enum Species monSpecies, enum BattlerId battlerId)
-{
-    u32 typeNum;
-
-    if (monIllusion == NULL)
-        return FALSE;
-
-    for (typeNum = 0; typeNum < 2; typeNum++)
-        if (GetSpeciesType(monSpecies, typeNum) != gBattleMons[battlerId].types[typeNum])
-        return FALSE;
-
-    return TRUE;
-}
-
 static void CreateSpriteFromType(u32 position, bool32 useDoubleBattleCoords, enum Type types[], u32 typeNum, enum BattlerId battler)
 {
     s32 x = 0, y = 0;
+    if (IS_FRLG && types[typeNum] == TYPE_MYSTERY) return;
 
     if (ShouldSkipSecondType(types, typeNum))
         return;

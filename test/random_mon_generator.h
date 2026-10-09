@@ -5,6 +5,7 @@ enum
     SPECIES_GENERATOR_BST_FILTER,
     SPECIES_GENERATOR_NO_ARG_FILTER,
     SPECIES_GENERATOR_FORM_FILTER,
+    SPECIES_GENERATOR_SCRIPTED_ENCOUNTER,
     RANDOM_SPECIES_OPTIONS_COUNT,
 };
 
@@ -96,6 +97,7 @@ static const enum HoldEffect sRandomItemOption1BannedHoldEffects[] =
 
 static const struct RandomSpeciesGeneratorOptions sRandomSpeciesGeneratorOptions[] =
 {
+    [SPECIES_GENERATOR_SCRIPTED_ENCOUNTER] = { .filterFunc = IsScriptedEncounterSpeciesFilterFunc, .randomizeForms = FALSE, .dexMode = RANDOM_MON_DEX_NATIONAL },
     [SPECIES_GENERATOR_FILTERED_POOL] =
     {
         .speciesPool = sRandomSpeciesOption0SpeciesPool,

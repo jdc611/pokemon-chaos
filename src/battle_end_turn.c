@@ -418,6 +418,15 @@ static bool32 HandleEndTurnFirstEventBlock(enum BattlerId battler)
         break;
     case FIRST_EVENT_BLOCK_ABILITIES:
     {
+        if (ChaosHasBenchAbility(battler,ABILITY_HEALER) && gBattleMons[battler].status1
+         && RandomPercentage(RNG_HEALER,30))
+        {
+            gBattleScripting.battler=gBattlerAbility=battler;gLastUsedAbility=ABILITY_HEALER;
+            gBattleScripting.abilityPopupOverwrite=ABILITY_HEALER;
+            BattleScriptCall(BattleScript_HealerActivates);
+            gBattleStruct->eventState.endTurnBlock++;
+            return TRUE;
+        }
         enum Ability ability = GetBattlerAbility(battler);
         switch (ability)
         {

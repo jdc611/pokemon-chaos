@@ -1039,7 +1039,18 @@ static void PrintItemDescription(int itemIndex)
     const u8 *str;
     if (itemIndex != LIST_CANCEL)
     {
-        str = GetItemDescription(GetBagItemId(gBagPosition.pocket, itemIndex));
+        enum Item item = GetBagItemId(gBagPosition.pocket,itemIndex);
+        str = GetItemDescription(item);
+        if (gBagPosition.pocket == POCKET_TM_HM)
+        {
+            enum Move move = GetTMHMMoveId(GetItemTMHMIndex(item));
+            StringCopy(gStringVar4,GetMoveName(move));StringAppend(gStringVar4,COMPOUND_STRING("\n"));
+            StringAppend(gStringVar4,IsBattleMovePhysical(move)?COMPOUND_STRING("Physical"):IsBattleMoveSpecial(move)?COMPOUND_STRING("Special"):COMPOUND_STRING("Status"));
+            StringAppend(gStringVar4,COMPOUND_STRING("  PP "));ConvertIntToDecimalStringN(gStringVar1,GetMovePP(move),STR_CONV_MODE_LEFT_ALIGN,2);StringAppend(gStringVar4,gStringVar1);
+            StringAppend(gStringVar4,COMPOUND_STRING("\nPower "));ConvertIntToDecimalStringN(gStringVar1,GetMovePower(move),STR_CONV_MODE_LEFT_ALIGN,3);StringAppend(gStringVar4,gStringVar1);
+            StringAppend(gStringVar4,COMPOUND_STRING("  Acc "));ConvertIntToDecimalStringN(gStringVar1,GetMoveAccuracy(move),STR_CONV_MODE_LEFT_ALIGN,3);StringAppend(gStringVar4,gStringVar1);
+            str=gStringVar4;
+        }
     }
     else
     {
@@ -1049,7 +1060,7 @@ static void PrintItemDescription(int itemIndex)
         str = gStringVar4;
     }
     FillWindowPixelBuffer(WIN_DESCRIPTION, PIXEL_FILL(0));
-    BagMenu_Print(WIN_DESCRIPTION, FONT_NORMAL, str, 3, 1, 0, 0, 0, COLORID_NORMAL);
+    BagMenu_Print(WIN_DESCRIPTION, gBagPosition.pocket == POCKET_TM_HM ? FONT_SMALL : FONT_NORMAL, str, 3, 1, 0, 0, 0, COLORID_NORMAL);
 }
 
 static void BagMenu_PrintCursor(u8 listTaskId, u8 colorIndex)

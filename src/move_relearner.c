@@ -1,3 +1,4 @@
+#include "chaos_input.h"
 #include "global.h"
 #include "main.h"
 #include "battle.h"
@@ -65,7 +66,7 @@ static EWRAM_DATA struct
     u16 movesToLearn[MAX_RELEARNER_MOVES];
     struct ListMenuItem menuItems[MAX_RELEARNER_MOVES + 1];
     u8 mainTask;
-    u8 numMenuChoices;
+    u16 numMenuChoices;
     u8 numToShowAtOnce;
     u8 moveListMenuTask;
     u8 moveListScrollArrowTask;
@@ -274,6 +275,24 @@ static void Task_MoveRelearner_HandleInput(u8 taskId);
 static void Task_MoveRelearner_LearnMove(u8 taskId);
 static void Task_MoveRelearner_Quit(u8 taskId);
 static void SortMovesAlphabetically(u16 *moves, u32 numMoves);
+static enum Species GetRelearnerEggRoot(enum Species species)
+{
+    enum Species visited[32];
+    u32 count = 0;
+    while (count < ARRAY_COUNT(visited))
+    {
+        visited[count++] = species;
+        enum Species previous = GetSpeciesPreEvolution(species);
+        if (previous == SPECIES_NONE || previous >= NUM_SPECIES) break;
+        bool32 repeated = FALSE;
+        for (u32 i = 0; i < count; i++)
+            if (visited[i] == previous) repeated = TRUE;
+        if (repeated) break;
+        species = previous;
+    }
+    return species;
+}
+
 static void QuickSortMoves(u16 *moves, s32 left, s32 right);
 
 static const struct RelearnType sRelearnTypes[MOVE_RELEARNER_COUNT] =
@@ -459,6 +478,7 @@ static void InitMoveRelearnerBackgroundLayers(void)
 
 static void CB2_MoveRelearnerMain(void)
 {
+    ChaosFilterMenuInput();
     RunTasks();
     AnimateSprites();
     BuildOamBuffer();
@@ -883,9 +903,9 @@ static void QuickSortMoves(u16 *moves, s32 left, s32 right)
 
     while (i <= j)
     {
-        while (moves[i] != MOVE_NONE && StringCompare(GetMoveName(moves[i]), GetMoveName(pivot)) < 0)
+        while (i <= right && moves[i] != MOVE_NONE && StringCompare(GetMoveName(moves[i]), GetMoveName(pivot)) < 0)
             i++;
-        while (moves[j] != MOVE_NONE && StringCompare(GetMoveName(moves[j]), GetMoveName(pivot)) > 0)
+        while (j >= left && moves[j] != MOVE_NONE && StringCompare(GetMoveName(moves[j]), GetMoveName(pivot)) > 0)
             j--;
 
         if (i <= j)
@@ -938,7 +958,7 @@ static u32 GetRelearnerLevelUpMoves(struct BoxPokemon *mon, u16 *moves)
                 if (learnset[i].move == moves[j])
                     alreadyInList = TRUE;
             }
-            if (!alreadyInList)
+            if (!alreadyInList && numMoves < MAX_RELEARNER_MOVES)
                 moves[numMoves++] = learnset[i].move;
         }
 
@@ -952,8 +972,7 @@ static u32 GetRelearnerEggMoves(struct BoxPokemon *mon, u16 *moves)
 {
     enum Species species = GetBoxMonData(mon, MON_DATA_SPECIES);
     u32 numMoves = 0;
-    while (GetSpeciesPreEvolution(species) != SPECIES_NONE)
-        species = GetSpeciesPreEvolution(species);
+    species = GetRelearnerEggRoot(species);
 
     const u16 *eggMoves = GetSpeciesEggMoves(species);
 
@@ -962,7 +981,7 @@ static u32 GetRelearnerEggMoves(struct BoxPokemon *mon, u16 *moves)
 
     for (u32 i = 0; eggMoves[i] != MOVE_UNAVAILABLE; i++)
     {
-        if (!BoxMonKnowsMove(mon, eggMoves[i]))
+        if (eggMoves[i] < MOVES_COUNT && !BoxMonKnowsMove(mon, eggMoves[i]) && numMoves < MAX_RELEARNER_MOVES)
             moves[numMoves++] = eggMoves[i];
     }
 
@@ -989,7 +1008,7 @@ static u32 GetRelearnerTMMoves(struct BoxPokemon *mon, u16 *moves)
             continue;
 
         if (!BoxMonKnowsMove(mon, move))
-            moves[numMoves++] = move;
+            if (numMoves < MAX_RELEARNER_MOVES) moves[numMoves++] = move;
     }
 
     return numMoves;
@@ -1008,7 +1027,7 @@ static u32 GetRelearnerTutorMoves(struct BoxPokemon *mon, u16 *moves)
             continue;
 
         if (!BoxMonKnowsMove(mon, move))
-            moves[numMoves++] = move;
+            if (numMoves < MAX_RELEARNER_MOVES) moves[numMoves++] = move;
     }
 
     return numMoves;
@@ -1065,8 +1084,7 @@ static bool32 HasRelearnerLevelUpMoves(struct BoxPokemon *boxMon)
 static bool32 HasRelearnerEggMoves(struct BoxPokemon *boxMon)
 {
     enum Species species = GetBoxMonData(boxMon, MON_DATA_SPECIES);
-    while (GetSpeciesPreEvolution(species) != SPECIES_NONE)
-        species = GetSpeciesPreEvolution(species);
+    species = GetRelearnerEggRoot(species);
 
     const u16 *eggMoves = GetSpeciesEggMoves(species);
 

@@ -7312,3 +7312,21 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ChaosJames = {
     .anims = sAnimTable_Standard,
     .images = sPicTable_ChaosJames,
 };
+
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ChaosEggDisplay = {
+    .tileTag = TAG_NONE,
+    .paletteTag = OBJ_EVENT_PAL_TAG_NPC_3,
+    .reflectionPaletteTag = OBJ_EVENT_PAL_TAG_NONE,
+    .size = 256,
+    .width = 16,
+    .height = 32,
+    .paletteSlot = PALSLOT_NPC_1,
+    .shadowSize = SHADOW_SIZE_NONE,
+    .inanimate = TRUE,
+    .compressed = FALSE,
+    .tracks = TRACKS_NONE,
+    .oam = &gObjectEventBaseOam_16x32,
+    .subspriteTables = sOamTables_16x32,
+    .anims = sAnimTable_Following,
+    .images = sPicTable_ChaosEggDisplay,
+};

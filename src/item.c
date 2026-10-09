@@ -820,6 +820,20 @@ const u8 *GetItemName(enum Item itemId)
 
 u32 GetItemPrice(enum Item itemId)
 {
+    // Keep competitive-item buy and sell prices consistent on every map.
+    if (IS_FRLG)
+    {
+        if ((itemId >= ITEM_FLAME_PLATE && itemId <= ITEM_PIXIE_PLATE)
+         || (itemId >= ITEM_FIRE_MEMORY && itemId <= ITEM_FAIRY_MEMORY))
+            return 3000;
+        switch (itemId)
+        {
+        case ITEM_LIFE_ORB: case ITEM_ASSAULT_VEST: case ITEM_EVIOLITE:
+        case ITEM_WEAKNESS_POLICY: case ITEM_ABILITY_SHIELD: return 5000;
+        case ITEM_FLAME_ORB: case ITEM_TOXIC_ORB: case ITEM_BOOSTER_ENERGY: return 3000;
+        default: break;
+        }
+    }
     // Local Celadon utility economy. Native resale prices remain unchanged
     // outside the store, and zero-price Mega items cannot become free stock.
     if(gSaveBlock1Ptr->location.mapGroup==MAP_GROUP(MAP_CELADON_CITY_DEPARTMENT_STORE_4F)

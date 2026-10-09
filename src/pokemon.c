@@ -3009,7 +3009,8 @@ u8 CopyMonToPC(struct Pokemon *mon)
 
     do
     {
-        for (boxPos = 0; boxPos < IN_BOX_COUNT; boxPos++)
+        // Ordinary gifts/captures must never use the Nuzlocke graveyard.
+        for (boxPos = 0; !Nuzlocke_IsGraveBox(boxNo) && boxPos < IN_BOX_COUNT; boxPos++)
         {
             struct BoxPokemon *checkingMon = GetBoxedMonPtr(boxNo, boxPos);
             if (GetBoxMonData(checkingMon, MON_DATA_SPECIES) == SPECIES_NONE)

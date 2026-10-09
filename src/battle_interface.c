@@ -2056,16 +2056,22 @@ void UpdateNickInHealthbox(u8 healthboxSpriteId, struct Pokemon *mon)
         break;
     }
 
-    const u8 *chaosMarker = ChaosAbilityMarker(gSprites[healthboxSpriteId].hMain_Battler);
-    if (chaosMarker != NULL)
+    u32 battler = gSprites[healthboxSpriteId].hMain_Battler;
+    const u8 *chaosPrefix = illusionMon == NULL ? ChaosAbilityNamePrefix(battler) : NULL;
+    const u8 *chaosMarker = illusionMon == NULL && chaosPrefix == NULL ? ChaosAbilityMarker(battler) : NULL;
+    if (chaosPrefix != NULL || chaosMarker != NULL)
     {
         u32 nameLen = StringLength(nickname);
         do
         {
             nickname[nameLen] = EOS;
-            StringCopy(gDisplayedStringBattle, nickname);
-            StringAppend(gDisplayedStringBattle, COMPOUND_STRING(" "));
-            StringAppend(gDisplayedStringBattle, chaosMarker);
+            StringCopy(gDisplayedStringBattle, chaosPrefix != NULL ? chaosPrefix : COMPOUND_STRING(""));
+            StringAppend(gDisplayedStringBattle, nickname);
+            if (chaosMarker != NULL)
+            {
+                StringAppend(gDisplayedStringBattle, COMPOUND_STRING(" "));
+                StringAppend(gDisplayedStringBattle, chaosMarker);
+            }
         } while (GetStringWidth(FONT_SMALL_NARROWER, gDisplayedStringBattle, 0) > 55 && nameLen-- != 0);
     }
 

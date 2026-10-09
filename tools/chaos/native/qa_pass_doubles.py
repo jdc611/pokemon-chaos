@@ -14,6 +14,10 @@ for battler,t in [(1,v[13]),(3,v[15])]:
  for i in range(3):wr(b+battler*z[0]+d[0]+i*d[3],t,d[3])
  wr(b+battler*z[0]+d[1],0,d[4])
 wr(b+d[2],v[17],d[5]);wr(b+d[2]+d[5],v[18],d[5]);wr('gMoveSelectionCursor',0,1);wr('gActionSelectionCursor',0,1);key();waitfn('HandleInputChooseMove');frames(2)
+# V3 intentionally hides undiscovered typing, even in Always mode.
+for target in [1,3]:
+ call('ChaosRevealBattleTypes',0,target,v[17],8192)
+ assert call('ChaosBattleTypesKnown',target)
 left=call('CheckTypeEffectiveness',0,1);right=call('CheckTypeEffectiveness',0,3);assert left!=right,(left,right)
 key();assert rd('gBattlerControllerFuncs')==symbols['HandleInputChooseTarget']|1
 first=rd('gMultiUsePlayerCursor',1);snap('qa-pass-double-target-first');key(16);second=rd('gMultiUsePlayerCursor',1);snap('qa-pass-double-target-second');assert first!=second

@@ -1,4 +1,5 @@
 #include "global.h"
+#include "chaos_abilities.h"
 #include "battle.h"
 #include "battle_scripts.h"
 #include "battle_util.h"
@@ -583,6 +584,7 @@ static enum BattlerId StatChange_IsFlowerVeilProtected(struct BattleCalcValues *
     if (!IS_BATTLER_OF_TYPE(cv->battlerDef, TYPE_GRASS))
         return MAX_BATTLERS_COUNT;
 
+    if (ChaosHasBenchAbility(cv->battlerDef,ABILITY_FLOWER_VEIL)) return cv->battlerDef;
     for (enum BattlerId battler = B_BATTLER_0; battler < gBattlersCount; battler++)
     {
         if (!IsBattlerAlly(cv->battlerDef, battler))

@@ -2051,6 +2051,10 @@ static void DexNavLoadEncounterData(void)
     u32 headerId = GetCurrentMapWildMonHeaderId();
     enum TimeOfDay timeOfDay;
 
+    memset(sDexNavUiDataPtr->landSpecies,0,sizeof(sDexNavUiDataPtr->landSpecies));
+    memset(sDexNavUiDataPtr->waterSpecies,0,sizeof(sDexNavUiDataPtr->waterSpecies));
+    memset(sDexNavUiDataPtr->waterMethods,0,sizeof(sDexNavUiDataPtr->waterMethods));
+    sDexNavUiDataPtr->waterCount=0;
     if (headerId == HEADER_NONE)
         return;
 

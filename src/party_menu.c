@@ -1,3 +1,4 @@
+#include "chaos_input.h"
 #include "global.h"
 #include "run_settings.h"
 #include "malloc.h"
@@ -609,6 +610,7 @@ static void RefreshPartyMenu(void) //Refreshes the party menu without restarting
 
 static void CB2_UpdatePartyMenu(void)
 {
+    ChaosFilterMenuInput();
     RunTasks();
     AnimateSprites();
     BuildOamBuffer();
@@ -1764,22 +1766,6 @@ static u16 PartyMenuButtonHandler(s8 *slotPtr)
 {
     s8 movementDir;
 
-    // Party navigation should advance once per distinct D-Pad press.
-    // Delta/iOS can report an extra press while the previous direction is
-    // still physically held, so ignore it until the D-Pad returns neutral.
-    static bool8 sWaitForDpadRelease = FALSE;
-    u16 dpadHeld = gMain.heldKeys & DPAD_ANY;
-
-    if (sWaitForDpadRelease)
-    {
-        if (dpadHeld)
-            return 0;
-        sWaitForDpadRelease = FALSE;
-    }
-
-    if (gMain.newKeys & DPAD_ANY)
-        sWaitForDpadRelease = TRUE;
-
     switch (gMain.newKeys)
     {
     case DPAD_UP:
@@ -1795,7 +1781,7 @@ static u16 PartyMenuButtonHandler(s8 *slotPtr)
         movementDir = MENU_DIR_RIGHT;
         break;
     default:
-        switch (GetLRKeysPressedAndHeld())
+        switch (GetLRKeysPressed())
         {
         case MENU_L_PRESSED:
             movementDir = MENU_DIR_UP;

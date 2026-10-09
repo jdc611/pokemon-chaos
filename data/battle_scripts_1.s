@@ -6456,3 +6456,37 @@ BattleScript_ChaosAbilityState::
 	waitmessage B_WAIT_TIME_LONG
 	trystatchanges BS_EFFECT_BATTLER, STAT_CHANGE_IGNORE_SELF
 	return
+
+BattleScript_ChaosGulpGorging::
+	call BattleScript_AbilityPopUp
+	playanimation BS_ATTACKER, B_ANIM_GULP_MISSILE
+	waitanimation
+	effectivenesssound
+	hitanimation BS_ATTACKER
+	waitstate
+	jumpifability BS_ATTACKER, ABILITY_MAGIC_GUARD, BattleScript_ChaosGulpNoDmgGorging
+	healthbarupdate BS_ATTACKER
+	datahpupdate BS_ATTACKER, ASSURANCE_DOUBLE
+	tryfaintmon BS_ATTACKER
+	jumpiffainted BS_ATTACKER, TRUE, BattleScript_ChaosGulpNoSecondEffectGorging
+BattleScript_ChaosGulpNoDmgGorging:
+	seteffectprimary BS_TARGET, BS_ATTACKER, MOVE_EFFECT_PARALYSIS
+BattleScript_ChaosGulpNoSecondEffectGorging:
+	return
+
+BattleScript_ChaosGulpGulping::
+	call BattleScript_AbilityPopUp
+	playanimation BS_ATTACKER, B_ANIM_GULP_MISSILE
+	waitanimation
+	effectivenesssound
+	hitanimation BS_ATTACKER
+	waitstate
+	jumpifability BS_ATTACKER, ABILITY_MAGIC_GUARD, BattleScript_ChaosGulpNoDmgGulping
+	healthbarupdate BS_ATTACKER
+	datahpupdate BS_ATTACKER, ASSURANCE_DOUBLE
+	tryfaintmon BS_ATTACKER
+	jumpiffainted BS_ATTACKER, TRUE, BattleScript_ChaosGulpNoSecondEffectGulping
+BattleScript_ChaosGulpNoDmgGulping:
+	trystatchanges BS_TARGET, STAT_CHANGE_NO_FLAGS
+BattleScript_ChaosGulpNoSecondEffectGulping:
+	return

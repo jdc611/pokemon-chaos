@@ -76,6 +76,7 @@ struct RandomizedWildCacheEntry
 {
     u32 seed;
     u32 generator;
+    u32 settings;
     u32 arg1;
     u32 arg2;
     enum Species species;
@@ -751,12 +752,14 @@ static enum Species GenerateRandomizedWildSpeciesForMap(const struct WildPokemon
     // species slots. Cache the deterministic result so those UI scans do not
     // rerun the full filtered species search dozens of times.
     {
+        u32 settings = gSaveBlock3Ptr->abilityMode | (gSaveBlock3Ptr->evolutionMode << 8)
+                     | (gSaveBlock3Ptr->runDifficulty << 16) | (gSaveBlock3Ptr->futureEvolutionEligible << 24);
         u32 cacheIndex = (seed ^ (generator * 33u) ^ filterArgs.arg1 ^ (filterArgs.arg2 << 8)) & (RANDOMIZED_WILD_CACHE_SIZE - 1);
         struct RandomizedWildCacheEntry *cache = &sRandomizedWildCache[cacheIndex];
 
         if (cache->valid
          && cache->seed == seed
-         && cache->generator == generator
+         && cache->generator == generator && cache->settings == settings
          && cache->arg1 == filterArgs.arg1
          && cache->arg2 == filterArgs.arg2)
             return cache->species;
@@ -793,6 +796,7 @@ static enum Species GenerateRandomizedWildSpeciesForMap(const struct WildPokemon
 
         cache->seed = seed;
         cache->generator = generator;
+        cache->settings = settings;
         cache->arg1 = filterArgs.arg1;
         cache->arg2 = filterArgs.arg2;
         cache->species = species;

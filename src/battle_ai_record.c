@@ -1,4 +1,6 @@
 #include "global.h"
+#include "chaos_abilities.h"
+#include "battle_util.h"
 #include "battle.h"
 #include "battle_setup.h"
 #include "battle_controllers.h"
@@ -40,6 +42,8 @@ void RecordAllMoves(enum BattlerId battler)
 
 void RecordAbilityBattle(enum BattlerId battlerId, enum Ability abilityId)
 {
+    if ((abilityId==ABILITY_FLOWER_VEIL || abilityId==ABILITY_AROMA_VEIL || abilityId==ABILITY_SWEET_VEIL || abilityId==ABILITY_PASTEL_VEIL)
+     && GetBattlerAbility(battlerId)!=abilityId && ChaosHasBenchAbility(battlerId,abilityId)) return;
     gBattleHistory->abilities[battlerId] = abilityId;
     gAiPartyData->mons[GetBattlerSide(battlerId)][gBattlerPartyIndexes[battlerId]].ability = abilityId;
 }

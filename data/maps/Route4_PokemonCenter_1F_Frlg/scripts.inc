@@ -25,6 +25,7 @@ Route4_PokemonCenter_1F_EventScript_MagikarpSalesman::
 	faceplayer
 	goto_if_set FLAG_BOUGHT_MAGIKARP, Route4_PokemonCenter_1F_EventScript_AlreadyBoughtMagikarp
 	showmoneybox 0, 0
+	callnative ChaosPreviewMagikarpGift
 	checkplayergender
 	goto_if_eq VAR_RESULT, MALE, Route4_PokemonCenter_1F_EventScript_AskBuyMagikarpMale
 	goto_if_eq VAR_RESULT, FEMALE, Route4_PokemonCenter_1F_EventScript_AskBuyMagikarpFemale
@@ -65,6 +66,7 @@ Route4_PokemonCenter_1F_EventScript_BuyMagikarpParty::
 	end
 
 Route4_PokemonCenter_1F_EventScript_BuyMagikarpPC::
+	setvar VAR_0x8004, PC_MON_CHOSEN
 	call Route4_PokemonCenter_1F_EventScript_PayForMagikarp
 	msgbox gText_NicknameThisPokemon, MSGBOX_YESNO
 	callnative ChaosRequireNickname
@@ -165,19 +167,21 @@ Route4_PokemonCenter_1F_Text_LaddieBuyMagikarpForJust500::
 	.string "MAN: Hello there, laddie!\n"
 	.string "Have I got a deal just for you!\p"
 	.string "I'll let you have a secret POKéMON\n"
-	.string "- a MAGIKARP - for just ¥500!\p"
+	.string "- a {STR_VAR_1} -\n"
+	.string "for just ¥500!\p"
 	.string "So, you'll buy it, am I right?$"
 
 Route4_PokemonCenter_1F_Text_SweetieBuyMagikarpForJust500::
 	.string "MAN: Hello there, sweetie pie!\n"
 	.string "Have I got a deal just for you!\p"
 	.string "I'll let you have a secret POKéMON\n"
-	.string "- a MAGIKARP - for just ¥500!\p"
+	.string "- a {STR_VAR_1} -\n"
+	.string "for just ¥500!\p"
 	.string "So, you'll buy it, am I right?$"
 
 Route4_PokemonCenter_1F_Text_PaidOutrageouslyForMagikarp::
 	.string "{PLAYER} paid an outrageous ¥500\n"
-	.string "and bought the MAGIKARP…$"
+	.string "and bought the {STR_VAR_1}…$"
 
 Route4_PokemonCenter_1F_Text_OnlyDoingThisAsFavorToYou::
 	.string "No? You say no? I'm only doing this\n"

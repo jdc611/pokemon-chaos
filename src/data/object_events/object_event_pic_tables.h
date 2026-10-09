@@ -2503,3 +2503,12 @@ static const struct SpriteFrameImage sPicTable_ChaosCole[] = { overworld_ascendi
 static const struct SpriteFrameImage sPicTable_ChaosVesper[] = { overworld_ascending_frames(gObjectEventPic_ChaosVesper, 2, 4), };
 static const struct SpriteFrameImage sPicTable_ChaosJessie[] = { overworld_ascending_frames(gObjectEventPic_ChaosJessie, 2, 4), };
 static const struct SpriteFrameImage sPicTable_ChaosJames[] = { overworld_ascending_frames(gObjectEventPic_ChaosJames, 2, 4), };
+
+static const struct SpriteFrameImage sPicTable_ChaosEggDisplay[] = {
+    overworld_frame(gObjectEventPic_ChaosEggDisplay, 2, 4, 0),
+    overworld_frame(gObjectEventPic_ChaosEggDisplay, 2, 4, 0),
+    overworld_frame(gObjectEventPic_ChaosEggDisplay, 2, 4, 0),
+    overworld_frame(gObjectEventPic_ChaosEggDisplay, 2, 4, 0),
+    overworld_frame(gObjectEventPic_ChaosEggDisplay, 2, 4, 0),
+    overworld_frame(gObjectEventPic_ChaosEggDisplay, 2, 4, 0),
+};

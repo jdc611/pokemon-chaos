@@ -1101,6 +1101,10 @@ void IncrementDaycareSteps(void)
 
 static inline u32 GetEggCycleLength(void)
 {
+#if IS_FRLG
+    // Eight times faster than modern 128-step cycles, still ordinary hatching.
+    return 16;
+#endif
     switch (P_EGG_CYCLE_LENGTH)
     {
     case GEN_1:
