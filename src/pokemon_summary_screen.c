@@ -1772,6 +1772,7 @@ static void Task_HandleInput(u8 taskId)
     if (MenuHelpers_ShouldWaitForLinkRecv() != TRUE && !gPaletteFade.active)
     {
         if (IS_FRLG && JOY_NEW(SELECT_BUTTON) && !gMain.inBattle
+         && sMonSummaryScreen->currPageIndex == PSS_PAGE_INFO
          && !sMonSummaryScreen->isBoxMon && sMonSummaryScreen->monList.mons == gParties[B_TRAINER_PLAYER]
          && !sMonSummaryScreen->summary.isEgg && !sMonSummaryScreen->lockMovesFlag
          && VarGet(VAR_CHAOS_CHANGERS_UNLOCKED) == 1)
@@ -1808,7 +1809,7 @@ static void Task_HandleInput(u8 taskId)
             {
                 if (sMonSummaryScreen->currPageIndex == PSS_PAGE_INFO)
                 {
-                    if (ShouldShowRename())
+                    if (!IS_FRLG && ShouldShowRename())
                     {
                         if (sMonSummaryScreen->isBoxMon)
                         {
@@ -1823,9 +1824,12 @@ static void Task_HandleInput(u8 taskId)
                         sMonSummaryScreen->callback = CB2_PssChangePokemonNickname;
                     }
 
-                    StopPokemonAnimations();
-                    PlaySE(SE_SELECT);
-                    BeginCloseSummaryScreen(taskId);
+                    if (!IS_FRLG)
+                    {
+                        StopPokemonAnimations();
+                        PlaySE(SE_SELECT);
+                        BeginCloseSummaryScreen(taskId);
+                    }
                 }
                 else if (IS_MOVE_PAGE(sMonSummaryScreen->currPageIndex))
                 {
@@ -3375,13 +3379,6 @@ static void PutPageWindowTilemaps(u8 page)
         if (InBattleFactory() == TRUE || InSlateportBattleTent() == TRUE)
             PutWindowTilemap(PSS_LABEL_WINDOW_POKEMON_INFO_RENTAL);
         PutWindowTilemap(PSS_LABEL_WINDOW_POKEMON_INFO_TYPE);
-        if (IS_FRLG && !gMain.inBattle && !sMonSummaryScreen->summary.isEgg
-         && !sMonSummaryScreen->isBoxMon && VarGet(VAR_CHAOS_CHANGERS_UNLOCKED) == 1)
-        {
-            FillWindowPixelBuffer(PSS_LABEL_WINDOW_PROMPT_RELEARN, PIXEL_FILL(0));
-            PrintTextOnWindowWithFont(PSS_LABEL_WINDOW_PROMPT_RELEARN, COMPOUND_STRING("SELECT: EDIT"), 0, 4, 0, 0, FONT_SMALL);
-            PutWindowTilemap(PSS_LABEL_WINDOW_PROMPT_RELEARN);
-        }
         break;
     case PSS_PAGE_SKILLS:
         PutWindowTilemap(PSS_LABEL_WINDOW_POKEMON_SKILLS_TITLE);
@@ -3532,13 +3529,33 @@ static const u8 *const sChaosGrowthNames[] = {
  COMPOUND_STRING("Medium Slow"), COMPOUND_STRING("Fast"), COMPOUND_STRING("Slow")};
 static const u8 *const sChaosEggNames[] = {
  COMPOUND_STRING("None"),COMPOUND_STRING("Monster"),COMPOUND_STRING("Water 1"),COMPOUND_STRING("Bug"),COMPOUND_STRING("Flying"),COMPOUND_STRING("Field"),COMPOUND_STRING("Fairy"),COMPOUND_STRING("Grass"),COMPOUND_STRING("Human-Like"),COMPOUND_STRING("Water 3"),COMPOUND_STRING("Mineral"),COMPOUND_STRING("Amorphous"),COMPOUND_STRING("Water 2"),COMPOUND_STRING("Ditto"),COMPOUND_STRING("Dragon"),COMPOUND_STRING("Undiscovered")};
+// Summary detail panels: FireRed red accents and blue-gray window borders.
+static const u16 sChaosSummaryEditPalette[] =
+{
+    RGB(0,0,0), RGB(5,7,9), RGB(23,25,26), RGB(30,31,31),
+    RGB(15,20,25), RGB(25,6,7), RGB(29,21,21), RGB(5,12,24),
+    RGB(21,25,30), RGB(25,28,31), RGB(12,17,22), RGB(7,11,15),
+    RGB(17,20,23), RGB(31,31,31), RGB(27,29,30), RGB(20,23,26)
+};
+
+static void ChaosPrintSummaryEditColor(u8 window, const u8 *text, u32 x, u32 y, u8 color, u8 background)
+{
+    u8 colors[] = {background, color, background};
+    AddTextPrinterParameterized4(window, x == 49 ? GetFontIdToFit(text, FONT_SMALL, 0, 87) : FONT_SMALL, x, y, 0, 0, colors, 0, text);
+}
+
 static void PrintChaosGrowthPage(void)
 {
  struct Pokemon *mon=&sMonSummaryScreen->currentMon;
  enum Species species=GetMonData(mon,MON_DATA_SPECIES);
- static const struct WindowTemplate templates[]={{.bg=0,.tilemapLeft=11,.tilemapTop=4,.width=18,.height=15,.paletteNum=6,.baseBlock=467}};
+ static const struct WindowTemplate templates[]={{.bg=0,.tilemapLeft=11,.tilemapTop=4,.width=18,.height=16,.paletteNum=9,.baseBlock=467}};
  u8 window=AddWindowFromTemplateList(templates,0);
- FillWindowPixelBuffer(window,PIXEL_FILL(0));
+ LoadPalette(sChaosSummaryEditPalette, BG_PLTT_ID(9), sizeof(sChaosSummaryEditPalette));
+ FillWindowPixelBuffer(window,PIXEL_FILL(11));
+ FillWindowPixelRect(window,PIXEL_FILL(4),1,1,142,126);
+ FillWindowPixelRect(window,PIXEL_FILL(3),3,3,138,122);
+ FillWindowPixelRect(window,PIXEL_FILL(5),3,3,138,12);
+ ChaosPrintSummaryEditColor(window,COMPOUND_STRING("EVOLUTION"),8,3,13,5);
  if(sMonSummaryScreen->chaosNextSprite!=SPRITE_NONE){FreeAndDestroyMonIconSprite(&gSprites[sMonSummaryScreen->chaosNextSprite]);sMonSummaryScreen->chaosNextSprite=SPRITE_NONE;}
  const struct Evolution *evos=GetSpeciesEvolutions(species);u32 count=0;
  if(evos!=NULL)while(evos[count].method!=EVOLUTIONS_END)count++;
@@ -3559,39 +3576,51 @@ static void PrintChaosGrowthPage(void)
     if(evos[j].targetSpecies==evos[i].targetSpecies && evos[j].method==EVO_ITEM)redundant=TRUE;
    if(!redundant)branchIds[visible++]=i;
   }
-  if(!visible){PrintTextOnWindowWithFont(window,COMPOUND_STRING("FINAL EVOLUTION"),0,8,0,0,FONT_SMALL);goto growth;}
+  if(!visible){ChaosPrintSummaryEditColor(window,COMPOUND_STRING("FINAL EVOLUTION"),8,23,1,3);goto growth;}
   sMonSummaryScreen->chaosBranch%=visible;const struct Evolution *evo=&evos[branchIds[sMonSummaryScreen->chaosBranch]];
-  StringCopy(gStringVar4, COMPOUND_STRING("BRANCH "));
+  StringCopy(gStringVar4, COMPOUND_STRING(""));
   ConvertIntToDecimalStringN(gStringVar1,sMonSummaryScreen->chaosBranch+1,STR_CONV_MODE_LEFT_ALIGN,2);StringAppend(gStringVar4,gStringVar1);
   StringAppend(gStringVar4,COMPOUND_STRING(" / "));
   ConvertIntToDecimalStringN(gStringVar1,visible,STR_CONV_MODE_LEFT_ALIGN,2);StringAppend(gStringVar4,gStringVar1);
-  PrintTextOnWindowWithFont(window,gStringVar4,0,0,0,0,FONT_SMALL);
+  ChaosPrintSummaryEditColor(window,gStringVar4,100,3,13,5);
   bool32 hideEvolution = gSaveBlock3Ptr->evolutionMode == RUN_EVOLUTIONS_RANDOM;
-  PrintTextOnWindowWithFont(window,hideEvolution ? COMPOUND_STRING("???") : GetSpeciesName(evo->targetSpecies),0,12,0,0,FONT_SMALL);
+  ChaosPrintSummaryEditColor(window,hideEvolution ? COMPOUND_STRING("???") : GetSpeciesName(evo->targetSpecies),8,18,1,3);
   ChaosFormatEvolution(evo,gStringVar4);
-  WrapFontIdToFit(gStringVar4,gStringVar4+StringLength(gStringVar4),FONT_SMALL,144);
-  PrintTextOnWindowWithFont(window,gStringVar4,0,32,-2,0,FONT_SMALL);
+  WrapFontIdToFit(gStringVar4,gStringVar4+StringLength(gStringVar4),FONT_SMALL_NARROW,128);
+  {
+   u8 colors[] = {3,1,3};
+   AddTextPrinterParameterized4(window,FONT_SMALL_NARROW,8,32,0,0,colors,0,gStringVar4);
+  }
   if (!hideEvolution)
   {
    LoadMonIconPalette(evo->targetSpecies);
-   sMonSummaryScreen->chaosNextSprite=CreateMonIconNoPersonality(evo->targetSpecies,SpriteCB_MonIcon,213,48,0);
+   sMonSummaryScreen->chaosNextSprite=CreateMonIconNoPersonality(evo->targetSpecies,SpriteCB_MonIcon,218,56,0);
   }
  }
- else PrintTextOnWindowWithFont(window,COMPOUND_STRING("FINAL EVOLUTION"),0,8,0,0,FONT_SMALL);
+ else ChaosPrintSummaryEditColor(window,COMPOUND_STRING("FINAL EVOLUTION"),8,23,1,3);
 growth:
- StringCopy(gStringVar4,COMPOUND_STRING("Growth: "));StringAppend(gStringVar4,sChaosGrowthNames[gSpeciesInfo[species].growthRate]);
- PrintTextOnWindowWithFont(window,gStringVar4,0,60,0,0,FONT_SMALL);
+ FillWindowPixelRect(window,PIXEL_FILL(10),3,56,138,11);
+ ChaosPrintSummaryEditColor(window,COMPOUND_STRING("GROWTH & BREEDING"),8,56,13,10);
+ StringCopy(gStringVar4,COMPOUND_STRING("Rate: "));StringAppend(gStringVar4,sChaosGrowthNames[gSpeciesInfo[species].growthRate]);
+ ChaosPrintSummaryEditColor(window,gStringVar4,8,69,1,3);
  u32 level=GetMonData(mon,MON_DATA_LEVEL),exp=GetMonData(mon,MON_DATA_EXP);
  u32 next=level<MAX_LEVEL?gExperienceTables[gSpeciesInfo[species].growthRate][level+1]-exp:0;
  StringCopy(gStringVar4,COMPOUND_STRING("Next EXP: "));ConvertIntToDecimalStringN(gStringVar1,next,STR_CONV_MODE_LEFT_ALIGN,7);StringAppend(gStringVar4,gStringVar1);
- PrintTextOnWindowWithFont(window,gStringVar4,0,72,0,0,FONT_SMALL);
+ ChaosPrintSummaryEditColor(window,gStringVar4,8,81,1,3);
  StringCopy(gStringVar4,COMPOUND_STRING("Egg: "));StringAppend(gStringVar4,sChaosEggNames[gSpeciesInfo[species].eggGroups[0]]);
  if(gSpeciesInfo[species].eggGroups[1]!=gSpeciesInfo[species].eggGroups[0]){StringAppend(gStringVar4,COMPOUND_STRING(" / "));StringAppend(gStringVar4,sChaosEggNames[gSpeciesInfo[species].eggGroups[1]]);}
- PrintTextOnWindowToFitPx(window,gStringVar4,0,84,0,0,144);
+ {
+  u8 colors[] = {3,1,3};
+  AddTextPrinterParameterized4(window,FONT_SMALL_NARROW,8,93,0,0,colors,0,gStringVar4);
+ }
  u32 rating=ChaosCurrentStageRating(mon);
  StringCopy(gStringVar4,COMPOUND_STRING("CHAOS RATING: "));ConvertIntToDecimalStringN(gStringVar1,rating/10,STR_CONV_MODE_LEFT_ALIGN,2);StringAppend(gStringVar4,gStringVar1);StringAppend(gStringVar4,COMPOUND_STRING("."));ConvertIntToDecimalStringN(gStringVar1,rating%10,STR_CONV_MODE_LEFT_ALIGN,1);StringAppend(gStringVar4,gStringVar1);StringAppend(gStringVar4,COMPOUND_STRING(" / 10"));
- PrintTextOnWindowWithFont(window,gStringVar4,0,98,0,0,FONT_SMALL);
- PrintTextOnWindowWithFont(window,COMPOUND_STRING("Estimated current-form score"),0,106,0,0,FONT_SMALL_NARROW);
+ FillWindowPixelRect(window,PIXEL_FILL(9),4,105,136,20);
+ ChaosPrintSummaryEditColor(window,gStringVar4,8,105,1,9);
+ {
+  u8 colors[] = {9,1,9};
+  AddTextPrinterParameterized4(window,FONT_SMALL_NARROW,8,116,0,0,colors,0,COMPOUND_STRING("Current-form estimate"));
+ }
  PutWindowTilemap(window);CopyWindowToVram(window,COPYWIN_FULL);
 }
 static void Task_PrintChaosGrowthPage(u8 taskId){PrintChaosGrowthPage();DestroyTask(taskId);}
@@ -4929,6 +4958,23 @@ static inline void ShowUtilityPrompt(s16 mode)
     const u8* gText_SkillPageStats = COMPOUND_STRING("STATS");
     const u8* gText_Rename = COMPOUND_STRING("RENAME");
 
+    if (IS_FRLG && sMonSummaryScreen->currPageIndex == PSS_PAGE_INFO)
+    {
+        FillWindowPixelBuffer(PSS_LABEL_WINDOW_PROMPT_UTILITY, PIXEL_FILL(0));
+        if (!gMain.inBattle && !sMonSummaryScreen->isBoxMon
+         && sMonSummaryScreen->monList.mons == gParties[B_TRAINER_PLAYER]
+         && !sMonSummaryScreen->summary.isEgg && !sMonSummaryScreen->lockMovesFlag
+         && VarGet(VAR_CHAOS_CHANGERS_UNLOCKED) == 1)
+        {
+            const u8 *editPrompt = COMPOUND_STRING("{SELECT_BUTTON} EDIT");
+            s32 x = GetStringRightAlignXOffset(FONT_SMALL, editPrompt, 62);
+            PrintTextOnWindowWithFont(PSS_LABEL_WINDOW_PROMPT_UTILITY, editPrompt, max(0, x), 1, 0, 0, FONT_SMALL);
+            PutWindowTilemap(PSS_LABEL_WINDOW_PROMPT_UTILITY);
+        }
+        else
+            ClearWindowTilemap(PSS_LABEL_WINDOW_PROMPT_UTILITY);
+        return;
+    }
     if (sMonSummaryScreen->currPageIndex == PSS_PAGE_INFO)
     {
         if (ShouldShowRename())
@@ -5014,40 +5060,96 @@ static void CB2_PssChangePokemonNickname(void)
     ChangePokemonNicknameWithCallback(CB2_ReturnToSummaryScreenFromNamingScreen);
 }
 
-static void ChaosPrintSummaryEdit(u8 window, const u8 *text, u32 x, u32 y)
+static const u8 *ChaosSummaryStatName(enum Stat stat)
 {
-    static const u8 colors[] = {3, 1, 2};
-    AddTextPrinterParameterized4(window, FONT_SMALL, x, y, 0, -2, colors, 0, text);
+    switch (stat)
+    {
+    case STAT_ATK: return COMPOUND_STRING("Attack");
+    case STAT_DEF: return COMPOUND_STRING("Defense");
+    case STAT_SPEED: return COMPOUND_STRING("Speed");
+    case STAT_SPATK: return COMPOUND_STRING("Sp. Atk");
+    case STAT_SPDEF: return COMPOUND_STRING("Sp. Def");
+    default: return COMPOUND_STRING("--");
+    }
+}
+
+static void ChaosDrawSummaryEditStat(u8 window, enum Stat stat, const u8 *label, u32 value, u32 x, u32 y)
+{
+    u32 nature = GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_HIDDEN_NATURE);
+    u8 color = 1;
+    if (gNaturesInfo[nature].statUp != gNaturesInfo[nature].statDown)
+    {
+        if (stat == gNaturesInfo[nature].statUp) color = 5; // Raised: red.
+        else if (stat == gNaturesInfo[nature].statDown) color = 7; // Lowered: blue.
+    }
+    StringCopy(gStringVar4, label);
+    StringAppend(gStringVar4, COMPOUND_STRING(" "));
+    ConvertIntToDecimalStringN(gStringVar1, value, STR_CONV_MODE_LEFT_ALIGN, 3);
+    StringAppend(gStringVar4, gStringVar1);
+    ChaosPrintSummaryEditColor(window, gStringVar4, x, y, color, 3);
 }
 
 static void ChaosDrawSummaryEdit(void)
 {
     struct Pokemon *mon = &sMonSummaryScreen->currentMon;
     u8 window = sMonSummaryScreen->chaosEditWindow;
-    FillWindowPixelBuffer(window, PIXEL_FILL(3));
-    ChaosPrintSummaryEdit(window, COMPOUND_STRING("EDIT POKEMON"), 0, 0);
-    const u8 *labels[] = {COMPOUND_STRING("Nature: "),COMPOUND_STRING("Ability: "),COMPOUND_STRING("Gender: "),COMPOUND_STRING("Accept"),COMPOUND_STRING("Discard")};
-    for (u32 row = 0; row < ARRAY_COUNT(labels); row++)
+    u32 row = sMonSummaryScreen->chaosEditRow;
+    u32 nature = GetMonData(mon, MON_DATA_HIDDEN_NATURE);
+    enum Stat up = gNaturesInfo[nature].statUp, down = gNaturesInfo[nature].statDown;
+    const u8 *labels[] = {COMPOUND_STRING("Nature"), COMPOUND_STRING("Ability"), COMPOUND_STRING("Gender")};
+    FillWindowPixelBuffer(window, PIXEL_FILL(11));
+    FillWindowPixelRect(window, PIXEL_FILL(4), 1, 1, 142, 126);
+    FillWindowPixelRect(window, PIXEL_FILL(3), 3, 3, 138, 122);
+    FillWindowPixelRect(window, PIXEL_FILL(5), 3, 3, 138, 12);
+    ChaosPrintSummaryEditColor(window, COMPOUND_STRING("EDIT PROFILE"), 8, 3, 13, 5);
+    for (u32 i = 0; i < ARRAY_COUNT(labels); i++)
     {
-        StringCopy(gStringVar4, row == sMonSummaryScreen->chaosEditRow ? COMPOUND_STRING("{RIGHT_ARROW}") : COMPOUND_STRING(" "));
-        StringAppend(gStringVar4, labels[row]);
-        if (row == 0) StringAppend(gStringVar4,gNaturesInfo[GetMonData(mon,MON_DATA_HIDDEN_NATURE)].name);
-        if (row == 1) StringAppend(gStringVar4,gAbilitiesInfo[GetMonAbility(mon)].name);
-        if (row == 2) StringAppend(gStringVar4,GetMonGender(mon)==MON_GENDERLESS?COMPOUND_STRING("Fixed"):GetMonGender(mon)==MON_MALE?COMPOUND_STRING("Male"):COMPOUND_STRING("Female"));
-        ChaosPrintSummaryEdit(window,gStringVar4,0,15+row*13);
+        u32 y = 18 + i * 14;
+        u8 background = row == i ? 9 : 3;
+        if (row == i) FillWindowPixelRect(window, PIXEL_FILL(9), 4, y, 136, 13);
+        ChaosPrintSummaryEditColor(window, labels[i], 8, y, 1, background);
+        if (i == 0) StringCopy(gStringVar4, gNaturesInfo[nature].name);
+        else if (i == 1) StringCopy(gStringVar4, gAbilitiesInfo[GetMonAbility(mon)].name);
+        else StringCopy(gStringVar4, GetMonGender(mon) == MON_GENDERLESS ? COMPOUND_STRING("Fixed") : GetMonGender(mon) == MON_MALE ? COMPOUND_STRING("Male") : COMPOUND_STRING("Female"));
+        ChaosPrintSummaryEditColor(window, gStringVar4, 49, y, 1, background);
     }
-    StringCopy(gStringVar4,COMPOUND_STRING("Atk "));ConvertIntToDecimalStringN(gStringVar1,GetMonData(mon,MON_DATA_ATK),STR_CONV_MODE_LEFT_ALIGN,3);StringAppend(gStringVar4,gStringVar1);
-    StringAppend(gStringVar4,COMPOUND_STRING(" SpA "));ConvertIntToDecimalStringN(gStringVar1,GetMonData(mon,MON_DATA_SPATK),STR_CONV_MODE_LEFT_ALIGN,3);StringAppend(gStringVar4,gStringVar1);
-    ChaosPrintSummaryEdit(window,gStringVar4,0,82);
-    StringCopy(gStringVar4,COMPOUND_STRING("Def "));ConvertIntToDecimalStringN(gStringVar1,GetMonData(mon,MON_DATA_DEF),STR_CONV_MODE_LEFT_ALIGN,3);StringAppend(gStringVar4,gStringVar1);
-    StringAppend(gStringVar4,COMPOUND_STRING(" SpD "));ConvertIntToDecimalStringN(gStringVar1,GetMonData(mon,MON_DATA_SPDEF),STR_CONV_MODE_LEFT_ALIGN,3);StringAppend(gStringVar4,gStringVar1);
-    StringAppend(gStringVar4,COMPOUND_STRING(" Spe "));ConvertIntToDecimalStringN(gStringVar1,GetMonData(mon,MON_DATA_SPEED),STR_CONV_MODE_LEFT_ALIGN,3);StringAppend(gStringVar4,gStringVar1);
-    ChaosPrintSummaryEdit(window,gStringVar4,0,94);
-    enum Ability ability=GetMonAbility(mon);
-    u8 description[256];StringCopy(description,gAbilitiesInfo[ability].description);
-    WrapFontIdToFit(description,description+StringLength(description),FONT_SMALL,144);
-    ChaosPrintSummaryEdit(window,description,0,107);
-    PutWindowTilemap(window);CopyWindowToVram(window,COPYWIN_FULL);
+    FillWindowPixelRect(window, PIXEL_FILL(4), 4, 60, 136, 1);
+    if (row == 1)
+    {
+        u8 description[256];
+        StringCopy(description, gAbilitiesInfo[GetMonAbility(mon)].description);
+        WrapFontIdToFit(description, description + StringLength(description), FONT_SMALL, 128);
+        ChaosPrintSummaryEditColor(window, description, 8, 64, 1, 3);
+    }
+    else
+    {
+        if (up == down)
+            ChaosPrintSummaryEditColor(window, COMPOUND_STRING("Neutral: no stat changes"), 8, 64, 1, 3);
+        else
+        {
+            StringCopy(gStringVar4, COMPOUND_STRING("{COLOR}{05}+ "));
+            StringAppend(gStringVar4, ChaosSummaryStatName(up));
+            StringAppend(gStringVar4, COMPOUND_STRING("{COLOR}{01} / {COLOR}{07}- "));
+            StringAppend(gStringVar4, ChaosSummaryStatName(down));
+            ChaosPrintSummaryEditColor(window, gStringVar4, 8, 64, 1, 3);
+        }
+        ChaosDrawSummaryEditStat(window, STAT_ATK, COMPOUND_STRING("Atk"), GetMonData(mon, MON_DATA_ATK), 8, 77);
+        ChaosDrawSummaryEditStat(window, STAT_DEF, COMPOUND_STRING("Def"), GetMonData(mon, MON_DATA_DEF), 76, 77);
+        ChaosDrawSummaryEditStat(window, STAT_SPATK, COMPOUND_STRING("SpA"), GetMonData(mon, MON_DATA_SPATK), 8, 89);
+        ChaosDrawSummaryEditStat(window, STAT_SPDEF, COMPOUND_STRING("SpD"), GetMonData(mon, MON_DATA_SPDEF), 76, 89);
+        ChaosDrawSummaryEditStat(window, STAT_SPEED, COMPOUND_STRING("Speed"), GetMonData(mon, MON_DATA_SPEED), 8, 101);
+    }
+    FillWindowPixelRect(window, PIXEL_FILL(4), 4, 113, 136, 1);
+    for (u32 i = 0; i < 2; i++)
+    {
+        u32 x = 4 + i * 68;
+        u8 background = row == i + 3 ? 9 : 14;
+        FillWindowPixelRect(window, PIXEL_FILL(background), x, 114, 68, 10);
+        ChaosPrintSummaryEditColor(window, i == 0 ? COMPOUND_STRING("Accept") : COMPOUND_STRING("Discard"), x + 13, 114, 1, background);
+        if (row == i + 3) ChaosPrintSummaryEditColor(window, COMPOUND_STRING("{RIGHT_ARROW}"), x + 3, 114, 7, background);
+    }
+    PutWindowTilemap(window);
+    CopyWindowToVram(window, COPYWIN_FULL);
 }
 
 static void ChaosEndSummaryEdit(u8 taskId, bool32 accept)
@@ -5125,9 +5227,10 @@ static void Task_ChaosSummaryEdit(u8 taskId)
 static void ChaosBeginSummaryEdit(u8 taskId)
 {
     ClearPageWindowTilemaps(sMonSummaryScreen->currPageIndex);
-    static const struct WindowTemplate template={.bg=0,.tilemapLeft=11,.tilemapTop=4,.width=18,.height=16,.paletteNum=6,.baseBlock=467};
+    static const struct WindowTemplate template={.bg=0,.tilemapLeft=11,.tilemapTop=4,.width=18,.height=16,.paletteNum=9,.baseBlock=467};
     sMonSummaryScreen->chaosEditWindow=AddWindow(&template);
     if(sMonSummaryScreen->chaosEditWindow==WINDOW_NONE) { PrintPageSpecificText(sMonSummaryScreen->currPageIndex);return; }
+    LoadPalette(sChaosSummaryEditPalette, BG_PLTT_ID(9), sizeof(sChaosSummaryEditPalette));
     sMonSummaryScreen->chaosEditRow=0;
     ChaosDrawSummaryEdit();
     gTasks[taskId].func=Task_ChaosSummaryEdit;
