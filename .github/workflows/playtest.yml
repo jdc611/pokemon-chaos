@@ -4,6 +4,7 @@ name: Build Playtest ROM
   push:
     branches:
       - chaos-firered
+      - chaos-v3
     paths-ignore:
       - "docs/**"
       - "README.md"
@@ -26,15 +27,16 @@ jobs:
       contents: write
 
     steps:
-      - name: Checkout FireRed port branch
+      - name: Checkout the requested playtest revision
         uses: actions/checkout@v4
         with:
-          ref: chaos-firered
+          ref: ${{ github.sha }}
 
       - name: Apply source migration
         run: python3 .github/scripts/apply_stat_colors_levelcap_exp.py
 
       - name: Commit migrated source changes
+        if: github.ref_name == 'chaos-firered'
         run: |
           if ! git diff --quiet -- src/battle_controller_player.c src/battle_script_commands.c src/debug.c; then
             git config user.name "github-actions[bot]"
@@ -81,6 +83,14 @@ jobs:
           set -o pipefail
           make firered -k -j$(nproc) -O 2>&1 | tee build.log
 
+      - name: Record ROM provenance
+        run: |
+          git rev-parse HEAD > Source_Revision.txt
+          sha256sum pokefirered.gba > SHA256SUMS.txt
+          echo "Source: ${{ github.repository }}@${{ github.sha }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "Branch: ${{ github.ref_name }}" >> "$GITHUB_STEP_SUMMARY"
+          cat SHA256SUMS.txt >> "$GITHUB_STEP_SUMMARY"
+
       - name: Surface build errors
         if: failure()
         run: |
@@ -103,8 +113,11 @@ jobs:
       - name: Upload Playtest ROM
         uses: actions/upload-artifact@v4
         with:
-          name: Chaos-FireRed-Audit-${{ github.sha }}
-          path: pokefirered.gba
+          name: Chaos-FireRed-${{ github.ref_name }}-Playtest-${{ github.run_number }}-${{ github.sha }}
+          path: |
+            pokefirered.gba
+            Source_Revision.txt
+            SHA256SUMS.txt
 
       - name: Upload emulator verification symbols
         uses: actions/upload-artifact@v4
