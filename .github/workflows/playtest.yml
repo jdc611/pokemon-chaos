@@ -85,11 +85,9 @@ jobs:
 
       - name: Record ROM provenance
         run: |
-          git rev-parse HEAD > Source_Revision.txt
-          sha256sum pokefirered.gba > SHA256SUMS.txt
           echo "Source: ${{ github.repository }}@${{ github.sha }}" >> "$GITHUB_STEP_SUMMARY"
           echo "Branch: ${{ github.ref_name }}" >> "$GITHUB_STEP_SUMMARY"
-          cat SHA256SUMS.txt >> "$GITHUB_STEP_SUMMARY"
+          sha256sum pokefirered.gba >> "$GITHUB_STEP_SUMMARY"
 
       - name: Surface build errors
         if: failure()
@@ -114,10 +112,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Chaos-FireRed-${{ github.ref_name }}-Playtest-${{ github.run_number }}-${{ github.sha }}
-          path: |
-            pokefirered.gba
-            Source_Revision.txt
-            SHA256SUMS.txt
+          path: pokefirered.gba
 
       - name: Upload emulator verification symbols
         uses: actions/upload-artifact@v4
