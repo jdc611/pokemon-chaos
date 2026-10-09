@@ -11,13 +11,19 @@ def types(name):
 def preview(move):
  wr(rd('gBattleResources')+W['offsetof(struct BattleResources,bufferA)']+4+W['offsetof(struct ChooseMoveStruct,moves)'],W['MOVE_'+move],2);wr('gMoveSelectionCursor',0,1);return call('CheckTypeEffectiveness',0,1)
 bf('species',19,size=L['sizeof(enum Species)']);bf('hp',100);bf('maxHP',100);bf('item',0);types('NORMAL');ab('TRACE')
-# Unknown identity produces blank icons and hides arrows regardless of hints preference.
-assert not call('ChaosBattleTypesKnown',1)
-assert preview('TACKLE')==0
-call('ChaosRevealBattleTypes',0,1,W['MOVE_TACKLE'],4096);assert not call('ChaosBattleTypesKnown',1)
-call('ChaosRevealBattleTypes',0,1,W['MOVE_TACKLE'],8192);assert call('ChaosBattleTypesKnown',1)
-call('GetBattlerTypes',1,0,scratch);assert rd(scratch,1)==W['TYPE_NORMAL']
-print('PASS unknown opponent types blank and preview hidden; neutral hit does not reveal, qualifying hit reveals current types',flush=True)
+# Icons and arrows share Off / Seen / Revealed, with legacy save values.
+call('VarSet',0x404E,1) # Seen
+assert not call('ChaosBattleTypesKnown',1) and preview('TACKLE')==0
+call('ChaosRevealBattleTypes',0,1,W['MOVE_TACKLE'],8192)
+assert not call('ChaosBattleTypesKnown',1) # A hit is not a prior Dex sighting.
+call('VarSet',0x404E,0) # Revealed; does not need a Dex sighting.
+assert call('ChaosBattleTypesKnown',1) and preview('TACKLE')==4
+call('VarSet',0x404E,3) # Off overrides knowledge.
+assert not call('ChaosBattleTypesKnown',1) and preview('TACKLE')==0
+call('VarSet',0x404E,2) # Saved legacy Caught normalizes to Seen.
+assert not call('ChaosBattleTypesKnown',1) and preview('TACKLE')==0
+call('VarSet',0x404E,0)
+print('PASS shared Off/Seen/Revealed visibility and legacy mode; Revealed previews unknown species immediately',flush=True)
 for ability,move,expected in [('EARTH_EATER','EARTHQUAKE',1),('WELL_BAKED_BODY','EMBER',1),('TERA_SHELL','TACKLE',3),('WONDER_GUARD','TACKLE',1)]:
  ab(ability);assert preview(move)==expected,(ability,preview(move));call('GetBattlerTypes',1,0,scratch);assert rd(scratch,1)==W['TYPE_NORMAL']
 types('WATER');ab('PURIFYING_SALT');assert preview('SHADOW_BALL')==3;call('GetBattlerTypes',1,0,scratch);assert rd(scratch,1)==L['TYPE_WATER']

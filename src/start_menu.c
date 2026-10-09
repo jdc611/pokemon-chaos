@@ -203,8 +203,7 @@ static const u8 sText_ExitPage1[] = _("EXIT  1/2");
 static const u8 sText_ExitPage2[] = _("EXIT  2/2");
 static const u8 sText_CloseTools[] = _("CLOSE");
 static const u8 sText_TypeHintsSeen[] = _("TYPE HINTS: SEEN");
-static const u8 sText_TypeHintsAlways[] = _("TYPE HINTS: ALWAYS");
-static const u8 sText_TypeHintsCaught[] = _("TYPE HINTS: CAUGHT");
+static const u8 sText_TypeHintsRevealed[] = _("TYPE HINTS: REVEALED");
 static const u8 sText_TypeHintsOff[] = _("TYPE HINTS: OFF");
 static const u8 sText_DexNavInfoSeen[] = _("DEXNAV INFO: SEEN");
 static const u8 sText_DexNavInfoRevealed[] = _("DEXNAV INFO: REVEALED");
@@ -626,10 +625,7 @@ static bool32 PrintStartMenuActions(s8 *pIndex, u32 count)
                 switch (VarGet(VAR_TYPE_HINTS_MODE))
                 {
                 case TYPE_HINTS_ALWAYS:
-                    StringCopy(gStringVar4, sText_TypeHintsAlways);
-                    break;
-                case TYPE_HINTS_CAUGHT:
-                    StringCopy(gStringVar4, sText_TypeHintsCaught);
+                    StringCopy(gStringVar4, sText_TypeHintsRevealed);
                     break;
                 case TYPE_HINTS_OFF:
                     StringCopy(gStringVar4, sText_TypeHintsOff);
@@ -1838,26 +1834,7 @@ static bool8 StartMenuChangeAbility(void)
 
 static bool8 StartMenuTypeHints(void)
 {
-    u16 mode = VarGet(VAR_TYPE_HINTS_MODE);
-
-    switch (mode)
-    {
-    case TYPE_HINTS_SEEN:
-        mode = TYPE_HINTS_CAUGHT;
-        break;
-    case TYPE_HINTS_CAUGHT:
-        mode = TYPE_HINTS_OFF;
-        break;
-    case TYPE_HINTS_OFF:
-        mode = TYPE_HINTS_ALWAYS;
-        break;
-    case TYPE_HINTS_ALWAYS:
-    default:
-        mode = TYPE_HINTS_SEEN;
-        break;
-    }
-
-    VarSet(VAR_TYPE_HINTS_MODE, mode);
+    VarSet(VAR_TYPE_HINTS_MODE, CycleTypeHintsMode(VarGet(VAR_TYPE_HINTS_MODE), FALSE));
     ClearStdWindowAndFrame(GetStartMenuWindowId(), TRUE);
     RemoveStartMenuWindow();
     InitStartMenu();

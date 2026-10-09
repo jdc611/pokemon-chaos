@@ -100,9 +100,8 @@ static const u8 gText_FrameTypeNumber[]    = _("{COLOR GREEN}{SHADOW LIGHT_GREEN
 static const u8 gText_ButtonTypeNormal[]   = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}NORMAL");
 static const u8 gText_ButtonTypeLR[]       = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}LR");
 static const u8 gText_ButtonTypeLEqualsA[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}L=A");
-static const u8 gText_TypeHintsAlways[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}ALWAYS");
+static const u8 gText_TypeHintsRevealed[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}REVEALED");
 static const u8 gText_TypeHintsSeen[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}SEEN");
-static const u8 gText_TypeHintsCaught[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}CAUGHT");
 static const u8 gText_TypeHintsOff[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}OFF");
 
 static const u16 sOptionMenuText_Pal[] = INCGFX_U16("graphics/interface/option_menu_text.pal", ".gbapal");
@@ -271,7 +270,7 @@ void CB2_InitOptionMenu(void)
         gTasks[taskId].tSound = gSaveBlock2Ptr->optionsSound;
         gTasks[taskId].tButtonMode = gSaveBlock2Ptr->optionsButtonMode;
         gTasks[taskId].tWindowFrameType = gSaveBlock2Ptr->optionsWindowFrameType;
-        gTasks[taskId].tTypeHints = VarGet(VAR_TYPE_HINTS_MODE);
+        gTasks[taskId].tTypeHints = NormalizeTypeHintsMode(VarGet(VAR_TYPE_HINTS_MODE));
         gTasks[taskId].tExpAll = VarGet(VAR_CHAOS_EXP_ALL) != 2;
 
         TextSpeed_DrawChoices(gTasks[taskId].tTextSpeed);
@@ -672,12 +671,12 @@ static u8 TypeHints_ProcessInput(u8 selection)
 {
     if (JOY_NEW(DPAD_RIGHT))
     {
-        selection = (selection + 1) % TYPE_HINTS_COUNT;
+        selection = CycleTypeHintsMode(selection, FALSE);
         sArrowPressed = TRUE;
     }
     else if (JOY_NEW(DPAD_LEFT))
     {
-        selection = (selection + TYPE_HINTS_COUNT - 1) % TYPE_HINTS_COUNT;
+        selection = CycleTypeHintsMode(selection, TRUE);
         sArrowPressed = TRUE;
     }
     return selection;
@@ -689,8 +688,7 @@ static void TypeHints_DrawChoices(u8 selection)
     FillWindowPixelRect(WIN_OPTIONS, PIXEL_FILL(1), 110, YPOS_TYPEHINTS, 90, OPTION_ROW_HEIGHT);
     switch (selection)
     {
-    case TYPE_HINTS_ALWAYS: text = gText_TypeHintsAlways; break;
-    case TYPE_HINTS_CAUGHT: text = gText_TypeHintsCaught; break;
+    case TYPE_HINTS_ALWAYS: text = gText_TypeHintsRevealed; break;
     case TYPE_HINTS_OFF: text = gText_TypeHintsOff; break;
     case TYPE_HINTS_SEEN:
     default: text = gText_TypeHintsSeen; break;

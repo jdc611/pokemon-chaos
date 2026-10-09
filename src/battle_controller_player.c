@@ -2575,7 +2575,7 @@ static bool32 ShouldShowTypeEffectiveness(u32 targetId)
     if (IsGhostBattleWithoutScope())
         return FALSE;
     if (IS_FRLG)
-        return mode != TYPE_HINTS_OFF && GetIllusionMonPtr(targetId) == NULL && ChaosBattleTypesKnown(targetId);
+        return ChaosBattleTypesKnown(targetId);
 
     switch (mode)
     {

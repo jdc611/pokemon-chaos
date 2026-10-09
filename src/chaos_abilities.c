@@ -18,6 +18,9 @@
 #include "constants/abilities.h"
 #include "constants/species.h"
 #include "constants/moves.h"
+#include "constants/type_hints.h"
+#include "constants/vars.h"
+#include "event_data.h"
 
 extern const u8 BattleScript_ChaosAbilityState[];
 static bool32 CheckThreshold(u32 battler, enum Ability ability);
@@ -488,11 +491,18 @@ bool32 ChaosBenchSymbiosis(u32 battler)
 bool32 ChaosBattleTypesKnown(u32 battler)
 {
     if (IsOnPlayerSide(battler)) return TRUE;
-    struct Pokemon *illusion = GetIllusionMonPtr(battler);
-    enum Species species = GetBattlerVisualSpecies(battler);
-    if (GetSetPokedexFlag(SpeciesToNationalPokedexNum(species), FLAG_GET_SEEN)) return TRUE;
-    // Revealing the actual holder cannot leak a still-active disguise.
-    return illusion == NULL && GetBattlerPartyState(battler)->chaosTypesRevealed;
+    switch (NormalizeTypeHintsMode(VarGet(VAR_TYPE_HINTS_MODE)))
+    {
+    case TYPE_HINTS_OFF:
+        return FALSE;
+    case TYPE_HINTS_REVEALED:
+        return TRUE;
+    case TYPE_HINTS_SEEN:
+    default:
+        // Visible identity matters while Illusion is active. Current battle
+        // types are drawn once that visible species is eligible for hints.
+        return GetSetPokedexFlag(SpeciesToNationalPokedexNum(GetBattlerVisualSpecies(battler)), FLAG_GET_SEEN);
+    }
 }
 
 void ChaosRevealBattleTypes(u32 attacker, u32 defender, enum Move move, u32 effectiveness)
