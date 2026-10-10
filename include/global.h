@@ -278,7 +278,7 @@ struct IronmonRunState
     u8 mode;
     u8 ended;
     u8 starterGranted;
-    u8 centerPermit;
+    u8 bstMode; // Locked v2 run selection; legacy runs leave this byte unused.
     u8 commitmentKind;
     u8 aiProfile;
 };

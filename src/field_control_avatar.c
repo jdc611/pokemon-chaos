@@ -195,7 +195,10 @@ int ProcessPlayerFieldInput(struct FieldInput *input)
 
     // The chord must win over the registered DexNav R action and hidden
     // Pokemon step checks. Holding R then tapping START opens Debug.
-    if (ChaosTrackerShortcut()) return TRUE;
+    // The overlay suspends callbacks itself and launches no field script.
+    // Consume the chord without making the caller acquire a script lock,
+    // including when opening is safely denied.
+    if (ChaosTrackerShortcut()) return 2;
     if (input->input_field_1_2 && DEBUG_OVERWORLD_MENU && !DEBUG_OVERWORLD_IN_MENU)
     {
         // The debug menu can reroll the seed, change the locked preset, grant

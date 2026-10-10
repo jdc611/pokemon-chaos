@@ -424,9 +424,8 @@ static void RunSetup_ApplyIronmonPreset(void)
 {
     if (!IsIronmonDifficulty(sRunSetupDifficulty)) return;
     sRunSetupRandomizer = RUN_WILD_RANDOM;
-    sRunSetupStarter = RUN_STARTER_RANDOM;
+    sRunSetupStarter = sRunSetupDifficulty == RUN_DIFFICULTY_IRONMON_NORMAL ? RUN_STARTER_CHOOSE : RUN_STARTER_RANDOM;
     sRunSetupMinimalGrinding = TRUE;
-    sRunSetupBstMode = RUN_BST_SHUFFLE;
     sRunSetupAbilityMode = RUN_ABILITIES_RANDOM;
     sRunSetupMovesets = RUN_MOVESETS_RANDOM;
     sRunSetupEvolutions = RUN_EVOLUTIONS_RANDOM;
@@ -2701,12 +2700,13 @@ static void RunSetup_Draw(u8 cursor)
         AddTextPrinterParameterized3(0, FONT_NORMAL, titleX, 3, sTextColor_Headers, TEXT_SKIP_DRAW, sText_RunSetupPlayStyle);
         FillWindowPixelRect(0, PIXEL_FILL(TEXT_DYNAMIC_COLOR_3), 48, 25, 112, 1);
         const u8 *labels[] = {sText_RunSetupDifficulty, sText_RunSetupMinimalGrinding,
-            COMPOUND_STRING("NUZLOCKE"), COMPOUND_STRING("EZ CATCH"), COMPOUND_STRING("CARE PACKAGES")};
+            IsIronmonDifficulty(sRunSetupDifficulty) ? sText_RunSetupBst : COMPOUND_STRING("NUZLOCKE"), COMPOUND_STRING("EZ CATCH"), COMPOUND_STRING("CARE PACKAGES")};
         const u8 *values[] = {difficulty, sRunSetupMinimalGrinding ? sText_RunSetupOn : sText_RunSetupOff,
-            sRunSetupNuzlocke ? sText_RunSetupOn : sText_RunSetupOff,
+            IsIronmonDifficulty(sRunSetupDifficulty) ? (sRunSetupBstMode == RUN_BST_RANDOM ? sText_RunSetupRandom : sText_RunSetupShuffle)
+                : sRunSetupNuzlocke ? sText_RunSetupOn : sText_RunSetupOff,
             sRunSetupEzCatch ? sText_RunSetupOn : sText_RunSetupOff,
             sRunSetupCarePackages ? sText_RunSetupOn : sText_RunSetupOff};
-        for (u32 row = 0; row < (IsIronmonDifficulty(sRunSetupDifficulty) ? 2 : 5); row++)
+        for (u32 row = 0; row < (IsIronmonDifficulty(sRunSetupDifficulty) ? 3 : 5); row++)
         {
             u8 y = 30 + row * 17;
             AddTextPrinterParameterized3(0, FONT_SMALL, 10, y + 2, sTextColor_Headers, TEXT_SKIP_DRAW, labels[row]);
@@ -2716,10 +2716,10 @@ static void RunSetup_Draw(u8 cursor)
         }
         RunSetup_DrawWideChoice(sText_RunSetupNext, 72, 110, 64, cursor == 5);
         if (IsIronmonDifficulty(sRunSetupDifficulty))
-            AddTextPrinterParameterized3(0, FONT_SMALL, 10, 66, sTextColor_Headers, TEXT_SKIP_DRAW,
+            AddTextPrinterParameterized3(0, FONT_SMALL, 10, 84, sTextColor_Headers, TEXT_SKIP_DRAW,
                 sRunSetupDifficulty == RUN_DIFFICULTY_IRONMON_NORMAL
-                ? COMPOUND_STRING("IRONMON NORMAL\n3 starters; each CENTER heals once.\nSolo main; capture retires old main.")
-                : COMPOUND_STRING("IRONMON HARDCORE\n1 starter; no CENTER healing.\nSolo main; capture retires old main."));
+                ? COMPOUND_STRING("Custom starter; random traits.\nEach CENTER heals once.")
+                : COMPOUND_STRING("One random starter.\nNo CENTER healing."));
         PutWindowTilemap(0);
         CopyWindowToVram(0, COPYWIN_FULL);
         return;
@@ -3042,8 +3042,10 @@ static void Task_RunSetup_Input(u8 taskId)
 
     if (sRunSetupPage == RUN_SETUP_PAGE_PLAY_STYLE && !sRunSetupConfirm)
     {
-        if (JOY_NEW(DPAD_UP)) *cursor = (*cursor + 5) % 6;
-        else if (JOY_NEW(DPAD_DOWN)) *cursor = (*cursor + 1) % 6;
+        if (JOY_NEW(DPAD_UP)) *cursor = IsIronmonDifficulty(sRunSetupDifficulty)
+            ? (*cursor == 0 ? 5 : *cursor == 5 ? 2 : *cursor - 1) : (*cursor + 5) % 6;
+        else if (JOY_NEW(DPAD_DOWN)) *cursor = IsIronmonDifficulty(sRunSetupDifficulty)
+            ? (*cursor == 2 ? 5 : *cursor == 5 ? 0 : *cursor + 1) : (*cursor + 1) % 6;
         else if (JOY_NEW(DPAD_LEFT | DPAD_RIGHT | A_BUTTON) && *cursor < 5)
         {
             if (*cursor == 0)
@@ -3055,9 +3057,15 @@ static void Task_RunSetup_Input(u8 taskId)
                 while (index < ARRAY_COUNT(choices) - 1 && choices[index] != sRunSetupDifficulty) index++;
                 index = (index + (JOY_NEW(DPAD_LEFT) ? 4 : 1)) % ARRAY_COUNT(choices);
                 sRunSetupDifficulty = choices[index];
+                if (IsIronmonDifficulty(sRunSetupDifficulty))
+                    sRunSetupBstMode = sRunSetupDifficulty == RUN_DIFFICULTY_IRONMON_HARDCORE ? RUN_BST_RANDOM : RUN_BST_SHUFFLE;
                 RunSetup_ApplyIronmonPreset();
             }
-            else if (IsIronmonDifficulty(sRunSetupDifficulty)) return;
+            else if (IsIronmonDifficulty(sRunSetupDifficulty))
+            {
+                if (*cursor != 2) return;
+                sRunSetupBstMode = sRunSetupBstMode == RUN_BST_SHUFFLE ? RUN_BST_RANDOM : RUN_BST_SHUFFLE;
+            }
             else if (*cursor == 1) sRunSetupMinimalGrinding ^= 1;
             else if (*cursor == 2) sRunSetupNuzlocke ^= 1;
             else if (*cursor == 3) sRunSetupEzCatch ^= 1;

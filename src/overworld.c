@@ -1701,12 +1701,13 @@ static void DoCB1_Overworld(u16 newKeys, u16 heldKeys)
     CancelSignPostMessageBox(&inputStruct);
     if (!ArePlayerFieldControlsLocked())
     {
-        if (ProcessPlayerFieldInput(&inputStruct) == 1)
+        int inputResult = ProcessPlayerFieldInput(&inputStruct);
+        if (inputResult == 1)
         {
             LockPlayerFieldControls();
             HideMapNamePopUpWindow();
         }
-        else
+        else if (inputResult == 0)
         {
             PlayerStep(inputStruct.dpadDirection, newKeys, heldKeys);
         }

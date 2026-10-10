@@ -4,7 +4,8 @@
 struct Trainer;
 struct TrainerMon;
 struct TrainerGenerator;
-#define IRONMON_STATE_MAGIC 0x494D3031u
+#define IRONMON_LEGACY_STATE_MAGIC 0x494D3031u
+#define IRONMON_STATE_MAGIC 0x494D3032u
 #define IRONMON_RETIRED_BOX (TOTAL_BOXES_COUNT - 1)
 bool32 IsIronmonRun(void);
 bool32 IsIronmonHardcore(void);

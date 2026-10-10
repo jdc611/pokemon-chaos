@@ -1112,7 +1112,9 @@ static void CustomStarterDraw(u8 taskId)
     {
         AddTextPrinterParameterized(0, FONT_NORMAL, sText_CustomConfirm, 8, 8, TEXT_SKIP_DRAW, NULL);
         AddTextPrinterParameterized(0, FONT_NORMAL, GetSpeciesName(species), 8, 30, TEXT_SKIP_DRAW, NULL);
-        AddTextPrinterParameterized(0, FONT_NORMAL, gTasks[taskId].tCustomShiny ? sText_CustomShiny : sText_CustomNormal, 8, 50, TEXT_SKIP_DRAW, NULL);
+        AddTextPrinterParameterized(0, IsIronmonRun() ? FONT_SMALL : FONT_NORMAL, IsIronmonRun()
+            ? (gSaveBlock3Ptr->bstMode == RUN_BST_RANDOM ? COMPOUND_STRING("Random stats; random traits") : COMPOUND_STRING("Shuffled stats; random traits"))
+            : gTasks[taskId].tCustomShiny ? sText_CustomShiny : sText_CustomNormal, 8, 50, TEXT_SKIP_DRAW, NULL);
         if (gTasks[taskId].tCustomConfirmChoice == 0)
             AddTextPrinterParameterized(0, FONT_NORMAL, gText_SelectorArrow2, 24, 88, TEXT_SKIP_DRAW, NULL);
         else
@@ -1254,7 +1256,8 @@ static void Task_CustomStarterInput(u8 taskId)
         else if (JOY_NEW(A_BUTTON))
         {
             PlaySE(SE_SELECT);
-            gTasks[taskId].tCustomState = 1;
+            gTasks[taskId].tCustomState = IsIronmonRun() ? 2 : 1;
+            gTasks[taskId].tCustomConfirmChoice = 0;
             gTasks[taskId].tCustomShiny = FALSE;
             CustomStarterUpdatePreview(taskId);
             CustomStarterDraw(taskId);
@@ -1290,7 +1293,7 @@ static void Task_CustomStarterInput(u8 taskId)
         }
         else if (JOY_NEW(B_BUTTON))
         {
-            gTasks[taskId].tCustomState = 1;
+            gTasks[taskId].tCustomState = IsIronmonRun() ? 0 : 1;
             CustomStarterDraw(taskId);
         }
         else if (JOY_NEW(A_BUTTON))
@@ -1306,7 +1309,7 @@ static void Task_CustomStarterInput(u8 taskId)
             }
             else
             {
-                gTasks[taskId].tCustomState = 1;
+                gTasks[taskId].tCustomState = IsIronmonRun() ? 0 : 1;
                 CustomStarterDraw(taskId);
             }
         }

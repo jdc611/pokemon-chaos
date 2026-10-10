@@ -33,7 +33,8 @@ bool32 IsIronmonDifficulty(u32 difficulty)
 bool32 IsIronmonRun(void)
 {
     return IS_FRLG && gSaveBlock3Ptr != NULL
-        && gSaveBlock3Ptr->ironmon.magic == IRONMON_STATE_MAGIC
+        && (gSaveBlock3Ptr->ironmon.magic == IRONMON_STATE_MAGIC
+            || gSaveBlock3Ptr->ironmon.magic == IRONMON_LEGACY_STATE_MAGIC)
         && gSaveBlock3Ptr->ironmon.seed == gSaveBlock3Ptr->worldSeed
         && IsIronmonDifficulty(gSaveBlock3Ptr->ironmon.mode);
 }
@@ -49,12 +50,15 @@ void IronmonEnforcePreset(void)
     gSaveBlock3Ptr->runDifficulty = gSaveBlock3Ptr->ironmon.mode;
     gSaveBlock3Ptr->ironmon.aiProfile = 0;
     gSaveBlock3Ptr->randomizerEnabled = RUN_WILD_RANDOM;
-    gSaveBlock3Ptr->starterMode = RUN_STARTER_RANDOM;
+    // Preserve the stat budget of already-started v1 runs. New runs use v2.
+    bool32 revised = gSaveBlock3Ptr->ironmon.magic == IRONMON_STATE_MAGIC;
+    gSaveBlock3Ptr->starterMode = revised && !IsIronmonHardcore() ? RUN_STARTER_CHOOSE : RUN_STARTER_RANDOM;
     gSaveBlock3Ptr->rivalMode = RUN_RIVAL_RANDOM;
     gSaveBlock3Ptr->filterMode = RUN_FILTER_NONE;
     gSaveBlock3Ptr->filterValue = 0;
     gSaveBlock3Ptr->minimalGrindingMode = TRUE;
-    gSaveBlock3Ptr->bstMode = RUN_BST_SHUFFLE;
+    gSaveBlock3Ptr->bstMode = revised && gSaveBlock3Ptr->ironmon.bstMode == RUN_BST_RANDOM
+        ? RUN_BST_RANDOM : RUN_BST_SHUFFLE;
     gSaveBlock3Ptr->abilityMode = RUN_ABILITIES_RANDOM;
     gSaveBlock3Ptr->movesetMode = RUN_MOVESETS_RANDOM;
     gSaveBlock3Ptr->evolutionMode = RUN_EVOLUTIONS_RANDOM;
@@ -73,6 +77,8 @@ void IronmonInitializeRun(void)
     state->magic = IRONMON_STATE_MAGIC;
     state->mode = gSaveBlock3Ptr->runDifficulty;
     state->seed = gSaveBlock3Ptr->worldSeed;
+    state->bstMode = gSaveBlock3Ptr->bstMode == RUN_BST_SHUFFLE || gSaveBlock3Ptr->bstMode == RUN_BST_RANDOM
+        ? gSaveBlock3Ptr->bstMode : (IsIronmonHardcore() ? RUN_BST_RANDOM : RUN_BST_SHUFFLE);
     IronmonEnforcePreset();
 }
 
@@ -206,6 +212,9 @@ void IronmonGenerateTrainerMon(struct Pokemon *mon, const struct TrainerMon *ent
     IronmonAssignAbility(mon, species, seed);
     enum Item item = IronmonHeldItem(seed);
     SetMonData(mon, MON_DATA_HELD_ITEM, &item);
+    // Match ordinary trainer generation: an omitted flag forbids AI Dynamax.
+    u32 dynamaxLevel = entry->shouldUseDynamax ? entry->dynamaxLevel : BLOCK_AI_DYNAMAX;
+    SetMonData(mon, MON_DATA_DYNAMAX_LEVEL, &dynamaxLevel);
     ApplyMinimalGrindingModeToMon(mon);
     SetMonData(mon, MON_DATA_OT_NAME, trainer->name);
     u32 gender = trainer->gender;

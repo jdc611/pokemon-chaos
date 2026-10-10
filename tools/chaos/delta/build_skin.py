@@ -27,26 +27,38 @@ def representation(output, name, w, h, landscape):
                    ('R', 'r', frame(w-122, 24, 100, 38))]
         bottom = h-48
     else:
-        gw = w-24
+        # Use almost the full width without stretching the GBA's 3:2 picture.
+        # Lower the viewport and put the controls within the thumb's lower
+        # reach instead of leaving most of a tall phone unused.
+        gw = w-12
         gh = gw*2/3
-        screen = frame(12, 52, gw, gh)
-        tracker = frame(w/2-56, 52+gh+10, 112, 40)
-        controls = 52+gh+82
-        dpad = frame(24, controls+55, 138, 138)
-        buttons = [('A', 'a', frame(w-92, controls+38, 72, 72)),
-                   ('B', 'b', frame(w-170, controls+105, 72, 72)),
-                   ('L', 'l', frame(18, controls-10, 112, 38)),
-                   ('R', 'r', frame(w-130, controls-10, 112, 38))]
-        bottom = h-88
+        screen = frame(6, max(90, h*.14), gw, gh)
+        tracker = frame(w/2-56, screen['y']+gh+10, 112, 36)
+        controls = min(h-160, max(h*.78, screen['y']+gh+214))
+        dpad = frame(w*.23-94, controls-94, 188, 188)
+        buttons = [('A', 'a', frame(w-90, controls-80, 72, 72)),
+                   ('B', 'b', frame(w-168, controls+4, 72, 72)),
+                   ('L', 'l', frame(18, controls-146, 112, 34)),
+                   ('R', 'r', frame(w-130, controls-146, 112, 34))]
+        bottom = h-52
     buttons += [('MENU', 'menu', frame(18, bottom, 82, 34)),
                 ('SELECT', 'select', frame(w/2-90, bottom, 80, 34)),
                 ('START', 'start', frame(w/2+10, bottom, 80, 34))]
-    items = [dict(inputs=['l', 'select'], frame=tracker),
-             dict(inputs={k:k for k in ('up','down','left','right')}, frame=dpad)]
+    # Independent cardinal buttons: blank gaps have no diagonal or adjacent
+    # input mappings, so touching a gap cannot select the wrong direction.
+    side = 56 if not landscape else 36
+    cx, cy = dpad['x']+dpad['width']/2, dpad['y']+dpad['height']/2
+    spacing = side+10 if not landscape else side+6
+    directions = [('▲', 'up', frame(cx-side/2, cy-spacing-side/2, side, side)),
+                  ('▼', 'down', frame(cx-side/2, cy+spacing-side/2, side, side)),
+                  ('◀', 'left', frame(cx-spacing-side/2, cy-side/2, side, side)),
+                  ('▶', 'right', frame(cx+spacing-side/2, cy-side/2, side, side))]
+    items = [dict(inputs=['l', 'select'], frame=tracker)]
+    items += [dict(inputs=[key], frame=f) for _,key,f in directions]
     items += [dict(inputs=[key], frame=f) for _,key,f in buttons]
     assets = {}
     for scale, size in ((1,'small'), (2,'medium'), (3,'large')):
-        image = Image.new('RGBA', (w*scale,h*scale), '#e9edf2')
+        image = Image.new('RGBA', (w*scale,h*scale), '#080a0e')
         draw = ImageDraw.Draw(image)
         def rect(f, fill, outline=None, radius=10):
             x,y,fw,fh = (f[k]*scale for k in ('x','y','width','height'))
@@ -56,20 +68,16 @@ def representation(output, name, w, h, landscape):
             font = ImageFont.truetype(FONT, size*scale)
             draw.text(((f['x']+f['width']/2)*scale,(f['y']+f['height']/2)*scale),
                       text, font=font, fill=color, anchor='mm')
-        draw.rectangle((0,0,w*scale,18*scale), fill='#b83c42')
+        draw.rectangle((0,0,w*scale,18*scale), fill='#080a0e')
         rect(frame(screen['x']-4,screen['y']-4,screen['width']+8,screen['height']+8), '#42576d')
         # DeltaCore renders GameView below the controller artwork. The game
         # viewport must be transparent, or the artwork hides the entire ROM.
         rect(screen, (0, 0, 0, 0), radius=0)
-        rect(tracker, '#b83c42', '#7c2630')
-        label(tracker, 'TRACKER', 'white')
-        # A single D-pad input is divided by Delta into a 3x3 grid.
-        third=dpad['width']/3
-        rect(frame(dpad['x']+third,dpad['y'],third,dpad['height']), '#42576d')
-        rect(frame(dpad['x'],dpad['y']+third,dpad['width'],third), '#42576d')
-        for text,key,f in buttons:
-            rect(f, '#b83c42' if key in ('a','b') else '#42576d')
-            label(f,text,'white',23 if key in ('a','b') else 12)
+        rect(tracker, '#d5dae1', '#8993a0')
+        label(tracker, 'TRACKER', '#11151c')
+        for text,key,f in directions+buttons:
+            rect(f, '#b83c42' if key in ('a','b') else '#d5dae1')
+            label(f,text,'white' if key in ('a','b') else '#11151c',23 if key in ('a','b','up','down','left','right') else 12)
         filename=f'{name}_{size}.png'
         image.save(output/filename)
         assets[size]=filename
@@ -86,6 +94,8 @@ def validate(info, output):
                 assert abs(sf['width']/sf['height']-1.5)<0.001
                 tracker=rep['items'][0]
                 assert tracker['inputs']==['l','select']
+                assert [item['inputs'] for item in rep['items'][1:5]] == [
+                    ['up'], ['down'], ['left'], ['right']]
                 tf=tracker['frame']
                 assert abs(tf['x']+tf['width']/2-w/2)<0.001
                 assert 0<tf['y']-sf['y']-sf['height']<=10
@@ -121,7 +131,7 @@ def main():
     parser=argparse.ArgumentParser()
     parser.add_argument('--output',type=Path,default=Path('/tmp/chaos-delta-skin'))
     args=parser.parse_args();out=args.output;out.mkdir(parents=True,exist_ok=True)
-    info=dict(name='Pokemon Chaos Tracker',identifier='com.jdc611.chaos.gba.tracker',
+    info=dict(name='Pokemon Chaos Tracker Dark Comfort',identifier='com.jdc611.chaos.gba.tracker.comfort.dark',
               gameTypeIdentifier='com.rileytestut.delta.game.gba',debug=False,
               representations={})
     for device,variants in {'iphone':{'standard':(414,736),'edgeToEdge':(414,896)},

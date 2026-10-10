@@ -1,4 +1,4 @@
-"""Real new-game callback and each lab-ball script, no injected gift outcome."""
+"""Legacy v1 Normal: each existing three-ball choice remains compatible."""
 from qa_ironmon_core import *
 import json
 objects=json.loads((repo/'data/maps/PalletTown_ProfessorOaksLab_Frlg/map.json').read_text())['object_events']
@@ -11,6 +11,7 @@ for choice in range(3):
     wr('gDebugForceKantoNewGame',1,1)
     call('SetMainCallback2',symbols['CB2_NewGame']|1);frames(600)
     s=rd('gSaveBlock3Ptr')
+    wr(s+IM,0x494D3031);call('IronmonEnforcePreset')
     for _ in range(25):frames(3,1);frames(40)
     assert call('IsIronmonRun') and not call('IsIronmonHardcore')
     assert rd('gPartiesCount',1)==0

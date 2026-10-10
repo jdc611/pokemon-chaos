@@ -15,11 +15,15 @@ for step in range(100):
  if rd('gBattleTypeFlags') & 8:break
 assert rd('gBattleTypeFlags') & 8, 'lab rival battle did not start'
 assert rd('gPartiesCount',1)==1 and call('IsIronmonHardcore')
+profile=struct.unpack('<15I',(ROOT/'ironmon-profile-layout.bin').read_bytes())
+assert data(p+6*MONSIZE,profile[6])==profile[7]
+assert not call('CanDynamax',1)
 # Controlled injury fixture: retain the real generated starter, opponent, moves
 # and AI, but lower the main to 1 HP before battle initialization.
 setdata(p,HP,1)
 for turn in range(300):
  frames(3,1);frames(30)
+ if turn>10 and not rd(s+IM+ENDED,1):assert not call('CanDynamax',1)
  if rd(s+IM+ENDED,1):break
 else: raise AssertionError('no loss observed in the controlled lab battle')
 for _ in range(150):
