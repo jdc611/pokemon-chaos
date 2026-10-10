@@ -21,6 +21,7 @@ u32 IronmonTrainerPartySize(const struct Trainer *trainer);
 u32 IronmonTrainerSeed(const struct Trainer *trainer);
 void IronmonGenerateTrainerMon(struct Pokemon *mon, const struct TrainerMon *entry, struct TrainerGenerator *trainer);
 void IronmonGiveStarter(enum Species species);
+void IronmonPrepareWildMon(struct Pokemon *mon);
 u32 IronmonAcceptCapture(struct Pokemon *mon);
 u32 IronmonPivotFloor(void);
 bool32 IronmonPermitHealing(void);

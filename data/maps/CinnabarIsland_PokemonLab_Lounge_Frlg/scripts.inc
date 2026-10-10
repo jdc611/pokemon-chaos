@@ -44,6 +44,8 @@ CinnabarIsland_PokemonLab_Lounge_EventScript_CliftonAlreadyTraded::
 CinnabarIsland_PokemonLab_Lounge_EventScript_Norma::
 	lock
 	faceplayer
+	specialvar VAR_RESULT, IsIronmonRun
+	goto_if_eq VAR_RESULT, TRUE, Ironmon_EventScript_ServiceBlocked
 	setvar VAR_0x8008, INGAME_TRADE_TANGELA
 	copyvar VAR_0x8004, VAR_0x8008
 	specialvar VAR_RESULT, GetInGameTradeSpeciesInfo

@@ -13,6 +13,8 @@ EventScript_HideMysteryGiftMan_Frlg::
 	return
 
 CableClub_EventScript_MysteryGiftMan_Frlg::
+	specialvar VAR_RESULT, IsIronmonRun
+	goto_if_eq VAR_RESULT, TRUE, Ironmon_EventScript_ServiceBlocked
 	trywondercardscript
 
 @ Unused
@@ -692,6 +694,8 @@ CableClub_EventScript_DoLinkRoomExit_Frlg::
 CableClub_EventScript_UnionRoomAttendant_Frlg::
 	lock
 	faceplayer
+	specialvar VAR_RESULT, IsIronmonRun
+	goto_if_eq VAR_RESULT, TRUE, Ironmon_EventScript_ServiceBlocked
 	goto_if_unset FLAG_SYS_POKEDEX_GET, CableClub_EventScript_WirelessClubAdjustements_Frlg
 	specialvar VAR_RESULT, IsBadEggInParty
 	goto_if_eq VAR_RESULT, TRUE, CableClub_EventScript_AbortLinkPlayerHasBadEgg_Frlg
@@ -792,6 +796,8 @@ CableClub_EventScript_DontAskAboutLinking_Frlg::
 CableClub_EventScript_DirectCornerAttendant_Frlg::
 	lock
 	faceplayer
+	specialvar VAR_RESULT, IsIronmonRun
+	goto_if_eq VAR_RESULT, TRUE, Ironmon_EventScript_ServiceBlocked
 	goto_if_unset FLAG_SYS_POKEDEX_GET, CableClub_EventScript_WirelessClubAdjustements_Frlg
 	specialvar VAR_RESULT, IsBadEggInParty
 	goto_if_eq VAR_RESULT, TRUE, CableClub_EventScript_AbortLinkPlayerHasBadEgg_Frlg

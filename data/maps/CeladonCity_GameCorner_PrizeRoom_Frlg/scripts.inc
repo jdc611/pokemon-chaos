@@ -12,6 +12,8 @@ CeladonCity_GameCorner_PrizeRoom_EventScript_OldMan::
 CeladonCity_GameCorner_PrizeRoom_EventScript_PrizeClerkMons::
 	lock
 	faceplayer
+	specialvar VAR_RESULT, IsIronmonRun
+	goto_if_eq VAR_RESULT, TRUE, Ironmon_EventScript_ServiceBlocked
 	goto_if_unset FLAG_BADGE04_GET, ChaosArcadePrize_Construction
 	checkitem ITEM_COIN_CASE
 	goto_if_eq VAR_RESULT, FALSE, CeladonCity_GameCorner_PrizeRoom_EventScript_NeedCoinCase
@@ -320,7 +322,12 @@ ChaosArcadeItemCounter::
 	checkitem ITEM_COIN_CASE
 	goto_if_eq VAR_RESULT, FALSE, CeladonCity_GameCorner_PrizeRoom_EventScript_NeedCoinCase
 	showcoinsbox 20, 0
+	specialvar VAR_RESULT, IsIronmonRun
+	goto_if_eq VAR_RESULT, TRUE, ChaosArcadeItem_IronmonWelcome
 	msgbox ChaosArcadeItem_Welcome
+	goto ChaosArcadeItem_Category
+ChaosArcadeItem_IronmonWelcome::
+	msgbox ChaosArcadeItem_IronmonWelcomeText
 ChaosArcadeItem_Category::
 	closemessage
 	special ChaosArcadeItemCategories
@@ -355,6 +362,10 @@ ChaosArcadeItem_Welcome:
 	.string "Our TMs are reusable! Highlight a move\n"
 	.string "to see its details alongside the list.\p"
 	.string "We also stock useful battle items.$"
+ChaosArcadeItem_IronmonWelcomeText:
+	.string "Battle items are available here!\n"
+	.string "In IRONMON, TMs are earned only\l"
+	.string "from GYM LEADERS.$"
 ChaosArcadeItem_Confirm:
 	.string "{STR_VAR_1}: {STR_VAR_2} COINS\n"
 	.string "Exchange Coins for this prize?$"

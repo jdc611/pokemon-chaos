@@ -94,6 +94,8 @@ Text_ChaosBetterRod::
 
 EventScript_ChaosTrainToCap::
  lockall
+ specialvar VAR_RESULT, IsIronmonRun
+ goto_if_eq VAR_RESULT, TRUE, Ironmon_EventScript_ServiceBlocked
  callnative ChaosBufferLevelCap
  msgbox Text_ChaosCurrentCap
  closemessage

@@ -1,4 +1,5 @@
 #include "global.h"
+#include "ironmon.h"
 #include "pokemon.h"
 #include "battle.h"
 #include "daycare.h"
@@ -257,6 +258,7 @@ static void StorePokemonInEmptyDaycareSlot(struct Pokemon *mon, struct DayCare *
 
 void StoreSelectedPokemonInDaycare(void)
 {
+    if (IsIronmonRun()) return;
     struct Pokemon *mon;
     if (gSpecialVar_0x8004 == PC_MON_CHOSEN)
     {
@@ -367,6 +369,7 @@ static u16 TakeSelectedPokemonMonFromDaycareShiftSlots(struct DayCare *daycare, 
 
 u16 TakePokemonFromDaycare(void)
 {
+    if (IsIronmonRun()) return SPECIES_NONE;
     return TakeSelectedPokemonMonFromDaycareShiftSlots(&gSaveBlock1Ptr->daycare, gSpecialVar_0x8004);
 }
 
@@ -1063,6 +1066,7 @@ static void SetInitialEggData(struct Pokemon *mon, enum Species species, struct 
 
 void GiveEggFromDaycare(void)
 {
+    if (IsIronmonRun()) return;
     _GiveEggFromDaycare(&gSaveBlock1Ptr->daycare);
 }
 
@@ -1517,6 +1521,7 @@ static u8 ModifyBreedingScoreForOvalCharm(u8 score)
 
 void PutMonInRoute5Daycare(void)
 {
+    if (IsIronmonRun()) return;
 #if IS_FRLG
     u8 monIdx = GetCursorSelectionMonId();
     StorePokemonInDaycare(&gParties[B_TRAINER_PLAYER][monIdx], &gSaveBlock1Ptr->route5DayCareMon);
@@ -1554,6 +1559,7 @@ u8 GetNumLevelsGainedForRoute5DaycareMon(void)
 
 u16 TakePokemonFromRoute5Daycare(void)
 {
+    if (IsIronmonRun()) return SPECIES_NONE;
 #if IS_FRLG
     return TakeSelectedPokemonFromDaycare(&gSaveBlock1Ptr->route5DayCareMon);
 #else

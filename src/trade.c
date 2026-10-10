@@ -1,4 +1,5 @@
 #include "global.h"
+#include "ironmon.h"
 #include "malloc.h"
 #include "battle_anim.h"
 #include "battle_interface.h"
@@ -3082,6 +3083,7 @@ static void TryEnableNationalDexFromLinkPartner(void)
 
 static void TradeMons(u8 playerPartyIdx, u8 partnerPartyIdx)
 {
+    if (IsIronmonRun()) return;
     u8 friendship;
     struct Pokemon *playerMon, *partnerMon;
     if (playerPartyIdx == PC_MON_CHOSEN)
@@ -4638,6 +4640,7 @@ enum Species GetTradeSpecies(void)
 
 void CreateInGameTradePokemon(void)
 {
+    if (IsIronmonRun()) return;
     CreateInGameTradePokemonInternal(gSpecialVar_0x8004, gSpecialVar_0x8005);
 }
 
@@ -4859,8 +4862,23 @@ static void CB2_FreeTradeAnim(void)
     UpdatePaletteFade();
 }
 
+static void Task_IronmonRejectTrade(u8 taskId)
+{
+    // This special has an implicit waitstate: resume on the following frame,
+    // after the script has actually paused, rather than synchronously.
+    gSpecialVar_Result = FALSE;
+    ScriptContext_Enable();
+    DestroyTask(taskId);
+}
+
 void DoInGameTradeScene(void)
 {
+    if (IsIronmonRun())
+    {
+        gSpecialVar_Result = FALSE;
+        CreateTask(Task_IronmonRejectTrade, 10);
+        return;
+    }
     LockPlayerFieldControls();
     CreateTask(Task_InGameTrade, 10);
     BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);

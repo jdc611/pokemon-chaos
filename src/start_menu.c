@@ -1,4 +1,5 @@
 #include "global.h"
+#include "ironmon.h"
 extern const u8 EventScript_ChaosTrainToCap[];
 #include "config/save.h"
 #include "battle_main.h"
@@ -439,11 +440,11 @@ static void BuildNormalStartMenu(void)
 
     if (sQuickToolsMode)
     {
-        if (IS_FRLG && !VarGet(VAR_CHAOS_CHANGERS_UNLOCKED))
+        if (IsIronmonRun() || (IS_FRLG && !VarGet(VAR_CHAOS_CHANGERS_UNLOCKED)))
             sStartMenuPage = 0;
         if (sStartMenuPage == 0)
         {
-            if (!IS_FRLG || VarGet(VAR_CHAOS_RECOVERY_TOOLS_UNLOCKED))
+            if (!IsIronmonRun() && (!IS_FRLG || VarGet(VAR_CHAOS_RECOVERY_TOOLS_UNLOCKED)))
             {
                 AddStartMenuAction(MENU_ACTION_POKEVIAL);
                 AddStartMenuAction(MENU_ACTION_PC_STORAGE);
@@ -490,7 +491,7 @@ static void BuildNormalStartMenu(void)
     }
     else
     {
-        if (!IS_FRLG || (VarGet(VAR_CHAOS_TRAINING_UNLOCKED) || VarGet(VAR_MAP_SCENE_PEWTER_CITY) >= 2))
+        if (!IsIronmonRun() && (!IS_FRLG || (VarGet(VAR_CHAOS_TRAINING_UNLOCKED) || VarGet(VAR_MAP_SCENE_PEWTER_CITY) >= 2)))
         {
             AddStartMenuAction(MENU_ACTION_TRAIN_TO_CAP);
 

@@ -111,8 +111,11 @@ EventScript_ChaosShowMoonRockets::
 	return
 EventScript_ChaosMtMoonRockets::
 	lockall
+	specialvar VAR_RESULT, IsIronmonRun
+	goto_if_eq VAR_RESULT, TRUE, EventScript_ChaosMoonStartBattle
 	specialvar VAR_RESULT, CountPartyAliveNonEggMons
 	goto_if_lt VAR_RESULT, 2, EventScript_ChaosMoonNeedTwo
+EventScript_ChaosMoonStartBattle::
 	msgbox Text_ChaosMoonRocketIntro
 	closemessage
 	trainerbattle OBJ_ID_NONE, TRAINER_CHAOS_JESSIE_MOON, NULL, Text_ChaosJessieDefeat, NULL, OBJ_ID_NONE, TRAINER_CHAOS_JAMES_MOON, NULL, Text_ChaosJamesDefeat, NULL, NULL, NULL, TRUE, TRUE, FALSE, FALSE, TRUE, FALSE, FALSE, TRUE

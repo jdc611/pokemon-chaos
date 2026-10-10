@@ -169,12 +169,8 @@ static enum Species IronmonSpecies(u32 seed)
     return SPECIES_BULBASAUR;
 }
 
-void IronmonGenerateTrainerMon(struct Pokemon *mon, const struct TrainerMon *entry, struct TrainerGenerator *trainer)
+static void IronmonAssignAbility(struct Pokemon *mon, enum Species species, u32 seed)
 {
-    u32 seed = LocalRandom32(&trainer->localRngState);
-    enum Species species = IronmonSpecies(seed);
-    CreateMon(mon, species, entry->lvl, IronmonMix(seed ^ 0x504944u), trainer->otID);
-    GiveMonInitialMoveset(mon);
     u32 count = 0;
     for (u32 slot = 0; slot < NUM_ABILITY_SLOTS; slot++)
         if (GetSpeciesAbility(species, slot) != ABILITY_NONE) count++;
@@ -188,6 +184,26 @@ void IronmonGenerateTrainerMon(struct Pokemon *mon, const struct TrainerMon *ent
                 break;
             }
     }
+}
+
+void IronmonPrepareWildMon(struct Pokemon *mon)
+{
+    if (!IsIronmonRun()) return;
+    u32 seed = IronmonMix(gSaveBlock3Ptr->worldSeed ^ GetMonData(mon, MON_DATA_PERSONALITY) ^ 0x57494C44u);
+    enum Species species = GetMonData(mon, MON_DATA_SPECIES);
+    IronmonAssignAbility(mon, species, seed);
+    enum Item item = IronmonHeldItem(seed);
+    SetMonData(mon, MON_DATA_HELD_ITEM, &item);
+    ApplyMinimalGrindingModeToMon(mon);
+}
+
+void IronmonGenerateTrainerMon(struct Pokemon *mon, const struct TrainerMon *entry, struct TrainerGenerator *trainer)
+{
+    u32 seed = LocalRandom32(&trainer->localRngState);
+    enum Species species = IronmonSpecies(seed);
+    CreateMon(mon, species, entry->lvl, IronmonMix(seed ^ 0x504944u), trainer->otID);
+    GiveMonInitialMoveset(mon);
+    IronmonAssignAbility(mon, species, seed);
     enum Item item = IronmonHeldItem(seed);
     SetMonData(mon, MON_DATA_HELD_ITEM, &item);
     ApplyMinimalGrindingModeToMon(mon);
@@ -202,6 +218,7 @@ void IronmonGiveStarter(enum Species species)
     if (!IsIronmonRun() || state->starterGranted || state->ended) return;
     u32 seed = IronmonMix(state->seed ^ species ^ 0x53544152u);
     CreateMon(&gParties[B_TRAINER_PLAYER][0], species, 5, seed, OTID_STRUCT_PLAYER_ID);
+    IronmonAssignAbility(&gParties[B_TRAINER_PLAYER][0], species, seed);
     GiveMonInitialMoveset(&gParties[B_TRAINER_PLAYER][0]);
     enum Item item = IronmonHeldItem(seed);
     SetMonData(&gParties[B_TRAINER_PLAYER][0], MON_DATA_HELD_ITEM, &item);

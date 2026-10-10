@@ -28,7 +28,7 @@ Master was at `dffbcb88c6431262284e4c043221919b437699a6` (Build #230). Its desce
 
 SaveBlock1: 15756/15872 bytes; SaveBlock2: 3884/3968; Pokémon storage: 34144/35712. Tracker observations have NOT been allocated. An appended storage journal is a possible approach, but capacity, SRAM checksums, initialization, old-save migration, run-seed resets and bounded-history behavior must be designed and tested before use. Do not overwrite existing boxes, fusion data, or journey records to claim full tracking.
 
-Current linker usage: EWRAM 252140/262144 bytes; IWRAM 29072/32768; ROM payload 27203836/33554432. Rendering a tracker must respect the remaining RAM and preserve battle callbacks, graphics buffers and input state.
+Current linker usage: EWRAM 252140/262144 bytes; IWRAM 29072/32768; ROM payload 27204996/33554432. Rendering a tracker must respect the remaining RAM and preserve battle callbacks, graphics buffers and input state.
 
 ## Verification actually performed
 
@@ -103,4 +103,22 @@ Brendan remains master planning only. Do not add his maps/scripts/trainers/rewar
 - IronMON's party relearner no longer requires the regular Chaos post-Brock training unlock. Current-level randomized level-up restrictions remain; actual early menu traversal still needs checking.
 - RUN OVER footer spacing was corrected and minutes are zero-padded.
 
-Latest internal ROM SHA-256: `cb8965aaa7c7fe7f866032302b97cdee96bcb164f65e7234040a8d8202e858d1`. This identifier does not imply a public workflow build or release.
+Latest internal ROM SHA-256: `f35281f1e7c31ccf8c4c2e1263e83da019ac1dcff8dd27de40d3cb8a96ba84f9`. This identifier does not imply a public workflow build or release.
+
+
+### Played story battles and service-isolation continuation
+
+- Route 4's Jessie/James script still required two conscious Pokemon before the engine could convert the battle. IronMON now bypasses only this entry requirement; ordinary Chaos retains its Double Battle check.
+- `qa_ironmon_played_pair.py` plays both Route 4 and (`--silph`) Silph partner-conversion scripts with ordinary A inputs. Both opponents fight separate Singles battles, distinct trainer flags persist, the original blast-off/result dialogue completes, the story variable changes, one main remains, and movement returns. Combat is deliberately controlled (level-100 main, enemy HP/type/ability fixture adjustments), with no injected victory or end callback. These are transition/story tests, not unbiased balance tests or a complete playthrough.
+- `qa_ironmon_played_exp.py` plays a controlled wild victory and trainer victory. At 30,000 starting EXP, the wild victory retains 30,000; the trainer victory awards EXP (30,419 in this seed). It exercises real attack/faint/EXP commands. A first level-5 fixture lost and returned through RUN OVER; its replacement uses a higher-level main to isolate EXP behavior. Neither is an early-game balance result.
+- Arcade Pokemon prizes are blocked before selecting/nicknaming/paying, with central replay guards. Arcade categories retain only Battle Items in IronMON, preserving their original category ID (2); TM categories and stale purchases are rejected without spending Coins. Regular Chaos retains all three categories.
+- Four Island daycare and the previously missed Cinnabar Tangela trade now have entry guards. Central daycare deposit/withdraw/egg and trade replacement APIs refuse IronMON. The trade-scene fallback resumes its implicit waiting script through a deferred task rather than synchronously, avoiding a waitstate freeze. Cable/Union Room/Mystery Gift entries are guarded. Fusion and unfusion are blocked at the item entry and party execution paths to prevent a second usable Pokemon.
+- IronMON hides PC/Pokevial, training and free editor entries from their applicable drawers. The training script is guarded; R+Start cannot open the cheat/debug menu in IronMON. Regular Chaos access remains unchanged. Native fixture writes remain available for controlled later-map testing.
+- Two Island's level-up Move Relearner has a free IronMON path without Mushroom costs. The existing party relearner remains available from the beginning. Actual NPC tutoring traversal is still untested.
+- Ordinary wild generation now receives a seeded legal held item, a legal shuffled ability slot and MGM, including legendary/script-created wild Pokemon using CreateWildMon. The common slot selector is also used by starters/trainers. Existing trainer generation bytes retain the same selection algorithm.
+- DexNav IronMON searches hide move/ability/item/potential previews, do not inject Egg Moves or bonus items/slots, and do not increase encounter level with chain bonuses. Encounter species/method selection remains available. The actual wild is created through ordinary wild generation. The existing opponent type/effectiveness implementation is untouched. Rendered DexNav secrecy/search integration still needs testing.
+- `qa_ironmon_services.py` checks both modes' central daycare/trade/arcade guards preserve all party/storage bytes and Coins; it also checks the deferred trade rejection task resumes a stopped script. This does not establish every NPC presentation.
+- `qa_ironmon_wild.py` checks representative wild species/seeds in both modes for legal randomized held item and ability slot, MGM, permitted moves, idempotent preparation and an exact no-op in regular Chaos. An attempted private DexNav-function call was unavailable because the compiler inlined it; no success is claimed for that attempted test. HUD tests remain pending.
+- Latest startup checks pass in regular Chaos, Nuzlocke and both IronMON modes. The 3,549-starter species/seed pool passed again after slot selection changed. The real old-save migration comparison passed again before the final deferred trade-task-only change; no save structures or offsets changed in this continuation.
+
+Remaining scope is still substantial: tracker persistence/rendering/input safety, Delta skin, full healing/acquisition/evolution/world audits, EXP curve/AI fairness, actual Brock/Misty playthrough and later integration. No complete IronMON release or public workflow build exists. Continue implementation from this checkpoint without treating it as acceptance.

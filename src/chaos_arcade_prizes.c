@@ -1,4 +1,5 @@
 #include "global.h"
+#include "ironmon.h"
 #include "coins.h"
 #include "event_data.h"
 #include "item.h"
@@ -100,6 +101,7 @@ static bool32 HasHidden(enum Species species)
 void ChaosArcadePrizeMenu(void)
 {
     ChaosArcadePrizeCancel();
+    if (IsIronmonRun()) {ShowItems(NULL, 0); return;}
     sPrizeDraft = AllocZeroed(sizeof(*sPrizeDraft));
     if (sPrizeDraft == NULL) {ShowItems(NULL, 0); return;}
     sPrizeDraft->prize = ARRAY_COUNT(sPrizes);
@@ -222,7 +224,7 @@ void ChaosArcadePrizeSetNickname(void)
 void ChaosArcadePrizeBuy(void)
 {
     gSpecialVar_Result = 4;
-    if (sPrizeDraft == NULL || !sPrizeDraft->prepared || !FlagGet(FLAG_BADGE04_GET) || !CheckBagHasItem(ITEM_COIN_CASE, 1)) goto done;
+    if (IsIronmonRun() || sPrizeDraft == NULL || !sPrizeDraft->prepared || !FlagGet(FLAG_BADGE04_GET) || !CheckBagHasItem(ITEM_COIN_CASE, 1)) goto done;
     if (GetCoins() < sPrizeDraft->price) {gSpecialVar_Result = 2; goto done;}
     u32 delivered = GiveScriptedMonToPlayer(&sPrizeDraft->mon, PARTY_SIZE);
     if (delivered == MON_CANT_GIVE) {gSpecialVar_Result = 3; goto done;}
@@ -258,11 +260,17 @@ static EWRAM_DATA u8 sItemCategory = 0;
 void ChaosArcadeItemCategories(void)
 {
     static const u8 *const names[] = {COMPOUND_STRING("SUPPORT TMs"),COMPOUND_STRING("ATTACK TMs"),COMPOUND_STRING("BATTLE ITEMS")};
-    struct ListMenuItem *items = NewItems(ARRAY_COUNT(names));
-    if (items != NULL) for (u32 i=0;i<ARRAY_COUNT(names);i++) StringCopy((u8 *)items[i].name,names[i]);
+    u32 first = IsIronmonRun() ? 2 : 0;
+    u32 count = ARRAY_COUNT(names) - first;
+    struct ListMenuItem *items = NewItems(count);
+    if (items != NULL) for (u32 i=0;i<count;i++)
+    {
+        StringCopy((u8 *)items[i].name,names[i + first]);
+        items[i].id = i + first;
+    }
     sItemChoice = 0xFFFF;
     sItemCategory = 0xFF;
-    ShowItems(items,ARRAY_COUNT(names));
+    ShowItems(items,count);
 }
 struct ItemBrowser {u16 tilemap[1024];u8 left, right, cursor, count, ids[32];};
 static EWRAM_DATA struct ItemBrowser *sBrowser;
@@ -338,7 +346,7 @@ static void Task_LaunchBrowser(u8 task){if(!gPaletteFade.active){DestroyTask(tas
 void ChaosArcadeItemMenu(void)
 {
     sItemCategory=gSpecialVar_Result;sItemChoice=0xFFFF;
-    if(sItemCategory>2){ShowItems(NULL,0);return;}
+    if(sItemCategory>2 || (IsIronmonRun() && sItemCategory != 2)){ShowItems(NULL,0);return;}
     DeactivateAllTextPrinters();
     sBrowser=AllocZeroed(sizeof(*sBrowser));
     if(!sBrowser){ShowItems(NULL,0);return;}
@@ -406,7 +414,7 @@ void ChaosArcadeItemBuy(void)
 {
     const struct ArcadeItemPrize *prize = ChosenItem();
     gSpecialVar_Result = 4;
-    if (prize == NULL || !FlagGet(FLAG_BADGE04_GET) || !CheckBagHasItem(ITEM_COIN_CASE,1)) return;
+    if (prize == NULL || (IsIronmonRun() && sItemCategory != 2) || !FlagGet(FLAG_BADGE04_GET) || !CheckBagHasItem(ITEM_COIN_CASE,1)) return;
     if (sItemCategory < 2 && CheckBagHasItem(prize->item,1)) {gSpecialVar_Result=5;return;}
     if (GetCoins() < prize->price) {gSpecialVar_Result=2;return;}
     if (!AddBagItem(prize->item,1)) {gSpecialVar_Result=3;return;}

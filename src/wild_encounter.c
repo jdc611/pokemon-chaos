@@ -1,4 +1,5 @@
 #include "global.h"
+#include "ironmon.h"
 #include "battle_setup.h"
 #include "battle_pike.h"
 #include "battle_pyramid.h"
@@ -554,6 +555,7 @@ void CreateWildMon(enum Species species, u8 level)
     // put the actual generated mon on the matching ability slot as well.
     TrySetMonAbilityToActiveRunFilter(&gParties[B_TRAINER_OPPONENT_A][0]);
     GiveMonInitialMoveset(&gParties[B_TRAINER_OPPONENT_A][0]);
+    IronmonPrepareWildMon(&gParties[B_TRAINER_OPPONENT_A][0]);
 }
 
 #ifdef BUGFIX

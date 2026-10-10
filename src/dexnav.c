@@ -1,4 +1,5 @@
 #include "global.h"
+#include "ironmon.h"
 #include "battle_main.h"
 #include "battle_setup.h"
 #include "bg.h"
@@ -606,7 +607,7 @@ static void AddSearchWindowText(enum Species species, u8 proximity, u8 searchLev
     StringExpandPlaceholders(gStringVar4, sText_MonLevel);
     AddTextPrinterParameterized3(sDexNavSearchDataPtr->windowId, FONT_SMALL, WINDOW_COL_1, 0, sSearchFontColor, TEXT_SKIP_DRAW, gStringVar4);
 
-    if (proximity <= SNEAKING_PROXIMITY)
+    if (!IsIronmonRun() && proximity <= SNEAKING_PROXIMITY)
     {
         PlaySE(SE_POKENAV_ON);
         // move
@@ -945,6 +946,13 @@ static void SetUpDexNavSearch(void)
     sDexNavSearchDataPtr->heldItem = DexNavGenerateHeldItem(species, searchLevel);
     sDexNavSearchDataPtr->abilityNum = DexNavGetAbilityNum(species, searchLevel);
     sDexNavSearchDataPtr->potential = DexNavGeneratePotential(searchLevel);
+    if (IsIronmonRun())
+    {
+        // Search may locate a species, but cannot preview its hidden loadout
+        // or inject Egg Moves/items/ability slots into the captured main.
+        sDexNavSearchDataPtr->heldItem = ITEM_NONE;
+        sDexNavSearchDataPtr->potential = 0;
+    }
     DexNavProximityUpdate();
 
     LoadSearchIconData();
@@ -1281,6 +1289,7 @@ static void CreateDexNavWildMon(enum Species species, u8 potential, u8 level, u8
     struct Pokemon *mon = &gParties[B_TRAINER_OPPONENT_A][0];
 
     CreateWildMon(species, level);  // shiny rate bonus handled in CreateBoxMon
+    if (IsIronmonRun()) return;
     SetBoxMonPerfectIVs(&mon->box, min(3, potential)); // Will not exceed 3 Perfect IVs
 
     //Set ability
@@ -1306,6 +1315,7 @@ static u8 DexNavTryGenerateMonLevel(enum Species species, enum EncounterType env
 
     if (levelBase == MON_LEVEL_NONEXISTENT)
         return MON_LEVEL_NONEXISTENT;   //species not found in the area
+    if (IsIronmonRun()) return levelBase;
 
     if (Random() % 100 < 4)
         levelBonus += 10; //4% chance of having a +10 level
@@ -2282,6 +2292,10 @@ static void PrintCurrentSpeciesInfo(void)
     if (species == SPECIES_NONE)
     {
         AddTextPrinterParameterized3(WINDOW_INFO, FONT_SMALL, 0, HA_INFO_Y, sFontColor_Black, 0, sText_DexNav_NoInfo);
+    }
+    else if (IsIronmonRun())
+    {
+        AddTextPrinterParameterized3(WINDOW_INFO, FONT_SMALL, 0, HA_INFO_Y, sFontColor_Black, 0, COMPOUND_STRING("Observe in battle"));
     }
     else if (GetSetPokedexFlag(dexNum, FLAG_GET_CAUGHT))
     {

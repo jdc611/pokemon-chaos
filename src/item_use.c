@@ -1477,6 +1477,12 @@ void ItemUseOutOfBattle_ZygardeCube(u8 taskId)
 
 void ItemUseOutOfBattle_Fusion(u8 taskId)
 {
+    // Unfusing can create a second usable Pokemon from fusion storage.
+    if (IsIronmonRun())
+    {
+        DisplayDadsAdviceCannotUseItemMessage(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
+        return;
+    }
     gItemUseCB = ItemUseCB_Fusion;
     SetUpItemUseCallback(taskId);
 }

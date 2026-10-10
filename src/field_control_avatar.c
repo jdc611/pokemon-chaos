@@ -196,6 +196,9 @@ int ProcessPlayerFieldInput(struct FieldInput *input)
     // Pokemon step checks. Holding R then tapping START opens Debug.
     if (input->input_field_1_2 && DEBUG_OVERWORLD_MENU && !DEBUG_OVERWORLD_IN_MENU)
     {
+        // The debug menu can reroll the seed, change the locked preset, grant
+        // Pokemon and heal. Keep it available in ordinary Chaos only.
+        if (IsIronmonRun()) return TRUE;
         // An R press can start a search just before START is pressed. Release
         // its HUD before Debug reuses the overworld window/tile space.
         EndDexNavSearch();

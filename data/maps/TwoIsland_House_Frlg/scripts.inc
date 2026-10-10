@@ -9,6 +9,8 @@ TwoIsland_House_Frlg_MapScripts::
 TwoIsland_House_EventScript_MoveManiac::
 	lock
 	faceplayer
+	specialvar VAR_RESULT, IsIronmonRun
+	goto_if_eq VAR_RESULT, TRUE, TwoIsland_House_EventScript_IronmonRelearn
 	clearflag HAS_BIG_MUSHROOM
 	clearflag HAS_TINY_MUSHROOMS
 	clearflag HAS_BOTH_MUSHROOMS
@@ -58,6 +60,8 @@ TwoIsland_House_EventScript_ChooseMoveToTeach::
 	msgbox TwoIsland_House_Text_TeachWhichMove
 	special TeachMoveRelearnerMove
 	goto_if_eq VAR_0x8004, 0, TwoIsland_House_EventScript_ChooseMonToTutor
+	specialvar VAR_RESULT, IsIronmonRun
+	goto_if_eq VAR_RESULT, TRUE, TwoIsland_House_EventScript_IronmonDone
 	goto_if_set HAS_BOTH_MUSHROOMS, TwoIsland_House_EventScript_ChooseMushroom
 	goto_if_set HAS_BIG_MUSHROOM, TwoIsland_House_EventScript_GiveBigMushroom
 	goto_if_set HAS_TINY_MUSHROOMS, TwoIsland_House_EventScript_GiveTinyMushrooms
@@ -99,9 +103,23 @@ TwoIsland_House_EventScript_CantTutorEgg::
 	end
 
 TwoIsland_House_EventScript_EndTutorMove::
+	specialvar VAR_RESULT, IsIronmonRun
+	goto_if_eq VAR_RESULT, TRUE, TwoIsland_House_EventScript_IronmonDone
 	msgbox TwoIsland_House_Text_NeedMushroomOrTwoToLearnMove
 	release
 	end
+
+TwoIsland_House_EventScript_IronmonRelearn::
+	msgbox TwoIsland_House_Text_IronmonRelearn, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, TwoIsland_House_EventScript_IronmonDone
+	goto TwoIsland_House_EventScript_ChooseMonToTutor
+TwoIsland_House_EventScript_IronmonDone::
+	release
+	end
+TwoIsland_House_Text_IronmonRelearn:
+	.string "In IRONMON, I can help you remember\n"
+	.string "your level-up moves for free!\p"
+	.string "Would you like to relearn a move?$"
 
 TwoIsland_House_EventScript_SetHasBigMushroom::
 	setflag HAS_BIG_MUSHROOM
