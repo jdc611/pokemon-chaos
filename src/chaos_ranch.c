@@ -1,4 +1,5 @@
 #include "global.h"
+#include "ironmon.h"
 #include "event_data.h"
 #include "event_object_movement.h"
 #include "field_screen_effect.h"
@@ -139,6 +140,7 @@ void ChaosRanchWithdraw(void)
 {
     u32 slot = RanchSlot();
     gSpecialVar_Result = 1;
+    if (IsIronmonRun()) { gSpecialVar_Result = 2; return; }
     if (slot >= IN_BOX_COUNT || Nuzlocke_IsGraveBox(RanchBox()))
     {
         gSpecialVar_Result = 2;

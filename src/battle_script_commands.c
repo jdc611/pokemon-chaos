@@ -1,4 +1,5 @@
 #include "global.h"
+#include "ironmon.h"
 #include "chaos_records.h"
 #include "chaos_abilities.h"
 #include "chaos_mega.h"
@@ -2176,7 +2177,8 @@ static void Cmd_getexp(void)
     case 0: // check if should receive exp at all
         if (IsOnPlayerSide(gBattlerFainted)
             || IsAiVsAiBattle()
-            || !BattleTypeAllowsExp())
+            || !BattleTypeAllowsExp()
+            || (IsIronmonRun() && !(gBattleTypeFlags & BATTLE_TYPE_TRAINER)))
         {
             gBattleScripting.getexpState = 6; // goto last case
         }

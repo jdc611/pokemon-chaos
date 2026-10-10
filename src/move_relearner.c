@@ -1,5 +1,6 @@
 #include "chaos_input.h"
 #include "global.h"
+#include "ironmon.h"
 #include "main.h"
 #include "battle.h"
 #include "battle_util.h"
@@ -968,7 +969,7 @@ static bool32 IsTmAvailable(enum Item item)
 static u32 GetRelearnerLevelUpMoves(struct BoxPokemon *mon, u16 *moves)
 {
     enum Species species = GetBoxMonData(mon, MON_DATA_SPECIES);
-    u32 level = (P_ENABLE_ALL_LEVEL_UP_MOVES ? MAX_LEVEL : GetLevelFromBoxMonExp(mon));
+    u32 level = (!IsIronmonRun() && P_ENABLE_ALL_LEVEL_UP_MOVES ? MAX_LEVEL : GetLevelFromBoxMonExp(mon));
     u32 numMoves = 0;
     do
     {
@@ -1074,6 +1075,7 @@ void Special_HasMoveToRelearn(void)
 
 bool32 CanBoxMonRelearnMoves(struct BoxPokemon *boxMon, enum MoveRelearnerStates state)
 {
+    if (IsIronmonRun() && state != MOVE_RELEARNER_LEVEL_UP_MOVES) return FALSE;
     if (!sRelearnTypes[state].isActive())
         return FALSE;
     if (GetBoxMonData(boxMon, MON_DATA_IS_EGG))
@@ -1083,13 +1085,14 @@ bool32 CanBoxMonRelearnMoves(struct BoxPokemon *boxMon, enum MoveRelearnerStates
 
 bool32 HasMoveToRelearn(struct BoxPokemon *boxMon, enum MoveRelearnerStates state)
 {
+    if (IsIronmonRun() && state != MOVE_RELEARNER_LEVEL_UP_MOVES) return FALSE;
     return sRelearnTypes[state].hasMoveToRelearn(boxMon);
 }
 
 static bool32 HasRelearnerLevelUpMoves(struct BoxPokemon *boxMon)
 {
     enum Species species = GetBoxMonData(boxMon, MON_DATA_SPECIES);
-    u32 level = (P_ENABLE_ALL_LEVEL_UP_MOVES == TRUE) ? MAX_LEVEL : GetLevelFromBoxMonExp(boxMon);
+    u32 level = (!IsIronmonRun() && P_ENABLE_ALL_LEVEL_UP_MOVES == TRUE) ? MAX_LEVEL : GetLevelFromBoxMonExp(boxMon);
 
     do
     {

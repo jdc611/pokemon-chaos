@@ -1,4 +1,5 @@
 #include "global.h"
+#include "ironmon.h"
 #include "chaos_records.h"
 #include "data.h"
 #include "main.h"
@@ -859,6 +860,7 @@ static void CB2_EndWildBattle(void)
 {
     ChaosRecordBattleEnd();
     sNuzlockeEligibleSection = -1;
+    IronmonRecordBattleEnd();
     Nuzlocke_ProcessBattleDeaths();
     if (IsPlayerDefeated(gBattleOutcome))
         Nuzlocke_RebuildPartyFromStorage();
@@ -891,6 +893,7 @@ static void CB2_EndScriptedWildBattle(void)
 {
     ChaosRecordBattleEnd();
     sNuzlockeEligibleSection = -1;
+    IronmonRecordBattleEnd();
     Nuzlocke_ProcessBattleDeaths();
     if (IsPlayerDefeated(gBattleOutcome))
         Nuzlocke_RebuildPartyFromStorage();
@@ -1785,6 +1788,7 @@ static void CB2_EndTrainerBattle(void)
     ChaosRestoreArcanineChallengeParty();
     ChaosRestoreSilphPartnerParty();
     HandleBattleVariantEndParty();
+    IronmonRecordBattleEnd();
     Nuzlocke_ProcessBattleDeaths();
     if (IsPlayerDefeated(gBattleOutcome))
         Nuzlocke_RebuildPartyFromStorage();
@@ -1849,6 +1853,7 @@ static void CB2_EndTrainerBattle(void)
 static void CB2_EndRematchBattle(void)
 {
     ChaosRecordBattleEnd();
+    IronmonRecordBattleEnd();
     Nuzlocke_ProcessBattleDeaths();
     if (IsPlayerDefeated(gBattleOutcome))
         Nuzlocke_RebuildPartyFromStorage();
@@ -2480,7 +2485,7 @@ void CreateNPCTrainerPartyFromTrainer(struct Pokemon *party, const struct Traine
         bool32 isKantoRival = IS_FRLG && (trainer->trainerClass == TRAINER_CLASS_RIVAL_EARLY_FRLG
                           || trainer->trainerClass == TRAINER_CLASS_RIVAL_LATE_FRLG
                           || trainer->trainerClass == TRAINER_CLASS_CHAMPION_FRLG);
-        if (isKantoRival
+        if (!IsIronmonRun() && isKantoRival
          && (gSaveBlock3Ptr->starterMode != RUN_STARTER_KANTO || gSaveBlock3Ptr->filterMode != RUN_FILTER_NONE)
          && counter != SPECIES_NONE && counter < NUM_SPECIES
          && entry->species >= SPECIES_BULBASAUR && entry->species <= SPECIES_BLASTOISE)

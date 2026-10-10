@@ -1,4 +1,5 @@
 #include "global.h"
+#include "ironmon.h"
 #include "chaos_records.h"
 #include "malloc.h"
 #include "bg.h"
@@ -9568,7 +9569,7 @@ static void SpriteCB_ItemIcon_HideParty(struct Sprite *sprite)
 
 bool8 Nuzlocke_IsGraveBox(u8 boxId)
 {
-    return IsNuzlockeRun()
+    return (IsNuzlockeRun() || IsIronmonRun())
         && boxId == NUZLOCKE_GRAVE_BOX;
 }
 

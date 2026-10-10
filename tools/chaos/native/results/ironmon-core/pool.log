@@ -1,0 +1,19 @@
+PASS IronMON core: mode isolation, save tail guard, preset/MGM/no caps, starter reentry, capture pivot/alias/floors, trainer byte determinism, Center use, Hardcore denial and end-state reset.
+pool progress 305441741 0 1183
+pool progress 305441741 250 1183
+pool progress 305441741 500 1183
+pool progress 305441741 750 1183
+pool progress 305441741 1000 1183
+PASS seed 305441741 all 1183 eligible starter species
+pool progress 1 0 1183
+pool progress 1 250 1183
+pool progress 1 500 1183
+pool progress 1 750 1183
+pool progress 1 1000 1183
+PASS seed 1 all 1183 eligible starter species
+pool progress 4294967295 0 1183
+pool progress 4294967295 250 1183
+pool progress 4294967295 500 1183
+pool progress 4294967295 750 1183
+pool progress 4294967295 1000 1183
+PASS seed 4294967295 all 1183 eligible starter species

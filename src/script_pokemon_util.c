@@ -1,4 +1,5 @@
 #include "global.h"
+#include "ironmon.h"
 #include "battle.h"
 #include "battle_gfx_sfx_util.h"
 #include "berry.h"
@@ -37,10 +38,11 @@ static void HealPlayerBoxes(void);
 
 void HealPlayerParty(void)
 {
+    if (!IronmonPermitHealing()) return;
     u32 i;
     for (i = 0; i < gPartiesCount[B_TRAINER_PLAYER]; i++)
         HealPokemon(&gParties[B_TRAINER_PLAYER][i]);
-    if (OW_PC_HEAL >= GEN_8)
+    if (!IsIronmonRun() && OW_PC_HEAL >= GEN_8)
         HealPlayerBoxes();
 
     // Recharge Tera Orb, if possible.
@@ -66,6 +68,7 @@ static void HealPlayerBoxes(void)
 
 u8 ScriptGiveEgg(enum Species species)
 {
+    if (IsIronmonRun()) return MON_CANT_GIVE;
     struct Pokemon mon;
     u8 isEgg;
 

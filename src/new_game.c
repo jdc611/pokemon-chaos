@@ -1,4 +1,5 @@
 #include "global.h"
+#include "ironmon.h"
 #include "clock.h"
 #include "new_game.h"
 #include "random.h"
@@ -311,11 +312,12 @@ gSaveBlock3Ptr->playerModel = selectedPlayerModel;
 // to select the correct first-field callback.
 gRunSetupStartRegion = startInKanto;
 gRunSetupPlayerModel = selectedPlayerModel;
-SetCurrentDifficultyLevel(gRunSetupDifficulty == RUN_DIFFICULTY_NUZLOCKE ? DIFFICULTY_NORMAL : gRunSetupDifficulty);
+SetCurrentDifficultyLevel(gRunSetupDifficulty == RUN_DIFFICULTY_NUZLOCKE || IsIronmonDifficulty(gRunSetupDifficulty) ? DIFFICULTY_NORMAL : gRunSetupDifficulty);
 VarSet(VAR_CHAOS_NUZLOCKE, gRunSetupNuzlocke);
 VarSet(VAR_CHAOS_EZ_CATCH, gRunSetupEzCatch);
 VarSet(VAR_CHAOS_CARE_PACKAGES, gRunSetupCarePackages);
 gSaveBlock3Ptr->futureEvolutionEligible = FALSE;
+IronmonInitializeRun();
     ClearFollowerNPCData();
 }
 

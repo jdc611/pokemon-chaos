@@ -1,4 +1,5 @@
 #include "global.h"
+#include "ironmon.h"
 #include "main.h"
 #include "data.h"
 #include "move.h"
@@ -12,6 +13,7 @@
 
 rng_value_t GeneratePartySeed(const struct Trainer *trainer)
 {
+    if (IsIronmonRun()) return LocalRandomSeed(IronmonTrainerSeed(trainer));
     u32 seed = Crc32B((const u8 *)trainer, sizeof(struct Trainer)) ^ READ_OTID_FROM_SAVE;
     return LocalRandomSeed(seed);
 }
@@ -104,6 +106,8 @@ void MakeTrainerGenerator(struct TrainerGenerator *trainerGen, const struct Trai
     trainerGen->trainerClass = trainer->trainerClass;
     trainerGen->otID = OTID_STRUCT_RANDOM_NO_SHINY;
     trainerGen->localRngState = GeneratePartySeed(trainer);
+    if (IsIronmonRun())
+        trainerGen->otID = OTID_STRUCT_PRESET(IronmonMix(IronmonTrainerSeed(trainer)));
 }
 
 void MakePartnerGenerator(struct TrainerGenerator *trainerGen, const struct Trainer *partner)
@@ -122,6 +126,7 @@ void MakePartnerGenerator(struct TrainerGenerator *trainerGen, const struct Trai
 
 void GenerateMonFromTrainerMon(struct Pokemon *mon, const struct TrainerMon *trainerMon, struct TrainerGenerator *trainer)
 {
+    if (IsIronmonRun()) { IronmonGenerateTrainerMon(mon, trainerMon, trainer); return; }
     u32 data;
     u32 personality = (LocalRandom32(&trainer->localRngState) & 0xFFFFDF00) + 0x1000;
     u32 genderValue = 0;

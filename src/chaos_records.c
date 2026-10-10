@@ -34,7 +34,7 @@ void ChaosEnsureRunRecords(void)
 {
     if (gSaveBlock3Ptr->recordsMagic == RECORDS_MAGIC) return;
     memset(gSaveBlock3Ptr->encounterSpecies, 0,
-        sizeof(*gSaveBlock3Ptr) - offsetof(struct SaveBlock3, encounterSpecies));
+        offsetof(struct SaveBlock3, ironmon) - offsetof(struct SaveBlock3, encounterSpecies));
     memcpy(gSaveBlock3Ptr->encounterFailed, gSaveBlock3Ptr->nuzlockeEncounterUsed, 32);
     gSaveBlock3Ptr->recordsMagic = RECORDS_MAGIC;
 }

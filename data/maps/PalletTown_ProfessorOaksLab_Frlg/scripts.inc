@@ -223,6 +223,8 @@ PalletTown_ProfessorOaksLab_ChooseStarterScene::
 	msgbox PalletTown_ProfessorOaksLab_Text_RivalNoFairWhatAboutMe
 	msgbox PalletTown_ProfessorOaksLab_Text_OakBePatientRival
 	setvar VAR_MAP_SCENE_PALLET_TOWN_PROFESSOR_OAKS_LAB, 2
+    specialvar VAR_RESULT, IsIronmonHardcore
+    goto_if_eq VAR_RESULT, TRUE, PalletTown_ProfessorOaksLab_EventScript_IronmonAutoStarter
 	releaseall
 	end
 
@@ -1091,6 +1093,8 @@ PalletTown_ProfessorOaksLab_EventScript_ResolveStarterChoice::
 	special ShowChaosOakStarterPic
 	textcolor NPC_TEXT_COLOR_MALE
 	bufferspeciesname STR_VAR_1, PLAYER_STARTER_SPECIES
+    specialvar VAR_RESULT, IsIronmonHardcore
+    goto_if_eq VAR_RESULT, TRUE, PalletTown_ProfessorOaksLab_EventScript_IronmonAssigned
 	msgbox PalletTown_ProfessorOaksLab_Text_ChaosConfirmStarter, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, YES, PalletTown_ProfessorOaksLab_EventScript_ChoseStarter
 	goto PalletTown_ProfessorOaksLab_EventScript_DeclinedStarter
@@ -1683,3 +1687,17 @@ PalletTown_ProfessorOaksLab_EventScript_FinishQuickStart::
 	setvar VAR_MAP_SCENE_PALLET_TOWN_PROFESSOR_OAKS_LAB, 6
 	releaseall
 	end
+
+PalletTown_ProfessorOaksLab_EventScript_IronmonAutoStarter::
+    setvar PLAYER_STARTER_NUM, 0
+    setvar RIVAL_STARTER_ID, LOCALID_CHARMANDER_BALL
+    setvar VAR_LAST_TALKED, LOCALID_BULBASAUR_BALL
+    goto PalletTown_ProfessorOaksLab_EventScript_ResolveStarterChoice
+
+PalletTown_ProfessorOaksLab_EventScript_IronmonAssigned::
+    msgbox Text_IronmonStarterAssigned
+    goto PalletTown_ProfessorOaksLab_EventScript_ChoseStarter
+
+Text_IronmonStarterAssigned::
+    .string "OAK: Your IRONMON partner is\n"
+    .string "{STR_VAR_1}! Best of luck!$"

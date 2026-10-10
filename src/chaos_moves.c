@@ -1,4 +1,5 @@
 #include "global.h"
+#include "ironmon.h"
 #include "chaos_moves.h"
 #include "move.h"
 #include "run_settings.h"
@@ -12,6 +13,7 @@ struct LevelCache
 {
     const struct LevelUpMove *source;
     u32 seed;
+    bool8 ironmon;
     enum Species species;
     struct LevelUpMove moves[LEARNSET_CAPACITY + 1];
 };
@@ -19,6 +21,7 @@ struct EggCache
 {
     const u16 *source;
     u32 seed;
+    bool8 ironmon;
     enum Species species;
     u16 moves[LEARNSET_CAPACITY + 1];
 };
@@ -65,7 +68,7 @@ static enum Move RandomizedMove(enum Move move, u32 multiplier, u32 offset)
     do
     {
         move = 1 + (multiplier * (move - 1) + offset) % (MOVES_COUNT - 1);
-    } while (move == MOVE_STRUGGLE || GetMovePP(move) == 0);
+    } while (move == MOVE_STRUGGLE || GetMovePP(move) == 0 || (IsIronmonRun() && !IronmonMoveAllowed(move)));
     return move;
 }
 
@@ -76,7 +79,7 @@ const struct LevelUpMove *ChaosGetLevelUpLearnset(enum Species species, const st
     if (!RandomMovesetsEnabled())
         return original;
     for (i = 0; i < LEARNSET_CACHE_SLOTS; i++)
-        if (sLevelCache[i].source == original && sLevelCache[i].species == species && sLevelCache[i].seed == gSaveBlock3Ptr->worldSeed)
+        if (sLevelCache[i].source == original && sLevelCache[i].species == species && sLevelCache[i].seed == gSaveBlock3Ptr->worldSeed && sLevelCache[i].ironmon == IsIronmonRun())
             return sLevelCache[i].moves;
     for (count = 0; original[count].move != LEVEL_UP_MOVE_END; count++)
         if (count == LEARNSET_CAPACITY)
@@ -85,13 +88,51 @@ const struct LevelUpMove *ChaosGetLevelUpLearnset(enum Species species, const st
     cache->source = original;
     cache->species = species;
     cache->seed = gSaveBlock3Ptr->worldSeed;
+    cache->ironmon = IsIronmonRun();
     GetPermutation(species, &multiplier, &offset);
+    u32 output = 0;
     for (i = 0; i < count; i++)
     {
-        cache->moves[i] = original[i];
-        cache->moves[i].move = RandomizedMove(original[i].move, multiplier, offset);
+        if (IsIronmonRun() && !IronmonMoveAllowed(original[i].move)) continue;
+        cache->moves[output] = original[i];
+        cache->moves[output++].move = RandomizedMove(original[i].move, multiplier, offset);
     }
-    cache->moves[count] = original[count];
+    count = output;
+    if (IsIronmonRun())
+    {
+        enum Move known[MAX_MON_MOVES] = {MOVE_NONE};
+        u32 knownCount = 0, last = count;
+        for (i = 0; i < count && cache->moves[i].level <= 5; i++)
+        {
+            if (!cache->moves[i].level) continue;
+            last = i;
+            bool32 duplicate = FALSE;
+            for (u32 slot = 0; slot < knownCount; slot++)
+                if (known[slot] == cache->moves[i].move) duplicate = TRUE;
+            if (duplicate) continue;
+            if (knownCount < MAX_MON_MOVES) known[knownCount++] = cache->moves[i].move;
+            else
+            {
+                for (u32 slot = 1; slot < MAX_MON_MOVES; slot++) known[slot - 1] = known[slot];
+                known[MAX_MON_MOVES - 1] = cache->moves[i].move;
+            }
+        }
+        bool32 attack = FALSE;
+        for (u32 slot = 0; slot < knownCount; slot++)
+            if (IronmonMoveIsStarterAttack(known[slot])) attack = TRUE;
+        if (!attack && last < count)
+        {
+            enum Move replacement = IronmonStarterAttack(species), displaced = cache->moves[last].move;
+            // Swap the mapping across the entire table, preserving duplicates
+            // already in the source rather than creating new duplicates.
+            for (i = 0; i < count; i++)
+            {
+                if (cache->moves[i].move == replacement) cache->moves[i].move = displaced;
+                else if (cache->moves[i].move == displaced) cache->moves[i].move = replacement;
+            }
+        }
+    }
+    cache->moves[count] = (struct LevelUpMove){LEVEL_UP_MOVE_END, 0};
     return cache->moves;
 }
 
@@ -102,7 +143,7 @@ const u16 *ChaosGetEggLearnset(enum Species species, const u16 *original)
     if (!RandomMovesetsEnabled())
         return original;
     for (i = 0; i < LEARNSET_CACHE_SLOTS; i++)
-        if (sEggCache[i].source == original && sEggCache[i].species == species && sEggCache[i].seed == gSaveBlock3Ptr->worldSeed)
+        if (sEggCache[i].source == original && sEggCache[i].species == species && sEggCache[i].seed == gSaveBlock3Ptr->worldSeed && sEggCache[i].ironmon == IsIronmonRun())
             return sEggCache[i].moves;
     for (count = 0; original[count] != MOVE_UNAVAILABLE; count++)
         if (count == LEARNSET_CAPACITY)
@@ -111,6 +152,7 @@ const u16 *ChaosGetEggLearnset(enum Species species, const u16 *original)
     cache->source = original;
     cache->species = species;
     cache->seed = gSaveBlock3Ptr->worldSeed;
+    cache->ironmon = IsIronmonRun();
     GetPermutation(species, &multiplier, &offset);
     for (i = 0; i < count; i++)
         cache->moves[i] = RandomizedMove(original[i], multiplier, offset);

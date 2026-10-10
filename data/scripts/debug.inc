@@ -842,6 +842,8 @@ EventScript_ChaosQuickStart::
 	setflag FLAG_SYS_B_DASH
 	additem ITEM_POKE_BALL, 10
 	additem ITEM_POTION, 5
+    specialvar VAR_RESULT, IsIronmonHardcore
+    goto_if_eq VAR_RESULT, TRUE, PalletTown_ProfessorOaksLab_EventScript_IronmonAutoStarter
 	msgbox Text_ChaosQuickStartChooseLabStarter
 	releaseall
 	end

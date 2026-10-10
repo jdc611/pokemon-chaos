@@ -1,4 +1,5 @@
 #include "global.h"
+#include "ironmon.h"
 #include "battle_main.h"
 #include "trainer_pokemon_sprites.h"
 #include "bg.h"
@@ -416,6 +417,24 @@ static const u8 sText_RunSetupDifficulty[] = _("DIFFICULTY");
 static const u8 sText_RunSetupMinimalGrinding[] = _("MIN. GRINDING");
 static const u8 sText_RunSetupEasy[] = _("EASY");
 static const u8 sText_RunSetupHard[] = _("HARD");
+static const u8 sText_IronmonNormal[] = _("IRON NORMAL");
+static const u8 sText_IronmonHardcore[] = _("IRON HARD");
+
+static void RunSetup_ApplyIronmonPreset(void)
+{
+    if (!IsIronmonDifficulty(sRunSetupDifficulty)) return;
+    sRunSetupRandomizer = RUN_WILD_RANDOM;
+    sRunSetupStarter = RUN_STARTER_RANDOM;
+    sRunSetupMinimalGrinding = TRUE;
+    sRunSetupBstMode = RUN_BST_SHUFFLE;
+    sRunSetupAbilityMode = RUN_ABILITIES_RANDOM;
+    sRunSetupMovesets = RUN_MOVESETS_RANDOM;
+    sRunSetupEvolutions = RUN_EVOLUTIONS_RANDOM;
+    sRunSetupItemRandomization = TRUE;
+    sRunSetupNuzlocke = sRunSetupEzCatch = sRunSetupCarePackages = FALSE;
+    sRunSetupFilter = RUN_FILTER_NONE;
+}
+
 static const u8 sText_RunSetupNuzlocke[] = _("NUZLOCKE");
 static const u8 sText_RunSetupOn[] = _("ON");
 static const u8 sText_RunSetupRandomizerPage[] = _("2/4  RANDOMIZER");
@@ -2574,6 +2593,8 @@ static void RunSetup_DrawConfirmLine(u8 row, u8 y)
     case 0:
         label = sText_RunSetupDifficulty;
         value = sRunSetupDifficulty == RUN_DIFFICULTY_EASY ? sText_RunSetupEasy
+              : sRunSetupDifficulty == RUN_DIFFICULTY_IRONMON_NORMAL ? sText_IronmonNormal
+              : sRunSetupDifficulty == RUN_DIFFICULTY_IRONMON_HARDCORE ? sText_IronmonHardcore
               : sRunSetupDifficulty == RUN_DIFFICULTY_HARD ? sText_RunSetupHard
               : sRunSetupDifficulty == RUN_DIFFICULTY_NUZLOCKE ? sText_RunSetupNuzlocke
               : sText_RunSetupNormal;
@@ -2670,7 +2691,9 @@ static void RunSetup_Draw(u8 cursor)
     if (sRunSetupPage == RUN_SETUP_PAGE_PLAY_STYLE && !sRunSetupConfirm)
     {
         const u8 *difficulty = sRunSetupDifficulty == RUN_DIFFICULTY_EASY ? sText_RunSetupEasy
-                               : sRunSetupDifficulty == RUN_DIFFICULTY_HARD ? sText_RunSetupHard
+                               : sRunSetupDifficulty == RUN_DIFFICULTY_IRONMON_NORMAL ? sText_IronmonNormal
+              : sRunSetupDifficulty == RUN_DIFFICULTY_IRONMON_HARDCORE ? sText_IronmonHardcore
+              : sRunSetupDifficulty == RUN_DIFFICULTY_HARD ? sText_RunSetupHard
                                : sRunSetupDifficulty == RUN_DIFFICULTY_NUZLOCKE ? sText_RunSetupNuzlocke
                                : sText_RunSetupNormal;
         FillWindowPixelBuffer(0, PIXEL_FILL(0xA));
@@ -2683,15 +2706,20 @@ static void RunSetup_Draw(u8 cursor)
             sRunSetupNuzlocke ? sText_RunSetupOn : sText_RunSetupOff,
             sRunSetupEzCatch ? sText_RunSetupOn : sText_RunSetupOff,
             sRunSetupCarePackages ? sText_RunSetupOn : sText_RunSetupOff};
-        for (u32 row = 0; row < 5; row++)
+        for (u32 row = 0; row < (IsIronmonDifficulty(sRunSetupDifficulty) ? 2 : 5); row++)
         {
             u8 y = 30 + row * 17;
             AddTextPrinterParameterized3(0, FONT_SMALL, 10, y + 2, sTextColor_Headers, TEXT_SKIP_DRAW, labels[row]);
-            RunSetup_DrawWideChoice(values[row], 135, y, 63, cursor == row);
+            RunSetup_DrawWideChoice(values[row], row == 0 ? 113 : 135, y, row == 0 ? 85 : 63, cursor == row);
             if (cursor == row)
                 AddTextPrinterParameterized3(0, FONT_NORMAL, 1, y, sTextColor_Headers, TEXT_SKIP_DRAW, gText_SelectorArrow2);
         }
         RunSetup_DrawWideChoice(sText_RunSetupNext, 72, 110, 64, cursor == 5);
+        if (IsIronmonDifficulty(sRunSetupDifficulty))
+            AddTextPrinterParameterized3(0, FONT_SMALL, 10, 66, sTextColor_Headers, TEXT_SKIP_DRAW,
+                sRunSetupDifficulty == RUN_DIFFICULTY_IRONMON_NORMAL
+                ? COMPOUND_STRING("IRONMON NORMAL\n3 starters; each CENTER heals once.\nSolo main; capture retires old main.")
+                : COMPOUND_STRING("IRONMON HARDCORE\n1 starter; no CENTER healing.\nSolo main; capture retires old main."));
         PutWindowTilemap(0);
         CopyWindowToVram(0, COPYWIN_FULL);
         return;
@@ -3019,7 +3047,17 @@ static void Task_RunSetup_Input(u8 taskId)
         else if (JOY_NEW(DPAD_LEFT | DPAD_RIGHT | A_BUTTON) && *cursor < 5)
         {
             if (*cursor == 0)
-                sRunSetupDifficulty = JOY_NEW(DPAD_LEFT) ? (sRunSetupDifficulty + 2) % 3 : (sRunSetupDifficulty + 1) % 3;
+                {
+                // Nuzlocke keeps its existing independent toggle.
+                const u8 choices[] = {RUN_DIFFICULTY_EASY, RUN_DIFFICULTY_NORMAL, RUN_DIFFICULTY_HARD,
+                    RUN_DIFFICULTY_IRONMON_NORMAL, RUN_DIFFICULTY_IRONMON_HARDCORE};
+                u32 index = 0;
+                while (index < ARRAY_COUNT(choices) - 1 && choices[index] != sRunSetupDifficulty) index++;
+                index = (index + (JOY_NEW(DPAD_LEFT) ? 4 : 1)) % ARRAY_COUNT(choices);
+                sRunSetupDifficulty = choices[index];
+                RunSetup_ApplyIronmonPreset();
+            }
+            else if (IsIronmonDifficulty(sRunSetupDifficulty)) return;
             else if (*cursor == 1) sRunSetupMinimalGrinding ^= 1;
             else if (*cursor == 2) sRunSetupNuzlocke ^= 1;
             else if (*cursor == 3) sRunSetupEzCatch ^= 1;
@@ -3027,7 +3065,7 @@ static void Task_RunSetup_Input(u8 taskId)
         }
         else if (JOY_NEW(A_BUTTON) && *cursor == 5)
         {
-            sRunSetupPage = RUN_SETUP_PAGE_RANDOMIZER;
+            sRunSetupPage = IsIronmonDifficulty(sRunSetupDifficulty) ? RUN_SETUP_PAGE_CONFIRM : RUN_SETUP_PAGE_RANDOMIZER;
             *cursor = 0;
         }
         else return;
@@ -3143,8 +3181,8 @@ static void Task_RunSetup_Input(u8 taskId)
         {
             sRunSetupConfirm = FALSE;
             sRunSetupLowPoolConfirmed = FALSE;
-            sRunSetupPage = RUN_SETUP_PAGE_FILTERS;
-            *cursor = 3;
+            sRunSetupPage = IsIronmonDifficulty(sRunSetupDifficulty) ? RUN_SETUP_PAGE_CONFIRM : RUN_SETUP_PAGE_FILTERS;
+            *cursor = IsIronmonDifficulty(sRunSetupDifficulty) ? 2 : 3;
             sRunSetupConfirmScroll = 0;
         }
         else if (JOY_NEW(A_BUTTON) && *cursor == 1)
@@ -3164,6 +3202,7 @@ static void Task_RunSetup_Input(u8 taskId)
                 RunSetup_Draw(*cursor);
                 return;
             }
+            RunSetup_ApplyIronmonPreset();
             gRunSetupRandomizerEnabled = sRunSetupRandomizer;
             gRunSetupSeedIsCustom = sRunSetupCustom;
             gRunSetupStarterMode = sRunSetupStarter;
@@ -3302,8 +3341,8 @@ static void Task_RunSetup_Input(u8 taskId)
         }
         else if (JOY_NEW(B_BUTTON) || (JOY_NEW(A_BUTTON) && *cursor == 1))
         {
-            sRunSetupPage = RUN_SETUP_PAGE_RANDOMIZER;
-            *cursor = 7;
+            sRunSetupPage = IsIronmonDifficulty(sRunSetupDifficulty) ? RUN_SETUP_PAGE_PLAY_STYLE : RUN_SETUP_PAGE_RANDOMIZER;
+            *cursor = IsIronmonDifficulty(sRunSetupDifficulty) ? 0 : 7;
         }
         else if (JOY_NEW(A_BUTTON) && *cursor == 2)
         {
@@ -3314,8 +3353,19 @@ static void Task_RunSetup_Input(u8 taskId)
                 return;
             }
             sRunSetupAbilityChoiceCount = 0;
-            sRunSetupPage = RUN_SETUP_PAGE_FILTERS;
-            *cursor = 0;
+            if (IsIronmonDifficulty(sRunSetupDifficulty))
+            {
+                RunSetup_ApplyIronmonPreset();
+                sRunSetupFinalEligible = NATIONAL_DEX_COUNT;
+                sRunSetupConfirm = TRUE;
+                sRunSetupConfirmScroll = 0;
+                *cursor = 1;
+            }
+            else
+            {
+                sRunSetupPage = RUN_SETUP_PAGE_FILTERS;
+                *cursor = 0;
+            }
         }
         else
             return;

@@ -1,0 +1,5 @@
+PASS IronMON core: mode isolation, save tail guard, preset/MGM/no caps, starter reentry, capture pivot/alias/floors, trainer byte determinism, Center use, Hardcore denial and end-state reset.
+PASS actual new-game callback mode 1 starter count 0
+PASS actual new-game callback mode 3 starter count 0
+PASS actual new-game callback mode 4 starter count 0
+PASS actual new-game callback mode 5 starter count 1

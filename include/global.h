@@ -266,6 +266,23 @@ struct ChaosRunMonRecord
     u8 nickname[11];
 };
 
+// Appended to SaveBlock3: previous save offsets remain unchanged.
+struct IronmonRunState
+{
+    u32 magic;
+    u32 seed;
+    u8 centersUsed[32];
+    u16 retiredCount;
+    u16 trainersDefeated;
+    u16 commitmentSection;
+    u8 mode;
+    u8 ended;
+    u8 starterGranted;
+    u8 centerPermit;
+    u8 commitmentKind;
+    u8 aiProfile;
+};
+
 struct SaveBlock3
 {
 #if OW_USE_FAKE_RTC
@@ -349,6 +366,7 @@ struct SaveBlock3
     u16 leagueMostMove;
     u8 leagueMostType, leagueCap, leagueBadges, leagueEzCatch;
     u8 leagueBestNickname[11];
+    struct IronmonRunState ironmon;
 
 }; /* max size 1624 bytes */
 

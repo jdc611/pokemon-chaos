@@ -22,6 +22,8 @@ EventScript_PkmnCenterNurse_Frlg::
 	end
 
 EventScript_PkmnCenterNurse_HealPkmn_Frlg::
+    special IronmonAuthorizeCenterHealing
+    goto_if_eq VAR_RESULT, FALSE, EventScript_IronmonCenterUnavailable
 	incrementgamestat GAME_STAT_USED_POKECENTER
 	message Text_TakeYourPkmnForFewSeconds_Frlg
 	waitmessage
@@ -104,3 +106,11 @@ Text_ChaosNurseRecoveryTools::
 	.string "POKéVIAL and a PORTABLE PC!\p"
 	.string "You can heal your POKéMON and\n"
 	.string "access your Boxes in QUICK TOOLS.$"
+
+EventScript_IronmonCenterUnavailable::
+    msgbox Text_IronmonCenterUnavailable
+    return
+
+Text_IronmonCenterUnavailable::
+    .string "IRONMON rules prevent healing\n"
+    .string "at this CENTER now.$"

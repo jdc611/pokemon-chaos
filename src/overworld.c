@@ -1,4 +1,5 @@
 #include "global.h"
+#include "ironmon.h"
 #include "chaos_arcade.h"
 #include "run_settings.h"
 #include "challenge_reset.h"
@@ -1996,8 +1997,16 @@ void CB2_NewGame(void)
         VarSet(VAR_MAP_SCENE_PALLET_TOWN_OAK, 1);
         VarSet(VAR_MAP_SCENE_PALLET_TOWN_PROFESSOR_OAKS_LAB, 2);
         FlagClear(FLAG_HIDE_OAK_IN_HIS_LAB);
-        FlagSet(FLAG_HIDE_RIVAL_IN_LAB);
-        FlagSet(FLAG_BEAT_RIVAL_IN_OAKS_LAB);
+        if (IsIronmonRun())
+        {
+            FlagClear(FLAG_HIDE_RIVAL_IN_LAB);
+            FlagClear(FLAG_BEAT_RIVAL_IN_OAKS_LAB);
+        }
+        else
+        {
+            FlagSet(FLAG_HIDE_RIVAL_IN_LAB);
+            FlagSet(FLAG_BEAT_RIVAL_IN_OAKS_LAB);
+        }
         FlagClear(FLAG_HIDE_BULBASAUR_BALL);
         FlagClear(FLAG_HIDE_CHARMANDER_BALL);
         FlagClear(FLAG_HIDE_SQUIRTLE_BALL);

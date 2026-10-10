@@ -1,5 +1,6 @@
 #include "chaos_input.h"
 #include "global.h"
+#include "ironmon.h"
 #include "run_settings.h"
 #include "malloc.h"
 #include "battle.h"
@@ -3172,7 +3173,7 @@ static void CursorCb_Relearn(u8 taskId)
 {
     PlaySE(SE_SELECT);
     PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[0]);
-    sPartyMenuInternal->numActions = 3;
+    sPartyMenuInternal->numActions = IsIronmonRun() ? 1 : 3;
     sPartyMenuInternal->actions[0] = MENU_RELEARN_LEVEL;
     sPartyMenuInternal->actions[1] = MENU_RELEARN_TM;
     sPartyMenuInternal->actions[2] = MENU_RELEARN_EGG;

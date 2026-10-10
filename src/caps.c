@@ -1,4 +1,5 @@
 #include "global.h"
+#include "ironmon.h"
 #include "battle.h"
 #include "event_data.h"
 #include "caps.h"
@@ -19,6 +20,7 @@ void ClearDebugImportantBattleLevelCap(void)
 
 u32 GetCurrentLevelCap(void)
 {
+    if (IsIronmonRun()) return MAX_LEVEL;
     static const u32 sLevelCapFlagMap[][2] =
     {
         {FLAG_BADGE01_GET, 15},
@@ -68,7 +70,7 @@ u32 GetSoftLevelCapExpValue(u32 level, u32 expValue)
     u32 levelDifference;
     u32 currentLevelCap = GetCurrentLevelCap();
 
-    if (B_EXP_CAP_TYPE == EXP_CAP_NONE)
+    if (IsIronmonRun() || B_EXP_CAP_TYPE == EXP_CAP_NONE)
         return expValue;
 
     if (level < currentLevelCap)
@@ -140,7 +142,7 @@ u32 GetCurrentEVCap(void)
 
 bool32 IsMinimalGrindingMode(void)
 {
-    return gSaveBlock3Ptr != NULL && gSaveBlock3Ptr->minimalGrindingMode;
+    return IsIronmonRun() || (gSaveBlock3Ptr != NULL && gSaveBlock3Ptr->minimalGrindingMode);
 }
 
 void ApplyMinimalGrindingModeToMon(struct Pokemon *mon)

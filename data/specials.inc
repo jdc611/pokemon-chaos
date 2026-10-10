@@ -710,3 +710,6 @@ gSpecials::
 
 	def_special ChaosBeginArcanineChallenge
 	def_special ChaosRestoreArcanineChallengeParty
+
+	def_special IronmonAuthorizeCenterHealing
+	def_special IsIronmonHardcore

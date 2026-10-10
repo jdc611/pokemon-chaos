@@ -1,4 +1,5 @@
 #include "global.h"
+#include "ironmon.h"
 #include "challenge_reset.h"
 #include "battle_setup.h"
 #include "event_data.h"
@@ -27,6 +28,7 @@ static bool8 IsSupportedChallengeCave(mapsec_u16_t section);
 
 bool8 ChallengeReset_BlocksRecoveryTools(void)
 {
+    if (IsIronmonRun()) return TRUE;
     if (!ChallengeResetEnabled())
         return FALSE;
 

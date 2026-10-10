@@ -1,4 +1,5 @@
 #include "global.h"
+#include "ironmon.h"
 #include "battle_main.h"
 #include "bg.h"
 #include "data.h"
@@ -598,6 +599,7 @@ static u16 ChooseChaosCounterStarter(u16 playerSpecies)
 
 void GiveChaosOakStarter(void)
 {
+    if (IsIronmonRun()) { IronmonGiveStarter(gSpecialVar_0x8004); return; }
     struct PokemonTemplate starter = {0};
     starter.species = gSpecialVar_0x8004;
     starter.level = 5;

@@ -1,4 +1,5 @@
 #include "global.h"
+#include "ironmon.h"
 #include "debug.h"
 #include "malloc.h"
 #include "battle.h"
@@ -4710,6 +4711,7 @@ void GetCodeFeedback(void)
 
 void SetHiddenNature(void)
 {
+    if (IsIronmonRun()) { gSpecialVar_Result = 1; return; }
     u32 hiddenNature = gSpecialVar_Result;
     SetMonData(&gParties[B_TRAINER_PLAYER][gSpecialVar_0x8004], MON_DATA_HIDDEN_NATURE, &hiddenNature);
     CalculateMonStats(&gParties[B_TRAINER_PLAYER][gSpecialVar_0x8004]);
@@ -4717,6 +4719,7 @@ void SetHiddenNature(void)
 
 void SetSelectedMonGender(void)
 {
+    if (IsIronmonRun()) { gSpecialVar_Result = 1; return; }
     struct Pokemon *mon = &gParties[B_TRAINER_PLAYER][gSpecialVar_0x8004];
     u32 species = GetMonData(mon, MON_DATA_SPECIES);
     u32 requestedGender;
@@ -4753,6 +4756,7 @@ void SetSelectedMonGender(void)
 
 void ToggleSelectedMonNormalAbility(void)
 {
+    if (IsIronmonRun()) { gSpecialVar_Result = 1; return; }
     struct Pokemon *mon;
     enum Species species;
     enum Ability currentAbility;
@@ -4842,6 +4846,7 @@ void ToggleSelectedMonNormalAbility(void)
 
 void SetAbility(void)
 {
+    if (IsIronmonRun()) { gSpecialVar_Result = 1; return; }
     enum Ability ability = gSpecialVar_Result;
     SetMonData(&gParties[B_TRAINER_PLAYER][gSpecialVar_0x8004], MON_DATA_ABILITY_NUM, &ability);
 }

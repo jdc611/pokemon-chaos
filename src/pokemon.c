@@ -1,4 +1,5 @@
 #include "global.h"
+#include "ironmon.h"
 #include "chaos_abilities.h"
 #include "chaos_moves.h"
 #include "malloc.h"
@@ -2982,6 +2983,8 @@ u8 GiveCapturedMonToPlayer(struct Pokemon *mon)
     SetMonData(mon, MON_DATA_OT_NAME, gSaveBlock2Ptr->playerName);
     SetMonData(mon, MON_DATA_OT_GENDER, &gSaveBlock2Ptr->playerGender);
     SetMonData(mon, MON_DATA_OT_ID, gSaveBlock2Ptr->playerTrainerId);
+
+    if (IsIronmonRun()) return IronmonAcceptCapture(mon);
 
     if (!CanSpeciesJoinActiveRunParty(GetMonData(mon, MON_DATA_SPECIES)))
         return CopyMonToPC(mon);
@@ -7487,6 +7490,7 @@ struct BoxPokemon *GetSelectedBoxMonFromPcOrParty(void)
 
 u32 GiveScriptedMonToPlayer(struct Pokemon *mon, u8 slot)
 {
+    if (IsIronmonRun()) return MON_CANT_GIVE;
     u32 sentToPc;
     u32 i = 0;
 

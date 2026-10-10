@@ -1,4 +1,5 @@
 #include "global.h"
+#include "ironmon.h"
 #include "item_use.h"
 #include "battle.h"
 #include "battle_setup.h"
@@ -857,6 +858,11 @@ static void ItemUseOnFieldCB_WailmerPailSudowoodo(u8 taskId)
 
 void ItemUseOutOfBattle_Medicine(u8 taskId)
 {
+    if (IsIronmonRun())
+    {
+        DisplayDadsAdviceCannotUseItemMessage(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
+        return;
+    }
     gItemUseCB = ItemUseCB_Medicine;
     SetUpItemUseCallback(taskId);
 }
@@ -875,30 +881,55 @@ void ItemUseOutOfBattle_AbilityPatch(u8 taskId)
 
 void ItemUseOutOfBattle_Mint(u8 taskId)
 {
+    if (IsIronmonRun())
+    {
+        DisplayDadsAdviceCannotUseItemMessage(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
+        return;
+    }
     gItemUseCB = ItemUseCB_Mint;
     SetUpItemUseCallback(taskId);
 }
 
 void ItemUseOutOfBattle_ResetEVs(u8 taskId)
 {
+    if (IsIronmonRun())
+    {
+        DisplayDadsAdviceCannotUseItemMessage(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
+        return;
+    }
     gItemUseCB = ItemUseCB_ResetEVs;
     SetUpItemUseCallback(taskId);
 }
 
 void ItemUseOutOfBattle_ReduceEV(u8 taskId)
 {
+    if (IsIronmonRun())
+    {
+        DisplayDadsAdviceCannotUseItemMessage(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
+        return;
+    }
     gItemUseCB = ItemUseCB_ReduceEV;
     SetUpItemUseCallback(taskId);
 }
 
 void ItemUseOutOfBattle_SacredAsh(u8 taskId)
 {
+    if (IsIronmonRun())
+    {
+        DisplayDadsAdviceCannotUseItemMessage(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
+        return;
+    }
     gItemUseCB = ItemUseCB_SacredAsh;
     SetUpItemUseCallback(taskId);
 }
 
 void ItemUseOutOfBattle_PPRecovery(u8 taskId)
 {
+    if (IsIronmonRun())
+    {
+        DisplayDadsAdviceCannotUseItemMessage(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
+        return;
+    }
     gItemUseCB = ItemUseCB_PPRecovery;
     SetUpItemUseCallback(taskId);
 }
@@ -911,12 +942,22 @@ void ItemUseOutOfBattle_PPUp(u8 taskId)
 
 void ItemUseOutOfBattle_RareCandy(u8 taskId)
 {
+    if (IsIronmonRun())
+    {
+        DisplayDadsAdviceCannotUseItemMessage(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
+        return;
+    }
     gItemUseCB = ItemUseCB_RareCandy;
     SetUpItemUseCallback(taskId);
 }
 
 void ItemUseOutOfBattle_DynamaxCandy(u8 taskId)
 {
+    if (IsIronmonRun())
+    {
+        DisplayDadsAdviceCannotUseItemMessage(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
+        return;
+    }
     gItemUseCB = ItemUseCB_DynamaxCandy;
     SetUpItemUseCallback(taskId);
 }
