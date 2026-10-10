@@ -10,6 +10,8 @@ SilphCo_9F_OnLoad::
 	end
 
 SilphCo_9F_EventScript_HealWoman::
+	specialvar VAR_RESULT, IsIronmonRun
+	goto_if_eq VAR_RESULT, TRUE, Ironmon_EventScript_FreeHealingBlocked
 	lock
 	faceplayer
 	goto_if_ge VAR_MAP_SCENE_SILPH_CO_11F, 1, SilphCo_9F_EventScript_HealWomanRocketsGone

@@ -2,6 +2,8 @@ SSAnne_1F_Room6_Frlg_MapScripts::
 	.byte 0
 
 SSAnne_1F_Room6_EventScript_Woman::
+	specialvar VAR_RESULT, IsIronmonRun
+	goto_if_eq VAR_RESULT, TRUE, Ironmon_EventScript_FreeHealingBlocked
 	lock
 	faceplayer
 	msgbox SSAnne_1F_Room6_Text_TakeAShortRest, MSGBOX_YESNO

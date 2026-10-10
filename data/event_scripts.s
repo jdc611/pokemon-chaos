@@ -1241,12 +1241,18 @@ Common_EventScript_PlayGymBadgeFanfare::
 	return
 
 Common_EventScript_OutOfCenterPartyHeal::
+	specialvar VAR_RESULT, IsIronmonRun
+	goto_if_eq VAR_RESULT, TRUE, Common_EventScript_IronmonHealingRejected
 	fadescreenswapbuffers FADE_TO_BLACK
 	playfanfare MUS_HEAL
 	waitfanfare
 	special HealPlayerParty
 	callnative UpdateFollowingPokemon
 	fadescreenswapbuffers FADE_FROM_BLACK
+	return
+
+Common_EventScript_IronmonHealingRejected::
+	msgbox Ironmon_Text_FreeHealingBlocked, MSGBOX_DEFAULT
 	return
 
 EventScript_RegionMap::

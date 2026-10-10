@@ -6,7 +6,10 @@ from qa_ironmon_core import *
 
 events=('PalletTown_PlayersHouse_1F_EventScript_MomHeal',
         'PokemonTower_5F_EventScript_PurifiedZone',
-        'OneIsland_KindleRoad_EmberSpa_EventScript_SpaHeal')
+        'OneIsland_KindleRoad_EmberSpa_EventScript_SpaHeal',
+        'SSAnne_1F_Room6_EventScript_Woman',
+        'SilphCo_9F_EventScript_HealWoman',
+        'SevenIsland_SevaultCanyon_House_EventScript_ChanseyDanceMan')
 for mode in (4,5):
     for event in events:
         start(mode);call('IronmonGiveStarter',BULBA)

@@ -4,6 +4,8 @@ SevenIsland_SevaultCanyon_House_Frlg_MapScripts::
 	.byte 0
 
 SevenIsland_SevaultCanyon_House_EventScript_ChanseyDanceMan::
+	specialvar VAR_RESULT, IsIronmonRun
+	goto_if_eq VAR_RESULT, TRUE, Ironmon_EventScript_FreeHealingBlocked
 	lock
 	goto_if_set DID_CHANSEY_DANCE, SevenIsland_SevaultCanyon_House_EventScript_AlreadyDanced
 	playbgm MUS_SCHOOL, 0

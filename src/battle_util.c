@@ -1,4 +1,5 @@
 #include "global.h"
+#include "ironmon.h"
 #include "chaos_abilities.h"
 #include "chaos_mega.h"
 #include "battle.h"
@@ -9377,6 +9378,10 @@ void SortBattlersBySpeed(enum BattlerId *battlers, bool32 slowToFast)
 
 void TryRestoreHeldItems(void)
 {
+    // IronMON resources stay spent. In-battle Harvest/Cud Chew still use their
+    // normal mechanics; Chaos's automatic end-of-battle refund is not a heal.
+    if (IsIronmonRun())
+        return;
     // Only a consumed original berry is restored. Theft, Knock Off and changed
     // holders are not refunds, and an existing held item is never overwritten.
     for (u32 i = 0; i < PARTY_SIZE; i++)

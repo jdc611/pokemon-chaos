@@ -167,3 +167,13 @@ Remaining scope is still substantial: tracker persistence/rendering/input safety
 - Current compiled memory before the final text-only layout correction: EWRAM 253,692/262,144, IWRAM 29,072/32,768, ROM payload 27,212,956/33,554,432. Native fixture scratch remains above allocated EWRAM. No public playtest workflow or incomplete IronMON release was dispatched.
 
 Next acceptance work remains: larger practical full-run observation capacity and damage/stat history/coverage; complete event/commitment/evolution audits; actual representative Brock/Misty playthroughs and later progression/EXP/AI fairness; final regressions and Delta device import/touch verification. Continue implementation without treating this checkpoint or a status reply as the project's completion.
+
+### Healing and held-consumable checkpoint — October 10, 2026
+
+The shared out-of-Center restoration script now returns without a healing sequence in IronMON. SS Anne room 6, Silph Co. 9F, and the Sevault Canyon dance service reject the request before their successful-rest dialogue. Ordinary Chaos behavior is preserved.
+
+IronMON now bypasses the ordinary battle-end held-item refund policy. An actually consumed Oran Berry stays consumed; legitimate in-battle Berry mechanics retain their existing code paths. This change does not recreate or remove items from the Bag.
+
+Verified on the compiled ROM using the native mGBA harness: all six healing-event fixtures (Mom, Tower purified zone, Ember Spa, SS Anne, Silph, Sevault) reject healing and release field controls in both modes; ordinary Mom healing still works. Actual wild-battle switch-in Oran consumption remains spent in both IronMON modes and is refunded in ordinary Chaos. Core mode, save, starter, capture, MGM and Center assertions also pass. Build memory: EWRAM 253692/262144, IWRAM 29072/32768, ROM payload 27212992 bytes. These are controlled fixtures, not full playthrough or Delta tests.
+
+The optional e-Reader visiting trainer and Trainer Tower remain under audit: the former restores saved parties after its battle, and the latter dynamically scales curated teams and supports Doubles. Their IronMON generation, resource preservation, and terminal callbacks are not yet accepted as complete. No public release has been dispatched.
