@@ -1,4 +1,5 @@
 #include "global.h"
+#include "ironmon.h"
 #include "random_mon_generation.h"
 #include "chaos_v2.h"
 #include "battle.h"
@@ -77,7 +78,7 @@ static const struct CareItem *CareItems(u32 bundle, u32 *count)
 bool32 ChaosTryCareMilestone(s16 x, s16 y)
 {
  static EWRAM_DATA u16 sFailedMap = 0;
- if (!IS_FRLG) return FALSE;
+ if (!IS_FRLG || IsIronmonRun()) return FALSE;
  u16 map = gSaveBlock1Ptr->location.mapNum | gSaveBlock1Ptr->location.mapGroup << 8;
  if (sFailedMap != map) sFailedMap = 0;
  s32 bundle = -1;

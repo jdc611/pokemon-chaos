@@ -7,6 +7,8 @@ PokemonTower_5F_EventScript_Channeler::
 
 PokemonTower_5F_EventScript_PurifiedZone::
 	lockall
+	specialvar VAR_RESULT, IsIronmonRun
+	goto_if_eq VAR_RESULT, TRUE, PokemonTower_5F_EventScript_PurifiedZoneIronmon
 	fadescreen FADE_TO_WHITE
 	special HealPlayerParty
 	fadescreen FADE_FROM_WHITE
@@ -92,3 +94,7 @@ PokemonTower_5F_Text_PurifiedZoneMonsFullyHealed::
 	.string "{PLAYER}'s POKéMON were fully\n"
 	.string "healed.$"
 
+
+PokemonTower_5F_EventScript_PurifiedZoneIronmon::
+	setvar VAR_TEMP_1, 1
+	goto Ironmon_EventScript_FreeHealingBlocked

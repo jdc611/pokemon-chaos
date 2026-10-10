@@ -233,3 +233,13 @@ Ironmon_Text_RandomGymTM:
     .string "This TM is your randomized GYM\n"
     .string "reward. Check its move and your\l"
     .string "POKéMON's compatibility in the BAG.$"
+
+Ironmon_EventScript_FreeHealingBlocked::
+    lockall
+    msgbox Ironmon_Text_FreeHealingBlocked, MSGBOX_DEFAULT
+    releaseall
+    end
+Ironmon_Text_FreeHealingBlocked:
+    .string "Free healing is unavailable in\n"
+    .string "IRONMON. Recovery items can only\l"
+    .string "be used during battle.$"

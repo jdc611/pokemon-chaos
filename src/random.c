@@ -1,4 +1,5 @@
 #include "global.h"
+#include "chaos_tracker.h"
 #include "random.h"
 #if MODERN
 #include <alloca.h>
@@ -99,7 +100,7 @@ rng_value_t LocalRandomSeed(u32 seed)
 
 void AdvanceRandom(void)
 {
-    if (sRngLoopUnlocked == TRUE)
+    if (sRngLoopUnlocked == TRUE && !ChaosTrackerIsOpen())
         Random32();
 }
 

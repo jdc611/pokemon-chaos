@@ -1,4 +1,5 @@
 #include "global.h"
+#include "chaos_tracker.h"
 #include "ironmon.h"
 #include "chaos_v2.h"
 #include "battle_setup.h"
@@ -194,6 +195,7 @@ int ProcessPlayerFieldInput(struct FieldInput *input)
 
     // The chord must win over the registered DexNav R action and hidden
     // Pokemon step checks. Holding R then tapping START opens Debug.
+    if (ChaosTrackerShortcut()) return TRUE;
     if (input->input_field_1_2 && DEBUG_OVERWORLD_MENU && !DEBUG_OVERWORLD_IN_MENU)
     {
         // The debug menu can reroll the seed, change the locked preset, grant

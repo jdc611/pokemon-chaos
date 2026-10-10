@@ -43,6 +43,8 @@ OneIsland_KindleRoad_EmberSpa_EventScript_AlreadyGotHM06::
 
 OneIsland_KindleRoad_EmberSpa_EventScript_SpaHeal::
 	lockall
+	specialvar VAR_RESULT, IsIronmonRun
+	goto_if_eq VAR_RESULT, TRUE, OneIsland_KindleRoad_EmberSpa_EventScript_SpaHealIronmon
 	fadescreen FADE_TO_WHITE
 	special HealPlayerParty
 	fadescreen FADE_FROM_WHITE
@@ -105,3 +107,7 @@ OneIsland_KindleRoad_EmberSpa_Text_ExplainHM06::
 	.string "That shatters boulders as if they\n"
 	.string "were made of crackers.$"
 
+
+OneIsland_KindleRoad_EmberSpa_EventScript_SpaHealIronmon::
+	setvar VAR_TEMP_1, 1
+	goto Ironmon_EventScript_FreeHealingBlocked
