@@ -5,6 +5,7 @@ def blob(ptr,size):return bytes(rd(ptr+i,1) for i in range(size))
 def snapshot():
     return {name:blob(address,size) for name,address,size in (
         ('party',p,6*MONSIZE),('save3',s,SIZE),
+        ('save1',rd('gSaveBlock1Ptr'),15872),
         ('storage',rd('gPokemonStoragePtr'),STORAGE),
         ('chars',0x06008000,0x4000),('map',0x0600f800,0x800),
         ('windows',symbols['gWindows'],32*12),

@@ -719,6 +719,8 @@ struct SaveBlock2
 #endif //FREE_RECORD_MIXING_HALL_RECORDS
     /*0x624*/ u16 contestLinkResults[CONTEST_CATEGORIES_COUNT][CONTESTANT_COUNT];
     /*0x64C*/ struct BattleFrontier frontier;
+    // Append-only observed-identity bitmap; preserve all legacy field offsets.
+    u8 chaosObservedSpeciesHigh[(NUM_SPECIES + 7) / 8 - 116];
 }; // sizeof=0xF2C
 
 extern struct SaveBlock2 *gSaveBlock2Ptr;
@@ -1306,6 +1308,7 @@ struct SaveBlock1
     u8 rivalName[PLAYER_NAME_LENGTH + 1];
     struct DaycareMon route5DayCareMon;
 #endif
+    u8 chaosObservedSpeciesLow[116];
     // sizeof: 0x3???
 };
 

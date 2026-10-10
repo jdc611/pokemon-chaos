@@ -15,7 +15,7 @@ for folder in (baseline,repo):
  assert lib.call(syms['LoadGameSave'],0,0,0,0)==1
  def blob(ptr,size):return bytes(lib.rd(ptr+i,1) for i in range(size))
  blocks=[blob(lib.rd(syms[name],4),size) for name,size in (
-  ('gSaveBlock1Ptr',15756),('gSaveBlock2Ptr',3884),('gSaveBlock3Ptr',1564),('gPokemonStoragePtr',34144))]
+  ('gSaveBlock1Ptr',15756),('gSaveBlock2Ptr',3884),('gSaveBlock3Ptr',int(os.environ.get('CHAOS_BASELINE_SAVE3_PREFIX','1564'))),('gPokemonStoragePtr',int(os.environ.get('CHAOS_BASELINE_STORAGE_PREFIX','34144'))))]
  blocks.append(blob(syms['gParties'],600))
  fingerprints.append([hashlib.sha256(block).hexdigest() for block in blocks])
  if folder==repo:assert lib.call(syms['IsIronmonRun'],0,0,0,0)==0

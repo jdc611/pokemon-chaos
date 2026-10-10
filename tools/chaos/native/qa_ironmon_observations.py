@@ -82,6 +82,7 @@ assert not call('ChaosObservationsRead')
 assert call('LoadGameSave',0)==1
 j=journal();assert saved==blob(j,JOURNALSIZE)
 assert call('ChaosObservationsRead')
+assert call('ChaosHasObservedSpecies',species) and call('ChaosHasObservedSpecies',BULBA)
 print('PASS visible identities/events only, no hidden move/ability reads; read-only pages and flash persistence.',flush=True)
 # Exercise the actual used-move announcement through ordinary battle input.
 # Damage/speed/ability are controlled for survival: this is an ingestion test,
@@ -113,6 +114,8 @@ for i in range(1,N_SPECIES):
 assert rd(j+8,2)==256
 wr(symbols['gBattleMons']+BS+BSP,N_SPECIES-1,2);call('ChaosObserveAbility',1,SOUNDPROOF)
 assert rd(j+11,1)==1 and first==blob(j+FACTS,FACTSIZE)
+assert call('ChaosHasObservedSpecies',N_SPECIES-1), 'full journal lost a newly observed identity'
+assert not call('ChaosHasObservedSpecies',0) and not call('ChaosHasObservedSpecies',N_SPECIES)
 wr(symbols['gBattleMons']+BS+BSP,species,2);call('ChaosObserveMove',1,TACKLE)
 assert (species,0x1000|TACKLE,2) in facts()
 print('PASS bounded 256-fact capacity explicitly marked; no eviction; existing counters preserved.',flush=True)
@@ -120,4 +123,5 @@ print('PASS bounded 256-fact capacity explicitly marked; no eviction; existing c
 wr(j+FACTS+2,0xffff,2);assert not call('ChaosObservationsRead')
 wr(s+SEED,987654);assert not call('ChaosObservationsRead')
 call('ResetPokemonStorageSystem');assert blob(j,JOURNALSIZE)==bytes(JOURNALSIZE)
+assert not any(call('ChaosHasObservedSpecies',i) for i in range(1,N_SPECIES))
 print('PASS malformed journal rejection, seed isolation and genuine storage/new-run reset.',flush=True)

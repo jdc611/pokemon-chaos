@@ -8,12 +8,43 @@
 #include "constants/battle.h"
 
 #define OBSERVATION_MAGIC 0x434F4231
-#define OBSERVATION_VERSION 1
+#define OBSERVATION_VERSION 2
+
+static u8 *SeenByte(u32 species)
+{
+    u32 byte = species >> 3;
+    if (byte < sizeof(gSaveBlock1Ptr->chaosObservedSpeciesLow))
+        return &gSaveBlock1Ptr->chaosObservedSpeciesLow[byte];
+    return &gSaveBlock2Ptr->chaosObservedSpeciesHigh[byte - sizeof(gSaveBlock1Ptr->chaosObservedSpeciesLow)];
+}
+
+void ChaosObservationsReset(void)
+{
+    memset(&gPokemonStoragePtr->observations, 0, sizeof(gPokemonStoragePtr->observations));
+    memset(gSaveBlock1Ptr->chaosObservedSpeciesLow, 0, sizeof(gSaveBlock1Ptr->chaosObservedSpeciesLow));
+    memset(gSaveBlock2Ptr->chaosObservedSpeciesHigh, 0, sizeof(gSaveBlock2Ptr->chaosObservedSpeciesHigh));
+}
+
+bool32 ChaosHasObservedSpecies(u32 species)
+{
+    const struct ChaosObservationJournal *journal = &gPokemonStoragePtr->observations;
+    if (species == SPECIES_NONE || species >= NUM_SPECIES || journal->magic != OBSERVATION_MAGIC
+     || journal->seed != gSaveBlock3Ptr->worldSeed || journal->count > CHAOS_OBSERVATION_CAPACITY)
+        return FALSE;
+    if (journal->version == OBSERVATION_VERSION)
+        return (*SeenByte(species) & (1 << (species & 7))) != 0;
+    // Read older internal checkpoint saves without mutating them in the UI.
+    if (journal->version == 1)
+        for (u32 i = 0; i < journal->count; i++)
+            if (journal->facts[i].species == species && journal->facts[i].fact == CHAOS_OBS_SEEN)
+                return TRUE;
+    return FALSE;
+}
 
 const struct ChaosObservationJournal *ChaosObservationsRead(void)
 {
     const struct ChaosObservationJournal *journal = &gPokemonStoragePtr->observations;
-    if (journal->magic != OBSERVATION_MAGIC || journal->version != OBSERVATION_VERSION
+    if (journal->magic != OBSERVATION_MAGIC || (journal->version != OBSERVATION_VERSION && journal->version != 1)
      || journal->seed != gSaveBlock3Ptr->worldSeed || journal->count > CHAOS_OBSERVATION_CAPACITY)
         return NULL;
     for (u32 i = 0; i < journal->count; i++)
@@ -55,11 +86,21 @@ static void Observe(u32 species, u32 fact, u32 amount, bool32 maximum)
     struct ChaosObservationJournal *journal = &gPokemonStoragePtr->observations;
     if (!ChaosObservationsRead())
     {
-        memset(journal, 0, sizeof(*journal));
+        ChaosObservationsReset();
         journal->magic = OBSERVATION_MAGIC;
         journal->seed = gSaveBlock3Ptr->worldSeed;
         journal->version = OBSERVATION_VERSION;
     }
+    else if (journal->version == 1)
+    {
+        memset(gSaveBlock1Ptr->chaosObservedSpeciesLow, 0, sizeof(gSaveBlock1Ptr->chaosObservedSpeciesLow));
+        memset(gSaveBlock2Ptr->chaosObservedSpeciesHigh, 0, sizeof(gSaveBlock2Ptr->chaosObservedSpeciesHigh));
+        for (u32 i = 0; i < journal->count; i++)
+            if (journal->facts[i].fact == CHAOS_OBS_SEEN)
+                *SeenByte(journal->facts[i].species) |= 1 << (journal->facts[i].species & 7);
+        journal->version = OBSERVATION_VERSION;
+    }
+    *SeenByte(species) |= 1 << (species & 7);
     for (u32 i = 0; i < journal->count; i++)
     {
         struct ChaosObservation *record = &journal->facts[i];

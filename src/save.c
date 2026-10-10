@@ -83,6 +83,10 @@ STATIC_ASSERT(sizeof(struct SaveBlock2) <= SECTOR_DATA_SIZE, SaveBlock2FreeSpace
 STATIC_ASSERT(sizeof(struct SaveBlock1) <= SECTOR_DATA_SIZE * (SECTOR_ID_SAVEBLOCK1_END - SECTOR_ID_SAVEBLOCK1_START + 1), SaveBlock1FreeSpace);
 STATIC_ASSERT(sizeof(struct PokemonStorage) <= SECTOR_DATA_SIZE * (SECTOR_ID_PKMN_STORAGE_END - SECTOR_ID_PKMN_STORAGE_START + 1), PokemonStorageFreeSpace);
 STATIC_ASSERT(offsetof(struct PokemonStorage, observations) == 34144, ChaosObservationLegacyStoragePrefix);
+#if IS_FRLG
+STATIC_ASSERT(offsetof(struct SaveBlock1, chaosObservedSpeciesLow) == 15756, ChaosObservationLegacySave1Prefix);
+STATIC_ASSERT(offsetof(struct SaveBlock2, chaosObservedSpeciesHigh) == 3884, ChaosObservationLegacySave2Prefix);
+#endif
 
 COMMON_DATA u16 gLastWrittenSector = 0;
 COMMON_DATA u32 gLastSaveCounter = 0;

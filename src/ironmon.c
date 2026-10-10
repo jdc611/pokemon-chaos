@@ -288,6 +288,11 @@ u32 IronmonAcceptCapture(struct Pokemon *mon)
     ZeroPartyMons(gParties[B_TRAINER_PLAYER]);
     CopyMon(&gParties[B_TRAINER_PLAYER][0], mon, sizeof(*mon));
     gPartiesCount[B_TRAINER_PLAYER] = 1;
+    // A pivot replaces the owner of slot zero. Its previous battle-form
+    // restoration metadata must never be applied to the captured Pokémon.
+    if (gMain.inBattle && gBattleStruct != NULL)
+        memset(&gBattleStruct->partyState[B_TRAINER_PLAYER][0], 0,
+               sizeof(gBattleStruct->partyState[B_TRAINER_PLAYER][0]));
     return MON_GIVEN_TO_PARTY;
 }
 

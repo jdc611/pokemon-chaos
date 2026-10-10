@@ -26,6 +26,8 @@ struct ChaosObservationJournal
 };
 
 const struct ChaosObservationJournal *ChaosObservationsRead(void);
+bool32 ChaosHasObservedSpecies(u32 species);
+void ChaosObservationsReset(void);
 void ChaosObserveOpponents(void);
 void ChaosObserveMove(u32 battler, u32 move);
 void ChaosObserveAbility(u32 battler, u32 ability);

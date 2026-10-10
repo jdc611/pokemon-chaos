@@ -8447,6 +8447,8 @@ static void Cmd_givecaughtmon(void)
         }
 
         // Copy changedSpecies to allow caught mon to revert to its original species.
+        if (IsIronmonRun())
+            emptySlot = 0; // The permanent pivot replaces slot zero, not the first empty slot.
         if (emptySlot != PARTY_SIZE)
             gBattleStruct->partyState[B_SIDE_PLAYER][emptySlot].changedSpecies = GetBattlerPartyState(GetCatchingBattler())->changedSpecies;
 

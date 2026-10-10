@@ -1710,7 +1710,7 @@ void ResetPokemonStorageSystem(void)
 {
     u16 boxId, boxPosition;
 
-    memset(&gPokemonStoragePtr->observations, 0, sizeof(gPokemonStoragePtr->observations));
+    ChaosObservationsReset();
 
     SetCurrentBox(0);
     for (boxId = 0; boxId < TOTAL_BOXES_COUNT; boxId++)

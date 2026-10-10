@@ -181,16 +181,13 @@ static void CycleObservedSpecies(bool32 forward)
 {
     const struct ChaosObservationJournal *journal=ChaosObservationsRead();
     if(!journal)return;
-    u32 current=0;
-    for(u32 i=0;i<journal->count;i++)
-        if(journal->facts[i].fact==CHAOS_OBS_SEEN && journal->facts[i].species==sTracker->observedSpecies)
-        {current=i;break;}
-    for(u32 n=0;n<journal->count;n++)
+    u32 current=sTracker->observedSpecies;
+    for(u32 n=0;n<NUM_SPECIES;n++)
     {
-        current=(current+(forward?1:journal->count-1))%journal->count;
-        if(journal->facts[current].fact==CHAOS_OBS_SEEN)
+        current=(current+(forward?1:NUM_SPECIES-1))%NUM_SPECIES;
+        if(ChaosHasObservedSpecies(current))
         {
-            sTracker->observedSpecies=journal->facts[current].species;
+            sTracker->observedSpecies=current;
             sTracker->factPage=0;return;
         }
     }
@@ -232,9 +229,9 @@ static void DrawObservations(void)
         return;
     }
     if(!sTracker->observedSpecies)
-        for(u32 i=0;i<journal->count;i++)
-            if(journal->facts[i].fact==CHAOS_OBS_SEEN)
-            {sTracker->observedSpecies=journal->facts[i].species;break;}
+        for(u32 species=1;species<NUM_SPECIES;species++)
+            if(ChaosHasObservedSpecies(species))
+            {sTracker->observedSpecies=species;break;}
     Print(6,40,gSpeciesInfo[sTracker->observedSpecies].speciesName,sBlue);
     u32 type=ObservationKind();
     const u8 *heading=type==CHAOS_OBS_MOVE?COMPOUND_STRING("MOVES / USES SEEN"):
