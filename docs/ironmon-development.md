@@ -19,7 +19,7 @@ Master was at `dffbcb88c6431262284e4c043221919b437699a6` (Build #230). Its desce
 - Recovery-tools guard blocks Portable PC/Pokévial access. Medicine, PP recovery, revival, Rare Candy, Mint and EV-item field entry points are blocked. In-battle use was not rewritten. All item paths still need coverage.
 - Summary and existing direct free Nature/Ability/Gender setters are blocked. The party relearner offers only level-up moves in IronMON; relearner state changes are gated and current level is enforced. NPC tutor/cost and pre-evolution mappings still need audit.
 - Destiny Bond is excluded from the generated IronMON learnset permutation, including its source entries, to preserve the restricted permutation without introducing a duplicate mapping. Other move candidates are deliberately not blanket-banned. Starter guarantee excludes self-sacrifice and conditional attacks from its fallback; these moves are not globally banned.
-- The faint command marks the main ended before party restoration. Battle/field/load callbacks route ended runs to a dedicated RUN OVER screen; it saves the terminal state without deleting the save. Screen includes seed, mode, final nickname/level, badges, retirees, trainer victories and play time. A/B returns to title after key release. Native callbacks, rendered UI, flash persistence and reload blocking are verified; actual lab/other loss battles remain untested.
+- The faint command marks the main ended before party restoration. Battle/field/load callbacks route ended runs to a dedicated RUN OVER screen; it saves the terminal state without deleting the save. Screen includes seed, mode, final nickname/level, badges, retirees, trainer victories and play time. A/B returns to title after key release. Native callbacks, rendered UI, flash persistence and reload blocking are verified; an actual Hardcore lab loss also passes using the generated starter/opponent and controlled 1-HP injury. Other loss battles remain untested.
 - Existing type icons, discovery rules, effectiveness arrows/immunity calculations were not changed.
 
 ## Save and memory findings
@@ -28,7 +28,7 @@ Master was at `dffbcb88c6431262284e4c043221919b437699a6` (Build #230). Its desce
 
 SaveBlock1: 15756/15872 bytes; SaveBlock2: 3884/3968; Pokémon storage: 34144/35712. Tracker observations have NOT been allocated. An appended storage journal is a possible approach, but capacity, SRAM checksums, initialization, old-save migration, run-seed resets and bounded-history behavior must be designed and tested before use. Do not overwrite existing boxes, fusion data, or journey records to claim full tracking.
 
-Current linker usage: EWRAM 252140/262144 bytes; IWRAM 29072/32768; ROM payload 27203604/33554432. Rendering a tracker must respect the remaining RAM and preserve battle callbacks, graphics buffers and input state.
+Current linker usage: EWRAM 252140/262144 bytes; IWRAM 29072/32768; ROM payload 27203836/33554432. Rendering a tracker must respect the remaining RAM and preserve battle callbacks, graphics buffers and input state.
 
 ## Verification actually performed
 
@@ -48,14 +48,14 @@ Native mGBA checks execute ROM functions and genuine new-game callbacks:
 
 Fixtures explicitly initialize player/rival name terminators before skipping into new-game callbacks. Missing fixture name initialization caused an early test overflow; this was fixed in the fixture, not represented as a gameplay bug.
 
-These tests do **not** establish a complete playthrough, real Delta verification, every trainer, all acquisition/healing/item routes, actual battle EXP/faint scenarios, every map, or fairness. No Brock/Misty playthrough or later-game balance test has been completed. No Delta skin exists yet.
+These tests do **not** establish a complete playthrough, real Delta verification, every trainer, all acquisition/healing/item routes, actual battle EXP/faint scenarios, every map, or fairness. An actual Hardcore lab loss was played with a controlled 1-HP main. No Brock/Misty playthrough or later-game balance test has been completed. No Delta skin exists yet.
 
 ## Remaining acceptance checklist
 
 | Directive sections | Remaining work |
 | --- | --- |
 | 1–3 Architecture/setup | Full setup UI traversal, mode immutability audit, migration across all supported save versions; preserve regular Chaos/Nuzlocke. |
-| 4 Starters | Normal three-choice UI tests, same-seed full reset checks, real lab rival win/loss integration. |
+| 4 Starters | Normal three-choice UI tests, same-seed full reset checks, real lab rival win integration and Normal starter-choice traversal; Hardcore lab loss is verified with a controlled injury. |
 | 5 Ownership | Audit storage, party scripts, daycare, ranch, trades, fusion, rentals, gifts/captures; block any recovery/reintroduction/second main; test nickname Yes/No after capture; balance floors against EXP. |
 | 6 Gifts/Eggs | Audit every vendor, gift, fossil, prize and story reward; deny entry before charging; retain story flags/progression. |
 | 7 Randomization | Verify wild mapping, abilities/natures, trainer mappings, held-item generation, seeded evolution branches and non-regression; mandatory evolution cancellation and inaccessible methods. |
@@ -69,7 +69,7 @@ These tests do **not** establish a complete playthrough, real Delta verification
 | 15 Gyms | Eight Kanto Gym commitments, canonical trainer flags, Leader gating, normal warp/escape denial and victory unlock now implemented; native requirements/size fixtures pass. Remaining: real doors, Saffron/Cinnabar puzzles, scripted warps and save/reload integration. |
 | 16 Dungeons | Seven commitments now implemented: Mt. Moon, Rock Tunnel, Tower, Rocket Hideout, Silph, Mansion and Kanto Victory Road. Tower requires Scope; Victory Road requires Badge 8 and Strength HM. Internal region warps allowed; progression exits/story flags/key acquisition complete the area. Native fixtures pass. Remaining: actual rooms/puzzles/story trainers, save/reload and all escape paths. No optional dungeon trainers are forced. |
 | 17 Singles | Central Singles flags and consecutive paired-trainer callbacks implemented, with no partner party loading/restoration in IronMON. Silph has a mode branch skipping three-mon selection. Koga setup and Jessie/James callback/identity/defeat-flag/main-integrity fixtures pass. Remaining: actual two-battle transitions, individual map scripts, dialogue/rewards/story flags and all mandatory pairs/multis. |
-| 18 Run over | Immediate faint marker, terminal UI, flash save and reload block implemented/fixture-tested. Remaining: real lab/trainer/wild/scripted loss integration, form restoration, failure recovery and reset testing. Emulator save states can restore an earlier RAM/flash snapshot; this ROM cannot prevent that external emulator capability. |
+| 18 Run over | Immediate faint marker, terminal UI, flash save and reload block implemented/fixture-tested. Remaining: other trainer/wild/scripted loss integration, form restoration, failure recovery and reset testing. Emulator save states can restore an earlier RAM/flash snapshot; this ROM cannot prevent that external emulator capability. |
 | 19 Tracker | Persistent nonspoiling observations across run; player party support in regular Chaos; polished read-only pages; safe battle/field access/callback restoration; no hidden-info leak; preserve existing indicators. Not implemented. |
 | 20 Delta | Inspect official supported inputs/skin schema; choose conflict-free chord; native shortcut; original or available skin graphics; centered TRACKER button; `.deltaskin` packaging/import/Delta checks. No dependency is assumed available. |
 | 21–22 Integration | Finish technical audits and internal checkpoints. Publish one complete release only. |
@@ -94,3 +94,13 @@ Brendan remains master planning only. Do not add his maps/scripts/trainers/rewar
 - The type-discovery/effectiveness code is untouched.
 - No tracker or Delta skin is implemented. Storage has only 1,568 unused bytes; a detailed observation journal requires explicit bounded-history or expanded-save design and migration tests. Do not silently call a small evicting journal comprehensive run history.
 - No complete public build has been published. Continue on this internal branch.
+
+### Additional lifecycle/AI verification
+
+- `qa_ironmon_lab_loss.py` starts Hardcore through the real new-game callback, declines nicknaming with B, walks down across the lab rival trigger, lowers the generated main to 1 HP before battle initialization, then sends ordinary A inputs until the battle causes fainting. The terminal screen finishes saving; the main remains fainted and the ended bit survives flash reload. This is a controlled loss test, not an unbiased seed-balance run.
+- `qa_ironmon_ai.py` compares the existing smart flags with the basic three-heuristic (bad-move/viability/KO) FireRed-style approximation while retaining identical trainer bytes. `aiProfile=1` is an internal fixture switch; no player menu exposes it. New-game/load preset enforcement resets it to smart (`0`). It is not an exact port of retail FireRed AI, nor a completed balance evaluation. Regular Chaos ignores this IronMON field. `GetAiFlags` is exported for this comparison.
+- A capture now explicitly refuses a main that already has zero HP before a battle-end observer runs, preventing a late capture from rescuing a lost run. Native core verifies this.
+- IronMON's party relearner no longer requires the regular Chaos post-Brock training unlock. Current-level randomized level-up restrictions remain; actual early menu traversal still needs checking.
+- RUN OVER footer spacing was corrected and minutes are zero-padded.
+
+Latest internal ROM SHA-256: `cb8965aaa7c7fe7f866032302b97cdee96bcb164f65e7234040a8d8202e858d1`. This identifier does not imply a public workflow build or release.

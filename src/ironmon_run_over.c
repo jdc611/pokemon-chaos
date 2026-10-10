@@ -74,7 +74,7 @@ void CB2_IronmonRunOver(void)
     FillWindowPixelBuffer(0,PIXEL_FILL(6));
     FillWindowPixelRect(0,PIXEL_FILL(3),0,0,224,23);
     FillWindowPixelRect(0,PIXEL_FILL(4),0,25,224,17);
-    Print(74,4,COMPOUND_STRING("RUN OVER"),sTitle);
+    Print(86,4,COMPOUND_STRING("RUN OVER"),sTitle);
     Print(8,27,IsIronmonHardcore()?COMPOUND_STRING("IRONMON HARDCORE"):COMPOUND_STRING("IRONMON NORMAL"),sWhite);
     Print(8,48,COMPOUND_STRING("SEED"),sInk);Number(76,48,gSaveBlock3Ptr->ironmon.seed);
     u8 nickname[POKEMON_NAME_LENGTH+1];
@@ -87,11 +87,13 @@ void CB2_IronmonRunOver(void)
     Print(112,80,COMPOUND_STRING("RETIRED"),sInk);Number(175,80,gSaveBlock3Ptr->ironmon.retiredCount);
     Print(8,96,COMPOUND_STRING("TRAINERS"),sInk);Number(76,96,gSaveBlock3Ptr->ironmon.trainersDefeated);
     Print(112,96,COMPOUND_STRING("TIME"),sInk);Number(153,96,gSaveBlock2Ptr->playTimeHours);
-    Print(171,96,COMPOUND_STRING(":"),sInk);Number(180,96,gSaveBlock2Ptr->playTimeMinutes);
+    Print(171,96,COMPOUND_STRING(":"),sInk);u8 minutes[3];
+    ConvertIntToDecimalStringN(minutes,gSaveBlock2Ptr->playTimeMinutes,STR_CONV_MODE_LEADING_ZEROS,2);
+    Print(180,96,minutes,sInk);
     // Save the terminal state without deleting the run or its Pokémon.
     u32 status=TrySavingData(SAVE_NORMAL);
     Print(8,115,status==SAVE_STATUS_OK?COMPOUND_STRING("Ended run saved."):COMPOUND_STRING("Save failed. Ended state is in memory."),sInk);
-    Print(40,132,COMPOUND_STRING("A / B: RETURN TO TITLE"),sInk);
+    Print(40,128,COMPOUND_STRING("A / B: RETURN TO TITLE"),sInk);
     PutWindowTilemap(0);
     CopyWindowToVram(0,COPYWIN_FULL);
     CopyBgTilemapBufferToVram(0);

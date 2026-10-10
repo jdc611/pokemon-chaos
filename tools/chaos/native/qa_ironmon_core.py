@@ -72,8 +72,11 @@ assert not call('IsIronmonRun')
 assert call('LoadGameSave',0)==1
 assert expected==bytes(rd(s+i,1) for i in range(SIZE))
 assert call('IsIronmonHardcore') and data(p,HP)==1
+# A capture cannot rescue a main that already fainted before an end observer.
+setdata(p,HP,0);assert call('IronmonAcceptCapture',p)==CANT
+assert rd(s+IM+ENDED,1)==1
 # End state is recorded, new ordinary runs clear it rather than inherit it.
-setdata(p,HP,0);call('IronmonRecordBattleEnd');assert rd(s+IM+ENDED,1)==1
+call('IronmonRecordBattleEnd');assert rd(s+IM+ENDED,1)==1
 assert call('IronmonAcceptCapture',p)==CANT
 wr(s+DIFF,1,1);call('IronmonInitializeRun');assert not call('IsIronmonRun')
 print('PASS IronMON core: mode isolation, save tail guard, preset/MGM/no caps, starter reentry, capture pivot/alias/floors, trainer byte determinism, Center use, Hardcore denial and end-state reset.')

@@ -47,6 +47,7 @@ void IronmonEnforcePreset(void)
 {
     if (!IsIronmonRun()) return;
     gSaveBlock3Ptr->runDifficulty = gSaveBlock3Ptr->ironmon.mode;
+    gSaveBlock3Ptr->ironmon.aiProfile = 0;
     gSaveBlock3Ptr->randomizerEnabled = RUN_WILD_RANDOM;
     gSaveBlock3Ptr->starterMode = RUN_STARTER_RANDOM;
     gSaveBlock3Ptr->rivalMode = RUN_RIVAL_RANDOM;
@@ -229,6 +230,12 @@ u32 IronmonAcceptCapture(struct Pokemon *mon)
 {
     struct IronmonRunState *state = &gSaveBlock3Ptr->ironmon;
     if (!IsIronmonRun() || state->ended || GetMonData(mon, MON_DATA_IS_EGG)) return MON_CANT_GIVE;
+    if (state->starterGranted && gPartiesCount[B_TRAINER_PLAYER]
+     && GetMonData(&gParties[B_TRAINER_PLAYER][0], MON_DATA_HP) == 0)
+    {
+        state->ended = TRUE;
+        return MON_CANT_GIVE;
+    }
     struct Pokemon captured = *mon;
     mon = &captured;
     if (gPartiesCount[B_TRAINER_PLAYER] && GetMonData(&gParties[B_TRAINER_PLAYER][0], MON_DATA_SPECIES))

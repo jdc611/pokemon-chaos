@@ -1,4 +1,5 @@
 #include "global.h"
+#include "ironmon.h"
 #include "run_settings.h"
 #include "main.h"
 #include "malloc.h"
@@ -257,7 +258,7 @@ static bool32 IsSmartBattle(void)
     return gBattleTypeFlags & BATTLE_TYPE_HAS_AI || IsWildMonSmart();
 }
 
-static u64 GetAiFlags(u16 trainerId, enum BattlerId battler)
+u64 GetAiFlags(u16 trainerId, enum BattlerId battler)
 {
     u64 flags = 0;
 
@@ -303,6 +304,11 @@ static u64 GetAiFlags(u16 trainerId, enum BattlerId battler)
         flags &= ~(AI_FLAG_OMNISCIENT | AI_FLAG_MOVE_OMNISCIENCE
                  | AI_FLAG_ITEM_OMNISCIENCE | AI_FLAG_ABILITY_OMNISCIENCE);
     }
+
+    // Internal same-seed comparison only. New game/load restores the locked
+    // smart profile; no player-facing IronMON settings editor exposes this.
+    if (IsIronmonRun() && gSaveBlock3Ptr->ironmon.aiProfile == 1 && trainerId != 0xFFFF)
+        flags = AI_FLAG_BASIC_TRAINER;
 
     if (IsDoubleBattle() && flags != 0)
     {
