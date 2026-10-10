@@ -1,0 +1,160 @@
+{
+  "repository": "jdc611/pokemon-chaos",
+  "branch": "master",
+  "rom_source_commit": "077d189cf78d22708a6c47f1edea71f89e3058e7",
+  "workflow": "Build Playtest ROM",
+  "run_number": 235,
+  "run_id": 38076407875,
+  "conclusion": "success",
+  "rom_artifact_id": 11679315600,
+  "skin_artifact_id": 11679026528,
+  "rom_sha256": "37962185b44726eb2ba38049756f06137ef4fa2070f287dfbcb899679a27405e",
+  "rom_bytes": 33554432,
+  "rom_payload_bytes": 27216400,
+  "ewram_bytes": 253892,
+  "iwram_bytes": 29072,
+  "rom_archive_entries": [
+    "pokefirered.gba"
+  ],
+  "skin_archive_entries": [
+    "Pokemon-Chaos-Tracker.deltaskin"
+  ],
+  "source_suites_passed": 21,
+  "native_suites_on_downloaded_rom": [
+    {
+      "suite": "core",
+      "exit": 0,
+      "script": "tools/chaos/native/qa_ironmon_core.py"
+    },
+    {
+      "suite": "startup",
+      "exit": 0,
+      "script": "tools/chaos/native/qa_ironmon_startup.py"
+    },
+    {
+      "suite": "normal_choices",
+      "exit": 0,
+      "script": "tools/chaos/native/qa_ironmon_normal_choices.py"
+    },
+    {
+      "suite": "world",
+      "exit": 0,
+      "script": "tools/chaos/native/qa_ironmon_world.py"
+    },
+    {
+      "suite": "dungeons",
+      "exit": 0,
+      "script": "tools/chaos/native/qa_ironmon_dungeons.py"
+    },
+    {
+      "suite": "services",
+      "exit": 0,
+      "script": "tools/chaos/native/qa_ironmon_services.py"
+    },
+    {
+      "suite": "singles",
+      "exit": 0,
+      "script": "tools/chaos/native/qa_ironmon_singles.py"
+    },
+    {
+      "suite": "wild",
+      "exit": 0,
+      "script": "tools/chaos/native/qa_ironmon_wild.py"
+    },
+    {
+      "suite": "played_exp",
+      "exit": 0,
+      "script": "tools/chaos/native/qa_ironmon_played_exp.py"
+    },
+    {
+      "suite": "played_pair",
+      "exit": 0,
+      "script": "tools/chaos/native/qa_ironmon_played_pair.py"
+    },
+    {
+      "suite": "terminal",
+      "exit": 0,
+      "script": "tools/chaos/native/qa_ironmon_terminal.py"
+    },
+    {
+      "suite": "facilities",
+      "exit": 0,
+      "script": "tools/chaos/native/qa_ironmon_facilities.py"
+    },
+    {
+      "suite": "healing_events",
+      "exit": 0,
+      "script": "tools/chaos/native/qa_ironmon_healing_events.py"
+    },
+    {
+      "suite": "berry_refund",
+      "exit": 0,
+      "script": "tools/chaos/native/qa_ironmon_berry_refund.py"
+    },
+    {
+      "suite": "relearner_pp",
+      "exit": 0,
+      "script": "tools/chaos/native/qa_ironmon_relearner_pp.py"
+    },
+    {
+      "suite": "tracker_overlay",
+      "exit": 0,
+      "script": "tools/chaos/native/qa_ironmon_tracker_overlay.py"
+    },
+    {
+      "suite": "ai",
+      "exit": 0,
+      "script": "tools/chaos/native/qa_ironmon_ai.py"
+    },
+    {
+      "suite": "capture",
+      "exit": 0,
+      "script": "tools/chaos/native/qa_ironmon_capture.py"
+    },
+    {
+      "suite": "preview",
+      "exit": 0,
+      "script": "tools/chaos/native/qa_ironmon_preview.py"
+    },
+    {
+      "suite": "center_play",
+      "exit": 0,
+      "script": "tools/chaos/native/qa_ironmon_center_play.py"
+    },
+    {
+      "suite": "evolution_play",
+      "exit": 0,
+      "script": "tools/chaos/native/qa_ironmon_evolution_play.py"
+    },
+    {
+      "suite": "relearner_play",
+      "exit": 0,
+      "script": "tools/chaos/native/qa_ironmon_relearner_play.py"
+    },
+    {
+      "suite": "observations",
+      "exit": 0,
+      "script": "tools/chaos/native/qa_ironmon_observations.py"
+    },
+    {
+      "suite": "lab_loss",
+      "exit": 0,
+      "script": "tools/chaos/native/qa_ironmon_lab_loss.py"
+    },
+    {
+      "suite": "gym_play",
+      "exit": 0,
+      "script": "tools/chaos/native/qa_ironmon_gym_play.py"
+    }
+  ],
+  "remaining_acceptance": [
+    "Full natural early walking progression and complete later-game/puzzle walkthrough",
+    "Broader strategic balance and pivot availability playtesting",
+    "Actual iOS Delta skin import and touch dispatch"
+  ],
+  "persistence_limits": {
+    "detailed_facts": 256,
+    "retired_snapshots": 30,
+    "all_observed_species_identities": true
+  }
+}

@@ -1,6 +1,6 @@
 # Pokémon Chaos FireRed — unified IronMON playtest
 
-Date: October 10, 2026. Repository: jdc611/pokemon-chaos. Target: master, **Build Playtest ROM**. This is the native FireRed/Kanto project. The workflow records the exact source commit, run number and ROM SHA256 in its summary; its ROM artifact contains only `pokefirered.gba`. The controller skin is a separate artifact. No Brendan content is implemented.
+Date: October 10, 2026. **Published Build #235 succeeded.** ROM source commit: `077d189cf78d22708a6c47f1edea71f89e3058e7`. [Exact workflow run](https://github.com/jdc611/pokemon-chaos/actions/runs/38076407875). Repository: jdc611/pokemon-chaos. Target: master, **Build Playtest ROM**. This is the native FireRed/Kanto project. The workflow records the exact source commit, run number and ROM SHA256 in its summary; its ROM artifact contains only `pokefirered.gba`. The controller skin is a separate artifact. No Brendan content is implemented.
 
 The implementation is ready for a unified gameplay playtest. Compilation, source checks and substantial native emulator tests pass. Full acceptance of every requested playthrough, balance and iOS test is **not claimed**. The limitations below are part of this deliverable, not silently omitted requirements.
 
@@ -32,6 +32,7 @@ Latest local build: 32 MiB padded GBA ROM, 27,216,576-byte payload; EWRAM 253,89
 
 - **21 existing source suites pass**, covering ordinary Chaos progression, party preservation, field systems, randomizer, abilities, arcade, ranch and stabilization. Host fixtures explicitly disable IronMON; native suites test the IronMON branches independently.
 - **17 integrated native suites pass:** four-mode startup, Normal starter choices, controlled Hardcore lab loss, eight Gyms, seven dungeons, services, Singles, wild generation, played trainer/wild EXP, played consecutive Jessie/James, terminal save/reload, facilities, six healing-event paths, actual Berry spending, PP/relearner restrictions, tracker restoration and AI comparison.
+- **Actual Center nurse/save tests pass** in both modes through ordinary NPC and Start-menu input: Normal heals once, Hardcore never heals, and save/reload retains reentry denial. A direct debug-injected save call timed out inside sound processing; the fixture was corrected to use the real save UI instead of treating that injection as gameplay evidence.
 - **Actual capture/nickname/save tests pass** in both modes for Yes and No: captured main, retirement, outgoing battle-form metadata isolation and flash reload. The ball is used through the genuine Bag/battle capture path.
 - **Actual evolution and relearner UI tests pass** in both modes. Held B cannot cancel evolution; party remains one after split evolution; ordinary Chaos still creates Shedinja. Seeded evolution preserves nature/item/MGM through flash reload. Relearner enters Summary, replaces a full slot, returns to field and preserves one remaining PP and unrelated Pokémon data.
 - **Actual Brock/Misty milestone tests pass** in both modes: real NPC interaction, generated battle, badge, randomized TM, leader defeat flag, exit unlock and flash reload. Own starting levels were controlled at 50 and Gym trainer flags pre-set; these are progression tests, not walking playthroughs or balance results.
@@ -63,3 +64,9 @@ These are explicit limitations to the full acceptance standard. No successful co
 4. Press TRACKER (L+Select) during ordinary field control or stable battle action/move selection. B closes; L/R change pages. The shortcut is safely consumed when opening is temporarily unavailable.
 
 Source tests, harnesses, policy and historical findings are committed in the repository. Reports/symbols are not bundled into the ROM download.
+
+## Published artifact verification
+
+Build #235 completed successfully on master. Both downloaded archives passed ZIP integrity checks. The ROM archive contains exactly `pokefirered.gba` and the skin archive exactly `Pokemon-Chaos-Tracker.deltaskin`; no reports, symbols or folders are bundled. Published ROM: 33,554,432 bytes, payload 27,216,400 bytes, SHA256 `37962185b44726eb2ba38049756f06137ef4fa2070f287dfbcb899679a27405e`. The published binary differs from the local build, so the downloaded ROM itself was independently exercised: **25 native suites pass**, including real Center/Start-menu save, capture, evolution, relearner and all four Brock/Misty milestone scenarios. The previously built native symbol/layout fixtures were checked against matching runtime function/data locations, and no prior-engine emulator states were imported. CI's 21 source checks also pass. These results retain the controlled-fixture and full-playthrough/device/balance limits above.
+
+[ROM artifact](https://github.com/jdc611/pokemon-chaos/actions/runs/38076407875/artifacts/11679315600) · [Delta skin artifact](https://github.com/jdc611/pokemon-chaos/actions/runs/38076407875/artifacts/11679026528). Machine-readable build/test identifiers: [ironmon-build-235.json](ironmon-build-235.json).
