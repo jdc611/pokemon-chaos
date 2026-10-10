@@ -1,0 +1,933 @@
+{
+  "limitations": "Optional-inclusive available trainer EXP model using real seeded teams and engine scale table.\n\nAssumes victories; no balance/playthrough claim. Excludes optional modifiers\n(traded bonus, Lucky Egg, affection, Exp Charm, overdue evolution). Models a\nsolo main in each growth curve, with no pivots or evolution growth-curve change.\n",
+  "trainers": {
+    "optional_inclusive": [
+      "TRAINER_RIVAL_OAKS_LAB_CHARMANDER",
+      "TRAINER_RIVAL_ROUTE22_EARLY_CHARMANDER",
+      "TRAINER_BUG_CATCHER_RICK",
+      "TRAINER_BUG_CATCHER_DOUG",
+      "TRAINER_BUG_CATCHER_SAMMY",
+      "TRAINER_BUG_CATCHER_ANTHONY",
+      "TRAINER_BUG_CATCHER_CHARLIE",
+      "TRAINER_CAMPER_LIAM",
+      "TRAINER_LEADER_BROCK",
+      "TRAINER_LASS_ROBIN",
+      "TRAINER_BUG_CATCHER_JAMES",
+      "TRAINER_LASS_SALLY",
+      "TRAINER_BUG_CATCHER_GREG",
+      "TRAINER_YOUNGSTER_CALVIN",
+      "TRAINER_LASS_JANICE",
+      "TRAINER_BUG_CATCHER_COLTON",
+      "TRAINER_YOUNGSTER_BEN",
+      "TRAINER_HIKER_MARCOS",
+      "TRAINER_YOUNGSTER_JOSH",
+      "TRAINER_LASS_MIRIAM",
+      "TRAINER_LASS_IRIS",
+      "TRAINER_SUPER_NERD_JOVAN",
+      "TRAINER_BUG_CATCHER_KENT",
+      "TRAINER_BUG_CATCHER_ROBBY",
+      "TRAINER_SUPER_NERD_MIGUEL",
+      "TRAINER_TEAM_ROCKET_GRUNT",
+      "TRAINER_TEAM_ROCKET_GRUNT_2",
+      "TRAINER_TEAM_ROCKET_GRUNT_3",
+      "TRAINER_TEAM_ROCKET_GRUNT_4",
+      "TRAINER_LASS_CRISSY",
+      "TRAINER_CHAOS_JESSIE_MOON",
+      "TRAINER_CHAOS_JAMES_MOON",
+      "TRAINER_RIVAL_CERULEAN_CHARMANDER",
+      "TRAINER_TEAM_ROCKET_GRUNT_6",
+      "TRAINER_CAMPER_ETHAN",
+      "TRAINER_LASS_RELI",
+      "TRAINER_YOUNGSTER_TIMMY",
+      "TRAINER_LASS_ALI",
+      "TRAINER_BUG_CATCHER_CALE",
+      "TRAINER_CAMPER_SHANE",
+      "TRAINER_HIKER_FRANKLIN",
+      "TRAINER_YOUNGSTER_JOEY",
+      "TRAINER_HIKER_WAYNE",
+      "TRAINER_YOUNGSTER_DAN",
+      "TRAINER_PICNICKER_KELSEY",
+      "TRAINER_HIKER_NOB",
+      "TRAINER_CAMPER_FLINT",
+      "TRAINER_YOUNGSTER_CHAD",
+      "TRAINER_LASS_HALEY",
+      "TRAINER_PICNICKER_DIANA",
+      "TRAINER_SWIMMER_MALE_LUIS",
+      "TRAINER_LEADER_MISTY"
+    ],
+    "lab_gym_lower_bound": [
+      "TRAINER_RIVAL_OAKS_LAB_CHARMANDER",
+      "TRAINER_CAMPER_LIAM",
+      "TRAINER_LEADER_BROCK",
+      "TRAINER_PICNICKER_DIANA",
+      "TRAINER_SWIMMER_MALE_LUIS",
+      "TRAINER_LEADER_MISTY"
+    ]
+  },
+  "results": [
+    {
+      "seed": 1,
+      "growth": 0,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 13,
+      "after_TRAINER_LEADER_BROCK": 15,
+      "before_TRAINER_LEADER_MISTY": 28,
+      "after_TRAINER_LEADER_MISTY": 29
+    },
+    {
+      "seed": 1,
+      "growth": 1,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 11,
+      "after_TRAINER_LEADER_BROCK": 13,
+      "before_TRAINER_LEADER_MISTY": 26,
+      "after_TRAINER_LEADER_MISTY": 27
+    },
+    {
+      "seed": 1,
+      "growth": 2,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 15,
+      "after_TRAINER_LEADER_BROCK": 17,
+      "before_TRAINER_LEADER_MISTY": 29,
+      "after_TRAINER_LEADER_MISTY": 29
+    },
+    {
+      "seed": 1,
+      "growth": 3,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 15,
+      "after_TRAINER_LEADER_BROCK": 17,
+      "before_TRAINER_LEADER_MISTY": 30,
+      "after_TRAINER_LEADER_MISTY": 30
+    },
+    {
+      "seed": 1,
+      "growth": 4,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 14,
+      "after_TRAINER_LEADER_BROCK": 16,
+      "before_TRAINER_LEADER_MISTY": 30,
+      "after_TRAINER_LEADER_MISTY": 31
+    },
+    {
+      "seed": 1,
+      "growth": 5,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 12,
+      "after_TRAINER_LEADER_BROCK": 14,
+      "before_TRAINER_LEADER_MISTY": 27,
+      "after_TRAINER_LEADER_MISTY": 27
+    },
+    {
+      "seed": 1,
+      "growth": 0,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 8,
+      "after_TRAINER_LEADER_BROCK": 13,
+      "before_TRAINER_LEADER_MISTY": 15,
+      "after_TRAINER_LEADER_MISTY": 18
+    },
+    {
+      "seed": 1,
+      "growth": 1,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 7,
+      "after_TRAINER_LEADER_BROCK": 11,
+      "before_TRAINER_LEADER_MISTY": 13,
+      "after_TRAINER_LEADER_MISTY": 16
+    },
+    {
+      "seed": 1,
+      "growth": 2,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 10,
+      "after_TRAINER_LEADER_BROCK": 15,
+      "before_TRAINER_LEADER_MISTY": 17,
+      "after_TRAINER_LEADER_MISTY": 20
+    },
+    {
+      "seed": 1,
+      "growth": 3,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 10,
+      "after_TRAINER_LEADER_BROCK": 15,
+      "before_TRAINER_LEADER_MISTY": 17,
+      "after_TRAINER_LEADER_MISTY": 20
+    },
+    {
+      "seed": 1,
+      "growth": 4,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 9,
+      "after_TRAINER_LEADER_BROCK": 13,
+      "before_TRAINER_LEADER_MISTY": 16,
+      "after_TRAINER_LEADER_MISTY": 19
+    },
+    {
+      "seed": 1,
+      "growth": 5,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 8,
+      "after_TRAINER_LEADER_BROCK": 12,
+      "before_TRAINER_LEADER_MISTY": 14,
+      "after_TRAINER_LEADER_MISTY": 17
+    },
+    {
+      "seed": 2,
+      "growth": 0,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 14,
+      "after_TRAINER_LEADER_BROCK": 15,
+      "before_TRAINER_LEADER_MISTY": 28,
+      "after_TRAINER_LEADER_MISTY": 29
+    },
+    {
+      "seed": 2,
+      "growth": 1,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 12,
+      "after_TRAINER_LEADER_BROCK": 13,
+      "before_TRAINER_LEADER_MISTY": 26,
+      "after_TRAINER_LEADER_MISTY": 27
+    },
+    {
+      "seed": 2,
+      "growth": 2,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 16,
+      "after_TRAINER_LEADER_BROCK": 17,
+      "before_TRAINER_LEADER_MISTY": 29,
+      "after_TRAINER_LEADER_MISTY": 30
+    },
+    {
+      "seed": 2,
+      "growth": 3,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 16,
+      "after_TRAINER_LEADER_BROCK": 17,
+      "before_TRAINER_LEADER_MISTY": 30,
+      "after_TRAINER_LEADER_MISTY": 30
+    },
+    {
+      "seed": 2,
+      "growth": 4,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 15,
+      "after_TRAINER_LEADER_BROCK": 16,
+      "before_TRAINER_LEADER_MISTY": 30,
+      "after_TRAINER_LEADER_MISTY": 31
+    },
+    {
+      "seed": 2,
+      "growth": 5,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 13,
+      "after_TRAINER_LEADER_BROCK": 14,
+      "before_TRAINER_LEADER_MISTY": 27,
+      "after_TRAINER_LEADER_MISTY": 28
+    },
+    {
+      "seed": 2,
+      "growth": 0,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 11,
+      "after_TRAINER_LEADER_BROCK": 13,
+      "before_TRAINER_LEADER_MISTY": 16,
+      "after_TRAINER_LEADER_MISTY": 19
+    },
+    {
+      "seed": 2,
+      "growth": 1,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 9,
+      "after_TRAINER_LEADER_BROCK": 12,
+      "before_TRAINER_LEADER_MISTY": 14,
+      "after_TRAINER_LEADER_MISTY": 17
+    },
+    {
+      "seed": 2,
+      "growth": 2,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 13,
+      "after_TRAINER_LEADER_BROCK": 15,
+      "before_TRAINER_LEADER_MISTY": 18,
+      "after_TRAINER_LEADER_MISTY": 21
+    },
+    {
+      "seed": 2,
+      "growth": 3,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 13,
+      "after_TRAINER_LEADER_BROCK": 15,
+      "before_TRAINER_LEADER_MISTY": 17,
+      "after_TRAINER_LEADER_MISTY": 21
+    },
+    {
+      "seed": 2,
+      "growth": 4,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 12,
+      "after_TRAINER_LEADER_BROCK": 14,
+      "before_TRAINER_LEADER_MISTY": 17,
+      "after_TRAINER_LEADER_MISTY": 20
+    },
+    {
+      "seed": 2,
+      "growth": 5,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 10,
+      "after_TRAINER_LEADER_BROCK": 13,
+      "before_TRAINER_LEADER_MISTY": 15,
+      "after_TRAINER_LEADER_MISTY": 18
+    },
+    {
+      "seed": 3,
+      "growth": 0,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 13,
+      "after_TRAINER_LEADER_BROCK": 15,
+      "before_TRAINER_LEADER_MISTY": 29,
+      "after_TRAINER_LEADER_MISTY": 30
+    },
+    {
+      "seed": 3,
+      "growth": 1,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 12,
+      "after_TRAINER_LEADER_BROCK": 13,
+      "before_TRAINER_LEADER_MISTY": 27,
+      "after_TRAINER_LEADER_MISTY": 27
+    },
+    {
+      "seed": 3,
+      "growth": 2,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 15,
+      "after_TRAINER_LEADER_BROCK": 16,
+      "before_TRAINER_LEADER_MISTY": 30,
+      "after_TRAINER_LEADER_MISTY": 30
+    },
+    {
+      "seed": 3,
+      "growth": 3,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 15,
+      "after_TRAINER_LEADER_BROCK": 16,
+      "before_TRAINER_LEADER_MISTY": 30,
+      "after_TRAINER_LEADER_MISTY": 31
+    },
+    {
+      "seed": 3,
+      "growth": 4,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 14,
+      "after_TRAINER_LEADER_BROCK": 15,
+      "before_TRAINER_LEADER_MISTY": 31,
+      "after_TRAINER_LEADER_MISTY": 31
+    },
+    {
+      "seed": 3,
+      "growth": 5,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 13,
+      "after_TRAINER_LEADER_BROCK": 14,
+      "before_TRAINER_LEADER_MISTY": 28,
+      "after_TRAINER_LEADER_MISTY": 28
+    },
+    {
+      "seed": 3,
+      "growth": 0,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 10,
+      "after_TRAINER_LEADER_BROCK": 12,
+      "before_TRAINER_LEADER_MISTY": 15,
+      "after_TRAINER_LEADER_MISTY": 18
+    },
+    {
+      "seed": 3,
+      "growth": 1,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 8,
+      "after_TRAINER_LEADER_BROCK": 10,
+      "before_TRAINER_LEADER_MISTY": 13,
+      "after_TRAINER_LEADER_MISTY": 15
+    },
+    {
+      "seed": 3,
+      "growth": 2,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 11,
+      "after_TRAINER_LEADER_BROCK": 14,
+      "before_TRAINER_LEADER_MISTY": 17,
+      "after_TRAINER_LEADER_MISTY": 19
+    },
+    {
+      "seed": 3,
+      "growth": 3,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 11,
+      "after_TRAINER_LEADER_BROCK": 14,
+      "before_TRAINER_LEADER_MISTY": 17,
+      "after_TRAINER_LEADER_MISTY": 19
+    },
+    {
+      "seed": 3,
+      "growth": 4,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 10,
+      "after_TRAINER_LEADER_BROCK": 13,
+      "before_TRAINER_LEADER_MISTY": 16,
+      "after_TRAINER_LEADER_MISTY": 19
+    },
+    {
+      "seed": 3,
+      "growth": 5,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 9,
+      "after_TRAINER_LEADER_BROCK": 11,
+      "before_TRAINER_LEADER_MISTY": 14,
+      "after_TRAINER_LEADER_MISTY": 17
+    },
+    {
+      "seed": 4,
+      "growth": 0,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 13,
+      "after_TRAINER_LEADER_BROCK": 15,
+      "before_TRAINER_LEADER_MISTY": 29,
+      "after_TRAINER_LEADER_MISTY": 29
+    },
+    {
+      "seed": 4,
+      "growth": 1,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 11,
+      "after_TRAINER_LEADER_BROCK": 13,
+      "before_TRAINER_LEADER_MISTY": 26,
+      "after_TRAINER_LEADER_MISTY": 26
+    },
+    {
+      "seed": 4,
+      "growth": 2,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 14,
+      "after_TRAINER_LEADER_BROCK": 17,
+      "before_TRAINER_LEADER_MISTY": 29,
+      "after_TRAINER_LEADER_MISTY": 29
+    },
+    {
+      "seed": 4,
+      "growth": 3,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 14,
+      "after_TRAINER_LEADER_BROCK": 16,
+      "before_TRAINER_LEADER_MISTY": 30,
+      "after_TRAINER_LEADER_MISTY": 30
+    },
+    {
+      "seed": 4,
+      "growth": 4,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 13,
+      "after_TRAINER_LEADER_BROCK": 16,
+      "before_TRAINER_LEADER_MISTY": 30,
+      "after_TRAINER_LEADER_MISTY": 30
+    },
+    {
+      "seed": 4,
+      "growth": 5,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 12,
+      "after_TRAINER_LEADER_BROCK": 14,
+      "before_TRAINER_LEADER_MISTY": 27,
+      "after_TRAINER_LEADER_MISTY": 27
+    },
+    {
+      "seed": 4,
+      "growth": 0,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 8,
+      "after_TRAINER_LEADER_BROCK": 12,
+      "before_TRAINER_LEADER_MISTY": 15,
+      "after_TRAINER_LEADER_MISTY": 17
+    },
+    {
+      "seed": 4,
+      "growth": 1,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 7,
+      "after_TRAINER_LEADER_BROCK": 11,
+      "before_TRAINER_LEADER_MISTY": 13,
+      "after_TRAINER_LEADER_MISTY": 15
+    },
+    {
+      "seed": 4,
+      "growth": 2,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 9,
+      "after_TRAINER_LEADER_BROCK": 14,
+      "before_TRAINER_LEADER_MISTY": 17,
+      "after_TRAINER_LEADER_MISTY": 19
+    },
+    {
+      "seed": 4,
+      "growth": 3,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 10,
+      "after_TRAINER_LEADER_BROCK": 14,
+      "before_TRAINER_LEADER_MISTY": 17,
+      "after_TRAINER_LEADER_MISTY": 19
+    },
+    {
+      "seed": 4,
+      "growth": 4,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 9,
+      "after_TRAINER_LEADER_BROCK": 13,
+      "before_TRAINER_LEADER_MISTY": 16,
+      "after_TRAINER_LEADER_MISTY": 18
+    },
+    {
+      "seed": 4,
+      "growth": 5,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 8,
+      "after_TRAINER_LEADER_BROCK": 12,
+      "before_TRAINER_LEADER_MISTY": 14,
+      "after_TRAINER_LEADER_MISTY": 16
+    },
+    {
+      "seed": 5,
+      "growth": 0,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 14,
+      "after_TRAINER_LEADER_BROCK": 16,
+      "before_TRAINER_LEADER_MISTY": 28,
+      "after_TRAINER_LEADER_MISTY": 29
+    },
+    {
+      "seed": 5,
+      "growth": 1,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 12,
+      "after_TRAINER_LEADER_BROCK": 14,
+      "before_TRAINER_LEADER_MISTY": 26,
+      "after_TRAINER_LEADER_MISTY": 26
+    },
+    {
+      "seed": 5,
+      "growth": 2,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 16,
+      "after_TRAINER_LEADER_BROCK": 17,
+      "before_TRAINER_LEADER_MISTY": 29,
+      "after_TRAINER_LEADER_MISTY": 29
+    },
+    {
+      "seed": 5,
+      "growth": 3,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 16,
+      "after_TRAINER_LEADER_BROCK": 17,
+      "before_TRAINER_LEADER_MISTY": 29,
+      "after_TRAINER_LEADER_MISTY": 30
+    },
+    {
+      "seed": 5,
+      "growth": 4,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 15,
+      "after_TRAINER_LEADER_BROCK": 17,
+      "before_TRAINER_LEADER_MISTY": 30,
+      "after_TRAINER_LEADER_MISTY": 30
+    },
+    {
+      "seed": 5,
+      "growth": 5,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 13,
+      "after_TRAINER_LEADER_BROCK": 15,
+      "before_TRAINER_LEADER_MISTY": 27,
+      "after_TRAINER_LEADER_MISTY": 27
+    },
+    {
+      "seed": 5,
+      "growth": 0,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 10,
+      "after_TRAINER_LEADER_BROCK": 13,
+      "before_TRAINER_LEADER_MISTY": 15,
+      "after_TRAINER_LEADER_MISTY": 18
+    },
+    {
+      "seed": 5,
+      "growth": 1,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 9,
+      "after_TRAINER_LEADER_BROCK": 11,
+      "before_TRAINER_LEADER_MISTY": 13,
+      "after_TRAINER_LEADER_MISTY": 16
+    },
+    {
+      "seed": 5,
+      "growth": 2,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 12,
+      "after_TRAINER_LEADER_BROCK": 15,
+      "before_TRAINER_LEADER_MISTY": 17,
+      "after_TRAINER_LEADER_MISTY": 20
+    },
+    {
+      "seed": 5,
+      "growth": 3,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 12,
+      "after_TRAINER_LEADER_BROCK": 15,
+      "before_TRAINER_LEADER_MISTY": 17,
+      "after_TRAINER_LEADER_MISTY": 20
+    },
+    {
+      "seed": 5,
+      "growth": 4,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 11,
+      "after_TRAINER_LEADER_BROCK": 14,
+      "before_TRAINER_LEADER_MISTY": 16,
+      "after_TRAINER_LEADER_MISTY": 19
+    },
+    {
+      "seed": 5,
+      "growth": 5,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 9,
+      "after_TRAINER_LEADER_BROCK": 12,
+      "before_TRAINER_LEADER_MISTY": 14,
+      "after_TRAINER_LEADER_MISTY": 17
+    },
+    {
+      "seed": 123456,
+      "growth": 0,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 14,
+      "after_TRAINER_LEADER_BROCK": 15,
+      "before_TRAINER_LEADER_MISTY": 30,
+      "after_TRAINER_LEADER_MISTY": 30
+    },
+    {
+      "seed": 123456,
+      "growth": 1,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 12,
+      "after_TRAINER_LEADER_BROCK": 13,
+      "before_TRAINER_LEADER_MISTY": 27,
+      "after_TRAINER_LEADER_MISTY": 28
+    },
+    {
+      "seed": 123456,
+      "growth": 2,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 16,
+      "after_TRAINER_LEADER_BROCK": 17,
+      "before_TRAINER_LEADER_MISTY": 30,
+      "after_TRAINER_LEADER_MISTY": 30
+    },
+    {
+      "seed": 123456,
+      "growth": 3,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 16,
+      "after_TRAINER_LEADER_BROCK": 17,
+      "before_TRAINER_LEADER_MISTY": 31,
+      "after_TRAINER_LEADER_MISTY": 31
+    },
+    {
+      "seed": 123456,
+      "growth": 4,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 15,
+      "after_TRAINER_LEADER_BROCK": 16,
+      "before_TRAINER_LEADER_MISTY": 31,
+      "after_TRAINER_LEADER_MISTY": 32
+    },
+    {
+      "seed": 123456,
+      "growth": 5,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 13,
+      "after_TRAINER_LEADER_BROCK": 15,
+      "before_TRAINER_LEADER_MISTY": 28,
+      "after_TRAINER_LEADER_MISTY": 28
+    },
+    {
+      "seed": 123456,
+      "growth": 0,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 10,
+      "after_TRAINER_LEADER_BROCK": 13,
+      "before_TRAINER_LEADER_MISTY": 16,
+      "after_TRAINER_LEADER_MISTY": 19
+    },
+    {
+      "seed": 123456,
+      "growth": 1,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 8,
+      "after_TRAINER_LEADER_BROCK": 11,
+      "before_TRAINER_LEADER_MISTY": 14,
+      "after_TRAINER_LEADER_MISTY": 17
+    },
+    {
+      "seed": 123456,
+      "growth": 2,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 11,
+      "after_TRAINER_LEADER_BROCK": 15,
+      "before_TRAINER_LEADER_MISTY": 18,
+      "after_TRAINER_LEADER_MISTY": 21
+    },
+    {
+      "seed": 123456,
+      "growth": 3,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 12,
+      "after_TRAINER_LEADER_BROCK": 14,
+      "before_TRAINER_LEADER_MISTY": 18,
+      "after_TRAINER_LEADER_MISTY": 21
+    },
+    {
+      "seed": 123456,
+      "growth": 4,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 10,
+      "after_TRAINER_LEADER_BROCK": 13,
+      "before_TRAINER_LEADER_MISTY": 17,
+      "after_TRAINER_LEADER_MISTY": 20
+    },
+    {
+      "seed": 123456,
+      "growth": 5,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 9,
+      "after_TRAINER_LEADER_BROCK": 12,
+      "before_TRAINER_LEADER_MISTY": 15,
+      "after_TRAINER_LEADER_MISTY": 18
+    },
+    {
+      "seed": 24680,
+      "growth": 0,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 14,
+      "after_TRAINER_LEADER_BROCK": 15,
+      "before_TRAINER_LEADER_MISTY": 28,
+      "after_TRAINER_LEADER_MISTY": 29
+    },
+    {
+      "seed": 24680,
+      "growth": 1,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 12,
+      "after_TRAINER_LEADER_BROCK": 13,
+      "before_TRAINER_LEADER_MISTY": 26,
+      "after_TRAINER_LEADER_MISTY": 27
+    },
+    {
+      "seed": 24680,
+      "growth": 2,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 16,
+      "after_TRAINER_LEADER_BROCK": 17,
+      "before_TRAINER_LEADER_MISTY": 29,
+      "after_TRAINER_LEADER_MISTY": 30
+    },
+    {
+      "seed": 24680,
+      "growth": 3,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 16,
+      "after_TRAINER_LEADER_BROCK": 17,
+      "before_TRAINER_LEADER_MISTY": 30,
+      "after_TRAINER_LEADER_MISTY": 30
+    },
+    {
+      "seed": 24680,
+      "growth": 4,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 15,
+      "after_TRAINER_LEADER_BROCK": 16,
+      "before_TRAINER_LEADER_MISTY": 30,
+      "after_TRAINER_LEADER_MISTY": 31
+    },
+    {
+      "seed": 24680,
+      "growth": 5,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 13,
+      "after_TRAINER_LEADER_BROCK": 14,
+      "before_TRAINER_LEADER_MISTY": 27,
+      "after_TRAINER_LEADER_MISTY": 27
+    },
+    {
+      "seed": 24680,
+      "growth": 0,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 10,
+      "after_TRAINER_LEADER_BROCK": 13,
+      "before_TRAINER_LEADER_MISTY": 15,
+      "after_TRAINER_LEADER_MISTY": 18
+    },
+    {
+      "seed": 24680,
+      "growth": 1,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 9,
+      "after_TRAINER_LEADER_BROCK": 11,
+      "before_TRAINER_LEADER_MISTY": 13,
+      "after_TRAINER_LEADER_MISTY": 15
+    },
+    {
+      "seed": 24680,
+      "growth": 2,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 12,
+      "after_TRAINER_LEADER_BROCK": 15,
+      "before_TRAINER_LEADER_MISTY": 17,
+      "after_TRAINER_LEADER_MISTY": 19
+    },
+    {
+      "seed": 24680,
+      "growth": 3,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 12,
+      "after_TRAINER_LEADER_BROCK": 15,
+      "before_TRAINER_LEADER_MISTY": 17,
+      "after_TRAINER_LEADER_MISTY": 19
+    },
+    {
+      "seed": 24680,
+      "growth": 4,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 11,
+      "after_TRAINER_LEADER_BROCK": 14,
+      "before_TRAINER_LEADER_MISTY": 16,
+      "after_TRAINER_LEADER_MISTY": 19
+    },
+    {
+      "seed": 24680,
+      "growth": 5,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 10,
+      "after_TRAINER_LEADER_BROCK": 12,
+      "before_TRAINER_LEADER_MISTY": 14,
+      "after_TRAINER_LEADER_MISTY": 17
+    },
+    {
+      "seed": 4294967295,
+      "growth": 0,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 14,
+      "after_TRAINER_LEADER_BROCK": 15,
+      "before_TRAINER_LEADER_MISTY": 28,
+      "after_TRAINER_LEADER_MISTY": 29
+    },
+    {
+      "seed": 4294967295,
+      "growth": 1,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 12,
+      "after_TRAINER_LEADER_BROCK": 13,
+      "before_TRAINER_LEADER_MISTY": 26,
+      "after_TRAINER_LEADER_MISTY": 26
+    },
+    {
+      "seed": 4294967295,
+      "growth": 2,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 16,
+      "after_TRAINER_LEADER_BROCK": 17,
+      "before_TRAINER_LEADER_MISTY": 29,
+      "after_TRAINER_LEADER_MISTY": 29
+    },
+    {
+      "seed": 4294967295,
+      "growth": 3,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 16,
+      "after_TRAINER_LEADER_BROCK": 17,
+      "before_TRAINER_LEADER_MISTY": 30,
+      "after_TRAINER_LEADER_MISTY": 30
+    },
+    {
+      "seed": 4294967295,
+      "growth": 4,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 15,
+      "after_TRAINER_LEADER_BROCK": 16,
+      "before_TRAINER_LEADER_MISTY": 30,
+      "after_TRAINER_LEADER_MISTY": 30
+    },
+    {
+      "seed": 4294967295,
+      "growth": 5,
+      "profile": "optional_inclusive",
+      "before_TRAINER_LEADER_BROCK": 13,
+      "after_TRAINER_LEADER_BROCK": 14,
+      "before_TRAINER_LEADER_MISTY": 27,
+      "after_TRAINER_LEADER_MISTY": 27
+    },
+    {
+      "seed": 4294967295,
+      "growth": 0,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 9,
+      "after_TRAINER_LEADER_BROCK": 12,
+      "before_TRAINER_LEADER_MISTY": 17,
+      "after_TRAINER_LEADER_MISTY": 19
+    },
+    {
+      "seed": 4294967295,
+      "growth": 1,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 8,
+      "after_TRAINER_LEADER_BROCK": 10,
+      "before_TRAINER_LEADER_MISTY": 14,
+      "after_TRAINER_LEADER_MISTY": 16
+    },
+    {
+      "seed": 4294967295,
+      "growth": 2,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 11,
+      "after_TRAINER_LEADER_BROCK": 14,
+      "before_TRAINER_LEADER_MISTY": 18,
+      "after_TRAINER_LEADER_MISTY": 20
+    },
+    {
+      "seed": 4294967295,
+      "growth": 3,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 11,
+      "after_TRAINER_LEADER_BROCK": 14,
+      "before_TRAINER_LEADER_MISTY": 18,
+      "after_TRAINER_LEADER_MISTY": 21
+    },
+    {
+      "seed": 4294967295,
+      "growth": 4,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 10,
+      "after_TRAINER_LEADER_BROCK": 13,
+      "before_TRAINER_LEADER_MISTY": 18,
+      "after_TRAINER_LEADER_MISTY": 20
+    },
+    {
+      "seed": 4294967295,
+      "growth": 5,
+      "profile": "lab_gym_lower_bound",
+      "before_TRAINER_LEADER_BROCK": 9,
+      "after_TRAINER_LEADER_BROCK": 12,
+      "before_TRAINER_LEADER_MISTY": 16,
+      "after_TRAINER_LEADER_MISTY": 18
+    }
+  ]
+}

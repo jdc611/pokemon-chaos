@@ -1,5 +1,6 @@
 """Tracker display restoration and paused input; observation journal pending."""
 from qa_ironmon_core import *
+import sys
 def blob(ptr,size):return bytes(rd(ptr+i,1) for i in range(size))
 def snapshot():
     return {name:blob(address,size) for name,address,size in (
@@ -35,6 +36,18 @@ print('PASS IronMON field tracker restores borrowed VRAM/window/tasks/callbacks 
 # Regular Chaos supports a party rather than enforcing one main.
 wr(s+DIFF,1,1);call('IronmonInitializeRun');check()
 print('PASS regular Chaos field tracker restoration.',flush=True)
+# Exercise lossless graphics restoration with a long run, a worst-case literal
+# span, and mixed spans. These are VRAM fixtures, not stored Pokémon edits.
+original_chars=blob(0x06008000,0x4000)
+for pattern in ('run','literal','mixed'):
+    for i in range(505*16):
+        value=0x3333 if pattern=='run' else ((i*257)^0xa55a)&0xffff
+        if pattern=='mixed' and i%256<128:value=0
+        wr(0x06008000+i*2,value,2)
+    check()
+    print('PASS tracker exact graphics backup round-trip',pattern,flush=True)
+for i in range(0,len(original_chars),2):
+    wr(0x06008000+i,int.from_bytes(original_chars[i:i+2],'little'),2)
 # Allocation failure must refuse safely rather than invoke the engine fatal UI.
 heap=symbols['gHeap'];block=heap;allocations=[]
 for _ in range(1000):
@@ -49,23 +62,38 @@ for ptr in allocations:
 for name,value in before.items():assert value==snapshot()[name],('denial',name)
 print('PASS low-heap tracker denial preserves scene and avoids fatal allocation.',flush=True)
 # Real battle stable action and move-selection input. No injected completion.
-STRUCTSIZE,BS,MAINSTATE=struct.unpack('<3I',(ROOT/'ironmon-tracker-layout.bin').read_bytes())
-start();call('IronmonGiveStarter',BULBA);call('CreateWildMon',PIKA,3)
-call('BattleSetup_StartWildBattle')
+STRUCTSIZE,BS,MAINSTATE,BATK,BMOVES,BPP=struct.unpack('<6I',(ROOT/'ironmon-tracker-layout.bin').read_bytes())
+start();call('IronmonGiveStarter',BULBA)
+if '--doubles' in sys.argv:
+    wr(s+DIFF,1,1);call('IronmonInitializeRun')
+    assert call('ScriptGiveMon',PIKA,20,0)==GIVEN
+    _,A,_,DA,_,koga,_,_=struct.unpack('<8I',(ROOT/'ironmon-singles-layout.bin').read_bytes())
+    call('InitTrainerBattleParameter')
+    wr(symbols['gTrainerBattleParameter']+A,koga,2)
+    wr(symbols['gTrainerBattleParameter']+DA,symbols['Text_ChaosJessieDefeat'])
+    wr('gNoOfApproachingTrainers',1,1);call('BattleSetup_StartTrainerBattle')
+else:
+    call('CreateWildMon',PIKA,3);call('BattleSetup_StartWildBattle')
 for _ in range(400):
     frames(3,1);frames(5)
     if rd('gBattlerControllerFuncs')==symbols['HandleInputChooseAction']|1:break
 else:raise AssertionError('battle did not reach stable action selection')
+if '--doubles' in sys.argv:
+    assert rd('gBattlersCount',1)==4 and rd('gBattleTypeFlags')&1
 for move_screen in (False,True):
     frames(60)
     wr(rd('gSaveBlock2Ptr')+0x13,2,1) # L=A must not select a move through the chord.
+    # Controlled battle-only changes make stored-party fallbacks visibly wrong.
+    wr(symbols['gBattleMons']+BATK,321,2)
+    wr(symbols['gBattleMons']+BMOVES,TACKLE,2)
+    wr(symbols['gBattleMons']+BPP,3,1)
     battle_struct=blob(rd('gBattleStruct'),STRUCTSIZE)
     battle_mons=blob(symbols['gBattleMons'],4*BS)
     before=snapshot();callbacks=blob(symbols['gMain'],24)
     controller=rd('gBattlerControllerFuncs');mainstate=rd(symbols['gMain']+MAINSTATE,1)
-    frames(1,512|4);frames(3)
+    frames(1,512|4);frames(60)
     assert call('ChaosTrackerIsOpen'),('shortcut did not open',move_screen)
-    frames(3,256);frames(4);frames(3,512);frames(4)
+    frames(12,256);frames(20);snap("ironmon-tracker-battle-moves");frames(12,512);frames(20)
     snap('ironmon-tracker-battle')
     assert battle_struct==blob(rd('gBattleStruct'),STRUCTSIZE)
     assert battle_mons==blob(symbols['gBattleMons'],4*BS)
@@ -81,4 +109,4 @@ for move_screen in (False,True):
             frames(3)
             if rd('gBattlerControllerFuncs')==symbols['HandleInputChooseMove']|1:break
         else:raise AssertionError('move selection did not open')
-print('PASS actual battle L+Select at action/move selection: no turns/actions/Pokemon/state changes, full borrowed graphics/window/callback restoration.',flush=True)
+print('PASS actual '+('Doubles' if '--doubles' in sys.argv else 'Singles')+' battle L+Select at action/move selection: no turns/actions/Pokemon/state changes, full borrowed graphics/window/callback restoration.',flush=True)

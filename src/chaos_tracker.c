@@ -25,7 +25,6 @@
 #define TRACKER_PIXELS (28 * 2 * TILE_SIZE_4BPP)
 struct TrackerOverlay
 {
-    u16 charBackup[TRACKER_TILES * TILE_SIZE_4BPP / 2];
     u16 mapBackup[BG_SCREEN_SIZE / 2];
     ALIGNED(4) u8 pixels[TRACKER_PIXELS];
     u16 unfaded[16], faded[16];
@@ -35,6 +34,7 @@ struct TrackerOverlay
     IntrCallback vblank, hblank;
     u8 window, page, party, mainState;
     bool8 released, closing, disabledPrinters;
+    u16 charBackup[];
 };
 static EWRAM_DATA struct TrackerOverlay *sTracker;
 static const u8 sRegisterOffsets[] = {
@@ -49,6 +49,66 @@ static const u16 sPalette[16] = {
 static const u8 sInk[] = {1,2,3}, sWhite[] = {4,7,4};
 static const u8 sBand[] = {6,2,9};
 static const u8 sRed[] = {1,4,3}, sBlue[] = {1,5,3};
+
+// Lossless halfword runs and literal spans. Size first, then encode into a
+// bounded allocation; never assume graphics compress enough to fit the heap.
+static u32 PackTiles(const u16 *source,u16 *dest,u32 capacity)
+{
+    const u32 words=TRACKER_TILES*TILE_SIZE_4BPP/2;
+    u32 in=0,out=0;
+    while(in<words)
+    {
+        u32 run=1;
+        while(in+run<words && source[in+run]==source[in])run++;
+        if(run>=3)
+        {
+            if(dest)
+            {
+                if(out+2>capacity)return 0;
+                dest[out]=0x8000|run;dest[out+1]=source[in];
+            }
+            out+=2;in+=run;
+        }
+        else
+        {
+            u32 start=in;
+            in+=run;
+            while(in<words)
+            {
+                run=1;
+                while(in+run<words && source[in+run]==source[in])run++;
+                if(run>=3)break;
+                in+=run;
+            }
+            u32 count=in-start;
+            if(dest)
+            {
+                if(out+1+count>capacity)return 0;
+                dest[out]=count;
+                for(u32 i=0;i<count;i++)dest[out+1+i]=source[start+i];
+            }
+            out+=1+count;
+        }
+    }
+    return out;
+}
+static void RestoreTiles(const u16 *source)
+{
+    u16 *dest=(u16 *)BG_CHAR_ADDR(2);
+    u32 out=0;
+    while(out<TRACKER_TILES*TILE_SIZE_4BPP/2)
+    {
+        u16 header=*source++;
+        u32 count=header&0x7FFF;
+        if(header&0x8000)
+        {
+            u16 value=*source++;
+            while(count--)dest[out++]=value;
+        }
+        else
+            while(count--)dest[out++]=*source++;
+    }
+}
 
 static void Print(u32 x, u32 y, const u8 *text, const u8 *colors)
 {
@@ -68,6 +128,15 @@ static struct Pokemon *SelectedMon(void)
 {
     return &gParties[B_TRAINER_PLAYER][sTracker->party];
 }
+static struct BattlePokemon *ActiveMon(void)
+{
+    if (gMain.inBattle)
+        for (u32 battler=0;battler<gBattlersCount;battler++)
+            if (GetBattlerParty(battler)==gParties[B_TRAINER_PLAYER]
+             && gBattlerPartyIndexes[battler]==sTracker->party)
+                return &gBattleMons[battler];
+    return NULL;
+}
 static void Stat(u32 x,u32 y,const u8 *name,u32 field,enum Stat stat)
 {
     struct Pokemon *mon=SelectedMon();
@@ -78,12 +147,24 @@ static void Stat(u32 x,u32 y,const u8 *name,u32 field,enum Stat stat)
         if(gNaturesInfo[nature].statUp==stat)colors=sRed;
         else if(gNaturesInfo[nature].statDown==stat)colors=sBlue;
     }
-    Print(x,y,name,colors);Number(x+63,y,GetMonData(mon,field),colors);
+    u32 value=GetMonData(mon,field);
+    struct BattlePokemon *active=ActiveMon();
+    if(active)
+        switch(field)
+        {
+        case MON_DATA_ATK:value=active->attack;break;
+        case MON_DATA_DEF:value=active->defense;break;
+        case MON_DATA_SPATK:value=active->spAttack;break;
+        case MON_DATA_SPDEF:value=active->spDefense;break;
+        case MON_DATA_SPEED:value=active->speed;break;
+        }
+    Print(x,y,name,colors);Number(x+63,y,value,colors);
 }
 static void Draw(void)
 {
     struct Pokemon *mon=SelectedMon();
-    enum Species species=GetMonData(mon,MON_DATA_SPECIES);
+    struct BattlePokemon *active=ActiveMon();
+    enum Species species=active?active->species:GetMonData(mon,MON_DATA_SPECIES);
     u8 text[128];
     CpuFill16(0x1111,(void *)BG_CHAR_ADDR(2),TRACKER_TILES*TILE_SIZE_4BPP);
     CpuFill16(0x4444,(void *)(BG_CHAR_ADDR(2)+32),28*2*32);
@@ -104,9 +185,9 @@ static void Draw(void)
         u32 badges=0;for(u32 i=0;i<8;i++)if(FlagGet(FLAG_BADGE01_GET+i))badges++;
         Print(117,58,COMPOUND_STRING("BADGES"),sInk);Number(171,58,badges,sInk);
         Print(6,58,COMPOUND_STRING("HP"),sInk);
-        Number(35,58,GetMonData(mon,MON_DATA_HP),sInk);
+        Number(35,58,active?active->hp:GetMonData(mon,MON_DATA_HP),sInk);
         Print(63,58,COMPOUND_STRING("/"),sInk);
-        Number(72,58,GetMonData(mon,MON_DATA_MAX_HP),sInk);
+        Number(72,58,active?active->maxHP:GetMonData(mon,MON_DATA_MAX_HP),sInk);
         Stat(6,75,COMPOUND_STRING("ATTACK"),MON_DATA_ATK,STAT_ATK);
         Stat(117,75,COMPOUND_STRING("SP. ATK"),MON_DATA_SPATK,STAT_SPATK);
         Stat(6,92,COMPOUND_STRING("DEFENSE"),MON_DATA_DEF,STAT_DEF);
@@ -118,15 +199,15 @@ static void Draw(void)
     {
         for(u32 i=0;i<MAX_MON_MOVES;i++)
         {
-            enum Move move=GetMonData(mon,MON_DATA_MOVE1+i);
+            enum Move move=active?active->moves[i]:GetMonData(mon,MON_DATA_MOVE1+i);
             u32 y=40+i*24;
 
             Print(6,y,move?GetMoveName(move):COMPOUND_STRING("--"),sInk);
             if(move)
             {
-                Number(159,y,GetMonData(mon,MON_DATA_PP1+i),sInk);
+                Number(159,y,active?active->pp[i]:GetMonData(mon,MON_DATA_PP1+i),sInk);
                 Print(178,y,COMPOUND_STRING("/"),sInk);
-                Number(187,y,CalculatePPWithBonus(move,GetMonData(mon,MON_DATA_PP_BONUSES),i),sInk);
+                Number(187,y,active && active->volatiles.transformed?min(5,GetMovePP(move)):CalculatePPWithBonus(move,active?active->ppBonuses:GetMonData(mon,MON_DATA_PP_BONUSES),i),sInk);
             }
         }
     }
@@ -134,14 +215,11 @@ static void Draw(void)
     {
         enum Ability ability=GetMonAbility(mon);
         enum Type type1=GetSpeciesType(species,0),type2=GetSpeciesType(species,1);
-        if(gMain.inBattle)
-            for(u32 battler=0;battler<gBattlersCount;battler++)
-                if(GetBattlerSide(battler)==B_SIDE_PLAYER&&gBattlerPartyIndexes[battler]==sTracker->party)
-                {
-                    ability=gBattleMons[battler].ability;
-                    type1=gBattleMons[battler].types[0];type2=gBattleMons[battler].types[1];
-                    break;
-                }
+        if(active)
+        {
+            ability=active->ability;
+            type1=active->types[0];type2=active->types[1];
+        }
         Print(6,42,gSpeciesInfo[species].speciesName,sInk);
         Print(117,42,gTypesInfo[type1].name,sBlue);
         if(type2!=type1)Print(174,42,gTypesInfo[type2].name,sBlue);
@@ -175,7 +253,7 @@ static void Restore(void)
     struct TrackerOverlay *overlay=sTracker;
     SetVBlankCallback(NULL);SetHBlankCallback(NULL);
     SetGpuReg_ForcedBlank(REG_OFFSET_DISPCNT,DISPCNT_FORCED_BLANK);
-    CpuCopy16(overlay->charBackup,(void *)BG_CHAR_ADDR(2),sizeof(overlay->charBackup));
+    RestoreTiles(overlay->charBackup);
     CpuCopy16(overlay->mapBackup,(void *)BG_SCREEN_ADDR(31),BG_SCREEN_SIZE);
     CpuCopy16(overlay->unfaded,&gPlttBufferUnfaded[0xF0],32);
     CpuCopy16(overlay->faded,&gPlttBufferFaded[0xF0],32);
@@ -231,7 +309,8 @@ bool32 ChaosTrackerTryOpen(void)
     u32 win=0;
     for(;win<WINDOWS_MAX;win++)if(gWindows[win].window.bg==0xFF)break;
     if(win==WINDOWS_MAX)return FALSE;
-    struct TrackerOverlay *overlay=AllocZeroedUnchecked(sizeof(*overlay));
+    u32 packedWords=PackTiles((const u16 *)BG_CHAR_ADDR(2),NULL,0);
+    struct TrackerOverlay *overlay=AllocZeroedUnchecked(sizeof(*overlay)+packedWords*sizeof(u16));
     if(!overlay)return FALSE;
     overlay->callback1=gMain.callback1;overlay->callback2=gMain.callback2;
     overlay->mainState=gMain.state;
@@ -240,7 +319,11 @@ bool32 ChaosTrackerTryOpen(void)
     overlay->window=win;overlay->party=party;overlay->unusedWindow=gWindows[win];
     for(u32 i=0;i<ARRAY_COUNT(sRegisterOffsets);i++)overlay->registers[i]=GetGpuReg(sRegisterOffsets[i]);
     SetVBlankCallback(NULL);SetHBlankCallback(NULL);
-    CpuCopy16((void *)BG_CHAR_ADDR(2),overlay->charBackup,sizeof(overlay->charBackup));
+    if(!PackTiles((const u16 *)BG_CHAR_ADDR(2),overlay->charBackup,packedWords))
+    {
+        SetHBlankCallback(overlay->hblank);SetVBlankCallback(overlay->vblank);
+        Free(overlay);return FALSE;
+    }
     CpuCopy16((void *)BG_SCREEN_ADDR(31),overlay->mapBackup,BG_SCREEN_SIZE);
     CpuCopy16(&gPlttBufferUnfaded[0xF0],overlay->unfaded,32);
     CpuCopy16(&gPlttBufferFaded[0xF0],overlay->faded,32);
