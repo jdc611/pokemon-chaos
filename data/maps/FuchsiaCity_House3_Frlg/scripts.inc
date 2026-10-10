@@ -4,10 +4,21 @@ FuchsiaCity_House3_Frlg_MapScripts::
 FuchsiaCity_House3_EventScript_MoveDeleter::
 	lock
 	faceplayer
+	specialvar VAR_RESULT, IsIronmonRun
+	goto_if_eq VAR_RESULT, TRUE, FuchsiaCity_House3_EventScript_IronmonMoveDeleter
 	msgbox FuchsiaCity_House3_Text_WouldYouLikeToForgetMove, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, YES, FuchsiaCity_House3_EventScript_ChooseMonForMoveDeleter
 	goto FuchsiaCity_House3_EventScript_CancelForgetMove
 	end
+
+FuchsiaCity_House3_EventScript_IronmonMoveDeleter::
+	msgbox FuchsiaCity_House3_Text_IronmonReplaceMoves
+	release
+	end
+
+FuchsiaCity_House3_Text_IronmonReplaceMoves:
+	.string "In IronMON, replace moves using\n"
+	.string "the Move Relearner instead.$"
 
 FuchsiaCity_House3_EventScript_ChooseMonForMoveDeleter::
 	msgbox FuchsiaCity_House3_Text_WhichMonShouldForgetMove

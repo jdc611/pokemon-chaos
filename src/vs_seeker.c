@@ -1,4 +1,5 @@
 #include "global.h"
+#include "ironmon.h"
 #include "task.h"
 #include "event_object_movement.h"
 #include "item_use.h"
@@ -433,6 +434,8 @@ static void GatherNearbyTrainerInfo(void)
 
 static u8 CanUseVsSeeker(void)
 {
+    if (IsIronmonRun())
+        return VSSEEKER_NO_ONE_IN_RANGE;
 #if FREE_MATCH_CALL == FALSE
     u8 vsSeekerChargeSteps = gSaveBlock1Ptr->trainerRematchStepCounter;
 

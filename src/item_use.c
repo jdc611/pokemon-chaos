@@ -936,6 +936,11 @@ void ItemUseOutOfBattle_PPRecovery(u8 taskId)
 
 void ItemUseOutOfBattle_PPUp(u8 taskId)
 {
+    if (IsIronmonRun())
+    {
+        DisplayDadsAdviceCannotUseItemMessage(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
+        return;
+    }
     gItemUseCB = ItemUseCB_PPUp;
     SetUpItemUseCallback(taskId);
 }
@@ -1517,6 +1522,8 @@ void ItemUseOutOfBattle_CannotUse(u8 taskId)
 
 static bool32 IsValidLocationForVsSeeker(void)
 {
+    if (IsIronmonRun())
+        return FALSE; // Repeatable rematches would bypass trainer-only EXP.
     u16 mapGroup = gSaveBlock1Ptr->location.mapGroup;
     u16 mapNum = gSaveBlock1Ptr->location.mapNum;
     enum MapType mapType = gMapHeader.mapType;

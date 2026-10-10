@@ -15,7 +15,7 @@ def check():
     frames(3)
     assert call('ChaosTrackerIsOpen')
     snap('ironmon-tracker-stats')
-    for page in range(6):
+    for page in range(10):
         frames(12,256);chars=blob(0x06008000,0x4000)
         frames(60,256)
         assert chars==blob(0x06008000,0x4000), 'held R repeated pages'

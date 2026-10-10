@@ -212,6 +212,20 @@ void IronmonGenerateTrainerMon(struct Pokemon *mon, const struct TrainerMon *ent
     SetMonData(mon, MON_DATA_OT_GENDER, &gender);
 }
 
+void IronmonGenerateFacilityMon(struct Pokemon *mon, const struct BattleTowerPokemon *entry, u32 identity, u32 level)
+{
+    // Hash stable source identity, never live RNG or the player's current level.
+    u32 seed = IronmonMix(gSaveBlock3Ptr->worldSeed ^ identity ^ entry->species
+        ^ entry->personality ^ entry->otId);
+    enum Species species = IronmonSpecies(seed);
+    CreateMon(mon, species, max(1, min(MAX_LEVEL, level)), IronmonMix(seed ^ 0x504944u), OTID_STRUCT_PRESET(entry->otId));
+    GiveMonInitialMoveset(mon);
+    IronmonAssignAbility(mon, species, seed);
+    enum Item item = IronmonHeldItem(seed);
+    SetMonData(mon, MON_DATA_HELD_ITEM, &item);
+    ApplyMinimalGrindingModeToMon(mon);
+}
+
 void IronmonGiveStarter(enum Species species)
 {
     struct IronmonRunState *state = &gSaveBlock3Ptr->ironmon;

@@ -5,6 +5,7 @@
 #include "chaos_v2.h"
 #include "ironmon.h"
 #include "battle.h"
+#include "battle_message.h"
 #include "battle_main.h"
 #include "bg.h"
 #include "gpu_regs.h"
@@ -23,7 +24,7 @@
 #include "constants/flags.h"
 #include "constants/game_stat.h"
 
-#define TRACKER_PAGES 7
+#define TRACKER_PAGES 11
 
 // Borrow only one unused window slot for CPU text rendering. No BG manager,
 // tile allocation, existing window, task, sprite or battle resource is reset.
@@ -194,6 +195,32 @@ static void CycleObservedSpecies(bool32 forward)
         }
     }
 }
+static u32 ObservationKind(void)
+{
+    switch (sTracker->page)
+    {
+    case 3: return CHAOS_OBS_MOVE;
+    case 4: return CHAOS_OBS_ABILITY;
+    case 7: return CHAOS_OBS_DAMAGE;
+    case 8: return CHAOS_OBS_STAT;
+    case 9: return CHAOS_OBS_BATTLE;
+    default: return 0;
+    }
+}
+static const u8 *OutcomeName(u32 outcome)
+{
+    switch (outcome)
+    {
+    case B_OUTCOME_WON: return COMPOUND_STRING("Won");
+    case B_OUTCOME_LOST: return COMPOUND_STRING("Lost");
+    case B_OUTCOME_DREW: return COMPOUND_STRING("Draw");
+    case B_OUTCOME_CAUGHT: return COMPOUND_STRING("Caught");
+    case B_OUTCOME_RAN: return COMPOUND_STRING("Escaped");
+    case B_OUTCOME_PLAYER_TELEPORTED: return COMPOUND_STRING("Player teleported");
+    case B_OUTCOME_MON_FLED: return COMPOUND_STRING("Opponent fled");
+    default: return COMPOUND_STRING("Battle ended");
+    }
+}
 static void DrawObservations(void)
 {
     const struct ChaosObservationJournal *journal=ChaosObservationsRead();
@@ -209,8 +236,13 @@ static void DrawObservations(void)
             if(journal->facts[i].fact==CHAOS_OBS_SEEN)
             {sTracker->observedSpecies=journal->facts[i].species;break;}
     Print(6,40,gSpeciesInfo[sTracker->observedSpecies].speciesName,sBlue);
-    Print(117,40,sTracker->page==3?COMPOUND_STRING("MOVES / USES SEEN"):COMPOUND_STRING("ABILITIES SHOWN"),sInk);
-    u32 type=sTracker->page==3?CHAOS_OBS_MOVE:CHAOS_OBS_ABILITY;
+    u32 type=ObservationKind();
+    const u8 *heading=type==CHAOS_OBS_MOVE?COMPOUND_STRING("MOVES / USES SEEN"):
+        type==CHAOS_OBS_ABILITY?COMPOUND_STRING("ABILITIES SHOWN"):
+        type==CHAOS_OBS_DAMAGE?COMPOUND_STRING("MAX HP LOST"):
+        type==CHAOS_OBS_STAT?COMPOUND_STRING("STAGES / TIMES"):
+        COMPOUND_STRING("OUTCOMES / TIMES");
+    Print(117,40,heading,sInk);
     u32 count=0,shown=0;
     for(u32 i=0;i<journal->count;i++)
     {
@@ -218,11 +250,23 @@ static void DrawObservations(void)
         if(record->species!=sTracker->observedSpecies || (record->fact&0xF000)!=type)continue;
         if(count++<sTracker->factPage*4 || shown==4)continue;
         u32 value=record->fact&0xFFF, y=56+16*shown++;
-        Print(6,y,type==CHAOS_OBS_MOVE?GetMoveName(value):gAbilitiesInfo[value].name,sInk);
-        if(type==CHAOS_OBS_MOVE)Number(180,y,record->count,sInk);
+        if(type==CHAOS_OBS_STAT)
+        {
+            Print(6,y,gStatNamesTable[value>>4],sInk);
+            u32 stage=value&15;
+            Print(117,y,stage>=DEFAULT_STAT_STAGE?COMPOUND_STRING("+"):COMPOUND_STRING("-"),stage>DEFAULT_STAT_STAGE?sRed:stage<DEFAULT_STAT_STAGE?sBlue:sInk);
+            Number(126,y,stage>=DEFAULT_STAT_STAGE?stage-DEFAULT_STAT_STAGE:DEFAULT_STAT_STAGE-stage,sInk);
+        }
+        else
+            Print(6,y,type==CHAOS_OBS_ABILITY?gAbilitiesInfo[value].name:type==CHAOS_OBS_BATTLE?OutcomeName(value):GetMoveName(value),sInk);
+        if(type!=CHAOS_OBS_ABILITY)Number(180,y,record->count,sInk);
     }
     if(!shown)Print(6,56,COMPOUND_STRING("Not observed"),sInk);
-    Print(6,112,journal->full?COMPOUND_STRING("Journal full: earlier facts preserved."):COMPOUND_STRING("A: MORE   Uses seen; PP unknown."),sInk);
+    Print(6,112,journal->full?COMPOUND_STRING("Journal full: earlier facts preserved."):
+        type==CHAOS_OBS_DAMAGE?COMPOUND_STRING("A: MORE   Damage to your Pokemon."):
+        type==CHAOS_OBS_STAT?COMPOUND_STRING("A: MORE   Observed stage history."):
+        type==CHAOS_OBS_BATTLE?COMPOUND_STRING("A: MORE   Final visible opponents."):
+        COMPOUND_STRING("A: MORE   Uses seen; PP unknown."),sInk);
 }
 static void DrawProgress(void)
 {
@@ -289,9 +333,9 @@ static void Draw(void)
     CpuFill16(0x1111,(void *)BG_CHAR_ADDR(2),TRACKER_TILES*TILE_SIZE_4BPP);
     CpuFill16(0x4444,(void *)(BG_CHAR_ADDR(2)+32),28*2*32);
     Print(6,3,COMPOUND_STRING("CHAOS TRACKER"),sWhite);
-    Number(180,3,sTracker->page+1,sWhite);Print(192,3,COMPOUND_STRING("/ 7"),sWhite);
+    Number(173,3,sTracker->page+1,sWhite);Print(192,3,COMPOUND_STRING("/ 11"),sWhite);
     CpuFill16(0x6666,(void *)(BG_CHAR_ADDR(2)+32*(1+3*28)),28*2*32);
-    if(sTracker->page<3)
+    if(sTracker->page<3 || sTracker->page==10)
     {
         GetMonData(mon,MON_DATA_NICKNAME,text);Print(6,24,text,sBand);
         Print(143,24,COMPOUND_STRING("Lv."),sBand);Number(164,24,GetMonData(mon,MON_DATA_LEVEL),sBand);
@@ -362,12 +406,31 @@ static void Draw(void)
             }
         }
     }
-    else if(sTracker->page<5)DrawObservations();
+    else if(ObservationKind())DrawObservations();
     else if(sTracker->page==5)DrawProgress();
-    else DrawRetired();
+    else if(sTracker->page==6)DrawRetired();
+    else
+    {
+        for(u32 i=0;i<MAX_MON_MOVES;i++)
+        {
+            enum Move move=active?active->moves[i]:GetMonData(mon,MON_DATA_MOVE1+i);
+            u32 y=40+i*18;
+            Print(6,y,move?GetMoveName(move):COMPOUND_STRING("--"),sInk);
+            if(!move)continue;
+            enum Type type=GetMoveType(move);
+            u32 category=GetMoveCategory(move);
+            u32 type1=active?active->types[0]:GetSpeciesType(species,0);
+            u32 type2=active?active->types[1]:GetSpeciesType(species,1);
+            Print(117,y,gTypesInfo[type].name,category!=DAMAGE_CATEGORY_STATUS && (type==type1 || type==type2)?sRed:sBlue);
+            Print(172,y,category==DAMAGE_CATEGORY_PHYSICAL?COMPOUND_STRING("PHYS"):
+                category==DAMAGE_CATEGORY_SPECIAL?COMPOUND_STRING("SPEC"):COMPOUND_STRING("STATUS"),sInk);
+
+        }
+        Print(6,112,COMPOUND_STRING("Red type = STAB. Base move types."),sInk);
+    }
     CpuFill16(0x8888,(void *)(BG_CHAR_ADDR(2)+32*(1+16*28)),28*2*32);
     static const u8 footer[]={8,7,8};
-    Print(6,130,sTracker->page<3?COMPOUND_STRING("L/R PAGE   UP/DOWN PARTY   B CLOSE"):sTracker->page<5?COMPOUND_STRING("L/R PAGE   UP/DOWN FOE   B CLOSE"):COMPOUND_STRING("L/R PAGE     B CLOSE"),footer);
+    Print(6,130,(sTracker->page<3 || sTracker->page==10)?COMPOUND_STRING("L/R PAGE   UP/DOWN PARTY   B CLOSE"):ObservationKind()?COMPOUND_STRING("L/R PAGE   UP/DOWN FOE   B CLOSE"):COMPOUND_STRING("L/R PAGE     B CLOSE"),footer);
     // Direct copies target the borrowed blocks, never the live BG configs.
 
 }
@@ -412,12 +475,12 @@ static void Input(void)
     }
     else if(gMain.newKeysRaw&(DPAD_UP|DPAD_DOWN))
     {
-        if(sTracker->page>=3 && sTracker->page<5)
+        if(ObservationKind())
         {
             CycleObservedSpecies((gMain.newKeysRaw&DPAD_DOWN)!=0);
             Draw();return;
         }
-        if(sTracker->page>=5)return;
+        if(sTracker->page>=5 && sTracker->page!=10)return;
         for(u32 count=0;count<PARTY_SIZE;count++)
         {
             sTracker->party=(sTracker->party+((gMain.newKeysRaw&DPAD_DOWN)?1:PARTY_SIZE-1))%PARTY_SIZE;
@@ -425,10 +488,10 @@ static void Input(void)
         }
         Draw();
     }
-    else if(sTracker->page>=3 && sTracker->page<5 && (gMain.newKeysRaw&A_BUTTON))
+    else if(ObservationKind() && (gMain.newKeysRaw&A_BUTTON))
     {
         const struct ChaosObservationJournal *journal=ChaosObservationsRead();
-        u32 count=0,type=sTracker->page==3?CHAOS_OBS_MOVE:CHAOS_OBS_ABILITY;
+        u32 count=0,type=ObservationKind();
         if(journal)
             for(u32 i=0;i<journal->count;i++)
                 if(journal->facts[i].species==sTracker->observedSpecies && (journal->facts[i].fact&0xF000)==type)count++;

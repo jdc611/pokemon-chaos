@@ -102,7 +102,16 @@ void DoSpecialTrainerBattle(void)
     #if FREE_BATTLE_TOWER_E_READER == FALSE
         ZeroEnemyPartyMons();
         for (i = 0; i < (int)ARRAY_COUNT(gSaveBlock2Ptr->frontier.ereaderTrainer.party); i++)
-            CreateBattleTowerMon(&gParties[B_TRAINER_OPPONENT_A][i], &gSaveBlock2Ptr->frontier.ereaderTrainer.party[i]);
+        {
+            struct BattleTowerPokemon *entry = &gSaveBlock2Ptr->frontier.ereaderTrainer.party[i];
+            if (IsIronmonRun())
+            {
+                if (entry->species != SPECIES_NONE)
+                    IronmonGenerateFacilityMon(&gParties[B_TRAINER_OPPONENT_A][i], entry, 0x45520000u + i, entry->level);
+            }
+            else
+                CreateBattleTowerMon(&gParties[B_TRAINER_OPPONENT_A][i], entry);
+        }
         gBattleTypeFlags = BATTLE_TYPE_TRAINER | BATTLE_TYPE_EREADER_TRAINER;
         TRAINER_BATTLE_PARAM.opponentA = 0;
         CreateTask(Task_StartBattleAfterTransition, 1);

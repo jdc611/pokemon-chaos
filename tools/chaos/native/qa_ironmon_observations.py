@@ -36,6 +36,18 @@ call('ChaosObserveMove',1,TACKLE);call('ChaosObserveMove',1,TACKLE)
 call('ChaosObserveAbility',1,SOUNDPROOF)
 assert (species,0x1000|TACKLE,2) in facts()
 assert (species,0x2000|SOUNDPROOF,1) in facts()
+# Additional histories contain visible events, not inferred opponent HP/stats.
+call('ChaosObserveDamage',1,0,TACKLE,12);call('ChaosObserveDamage',1,0,TACKLE,8)
+call('ChaosObserveDamage',0,1,TACKLE,500)
+assert (species,0x3000|TACKLE,12) in facts()
+assert not any(fact==0x3000|TACKLE and count==500 for _,fact,count in facts())
+call('ChaosObserveStat',1,1,8);call('ChaosObserveStat',1,1,8)
+assert (species,0x4000|(1<<4)|8,2) in facts()
+call('ChaosObserveStat',1,8,8);call('ChaosObserveStat',1,1,13)
+wr('gBattleOutcome',1,1);call('ChaosObserveBattleEnd')
+assert (species,0x5001,1) in facts()
+print('PASS opponent damage-to-player maxima, public stage history and outcomes; invalid/private events rejected.',flush=True)
+
 # Hidden slots and actual ability may disagree: only the explicitly shown event is ingested.
 wr(symbols['gBattleMons']+BS+BMOVES,DB,2)
 wr(symbols['gBattleMons']+BS+BABILITY,ILLUSION,2)
@@ -53,7 +65,13 @@ assert call('ChaosTrackerTryOpen');frames(60)
 for _ in range(3):frames(12,256);frames(20)
 snap('ironmon-observed-moves')
 frames(12,256);frames(20);snap('ironmon-observed-abilities')
-frames(12,1);frames(20);frames(3,2);frames(1)
+frames(12,1);frames(20)
+for _ in range(3):frames(12,256);frames(20)
+snap('ironmon-observed-damage')
+frames(12,256);frames(20);snap('ironmon-observed-stages')
+frames(12,256);frames(20);snap('ironmon-observed-outcomes')
+frames(12,256);frames(20);snap('ironmon-move-coverage')
+frames(3,2);frames(1)
 assert storage==blob(rd('gPokemonStoragePtr'),STORAGESIZE)
 assert not call('ChaosTrackerIsOpen')
 # Flash save/reload, with no emulator state used to preserve the journal.
@@ -79,6 +97,12 @@ for _ in range(200):
     if any(sp==species and fact==0x1000|TACKLE for sp,fact,_ in facts()):break
 else:raise AssertionError('real opponent move announcement did not record')
 print('PASS actual opponent used-move announcement records Tackle through battle inputs.',flush=True)
+for _ in range(250):
+    if any((fact&0xf000)==0x3000 for _,fact,_ in facts()):break
+    frames(3,1);frames(12)
+else:raise AssertionError('actual incoming Tackle damage was not journaled')
+print('PASS actual opponent attack damage recorded without reading enemy maximum HP.',flush=True)
+
 # No eviction on overflow; existing recorded use counters continue working.
 species=enter();j=journal()
 call('ChaosObserveMove',1,TACKLE)

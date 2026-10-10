@@ -1,4 +1,5 @@
 #include "global.h"
+#include "chaos_observations.h"
 #include "chaos_abilities.h"
 #include "battle.h"
 #include "battle_scripts.h"
@@ -460,6 +461,8 @@ static void StatChanged(struct BattleCalcValues *cv, struct StatChange *st, bool
         if (gBattleMons[cv->battlerDef].statStages[st->stat] < MIN_STAT_STAGE)
             gBattleMons[cv->battlerDef].statStages[st->stat] = MIN_STAT_STAGE;
     }
+
+    ChaosObserveStat(cv->battlerDef, st->stat, gBattleMons[cv->battlerDef].statStages[st->stat]);
 
     if (cv->moveEffect == EFFECT_STOCKPILE && st->stage > 0)
     {

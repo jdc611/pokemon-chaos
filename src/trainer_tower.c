@@ -662,7 +662,7 @@ static void DoTrainerTowerBattle(void)
 {
     gBattleTypeFlags = BATTLE_TYPE_TRAINER | BATTLE_TYPE_TRAINER_TOWER;
 
-    if (CURR_FLOOR.challengeType == CHALLENGE_TYPE_DOUBLE)
+    if (CURR_FLOOR.challengeType == CHALLENGE_TYPE_DOUBLE && !IsIronmonRun())
         gBattleTypeFlags |= BATTLE_TYPE_DOUBLE;
 
     TRAINER_BATTLE_PARAM.opponentA = 0;
@@ -963,6 +963,31 @@ static void BuildEnemyParty(void)
     u8 monIdx;
 
     ZeroEnemyPartyMons();
+
+    if (IsIronmonRun())
+    {
+        // Tower templates omit levels. Use a fixed postgame facility level,
+        // rather than scaling opponents to the IronMON main.
+        u32 count = CURR_FLOOR.challengeType == CHALLENGE_TYPE_KNOCKOUT ? 1 : 2;
+        for (i = 0; i < count; i++)
+        {
+            u32 sourceTrainer = trainerIdx;
+            if (CURR_FLOOR.challengeType == CHALLENGE_TYPE_DOUBLE)
+            {
+                sourceTrainer = i;
+                monIdx = sDoubleBattleChallengeMonIdxs[floorIdx][i];
+            }
+            else if (CURR_FLOOR.challengeType == CHALLENGE_TYPE_KNOCKOUT)
+                monIdx = sKnockoutChallengeMonIdxs[floorIdx][trainerIdx];
+            else
+                monIdx = sSingleBattleChallengeMonIdxs[floorIdx][i];
+            u32 identity = 0x54540000u ^ (gSaveBlock1Ptr->towerChallengeId << 12)
+                ^ (floorIdx << 8) ^ (sourceTrainer << 4) ^ monIdx;
+            IronmonGenerateFacilityMon(&gParties[B_TRAINER_OPPONENT_A][i],
+                &CURR_FLOOR.trainers[sourceTrainer].mons[monIdx], identity, 50);
+        }
+        return;
+    }
 
     switch (CURR_FLOOR.challengeType)
     {

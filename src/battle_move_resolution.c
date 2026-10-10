@@ -1,4 +1,5 @@
 #include "global.h"
+#include "chaos_observations.h"
 #include "chaos_records.h"
 #include "chaos_abilities.h"
 #include "battle.h"
@@ -3038,6 +3039,7 @@ static bool32 TryMoveDamageUpdate(struct BattleCalcValues *cv)
             }
 
             hpLost = hpBefore - gBattleMons[cv->battlerDef].hp;
+            ChaosObserveDamage(cv->battlerAtk, cv->battlerDef, cv->move, hpLost);
             if (hpLost && GetBattlerSide(cv->battlerAtk) == B_SIDE_PLAYER && GetBattlerSide(cv->battlerDef) == B_SIDE_OPPONENT)
             {
                 ChaosEnsureRunRecords();

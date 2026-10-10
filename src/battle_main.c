@@ -1,4 +1,5 @@
 #include "global.h"
+#include "chaos_observations.h"
 #include "chaos_abilities.h"
 #include "chaos_mega.h"
 #include "battle.h"
@@ -5324,6 +5325,7 @@ static void FreeResetData_ReturnToOvOrDoEvolutions(void)
 {
     if (!gPaletteFade.active)
     {
+        ChaosObserveBattleEnd();
         memset(&gBattleMons, 0, sizeof(struct BattlePokemon) * MAX_BATTLERS_COUNT);
         gIsFishingEncounter = FALSE;
         gIsSurfingEncounter = FALSE;

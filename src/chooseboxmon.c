@@ -1,4 +1,5 @@
 #include "global.h"
+#include "ironmon.h"
 #include "chooseboxmon.h"
 #include "daycare.h"
 #include "event_data.h"
@@ -343,7 +344,7 @@ s32 LearnMove(const struct MoveLearnUI *ui, u8 taskId)
         u32 originalPP = GetBoxMonData(boxmon, MON_DATA_PP1 + slot);
         u32 pp = GetMovePP(move);
         SetBoxMonData(boxmon, MON_DATA_MOVE1 + slot, &move);
-        if (recoverPP || (pp < originalPP))
+        if ((recoverPP && !IsIronmonRun()) || (pp < originalPP))
             SetBoxMonData(boxmon, MON_DATA_PP1 + slot, &pp);
         GetBoxMonNickname(boxmon, gStringVar1);
         StringCopy(gStringVar2, GetMoveName(move));

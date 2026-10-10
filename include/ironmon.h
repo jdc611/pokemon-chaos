@@ -20,6 +20,7 @@ void IronmonSetTrainerIdentity(u32 id);
 u32 IronmonTrainerPartySize(const struct Trainer *trainer);
 u32 IronmonTrainerSeed(const struct Trainer *trainer);
 void IronmonGenerateTrainerMon(struct Pokemon *mon, const struct TrainerMon *entry, struct TrainerGenerator *trainer);
+void IronmonGenerateFacilityMon(struct Pokemon *mon, const struct BattleTowerPokemon *entry, u32 identity, u32 level);
 void IronmonGiveStarter(enum Species species);
 void IronmonPrepareWildMon(struct Pokemon *mon);
 u32 IronmonAcceptCapture(struct Pokemon *mon);
