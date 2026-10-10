@@ -1,4 +1,5 @@
 #include "global.h"
+#include "chaos_observations.h"
 #include "chaos_abilities.h"
 #include "malloc.h"
 #include "battle.h"
@@ -2918,6 +2919,8 @@ void CreateAbilityPopUp(enum BattlerId battler, enum Ability ability, bool32 isD
     if (gBattleScripting.abilityPopupOverwrite)
         ability = gBattleScripting.abilityPopupOverwrite;
 
+    ChaosObserveAbility(battler, ability);
+
     if (gTestRunnerEnabled)
     {
         TestRunner_Battle_RecordAbilityPopUp(battler, ability);
@@ -2975,6 +2978,7 @@ void UpdateAbilityPopup(enum BattlerId battler)
     u8 *spriteIds = gBattleStruct->abilityPopUpSpriteIds[battler];
     enum Ability ability = (gBattleScripting.abilityPopupOverwrite) ? gBattleScripting.abilityPopupOverwrite
                                                            : gBattleMons[battler].ability;
+    ChaosObserveAbility(battler, ability);
     PrintAbilityOnAbilityPopUp(ability, spriteIds[0], spriteIds[1]);
 }
 

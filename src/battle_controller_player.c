@@ -1,5 +1,6 @@
 #include "global.h"
 #include "chaos_tracker.h"
+#include "chaos_observations.h"
 #include "chaos_abilities.h"
 #include "battle.h"
 #include "battle_anim.h"
@@ -396,6 +397,7 @@ static void DrawBattleStagePanel(void)
 
 static void HandleInputChooseAction(enum BattlerId battler)
 {
+    ChaosObserveOpponents();
     if (ChaosTrackerShortcut()) return;
     enum Item itemId = gBattleResources->bufferA[battler][2] | (gBattleResources->bufferA[battler][3] << 8);
 
@@ -882,6 +884,7 @@ static bool32 CanSelectBattler(enum MoveTarget target)
 
 void HandleInputChooseMove(enum BattlerId battler)
 {
+    ChaosObserveOpponents();
     if (ChaosTrackerShortcut()) return;
     u32 canSelectTarget = 0;
     struct ChooseMoveStruct *moveInfo = (struct ChooseMoveStruct *)(&gBattleResources->bufferA[battler][4]);

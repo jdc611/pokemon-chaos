@@ -1,10 +1,11 @@
-"""Tracker display restoration and paused input; observation journal pending."""
+"""Tracker display restoration and paused input; journal has separate fixtures."""
 from qa_ironmon_core import *
 import sys
 def blob(ptr,size):return bytes(rd(ptr+i,1) for i in range(size))
 def snapshot():
     return {name:blob(address,size) for name,address,size in (
         ('party',p,6*MONSIZE),('save3',s,SIZE),
+        ('storage',rd('gPokemonStoragePtr'),STORAGE),
         ('chars',0x06008000,0x4000),('map',0x0600f800,0x800),
         ('windows',symbols['gWindows'],32*12),
         ('tasks',symbols['gTasks'],16*40))}
@@ -14,7 +15,7 @@ def check():
     frames(3)
     assert call('ChaosTrackerIsOpen')
     snap('ironmon-tracker-stats')
-    for page in range(2):
+    for page in range(6):
         frames(12,256);chars=blob(0x06008000,0x4000)
         frames(60,256)
         assert chars==blob(0x06008000,0x4000), 'held R repeated pages'
@@ -33,6 +34,19 @@ def check():
     for name in before:assert before[name]==after[name],name
 start();call('IronmonGiveStarter',BULBA);check()
 print('PASS IronMON field tracker restores borrowed VRAM/window/tasks/callbacks and preserves Pokemon/save/RNG.',flush=True)
+# Retired history is read-only and paginates the bounded 30-snapshot ring.
+start();call('IronmonGiveStarter',BULBA)
+for _ in range(35):
+    call('CreateWildMon',PIKA,3);assert call('IronmonAcceptCapture',p+6*MONSIZE)==GIVEN
+before=snapshot();assert call('ChaosTrackerTryOpen');frames(60)
+for _ in range(5):frames(12,256);frames(20)
+snap('ironmon-tracker-progress')
+frames(12,256);frames(20)
+for _ in range(9):frames(12,1);frames(20)
+snap('ironmon-tracker-retired')
+frames(3,2);frames(1)
+for name,value in before.items():assert value==snapshot()[name],('retired',name)
+print('PASS progress/retired pages, 35 captures and read-only history pagination preserve party/storage/save.',flush=True)
 # Regular Chaos supports a party rather than enforcing one main.
 wr(s+DIFF,1,1);call('IronmonInitializeRun');check()
 print('PASS regular Chaos field tracker restoration.',flush=True)
@@ -62,7 +76,7 @@ for ptr in allocations:
 for name,value in before.items():assert value==snapshot()[name],('denial',name)
 print('PASS low-heap tracker denial preserves scene and avoids fatal allocation.',flush=True)
 # Real battle stable action and move-selection input. No injected completion.
-STRUCTSIZE,BS,MAINSTATE,BATK,BMOVES,BPP=struct.unpack('<6I',(ROOT/'ironmon-tracker-layout.bin').read_bytes())
+STRUCTSIZE,BS,MAINSTATE,BATK,BMOVES,BPP,BSTAGES=struct.unpack('<7I',(ROOT/'ironmon-tracker-layout.bin').read_bytes())
 start();call('IronmonGiveStarter',BULBA)
 if '--doubles' in sys.argv:
     wr(s+DIFF,1,1);call('IronmonInitializeRun')
@@ -87,6 +101,8 @@ for move_screen in (False,True):
     wr(symbols['gBattleMons']+BATK,321,2)
     wr(symbols['gBattleMons']+BMOVES,TACKLE,2)
     wr(symbols['gBattleMons']+BPP,3,1)
+    wr(symbols['gBattleMons']+BSTAGES+1,8,1) # Attack +2, Defense -2 remain visible.
+    wr(symbols['gBattleMons']+BSTAGES+2,4,1)
     battle_struct=blob(rd('gBattleStruct'),STRUCTSIZE)
     battle_mons=blob(symbols['gBattleMons'],4*BS)
     before=snapshot();callbacks=blob(symbols['gMain'],24)

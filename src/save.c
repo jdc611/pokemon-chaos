@@ -82,6 +82,7 @@ STATIC_ASSERT(sizeof(struct SaveBlock3) <= SAVE_BLOCK_3_CHUNK_SIZE * NUM_SECTORS
 STATIC_ASSERT(sizeof(struct SaveBlock2) <= SECTOR_DATA_SIZE, SaveBlock2FreeSpace);
 STATIC_ASSERT(sizeof(struct SaveBlock1) <= SECTOR_DATA_SIZE * (SECTOR_ID_SAVEBLOCK1_END - SECTOR_ID_SAVEBLOCK1_START + 1), SaveBlock1FreeSpace);
 STATIC_ASSERT(sizeof(struct PokemonStorage) <= SECTOR_DATA_SIZE * (SECTOR_ID_PKMN_STORAGE_END - SECTOR_ID_PKMN_STORAGE_START + 1), PokemonStorageFreeSpace);
+STATIC_ASSERT(offsetof(struct PokemonStorage, observations) == 34144, ChaosObservationLegacyStoragePrefix);
 
 COMMON_DATA u16 gLastWrittenSector = 0;
 COMMON_DATA u32 gLastSaveCounter = 0;
@@ -500,6 +501,8 @@ static u8 CopySaveSlotData(u16 sectorId, struct SaveSectorLocation *locations)
         ReadFlashSector(i + slotOffset, gReadWriteSector);
 
         id = gReadWriteSector->id;
+        if (id >= NUM_SECTORS_PER_SLOT)
+            continue;
         if (id == 0)
             gLastWrittenSector = i;
 
@@ -533,7 +536,7 @@ static u8 GetSaveValidStatus(const struct SaveSectorLocation *locations)
     for (i = 0; i < NUM_SECTORS_PER_SLOT; i++)
     {
         ReadFlashSector(i, gReadWriteSector);
-        if (gReadWriteSector->signature == SECTOR_SIGNATURE)
+        if (gReadWriteSector->signature == SECTOR_SIGNATURE && gReadWriteSector->id < NUM_SECTORS_PER_SLOT)
         {
             signatureValid = TRUE;
             checksum = CalculateChecksum(gReadWriteSector->data, locations[gReadWriteSector->id].size);
@@ -565,7 +568,7 @@ static u8 GetSaveValidStatus(const struct SaveSectorLocation *locations)
     for (i = 0; i < NUM_SECTORS_PER_SLOT; i++)
     {
         ReadFlashSector(i + NUM_SECTORS_PER_SLOT, gReadWriteSector);
-        if (gReadWriteSector->signature == SECTOR_SIGNATURE)
+        if (gReadWriteSector->signature == SECTOR_SIGNATURE && gReadWriteSector->id < NUM_SECTORS_PER_SLOT)
         {
             signatureValid = TRUE;
             checksum = CalculateChecksum(gReadWriteSector->data, locations[gReadWriteSector->id].size);

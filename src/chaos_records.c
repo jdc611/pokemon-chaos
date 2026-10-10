@@ -1,5 +1,6 @@
 #include "global.h"
 #include "chaos_records.h"
+#include "chaos_observations.h"
 #include "battle.h"
 #include "battle_setup.h"
 #include "event_data.h"
@@ -58,6 +59,9 @@ static void RecordMon(struct ChaosRunMonRecord *record, struct Pokemon *mon)
 
 void ChaosRecordMove(void)
 {
+    // The used-move announcement is visible to the player. AI knowledge and
+    // party creation are deliberately not sources of tracker observations.
+    ChaosObserveMove(gBattlerAttacker, gCurrentMove);
     if (GetBattlerSide(gBattlerAttacker) != B_SIDE_PLAYER
      || gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED | BATTLE_TYPE_FIRST_BATTLE)) return;
     ChaosEnsureRunRecords();

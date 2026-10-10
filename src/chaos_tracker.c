@@ -1,5 +1,7 @@
 #include "global.h"
 #include "chaos_tracker.h"
+#include "chaos_observations.h"
+#include "pokemon_storage_system.h"
 #include "chaos_v2.h"
 #include "ironmon.h"
 #include "battle.h"
@@ -17,7 +19,11 @@
 #include "window.h"
 #include "constants/rgb.h"
 #include "event_data.h"
+#include "overworld.h"
 #include "constants/flags.h"
+#include "constants/game_stat.h"
+
+#define TRACKER_PAGES 7
 
 // Borrow only one unused window slot for CPU text rendering. No BG manager,
 // tile allocation, existing window, task, sprite or battle resource is reset.
@@ -29,6 +35,8 @@ struct TrackerOverlay
     ALIGNED(4) u8 pixels[TRACKER_PIXELS];
     u16 unfaded[16], faded[16];
     u16 registers[7];
+    u16 observedSpecies, factPage;
+    u8 retiredPage;
     struct Window unusedWindow;
     MainCallback callback1, callback2;
     IntrCallback vblank, hblank;
@@ -142,13 +150,13 @@ static void Stat(u32 x,u32 y,const u8 *name,u32 field,enum Stat stat)
     struct Pokemon *mon=SelectedMon();
     u32 nature=GetNature(mon);
     const u8 *colors=sInk;
-    if(gNaturesInfo[nature].statUp!=gNaturesInfo[nature].statDown)
+    struct BattlePokemon *active=ActiveMon();
+    if((!active || !active->volatiles.transformed) && gNaturesInfo[nature].statUp!=gNaturesInfo[nature].statDown)
     {
         if(gNaturesInfo[nature].statUp==stat)colors=sRed;
         else if(gNaturesInfo[nature].statDown==stat)colors=sBlue;
     }
     u32 value=GetMonData(mon,field);
-    struct BattlePokemon *active=ActiveMon();
     if(active)
         switch(field)
         {
@@ -159,6 +167,118 @@ static void Stat(u32 x,u32 y,const u8 *name,u32 field,enum Stat stat)
         case MON_DATA_SPEED:value=active->speed;break;
         }
     Print(x,y,name,colors);Number(x+63,y,value,colors);
+    if(active && active->statStages[stat]!=DEFAULT_STAT_STAGE)
+    {
+        s32 stage=active->statStages[stat]-DEFAULT_STAT_STAGE;
+        u8 text[8];
+        u8 *end=StringCopy(text,stage>0?COMPOUND_STRING("+"):COMPOUND_STRING("-"));
+        ConvertIntToDecimalStringN(end,stage>0?stage:-stage,STR_CONV_MODE_LEFT_ALIGN,1);
+        Print(x+91,y,text,sInk);
+    }
+}
+static void CycleObservedSpecies(bool32 forward)
+{
+    const struct ChaosObservationJournal *journal=ChaosObservationsRead();
+    if(!journal)return;
+    u32 current=0;
+    for(u32 i=0;i<journal->count;i++)
+        if(journal->facts[i].fact==CHAOS_OBS_SEEN && journal->facts[i].species==sTracker->observedSpecies)
+        {current=i;break;}
+    for(u32 n=0;n<journal->count;n++)
+    {
+        current=(current+(forward?1:journal->count-1))%journal->count;
+        if(journal->facts[current].fact==CHAOS_OBS_SEEN)
+        {
+            sTracker->observedSpecies=journal->facts[current].species;
+            sTracker->factPage=0;return;
+        }
+    }
+}
+static void DrawObservations(void)
+{
+    const struct ChaosObservationJournal *journal=ChaosObservationsRead();
+    Print(6,24,COMPOUND_STRING("OBSERVED IDENTITIES"),sBand);
+    if(!journal || journal->count==0)
+    {
+        Print(6,48,COMPOUND_STRING("No opponents recorded yet."),sInk);
+        Print(6,72,COMPOUND_STRING("Only visible battle events are saved."),sInk);
+        return;
+    }
+    if(!sTracker->observedSpecies)
+        for(u32 i=0;i<journal->count;i++)
+            if(journal->facts[i].fact==CHAOS_OBS_SEEN)
+            {sTracker->observedSpecies=journal->facts[i].species;break;}
+    Print(6,40,gSpeciesInfo[sTracker->observedSpecies].speciesName,sBlue);
+    Print(117,40,sTracker->page==3?COMPOUND_STRING("MOVES / USES SEEN"):COMPOUND_STRING("ABILITIES SHOWN"),sInk);
+    u32 type=sTracker->page==3?CHAOS_OBS_MOVE:CHAOS_OBS_ABILITY;
+    u32 count=0,shown=0;
+    for(u32 i=0;i<journal->count;i++)
+    {
+        const struct ChaosObservation *record=&journal->facts[i];
+        if(record->species!=sTracker->observedSpecies || (record->fact&0xF000)!=type)continue;
+        if(count++<sTracker->factPage*4 || shown==4)continue;
+        u32 value=record->fact&0xFFF, y=56+16*shown++;
+        Print(6,y,type==CHAOS_OBS_MOVE?GetMoveName(value):gAbilitiesInfo[value].name,sInk);
+        if(type==CHAOS_OBS_MOVE)Number(180,y,record->count,sInk);
+    }
+    if(!shown)Print(6,56,COMPOUND_STRING("Not observed"),sInk);
+    Print(6,112,journal->full?COMPOUND_STRING("Journal full: earlier facts preserved."):COMPOUND_STRING("A: MORE   Uses seen; PP unknown."),sInk);
+}
+static void DrawProgress(void)
+{
+    Print(6,24,COMPOUND_STRING("RUN PROGRESS"),sBand);
+    Print(6,42,COMPOUND_STRING("MODE"),sInk);
+    Print(80,42,IsIronmonRun()?(IsIronmonHardcore()?COMPOUND_STRING("IronMON Hardcore"):COMPOUND_STRING("IronMON Normal")):COMPOUND_STRING("Chaos"),sBlue);
+    Print(6,58,COMPOUND_STRING("SEED"),sInk);
+    u8 text[16];
+    ConvertIntToDecimalStringN(text,gSaveBlock3Ptr->worldSeed,STR_CONV_MODE_LEFT_ALIGN,10);
+    Print(80,58,text,sInk);
+    Print(6,74,COMPOUND_STRING("PLAY TIME"),sInk);
+    u8 *end=ConvertIntToDecimalStringN(text,gSaveBlock2Ptr->playTimeHours,STR_CONV_MODE_LEFT_ALIGN,3);
+    *end++=CHAR_COLON;
+    ConvertIntToDecimalStringN(end,gSaveBlock2Ptr->playTimeMinutes,STR_CONV_MODE_LEADING_ZEROS,2);
+    Print(80,74,text,sInk);
+    Print(6,90,IsIronmonRun()?COMPOUND_STRING("TRAINERS WON"):COMPOUND_STRING("TRAINER BATTLES"),sInk);
+    Number(139,90,IsIronmonRun()?gSaveBlock3Ptr->ironmon.trainersDefeated:GetGameStat(GAME_STAT_TRAINER_BATTLES),sInk);
+    Print(6,106,COMPOUND_STRING("BADGES"),sInk);
+    u32 badges=0;
+    for(u32 i=0;i<8;i++)if(FlagGet(FLAG_BADGE01_GET+i))badges++;
+    Number(80,106,badges,sInk);
+    if(IsIronmonRun())
+    {
+        Print(110,106,COMPOUND_STRING("RETIRED"),sInk);
+        Number(170,106,gSaveBlock3Ptr->ironmon.retiredCount,sInk);
+    }
+}
+static void DrawRetired(void)
+{
+    Print(6,24,COMPOUND_STRING("RETIRED HISTORY"),sBand);
+    if(!IsIronmonRun())
+    {
+        Print(6,48,COMPOUND_STRING("Retirement applies to IronMON."),sInk);
+        Print(6,72,COMPOUND_STRING("Your Chaos party remains available."),sInk);
+        return;
+    }
+    u32 total=gSaveBlock3Ptr->ironmon.retiredCount,count=min(total,IN_BOX_COUNT);
+    if(!count)
+    {
+        Print(6,48,COMPOUND_STRING("No retired Pokemon yet."),sInk);
+        return;
+    }
+    Print(6,40,COMPOUND_STRING("READ ONLY"),sBlue);
+    Print(155,40,COMPOUND_STRING("A: MORE"),sInk);
+    if(total>IN_BOX_COUNT)Print(83,40,COMPOUND_STRING("LAST 30"),sInk);
+    for(u32 row=0;row<4;row++)
+    {
+        u32 index=sTracker->retiredPage*4+row;
+        if(index>=count)break;
+        u32 slot=(total-1-index)%IN_BOX_COUNT;
+        u8 name[POKEMON_NAME_LENGTH+1];
+        GetAndCopyBoxMonDataAt(IRONMON_RETIRED_BOX,slot,MON_DATA_NICKNAME,name);
+        Print(6,56+row*16,name,sInk);
+        enum Species species=GetBoxMonDataAt(IRONMON_RETIRED_BOX,slot,MON_DATA_SPECIES);
+        if(species<NUM_SPECIES)Print(110,56+row*16,gSpeciesInfo[species].speciesName,sInk);
+    }
 }
 static void Draw(void)
 {
@@ -169,10 +289,13 @@ static void Draw(void)
     CpuFill16(0x1111,(void *)BG_CHAR_ADDR(2),TRACKER_TILES*TILE_SIZE_4BPP);
     CpuFill16(0x4444,(void *)(BG_CHAR_ADDR(2)+32),28*2*32);
     Print(6,3,COMPOUND_STRING("CHAOS TRACKER"),sWhite);
-    Number(180,3,sTracker->page+1,sWhite);Print(192,3,COMPOUND_STRING("/ 3"),sWhite);
+    Number(180,3,sTracker->page+1,sWhite);Print(192,3,COMPOUND_STRING("/ 7"),sWhite);
     CpuFill16(0x6666,(void *)(BG_CHAR_ADDR(2)+32*(1+3*28)),28*2*32);
-    GetMonData(mon,MON_DATA_NICKNAME,text);Print(6,24,text,sBand);
-    Print(143,24,COMPOUND_STRING("Lv."),sBand);Number(164,24,GetMonData(mon,MON_DATA_LEVEL),sBand);
+    if(sTracker->page<3)
+    {
+        GetMonData(mon,MON_DATA_NICKNAME,text);Print(6,24,text,sBand);
+        Print(143,24,COMPOUND_STRING("Lv."),sBand);Number(164,24,GetMonData(mon,MON_DATA_LEVEL),sBand);
+    }
     if(sTracker->page==0)
     {
         Print(6,42,gNaturesInfo[GetNature(mon)].name,sInk);
@@ -193,7 +316,7 @@ static void Draw(void)
         Stat(6,92,COMPOUND_STRING("DEFENSE"),MON_DATA_DEF,STAT_DEF);
         Stat(117,92,COMPOUND_STRING("SP. DEF"),MON_DATA_SPDEF,STAT_SPDEF);
         Stat(6,109,COMPOUND_STRING("SPEED"),MON_DATA_SPEED,STAT_SPEED);
-        Print(117,109,COMPOUND_STRING("Red + / Blue -"),sInk);
+        Print(117,109,active && active->volatiles.transformed?COMPOUND_STRING("Copied stats"):COMPOUND_STRING("Red + / Blue -"),sInk);
     }
     else if(sTracker->page==1)
     {
@@ -211,7 +334,7 @@ static void Draw(void)
             }
         }
     }
-    else
+    else if(sTracker->page==2)
     {
         enum Ability ability=GetMonAbility(mon);
         enum Type type1=GetSpeciesType(species,0),type2=GetSpeciesType(species,1);
@@ -238,11 +361,13 @@ static void Draw(void)
                 if(y>=128)break;
             }
         }
-
     }
+    else if(sTracker->page<5)DrawObservations();
+    else if(sTracker->page==5)DrawProgress();
+    else DrawRetired();
     CpuFill16(0x8888,(void *)(BG_CHAR_ADDR(2)+32*(1+16*28)),28*2*32);
     static const u8 footer[]={8,7,8};
-    Print(6,130,COMPOUND_STRING("L/R PAGE   UP/DOWN PARTY   B CLOSE"),footer);
+    Print(6,130,sTracker->page<3?COMPOUND_STRING("L/R PAGE   UP/DOWN PARTY   B CLOSE"):sTracker->page<5?COMPOUND_STRING("L/R PAGE   UP/DOWN FOE   B CLOSE"):COMPOUND_STRING("L/R PAGE     B CLOSE"),footer);
     // Direct copies target the borrowed blocks, never the live BG configs.
 
 }
@@ -281,16 +406,39 @@ static void Input(void)
     if(gMain.newKeysRaw&B_BUTTON){sTracker->closing=TRUE;return;}
     if(gMain.newKeysRaw&(L_BUTTON|R_BUTTON))
     {
-        sTracker->page=(sTracker->page+((gMain.newKeysRaw&R_BUTTON)?1:2))%3;
+        sTracker->page=(sTracker->page+((gMain.newKeysRaw&R_BUTTON)?1:TRACKER_PAGES-1))%TRACKER_PAGES;
+        sTracker->factPage=0;
         Draw();
     }
     else if(gMain.newKeysRaw&(DPAD_UP|DPAD_DOWN))
     {
+        if(sTracker->page>=3 && sTracker->page<5)
+        {
+            CycleObservedSpecies((gMain.newKeysRaw&DPAD_DOWN)!=0);
+            Draw();return;
+        }
+        if(sTracker->page>=5)return;
         for(u32 count=0;count<PARTY_SIZE;count++)
         {
             sTracker->party=(sTracker->party+((gMain.newKeysRaw&DPAD_DOWN)?1:PARTY_SIZE-1))%PARTY_SIZE;
             if(GetMonData(SelectedMon(),MON_DATA_SPECIES)&&!GetMonData(SelectedMon(),MON_DATA_IS_EGG))break;
         }
+        Draw();
+    }
+    else if(sTracker->page>=3 && sTracker->page<5 && (gMain.newKeysRaw&A_BUTTON))
+    {
+        const struct ChaosObservationJournal *journal=ChaosObservationsRead();
+        u32 count=0,type=sTracker->page==3?CHAOS_OBS_MOVE:CHAOS_OBS_ABILITY;
+        if(journal)
+            for(u32 i=0;i<journal->count;i++)
+                if(journal->facts[i].species==sTracker->observedSpecies && (journal->facts[i].fact&0xF000)==type)count++;
+        sTracker->factPage=(sTracker->factPage+1)*4<count?sTracker->factPage+1:0;
+        Draw();
+    }
+    else if(sTracker->page==6 && (gMain.newKeysRaw&A_BUTTON) && IsIronmonRun())
+    {
+        u32 count=min(gSaveBlock3Ptr->ironmon.retiredCount,IN_BOX_COUNT);
+        sTracker->retiredPage=(sTracker->retiredPage+1)*4<count?sTracker->retiredPage+1:0;
         Draw();
     }
 }
