@@ -195,3 +195,41 @@ EventSnippet_NotEnoughMonsForDoubleBattle::
 	waitbuttonpress
 	release
 	end
+
+EventSnippet_IronmonGymLocked::
+    msgbox Ironmon_Text_GymTrainersFirst, MSGBOX_DEFAULT
+    releaseall
+    end
+Ironmon_Text_GymTrainersFirst:
+    .string "IRONMON challenge!\n"
+    .string "Defeat every GYM TRAINER before\l"
+    .string "challenging the LEADER.$"
+
+Ironmon_EventScript_ExitLocked::
+    lockall
+    msgbox Ironmon_Text_ExitLocked, MSGBOX_DEFAULT
+    releaseall
+    end
+Ironmon_Text_ExitLocked:
+    .string "IRONMON challenge!\n"
+    .string "Complete this challenge before\l"
+    .string "leaving the area.$"
+
+Ironmon_EventScript_ServiceBlocked::
+    lockall
+    msgbox Ironmon_Text_ServiceBlocked, MSGBOX_DEFAULT
+    releaseall
+    end
+Ironmon_Text_ServiceBlocked:
+    .string "This service is unavailable in\n"
+    .string "IRONMON. Your only usable POKéMON\l"
+    .string "can be replaced by a wild capture.$"
+
+Ironmon_Common_GymTMReward::
+    callnative IronmonPrepareGymTM
+    giveitem VAR_0x8000
+    return
+Ironmon_Text_RandomGymTM:
+    .string "This TM is your randomized GYM\n"
+    .string "reward. Check its move and your\l"
+    .string "POKéMON's compatibility in the BAG.$"

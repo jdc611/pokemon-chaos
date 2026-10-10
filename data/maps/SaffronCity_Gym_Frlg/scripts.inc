@@ -24,6 +24,8 @@ SaffronCity_Gym_EventScript_DefeatedSabrina::
 	end
 
 SaffronCity_Gym_EventScript_GiveTM04::
+	specialvar VAR_RESULT, IsIronmonRun
+	goto_if_eq VAR_RESULT, TRUE, SaffronCity_Gym_EventScript_GiveTM04Ironmon
 	msgbox SaffronCity_Gym_Text_ExplainMarshBadgeTakeThis
 	checkitemspace ITEM_TM04
 	goto_if_eq VAR_RESULT, FALSE, SaffronCity_Gym_EventScript_NoRoomForTM04
@@ -268,3 +270,11 @@ SaffronCity_Gym_EventScript_ClaimChaosStone::
 	setvar VAR_0x8004, 4
 	call EventScript_ChaosClaimGymStone
 	return
+
+SaffronCity_Gym_EventScript_GiveTM04Ironmon::
+    call Ironmon_Common_GymTMReward
+    goto_if_eq VAR_RESULT, FALSE, SaffronCity_Gym_EventScript_NoRoomForTM04
+    setflag FLAG_GOT_TM04_FROM_SABRINA
+    msgbox Ironmon_Text_RandomGymTM
+    release
+    end

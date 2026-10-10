@@ -9,6 +9,8 @@ CinnabarIsland_PokemonLab_Lounge_EventScript_Clifton::
 	lock
 	faceplayer
 	setvar VAR_0x8008, INGAME_TRADE_ELECTRODE
+	specialvar VAR_RESULT, IsIronmonRun
+	goto_if_eq VAR_RESULT, TRUE, Ironmon_EventScript_ServiceBlocked
 	call EventScript_GetInGameTradeSpeciesInfo
 	goto_if_set FLAG_DID_ESPHERE_TRADE, CinnabarIsland_PokemonLab_Lounge_EventScript_CliftonAlreadyTraded
 	msgbox Trade_Text_DoYouHaveMonWouldYouTradeForMon, MSGBOX_YESNO

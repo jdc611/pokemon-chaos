@@ -1,4 +1,5 @@
 #include "global.h"
+#include "ironmon.h"
 #include "field_effect.h"
 #include "field_player_avatar.h"
 #include "fldeff.h"
@@ -13,6 +14,7 @@ static void StartTeleportFieldEffect(void);
 
 bool32 SetUpFieldMove_Teleport(void)
 {
+    if (IronmonEscapeLocked()) return FALSE;
     if (!CheckFollowerNPCFlag(FOLLOWER_NPC_FLAG_CAN_LEAVE_ROUTE))
         return FALSE;
 

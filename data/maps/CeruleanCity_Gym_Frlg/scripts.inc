@@ -22,6 +22,8 @@ CeruleanCity_Gym_EventScript_MistyDefeated::
 	end
 
 CeruleanCity_Gym_EventScript_GiveTM03::
+	specialvar VAR_RESULT, IsIronmonRun
+	goto_if_eq VAR_RESULT, TRUE, CeruleanCity_Gym_EventScript_GiveTM03Ironmon
 	msgbox CeruleanCity_Gym_Text_ExplainCascadeBadge
 	checkitemspace ITEM_TM03
 	goto_if_eq VAR_RESULT, FALSE, CeruleanCity_Gym_EventScript_NoRoomForTM03
@@ -181,3 +183,11 @@ CeruleanCity_Gym_EventScript_MistyChaosRematchWon::
 	msgbox Text_ChaosRematchWon
 	release
 	end
+
+CeruleanCity_Gym_EventScript_GiveTM03Ironmon::
+    call Ironmon_Common_GymTMReward
+    goto_if_eq VAR_RESULT, FALSE, CeruleanCity_Gym_EventScript_NoRoomForTM03
+    setflag FLAG_GOT_TM03_FROM_MISTY
+    msgbox Ironmon_Text_RandomGymTM
+    release
+    end

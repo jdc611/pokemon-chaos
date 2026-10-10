@@ -1,4 +1,5 @@
 #include "global.h"
+#include "ironmon.h"
 #include "follower_npc.h"
 #include "follower_npc_alternate_sprites.h"
 #include "battle.h"
@@ -1681,6 +1682,7 @@ bool32 IsNPCFollowerWildBattle(void)
 
 void PrepareForFollowerNPCBattle(void)
 {
+    if (IsIronmonRun()) return;
     // Load the partner party if the NPC follower should participate.
     if (gBattleTypeFlags & BATTLE_TYPE_INGAME_PARTNER && FollowerNPCIsBattlePartner())
     {
@@ -1700,6 +1702,7 @@ void PrepareForFollowerNPCBattle(void)
 
 void RestorePartyAfterFollowerNPCBattle(void)
 {
+    if (IsIronmonRun()) return;
     if (!AreMultiPartiesFullTeams())
     {
         VarSet(VAR_0x8004, FRONTIER_UTIL_FUNC_SAVE_PARTY);

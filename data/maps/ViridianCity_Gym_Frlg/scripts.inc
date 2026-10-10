@@ -27,6 +27,8 @@ ViridianCity_Gym_EventScript_DefeatedGiovanni::
 	end
 
 ViridianCity_Gym_EventScript_GiveTM26::
+	specialvar VAR_RESULT, IsIronmonRun
+	goto_if_eq VAR_RESULT, TRUE, ViridianCity_Gym_EventScript_GiveTM26Ironmon
 	msgbox ViridianCity_Gym_Text_ExplainEarthBadgeTakeThis
 	checkitemspace ITEM_TM26
 	goto_if_eq VAR_RESULT, FALSE, ViridianCity_Gym_EventScript_NoRoomForTM26
@@ -283,3 +285,11 @@ ViridianCity_Gym_EventScript_ClaimChaosStone::
 	setvar VAR_0x8004, 5
 	call EventScript_ChaosClaimGymStone
 	return
+
+ViridianCity_Gym_EventScript_GiveTM26Ironmon::
+    call Ironmon_Common_GymTMReward
+    goto_if_eq VAR_RESULT, FALSE, ViridianCity_Gym_EventScript_NoRoomForTM26
+    setflag FLAG_GOT_TM26_FROM_GIOVANNI
+    msgbox Ironmon_Text_RandomGymTM
+    release
+    end

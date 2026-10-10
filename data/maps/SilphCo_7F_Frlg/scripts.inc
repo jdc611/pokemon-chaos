@@ -39,6 +39,8 @@ SilphCo_7F_EventScript_RivalScene::
 
 EventScript_ChaosSilphChooseThree::
 	lockall
+	specialvar VAR_RESULT, IsIronmonRun
+	goto_if_eq VAR_RESULT, TRUE, EventScript_ChaosSilphIronmon
 	specialvar VAR_RESULT, CountPartyNonEggMons
 	goto_if_lt VAR_RESULT, 3, EventScript_ChaosSilphNeedThree
 	msgbox Text_ChaosSilphChooseThree, MSGBOX_YESNO
@@ -53,6 +55,7 @@ EventScript_ChaosSilphChooseThree::
 	setvar VAR_0x8005, MULTI_BATTLE_2_VS_2 | MULTI_BATTLE_CHOOSE_MONS
 	callnative BattleSetup_StartMultiBattle
 	waitstate
+EventScript_ChaosSilphBattleResult::
 	specialvar VAR_RESULT, GetBattleOutcome
 	goto_if_ne VAR_RESULT, B_OUTCOME_WON, EventScript_ChaosSilphCancel
 	msgbox Text_ChaosRocketBlastOff
@@ -141,6 +144,8 @@ SilphCo_7F_Movement_RivalExitBottom::
 	step_end
 
 SilphCo_7F_EventScript_LaprasGuy::
+	specialvar VAR_RESULT, IsIronmonRun
+	goto_if_eq VAR_RESULT, TRUE, Ironmon_EventScript_ServiceBlocked
 	lock
 	faceplayer
 	goto_if_set FLAG_GOT_LAPRAS_FROM_SILPH, SilphCo_7F_EventScript_AlreadyGotLapras
@@ -415,3 +420,9 @@ EventScript_ChaosSilphRivalTalk::
 	lockall
 	faceplayer
 	goto EventScript_ChaosSilphChooseThree
+
+EventScript_ChaosSilphIronmon::
+    setmultitrainerbattle TRAINER_CHAOS_JESSIE_SILPH, Text_ChaosJessieDefeat, TRAINER_CHAOS_JAMES_SILPH, Text_ChaosJamesDefeat, PARTNER_CHAOS_RIVAL
+    callnative BattleSetup_StartMultiBattle
+    waitstate
+    goto EventScript_ChaosSilphBattleResult

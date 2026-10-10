@@ -1,4 +1,6 @@
 EventScript_PC::
+	specialvar VAR_RESULT, IsIronmonRun
+	goto_if_eq VAR_RESULT, TRUE, Ironmon_EventScript_ServiceBlocked
 	lockall
 	setvar VAR_0x8004, PC_LOCATION_OTHER
 	special DoPCTurnOnEffect

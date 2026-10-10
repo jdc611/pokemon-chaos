@@ -240,6 +240,11 @@ void ChaosRandomizeOverworldItem(void)
          ^ ((u32)original << 1)
          ^ 0x4348414F; // "CHAO"
     roll = ChaosFieldItemHash(seed);
+    if (IsIronmonRun())
+    {
+        gSpecialVar_Result = IronmonOverworldItem(roll);
+        return;
+    }
 
     // TM spots always remain TM spots. HMs are protected above.
     if (original >= ITEM_TM01 && original <= ITEM_TM100)

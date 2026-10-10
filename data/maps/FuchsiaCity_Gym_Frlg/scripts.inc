@@ -27,6 +27,8 @@ FuchsiaCity_Gym_EventScript_DefeatedKoga::
 	end
 
 FuchsiaCity_Gym_EventScript_GiveTM06::
+	specialvar VAR_RESULT, IsIronmonRun
+	goto_if_eq VAR_RESULT, TRUE, FuchsiaCity_Gym_EventScript_GiveTM06Ironmon
 	msgbox FuchsiaCity_Gym_Text_KogaExplainSoulBadge
 	checkitemspace ITEM_TM06
 	goto_if_eq VAR_RESULT, FALSE, FuchsiaCity_Gym_EventScript_NoRoomForTM06
@@ -275,3 +277,11 @@ FuchsiaCity_Gym_EventScript_ClaimChaosStone::
 	setvar VAR_0x8004, 3
 	call EventScript_ChaosClaimGymStone
 	return
+
+FuchsiaCity_Gym_EventScript_GiveTM06Ironmon::
+    call Ironmon_Common_GymTMReward
+    goto_if_eq VAR_RESULT, FALSE, FuchsiaCity_Gym_EventScript_NoRoomForTM06
+    setflag FLAG_GOT_TM06_FROM_KOGA
+    msgbox Ironmon_Text_RandomGymTM
+    release
+    end

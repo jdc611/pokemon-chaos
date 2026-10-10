@@ -2,6 +2,8 @@ FiveIsland_WaterLabyrinth_Frlg_MapScripts::
 	.byte 0
 
 FiveIsland_WaterLabyrinth_EventScript_EggGentleman::
+	specialvar VAR_RESULT, IsIronmonRun
+	goto_if_eq VAR_RESULT, TRUE, Ironmon_EventScript_ServiceBlocked
 	lock
 	faceplayer
 	goto_if_set FLAG_GOT_TOGEPI_EGG, FiveIsland_WaterLabyrinth_EventScript_PostEggComment

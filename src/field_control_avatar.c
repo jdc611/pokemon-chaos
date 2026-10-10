@@ -1,4 +1,5 @@
 #include "global.h"
+#include "ironmon.h"
 #include "chaos_v2.h"
 #include "battle_setup.h"
 #include "bike.h"
@@ -974,6 +975,21 @@ static void StorePlayerStateAndSetupWarp(struct MapPosition *position, s32 warpE
     SetupWarp(&gMapHeader, warpEventId, position);
 }
 
+static bool32 IronmonRejectWarp(s32 warpEventId)
+{
+    if (warpEventId == WARP_ID_NONE || !IronmonEscapeLocked()) return FALSE;
+    const struct WarpEvent *warp = &gMapHeader.events->warps[warpEventId];
+    const struct MapHeader *destination;
+    if (warp->mapNum == MAP_NUM(MAP_DYNAMIC))
+        destination = Overworld_GetMapHeaderByGroupAndId(gSaveBlock1Ptr->dynamicWarp.mapGroup, gSaveBlock1Ptr->dynamicWarp.mapNum);
+    else
+        destination = Overworld_GetMapHeaderByGroupAndId(warp->mapGroup, warp->mapNum);
+    if (IronmonWarpAllowed(destination)) return FALSE;
+    extern const u8 Ironmon_EventScript_ExitLocked[];
+    ScriptContext_SetupScript(Ironmon_EventScript_ExitLocked);
+    return TRUE;
+}
+
 static bool8 TryArrowWarp(struct MapPosition *position, u16 metatileBehavior, enum Direction direction)
 {
     s32 warpEventId = GetWarpEventAtMapPosition(&gMapHeader, position);
@@ -984,12 +1000,14 @@ static bool8 TryArrowWarp(struct MapPosition *position, u16 metatileBehavior, en
 
     if (IsArrowWarpMetatileBehavior(metatileBehavior, direction) == TRUE)
     {
+        if (IronmonRejectWarp(warpEventId)) return TRUE;
         StorePlayerStateAndSetupWarp(position, warpEventId);
         DoWarp();
         return TRUE;
     }
     else if (IsDirectionalStairWarpMetatileBehavior(metatileBehavior, direction) == TRUE)
     {
+        if (IronmonRejectWarp(warpEventId)) return TRUE;
         delay = 0;
         if (gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_BIKE)
         {
@@ -1010,6 +1028,7 @@ static bool8 TryStartWarpEventScript(struct MapPosition *position, u16 metatileB
 
     if (warpEventId != WARP_ID_NONE && IsWarpMetatileBehavior(metatileBehavior) == TRUE)
     {
+        if (IronmonRejectWarp(warpEventId)) return TRUE;
         StoreInitialPlayerAvatarState();
         SetupWarp(&gMapHeader, warpEventId, position);
         if (MetatileBehavior_IsEscalator(metatileBehavior) == TRUE)
@@ -1153,6 +1172,7 @@ static bool8 TryDoorWarp(struct MapPosition *position, u16 metatileBehavior, enu
             warpEventId = GetWarpEventAtMapPosition(&gMapHeader, position);
             if (warpEventId != WARP_ID_NONE && IsWarpMetatileBehavior(metatileBehavior) == TRUE)
             {
+                if (IronmonRejectWarp(warpEventId)) return TRUE;
                 // Choose the actual PC-box pasture before entering the Ranch.
                 // The script performs the same native door animation after selection.
                 const struct WarpEvent *door = &gMapHeader.events->warps[warpEventId];

@@ -1,4 +1,5 @@
 #include "global.h"
+#include "ironmon.h"
 #include "run_settings.h"
 #include "malloc.h"
 #include "battle.h"
@@ -657,7 +658,7 @@ static void Task_EvolutionScene(u8 taskId)
     struct Pokemon *mon = &gParties[B_TRAINER_PLAYER][gTasks[taskId].tPartyId];
 
     // check if B Button was held, so the evolution gets stopped
-    if (gMain.heldKeys == B_BUTTON
+    if (!IsIronmonRun() && gMain.heldKeys == B_BUTTON
         && gTasks[taskId].tState == EVOSTATE_WAIT_CYCLE_MON_SPRITE
         && gTasks[sEvoGraphicsTaskId].isActive
         && gTasks[taskId].tBits & TASK_BIT_CAN_STOP)

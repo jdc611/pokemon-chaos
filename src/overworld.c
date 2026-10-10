@@ -711,6 +711,12 @@ static void SetPlayerCoordsFromWarp(void)
 void WarpIntoMap(void)
 {
     const struct MapHeader *destination = GetDestinationWarpMapHeader();
+    if (!IronmonWarpAllowed(destination))
+    {
+        SetWarpDestination(gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum, WARP_ID_NONE, gSaveBlock1Ptr->pos.x, gSaveBlock1Ptr->pos.y);
+        destination = GetDestinationWarpMapHeader();
+    }
+    IronmonOnMapTransition(destination);
     ChallengeReset_OnMapTransition(&gMapHeader, destination,
                                    (gSaveBlock1Ptr->location.mapGroup << 8) | (u8)gSaveBlock1Ptr->location.mapNum,
                                    gSaveBlock1Ptr->pos.x, gSaveBlock1Ptr->pos.y);
@@ -908,6 +914,7 @@ void LoadMapFromCameraTransition(u8 mapGroup, u8 mapNum)
     ApplyCurrentWarp();
     LoadCurrentMapData();
     ChallengeReset_OnMapLoaded();
+    IronmonOnMapLoaded();
     LoadObjEventTemplatesFromHeader();
     TrySetMapSaveWarpStatus();
     ClearTempFieldEventData();
@@ -961,6 +968,7 @@ static void LoadMapFromWarp(bool32 a1)
 
     LoadCurrentMapData();
     ChallengeReset_OnMapLoaded();
+    IronmonOnMapLoaded();
     if (!(sObjectEventLoadFlag & SKIP_OBJECT_EVENT_LOAD))
     {
         if (gMapHeader.mapLayoutId == LAYOUT_BATTLE_FRONTIER_BATTLE_PYRAMID_FLOOR)
@@ -1922,6 +1930,7 @@ void CB2_OverworldBasic(void)
 
 void CB2_Overworld(void)
 {
+    if (IronmonCheckRunOver()) return;
     bool32 fading = (gPaletteFade.active != 0);
     if (fading)
         SetVBlankCallback(NULL);
@@ -2206,6 +2215,7 @@ static void FieldCB_FadeTryShowMapPopup(void)
 
 void CB2_ContinueSavedGame(void)
 {
+    if (IronmonCheckRunOver()) return;
     u8 trainerHillMapId;
 
     FieldClearVBlankHBlankCallbacks();

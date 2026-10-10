@@ -209,6 +209,8 @@ ChaosMysteryEggVendor2::
  setvar VAR_0x8004, 2
  goto ChaosMysteryEggVendor
 ChaosMysteryEggVendor::
+	specialvar VAR_RESULT, IsIronmonRun
+	goto_if_eq VAR_RESULT, TRUE, Ironmon_EventScript_ServiceBlocked
  lock
  faceplayer
  goto_if_eq VAR_0x8004, 0, ChaosMysteryEggVendorBaby

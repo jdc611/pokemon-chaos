@@ -1,6 +1,7 @@
 #include "global.h"
 #include "ironmon.h"
 #include "battle.h"
+#include "main.h"
 #include "caps.h"
 #include "event_data.h"
 #include "item.h"
@@ -19,7 +20,9 @@
 #include "constants/items.h"
 #include "constants/moves.h"
 #include "constants/battle.h"
+#include "constants/opponents_frlg.h"
 
+static EWRAM_DATA u16 sTrainerIdentity;
 static EWRAM_DATA u16 sCenterPermit = 0;
 
 bool32 IsIronmonDifficulty(u32 difficulty)
@@ -138,8 +141,8 @@ enum Item IronmonHeldItem(u32 seed)
 u32 IronmonTrainerSeed(const struct Trainer *trainer)
 {
     // Find a stable table identity without including the ROM address itself.
-    u32 identity = 0;
-    for (u32 difficulty = 0; difficulty < DIFFICULTY_COUNT; difficulty++)
+    u32 identity = sTrainerIdentity;
+    for (u32 difficulty = 0; !sTrainerIdentity && difficulty < DIFFICULTY_COUNT; difficulty++)
         for (u32 id = 0; id < TRAINERS_COUNT; id++)
             if (trainer == &gTrainers[difficulty][id]) identity = id + 1;
     // Overrides are temporary copies: their full template remains the fallback.
@@ -296,4 +299,64 @@ void IronmonRecordBattleEnd(void)
     if (gBattleTypeFlags & BATTLE_TYPE_TRAINER && gBattleOutcome == B_OUTCOME_WON
      && gSaveBlock3Ptr->ironmon.trainersDefeated < 65535)
         gSaveBlock3Ptr->ironmon.trainersDefeated++;
+}
+
+void IronmonMarkFainted(u32 battler)
+{
+    if (IsIronmonRun() && GetBattlerSide(battler) == B_SIDE_PLAYER
+     && gBattlerPartyIndexes[battler] == 0)
+        gSaveBlock3Ptr->ironmon.ended = TRUE;
+}
+
+bool32 IronmonCheckRunOver(void)
+{
+    if (!IsIronmonRun()) return FALSE;
+    if (gSaveBlock3Ptr->ironmon.starterGranted
+     && gPartiesCount[B_TRAINER_PLAYER] && GetMonData(&gParties[B_TRAINER_PLAYER][0], MON_DATA_HP) == 0)
+        gSaveBlock3Ptr->ironmon.ended = TRUE;
+    if (!gSaveBlock3Ptr->ironmon.ended) return FALSE;
+    SetMainCallback1(NULL);
+    SetMainCallback2(CB2_IronmonRunOver);
+    return TRUE;
+}
+
+void IronmonSetTrainerIdentity(u32 id)
+{
+    sTrainerIdentity = id == 0xFFFF ? 0 : id + 1;
+}
+
+u32 IronmonTrainerPartySize(const struct Trainer *trainer)
+{
+    if (!IsIronmonRun()) return trainer->partySize;
+    u32 identity = sTrainerIdentity;
+    for (u32 difficulty = 0; !identity && difficulty < DIFFICULTY_COUNT; difficulty++)
+        for (u32 id = 0; id < TRAINERS_COUNT; id++)
+            if (trainer == &gTrainers[difficulty][id]) { identity = id + 1; break; }
+    switch (identity - 1)
+    {
+    case TRAINER_LEADER_BROCK: case TRAINER_LEADER_MISTY: return 3;
+    case TRAINER_LEADER_LT_SURGE: case TRAINER_LEADER_ERIKA: return 4;
+    case TRAINER_LEADER_KOGA: case TRAINER_LEADER_SABRINA: return 5;
+    case TRAINER_LEADER_BLAINE: case TRAINER_LEADER_GIOVANNI: return 6;
+    default: return trainer->partySize;
+    }
+}
+
+static bool32 OverworldItemEligible(enum Item item)
+{
+    // Preserve progression objects at their sources; generated rewards use a
+    // uniform ordinary pool. TMs, HMs, mail and unobtainable dummy IDs are out.
+    return item != ITEM_NONE && GetItemPocket(item) != POCKET_KEY_ITEMS
+        && GetItemPocket(item) != POCKET_TM_HM && !ItemIsMail(item)
+        && GetItemPrice(item) > 0;
+}
+enum Item IronmonOverworldItem(u32 seed)
+{
+    u32 count = 0;
+    for (u32 item = 1; item < ITEMS_COUNT; item++)
+        if (OverworldItemEligible(item)) count++;
+    u32 rank = IronmonMix(seed) % count;
+    for (u32 item = 1; item < ITEMS_COUNT; item++)
+        if (OverworldItemEligible(item) && rank-- == 0) return item;
+    return ITEM_POKE_BALL;
 }

@@ -1,4 +1,6 @@
 Route5_PokemonDayCare_EventScript_DaycareMan::
+	specialvar VAR_RESULT, IsIronmonRun
+	goto_if_eq VAR_RESULT, TRUE, Ironmon_EventScript_ServiceBlocked
 	lock
 	faceplayer
 	showmoneybox 0, 0

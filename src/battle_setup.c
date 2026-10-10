@@ -104,6 +104,8 @@ static void DoTrainerBattle(void);
 
 EWRAM_DATA TrainerBattleParameter gTrainerBattleParameter = {0};
 EWRAM_DATA u16 gPartnerTrainerId = 0;
+static EWRAM_DATA TrainerBattleParameter sIronmonPairOriginal;
+static EWRAM_DATA u8 sIronmonPairPhase;
 EWRAM_DATA static u8 *sTrainerBattleEndScript = NULL;
 
 EWRAM_DATA static u16 sNuzlockeFamily[NUM_SPECIES];
@@ -517,6 +519,11 @@ void BattleSetup_StartDoubleWildBattle(void)
 
 void BattleSetup_StartMultiBattle(void)
 {
+    if (IsIronmonRun())
+    {
+        BattleSetup_StartTrainerBattle();
+        return;
+    }
     // Chaos's story partner battle needs the normal trainer exit callback so
     // all original party slots are restored before whiteout/Nuzlocke handling.
     if (IS_FRLG && gPartnerTrainerId == TRAINER_PARTNER(PARTNER_CHAOS_RIVAL))
@@ -569,11 +576,11 @@ static void DoStandardWildBattle(bool32 isDouble)
     StopPlayerAvatar();
     gMain.savedCallback = CB2_EndWildBattle;
     gBattleTypeFlags = 0;
-    if (IsNPCFollowerWildBattle())
+    if (!IsIronmonRun() && IsNPCFollowerWildBattle())
     {
         gBattleTypeFlags |= BATTLE_TYPE_MULTI | BATTLE_TYPE_INGAME_PARTNER | BATTLE_TYPE_DOUBLE;
     }
-    else if (isDouble)
+    else if (!IsIronmonRun() && isDouble)
         gBattleTypeFlags |= BATTLE_TYPE_DOUBLE;
     if (CurrentBattlePyramidLocation() != PYRAMID_LOCATION_NONE)
     {
@@ -708,7 +715,7 @@ void BattleSetup_StartScriptedDoubleWildBattle(void)
     NuzlockeAccountStandardEncounter(TRUE);
     LockPlayerFieldControls();
     gMain.savedCallback = CB2_EndScriptedWildBattle;
-    gBattleTypeFlags = BATTLE_TYPE_DOUBLE;
+    gBattleTypeFlags = IsIronmonRun() ? 0 : BATTLE_TYPE_DOUBLE;
     CreateBattleStartTask(GetWildBattleTransition(), 0);
     IncrementGameStat(GAME_STAT_TOTAL_BATTLES);
     IncrementGameStat(GAME_STAT_WILD_BATTLES);
@@ -861,6 +868,7 @@ static void CB2_EndWildBattle(void)
     ChaosRecordBattleEnd();
     sNuzlockeEligibleSection = -1;
     IronmonRecordBattleEnd();
+    if (IronmonCheckRunOver()) return;
     Nuzlocke_ProcessBattleDeaths();
     if (IsPlayerDefeated(gBattleOutcome))
         Nuzlocke_RebuildPartyFromStorage();
@@ -868,7 +876,7 @@ static void CB2_EndWildBattle(void)
     CpuFill16(0, (void *)(BG_PLTT), BG_PLTT_SIZE);
     ResetOamRange(0, 128);
 
-    if (IsNPCFollowerWildBattle())
+    if (!IsIronmonRun() && IsNPCFollowerWildBattle())
     {
         RestorePartyAfterFollowerNPCBattle();
         if (FNPC_FLAG_HEAL_AFTER_FOLLOWER_BATTLE != 0
@@ -894,6 +902,7 @@ static void CB2_EndScriptedWildBattle(void)
     ChaosRecordBattleEnd();
     sNuzlockeEligibleSection = -1;
     IronmonRecordBattleEnd();
+    if (IronmonCheckRunOver()) return;
     Nuzlocke_ProcessBattleDeaths();
     if (IsPlayerDefeated(gBattleOutcome))
         Nuzlocke_RebuildPartyFromStorage();
@@ -917,6 +926,8 @@ static void CB2_EndScriptedWildBattle(void)
 
 static void CB2_EndMarowakBattle(void)
 {
+    IronmonRecordBattleEnd();
+    if (IronmonCheckRunOver()) return;
     CpuFill16(0, (void *)BG_PLTT, BG_PLTT_SIZE);
     ResetOamRange(0, 128);
 
@@ -1245,6 +1256,8 @@ static void CB2_StartFirstBattle(void)
 
 static void CB2_EndFirstBattle(void)
 {
+    IronmonRecordBattleEnd();
+    if (IronmonCheckRunOver()) return;
     Overworld_ClearSavedMusic();
     DowngradeBadPoison();
     SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
@@ -1293,6 +1306,7 @@ static bool32 IsPlayerDefeated(u32 battleOutcome)
 
 void InitTrainerBattleParameter(void)
 {
+    sIronmonPairPhase = 0;
     memset(gTrainerBattleParameter.data, 0, sizeof(TrainerBattleParameter));
     sTrainerBattleEndScript = NULL;
 }
@@ -1430,6 +1444,12 @@ static void BattleSetup_ConfigureTrainerBattle(TrainerBattleParameter *battlePar
     PUSH_IF_SET(EventSnippet_FacePlayer, battleParams->params.facePlayer)
     PUSH       (EventSnippet_RevealTrainer)
 
+    if (IronmonLeaderLocked(battleParams->params.opponentA))
+    {
+        PUSH(EventSnippet_IronmonGymLocked)
+        return;
+    }
+
     bool32 isTrainerDefeated = !battleParams->params.skipFlagCheck
                             && GetTrainerFlag()
                             && !ChallengeReset_ShouldIgnoreTrainerFlag(GetTrainerAFlag());
@@ -1440,7 +1460,7 @@ static void BattleSetup_ConfigureTrainerBattle(TrainerBattleParameter *battlePar
         return;
     }
 
-    if (battleParams->params.isDoubleBattle && !HasEnoughMonsForDoubleBattle2())
+    if (!IsIronmonRun() && battleParams->params.isDoubleBattle && !HasEnoughMonsForDoubleBattle2())
     {
         PUSH(EventSnippet_NotEnoughMonsForDoubleBattle)
         return;
@@ -1656,7 +1676,9 @@ void ClearTrainerFlag(u16 trainerId)
 
 void BattleSetup_StartTrainerBattle(void)
 {
-    if (gNoOfApproachingTrainers == 2)
+    if (IsIronmonRun())
+        gBattleTypeFlags = BATTLE_TYPE_TRAINER;
+    else if (gNoOfApproachingTrainers == 2)
     {
         if (FollowerNPCIsBattlePartner())
             gBattleTypeFlags = (BATTLE_TYPE_MULTI | BATTLE_TYPE_DOUBLE | BATTLE_TYPE_INGAME_PARTNER | BATTLE_TYPE_TWO_OPPONENTS | BATTLE_TYPE_TRAINER);
@@ -1712,11 +1734,23 @@ void BattleSetup_StartTrainerBattle(void)
 
         SetHillTrainerFlag();
     }
-    else if (GetTrainerBattleType(TRAINER_BATTLE_PARAM.opponentA) == TRAINER_BATTLE_TYPE_DOUBLES)
+    else if (!IsIronmonRun() && GetTrainerBattleType(TRAINER_BATTLE_PARAM.opponentA) == TRAINER_BATTLE_TYPE_DOUBLES)
     {
         gBattleTypeFlags |= BATTLE_TYPE_DOUBLE;
     }
 
+    if (IsIronmonRun())
+    {
+        sIronmonPairPhase = 0;
+        if (TRAINER_BATTLE_PARAM.opponentB != 0 && TRAINER_BATTLE_PARAM.opponentB != 0xFFFF)
+        {
+            sIronmonPairOriginal = gTrainerBattleParameter;
+            sIronmonPairPhase = 1;
+        }
+        TRAINER_BATTLE_PARAM.opponentB = 0;
+        TRAINER_BATTLE_PARAM.isDoubleBattle = FALSE;
+        gBattleTypeFlags = BATTLE_TYPE_TRAINER;
+    }
     sNoOfPossibleTrainerRetScripts = gNoOfApproachingTrainers;
     gNoOfApproachingTrainers = 0;
     sShouldCheckTrainerBScript = FALSE;
@@ -1748,6 +1782,18 @@ static void CB2_EndDebugBattle(void)
 
 void BattleSetup_StartTrainerBattle_Debug(void)
 {
+    if (IsIronmonRun())
+    {
+        sIronmonPairPhase = 0;
+        if (TRAINER_BATTLE_PARAM.opponentB != 0 && TRAINER_BATTLE_PARAM.opponentB != 0xFFFF)
+        {
+            sIronmonPairOriginal = gTrainerBattleParameter;
+            sIronmonPairPhase = 1;
+        }
+        TRAINER_BATTLE_PARAM.opponentB = 0;
+        TRAINER_BATTLE_PARAM.isDoubleBattle = FALSE;
+        gBattleTypeFlags = BATTLE_TYPE_TRAINER;
+    }
     sNoOfPossibleTrainerRetScripts = gNoOfApproachingTrainers;
     gNoOfApproachingTrainers = 0;
     sShouldCheckTrainerBScript = FALSE;
@@ -1785,10 +1831,32 @@ static void HandleBattleVariantEndParty(void)
 static void CB2_EndTrainerBattle(void)
 {
     ChaosRecordBattleEnd();
+    IronmonRecordBattleEnd();
+    if (IronmonCheckRunOver()) return;
+    if (IsIronmonRun() && sIronmonPairPhase == 1 && gBattleOutcome == B_OUTCOME_WON)
+    {
+        SetTrainerFlag(sIronmonPairOriginal.params.opponentA);
+        TRAINER_BATTLE_PARAM.opponentA = sIronmonPairOriginal.params.opponentB;
+        TRAINER_BATTLE_PARAM.defeatTextA = sIronmonPairOriginal.params.defeatTextB;
+        TRAINER_BATTLE_PARAM.introTextA = sIronmonPairOriginal.params.introTextB;
+        TRAINER_BATTLE_PARAM.objEventLocalIdA = sIronmonPairOriginal.params.objEventLocalIdB;
+        sIronmonPairPhase = 2;
+        gBattleTypeFlags = BATTLE_TYPE_TRAINER;
+        CreateNPCTrainerParty(gParties[B_TRAINER_OPPONENT_A],TRAINER_BATTLE_PARAM.opponentA);
+        IncrementGameStat(GAME_STAT_TOTAL_BATTLES);
+        IncrementGameStat(GAME_STAT_TRAINER_BATTLES);
+        gMain.savedCallback = CB2_EndTrainerBattle;
+        SetMainCallback2(CB2_InitBattle);
+        return;
+    }
+    if (IsIronmonRun() && sIronmonPairPhase == 2)
+    {
+        gTrainerBattleParameter = sIronmonPairOriginal;
+        sIronmonPairPhase = 0;
+    }
     ChaosRestoreArcanineChallengeParty();
     ChaosRestoreSilphPartnerParty();
     HandleBattleVariantEndParty();
-    IronmonRecordBattleEnd();
     Nuzlocke_ProcessBattleDeaths();
     if (IsPlayerDefeated(gBattleOutcome))
         Nuzlocke_RebuildPartyFromStorage();
@@ -1854,6 +1922,7 @@ static void CB2_EndRematchBattle(void)
 {
     ChaosRecordBattleEnd();
     IronmonRecordBattleEnd();
+    if (IronmonCheckRunOver()) return;
     Nuzlocke_ProcessBattleDeaths();
     if (IsPlayerDefeated(gBattleOutcome))
         Nuzlocke_RebuildPartyFromStorage();
@@ -1880,7 +1949,7 @@ static void CB2_EndRematchBattle(void)
 void BattleSetup_StartRematchBattle(void)
 {
     gBattleTypeFlags = BATTLE_TYPE_TRAINER;
-    if (GetTrainerBattleType(TRAINER_BATTLE_PARAM.opponentA) == TRAINER_BATTLE_TYPE_DOUBLES)
+    if (!IsIronmonRun() && GetTrainerBattleType(TRAINER_BATTLE_PARAM.opponentA) == TRAINER_BATTLE_TYPE_DOUBLES)
         gBattleTypeFlags |= BATTLE_TYPE_DOUBLE;
     
     gMain.savedCallback = CB2_EndRematchBattle;
@@ -2465,7 +2534,8 @@ void CreateNPCTrainerPartyFromTrainer(struct Pokemon *party, const struct Traine
 
     ZeroPartyMons(party);
 
-    monsCount = trainer->partySize;
+    if (!trainer->partySize || trainer->party == NULL) return;
+    monsCount = IronmonTrainerPartySize(trainer);
     if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS && (B_MULTI_HALF_TEAMS || trainer->multiTeamSize == MULTI_TEAM_SIZE_HALF))
     {
         if (monsCount > PARTY_SIZE / 2)
@@ -2475,7 +2545,11 @@ void CreateNPCTrainerPartyFromTrainer(struct Pokemon *party, const struct Traine
     u32 monIndices[monsCount];
     struct TrainerGenerator *trainerGen = AllocZeroed(sizeof(struct TrainerGenerator));
     MakeTrainerGenerator(trainerGen, trainer);
-    DoTrainerPartyPool(trainer, monIndices, monsCount, gBattleTypeFlags);
+    if (IsIronmonRun())
+        for (u32 index = 0; index < monsCount; index++)
+            monIndices[index] = index == monsCount - 1 ? trainer->partySize - 1 : min(index,trainer->partySize - 1);
+    else
+        DoTrainerPartyPool(trainer, monIndices, monsCount, gBattleTypeFlags);
 
     for (i = 0; i < monsCount; i++)
     {
@@ -2518,9 +2592,11 @@ void CreateNPCTrainerPartyFromTrainer(struct Pokemon *party, const struct Traine
 
 static void CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum)
 {
+    IronmonSetTrainerIdentity(trainerNum);
     if (!GetTrainerStructFromId(trainerNum)->overrideTrainer)
     {
         CreateNPCTrainerPartyFromTrainer(party, GetTrainerStructFromId(trainerNum));
+        IronmonSetTrainerIdentity(0xFFFF);
         return;
     }
 
@@ -2534,6 +2610,7 @@ static void CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum)
     if (tempTrainer.partySize == 0)
         tempTrainer.partySize = origTrainer->partySize;
     CreateNPCTrainerPartyFromTrainer(party, (const struct Trainer *)(&tempTrainer));
+    IronmonSetTrainerIdentity(0xFFFF);
 }
 
 void CreateTrainerPartyForPlayer(void)

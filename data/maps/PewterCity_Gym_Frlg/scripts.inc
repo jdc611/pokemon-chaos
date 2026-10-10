@@ -24,6 +24,8 @@ PewterCity_Gym_EventScript_DefeatedBrock::
 	end
 
 PewterCity_Gym_EventScript_GiveTM39::
+	specialvar VAR_RESULT, IsIronmonRun
+	goto_if_eq VAR_RESULT, TRUE, PewterCity_Gym_EventScript_GiveTM39Ironmon
 	msgbox PewterCity_Gym_Text_TakeThisWithYou
 	checkitemspace ITEM_TM39
 	goto_if_eq VAR_RESULT, FALSE, PewterCity_Gym_EventScript_NoRoomForTM39
@@ -221,3 +223,11 @@ PewterCity_Gym_EventScript_BrockChaosRematchWon::
 	msgbox Text_ChaosRematchWon
 	release
 	end
+
+PewterCity_Gym_EventScript_GiveTM39Ironmon::
+    call Ironmon_Common_GymTMReward
+    goto_if_eq VAR_RESULT, FALSE, PewterCity_Gym_EventScript_NoRoomForTM39
+    setflag FLAG_GOT_TM39_FROM_BROCK
+    msgbox Ironmon_Text_RandomGymTM
+    release
+    end

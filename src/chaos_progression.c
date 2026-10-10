@@ -1,4 +1,5 @@
 #include "global.h"
+#include "ironmon.h"
 #include "run_settings.h"
 #include "event_data.h"
 #include "chaos_progression.h"
@@ -85,6 +86,7 @@ void ChaosCancelSilphSelection(void)
 
 void ChaosBeginSilphPartnerBattle(void)
 {
+    if (IsIronmonRun()) return;
     SavePlayerParty();
     for (u32 i = 0; i < MULTI_PARTY_SIZE; i++)
         gSaveBlock2Ptr->frontier.selectedPartyMons[i] = gSelectedOrderFromParty[i];

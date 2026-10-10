@@ -225,6 +225,8 @@ VermilionCity_Gym_EventScript_ShowOaksAide::
 	return
 
 VermilionCity_Gym_EventScript_GiveTM34::
+	specialvar VAR_RESULT, IsIronmonRun
+	goto_if_eq VAR_RESULT, TRUE, VermilionCity_Gym_EventScript_GiveTM34Ironmon
 	msgbox VermilionCity_Gym_Text_ExplainThunderBadgeTakeThis
 	checkitemspace ITEM_TM34
 	goto_if_eq VAR_RESULT, FALSE, VermilionCity_Gym_EventScript_NoRoomForTM34
@@ -443,3 +445,11 @@ VermilionCity_Gym_EventScript_RestoreFirst::
 	copyvar VAR_TEMP_0, VAR_CHAOS_SURGE_SWITCH1
 	copyvar VAR_TEMP_1, VAR_CHAOS_SURGE_SWITCH2
 	return
+
+VermilionCity_Gym_EventScript_GiveTM34Ironmon::
+    call Ironmon_Common_GymTMReward
+    goto_if_eq VAR_RESULT, FALSE, VermilionCity_Gym_EventScript_NoRoomForTM34
+    setflag FLAG_GOT_TM34_FROM_SURGE
+    msgbox Ironmon_Text_RandomGymTM
+    release
+    end

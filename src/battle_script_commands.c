@@ -1922,6 +1922,7 @@ static void Cmd_tryfaintmon(void)
                 }
             }
 
+            IronmonMarkFainted(battler);
             SetValuesOnFaint(battler);
             BattleScriptPush(cmd->nextInstr);
             gBattlescriptCurrInstr = BattleScript_FaintBattler;

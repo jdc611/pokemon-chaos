@@ -23,6 +23,8 @@ Route11_EastEntrance_2F_EventScript_Turner::
 	lock
 	faceplayer
 	setvar VAR_0x8008, INGAME_TRADE_NIDORINOA
+	specialvar VAR_RESULT, IsIronmonRun
+	goto_if_eq VAR_RESULT, TRUE, Ironmon_EventScript_ServiceBlocked
 	call EventScript_GetInGameTradeSpeciesInfo
 	goto_if_set FLAG_DID_NINA_TRADE, Route11_EastEntrance_2F_EventScript_AlreadyTraded
 	msgbox Trade_Text_LookingForMonWannaTradeForMon, MSGBOX_YESNO

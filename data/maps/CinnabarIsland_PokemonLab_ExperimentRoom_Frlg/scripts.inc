@@ -9,6 +9,8 @@ CinnabarIsland_PokemonLab_ExperimentRoom_EventScript_Garett::
 	lock
 	faceplayer
 	setvar VAR_0x8008, INGAME_TRADE_SEEL
+	specialvar VAR_RESULT, IsIronmonRun
+	goto_if_eq VAR_RESULT, TRUE, Ironmon_EventScript_ServiceBlocked
 	call EventScript_GetInGameTradeSpeciesInfo
 	goto_if_set FLAG_DID_SEELOR_TRADE, CinnabarIsland_PokemonLab_ExperimentRoom_EventScript_AlreadyTraded
 	msgbox Trade_Text_LookingForMonWannaTradeForMon, MSGBOX_YESNO
@@ -40,6 +42,8 @@ CinnabarIsland_PokemonLab_ExperimentRoom_EventScript_AlreadyTraded::
 	end
 
 CinnabarIsland_PokemonLab_ExperimentRoom_EventScript_FossilScientist::
+	specialvar VAR_RESULT, IsIronmonRun
+	goto_if_eq VAR_RESULT, TRUE, Ironmon_EventScript_ServiceBlocked
 	lock
 	faceplayer
 	setvar VAR_RESULT, FALSE

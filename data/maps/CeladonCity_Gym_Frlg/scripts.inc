@@ -20,6 +20,8 @@ CeladonCity_Gym_EventScript_DefeatedErika::
 	end
 
 CeladonCity_Gym_EventScript_GiveTM19::
+	specialvar VAR_RESULT, IsIronmonRun
+	goto_if_eq VAR_RESULT, TRUE, CeladonCity_Gym_EventScript_GiveTM19Ironmon
 	msgbox CeladonCity_Gym_Text_ExplainRainbowBadgeTakeThis
 	checkitemspace ITEM_TM19
 	goto_if_eq VAR_RESULT, FALSE, CeladonCity_Gym_EventScript_NoRoomForTM19
@@ -235,3 +237,11 @@ CeladonCity_Gym_Text_GymStatuePlayerWon::
 	.string "WINNING TRAINERS:\n"
 	.string "{RIVAL}, {PLAYER}$"
 
+
+CeladonCity_Gym_EventScript_GiveTM19Ironmon::
+    call Ironmon_Common_GymTMReward
+    goto_if_eq VAR_RESULT, FALSE, CeladonCity_Gym_EventScript_NoRoomForTM19
+    setflag FLAG_GOT_TM19_FROM_ERIKA
+    msgbox Ironmon_Text_RandomGymTM
+    release
+    end

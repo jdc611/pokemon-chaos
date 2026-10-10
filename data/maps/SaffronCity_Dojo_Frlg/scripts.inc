@@ -18,6 +18,8 @@ SaffronCity_Dojo_EventScript_TriggerMasterBattleRight::
 	end
 
 SaffronCity_Dojo_EventScript_HitmonleeBall::
+	specialvar VAR_RESULT, IsIronmonRun
+	goto_if_eq VAR_RESULT, TRUE, Ironmon_EventScript_ServiceBlocked
 	lock
 	faceplayer
 	goto_if_set FLAG_GOT_HITMON_FROM_DOJO, SaffronCity_Dojo_EventScript_AlreadyGotHitmon
@@ -39,6 +41,8 @@ SaffronCity_Dojo_EventScript_AlreadyGotHitmon::
 	end
 
 SaffronCity_Dojo_EventScript_HitmonchanBall::
+	specialvar VAR_RESULT, IsIronmonRun
+	goto_if_eq VAR_RESULT, TRUE, Ironmon_EventScript_ServiceBlocked
 	lock
 	faceplayer
 	goto_if_set FLAG_GOT_HITMON_FROM_DOJO, SaffronCity_Dojo_EventScript_AlreadyGotHitmon

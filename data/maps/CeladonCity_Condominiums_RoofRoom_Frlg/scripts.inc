@@ -6,6 +6,8 @@ CeladonCity_Condominiums_RoofRoom_EventScript_BlackBelt::
 	end
 
 CeladonCity_Condominiums_RoofRoom_EventScript_EeveeBall::
+	specialvar VAR_RESULT, IsIronmonRun
+	goto_if_eq VAR_RESULT, TRUE, Ironmon_EventScript_ServiceBlocked
 	lock
 	faceplayer
 	setvar VAR_TEMP_1, SPECIES_EEVEE

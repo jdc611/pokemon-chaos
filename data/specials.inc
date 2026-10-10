@@ -713,3 +713,5 @@ gSpecials::
 
 	def_special IronmonAuthorizeCenterHealing
 	def_special IsIronmonHardcore
+
+	def_special IsIronmonRun

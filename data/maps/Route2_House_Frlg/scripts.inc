@@ -9,6 +9,8 @@ Route2_House_EventScript_Reyley::
 	lock
 	faceplayer
 	setvar VAR_0x8008, INGAME_TRADE_MR_MIME
+	specialvar VAR_RESULT, IsIronmonRun
+	goto_if_eq VAR_RESULT, TRUE, Ironmon_EventScript_ServiceBlocked
 	call EventScript_GetInGameTradeSpeciesInfo
 	goto_if_set FLAG_DID_MIMIEN_TRADE, Route2_House_EventScript_AlreadyTraded
 	msgbox Trade_Text_LookingForMonWannaTradeForMon, MSGBOX_YESNO

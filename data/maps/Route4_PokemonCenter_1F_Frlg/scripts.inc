@@ -21,6 +21,8 @@ Route4_PokemonCenter_1F_EventScript_Gentleman::
 	end
 
 Route4_PokemonCenter_1F_EventScript_MagikarpSalesman::
+	specialvar VAR_RESULT, IsIronmonRun
+	goto_if_eq VAR_RESULT, TRUE, Ironmon_EventScript_ServiceBlocked
 	lock
 	faceplayer
 	goto_if_set FLAG_BOUGHT_MAGIKARP, Route4_PokemonCenter_1F_EventScript_AlreadyBoughtMagikarp

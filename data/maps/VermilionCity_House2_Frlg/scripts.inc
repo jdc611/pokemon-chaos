@@ -5,6 +5,8 @@ VermilionCity_House2_EventScript_Elyssa::
 	lock
 	faceplayer
 	setvar VAR_0x8008, INGAME_TRADE_FARFETCHD
+	specialvar VAR_RESULT, IsIronmonRun
+	goto_if_eq VAR_RESULT, TRUE, Ironmon_EventScript_ServiceBlocked
 	call EventScript_GetInGameTradeSpeciesInfo
 	goto_if_set FLAG_DID_CH_DING_TRADE, VermilionCity_House2_EventScript_AlreadyTraded
 	msgbox VermilionCity_House2_Text_DoYouHaveMonWantToTradeForMyMon, MSGBOX_YESNO

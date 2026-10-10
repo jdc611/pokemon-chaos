@@ -68,6 +68,8 @@ CinnabarIsland_Gym_EventScript_DefeatedBlaine::
 	end
 
 CinnabarIsland_Gym_EventScript_GiveTM38::
+	specialvar VAR_RESULT, IsIronmonRun
+	goto_if_eq VAR_RESULT, TRUE, CinnabarIsland_Gym_EventScript_GiveTM38Ironmon
 	msgbox CinnabarIsland_Gym_Text_ExplainVolcanoBadge
 	checkitemspace ITEM_TM38
 	goto_if_eq VAR_RESULT, FALSE, CinnabarIsland_Gym_EventScript_NoRoomForTM38
@@ -907,3 +909,11 @@ CinnabarIsland_Gym_EventScript_ClaimChaosStone::
 	setvar VAR_0x8004, 6
 	call EventScript_ChaosClaimGymStone
 	return
+
+CinnabarIsland_Gym_EventScript_GiveTM38Ironmon::
+    call Ironmon_Common_GymTMReward
+    goto_if_eq VAR_RESULT, FALSE, CinnabarIsland_Gym_EventScript_NoRoomForTM38
+    setflag FLAG_GOT_TM38_FROM_BLAINE
+    msgbox Ironmon_Text_RandomGymTM
+    release
+    end

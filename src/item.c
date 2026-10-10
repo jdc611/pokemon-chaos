@@ -1,4 +1,5 @@
 #include "global.h"
+#include "ironmon.h"
 #include "constants/maps.h"
 #include "item.h"
 #include "berry.h"
@@ -351,7 +352,7 @@ static bool32 NONNULL BagPocket_AddItem(struct BagPocket *pocket, enum Item item
 bool32 AddBagItem(enum Item itemId, u16 count)
 {
     itemId = SanitizeBagItemId(itemId);
-    if (itemId == ITEM_NONE)
+    if (itemId == ITEM_NONE || !IronmonPermitItemAward(itemId, count))
         return FALSE;
 
     // check Battle Pyramid Bag
@@ -1006,6 +1007,7 @@ ShopCriteriaFunc GetItemShopCriteriaFunc(enum Item itemId)
 
 bool32 IsItemShopCriteriaFulfilled(enum Item itemId)
 {
+    if (IsIronmonRun() && itemId >= ITEM_TM01 && itemId <= ITEM_TM100) return FALSE;
     ShopCriteriaFunc func = GetItemShopCriteriaFunc(itemId);
 
     if (!func)
