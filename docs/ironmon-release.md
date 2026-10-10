@@ -1,0 +1,65 @@
+# Pokémon Chaos FireRed — unified IronMON playtest
+
+Date: October 10, 2026. Repository: jdc611/pokemon-chaos. Target: master, **Build Playtest ROM**. This is the native FireRed/Kanto project. The workflow records the exact source commit, run number and ROM SHA256 in its summary; its ROM artifact contains only `pokefirered.gba`. The controller skin is a separate artifact. No Brendan content is implemented.
+
+The implementation is ready for a unified gameplay playtest. Compilation, source checks and substantial native emulator tests pass. Full acceptance of every requested playthrough, balance and iOS test is **not claimed**. The limitations below are part of this deliverable, not silently omitted requirements.
+
+## Implemented behavior
+
+| Area | Behavior |
+|---|---|
+| Modes | New Game offers IronMON Normal and Hardcore with descriptions. The seed/mode persist and their locked randomizer presets are reasserted on load. Regular Chaos and Nuzlocke retain their modes. |
+| Starters | Normal offers three deterministic choices; Hardcore assigns one. Generated starters have a functional damaging move, one legal random held item, shuffled abilities/stats/learnsets, random nature and MGM. Reentry cannot reroll an awarded main. The lab loss counts. |
+| Ownership | Exactly one usable main; successful capture immediately pivots and retires the old main. Core storage/party guards prevent recovering retirees. Gifts, eggs, trades, daycare, prizes, fossils, scripted additions and split-evolution extras are denied in IronMON. |
+| Retirement/floors | Read-only history preserves the latest 30 retirees and a separate total count. Capture floors remain provisional: 10/18/25/32/39/46/52/58/64 by badge progress, never lowering a higher level. |
+| Generation | Shared seeded species/stat/ability/learnset/evolution rules; original typing; legal held items. Species learnsets and evolution mappings remain stable. All six IVs are 31, EVs zero, no EV accumulation. Seeded evolution mappings normalize inaccessible methods to attainable level thresholds; cancellation is blocked. |
+| Battles/EXP | Trainer EXP, no wild EXP and no badge level caps. The main fainting marks the run ended and routes to a saved RUN OVER screen. Existing paired/partner encounters become Singles only in IronMON. |
+| Trainers | Identity-seeded generation retains authored levels, trainer identity and rewards; replaces curated competitive species/moves/items/abilities with legal random generation. Early leader sizes are 3/3/4/4, then 5/5/6/6. Improved AI is the default; a controlled classic-AI comparison is available without changing teams. |
+| Healing | Normal uses each mapped Center identity once, spent only on actual restoration; Hardcore denies Centers. Free restoration, portable PC, Pokévial, care packages and field medicine/PP/nature/EV tools are blocked. Battle healing items and legitimate recovery moves/abilities/items remain available. |
+| Items/TMs | Central deterministic overworld random item awards exclude TMs. Randomized Gym rewards are the sole IronMON TM source; non-Gym sources are denied. Consumable legal ability-slot changes remain allowed; free Summary/NPC editing is blocked. |
+| Relearning | Unlimited legitimate current-level randomized level-up relearning, including party access; Egg Move tutoring is blocked. Replacing a move preserves/clamps remaining PP. Move Deleter and Vs. Seeker are blocked to prevent free PP and repeatable EXP exploits. Ordinary Chaos retains their behavior. |
+| Commitments | Eight Gym trainer lists gate leaders and persist entry commitments. Seven major dungeon families have prerequisite, internal-warp and completion-aware commitments. Optional dungeon trainers are not made mandatory. HM field tools reuse owned-HM/badge support without another usable Pokémon. |
+| Facilities | Visiting-trainer party restoration preserves the sole main's remaining resources. Tower generation is seeded Singles with fixed level 50 because its templates omit levels. Existing no-EXP facility policy remains. Terminal callbacks apply to both. |
+| Tracker | Eleven FireRed-style read-only pages: owned stats/nature colors, moves/PP, typing/ability, observed moves, demonstrated abilities, progress, retirees, incoming-damage maxima, public stage events, visible outcomes and owned-move coverage. Regular Chaos supports the current party. L+Select opens in stable field/battle states, B closes, L/R page, Up/Down select party/species where applicable. Sensitive states deny access safely. |
+| Existing battle UI | Off/Seen/Revealed typing and preview policy, icons, arrows and ability-immunity calculations are retained. Tracker observations use visible Illusion identity and do not read hidden opponent stats, moves, items or undiscovered evolution mappings. |
+| Delta skin | Original portrait/landscape assets for standard/edge-to-edge iPhone and standard iPad; transparent game viewport, centered TRACKER immediately below the screen, supported L+Select mapping. No missing custom-skin dependency. |
+
+The move policy excludes Destiny Bond from generated IronMON learnsets. The entire candidate list was deliberately **not** blanket-banned. Perish, OHKO, trapping and self-sacrifice interactions remain strategic risks; see [ironmon-move-policy.md](ironmon-move-policy.md). The starter fallback excludes conditional/self-sacrificing attacks from its functional-attack guarantee.
+
+## Verification actually performed
+
+Latest local build: 32 MiB padded GBA ROM, 27,216,576-byte payload; EWRAM 253,892/262,144 and IWRAM 29,072/32,768. Tests execute this ROM with native mGBA 0.10.2 unless explicitly identified as host checks/models. Debug fixture setup is distinguished from played inputs.
+
+- **21 existing source suites pass**, covering ordinary Chaos progression, party preservation, field systems, randomizer, abilities, arcade, ranch and stabilization. Host fixtures explicitly disable IronMON; native suites test the IronMON branches independently.
+- **17 integrated native suites pass:** four-mode startup, Normal starter choices, controlled Hardcore lab loss, eight Gyms, seven dungeons, services, Singles, wild generation, played trainer/wild EXP, played consecutive Jessie/James, terminal save/reload, facilities, six healing-event paths, actual Berry spending, PP/relearner restrictions, tracker restoration and AI comparison.
+- **Actual capture/nickname/save tests pass** in both modes for Yes and No: captured main, retirement, outgoing battle-form metadata isolation and flash reload. The ball is used through the genuine Bag/battle capture path.
+- **Actual evolution and relearner UI tests pass** in both modes. Held B cannot cancel evolution; party remains one after split evolution; ordinary Chaos still creates Shedinja. Seeded evolution preserves nature/item/MGM through flash reload. Relearner enters Summary, replaces a full slot, returns to field and preserves one remaining PP and unrelated Pokémon data.
+- **Actual Brock/Misty milestone tests pass** in both modes: real NPC interaction, generated battle, badge, randomized TM, leader defeat flag, exit unlock and flash reload. Own starting levels were controlled at 50 and Gym trainer flags pre-set; these are progression tests, not walking playthroughs or balance results.
+- **Tracker privacy/capacity/legacy tests pass:** genuine displayed move and incoming-damage hooks, visible Illusion identity, staged/outcome events, seed reset, flash persistence, all discovered species, bounded fact overflow, stale-padding-safe v1 migration. Overlay closure restores callbacks, inputs, tasks, windows, party/save/battle state and borrowed graphics exactly, including regular Chaos Doubles and low-heap denial.
+- **Shared effectiveness tests pass:** unknown Seen hides previews, Revealed shows them immediately, Off hides them, plus Wonder Guard, Tera Shell, Earth Eater, Well-Baked Body, Purifying Salt, Mind's Eye and bypass/Ability Shield checks.
+- **Save migration passes** with an actual pre-extension ordinary save: original Save1/2 bytes, full Save3, full storage and party remain byte-identical, IronMON stays off. Existing field offsets are retained. Save tails stay within existing sector capacities; old zero-filled sector padding permits forward loading.
+- Starter pool: 3,549 generated starters across three seeds have legal items, functional attacks, nonzero PP and MGM. Evolution mapping sample: 1,605 mappings across three seeds are stable and do not regress canonical BST. These are native generation checks, not played victories.
+- Controlled combat sample: 60 Brock/Misty battles, five selected pivots and three seeds, own levels 15/29, generated enemies unchanged, no item use/relearning, greedy own-stat move policy. Eight wins; all losses terminate correctly; results agree between modes. Earlier starter-only no-item samples all lost. See [ironmon-boss-play-results.json](ironmon-boss-play-results.json). This is **not a fair-run win-rate study**.
+- EXP model: 96 modeled outcomes assuming victories, no pivots/evolution changes. Listed optional battles produce before-Brock levels 11–16 and before-Misty 26–31. This is a model, not an observed walking playthrough; [ironmon-exp-audit.json](ironmon-exp-audit.json) records assumptions.
+- Skin package passes archive, schema, assets, input names, screen ratio, transparent viewport and nonoverlapping control checks. DeltaCore source supports multiple mapped inputs. Native shortcut passes with L=A. **No actual iOS import/touch test was possible.**
+
+## Known limits and outstanding acceptance
+
+1. **Full natural Pallet→Brock→Misty progression and a full later-game walkthrough have not been completed.** Controlled milestone/warp/flag fixtures cannot prove every puzzle, NPC, room and story transition is softlock-free. Complete dungeon puzzles, facility dialogue traversal and all individual item/NPC variants remain device/playthrough validation targets.
+2. **Balance remains provisional.** Poor starter-only samples show substantial early difficulty. The selected pivot wins show functional combat, not natural pivot availability or fairness. No blanket opponent weakening or floor inflation was applied to conceal this. Broader seeds, strategic play, resources and actual walking progression need evaluation before asserting full balance acceptance.
+3. **Persistence is bounded by the existing save allocation.** All observed species identities persist. Detailed observations retain 256 distinct facts, display a full warning, preserve earlier records and update existing counters when full; they cannot store unlimited battle history. Retirement retains 30 snapshots plus a total count. No boxes, Hall of Fame or e-Reader sectors are repurposed for unlimited data.
+4. The tracker uses a polished opaque overlay with lossless restoration rather than genuine translucency. It is denied during sensitive transitions or insufficient temporary memory. Damage history is legitimately observed incoming player damage, not hidden opponent HP or a hidden-stat estimate; move usage is an observation counter, not a false claim of exact enemy remaining PP.
+5. Emulator save states and external backups can rewind any game; the ROM cannot enforce irreversible losses against external rewind. Saved ended runs cannot resume through the game itself. No save is deleted.
+6. Actual Delta skin import and multi-input touch dispatch require iOS confirmation. The skin and supported mapping are supplied, but device compatibility is not claimed as tested.
+7. Forward save loading is tested; **downgrading a save populated by this engine to an older ROM is not supported**. Preserve an original backup. New IronMON modes require New Game; loading a regular save does not convert it to IronMON.
+
+These are explicit limitations to the full acceptance standard. No successful compilation is presented as proof of an exhaustive playthrough or complete device verification.
+
+## Install and play
+
+1. Open the exact **Build Playtest ROM** run for the final commit on `master`. Download the **Chaos-FireRed-master-Playtest-<number>-<commit>** artifact. Extract its ZIP; it contains only `pokefirered.gba`. Import that ROM into Delta.
+2. Back up existing battery saves. To continue ordinary Chaos, import the exported battery `.sav` into the new ROM's Delta game entry. Use the game's Continue, not a save state made by another engine revision. Start **New Game** for either IronMON mode; select its mode and run seed.
+3. Download the separate **Chaos-Delta-Tracker-<number>** artifact, extract `Pokemon-Chaos-Tracker.deltaskin`, and import through Delta Settings → Controller Skins → Game Boy Advance → desired orientation → +. Select the imported skin.
+4. Press TRACKER (L+Select) during ordinary field control or stable battle action/move selection. B closes; L/R change pages. The shortcut is safely consumed when opening is temporarily unavailable.
+
+Source tests, harnesses, policy and historical findings are committed in the repository. Reports/symbols are not bundled into the ROM download.

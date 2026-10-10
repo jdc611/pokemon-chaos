@@ -1,6 +1,6 @@
 """Build original Delta skin artwork and mapping, not an unavailable user skin.
 
-Requires Pillow. Output is an internal checkpoint until actual Delta import QA.
+Requires Pillow. Actual Delta import/touch QA requires an iOS device.
 Schema: https://noah978.gitbook.io/delta-docs/skins
 """
 from pathlib import Path
@@ -16,7 +16,7 @@ def frame(x, y, width, height):
 
 def representation(output, name, w, h, landscape):
     if landscape:
-        gh = min(h - 110, (w - 360) * 2/3, 400)
+        gh = min(h - 124, (w - 360) * 2/3, 400)
         gw = gh * 1.5
         screen = frame((w-gw)/2, 22, gw, gh)
         tracker = frame(w/2-56, 22+gh+8, 112, 36)
@@ -46,7 +46,7 @@ def representation(output, name, w, h, landscape):
     items += [dict(inputs=[key], frame=f) for _,key,f in buttons]
     assets = {}
     for scale, size in ((1,'small'), (2,'medium'), (3,'large')):
-        image = Image.new('RGB', (w*scale,h*scale), '#e9edf2')
+        image = Image.new('RGBA', (w*scale,h*scale), '#e9edf2')
         draw = ImageDraw.Draw(image)
         def rect(f, fill, outline=None, radius=10):
             x,y,fw,fh = (f[k]*scale for k in ('x','y','width','height'))
@@ -58,7 +58,9 @@ def representation(output, name, w, h, landscape):
                       text, font=font, fill=color, anchor='mm')
         draw.rectangle((0,0,w*scale,18*scale), fill='#b83c42')
         rect(frame(screen['x']-4,screen['y']-4,screen['width']+8,screen['height']+8), '#42576d')
-        rect(screen, '#101a25', radius=0)
+        # DeltaCore renders GameView below the controller artwork. The game
+        # viewport must be transparent, or the artwork hides the entire ROM.
+        rect(screen, (0, 0, 0, 0), radius=0)
         rect(tracker, '#b83c42', '#7c2630')
         label(tracker, 'TRACKER', 'white')
         # A single D-pad input is divided by Delta into a 3x3 grid.
@@ -95,9 +97,25 @@ def validate(info, output):
                     assert set(inputs.values() if isinstance(inputs,dict) else inputs)<=allowed
                     assert (f['x']+f['width']<=sf['x'] or f['x']>=sf['x']+sf['width']
                             or f['y']+f['height']<=sf['y'] or f['y']>=sf['y']+sf['height'])
+                for i, item in enumerate(rep['items']):
+                    f = item['frame']
+                    for other in rep['items'][i+1:]:
+                        g = other['frame']
+                        assert (f['x']+f['width']<=g['x'] or g['x']+g['width']<=f['x']
+                                or f['y']+f['height']<=g['y'] or g['y']+g['height']<=f['y'])
                 for filename in rep['assets'].values():
                     with Image.open(output/filename) as im:
                         assert abs(im.width/im.height-w/h)<0.001
+                        assert im.mode == 'RGBA'
+                        sx = im.width/w
+                        sy = im.height/h
+                        center = ((sf['x']+sf['width']/2)*sx,
+                                  (sf['y']+sf['height']/2)*sy)
+                        assert im.getpixel(tuple(int(v) for v in center))[3] == 0
+                        interior = (int(sf['x']*sx)+1, int(sf['y']*sy)+1,
+                                    int((sf['x']+sf['width'])*sx)-1,
+                                    int((sf['y']+sf['height'])*sy)-1)
+                        assert im.getchannel('A').crop(interior).getbbox() is None
 
 def main():
     parser=argparse.ArgumentParser()

@@ -1,6 +1,6 @@
 # IronMON internal development checkpoints — October 10, 2026
 
-**Not a release. The complete IronMON directive is not implemented. Do not merge or publish this branch as a playable IronMON release.**
+**Historical development log. For current implementation, verification, installation and remaining acceptance limitations, read [ironmon-release.md](ironmon-release.md). Initial checkpoint statements below describe their earlier state, not the current implementation.**
 
 Repository: `jdc611/pokemon-chaos`. Target branch: `master`. Internal branch: `ironmon-development`.
 
@@ -50,40 +50,29 @@ Fixtures explicitly initialize player/rival name terminators before skipping int
 
 These tests do **not** establish a complete playthrough, real Delta verification, every trainer, all acquisition/healing/item routes, actual battle EXP/faint scenarios, every map, or fairness. An actual Hardcore lab loss was played with a controlled 1-HP main. No Brock/Misty playthrough or later-game balance test has been completed. No Delta skin exists yet.
 
-## Remaining acceptance checklist
+## Current acceptance work
 
-| Directive sections | Remaining work |
-| --- | --- |
-| 1–3 Architecture/setup | Full setup UI traversal, mode immutability audit, migration across all supported save versions; preserve regular Chaos/Nuzlocke. |
-| 4 Starters | Normal three-choice UI tests, same-seed full reset checks, real lab rival win integration and Normal starter-choice traversal; Hardcore lab loss is verified with a controlled injury. |
-| 5 Ownership | Audit storage, party scripts, daycare, ranch, trades, fusion, rentals, gifts/captures; block any recovery/reintroduction/second main; test nickname Yes/No after capture; balance floors against EXP. |
-| 6 Gifts/Eggs | Audit every vendor, gift, fossil, prize and story reward; deny entry before charging; retain story flags/progression. |
-| 7 Randomization | Verify wild mapping, abilities/natures, trainer mappings, held-item generation, seeded evolution branches and non-regression; mandatory evolution cancellation and inaccessible methods. |
-| 8 Move safety | Audit Perish Song/Body, OHKO, self-sacrifice, trapping and immunity combinations; document decisions separately from Destiny Bond. |
-| 9 MGM | Actual opposing battle generation/evolutions and all alternate IV/EV routes. |
-| 10 EXP | Actual trainer/wild EXP, alternate grinding blocks, progression trainer-yield analysis and floor adjustment. |
-| 11 Healing | Every Center map/identity, real nurse scripts, free healing NPCs, scripted/direct restoration, lab/story heal callbacks, held-item/move legitimacy. |
-| 12 Items/TMs | Uniform deterministic overworld non-TM pool; central item award paths; Gym-only randomized TM rewards; shop/NPC/hidden/Game Corner filtering; all ability consumables; free tutors/editors; daycare. IronMON now uses a uniform ordinary non-TM pickup pool. Eight Gym scripts issue seeded eligible TM rewards; a transient one-award authorization gates AddBagItem and ordinary shop criteria hide TMs. NPC/Game Corner presentation and all reward routes still need audit. |
-| 13 Trainers | Explicit override identity is implemented. Remaining: all trainer/pool paths, all levels/moves/PP/items, reload stability and actual battles. |
-| 14 Boss/AI | Brock 3, Misty 3, Surge 4, Erika 4 profile; later roster sizes; improved/classic comparison under same seed; meaningful balance playtests. Initial IronMON sizes now implemented and verified by ROM generation fixtures: 3/3/4/4/5/5/6/6. Regular rosters retain their table sizes. |
-| 15 Gyms | Eight Kanto Gym commitments, canonical trainer flags, Leader gating, normal warp/escape denial and victory unlock now implemented; native requirements/size fixtures pass. Remaining: real doors, Saffron/Cinnabar puzzles, scripted warps and save/reload integration. |
-| 16 Dungeons | Seven commitments now implemented: Mt. Moon, Rock Tunnel, Tower, Rocket Hideout, Silph, Mansion and Kanto Victory Road. Tower requires Scope; Victory Road requires Badge 8 and Strength HM. Internal region warps allowed; progression exits/story flags/key acquisition complete the area. Native fixtures pass. Remaining: actual rooms/puzzles/story trainers, save/reload and all escape paths. No optional dungeon trainers are forced. |
-| 17 Singles | Central Singles flags and consecutive paired-trainer callbacks implemented, with no partner party loading/restoration in IronMON. Silph has a mode branch skipping three-mon selection. Koga setup and Jessie/James callback/identity/defeat-flag/main-integrity fixtures pass. Remaining: actual two-battle transitions, individual map scripts, dialogue/rewards/story flags and all mandatory pairs/multis. |
-| 18 Run over | Immediate faint marker, terminal UI, flash save and reload block implemented/fixture-tested. Remaining: other trainer/wild/scripted loss integration, form restoration, failure recovery and reset testing. Emulator save states can restore an earlier RAM/flash snapshot; this ROM cannot prevent that external emulator capability. |
-| 19 Tracker | Persistent nonspoiling observations across run; player party support in regular Chaos; polished read-only pages; safe battle/field access/callback restoration; no hidden-info leak; preserve existing indicators. Not implemented. |
-| 20 Delta | Inspect official supported inputs/skin schema; choose conflict-free chord; native shortcut; original or available skin graphics; centered TRACKER button; `.deltaskin` packaging/import/Delta checks. No dependency is assumed available. |
-| 21–22 Integration | Finish technical audits and internal checkpoints. Publish one complete release only. |
-| 23 Tests | Real Brock/Misty progression, representative unfavorable seeds, later controlled saves, save integrity/menu/battle/world/Delta regression and fair EXP/AI/resource balance. |
-| 24–26 Delivery | Complete ROM + skin + final commits/build identifier + installation/implementation/testing/limitations reports. Not ready. |
+This section supersedes the initial checkpoint checklist. Earlier entries below remain a chronological record, including their then-outstanding tasks.
 
-Brendan remains master planning only. Do not add his maps/scripts/trainers/rewards.
+| System | Current implementation and verification | Still to verify or disclose |
+|---|---|---|
+| Modes/start/seed | Both presets and save enforcement; actual startup, Normal ball choices and Hardcore controlled lab loss tested. | Full ordinary intro traversal under multiple unfavorable seeds. |
+| Ownership/acquisition | Solo pivot, protected 30-snapshot retired ring, level floors, centralized gift/egg/prize/trade/daycare protections; actual capture nickname Yes/No and flash reload pass in both modes. Split evolutions cannot award another Pokémon. | Complete map-by-map story walkthrough; 30 retained snapshots is a bounded history. |
+| Generation/evolution | MGM, legal seeded stats/ability/moves/items, trainer/facility generation and evolution mapping tests; actual evolution/B-cancel denial/flash reload pass. | Gameplay balance across full runs; provisional pivot floors and level-50 optional Tower profile. |
+| EXP/healing/items | Trainer/wild EXP battle flow, unique Center authorization, free healing denial, berry spending, field restrictions, Gym-only TMs and repeat-grind protections tested. Actual relearner replacement retains remaining PP. | Every individual item-use and NPC dialogue sequence in a full playthrough. |
+| World/battles | Eight Gym and seven dungeon commitment/prerequisite/warp fixtures; Gym trainer requirements; paired Jessie/James consecutive Singles; Koga and facility Singles; terminal save/resume rejection. | Full puzzle/room traversal, all later story transitions, unbiased progression through Brock/Misty. |
+| Tracker | Eleven read-only pages; actual shown move/damage hooks, public stat-stage/outcome events, all discovered identities persist, privacy/seed/reset/legacy migration/save/graphics restoration tests. Original previews regression-tested. | Detailed journal is limited to 256 facts, with an in-game full warning. No unlimited history or hidden opponent information. |
+| Delta | Original six-representation skin, centered L+Select button, valid archive/assets/geometry, transparent game window and source-compatible supported input mapping. Native ROM shortcut tests. | Actual iOS import/touch dispatch cannot be tested in this environment. |
+| Release | ROM compiles; existing source suites pass; 17 native integration suites and additional capture/evolution/relearner/Gym/observation/preview suites pass. | Final source checkpoint, full reports/known limitations, master integration and one Build Playtest ROM artifact plus separate skin artifact. |
+
+Brendan remains master planning only. No Brendan content is added.
 
 ## Resume instructions
 
 1. Checkout `ironmon-development`, inspect `git log/status`, read this report and the approved directive. Do not use the old Emerald project or assume the core checkpoint fulfills the release.
 2. Build with the repository instructions. In the current workspace ARM tools/newlib live under `/workspace/scratch/3923bd38e6ed/deps/root`; use ARM CPP with `-isystem .../usr/include/newlib` instead of exporting that include path into host tool builds. Materialize the existing title as required, then restore the generated tracked PNG/untracked tilemap before committing.
-3. Native QA: compile `ironmon-layout.c` with `-DFIRERED -DMODERN=1 -mthumb -mabi=apcs-gnu -march=armv4t -iquote include`; extract `.rodata` to `$CHAOS_QA_DIR/ironmon-layout.bin`. `ironmon-emulator.c` is the source of the previously built mGBA 0.10 harness used in this session; requires development headers/library to rebuild. Existing headers were unavailable during this session; the known prior compiled harness was reused. Set `CHAOS_ARM_NM`, then run core/pool/startup. Migration additionally requires `CHAOS_BASELINE_ROM_DIR` and `CHAOS_BASELINE_SAVE`.
-4. Next verify the real consecutive Singles transition and mandatory story scripts, finish remaining acquisition/healing/item/editor routes and commitment integration tests. Implement tracker save architecture/UI and Delta skin, AI comparison/EXP balance, then Brock/Misty and later integration/playthrough verification. Do not activate half-audited locks or publish an incomplete public build.
+3. Native QA: compile `ironmon-layout.c` with `-DFIRERED -DMODERN=1 -mthumb -mabi=apcs-gnu -march=armv4t -iquote include`; extract `.rodata` to `$CHAOS_QA_DIR/ironmon-layout.bin`. `ironmon-emulator.c` is the source of the previously built mGBA 0.10 harness used in this session; requires development headers/library to rebuild. mGBA 0.10.2 headers and the matching runtime were recovered and the harness rebuilt; see the later checkpoints for current details. Set `CHAOS_ARM_NM`, then run core/pool/startup. Migration additionally requires `CHAOS_BASELINE_ROM_DIR` and `CHAOS_BASELINE_SAVE`.
+4. Core implementation, actual paired Singles, acquisition/healing gates, tracker and skin are now present. Use the release report for current remaining validation: complete walking progression and map puzzles, broader balance, and actual Delta import/touch. Do not restart already completed implementation from this historical checklist.
 5. Current generated ROM/logs/fixtures are scratch-only and reproducible; code, test sources, findings and checklist are committed to the internal branch. The final release must be merged into master only after its acceptance checks pass.
 
 ## Continuation checkpoint findings
@@ -209,3 +198,19 @@ Every observed species now persists in a 197-byte bitmap, split across the previ
 The rebuilt ROM passes observation privacy/actual damage/event ingestion/flash persistence and eleven-page overlay restoration checks. An actual pre-extension ordinary .sav loads with all original SaveBlock1/2 bytes, full SaveBlock3, full storage and party byte-identical. Payload 27216568 bytes, EWRAM 253892, IWRAM 29072. The new save tails use the remaining capacity; further persistent additions require a fresh capacity audit.
 
 Capture audit found outgoing slot-zero form metadata surviving an immediate IronMON pivot. The pivot now clears its outgoing battle state; capture delivery assigns any caught-form restoration metadata to the actual pivot slot zero. Actual bag/ball capture paths now pass in both modes with Yes and No nickname choices, retirement, injected outgoing form-restoration metadata, and actual flash save/reload. This establishes slot ownership isolation rather than every species-specific form interaction. Delta package generation passes schema, geometry, asset and archive checks; iOS import/touch verification is unavailable in this environment and remains disclosed.
+
+### Ownership, real UI, legacy saves and integration rerun — October 10, 2026
+
+The Nincada split-evolution helper now returns before creating an extra Pokémon in IronMON. Actual evolution scenes pass in both modes while B is held: evolution completes, party stays at one, MGM persists. Ordinary Chaos still creates its extra Shedinja. A seeded Bulbasaur→Primeape scene passes in both modes with nature/item/MGM preservation and actual flash reload. Full stone/trade/time mapping normalization is separately covered by the seeded mapping suite; these scenes do not exhaust every evolution animation.
+
+The actual level-up Relearner opens, hands off to Summary to replace a full move slot, returns, preserves that slot's one remaining PP, and closes to field in both modes. Unrelated item/nature/ability/IV/EV fields remain unchanged. Legacy version-1 observation fixtures now pass read-only lookup and legitimate-event migration despite deliberately stale unused padding, retaining existing facts and preventing false discoveries.
+
+All 21 existing source suites pass after their ordinary-mode host harnesses gained explicit no-IronMON stubs; their production code extraction is unchanged. The stabilization harness additionally verifies that run-record initialization preserves the appended IronMON state. Seventeen native suites pass on the latest ROM: startup, all Normal choices, controlled Hardcore lab loss, world, dungeons, services, Singles, wild, played EXP, played pair, terminal, facilities, free-healing NPCs, berry spending, relearner PP/deletion, tracker restoration and AI comparison. Shared Off/Seen/Revealed preview and ability-immunity fixtures also pass on a newly entered current-ROM battle; no old emulator state was reused across ROMs.
+
+The Delta skin source audit found its game viewport must be transparent because DeltaCore places GameView beneath controller artwork. Assets now use RGBA and a fully transparent viewport. All six representations validate alpha, archive integrity, screen aspect/placement and non-overlapping controls. Edge-to-edge landscape spacing was adjusted to keep TRACKER separate from SELECT/START. Actual iOS import/touch testing remains unavailable.
+
+Controlled unmodified generated-combatant tests exercised Brock/Misty victories and losses in both modes. The greedy owned-move policy uses actual own attacking stats and no opponent hidden information. With five deliberately selected pivot species, three seeds and two bosses, 60 battles completed, including eight victories (identical counts between modes) and terminal losses. Starting EXP, species and full initial resources are controlled; no enemy stats, HP, ability, items, moves or outcomes are changed. This is evidence of functional combat and seed variance, not a fair-run win-rate study or a complete walking playthrough. Initial starter-only samples were unfavorable and all lost under this no-item/no-relearning policy. Boss sizes and floor proposals are unchanged; broader balance playtesting remains necessary. Detailed results are in `docs/ironmon-boss-play-results.json`.
+
+### Actual Gym milestone integration — October 10, 2026
+
+Brock and Misty were interacted with as real map objects through ordinary inputs in both modes. Their actual scripts executed unmodified generated battles, badge and randomized TM awards, defeat flags, exit unlock and flash save/reload. All four scenarios pass. Initial own Pokémon levels were controlled at 50 and mandatory trainer flags were initialized for this milestone test; it is a progression integration check, not a natural early-game playthrough or balance result. A previous direct-script fixture failed the engine's correct selected-object assertion; the fixture was corrected to use actual NPC interaction rather than bypassing production safeguards.

@@ -136,7 +136,7 @@ int main(void) {
 '''
 with tempfile.TemporaryDirectory() as directory:
  source=Path(directory)/'check.c'; binary=Path(directory)/'check'
- source.write_text(preamble + defines + re.sub(r'^#include.*\n','',progression,flags=re.M) + cap_function + main)
+ source.write_text('int IsIronmonRun(void){return 0;}\n#define MAX_LEVEL 100\n' + preamble + defines + re.sub(r'^#include.*\n','',progression,flags=re.M) + cap_function + main)
  subprocess.run(['cc','-std=gnu11','-Wall','-Werror',str(source),'-o',str(binary)],check=True)
  subprocess.run([str(binary)],check=True)
 # Structural checks cover the hooks and native event dependencies.

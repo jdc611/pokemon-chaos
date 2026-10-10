@@ -64,7 +64,7 @@ int main(void){
 code = prefix + '\n'.join(function(name) for name in ['RanchBox', 'RanchSlot', 'ChaosRanchWithdraw', 'ChaosRanchTakeItem']) + tests
 with tempfile.TemporaryDirectory() as tmp:
     src, exe = Path(tmp) / 'test.c', Path(tmp) / 'test'
-    src.write_text(code)
+    src.write_text('int IsIronmonRun(void){return 0;}\n' + code)
     subprocess.run(['cc', '-std=c99', str(src), '-o', str(exe)], check=True)
     subprocess.run([str(exe)], check=True)
 

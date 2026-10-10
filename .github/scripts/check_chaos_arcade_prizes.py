@@ -88,6 +88,6 @@ int main(void){
 }
 '''
 with tempfile.TemporaryDirectory() as d:
- p=Path(d)/'check.c';p.write_text(code)
+ p=Path(d)/'check.c';p.write_text('int IsIronmonRun(void){return 0;}\n' + code)
  subprocess.run(['cc','-std=gnu11','-Wall','-Werror',str(p),'-o',d+'/check'],check=True)
  subprocess.run([d+'/check'],check=True)

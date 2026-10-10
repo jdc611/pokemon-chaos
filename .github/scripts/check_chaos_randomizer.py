@@ -13,7 +13,7 @@ def function(path,name):
  return s[a:i]+'\n'
 def run(code):
  with tempfile.TemporaryDirectory() as d:
-  p=Path(d)/'check.c';p.write_text(code)
+  p=Path(d)/'check.c';p.write_text('int IsIronmonRun(void){return 0;}\nunsigned IronmonOverworldItem(unsigned seed){return seed;}\n' + code)
   subprocess.run(['cc','-std=gnu11','-Wall','-Werror','-iquote',str(root/'include'),str(p),'-o',d+'/check'],check=True)
   subprocess.run([d+'/check'],check=True)
 base=r'''

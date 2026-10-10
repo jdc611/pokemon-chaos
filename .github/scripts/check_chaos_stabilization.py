@@ -41,7 +41,7 @@ typedef uint8_t u8;typedef uint16_t u16;typedef uint32_t u32;typedef int16_t s16
 enum Species {SPECIES_NONE=0};enum NationalDexOrder {D_NONE=0};
 struct Evolution{u16 method,targetSpecies;} ev[12][3]={[1]={{1,2},{EVOLUTIONS_END,0}},[2]={{1,3},{EVOLUTIONS_END,0}},[4]={{1,5},{1,6},{EVOLUTIONS_END,0}}};
 struct Pokemon{u16 species;bool8 shiny;} gParties[2][6];u16 boxes[2][4];bool8 caught[12];
-struct SaveBlock3 {u8 runDifficulty;u8 nuzlockeEncounterUsed[32];bool8 nuzlockeCurrentEncounterCatchable;u32 recordsMagic;u16 encounterSpecies[256];u8 encounterFailed[32];u32 runCounters[16];} save,*gSaveBlock3Ptr=&save;
+struct SaveBlock3 {u8 runDifficulty;u8 nuzlockeEncounterUsed[32];bool8 nuzlockeCurrentEncounterCatchable;u32 recordsMagic;u16 encounterSpecies[256];u8 encounterFailed[32];u32 runCounters[16];u8 ironmon[52];} save,*gSaveBlock3Ptr=&save;
 struct {u16 regionMapSectionId;} gMapHeader;
 u16 sNuzlockeFamily[NUM_SPECIES];bool8 sNuzlockeFamiliesReady;s16 sNuzlockeEligibleSection;
 u16 vars[20];u32 VarGet(u16 i){return vars[i];}bool32 FlagGet(u16 i){return vars[i];}
@@ -58,6 +58,7 @@ bool8 IsMonShiny(struct Pokemon*m){return m->shiny;}
 fns=['NuzlockeFamilyRoot','NuzlockeBuildFamilies','NuzlockeSpeciesWasCaught','NuzlockeMonIsShiny','NuzlockeMapSectionEncounterUsed','NuzlockeAreaEncounterUsed','NuzlockeMarkAreaEncounterUsed','NuzlockeAccountStandardEncounter','NuzlockeCanCatchMon','NuzlockeRecordCapture']
 code=base+function('src/chaos_progression.c','IsNuzlockeRun')+function('src/chaos_records.c','ChaosEnsureRunRecords')+''.join(function('src/battle_setup.c',n) for n in fns)+r'''
 int main(void){
+ memset(save.ironmon,0x5a,sizeof(save.ironmon));
  ev[3][0].method=EVOLUTIONS_END;
  vars[VAR_CHAOS_NUZLOCKE]=1;save.runDifficulty=1;assert(IsNuzlockeRun());save.runDifficulty=2;assert(IsNuzlockeRun());vars[1]=0;assert(!IsNuzlockeRun());vars[1]=1;
  gMapHeader.regionMapSectionId=101;
@@ -67,6 +68,7 @@ int main(void){
  gParties[1][0].species=9;NuzlockeAccountStandardEncounter(0);assert(!NuzlockeCanCatchMon(&gParties[1][0]));gParties[1][0].shiny=1;assert(NuzlockeCanCatchMon(&gParties[1][0]));
  gMapHeader.regionMapSectionId=102;NuzlockeAccountStandardEncounter(0);assert(!NuzlockeAreaEncounterUsed());gParties[1][0].shiny=0;vars[WE_FLAG_NO_CATCHING]=1;NuzlockeAccountStandardEncounter(0);assert(!NuzlockeAreaEncounterUsed());vars[WE_FLAG_NO_CATCHING]=0;
  gParties[1][0].species=1;gParties[0][0].species=1;gParties[1][1].species=9;NuzlockeAccountStandardEncounter(1);assert(save.encounterSpecies[102]==9);assert(!NuzlockeCanCatchMon(&gParties[1][0]));assert(NuzlockeCanCatchMon(&gParties[1][1]));
+ for(unsigned i=0;i<sizeof(save.ironmon);i++)assert(save.ironmon[i]==0x5a);
  puts("PASS production family union/alternate forms, past and boxed ownership, named-area first opportunity, capture transition, shiny and uncatchable exceptions, doubles and independent difficulty.");}
 '''
 run(code)

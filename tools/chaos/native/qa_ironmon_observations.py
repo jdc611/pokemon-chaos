@@ -59,6 +59,21 @@ wr(illusion+ILLSTATE,ILLON,1);wr(illusion+ILLMON,p)
 call('ChaosObserveMove',1,TACKLE)
 assert (BULBA,0x1000|TACKLE,1) in facts()
 for i,b in enumerate(before):wr(illusion+i,b,1)
+# Legacy version-1 journals read only their existing facts, then migrate on
+# a legitimate observed event. Old unused tails must not become discoveries.
+legacy_facts=facts()
+for i in range(116):wr(rd('gSaveBlock1Ptr')+15756+i,255,1)
+for i in range(81):wr(rd('gSaveBlock2Ptr')+3884+i,255,1)
+wr(j+10,1,1)
+assert call('ChaosObservationsRead')
+assert call('ChaosHasObservedSpecies',species) and call('ChaosHasObservedSpecies',BULBA)
+unknown=next(i for i in range(1,N_SPECIES) if i not in (species,BULBA))
+assert not call('ChaosHasObservedSpecies',unknown)
+call('ChaosObserveAbility',1,SOUNDPROOF)
+assert rd(j+10,1)==2 and facts()==legacy_facts
+assert call('ChaosHasObservedSpecies',species) and call('ChaosHasObservedSpecies',BULBA)
+assert not call('ChaosHasObservedSpecies',unknown)
+print('PASS read-only legacy journal lookup and event-triggered bitmap migration; stale padding never leaks discoveries.',flush=True)
 # The journal is read-only while its two pages are open, even with repeated paging.
 storage=blob(rd('gPokemonStoragePtr'),STORAGESIZE)
 assert call('ChaosTrackerTryOpen');frames(60)

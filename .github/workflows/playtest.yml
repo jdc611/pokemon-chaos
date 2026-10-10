@@ -3,6 +3,7 @@ name: Build Playtest ROM
 "on":
   push:
     branches:
+      - master
       - chaos-firered
       - chaos-v3
     paths-ignore:
@@ -18,7 +19,7 @@ env:
   COMPARE: 0
   UNUSED_ERROR: 1
   DEPRECATED_ERROR: 1
-  PLAYTEST_TRIGGER: "Native FireRed Feasibility Audit v2"
+  PLAYTEST_TRIGGER: "Unified FireRed IronMON playtest"
 
 jobs:
   build:
@@ -114,10 +115,11 @@ jobs:
           name: Chaos-FireRed-${{ github.ref_name }}-Playtest-${{ github.run_number }}-${{ github.sha }}
           path: pokefirered.gba
 
-      - name: Upload emulator verification symbols
+      - name: Build and validate Delta tracker skin
+        run: python3 tools/chaos/delta/build_skin.py --output delta-skin
+
+      - name: Upload Delta tracker skin
         uses: actions/upload-artifact@v4
         with:
-          name: Chaos-QA-symbols-${{ github.sha }}
-          path: |
-            pokefirered.elf
-            pokefirered.map
+          name: Chaos-Delta-Tracker-${{ github.run_number }}
+          path: delta-skin/Pokemon-Chaos-Tracker.deltaskin

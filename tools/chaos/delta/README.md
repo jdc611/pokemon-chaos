@@ -12,6 +12,6 @@ The resulting `Pokemon-Chaos-Tracker.deltaskin` includes portrait and landscape 
 
 Install from Delta Settings → Controller Skins → Game Boy Advance → the desired orientation → +, then choose the `.deltaskin` file. Select the imported skin. A ROM containing the tracker hooks is required. B closes the overlay; L/R change pages; Up/Down select an owned party Pokémon.
 
-The build script verifies archive integrity, assets, identifiers, screen ratio, tracker placement, input names and control bounds. The game shortcut has native mGBA action/menu-state tests. **Actual Delta import, multi-touch dispatch and device testing are pending. This is an internal development checkpoint, not an accepted release.**
+The build script verifies archive integrity, assets, identifiers, screen ratio, tracker placement, input names and control bounds. The game shortcut has native mGBA action/menu-state tests. **Actual Delta import, multi-touch dispatch and device testing are pending. The package is supplied for device playtesting; its import and touch behavior must not be described as device-verified.**
 
 Primary schema reference: https://noah978.gitbook.io/delta-docs/skins (including Using Multiple Inputs). Official installation reference: https://faq.deltaemulator.com/using-delta/controller-skins.
