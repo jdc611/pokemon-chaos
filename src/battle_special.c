@@ -1,4 +1,6 @@
 #include "global.h"
+#include "ironmon.h"
+#include "load_save.h"
 #include "main.h"
 #include "battle_special.h"
 #include "battle.h"
@@ -32,6 +34,16 @@ static void HandleSpecialTrainerBattleEnd(void)
     s32 i;
 
     RecordedBattle_SaveBattleOutcome();
+    if (IsIronmonRun())
+    {
+        IronmonRecordBattleEnd();
+        if (IronmonCheckRunOver())
+            return;
+        // The visiting-trainer script reloads this snapshot after the battle.
+        // Preserve the sole main's actual HP, PP, items and gained experience.
+        if (gBattleScripting.specialTrainerBattleType == SPECIAL_BATTLE_EREADER)
+            SavePlayerParty();
+    }
     switch (gBattleScripting.specialTrainerBattleType)
     {
     case SPECIAL_BATTLE_SECRET_BASE:

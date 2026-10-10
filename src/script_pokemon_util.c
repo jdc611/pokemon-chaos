@@ -205,6 +205,13 @@ void ScriptSetMonMoveSlot(u8 monIndex, enum Move move, u8 slot)
 // TRUE if the party selection was successful.
 void ChooseHalfPartyForBattle(void)
 {
+    if (IsIronmonRun())
+    {
+        ClearSelectedPartyOrder();
+        gSelectedOrderFromParty[0] = 1;
+        gSpecialVar_Result = TRUE;
+        return;
+    }
     gMain.savedCallback = CB2_ReturnFromChooseHalfParty;
     VarSet(VAR_FRONTIER_FACILITY, FACILITY_MULTI_OR_EREADER);
     InitChooseHalfPartyForBattle(0);

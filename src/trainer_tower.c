@@ -1,4 +1,5 @@
 #include "global.h"
+#include "ironmon.h"
 #include "battle.h"
 #include "battle_main.h"
 #include "battle_setup.h"
@@ -640,6 +641,9 @@ static void TrainerTowerGetOpponentTextColor(u8 challengeType, u8 facilityClass)
 
 static void CB2_EndTrainerTowerBattle(void)
 {
+    IronmonRecordBattleEnd();
+    if (IronmonCheckRunOver())
+        return;
     SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
 }
 
