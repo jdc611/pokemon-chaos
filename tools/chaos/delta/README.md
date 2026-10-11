@@ -17,3 +17,11 @@ Install from Delta Settings → Controller Skins → Game Boy Advance → the de
 The build script verifies archive integrity, assets, identifiers, screen ratio, tracker placement, input names and control bounds. The game shortcut has native mGBA action/menu-state tests. **Actual Delta import, multi-touch dispatch and device testing are pending. The package is supplied for device playtesting; its import and touch behavior must not be described as device-verified.**
 
 Primary schema reference: https://noah978.gitbook.io/delta-docs/skins (including Using Multiple Inputs). Official installation reference: https://faq.deltaemulator.com/using-delta/controller-skins.
+
+## Fire / Water Neon reference skin
+
+Build the illustrated variant with `python tools/chaos/delta/build_neon_skin.py --output /tmp/chaos-neon-skin` (Pillow and NumPy). It produces `Pokemon-Chaos-Fire-Water-Neon.deltaskin`, named **Pokemon Chaos Fire Water Neon** in Delta. This is a skin-only package; it does not change the ROM or save. The source artwork is retained in `assets/fire-water-dragons.png`.
+
+The user's reference is recreated as obsidian fire/water dragons, dark glass controls, red-to-blue luminous rims, red A, blue B and separated arrow buttons. The working portrait layout retains lower thumb reach and TRACKER immediately beneath the real 3:2 viewport. Menu is provided alongside Select/Start. The reference's painted title screen is replaced by actual game output. Its dragon artwork is regenerated rather than pixel-identical, and proportions adapt to the taller phone. Glow is static, not an animated LED effect. Six validated device/orientation layouts are provided; physical iOS import and touch feel remain unverified.
+
+Artwork uses the built-in image-generation tool with the user's reference: a tall 9:19.5 background only, no screen/buttons/text, black obsidian dragon heads in the lower half, red glowing eye and lava on the left, blue glowing eye and luminous water/lightning on the right, dark obsidian in the upper viewport area. Native deterministic code draws all neon controls, labels and the transparent live viewport, and verifies that touch regions do not overlap.
