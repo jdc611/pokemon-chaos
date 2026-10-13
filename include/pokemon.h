@@ -129,6 +129,8 @@ enum MonData {
     MON_DATA_TERA_TYPE,
     MON_DATA_EVOLUTION_TRACKER,
     MON_DATA_CHAOS_STARTER_ABILITY,
+    MON_DATA_DRAFT_MEMBER,
+    MON_DATA_DRAFT_REROLLED,
 };
 
 #define BLOCK_AI_DYNAMAX 15 // Used as dynamax level value by the AI to indicate this mon shouldn't dynamax
@@ -146,7 +148,8 @@ struct PokemonSubstruct0
     u8 friendship;
     u16 pokeball:6; // 63 balls.
     u16 nickname12:8; // 12th character of nickname.
-    u16 unused_0A:2;
+    u16 draftMember:1;
+    u16 draftRerolled:1;
 };
 
 struct PokemonSubstruct1

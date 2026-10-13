@@ -198,6 +198,8 @@ PalletTown_ProfessorOaksLab_Movement_OakBringDexesToDeskSouth::
 
 PalletTown_ProfessorOaksLab_ChooseStarterScene::
 	lockall
+    specialvar VAR_RESULT, IsOaksDraft
+    goto_if_eq VAR_RESULT, TRUE, OaksDraftRoom_Intro
 	textcolor NPC_TEXT_COLOR_MALE
 	applymovement LOCALID_OAKS_LAB_PROF_OAK, PalletTown_ProfessorOaksLab_Movement_OakEnter
 	waitmovement 0
@@ -468,6 +470,7 @@ PalletTown_ProfessorOaksLab_Movement_RivalApproachForBattleBulbasaurRight::
 
 PalletTown_ProfessorOaksLab_EventScript_EndRivalBattle::
 	special HealPlayerParty
+    callnative OaksDraftFinishOpening
 	msgbox PalletTown_ProfessorOaksLab_Text_RivalGoToughenMyMon
 	closemessage
 	playbgm MUS_RG_RIVAL_EXIT, 0
@@ -1066,6 +1069,8 @@ PalletTown_ProfessorOaksLab_Movement_RivalExit::
 	step_end
 
 PalletTown_ProfessorOaksLab_EventScript_BulbasaurBall::
+    specialvar VAR_RESULT, IsOaksDraft
+    goto_if_eq VAR_RESULT, TRUE, OaksDraftRoom_Entrance
 	lock
 	faceplayer
 	setvar PLAYER_STARTER_NUM, 0
@@ -1224,6 +1229,8 @@ PalletTown_ProfessorOaksLab_Movement_RivalWalksToBulbasaur::
 	step_end
 
 PalletTown_ProfessorOaksLab_EventScript_SquirtleBall::
+    specialvar VAR_RESULT, IsOaksDraft
+    goto_if_eq VAR_RESULT, TRUE, OaksDraftRoom_Entrance
 	lock
 	faceplayer
 	setvar PLAYER_STARTER_NUM, 1
@@ -1237,6 +1244,8 @@ PalletTown_ProfessorOaksLab_EventScript_SquirtleBall::
 	end
 
 PalletTown_ProfessorOaksLab_EventScript_CharmanderBall::
+    specialvar VAR_RESULT, IsOaksDraft
+    goto_if_eq VAR_RESULT, TRUE, OaksDraftRoom_Entrance
 	lock
 	faceplayer
 	setvar PLAYER_STARTER_NUM, 2
@@ -1701,3 +1710,15 @@ PalletTown_ProfessorOaksLab_EventScript_IronmonAssigned::
 Text_IronmonStarterAssigned::
     .string "OAK: Your IRONMON partner is\n"
     .string "{STR_VAR_1}! Best of luck!$"
+
+OaksDraftRoom_Intro::
+    setvar VAR_MAP_SCENE_PALLET_TOWN_PROFESSOR_OAKS_LAB, 2
+    setobjectxyperm LOCALID_OAKS_LAB_PROF_OAK, 6, 3
+    clearflag FLAG_HIDE_OAK_IN_HIS_LAB
+    msgbox OaksDraftRoom_Text_Intro
+    warp MAP_OAKS_DRAFT_ROOM, 6, 11
+    waitstate
+    releaseall
+    end
+OaksDraftRoom_Text_Intro:
+    .string "OAK: I've run out of traditional starters.\nBut a shipment arrived this morning.\pThese companions were abandoned,\nsurrendered, or left behind.\pIn my back room, six crates await.\nGive six of these Pokemon a new home.$"

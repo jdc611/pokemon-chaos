@@ -1,4 +1,5 @@
 #include "global.h"
+#include "oaks_draft.h"
 #include "ironmon.h"
 #include "random_mon_generation.h"
 #include "chaos_v2.h"
@@ -34,6 +35,7 @@ static const u16 sRegionalEggs[] = {SPECIES_VULPIX_ALOLA,SPECIES_ZORUA_HISUI,SPE
 
 void ChaosBuyMysteryEgg(void)
 {
+    if (IsOaksDraft()) { gSpecialVar_Result=3; return; }
     u32 vendor = gSpecialVar_0x8004;
     u32 flags = VarGet(VAR_CHAOS_EGG_VENDORS);
     struct Pokemon mon;
@@ -318,7 +320,7 @@ void ChaosFormatEvolution(const struct Evolution *evo,u8 *dest)
  }
 }
 
-void ChaosRequireNickname(void) { if (IsNuzlockeRun()) gSpecialVar_Result = TRUE; }
+void ChaosRequireNickname(void) { if (IsOaksDraft()) gSpecialVar_Result = FALSE; else if (IsNuzlockeRun()) gSpecialVar_Result = TRUE; }
 
 // Preview the same deterministic gifted species as the purchase, without
 // creating a Pokemon or changing the selected party/storage destination.

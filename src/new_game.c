@@ -1,4 +1,5 @@
 #include "global.h"
+#include "oaks_draft.h"
 #include "ironmon.h"
 #include "clock.h"
 #include "new_game.h"
@@ -318,6 +319,7 @@ VarSet(VAR_CHAOS_EZ_CATCH, gRunSetupEzCatch);
 VarSet(VAR_CHAOS_CARE_PACKAGES, gRunSetupCarePackages);
 gSaveBlock3Ptr->futureEvolutionEligible = FALSE;
 IronmonInitializeRun();
+OaksDraftInitialize();
     ClearFollowerNPCData();
 }
 

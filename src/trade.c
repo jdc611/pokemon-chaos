@@ -1,4 +1,5 @@
 #include "global.h"
+#include "oaks_draft.h"
 #include "ironmon.h"
 #include "malloc.h"
 #include "battle_anim.h"
@@ -4592,6 +4593,7 @@ static void CreateInGameTradePokemonInternal(u8 whichPlayerMon, u8 whichInGameTr
     SetMonData(pokemon, MON_DATA_TOUGH, &inGameTrade->conditions[4]);
     SetMonData(pokemon, MON_DATA_SHEEN, &inGameTrade->sheen);
     SetMonData(pokemon, MON_DATA_MET_LOCATION, &metLocation);
+    if (IsOaksDraft()) OaksDraftSetNickname(pokemon, 18 + whichInGameTrade);
 
     mailNum = 0;
     if (inGameTrade->heldItem != ITEM_NONE)

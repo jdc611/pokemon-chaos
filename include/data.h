@@ -6,6 +6,7 @@
 #include "constants/battle.h"
 #include "constants/pokeball.h"
 #include "difficulty.h"
+#include "oaks_draft.h"
 #include "debug.h"
 
 #define MAX_TRAINER_ITEMS 4
@@ -289,7 +290,7 @@ static inline const struct Trainer *GetTrainerStructFromId(u16 trainerId)
     else
     {
         difficulty = GetTrainerDifficultyLevel(trainerId);
-        return &gTrainers[difficulty][SanitizeTrainerId(trainerId)];
+        return OaksDraftTrainerOverride(&gTrainers[difficulty][SanitizeTrainerId(trainerId)]);
     }
 }
 

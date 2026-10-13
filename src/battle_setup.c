@@ -1,4 +1,5 @@
 #include "global.h"
+#include "oaks_draft.h"
 #include "ironmon.h"
 #include "chaos_records.h"
 #include "data.h"
@@ -1629,6 +1630,7 @@ void SetTrainerFacingDirection(void)
 
 u8 GetRivalBattleFlags(void)
 {
+    if (OaksDraftOpeningBattle()) return RIVAL_BATTLE_HEAL_AFTER;
     return TRAINER_BATTLE_PARAM.rivalBattleFlags;
 }
 
@@ -1698,7 +1700,7 @@ void BattleSetup_StartTrainerBattle(void)
         }
     }
 
-    if (TRAINER_BATTLE_PARAM.earlyRival && GetRivalBattleFlags() & RIVAL_BATTLE_TUTORIAL)
+    if (!IsOaksDraft() && TRAINER_BATTLE_PARAM.earlyRival && GetRivalBattleFlags() & RIVAL_BATTLE_TUTORIAL)
         gBattleTypeFlags |= BATTLE_TYPE_FIRST_BATTLE;
 
     if (CurrentBattlePyramidLocation() != PYRAMID_LOCATION_NONE)
@@ -2534,6 +2536,7 @@ void CreateNPCTrainerPartyFromTrainer(struct Pokemon *party, const struct Traine
 
     ZeroPartyMons(party);
 
+    if (OaksDraftCreateTrainerParty(party, trainer)) return;
     if (!trainer->partySize || trainer->party == NULL) return;
     monsCount = IronmonTrainerPartySize(trainer);
     if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS && (B_MULTI_HALF_TEAMS || trainer->multiTeamSize == MULTI_TEAM_SIZE_HALF))

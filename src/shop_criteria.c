@@ -1,4 +1,5 @@
 #include "global.h"
+#include "oaks_draft.h"
 #include "item.h"
 #include "script.h"
 #include "event_data.h"
@@ -25,7 +26,7 @@ void TryBuildDynamicShopItemList(const u16 **ogItemList, u16 *resultingTotal)
 
         if (IsItemShopCriteriaFulfilled(item))
         {
-            list[overallIdx] = item;
+            list[overallIdx] = OaksDraftExternalItem(item);
             overallIdx++;
         }
 

@@ -68,6 +68,8 @@ CinnabarIsland_Gym_EventScript_DefeatedBlaine::
 	end
 
 CinnabarIsland_Gym_EventScript_GiveTM38::
+    specialvar VAR_RESULT, IsOaksDraft
+    goto_if_eq VAR_RESULT, TRUE, CinnabarIsland_Gym_EventScript_GiveTM38Draft
 	specialvar VAR_RESULT, IsIronmonRun
 	goto_if_eq VAR_RESULT, TRUE, CinnabarIsland_Gym_EventScript_GiveTM38Ironmon
 	msgbox CinnabarIsland_Gym_Text_ExplainVolcanoBadge
@@ -916,4 +918,13 @@ CinnabarIsland_Gym_EventScript_GiveTM38Ironmon::
     setflag FLAG_GOT_TM38_FROM_BLAINE
     msgbox Ironmon_Text_RandomGymTM
     release
+    end
+
+CinnabarIsland_Gym_EventScript_GiveTM38Draft::
+    setvar VAR_0x8004, 6
+    special OaksDraftGiveGymTM
+    goto_if_eq VAR_RESULT, FALSE, OaksDraft_GymNoRoom
+    setflag FLAG_GOT_TM38_FROM_BLAINE
+    msgbox OaksDraft_Text_GymTM
+    releaseall
     end

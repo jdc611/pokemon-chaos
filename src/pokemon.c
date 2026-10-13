@@ -1,4 +1,5 @@
 #include "global.h"
+#include "oaks_draft.h"
 #include "ironmon.h"
 #include "chaos_abilities.h"
 #include "chaos_moves.h"
@@ -2251,6 +2252,12 @@ u32 GetBoxMonData3(struct BoxPokemon *boxMon, s32 field, u8 *data)
         case MON_DATA_IS_EGG:
             retVal = IsEggOrBadEgg(boxMon);
             break;
+        case MON_DATA_DRAFT_MEMBER:
+            retVal = GetSubstruct0(boxMon)->draftMember;
+            break;
+        case MON_DATA_DRAFT_REROLLED:
+            retVal = GetSubstruct0(boxMon)->draftRerolled;
+            break;
         case MON_DATA_CHAOS_STARTER_ABILITY:
             retVal = GetSubstruct0(boxMon)->chaosStarterAbilityLow
                    | (GetSubstruct0(boxMon)->chaosStarterAbilityHigh << 6);
@@ -2629,6 +2636,7 @@ void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg)
         {
             s32 i;
             struct PokemonSubstruct0 *substruct0 = GetSubstruct0(boxMon);
+            if (IsOaksDraft() && substruct0->draftMember) break;
             for (i = 0; i < min(sizeof(boxMon->nickname), POKEMON_NAME_LENGTH); i++)
                 boxMon->nickname[i] = data[i];
             if (field != MON_DATA_NICKNAME10)
@@ -2772,6 +2780,12 @@ void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg)
         case MON_DATA_IS_EGG:
             SET8(GetSubstruct3(boxMon)->isEgg);
             SET8(boxMon->isEgg);
+            break;
+        case MON_DATA_DRAFT_MEMBER:
+            SET8(GetSubstruct0(boxMon)->draftMember);
+            break;
+        case MON_DATA_DRAFT_REROLLED:
+            SET8(GetSubstruct0(boxMon)->draftRerolled);
             break;
         case MON_DATA_CHAOS_STARTER_ABILITY:
         {
@@ -2975,6 +2989,7 @@ void CopyMon(void *dest, void *src, size_t size)
 
 u8 GiveCapturedMonToPlayer(struct Pokemon *mon)
 {
+    if (IsOaksDraft()) return MON_CANT_GIVE;
     s32 i;
 
     if (IsMinimalGrindingMode())
@@ -7490,7 +7505,7 @@ struct BoxPokemon *GetSelectedBoxMonFromPcOrParty(void)
 
 u32 GiveScriptedMonToPlayer(struct Pokemon *mon, u8 slot)
 {
-    if (IsIronmonRun()) return MON_CANT_GIVE;
+    if (IsIronmonRun() || IsOaksDraft()) return MON_CANT_GIVE;
     u32 sentToPc;
     u32 i = 0;
 

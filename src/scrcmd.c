@@ -1,4 +1,5 @@
 #include "global.h"
+#include "oaks_draft.h"
 #include "frontier_util.h"
 #include "battle_setup.h"
 #include "battle_util.h"
@@ -617,7 +618,7 @@ bool8 ScrCmd_random(struct ScriptContext *ctx)
 
 bool8 ScrCmd_additem(struct ScriptContext *ctx)
 {
-    enum Item itemId = VarGet(ScriptReadHalfword(ctx));
+    enum Item itemId = OaksDraftExternalItem(VarGet(ScriptReadHalfword(ctx)));
     u32 quantity = VarGet(ScriptReadHalfword(ctx));
 
     Script_RequestEffects(SCREFF_V1 | SCREFF_SAVE);
@@ -639,7 +640,7 @@ bool8 ScrCmd_removeitem(struct ScriptContext *ctx)
 
 bool8 ScrCmd_checkitemspace(struct ScriptContext *ctx)
 {
-    enum Item itemId = VarGet(ScriptReadHalfword(ctx));
+    enum Item itemId = OaksDraftExternalItem(VarGet(ScriptReadHalfword(ctx)));
     u32 quantity = VarGet(ScriptReadHalfword(ctx));
 
     Script_RequestEffects(SCREFF_V1);
@@ -2148,7 +2149,7 @@ bool8 ScrCmd_bufferpartymonnick(struct ScriptContext *ctx)
 bool8 ScrCmd_bufferitemname(struct ScriptContext *ctx)
 {
     u8 stringVarIndex = ScriptReadByte(ctx);
-    enum Item itemId = VarGet(ScriptReadHalfword(ctx));
+    enum Item itemId = OaksDraftExternalItem(VarGet(ScriptReadHalfword(ctx)));
 
     Script_RequestEffects(SCREFF_V1);
 
@@ -2159,7 +2160,7 @@ bool8 ScrCmd_bufferitemname(struct ScriptContext *ctx)
 bool8 ScrCmd_bufferitemnameplural(struct ScriptContext *ctx)
 {
     u8 stringVarIndex = ScriptReadByte(ctx);
-    enum Item itemId = VarGet(ScriptReadHalfword(ctx));
+    enum Item itemId = OaksDraftExternalItem(VarGet(ScriptReadHalfword(ctx)));
     u16 quantity = VarGet(ScriptReadHalfword(ctx));
 
     Script_RequestEffects(SCREFF_V1);

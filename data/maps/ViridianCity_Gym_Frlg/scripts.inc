@@ -27,6 +27,8 @@ ViridianCity_Gym_EventScript_DefeatedGiovanni::
 	end
 
 ViridianCity_Gym_EventScript_GiveTM26::
+    specialvar VAR_RESULT, IsOaksDraft
+    goto_if_eq VAR_RESULT, TRUE, ViridianCity_Gym_EventScript_GiveTM26Draft
 	specialvar VAR_RESULT, IsIronmonRun
 	goto_if_eq VAR_RESULT, TRUE, ViridianCity_Gym_EventScript_GiveTM26Ironmon
 	msgbox ViridianCity_Gym_Text_ExplainEarthBadgeTakeThis
@@ -292,4 +294,13 @@ ViridianCity_Gym_EventScript_GiveTM26Ironmon::
     setflag FLAG_GOT_TM26_FROM_GIOVANNI
     msgbox Ironmon_Text_RandomGymTM
     release
+    end
+
+ViridianCity_Gym_EventScript_GiveTM26Draft::
+    setvar VAR_0x8004, 7
+    special OaksDraftGiveGymTM
+    goto_if_eq VAR_RESULT, FALSE, OaksDraft_GymNoRoom
+    setflag FLAG_GOT_TM26_FROM_GIOVANNI
+    msgbox OaksDraft_Text_GymTM
+    releaseall
     end

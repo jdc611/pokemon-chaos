@@ -24,6 +24,7 @@ typedef unsigned char u8,bool8;typedef unsigned short u16;typedef unsigned u32;
 #define ITEM_COIN_CASE 1000
 u16 gSpecialVar_Result,coins;int badge=1,coinCase=1,bagSpace=1,owned,charges,deliveries;
 int FlagGet(int f){return badge;}
+int OaksDraftExternalItem(int item) {return item;}
 int CheckBagHasItem(int i,int n){return i==ITEM_COIN_CASE?coinCase:owned;}
 unsigned GetCoins(void){return coins;}
 int AddBagItem(int i,int n){if(!bagSpace)return 0;deliveries++;return 1;}

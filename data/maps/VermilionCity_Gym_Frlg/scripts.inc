@@ -225,6 +225,8 @@ VermilionCity_Gym_EventScript_ShowOaksAide::
 	return
 
 VermilionCity_Gym_EventScript_GiveTM34::
+    specialvar VAR_RESULT, IsOaksDraft
+    goto_if_eq VAR_RESULT, TRUE, VermilionCity_Gym_EventScript_GiveTM34Draft
 	specialvar VAR_RESULT, IsIronmonRun
 	goto_if_eq VAR_RESULT, TRUE, VermilionCity_Gym_EventScript_GiveTM34Ironmon
 	msgbox VermilionCity_Gym_Text_ExplainThunderBadgeTakeThis
@@ -452,4 +454,13 @@ VermilionCity_Gym_EventScript_GiveTM34Ironmon::
     setflag FLAG_GOT_TM34_FROM_SURGE
     msgbox Ironmon_Text_RandomGymTM
     release
+    end
+
+VermilionCity_Gym_EventScript_GiveTM34Draft::
+    setvar VAR_0x8004, 2
+    special OaksDraftGiveGymTM
+    goto_if_eq VAR_RESULT, FALSE, OaksDraft_GymNoRoom
+    setflag FLAG_GOT_TM34_FROM_SURGE
+    msgbox OaksDraft_Text_GymTM
+    releaseall
     end

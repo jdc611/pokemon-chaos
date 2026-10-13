@@ -1,4 +1,5 @@
 #include "global.h"
+#include "oaks_draft.h"
 #include "ironmon.h"
 #include "chaos_records.h"
 #include "malloc.h"
@@ -6739,6 +6740,7 @@ static bool32 AtLeastThreeUsableMons(void)
 
 static s8 RunCanReleaseMon(void)
 {
+    if (IsOaksDraft()) return FALSE;
     u16 i;
     u16 knownMoves;
 
@@ -7857,7 +7859,7 @@ static bool8 SetMenuTexts_Mon(void)
     }
 
     SetMenuText(MENU_MARK);
-    if (sStorage->boxOption != OPTION_SELECT_MON)
+    if (sStorage->boxOption != OPTION_SELECT_MON && !IsOaksDraft())
         SetMenuText(MENU_RELEASE);
     SetMenuText(MENU_CANCEL);
     return TRUE;
@@ -9587,7 +9589,7 @@ bool8 Nuzlocke_ProcessBattleDeaths(void)
     s32 i;
     bool8 movedAny = FALSE;
 
-    if (!IsNuzlockeRun())
+    if (!IsNuzlockeRun() || OaksDraftOpeningBattle())
         return FALSE;
 
     Nuzlocke_InitializeGraveBox();

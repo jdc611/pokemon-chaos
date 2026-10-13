@@ -20,6 +20,8 @@ CeladonCity_Gym_EventScript_DefeatedErika::
 	end
 
 CeladonCity_Gym_EventScript_GiveTM19::
+    specialvar VAR_RESULT, IsOaksDraft
+    goto_if_eq VAR_RESULT, TRUE, CeladonCity_Gym_EventScript_GiveTM19Draft
 	specialvar VAR_RESULT, IsIronmonRun
 	goto_if_eq VAR_RESULT, TRUE, CeladonCity_Gym_EventScript_GiveTM19Ironmon
 	msgbox CeladonCity_Gym_Text_ExplainRainbowBadgeTakeThis
@@ -244,4 +246,13 @@ CeladonCity_Gym_EventScript_GiveTM19Ironmon::
     setflag FLAG_GOT_TM19_FROM_ERIKA
     msgbox Ironmon_Text_RandomGymTM
     release
+    end
+
+CeladonCity_Gym_EventScript_GiveTM19Draft::
+    setvar VAR_0x8004, 3
+    special OaksDraftGiveGymTM
+    goto_if_eq VAR_RESULT, FALSE, OaksDraft_GymNoRoom
+    setflag FLAG_GOT_TM19_FROM_ERIKA
+    msgbox OaksDraft_Text_GymTM
+    releaseall
     end

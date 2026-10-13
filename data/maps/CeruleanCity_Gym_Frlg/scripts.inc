@@ -22,6 +22,8 @@ CeruleanCity_Gym_EventScript_MistyDefeated::
 	end
 
 CeruleanCity_Gym_EventScript_GiveTM03::
+    specialvar VAR_RESULT, IsOaksDraft
+    goto_if_eq VAR_RESULT, TRUE, CeruleanCity_Gym_EventScript_GiveTM03Draft
 	specialvar VAR_RESULT, IsIronmonRun
 	goto_if_eq VAR_RESULT, TRUE, CeruleanCity_Gym_EventScript_GiveTM03Ironmon
 	msgbox CeruleanCity_Gym_Text_ExplainCascadeBadge
@@ -190,4 +192,13 @@ CeruleanCity_Gym_EventScript_GiveTM03Ironmon::
     setflag FLAG_GOT_TM03_FROM_MISTY
     msgbox Ironmon_Text_RandomGymTM
     release
+    end
+
+CeruleanCity_Gym_EventScript_GiveTM03Draft::
+    setvar VAR_0x8004, 1
+    special OaksDraftGiveGymTM
+    goto_if_eq VAR_RESULT, FALSE, OaksDraft_GymNoRoom
+    setflag FLAG_GOT_TM03_FROM_MISTY
+    msgbox OaksDraft_Text_GymTM
+    releaseall
     end

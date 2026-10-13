@@ -1,4 +1,5 @@
 #include "global.h"
+#include "oaks_draft.h"
 #include "ironmon.h"
 #include "coins.h"
 #include "event_data.h"
@@ -290,19 +291,19 @@ static void DrawBrowser(void)
     u32 start=b->cursor/4*4;
     for(u32 row=0;row<4 && start+row<b->count;row++){
         const struct ArcadeItemPrize *q=&prizes[b->ids[start+row]];
-        const u8 *name=sItemCategory==2?GetItemName(q->item):GetMoveName(ItemIdToBattleMoveId(q->item));
+        const u8 *name=sItemCategory==2?GetItemName(OaksDraftExternalItem(q->item)):GetMoveName(ItemIdToBattleMoveId(OaksDraftExternalItem(q->item)));
         BrowserPrint(b->left,start+row==b->cursor?COMPOUND_STRING("> "):COMPOUND_STRING("  "),0,row*28);
         BrowserPrint(b->left,name,8,row*28);
-        if(sItemCategory<2 && CheckBagHasItem(q->item,1))StringCopy(text,COMPOUND_STRING("OWNED"));
+        if(sItemCategory<2 && CheckBagHasItem(OaksDraftExternalItem(q->item),1))StringCopy(text,COMPOUND_STRING("OWNED"));
         else ConvertIntToDecimalStringN(text,q->price,STR_CONV_MODE_LEFT_ALIGN,4);
         BrowserPrint(b->left,text,8,row*28+12);
-        if(sItemCategory==2||!CheckBagHasItem(q->item,1))BrowserPrint(b->left,COMPOUND_STRING("COINS"),38,row*28+12);
+        if(sItemCategory==2||!CheckBagHasItem(OaksDraftExternalItem(q->item),1))BrowserPrint(b->left,COMPOUND_STRING("COINS"),38,row*28+12);
     }
     BrowserPrint(b->left,COMPOUND_STRING("UP/DOWN  A: Buy"),0,116);
-    if(sItemCategory==2){StringCopy(text,GetItemDescription(p->item));end=text+StringLength(text);WrapFontIdToFit(text,end,FONT_SMALL,120);BrowserPrint(b->right,text,2,4);}
+    if(sItemCategory==2){StringCopy(text,GetItemDescription(OaksDraftExternalItem(p->item)));end=text+StringLength(text);WrapFontIdToFit(text,end,FONT_SMALL,120);BrowserPrint(b->right,text,2,4);}
     else{
         static const u8 *const cats[]={[DAMAGE_CATEGORY_NONE]=COMPOUND_STRING("--"),[DAMAGE_CATEGORY_PHYSICAL]=COMPOUND_STRING("Physical"),[DAMAGE_CATEGORY_SPECIAL]=COMPOUND_STRING("Special"),[DAMAGE_CATEGORY_STATUS]=COMPOUND_STRING("Status")};
-        enum Move move=ItemIdToBattleMoveId(p->item);
+        enum Move move=ItemIdToBattleMoveId(OaksDraftExternalItem(p->item));
         end=StringCopy(text,gTypesInfo[GetMoveType(move)].name);StringCopy(StringCopy(end,COMPOUND_STRING(" / ")),cats[GetMoveCategory(move)]);BrowserPrint(b->right,text,2,2);
         BrowserPrint(b->right,COMPOUND_STRING("PWR"),2,17);DetailNumber(text,GetMovePower(move));BrowserPrint(b->right,text,27,17);
         BrowserPrint(b->right,COMPOUND_STRING("ACC"),62,17);DetailNumber(text,GetMoveAccuracy(move));BrowserPrint(b->right,text,87,17);
@@ -375,8 +376,8 @@ void ChaosArcadeItemPreview(void)
     u8 *text;
     if (sItemCategory == 2)
     {
-        StringCopy(gStringVar1,GetItemName(prize->item));
-        description = GetItemDescription(prize->item);
+        StringCopy(gStringVar1,GetItemName(OaksDraftExternalItem(prize->item)));
+        description = GetItemDescription(OaksDraftExternalItem(prize->item));
         text = StringCopy(gStringVar4,gStringVar1);
         text = StringCopy(text,COMPOUND_STRING("\p"));
     }
@@ -388,7 +389,7 @@ void ChaosArcadeItemPreview(void)
             [DAMAGE_CATEGORY_SPECIAL] = COMPOUND_STRING("SPECIAL"),
             [DAMAGE_CATEGORY_STATUS] = COMPOUND_STRING("STATUS"),
         };
-        enum Move move = ItemIdToBattleMoveId(prize->item);
+        enum Move move = ItemIdToBattleMoveId(OaksDraftExternalItem(prize->item));
         StringCopy(gStringVar1,GetMoveName(move));
         text = StringCopy(gStringVar4,gStringVar1);
         text = StringCopy(text,COMPOUND_STRING("\n"));
@@ -415,9 +416,9 @@ void ChaosArcadeItemBuy(void)
     const struct ArcadeItemPrize *prize = ChosenItem();
     gSpecialVar_Result = 4;
     if (prize == NULL || (IsIronmonRun() && sItemCategory != 2) || !FlagGet(FLAG_BADGE04_GET) || !CheckBagHasItem(ITEM_COIN_CASE,1)) return;
-    if (sItemCategory < 2 && CheckBagHasItem(prize->item,1)) {gSpecialVar_Result=5;return;}
+    if (sItemCategory < 2 && CheckBagHasItem(OaksDraftExternalItem(prize->item),1)) {gSpecialVar_Result=5;return;}
     if (GetCoins() < prize->price) {gSpecialVar_Result=2;return;}
-    if (!AddBagItem(prize->item,1)) {gSpecialVar_Result=3;return;}
+    if (!AddBagItem(OaksDraftExternalItem(prize->item),1)) {gSpecialVar_Result=3;return;}
     RemoveCoins(prize->price);
     gSpecialVar_Result=0;
     sItemChoice=0xFFFF;

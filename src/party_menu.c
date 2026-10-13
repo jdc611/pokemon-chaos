@@ -1,5 +1,6 @@
 #include "chaos_input.h"
 #include "global.h"
+#include "oaks_draft.h"
 #include "ironmon.h"
 #include "run_settings.h"
 #include "malloc.h"
@@ -2968,7 +2969,7 @@ static void SetPartyMonFieldSelectionActions(struct Pokemon *mons, u8 slotId)
 
     sPartyMenuInternal->numActions = 0;
     AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_SUMMARY);
-    AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_RENAME);
+    if (!IsOaksDraft()) AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_RENAME);
     if (IsIronmonRun() || !IS_FRLG || VarGet(VAR_CHAOS_TRAINING_UNLOCKED) || VarGet(VAR_MAP_SCENE_PEWTER_CITY) >= 2)
         AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_RELEARN);
 

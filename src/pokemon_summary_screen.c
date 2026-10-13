@@ -1,5 +1,6 @@
 #include "chaos_input.h"
 #include "global.h"
+#include "oaks_draft.h"
 #include "ironmon.h"
 #include "chaos_v2.h"
 #include "pokemon_icon.h"
@@ -3719,6 +3720,13 @@ static void BufferMonTrainerMemo(void)
     struct PokeSummary *sum = &sMonSummaryScreen->summary;
     const u8 *text;
 
+    if(IsOaksDraft() && GetMonData(&sMonSummaryScreen->currentMon,MON_DATA_DRAFT_MEMBER)) {
+        u8 note[160];
+        StringCopy(gStringVar4,gNaturesInfo[sum->mintNature].name);
+        StringAppend(gStringVar4,COMPOUND_STRING(" nature.\n"));
+        OaksDraftFormatBackground(&sMonSummaryScreen->currentMon,note);
+        StringAppend(gStringVar4,note);return;
+    }
     DynamicPlaceholderTextUtil_Reset();
     DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, sMemoNatureTextColor);
     DynamicPlaceholderTextUtil_SetPlaceholderPtr(1, sMemoMiscTextColor);

@@ -6,6 +6,7 @@ name: Build Playtest ROM
       - master
       - chaos-firered
       - chaos-v3
+      - oaks-draft
     paths-ignore:
       - "docs/**"
       - "README.md"

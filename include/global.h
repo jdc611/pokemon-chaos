@@ -283,6 +283,19 @@ struct IronmonRunState
     u8 aiProfile;
 };
 
+// Compact Draft state occupies the mutually exclusive IronMON save tail.
+// Species, personalities, IVs and notes are deterministic from the run seed.
+struct OaksDraftState
+{
+    u32 magic;
+    u8 picks[6];
+    u8 rival[6];
+    u16 gymTms[8];
+    u8 seenTms[13];
+    u8 round;
+    u8 openingComplete;
+};
+
 struct SaveBlock3
 {
 #if OW_USE_FAKE_RTC
@@ -366,7 +379,7 @@ struct SaveBlock3
     u16 leagueMostMove;
     u8 leagueMostType, leagueCap, leagueBadges, leagueEzCatch;
     u8 leagueBestNickname[11];
-    struct IronmonRunState ironmon;
+    union { struct IronmonRunState ironmon; struct OaksDraftState draft; };
 
 }; /* max size 1624 bytes */
 

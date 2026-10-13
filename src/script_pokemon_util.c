@@ -1,4 +1,5 @@
 #include "global.h"
+#include "oaks_draft.h"
 #include "ironmon.h"
 #include "battle.h"
 #include "battle_gfx_sfx_util.h"
@@ -68,7 +69,7 @@ static void HealPlayerBoxes(void)
 
 u8 ScriptGiveEgg(enum Species species)
 {
-    if (IsIronmonRun()) return MON_CANT_GIVE;
+    if (IsIronmonRun() || IsOaksDraft()) return MON_CANT_GIVE;
     struct Pokemon mon;
     u8 isEgg;
 
@@ -494,6 +495,14 @@ void ScrCmd_createmon(struct ScriptContext *ctx)
         monTemplate.species = GetRandomizedScriptedSpecies(monTemplate.species, monTemplate.level, 0);
 #endif
 
+    if (IsOaksDraft() && side == B_SIDE_PLAYER)
+    {
+        gSpecialVar_0x8004 = monTemplate.species;
+        gSpecialVar_0x8005 = monTemplate.heldItem;
+        if (!monTemplate.isEgg) OaksDraftOpenGift();
+        else gSpecialVar_Result = MON_CANT_GIVE;
+        return;
+    }
     gSpecialVar_Result = ScriptGiveMonParameterized(side, slot, &monTemplate);
     if (side == B_SIDE_PLAYER && gSpecialVar_Result != MON_CANT_GIVE)
         VarSet(VAR_TEMP_TRANSFERRED_SPECIES, monTemplate.species);

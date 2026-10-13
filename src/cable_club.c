@@ -1,4 +1,5 @@
 #include "global.h"
+#include "oaks_draft.h"
 #include "main.h"
 #include "battle.h"
 #include "battle_records.h"
@@ -1159,6 +1160,7 @@ static void Task_StartWirelessTrade(u8 taskId)
 
 void PlayerEnteredTradeSeat(void)
 {
+    if (IsOaksDraft()) { ScriptContext_Enable(); return; }
     if (gWirelessCommType != 0)
         CreateTask_EnterCableClubSeat(Task_StartWirelessTrade);
     else

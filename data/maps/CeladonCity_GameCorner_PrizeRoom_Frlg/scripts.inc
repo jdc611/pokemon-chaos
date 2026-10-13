@@ -17,6 +17,8 @@ CeladonCity_GameCorner_PrizeRoom_EventScript_PrizeClerkMons::
 	goto_if_unset FLAG_BADGE04_GET, ChaosArcadePrize_Construction
 	checkitem ITEM_COIN_CASE
 	goto_if_eq VAR_RESULT, FALSE, CeladonCity_GameCorner_PrizeRoom_EventScript_NeedCoinCase
+    specialvar VAR_RESULT, IsOaksDraft
+    goto_if_eq VAR_RESULT, TRUE, OaksDraft_AbilityCounter
 	showcoinsbox 20, 0
 	msgbox ChaosArcadePrize_Welcome
 	closemessage
@@ -416,3 +418,15 @@ ChaosArcadeCosmetic_Confirm:
 ChaosArcadeCosmetic_Applied:
  .string "{STR_VAR_3} applied!\n"
  .string "Enjoy your new look!$"
+
+OaksDraft_AbilityCounter::
+    msgbox OaksDraft_Text_AbilityCounter
+    special OaksDraftOpenAbilityReroll
+    goto_if_eq VAR_RESULT, 2, ChaosArcadePrize_Cancel
+    msgbox OaksDraft_Text_AbilityResult
+    releaseall
+    end
+OaksDraft_Text_AbilityCounter:
+    .string "A mystery ability costs 2000 Coins.\nEach friend gets one paid reroll.\pThe result is hidden until purchase.\nAbilities may still be changed elsewhere.$"
+OaksDraft_Text_AbilityResult:
+    .string "Your companion's new ability is\n{STR_VAR_1}!$"

@@ -715,3 +715,11 @@ gSpecials::
 	def_special IsIronmonHardcore
 
 	def_special IsIronmonRun
+
+    def_special IsOaksDraft
+    def_special OaksDraftGetRound
+    def_special OaksDraftOpenCrate , waitstate=1
+    def_special OaksDraftOpenReport , waitstate=1
+    def_special OaksDraftOpenAbilityReroll , waitstate=1
+    def_special OaksDraftGiveGymTM
+    def_special OaksDraftSetChampionGraphic

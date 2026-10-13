@@ -1,4 +1,5 @@
 #include "global.h"
+#include "oaks_draft.h"
 #include "ironmon.h"
 #include "battle_main.h"
 #include "trainer_pokemon_sprites.h"
@@ -360,6 +361,7 @@ static const u8 gText_ContinueMenuPlayer[] = _("PLAYER");
 static const u8 gText_ContinueMenuTime[] = _("TIME");
 static const u8 gText_ContinueMenuPokedex[] = _("POKéDEX");
 static const u8 gText_ContinueMenuBadges[] = _("BADGES");
+static EWRAM_DATA bool8 sRunSetupDraft;
 static const u8 sText_RunSetupTitle[] = _("RUN SETUP");
 static const u8 sText_StartRegionTitle[] = _("WHERE WILL YOUR JOURNEY BEGIN?");
 static const u8 sText_StartRegionKanto[] = _("KANTO");
@@ -2091,6 +2093,7 @@ static void RunSetup_ResetDefaults(void)
 {
     sRunSetupRandomizer = FALSE;
     sRunSetupStarter = RUN_STARTER_KANTO;
+    sRunSetupDraft = FALSE;
     sRunSetupCustom = FALSE;
     sRunSetupConfirm = FALSE;
     sRunSetupEmptySeed = FALSE;
@@ -2584,6 +2587,11 @@ static u32 RunSetup_CountFinalEligibleMons(void)
 
 static void RunSetup_DrawConfirmLine(u8 row, u8 y)
 {
+    if(sRunSetupDraft) {
+        const u8 rows[]={0,1,6,7,4,12,10,3};
+        if(row>=ARRAY_COUNT(rows))return;
+        row=rows[row];
+    }
     const u8 *label = sText_RunSetupSeed;
     const u8 *value = sText_RunSetupOff;
 
@@ -2610,7 +2618,7 @@ static void RunSetup_DrawConfirmLine(u8 row, u8 y)
         break;
     case 3:
         label = sText_RunSetupStarters;
-        value = sRunSetupStarter == RUN_STARTER_RANDOM ? sText_RunSetupRandom
+        value = sRunSetupStarter == RUN_STARTER_DRAFT ? COMPOUND_STRING("OAK'S DRAFT") : sRunSetupStarter == RUN_STARTER_RANDOM ? sText_RunSetupRandom
               : sRunSetupStarter == RUN_STARTER_CHOOSE ? sText_RunSetupCustom
               : sRunSetupStarter == RUN_STARTER_KANTO ? sText_RunSetupKanto
               : sText_RunSetupKanto;
@@ -2706,7 +2714,7 @@ static void RunSetup_Draw(u8 cursor)
                 : sRunSetupNuzlocke ? sText_RunSetupOn : sText_RunSetupOff,
             sRunSetupEzCatch ? sText_RunSetupOn : sText_RunSetupOff,
             sRunSetupCarePackages ? sText_RunSetupOn : sText_RunSetupOff};
-        for (u32 row = 0; row < (IsIronmonDifficulty(sRunSetupDifficulty) ? 3 : 5); row++)
+        for (u32 row = 0; row < (IsIronmonDifficulty(sRunSetupDifficulty) || sRunSetupDraft ? 3 : 5); row++)
         {
             u8 y = 30 + row * 17;
             AddTextPrinterParameterized3(0, FONT_SMALL, 10, y + 2, sTextColor_Headers, TEXT_SKIP_DRAW, labels[row]);
@@ -2714,6 +2722,9 @@ static void RunSetup_Draw(u8 cursor)
             if (cursor == row)
                 AddTextPrinterParameterized3(0, FONT_NORMAL, 1, y, sTextColor_Headers, TEXT_SKIP_DRAW, gText_SelectorArrow2);
         }
+        if (!IsIronmonDifficulty(sRunSetupDifficulty))
+            AddTextPrinterParameterized3(0,FONT_SMALL,8,91,sTextColor_Headers,TEXT_SKIP_DRAW,
+                sRunSetupDraft ? COMPOUND_STRING("SELECT: OAK'S DRAFT") : COMPOUND_STRING("SELECT: STANDARD CHAOS"));
         RunSetup_DrawWideChoice(sText_RunSetupNext, 72, 110, 64, cursor == 5);
         if (IsIronmonDifficulty(sRunSetupDifficulty))
             AddTextPrinterParameterized3(0, FONT_SMALL, 10, 84, sTextColor_Headers, TEXT_SKIP_DRAW,
@@ -2723,6 +2734,22 @@ static void RunSetup_Draw(u8 cursor)
         PutWindowTilemap(0);
         CopyWindowToVram(0, COPYWIN_FULL);
         return;
+    }
+
+    if (sRunSetupDraft && sRunSetupPage == RUN_SETUP_PAGE_RANDOMIZER && !sRunSetupConfirm)
+    {
+        const u8 *labels[] = {COMPOUND_STRING("BASE STATS"),sText_RunSetupAbilities,sText_RunSetupMovesets};
+        const u8 *values[] = {sRunSetupBstMode == RUN_BST_RANDOM ? sText_RunSetupRandom : sRunSetupBstMode == RUN_BST_SHUFFLE ? sText_RunSetupShuffle : sText_RunSetupNormal,
+            sRunSetupAbilityMode ? sText_RunSetupRandom : sText_RunSetupNormal,sRunSetupMovesets ? sText_RunSetupRandom : sText_RunSetupNormal};
+        FillWindowPixelBuffer(0,PIXEL_FILL(0xA));
+        AddTextPrinterParameterized3(0,FONT_NORMAL,42,3,sTextColor_Headers,TEXT_SKIP_DRAW,COMPOUND_STRING("OAK'S DRAFT OPTIONS"));
+        for(u32 i=0;i<3;i++) {
+            AddTextPrinterParameterized3(0,FONT_SMALL,8,33+i*23,sTextColor_Headers,TEXT_SKIP_DRAW,labels[i]);
+            RunSetup_DrawWideChoice(values[i],108,31+i*23,88,cursor==i);
+        }
+        RunSetup_DrawWideChoice(sText_RunSetupNext,112,112,78,cursor==3);
+        RunSetup_DrawWideChoice(sText_RunSetupBack,18,112,78,cursor==4);
+        PutWindowTilemap(0);CopyWindowToVram(0,COPYWIN_FULL);return;
     }
 
     if (sRunSetupPage == RUN_SETUP_PAGE_RANDOMIZER && !sRunSetupConfirm)
@@ -2810,12 +2837,12 @@ static void RunSetup_Draw(u8 cursor)
     {
         u8 row;
 
-        for (row = sRunSetupConfirmScroll; row < sRunSetupConfirmScroll + 5 && row < 15; row++)
+        for (row = sRunSetupConfirmScroll; row < sRunSetupConfirmScroll + 5 && row < (sRunSetupDraft ? 8 : 15); row++)
             RunSetup_DrawConfirmLine(row, 31 + 15 * (row - sRunSetupConfirmScroll));
 
         if (sRunSetupConfirmScroll > 0)
             AddTextPrinterParameterized3(0, FONT_SMALL, 198, 29, sTextColor_Headers, TEXT_SKIP_DRAW, sText_RunSetupScrollUp);
-        if (sRunSetupConfirmScroll < 10)
+        if (sRunSetupConfirmScroll < (sRunSetupDraft ? 3 : 10))
             AddTextPrinterParameterized3(0, FONT_SMALL, 198, 91, sTextColor_Headers, TEXT_SKIP_DRAW, sText_RunSetupScrollDown);
 
         if (sRunSetupFilter != RUN_FILTER_NONE && sRunSetupFinalEligible <= 5 && cursor == 1)
@@ -3042,9 +3069,15 @@ static void Task_RunSetup_Input(u8 taskId)
 
     if (sRunSetupPage == RUN_SETUP_PAGE_PLAY_STYLE && !sRunSetupConfirm)
     {
-        if (JOY_NEW(DPAD_UP)) *cursor = IsIronmonDifficulty(sRunSetupDifficulty)
+        if (JOY_NEW(SELECT_BUTTON) && !IsIronmonDifficulty(sRunSetupDifficulty)) {
+            sRunSetupDraft ^= 1; sRunSetupStarter = sRunSetupDraft ? RUN_STARTER_DRAFT : RUN_STARTER_KANTO;
+            sRunSetupFilter=RUN_FILTER_NONE;sRunSetupType=TYPE_NONE;sRunSetupAbility=ABILITY_NONE;
+            sRunSetupRandomizer=RUN_WILD_NORMAL;sRunSetupEvolutions=RUN_EVOLUTIONS_NORMAL;
+            sRunSetupItemRandomization=sRunSetupCarePackages=sRunSetupEzCatch=FALSE;*cursor=0;
+        }
+        else if (JOY_NEW(DPAD_UP)) *cursor = IsIronmonDifficulty(sRunSetupDifficulty) || sRunSetupDraft
             ? (*cursor == 0 ? 5 : *cursor == 5 ? 2 : *cursor - 1) : (*cursor + 5) % 6;
-        else if (JOY_NEW(DPAD_DOWN)) *cursor = IsIronmonDifficulty(sRunSetupDifficulty)
+        else if (JOY_NEW(DPAD_DOWN)) *cursor = IsIronmonDifficulty(sRunSetupDifficulty) || sRunSetupDraft
             ? (*cursor == 2 ? 5 : *cursor == 5 ? 0 : *cursor + 1) : (*cursor + 1) % 6;
         else if (JOY_NEW(DPAD_LEFT | DPAD_RIGHT | A_BUTTON) && *cursor < 5)
         {
@@ -3055,7 +3088,7 @@ static void Task_RunSetup_Input(u8 taskId)
                     RUN_DIFFICULTY_IRONMON_NORMAL, RUN_DIFFICULTY_IRONMON_HARDCORE};
                 u32 index = 0;
                 while (index < ARRAY_COUNT(choices) - 1 && choices[index] != sRunSetupDifficulty) index++;
-                index = (index + (JOY_NEW(DPAD_LEFT) ? 4 : 1)) % ARRAY_COUNT(choices);
+                index = (index + (JOY_NEW(DPAD_LEFT) ? (sRunSetupDraft ? 2 : 4) : 1)) % (sRunSetupDraft ? 3 : ARRAY_COUNT(choices));
                 sRunSetupDifficulty = choices[index];
                 if (IsIronmonDifficulty(sRunSetupDifficulty))
                     sRunSetupBstMode = sRunSetupDifficulty == RUN_DIFFICULTY_IRONMON_HARDCORE ? RUN_BST_RANDOM : RUN_BST_SHUFFLE;
@@ -3080,6 +3113,20 @@ static void Task_RunSetup_Input(u8 taskId)
         PlaySE(SE_SELECT);
         RunSetup_Draw(*cursor);
         return;
+    }
+
+    if (sRunSetupDraft && sRunSetupPage == RUN_SETUP_PAGE_RANDOMIZER && !sRunSetupConfirm)
+    {
+        if(JOY_NEW(DPAD_UP))*cursor=(*cursor+4)%5;
+        else if(JOY_NEW(DPAD_DOWN))*cursor=(*cursor+1)%5;
+        else if(JOY_NEW(B_BUTTON) || (JOY_NEW(A_BUTTON)&&*cursor==4)){sRunSetupPage=RUN_SETUP_PAGE_PLAY_STYLE;*cursor=5;}
+        else if(JOY_NEW(A_BUTTON)&&*cursor==3){sRunSetupPage=RUN_SETUP_PAGE_CONFIRM;*cursor=0;}
+        else if(JOY_NEW(A_BUTTON|DPAD_LEFT|DPAD_RIGHT)&&*cursor<3){
+            if(*cursor==0)sRunSetupBstMode=(sRunSetupBstMode+(JOY_NEW(DPAD_LEFT)?2:1))%3;
+            else if(*cursor==1)sRunSetupAbilityMode^=1;
+            else sRunSetupMovesets^=1;
+        }else return;
+        RunSetup_InvalidateSeedFilters();PlaySE(SE_SELECT);RunSetup_Draw(*cursor);return;
     }
 
     if (sRunSetupPage == RUN_SETUP_PAGE_RANDOMIZER && !sRunSetupConfirm)
@@ -3180,7 +3227,7 @@ static void Task_RunSetup_Input(u8 taskId)
         }
         else if (JOY_NEW(DPAD_DOWN))
         {
-            if (sRunSetupConfirmScroll < 10)
+            if (sRunSetupConfirmScroll < (sRunSetupDraft ? 3 : 10))
                 sRunSetupConfirmScroll++;
         }
         else if (JOY_NEW(DPAD_LEFT | DPAD_RIGHT))
@@ -3189,7 +3236,7 @@ static void Task_RunSetup_Input(u8 taskId)
         {
             sRunSetupConfirm = FALSE;
             sRunSetupLowPoolConfirmed = FALSE;
-            sRunSetupPage = IsIronmonDifficulty(sRunSetupDifficulty) ? RUN_SETUP_PAGE_CONFIRM : RUN_SETUP_PAGE_FILTERS;
+            sRunSetupPage = IsIronmonDifficulty(sRunSetupDifficulty) || sRunSetupDraft ? RUN_SETUP_PAGE_CONFIRM : RUN_SETUP_PAGE_FILTERS;
             *cursor = IsIronmonDifficulty(sRunSetupDifficulty) ? 2 : 3;
             sRunSetupConfirmScroll = 0;
         }
@@ -3214,6 +3261,7 @@ static void Task_RunSetup_Input(u8 taskId)
             gRunSetupRandomizerEnabled = sRunSetupRandomizer;
             gRunSetupSeedIsCustom = sRunSetupCustom;
             gRunSetupStarterMode = sRunSetupStarter;
+            if(sRunSetupDraft) gRunSetupStartRegion=1;
             gRunSetupWorldSeed = sRunSetupSeed;
             gRunSetupFilterMode = sRunSetupFilter;
             gRunSetupBstMode = sRunSetupBstMode;
@@ -3361,7 +3409,7 @@ static void Task_RunSetup_Input(u8 taskId)
                 return;
             }
             sRunSetupAbilityChoiceCount = 0;
-            if (IsIronmonDifficulty(sRunSetupDifficulty))
+            if (IsIronmonDifficulty(sRunSetupDifficulty) || sRunSetupDraft)
             {
                 RunSetup_ApplyIronmonPreset();
                 sRunSetupFinalEligible = NATIONAL_DEX_COUNT;
@@ -3371,7 +3419,7 @@ static void Task_RunSetup_Input(u8 taskId)
             }
             else
             {
-                sRunSetupPage = RUN_SETUP_PAGE_FILTERS;
+                sRunSetupPage = sRunSetupDraft ? RUN_SETUP_PAGE_CONFIRM : RUN_SETUP_PAGE_FILTERS;
                 *cursor = 0;
             }
         }

@@ -27,6 +27,8 @@ FuchsiaCity_Gym_EventScript_DefeatedKoga::
 	end
 
 FuchsiaCity_Gym_EventScript_GiveTM06::
+    specialvar VAR_RESULT, IsOaksDraft
+    goto_if_eq VAR_RESULT, TRUE, FuchsiaCity_Gym_EventScript_GiveTM06Draft
 	specialvar VAR_RESULT, IsIronmonRun
 	goto_if_eq VAR_RESULT, TRUE, FuchsiaCity_Gym_EventScript_GiveTM06Ironmon
 	msgbox FuchsiaCity_Gym_Text_KogaExplainSoulBadge
@@ -284,4 +286,13 @@ FuchsiaCity_Gym_EventScript_GiveTM06Ironmon::
     setflag FLAG_GOT_TM06_FROM_KOGA
     msgbox Ironmon_Text_RandomGymTM
     release
+    end
+
+FuchsiaCity_Gym_EventScript_GiveTM06Draft::
+    setvar VAR_0x8004, 4
+    special OaksDraftGiveGymTM
+    goto_if_eq VAR_RESULT, FALSE, OaksDraft_GymNoRoom
+    setflag FLAG_GOT_TM06_FROM_KOGA
+    msgbox OaksDraft_Text_GymTM
+    releaseall
     end

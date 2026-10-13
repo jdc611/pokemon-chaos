@@ -1,4 +1,5 @@
 #include "global.h"
+#include "oaks_draft.h"
 #include "ironmon.h"
 #include "chaos_records.h"
 #include "chaos_abilities.h"
@@ -8284,7 +8285,7 @@ static void Cmd_handleballthrow(void)
         MarkBattlerForControllerExec(gBattlerAttacker);
         gBattlescriptCurrInstr = BattleScript_WallyBallThrow;
     }
-    else if (FlagGet(WE_FLAG_NO_CATCHING) || !NuzlockeCanCatchMon(GetBattlerMon(GetCatchingBattler())))
+    else if (IsOaksDraft() || FlagGet(WE_FLAG_NO_CATCHING) || !NuzlockeCanCatchMon(GetBattlerMon(GetCatchingBattler())))
     {
         // This ordinary wild battle began after the named area's encounter was
         // already spent. Shiny/duplicate exemptions were resolved at battle

@@ -24,6 +24,8 @@ SaffronCity_Gym_EventScript_DefeatedSabrina::
 	end
 
 SaffronCity_Gym_EventScript_GiveTM04::
+    specialvar VAR_RESULT, IsOaksDraft
+    goto_if_eq VAR_RESULT, TRUE, SaffronCity_Gym_EventScript_GiveTM04Draft
 	specialvar VAR_RESULT, IsIronmonRun
 	goto_if_eq VAR_RESULT, TRUE, SaffronCity_Gym_EventScript_GiveTM04Ironmon
 	msgbox SaffronCity_Gym_Text_ExplainMarshBadgeTakeThis
@@ -277,4 +279,13 @@ SaffronCity_Gym_EventScript_GiveTM04Ironmon::
     setflag FLAG_GOT_TM04_FROM_SABRINA
     msgbox Ironmon_Text_RandomGymTM
     release
+    end
+
+SaffronCity_Gym_EventScript_GiveTM04Draft::
+    setvar VAR_0x8004, 5
+    special OaksDraftGiveGymTM
+    goto_if_eq VAR_RESULT, FALSE, OaksDraft_GymNoRoom
+    setflag FLAG_GOT_TM04_FROM_SABRINA
+    msgbox OaksDraft_Text_GymTM
+    releaseall
     end

@@ -243,3 +243,12 @@ Ironmon_Text_FreeHealingBlocked:
     .string "Free healing is unavailable in\n"
     .string "IRONMON. Recovery items can only\l"
     .string "be used during battle.$"
+
+OaksDraft_GymNoRoom::
+    msgbox OaksDraft_Text_GymNoRoom
+    releaseall
+    end
+OaksDraft_Text_GymNoRoom:
+    .string "Make room in your TM pocket,\nthen speak to me again.$"
+OaksDraft_Text_GymTM:
+    .string "You received {STR_VAR_1}!\nIt teaches {STR_VAR_2}.\pAt least one current companion can\nlearn it. This is your Gym reward.$"

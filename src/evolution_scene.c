@@ -1,4 +1,5 @@
 #include "global.h"
+#include "oaks_draft.h"
 #include "ironmon.h"
 #include "run_settings.h"
 #include "malloc.h"
@@ -552,6 +553,7 @@ static void CB2_TradeEvolutionSceneUpdate(void)
 
 static void CreateShedinja(enum Species preEvoSpecies, enum Species postEvoSpecies, struct Pokemon *mon)
 {
+    if (IsOaksDraft()) return;
     // Split evolutions cannot award a second usable Pokémon in IronMON.
     if (IsIronmonRun())
         return;

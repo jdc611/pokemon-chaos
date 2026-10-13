@@ -1,0 +1,27 @@
+[
+  {
+    "suite": "qa_ironmon_startup",
+    "code": 0,
+    "output": "PASS IronMON core: mode isolation, save tail guard, preset/MGM/no caps, starter reentry, capture pivot/alias/floors, trainer byte determinism, Center use, Hardcore denial and end-state reset.\nPASS actual new-game callback mode 1 starter count 0\nPASS actual new-game callback mode 3 starter count 0\nPASS actual new-game callback mode 4 starter count 0\nPASS actual new-game callback mode 5 starter count 1\n"
+  },
+  {
+    "suite": "qa_ironmon_world",
+    "code": 0,
+    "output": "PASS IronMON core: mode isolation, save tail guard, preset/MGM/no caps, starter reentry, capture pivot/alias/floors, trainer byte determinism, Center use, Hardcore denial and end-state reset.\nPASS Gym 1 all 1 trainer flags; internal warp; escape lock; victory unlock; boss size 3\nPASS Gym 2 all 2 trainer flags; internal warp; escape lock; victory unlock; boss size 3\nPASS Gym 3 all 3 trainer flags; internal warp; escape lock; victory unlock; boss size 4\nPASS Gym 4 all 7 trainer flags; internal warp; escape lock; victory unlock; boss size 4\nPASS Gym 5 all 6 trainer flags; internal warp; escape lock; victory unlock; boss size 5\nPASS Gym 6 all 7 trainer flags; internal warp; escape lock; victory unlock; boss size 5\nPASS Gym 7 all 7 trainer flags; internal warp; escape lock; victory unlock; boss size 6\nPASS Gym 8 all 8 trainer flags; internal warp; escape lock; victory unlock; boss size 6\nPASS uniform-pool item policy: 256 deterministic rewards, no TMs/HMs.\n"
+  },
+  {
+    "suite": "qa_ironmon_tracker_overlay",
+    "code": 0,
+    "output": "PASS IronMON core: mode isolation, save tail guard, preset/MGM/no caps, starter reentry, capture pivot/alias/floors, trainer byte determinism, Center use, Hardcore denial and end-state reset.\nPASS IronMON field tracker restores borrowed VRAM/window/tasks/callbacks and preserves Pokemon/save/RNG.\nPASS progress/retired pages, 35 captures and read-only history pagination preserve party/storage/save.\nPASS regular Chaos field tracker restoration.\nPASS tracker exact graphics backup round-trip run\nPASS tracker exact graphics backup round-trip literal\nPASS tracker exact graphics backup round-trip mixed\nPASS low-heap tracker denial preserves scene and avoids fatal allocation.\nPASS actual Singles battle L+Select at action/move selection: no turns/actions/Pokemon/state changes, full borrowed graphics/window/callback restoration.\n"
+  },
+  {
+    "suite": "qa_ironmon_profiles",
+    "code": 0,
+    "output": "PASS IronMON core: mode isolation, save tail guard, preset/MGM/no caps, starter reentry, capture pivot/alias/floors, trainer byte determinism, Center use, Hardcore denial and end-state reset.\nPASS new preset, species/seed stats, lab Dynamax block, MGM and save/reload 4 1 1 (62, 45, 58, 77, 11, 65)\nPASS new preset, species/seed stats, lab Dynamax block, MGM and save/reload 4 1 24680 (52, 48, 12, 71, 94, 41)\nPASS new preset, species/seed stats, lab Dynamax block, MGM and save/reload 4 1 4294967295 (54, 8, 31, 76, 66, 83)\nPASS new preset, species/seed stats, lab Dynamax block, MGM and save/reload 4 2 1 (17, 34, 23, 17, 39, 91)\nPASS new preset, species/seed stats, lab Dynamax block, MGM and save/reload 4 2 24680 (135, 53, 25, 137, 164, 136)\nPASS new preset, species/seed stats, lab Dynamax block, MGM and save/reload 4 2 4294967295 (62, 92, 31, 136, 150, 108)\nPASS legacy IronMON preset stays unchanged 4\nPASS new preset, species/seed stats, lab Dynamax block, MGM and save/reload 5 1 1 (62, 45, 58, 77, 11, 65)\nPASS new preset, species/seed stats, lab Dynamax block, MGM and save/reload 5 1 24680 (52, 48, 12, 71, 94, 41)\nPASS new preset, species/seed stats, lab Dynamax block, MGM and save/reload 5 1 4294967295 (54, 8, 31, 76, 66, 83)\nPASS new preset, species/seed stats, lab Dynamax block, MGM and save/reload 5 2 1 (17, 34, 23, 17, 39, 91)\nPASS new preset, species/seed stats, lab Dynamax block, MGM and save/reload 5 2 24680 (135, 53, 25, 137, 164, 136)\nPASS new preset, species/seed stats, lab Dynamax block, MGM and save/reload 5 2 4294967295 (62, 92, 31, 136, 150, 108)\nPASS legacy IronMON preset stays unchanged 5\n"
+  },
+  {
+    "suite": "qa_ironmon_lab_loss",
+    "code": 0,
+    "output": "PASS IronMON core: mode isolation, save tail guard, preset/MGM/no caps, starter reentry, capture pivot/alias/floors, trainer byte determinism, Center use, Hardcore denial and end-state reset.\nPASS actual Hardcore lab rival battle with a controlled 1-HP main: faint ends run, terminal saves, no scripted restoration.\n"
+  }
+]

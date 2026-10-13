@@ -24,6 +24,8 @@ PewterCity_Gym_EventScript_DefeatedBrock::
 	end
 
 PewterCity_Gym_EventScript_GiveTM39::
+    specialvar VAR_RESULT, IsOaksDraft
+    goto_if_eq VAR_RESULT, TRUE, PewterCity_Gym_EventScript_GiveTM39Draft
 	specialvar VAR_RESULT, IsIronmonRun
 	goto_if_eq VAR_RESULT, TRUE, PewterCity_Gym_EventScript_GiveTM39Ironmon
 	msgbox PewterCity_Gym_Text_TakeThisWithYou
@@ -230,4 +232,13 @@ PewterCity_Gym_EventScript_GiveTM39Ironmon::
     setflag FLAG_GOT_TM39_FROM_BROCK
     msgbox Ironmon_Text_RandomGymTM
     release
+    end
+
+PewterCity_Gym_EventScript_GiveTM39Draft::
+    setvar VAR_0x8004, 0
+    special OaksDraftGiveGymTM
+    goto_if_eq VAR_RESULT, FALSE, OaksDraft_GymNoRoom
+    setflag FLAG_GOT_TM39_FROM_BROCK
+    msgbox OaksDraft_Text_GymTM
+    releaseall
     end

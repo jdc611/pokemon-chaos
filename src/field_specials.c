@@ -1,4 +1,5 @@
 #include "global.h"
+#include "oaks_draft.h"
 #include "ironmon.h"
 #include "debug.h"
 #include "malloc.h"
@@ -227,6 +228,7 @@ void ChaosRandomizeOverworldItem(void)
 {
     enum Item original = gSpecialVar_Result;
 
+    if (IsOaksDraft()) { gSpecialVar_Result=OaksDraftExternalItem(original);return; }
     if (!gSaveBlock3Ptr->itemRandomization)
         return;
     u32 seed;

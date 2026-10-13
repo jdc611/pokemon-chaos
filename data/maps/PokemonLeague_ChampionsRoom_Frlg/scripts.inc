@@ -1,4 +1,5 @@
 PokemonLeague_ChampionsRoom_Frlg_MapScripts::
+    map_script MAP_SCRIPT_ON_TRANSITION, OaksDraft_ChampionTransition
 	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, PokemonLeague_ChampionsRoom_OnWarp
 	map_script MAP_SCRIPT_ON_RESUME, PokemonLeague_ChampionsRoom_OnResume
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, PokemonLeague_ChampionsRoom_OnFrame
@@ -45,6 +46,8 @@ PokemonLeague_ChampionsRoom_OnFrame::
 
 PokemonLeague_ChampionsRoom_EventScript_EnterRoom::
 	lockall
+    specialvar VAR_RESULT, IsOaksDraft
+    goto_if_eq VAR_RESULT, TRUE, OaksDraft_ChampionEncounter
 	textcolor NPC_TEXT_COLOR_MALE
 	setflag FLAG_TEMP_2
 	applymovement LOCALID_PLAYER, PokemonLeague_ChampionsRoom_Movement_PlayerEnter
@@ -325,3 +328,27 @@ PokemonLeague_ChampionsRoom_Text_OakPlayerComeWithMe::
 	.string "{PLAYER}!\n"
 	.string "Come with me!$"
 
+
+OaksDraft_ChampionTransition::
+    special OaksDraftSetChampionGraphic
+    end
+OaksDraft_ChampionEncounter::
+    applymovement LOCALID_PLAYER, PokemonLeague_ChampionsRoom_Movement_PlayerEnter
+    waitmovement 0
+    msgbox OaksDraft_Text_ChampionIntro
+    closemessage
+    call_if_unset FLAG_SYS_GAME_CLEAR, PokemonLeague_ChampionsRoom_EventScript_Battle
+    call_if_set FLAG_SYS_GAME_CLEAR, PokemonLeague_ChampionsRoom_EventScript_Rematch
+    setflag FLAG_DEFEATED_CHAMP
+    msgbox OaksDraft_Text_ChampionWin
+    closemessage
+    special OaksDraftOpenReport
+    setvar VAR_TEMP_1, 1
+    warp MAP_POKEMON_LEAGUE_HALL_OF_FAME, 5, 12
+    waitstate
+    releaseall
+    end
+OaksDraft_Text_ChampionIntro:
+    .string "OAK: Do you remember those Pokemon\nyou left in my care?\pWell, they've grown quite a bit\nthemselves.\pLet's see how our choices\nhave shaped us!$"
+OaksDraft_Text_ChampionWin:
+    .string "OAK: What a journey you've shared!\nYou have earned your place here.\pLet us record your companions\nin the HALL OF FAME.$"
