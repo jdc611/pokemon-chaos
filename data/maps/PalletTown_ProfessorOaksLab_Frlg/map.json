@@ -185,6 +185,13 @@
       "elevation": 3,
       "dest_map": "MAP_PALLET_TOWN",
       "dest_warp_id": "2"
+    },
+    {
+      "x": 6,
+      "y": 6,
+      "elevation": 3,
+      "dest_map": "MAP_OAKS_DRAFT_ROOM",
+      "dest_warp_id": "0"
     }
   ],
   "coord_events": [

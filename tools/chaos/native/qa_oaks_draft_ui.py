@@ -68,5 +68,5 @@ for _ in range(70):
 assert rd('gBattleTypeFlags')&8
 frames(150)
 assert rd('gPartiesCount',1)==6 and rd(symbols['gPartiesCount']+1,1)==6
-snap('draft-opening-battle')
+snap('draft-opening-battle');state('draft-opening-active')
 print('PASS genuine opening battle initializes 6v6',flush=True)

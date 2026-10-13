@@ -1,0 +1,17 @@
+[
+  {
+    "suite": "draft fixes and opening/Oak integration",
+    "code": 0,
+    "output": "PASS draft options, all choices, identities, name lock, save and three trainer stages 0 0\nPASS draft options, all choices, identities, name lock, save and three trainer stages 0 1\nPASS draft options, all choices, identities, name lock, save and three trainer stages 1 0\nPASS draft options, all choices, identities, name lock, save and three trainer stages 1 1\nPASS draft options, all choices, identities, name lock, save and three trainer stages 2 0\nPASS draft options, all choices, identities, name lock, save and three trainer stages 2 1\nPASS gifts, capture/egg blocking, living-only trade, ability cost/one-time marker and eight compatible exclusive TMs\nPASS opening Nuzlocke exemption, later grave removal and no vacancy exchange\nPASS actual setup: Draft toggle, restricted options, seed/confirm and new-game persistence\nPASS real room/intro, sealed future crate, all six Summary screens, No/Yes confirmation and final report/return\nPASS genuine opening battle initializes 6v6\nPASS real 6v6 opening outcome, full heal and Nuzlocke exemption False 63\nPASS real 6v6 opening outcome, full heal and Nuzlocke exemption True 872\nPASS actual Oak Champion battle: six retained drafted identities\nPASS Oak victory reaches final comparison and actual Hall of Fame recording\nPASS all three post-battle starter balls stay empty, preserve party and release controls\nPASS three actual room visits/door exits resume movement with no script resets\nPASS all three actual rival approach triggers stay in the aisle and stop directly before the player\nPASS Dynamax is unavailable to player and rival in every play style\nPASS real Scyther evolution-branch switching and Summary exit\n"
+  },
+  {
+    "suite": "long evolution descriptions",
+    "code": 0,
+    "output": "PASS actual multi-condition evolution paging and Summary exit\n"
+  },
+  {
+    "suite": "existing startup regression",
+    "code": 0,
+    "output": "PASS IronMON core: mode isolation, save tail guard, preset/MGM/no caps, starter reentry, capture pivot/alias/floors, trainer byte determinism, Center use, Hardcore denial and end-state reset.\nPASS actual new-game callback mode 1 starter count 0\nPASS actual new-game callback mode 3 starter count 0\nPASS actual new-game callback mode 4 starter count 0\nPASS actual new-game callback mode 5 starter count 1\n"
+  }
+]

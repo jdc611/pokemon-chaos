@@ -5,9 +5,9 @@ OaksDraftRoom_Entrance::
     specialvar VAR_RESULT, IsOaksDraft
     goto_if_eq VAR_RESULT, FALSE, PalletTown_ProfessorOaksLab_EventScript_LeftSign
     lockall
+    releaseall
     warp MAP_OAKS_DRAFT_ROOM, 6, 11
     waitstate
-    releaseall
     end
 
 OaksDraftRoom_Oak::
@@ -117,9 +117,9 @@ OaksDraftRoom_Finished::
     setvar VAR_MAP_SCENE_PALLET_TOWN_PROFESSOR_OAKS_LAB, 3
     msgbox OaksDraftRoom_Text_Finished
     special OaksDraftOpenReport
+    releaseall
     warp MAP_PALLET_TOWN_PROFESSOR_OAKS_LAB, 6, 7
     waitstate
-    releaseall
     end
 OaksDraftRoom_Text_Next:
     .string "Choose one friend from each crate.\nStart with the top-left crate.\pInspect their summaries first.\nYour confirmed choices are permanent.$"
@@ -131,10 +131,3 @@ OaksDraftRoom_Text_Locked:
     .string "This crate is sealed or already chosen.\nFinish the current crate first.$"
 OaksDraftRoom_Text_Finished:
     .string "OAK: Six companions, six new beginnings.\nHere is your original Draft Report.\pYou can revisit this room to compare\nyour choices with your growing team.$"
-
-OaksDraftRoom_Exit::
-    lockall
-    warp MAP_PALLET_TOWN_PROFESSOR_OAKS_LAB, 6, 6
-    waitstate
-    releaseall
-    end

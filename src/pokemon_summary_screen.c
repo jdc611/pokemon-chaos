@@ -185,6 +185,8 @@ static EWRAM_DATA struct PokemonSummaryScreenData
     u8 minPageIndex;
     u8 maxPageIndex;
     u8 chaosBranch;
+    u8 chaosEvolutionPage;
+    u8 chaosEvolutionPages;
     u8 chaosNextSprite;
     u8 chaosEditWindow;
     u8 chaosEditRow;
@@ -1802,7 +1804,11 @@ static void Task_HandleInput(u8 taskId)
         {
             if (IS_FRLG && sMonSummaryScreen->currPageIndex == PSS_PAGE_CONTEST_MOVES)
             {
-                sMonSummaryScreen->chaosBranch++;
+                if (++sMonSummaryScreen->chaosEvolutionPage >= sMonSummaryScreen->chaosEvolutionPages)
+                {
+                    sMonSummaryScreen->chaosEvolutionPage = 0;
+                    sMonSummaryScreen->chaosBranch++;
+                }
                 PrintChaosGrowthPage();
                 PlaySE(SE_SELECT);
                 return;
@@ -3513,6 +3519,8 @@ static void PrintPageSpecificText(u8 pageIndex)
         sMonSummaryScreen->chaosNextSprite = SPRITE_NONE;
     }
     sMonSummaryScreen->chaosBranch = 0;
+    sMonSummaryScreen->chaosEvolutionPage = 0;
+    sMonSummaryScreen->chaosEvolutionPages = 1;
     for (i = 0; i < ARRAY_COUNT(sMonSummaryScreen->windowIds); i++)
     {
         if (sMonSummaryScreen->windowIds[i] != WINDOW_NONE)
@@ -3559,6 +3567,7 @@ static void PrintChaosGrowthPage(void)
  FillWindowPixelRect(window,PIXEL_FILL(5),3,3,138,12);
  ChaosPrintSummaryEditColor(window,COMPOUND_STRING("EVOLUTION"),8,3,13,5);
  if(sMonSummaryScreen->chaosNextSprite!=SPRITE_NONE){FreeAndDestroyMonIconSprite(&gSprites[sMonSummaryScreen->chaosNextSprite]);sMonSummaryScreen->chaosNextSprite=SPRITE_NONE;}
+ sMonSummaryScreen->chaosEvolutionPages = 1;
  const struct Evolution *evos=GetSpeciesEvolutions(species);u32 count=0;
  if(evos!=NULL)while(evos[count].method!=EVOLUTIONS_END)count++;
  struct Evolution randomEvo;
@@ -3584,14 +3593,42 @@ static void PrintChaosGrowthPage(void)
   ConvertIntToDecimalStringN(gStringVar1,sMonSummaryScreen->chaosBranch+1,STR_CONV_MODE_LEFT_ALIGN,2);StringAppend(gStringVar4,gStringVar1);
   StringAppend(gStringVar4,COMPOUND_STRING(" / "));
   ConvertIntToDecimalStringN(gStringVar1,visible,STR_CONV_MODE_LEFT_ALIGN,2);StringAppend(gStringVar4,gStringVar1);
-  ChaosPrintSummaryEditColor(window,gStringVar4,100,3,13,5);
+  u8 branchLabel[24];
+  StringCopy(branchLabel, gStringVar4);
   bool32 hideEvolution = gSaveBlock3Ptr->evolutionMode == RUN_EVOLUTIONS_RANDOM;
   ChaosPrintSummaryEditColor(window,hideEvolution ? COMPOUND_STRING("???") : GetSpeciesName(evo->targetSpecies),8,18,1,3);
   ChaosFormatEvolution(evo,gStringVar4);
-  WrapFontIdToFit(gStringVar4,gStringVar4+StringLength(gStringVar4),FONT_SMALL_NARROW,128);
+  // Narrow fonts report an 8px height, but their glyph backgrounds extend
+  // farther. Print each condition separately on a 13px baseline so the
+  // following line cannot erase the preceding one. Page long descriptions.
+  u32 lines = 1;
+  for (const u8 *text = gStringVar4; *text != EOS; text++)
+   if (*text == CHAR_NEWLINE) lines++;
+  sMonSummaryScreen->chaosEvolutionPages = (lines + 1) / 2;
+  sMonSummaryScreen->chaosEvolutionPage %= sMonSummaryScreen->chaosEvolutionPages;
+  if (sMonSummaryScreen->chaosEvolutionPages > 1)
   {
-   u8 colors[] = {3,1,3};
-   AddTextPrinterParameterized4(window,FONT_SMALL_NARROW,8,32,0,0,colors,0,gStringVar4);
+   StringAppend(branchLabel, COMPOUND_STRING(" "));
+   ConvertIntToDecimalStringN(gStringVar1,sMonSummaryScreen->chaosEvolutionPage+1,STR_CONV_MODE_LEFT_ALIGN,2);
+   StringAppend(branchLabel,gStringVar1);
+   StringAppend(branchLabel,COMPOUND_STRING("/"));
+   ConvertIntToDecimalStringN(gStringVar1,sMonSummaryScreen->chaosEvolutionPages,STR_CONV_MODE_LEFT_ALIGN,2);
+   StringAppend(branchLabel,gStringVar1);
+  }
+  ChaosPrintSummaryEditColor(window,branchLabel,76,3,13,5);
+  const u8 *text = gStringVar4;
+  for (u32 line=0; line<lines; line++)
+  {
+   u8 condition[256]; u32 length=0;
+   while (*text != EOS && *text != CHAR_NEWLINE && length < sizeof(condition)-1)
+    condition[length++]=*text++;
+   condition[length]=EOS;
+   if (*text == CHAR_NEWLINE) text++;
+   if (line / 2 == sMonSummaryScreen->chaosEvolutionPage)
+   {
+    u8 colors[] = {3,1,3};
+    AddTextPrinterParameterized4(window,GetFontIdToFit(condition,FONT_SMALL,0,128),8,30+(line%2)*13,0,0,colors,0,condition);
+   }
   }
   if (!hideEvolution)
   {

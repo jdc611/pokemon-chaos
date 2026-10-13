@@ -22,13 +22,23 @@ Start a new game, then press SELECT on PLAY STYLE until it says OAK'S DRAFT. Cho
 - Nuzlocke deaths after the opening battle go to GRAVE and leave vacancies. Vacancies and dead companions cannot be exchanged for gifts. Ordinary runs retain normal healing. Required field HMs still need ownership and badges, never a Pokémon that knows or can learn the move.
 - The report preserves the original six, with Summary access and original/current analysis: attack balance, current attack types, shared weaknesses and remaining evolution paths. It is available in the draft room and near the Hall of Fame. It does not reveal unused crates or the hidden Oak team.
 
+## First playtest corrections
+
+- The opening rival has a dedicated Draft approach from the center aisle, with routes for the player's left, middle and right trigger positions. Standard starter routes remain unchanged.
+- Dynamax and Gigantamax are unavailable to both sides in every play style. Mega Evolution and the other existing battle systems remain available.
+- Both back-room bookcases use complete two-column tile sets. Each crate pile uses two adjacent existing storage-box sprites instead of repeated vertical shelf-like stacks.
+- Evolution requirements use separate 13-pixel baselines. Descriptions longer than two lines page with A before advancing to the next branch; the header shows branch and condition-page counts.
+- Completed-draft starter balls are empty and cannot reopen the draft room. The room remains accessible through its intended lab entrance. Its exit uses a standard map warp with a dedicated lab arrival point, without the old coordinate-trigger script. Draft-room scripted entrances release controls before beginning their warp.
+
+The replacement compiled and passed the real opening win/loss, Hall of Fame, three-column rival movement, all three empty-ball interactions, three repeated door exits without forced control resets, global Dynamax availability, Scyther branch switching and longer Milcery requirements. The repaired bookcases and both evolution descriptions were visually inspected. All 20 existing source suites and native startup checks also passed. Actual iOS Delta testing remains for the player. Use an in-game save when switching ROM builds; emulator save states retain the previous build's running code and RAM.
+
 ## Persistence and compatibility
 
 Draft state is versioned and occupies the mutually exclusive IronMON save tail without changing save sizes or existing field offsets. Two previously unused encrypted Pokémon bits store membership and paid-reroll consumption without growing Pokémon structures. Original candidates are reconstructed from the saved seed/settings and picks. Future changes to the pool or randomization algorithm must preserve this generator version or provide migration before claiming compatibility with earlier Draft saves.
 
 ## Validation
 
-The local native FireRed target compiled successfully. EWRAM: 253,896/262,144 bytes; IWRAM: 29,368/32,768 bytes; ROM payload: 27,233,292/33,554,432 bytes. The deliverable is a padded 32 MiB GBA ROM.
+The local native FireRed target compiled successfully. EWRAM: 253,896/262,144 bytes; IWRAM: 29,368/32,768 bytes; ROM payload: 27,233,664/33,554,432 bytes. The deliverable is a padded 32 MiB GBA ROM.
 
 Passing checks include all 21 existing source regression suites, six stat/trait combinations, six permanent selections, deterministic identities and names, real flash save/reload mid-draft and after completion, three rival/Oak generation stages, central acquisition blocking, actual gift/reroll interfaces, the mapped room and all Summary screens, opening win/loss with Nuzlocke exemption, all eight mapped Gym battles and compatible rewards, Koga's Double Battle, Oak's Champion/Hall-of-Fame path, required HM commands and real evolution animations. Existing Normal/Nuzlocke/IronMON startup, legacy IronMON profiles, world policy, tracker overlay and terminal lab-loss checks pass. Battle outcomes use controlled HP, levels and moves to exercise transitions; they do not establish natural difficulty balance.
 
@@ -40,7 +50,7 @@ Passing checks include all 21 existing source regression suites, six stat/trait 
 - Legendary difficulty, the relocated rival finale, and the larger Mewtwo/Pallet/Gym-succession story remain deferred by design.
 - The compact report's first analysis panel shows up to six attack types and the two largest shared weaknesses; full individual details are available through Summary.
 
-ROM SHA-256: `739e9325f14da79ad55ca0bdc98f3f99eec724c46a6d7f04de8ebd20e3720b2e`
+ROM SHA-256: `57598b3dffe3f888b78193feb6d05782871a55403caaf50f69328e2c4e3727c8`
 
 ## Changed files
 
@@ -107,3 +117,7 @@ ROM SHA-256: `739e9325f14da79ad55ca0bdc98f3f99eec724c46a6d7f04de8ebd20e3720b2e`
 - `src/shop.c`
 - `src/shop_criteria.c`
 - `src/trade.c`
+- `src/battle_dynamax.c`
+- `tools/chaos/native/qa_oaks_draft_fixes.py`
+- `docs/oaks-draft-fixes-native-results.json`
+- `docs/oaks-draft-fixes-source-results.json`

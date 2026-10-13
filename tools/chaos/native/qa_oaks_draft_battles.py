@@ -35,11 +35,17 @@ for win in (False,True):
      wr(addr+z[2],80,1)
    if not win:
     for i in range(6):setdata(p+(6+i)*MS,HP,data(p+(6+i)*MS,MAXHP))
+  assert not call('CanDynamax',0) and not call('CanDynamax',1)
   key()
   if rd(s+DRAFT+ROUND,1)==6 and not call('OaksDraftOpeningBattle') and rd(symbols['gMain']+4)==symbols['CB2_Overworld']|1:break
  else:raise AssertionError(('opening did not finish',win,rd('gBattleOutcome',1)))
  assert rd('gBattleOutcome',1)==(1 if win else 2)
  assert rd('gPartiesCount',1)==6 and all(data(p+i*MS,HP)==data(p+i*MS,MAXHP) for i in range(6))
+ for _ in range(80):
+  key()
+  if call('VarGet',LABSCENE)==4 and not call('ArePlayerFieldControlsLocked'):break
+ assert call('VarGet',LABSCENE)==4 and not call('ArePlayerFieldControlsLocked')
+ state('draft-after-opening')
  print('PASS real 6v6 opening outcome, full heal and Nuzlocke exemption',win,turn,flush=True)
 # Enter the real Champion room and verify the Oak presentation/team.
 state('draft-before-lab-battle',1);call('OaksDraftFinishOpening')

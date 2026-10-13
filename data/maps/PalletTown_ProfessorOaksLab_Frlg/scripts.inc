@@ -13,6 +13,8 @@ PalletTown_ProfessorOaksLab_Frlg_MapScripts::
 
 PalletTown_ProfessorOaksLab_OnTransition::
 	setflag FLAG_VISITED_OAKS_LAB
+    specialvar VAR_RESULT, IsOaksDraft
+    call_if_eq VAR_RESULT, TRUE, OaksDraftRoom_LabTransition
 	call_if_eq VAR_MAP_SCENE_PALLET_TOWN_PROFESSOR_OAKS_LAB, 1, PalletTown_ProfessorOaksLab_EventScript_ReadyOakForStarterScene
 	call_if_eq VAR_MAP_SCENE_PALLET_TOWN_PROFESSOR_OAKS_LAB, 7, PalletTown_ProfessorOaksLab_EventScript_ReadyOakForNationalDexScene
 	call_if_eq VAR_MAP_SCENE_PALLET_TOWN_PROFESSOR_OAKS_LAB, 8, PalletTown_ProfessorOaksLab_EventScript_SetNationalDexSceneFinished
@@ -300,6 +302,8 @@ PalletTown_ProfessorOaksLab_EventScript_RivalBattle::
 	closemessage
 	applymovement LOCALID_OAKS_LAB_PROF_OAK, Common_Movement_FaceDown
 	waitmovement 0
+    specialvar VAR_RESULT, IsOaksDraft
+    goto_if_eq VAR_RESULT, TRUE, OaksDraftRoom_RivalApproach
 	goto_if_eq VAR_STARTER_MON, 0, PalletTown_ProfessorOaksLab_EventScript_RivalApproachForBattleCharmander
 	goto_if_eq VAR_STARTER_MON, 1, PalletTown_ProfessorOaksLab_EventScript_RivalApproachForBattleBulbasaur
 	goto_if_eq VAR_STARTER_MON, 2, PalletTown_ProfessorOaksLab_EventScript_RivalApproachForBattleSquirtle
@@ -1070,7 +1074,7 @@ PalletTown_ProfessorOaksLab_Movement_RivalExit::
 
 PalletTown_ProfessorOaksLab_EventScript_BulbasaurBall::
     specialvar VAR_RESULT, IsOaksDraft
-    goto_if_eq VAR_RESULT, TRUE, OaksDraftRoom_Entrance
+    goto_if_eq VAR_RESULT, TRUE, OaksDraftRoom_StarterBall
 	lock
 	faceplayer
 	setvar PLAYER_STARTER_NUM, 0
@@ -1230,7 +1234,7 @@ PalletTown_ProfessorOaksLab_Movement_RivalWalksToBulbasaur::
 
 PalletTown_ProfessorOaksLab_EventScript_SquirtleBall::
     specialvar VAR_RESULT, IsOaksDraft
-    goto_if_eq VAR_RESULT, TRUE, OaksDraftRoom_Entrance
+    goto_if_eq VAR_RESULT, TRUE, OaksDraftRoom_StarterBall
 	lock
 	faceplayer
 	setvar PLAYER_STARTER_NUM, 1
@@ -1245,7 +1249,7 @@ PalletTown_ProfessorOaksLab_EventScript_SquirtleBall::
 
 PalletTown_ProfessorOaksLab_EventScript_CharmanderBall::
     specialvar VAR_RESULT, IsOaksDraft
-    goto_if_eq VAR_RESULT, TRUE, OaksDraftRoom_Entrance
+    goto_if_eq VAR_RESULT, TRUE, OaksDraftRoom_StarterBall
 	lock
 	faceplayer
 	setvar PLAYER_STARTER_NUM, 2
@@ -1716,9 +1720,58 @@ OaksDraftRoom_Intro::
     setobjectxyperm LOCALID_OAKS_LAB_PROF_OAK, 6, 3
     clearflag FLAG_HIDE_OAK_IN_HIS_LAB
     msgbox OaksDraftRoom_Text_Intro
+    releaseall
     warp MAP_OAKS_DRAFT_ROOM, 6, 11
     waitstate
-    releaseall
     end
 OaksDraftRoom_Text_Intro:
     .string "OAK: I've run out of traditional starters.\nBut a shipment arrived this morning.\pThese companions were abandoned,\nsurrendered, or left behind.\pIn my back room, six crates await.\nGive six of these Pokemon a new home.$"
+
+OaksDraftRoom_LabTransition::
+    goto_if_ne VAR_MAP_SCENE_PALLET_TOWN_PROFESSOR_OAKS_LAB, 3, OaksDraftRoom_LabTransitionEnd
+    setobjectxyperm LOCALID_OAKS_LAB_RIVAL, 6, 4
+OaksDraftRoom_LabTransitionEnd::
+    return
+
+OaksDraftRoom_StarterBall::
+    special OaksDraftGetRound
+    goto_if_lt VAR_RESULT, 6, OaksDraftRoom_Entrance
+    msgbox OaksDraftRoom_Text_EmptyBall, MSGBOX_NPC
+    end
+OaksDraftRoom_Text_EmptyBall:
+    .string "An empty POKE BALL.\nYour companions came from the crates.$"
+
+OaksDraftRoom_RivalApproach::
+    call_if_eq VAR_TEMP_2, 1, OaksDraftRoom_RivalApproachLeft
+    call_if_eq VAR_TEMP_2, 2, OaksDraftRoom_RivalApproachMid
+    call_if_eq VAR_TEMP_2, 3, OaksDraftRoom_RivalApproachRight
+    goto PalletTown_ProfessorOaksLab_EventScript_RivalBattleCharmander
+OaksDraftRoom_RivalApproachLeft::
+    applymovement LOCALID_OAKS_LAB_RIVAL, OaksDraftRoom_Movement_RivalLeft
+    waitmovement 0
+    return
+OaksDraftRoom_RivalApproachMid::
+    applymovement LOCALID_OAKS_LAB_RIVAL, OaksDraftRoom_Movement_RivalMid
+    waitmovement 0
+    return
+OaksDraftRoom_RivalApproachRight::
+    applymovement LOCALID_OAKS_LAB_RIVAL, OaksDraftRoom_Movement_RivalRight
+    waitmovement 0
+    return
+OaksDraftRoom_Movement_RivalLeft::
+    walk_down
+    walk_down
+    walk_left
+    walk_down
+    step_end
+OaksDraftRoom_Movement_RivalMid::
+    walk_down
+    walk_down
+    walk_down
+    step_end
+OaksDraftRoom_Movement_RivalRight::
+    walk_down
+    walk_down
+    walk_right
+    walk_down
+    step_end
