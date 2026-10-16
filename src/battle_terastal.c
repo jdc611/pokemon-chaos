@@ -68,46 +68,7 @@ bool32 IsTeraOrbCharged(void)
 // Returns whether a battler can Terastallize.
 bool32 CanTerastallize(enum BattlerId battler)
 {
-    enum HoldEffect holdEffect = GetBattlerHoldEffectIgnoreNegation(battler);
-
-    if (gBattleMons[battler].volatiles.transformed && GET_BASE_SPECIES_ID(gBattleMons[battler].species) == SPECIES_TERAPAGOS)
-        return FALSE;
-
-    // Prevents Zigzagoon from terastalizing in vanilla.
-    if (gBattleTypeFlags & BATTLE_TYPE_FIRST_BATTLE && !IsOnPlayerSide(battler))
-        return FALSE;
-
-    if (TESTING || !IsOnPlayerSide(battler))
-    {
-        // Skip all other checks in this block, go to HasTrainerUsedGimmick
-    }
-    else if (!CheckBagHasItem(ITEM_TERA_ORB, 1))
-    {
-        return FALSE;
-    }
-    else if (!IsTeraOrbCharged())
-    {
-        return FALSE;
-    }
-
-    // Check if Trainer has already Terastallized.
-    if (HasTrainerUsedGimmick(battler, GIMMICK_TERA))
-        return FALSE;
-
-    // Check if AI battler is intended to Terastallize.
-    if (!ShouldTrainerBattlerUseGimmick(battler, GIMMICK_TERA))
-        return FALSE;
-
-    // Check if battler has another gimmick active.
-    if (GetActiveGimmick(battler) != GIMMICK_NONE)
-        return FALSE;
-
-    // Check if battler is holding a Z-Crystal or Mega Stone.
-    if (!TESTING && (holdEffect == HOLD_EFFECT_Z_CRYSTAL || holdEffect == HOLD_EFFECT_MEGA_STONE)) // tests make this check already
-        return FALSE;
-
-    // Every check passed!
-    return TRUE;
+    return FALSE; // Removed from Pokemon Chaos in every mode.
 }
 
 // Returns a battler's Tera type.

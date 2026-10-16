@@ -9,6 +9,8 @@ UndergroundPath_NorthEntrance_EventScript_Saige::
 	goto_if_eq VAR_RESULT, TRUE, Ironmon_EventScript_ServiceBlocked
 	call EventScript_GetInGameTradeSpeciesInfo
 	goto_if_set FLAG_DID_MS_NIDO_TRADE, UndergroundPath_NorthEntrance_EventScript_AlreadyTraded
+    specialvar VAR_RESULT, IsCustomBuild
+    goto_if_eq VAR_RESULT, TRUE, CustomBuild_Trade_FLAG_DID_MS_NIDO_TRADE
 	msgbox Trade_Text_DoYouHaveMonWantToTradeForMon, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, UndergroundPath_NorthEntrance_EventScript_DeclineTrade
 	call EventScript_ChooseMonForInGameTrade
@@ -36,3 +38,11 @@ UndergroundPath_NorthEntrance_EventScript_AlreadyTraded::
 	msgbox Trade_Text_HowIsMyOldMon
 	release
 	end
+
+CustomBuild_Trade_FLAG_DID_MS_NIDO_TRADE::
+    special CustomBuildNPCTrade
+    goto_if_eq VAR_RESULT, 2, CustomBuild_Trade_FLAG_DID_MS_NIDO_TRADE_Decline
+    setflag FLAG_DID_MS_NIDO_TRADE
+CustomBuild_Trade_FLAG_DID_MS_NIDO_TRADE_Decline::
+    releaseall
+    end

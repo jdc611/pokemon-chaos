@@ -27,6 +27,8 @@ Route11_EastEntrance_2F_EventScript_Turner::
 	goto_if_eq VAR_RESULT, TRUE, Ironmon_EventScript_ServiceBlocked
 	call EventScript_GetInGameTradeSpeciesInfo
 	goto_if_set FLAG_DID_NINA_TRADE, Route11_EastEntrance_2F_EventScript_AlreadyTraded
+    specialvar VAR_RESULT, IsCustomBuild
+    goto_if_eq VAR_RESULT, TRUE, CustomBuild_Trade_FLAG_DID_NINA_TRADE
 	msgbox Trade_Text_LookingForMonWannaTradeForMon, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, Route11_EastEntrance_2F_EventScript_DeclineTrade
 	call EventScript_ChooseMonForInGameTrade
@@ -139,3 +141,11 @@ Route11_EastEntrance_2F_Text_RockTunnelGoodRouteToLavender::
 
 Text_ChaosAideJoke5::
 	.string "OAK waived the quota. Sadly,\nhe did not waive my overtime.$"
+
+CustomBuild_Trade_FLAG_DID_NINA_TRADE::
+    special CustomBuildNPCTrade
+    goto_if_eq VAR_RESULT, 2, CustomBuild_Trade_FLAG_DID_NINA_TRADE_Decline
+    setflag FLAG_DID_NINA_TRADE
+CustomBuild_Trade_FLAG_DID_NINA_TRADE_Decline::
+    releaseall
+    end

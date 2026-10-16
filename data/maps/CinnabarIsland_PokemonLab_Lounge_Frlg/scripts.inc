@@ -13,6 +13,8 @@ CinnabarIsland_PokemonLab_Lounge_EventScript_Clifton::
 	goto_if_eq VAR_RESULT, TRUE, Ironmon_EventScript_ServiceBlocked
 	call EventScript_GetInGameTradeSpeciesInfo
 	goto_if_set FLAG_DID_ESPHERE_TRADE, CinnabarIsland_PokemonLab_Lounge_EventScript_CliftonAlreadyTraded
+    specialvar VAR_RESULT, IsCustomBuild
+    goto_if_eq VAR_RESULT, TRUE, CustomBuild_Trade_FLAG_DID_ESPHERE_TRADE
 	msgbox Trade_Text_DoYouHaveMonWouldYouTradeForMon, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, CinnabarIsland_PokemonLab_Lounge_EventScript_CliftonDeclineTrade
 	call EventScript_ChooseMonForInGameTrade
@@ -51,6 +53,8 @@ CinnabarIsland_PokemonLab_Lounge_EventScript_Norma::
 	specialvar VAR_RESULT, GetInGameTradeSpeciesInfo
 	copyvar VAR_0x8009, VAR_RESULT
 	goto_if_set FLAG_DID_TANGENY_TRADE, CinnabarIsland_PokemonLab_Lounge_EventScript_NormaAlreadyTraded
+    specialvar VAR_RESULT, IsCustomBuild
+    goto_if_eq VAR_RESULT, TRUE, CustomBuild_Trade_FLAG_DID_TANGENY_TRADE
 	msgbox Trade_Text_DoYouHaveMonWantToTradeForMon, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, CinnabarIsland_PokemonLab_Lounge_EventScript_NormaDeclineTrade
 	special ChoosePartyMon
@@ -91,3 +95,19 @@ CinnabarIsland_PokemonLab_Lounge_Text_FoundFossilInMtMoon::
 	.string "I think it's of a rare, prehistoric\n"
 	.string "POKéMON.$"
 
+
+CustomBuild_Trade_FLAG_DID_ESPHERE_TRADE::
+    special CustomBuildNPCTrade
+    goto_if_eq VAR_RESULT, 2, CustomBuild_Trade_FLAG_DID_ESPHERE_TRADE_Decline
+    setflag FLAG_DID_ESPHERE_TRADE
+CustomBuild_Trade_FLAG_DID_ESPHERE_TRADE_Decline::
+    releaseall
+    end
+
+CustomBuild_Trade_FLAG_DID_TANGENY_TRADE::
+    special CustomBuildNPCTrade
+    goto_if_eq VAR_RESULT, 2, CustomBuild_Trade_FLAG_DID_TANGENY_TRADE_Decline
+    setflag FLAG_DID_TANGENY_TRADE
+CustomBuild_Trade_FLAG_DID_TANGENY_TRADE_Decline::
+    releaseall
+    end

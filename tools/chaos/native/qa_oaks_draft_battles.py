@@ -1,7 +1,7 @@
 """Controlled actual opening outcomes and Oak Champion/Hall of Fame path."""
 from qa_oaks_draft_ui import *
 z=struct.unpack('<11I',(ROOT/'battle-layout.bin').read_bytes());b=symbols['gBattleMons']
-def key(k=1,n=26):frames(2,k);frames(n)
+def key(k=1,n=26):frames(8,k);frames(n)
 def enter_lab():
  state('draft-before-lab-battle',1)
  for i in range(6):

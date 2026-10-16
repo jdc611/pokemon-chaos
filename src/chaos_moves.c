@@ -1,4 +1,5 @@
 #include "global.h"
+#include "custom_build.h"
 #include "ironmon.h"
 #include "chaos_moves.h"
 #include "move.h"
@@ -32,7 +33,7 @@ static EWRAM_DATA u8 sNextEggCache = 0;
 
 static bool32 RandomMovesetsEnabled(void)
 {
-    return gSaveBlock3Ptr != NULL && gSaveBlock3Ptr->randomizerEnabled
+    return gSaveBlock3Ptr != NULL && (gSaveBlock3Ptr->randomizerEnabled || IsCustomBuild())
         && gSaveBlock3Ptr->movesetMode == RUN_MOVESETS_RANDOM;
 }
 
@@ -68,7 +69,7 @@ static enum Move RandomizedMove(enum Move move, u32 multiplier, u32 offset)
     do
     {
         move = 1 + (multiplier * (move - 1) + offset) % (MOVES_COUNT - 1);
-    } while (move == MOVE_STRUGGLE || GetMovePP(move) == 0 || (IsIronmonRun() && !IronmonMoveAllowed(move)));
+    } while (!ChaosUsableMove(move) || (IsIronmonRun() && !IronmonMoveAllowed(move)));
     return move;
 }
 

@@ -112,33 +112,7 @@ bool32 IsZMove(enum Move move)
 
 bool32 CanUseZMove(enum BattlerId battler)
 {
-    enum HoldEffect holdEffect = GetBattlerHoldEffectIgnoreNegation(battler);
-    enum BattlerPosition position = GetBattlerPosition(battler);
-
-    // Check if Player has Z-Power Ring.
-    if (!TESTING && (position == B_POSITION_PLAYER_LEFT
-        || (!(gBattleTypeFlags & BATTLE_TYPE_MULTI) && position == B_POSITION_PLAYER_RIGHT))
-        && !CheckBagHasItem(ITEM_Z_POWER_RING, 1))
-        return FALSE;
-
-    // Add '| BATTLE_TYPE_FRONTIER' to below if issues occur
-    if (gBattleTypeFlags & (BATTLE_TYPE_SAFARI | BATTLE_TYPE_CATCH_TUTORIAL))
-        return FALSE;
-
-    // Check if Trainer has already used a Z-Move.
-    if (HasTrainerUsedGimmick(battler, GIMMICK_Z_MOVE))
-        return FALSE;
-
-    // Check if battler has another gimmick active.
-    if (GetActiveGimmick(battler) != GIMMICK_NONE && GetActiveGimmick(battler) != GIMMICK_ULTRA_BURST)
-        return FALSE;
-
-    // Check if battler isn't holding a Z-Crystal.
-    if (holdEffect != HOLD_EFFECT_Z_CRYSTAL)
-        return FALSE;
-
-    // All checks passed!
-    return TRUE;
+    return FALSE; // Removed from Pokemon Chaos in every mode.
 }
 
 enum Move GetUsableZMove(enum BattlerId battler, enum Move move)

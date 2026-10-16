@@ -1,4 +1,5 @@
 #include "global.h"
+#include "custom_build.h"
 #include "battle.h"
 #include "battle_anim.h"
 #include "battle_controllers.h"
@@ -36,6 +37,7 @@ void AssignUsableGimmicks(void)
 // Returns whether a battler is able to use a gimmick. Checks consumption and gimmick specific functions.
 bool32 CanActivateGimmick(enum BattlerId battler, enum Gimmick gimmick)
 {
+    if(gimmick!=GIMMICK_MEGA || (IsCustomBuild() && IsOnPlayerSide(battler)))return FALSE;
     return gGimmicksInfo[gimmick].CanActivate != NULL && gGimmicksInfo[gimmick].CanActivate(battler);
 }
 
@@ -53,6 +55,7 @@ bool32 IsGimmickSelected(enum BattlerId battler, enum Gimmick gimmick)
 // Sets a battler as having a gimmick active using their party index.
 void SetActiveGimmick(enum BattlerId battler, enum Gimmick gimmick)
 {
+    if(gimmick!=GIMMICK_NONE && gimmick!=GIMMICK_MEGA)return;
     gBattleStruct->gimmick.activeGimmick[GetBattlerTrainer(battler)][gBattlerPartyIndexes[battler]] = gimmick;
 }
 

@@ -293,6 +293,8 @@ FuchsiaCity_Gym_EventScript_GiveTM06Draft::
     special OaksDraftGiveGymTM
     goto_if_eq VAR_RESULT, FALSE, OaksDraft_GymNoRoom
     setflag FLAG_GOT_TM06_FROM_KOGA
+    goto_if_eq VAR_RESULT, 2, CustomBuild_GymFallback
     msgbox OaksDraft_Text_GymTM
+    special CustomBuildShowTM
     releaseall
     end

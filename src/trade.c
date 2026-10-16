@@ -1,4 +1,5 @@
 #include "global.h"
+#include "custom_build.h"
 #include "oaks_draft.h"
 #include "ironmon.h"
 #include "malloc.h"
@@ -5135,3 +5136,5 @@ static void CB2_SaveAndEndWirelessTrade(void)
     BuildOamBuffer();
     UpdatePaletteFade();
 }
+
+void CustomBuildNPCTrade(void){const struct InGameTrade *trade=&sIngameTrades[gSpecialVar_0x8008];gSpecialVar_0x8004=trade->species;gSpecialVar_0x8005=trade->heldItem;CustomBuildOpenGift();}

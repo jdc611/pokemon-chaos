@@ -17,6 +17,8 @@ Route18_EastEntrance_2F_EventScript_Haden::
 	goto_if_eq VAR_RESULT, TRUE, Ironmon_EventScript_ServiceBlocked
 	call EventScript_GetInGameTradeSpeciesInfo
 	goto_if_set FLAG_DID_MARC_TRADE, Route18_EastEntrance_2F_EventScript_AlreadyTraded
+    specialvar VAR_RESULT, IsCustomBuild
+    goto_if_eq VAR_RESULT, TRUE, CustomBuild_Trade_FLAG_DID_MARC_TRADE
 	msgbox Trade_Text_LookingForMonWannaTradeForMon, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, Route18_EastEntrance_2F_EventScript_DeclineTrade
 	call EventScript_ChooseMonForInGameTrade
@@ -55,3 +57,11 @@ Route18_EastEntrance_2F_Text_PeopleSwimming::
 	.string "to show…\p"
 	.string "There are people swimming.$"
 
+
+CustomBuild_Trade_FLAG_DID_MARC_TRADE::
+    special CustomBuildNPCTrade
+    goto_if_eq VAR_RESULT, 2, CustomBuild_Trade_FLAG_DID_MARC_TRADE_Decline
+    setflag FLAG_DID_MARC_TRADE
+CustomBuild_Trade_FLAG_DID_MARC_TRADE_Decline::
+    releaseall
+    end

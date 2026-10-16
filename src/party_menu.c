@@ -1,5 +1,6 @@
 #include "chaos_input.h"
 #include "global.h"
+#include "custom_build.h"
 #include "oaks_draft.h"
 #include "ironmon.h"
 #include "run_settings.h"
@@ -2969,7 +2970,7 @@ static void SetPartyMonFieldSelectionActions(struct Pokemon *mons, u8 slotId)
 
     sPartyMenuInternal->numActions = 0;
     AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_SUMMARY);
-    if (!IsOaksDraft()) AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_RENAME);
+    if (!IsOaksDraft() || IsCustomBuild()) AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_RENAME);
     if (IsIronmonRun() || !IS_FRLG || VarGet(VAR_CHAOS_TRAINING_UNLOCKED) || VarGet(VAR_MAP_SCENE_PEWTER_CITY) >= 2)
         AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_RELEARN);
 
@@ -8862,3 +8863,13 @@ s8 Test_UpdatePartySelectionSingleLayout(s8 slotId, s8 movementDir, bool8 choose
     return slotId;
 }
 #endif
+
+void ItemUseCB_CustomMega(u8 taskId,TaskFunc task)
+{
+ struct Pokemon *mon=&gParties[B_TRAINER_PLAYER][gPartyMenu.slotId];
+ enum Species target=CustomBuildMegaTarget(mon,gSpecialVar_ItemId);
+ if(!target){gPartyMenuUseExitCallback=FALSE;DisplayPartyMenuMessage(gText_WontHaveEffect,TRUE);ScheduleBgCopyTilemapToVram(2);gTasks[taskId].func=task;return;}
+ gCB2_AfterEvolution=gPartyMenu.exitCallback;
+ BeginEvolutionScene(mon,target,FALSE,gPartyMenu.slotId);
+ FreePartyPointers();
+}

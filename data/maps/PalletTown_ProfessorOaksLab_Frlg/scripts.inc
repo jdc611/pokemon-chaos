@@ -1719,6 +1719,8 @@ OaksDraftRoom_Intro::
     setvar VAR_MAP_SCENE_PALLET_TOWN_PROFESSOR_OAKS_LAB, 2
     setobjectxyperm LOCALID_OAKS_LAB_PROF_OAK, 6, 3
     clearflag FLAG_HIDE_OAK_IN_HIS_LAB
+    specialvar VAR_RESULT, IsCustomBuild
+    goto_if_eq VAR_RESULT, TRUE, CustomBuild_Intro
     msgbox OaksDraftRoom_Text_Intro
     releaseall
     warp MAP_OAKS_DRAFT_ROOM, 6, 11
@@ -1775,3 +1777,12 @@ OaksDraftRoom_Movement_RivalRight::
     walk_right
     walk_down
     step_end
+
+CustomBuild_Intro::
+    msgbox CustomBuild_Text_Intro
+    releaseall
+    warp MAP_OAKS_DRAFT_ROOM, 6, 11
+    waitstate
+    end
+CustomBuild_Text_Intro:
+    .string "OAK: Choose your six companions.\nThen build their strengths yourself.\pEach crate offers immediate power,\nevolution, or MEGA potential.\pTheir current BST is visible.\nTheir future is yours to discover!$"

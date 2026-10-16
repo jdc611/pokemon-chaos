@@ -1,4 +1,5 @@
 #include "global.h"
+#include "custom_build.h"
 #include "ironmon.h"
 #include "item_use.h"
 #include "battle.h"
@@ -1653,3 +1654,5 @@ void ItemUseOutOfBattle_TownMap(u8 taskId)
 }
 
 #undef tUsingRegisteredKeyItem
+
+void ItemUseOutOfBattle_CustomMega(u8 taskId){gItemUseCB=ItemUseCB_CustomMega;SetUpItemUseCallback(taskId);}

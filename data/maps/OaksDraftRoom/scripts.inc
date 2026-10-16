@@ -131,3 +131,10 @@ OaksDraftRoom_Text_Locked:
     .string "This crate is sealed or already chosen.\nFinish the current crate first.$"
 OaksDraftRoom_Text_Finished:
     .string "OAK: Six companions, six new beginnings.\nHere is your original Draft Report.\pYou can revisit this room to compare\nyour choices with your growing team.$"
+
+CustomBuild_GymFallback::
+    msgbox CustomBuild_Text_GymFallback
+    releaseall
+    end
+CustomBuild_Text_GymFallback:
+    .string "Your team has no new compatible TM.\nTake this RARE CANDY instead.$"

@@ -1,4 +1,5 @@
 #include "global.h"
+#include "custom_build.h"
 #include "oaks_draft.h"
 #include "ironmon.h"
 #include "battle_main.h"
@@ -2618,14 +2619,14 @@ static void RunSetup_DrawConfirmLine(u8 row, u8 y)
         break;
     case 3:
         label = sText_RunSetupStarters;
-        value = sRunSetupStarter == RUN_STARTER_DRAFT ? COMPOUND_STRING("OAK'S DRAFT") : sRunSetupStarter == RUN_STARTER_RANDOM ? sText_RunSetupRandom
+        value = sRunSetupStarter == RUN_STARTER_CUSTOM_BUILD ? COMPOUND_STRING("CUSTOM BUILD") : sRunSetupStarter == RUN_STARTER_DRAFT ? COMPOUND_STRING("OAK'S DRAFT") : sRunSetupStarter == RUN_STARTER_RANDOM ? sText_RunSetupRandom
               : sRunSetupStarter == RUN_STARTER_CHOOSE ? sText_RunSetupCustom
               : sRunSetupStarter == RUN_STARTER_KANTO ? sText_RunSetupKanto
               : sText_RunSetupKanto;
         break;
     case 4:
         label = sText_RunSetupMovesets;
-        value = sRunSetupMovesets ? sText_RunSetupRandom : sText_RunSetupNormal;
+        value = sRunSetupDraft==2 || sRunSetupMovesets ? sText_RunSetupRandom : sText_RunSetupNormal;
         break;
     case 5:
         label = sText_RunSetupEvolutions;
@@ -2633,13 +2634,13 @@ static void RunSetup_DrawConfirmLine(u8 row, u8 y)
         break;
     case 6:
         label = sText_RunSetupBst;
-        value = sRunSetupBstMode == RUN_BST_SHUFFLE ? sText_RunSetupShuffle
+        value = sRunSetupDraft==2 ? COMPOUND_STRING("MANUAL") : sRunSetupBstMode == RUN_BST_SHUFFLE ? sText_RunSetupShuffle
               : sRunSetupBstMode == RUN_BST_RANDOM ? sText_RunSetupRandom
               : sText_RunSetupNormal;
         break;
     case 7:
         label = sText_RunSetupAbilities;
-        value = sRunSetupAbilityMode == RUN_ABILITIES_RANDOM ? sText_RunSetupRandom : sText_RunSetupNormal;
+        value = sRunSetupDraft==2 ? COMPOUND_STRING("DRAFT THREE") : sRunSetupAbilityMode == RUN_ABILITIES_RANDOM ? sText_RunSetupRandom : sText_RunSetupNormal;
         break;
     case 8:
         label = sText_RunSetupType;
@@ -2724,7 +2725,7 @@ static void RunSetup_Draw(u8 cursor)
         }
         if (!IsIronmonDifficulty(sRunSetupDifficulty))
             AddTextPrinterParameterized3(0,FONT_SMALL,8,91,sTextColor_Headers,TEXT_SKIP_DRAW,
-                sRunSetupDraft ? COMPOUND_STRING("SELECT: OAK'S DRAFT") : COMPOUND_STRING("SELECT: STANDARD CHAOS"));
+                sRunSetupDraft == 2 ? COMPOUND_STRING("SELECT: CUSTOM BUILD") : sRunSetupDraft ? COMPOUND_STRING("SELECT: OAK'S DRAFT") : COMPOUND_STRING("SELECT: STANDARD CHAOS"));
         RunSetup_DrawWideChoice(sText_RunSetupNext, 72, 110, 64, cursor == 5);
         if (IsIronmonDifficulty(sRunSetupDifficulty))
             AddTextPrinterParameterized3(0, FONT_SMALL, 10, 84, sTextColor_Headers, TEXT_SKIP_DRAW,
@@ -2741,8 +2742,9 @@ static void RunSetup_Draw(u8 cursor)
         const u8 *labels[] = {COMPOUND_STRING("BASE STATS"),sText_RunSetupAbilities,sText_RunSetupMovesets};
         const u8 *values[] = {sRunSetupBstMode == RUN_BST_RANDOM ? sText_RunSetupRandom : sRunSetupBstMode == RUN_BST_SHUFFLE ? sText_RunSetupShuffle : sText_RunSetupNormal,
             sRunSetupAbilityMode ? sText_RunSetupRandom : sText_RunSetupNormal,sRunSetupMovesets ? sText_RunSetupRandom : sText_RunSetupNormal};
+        if(sRunSetupDraft==2){values[0]=COMPOUND_STRING("MANUAL");values[1]=COMPOUND_STRING("DRAFT THREE");values[2]=sText_RunSetupRandom;}
         FillWindowPixelBuffer(0,PIXEL_FILL(0xA));
-        AddTextPrinterParameterized3(0,FONT_NORMAL,42,3,sTextColor_Headers,TEXT_SKIP_DRAW,COMPOUND_STRING("OAK'S DRAFT OPTIONS"));
+        AddTextPrinterParameterized3(0,FONT_NORMAL,42,3,sTextColor_Headers,TEXT_SKIP_DRAW,sRunSetupDraft == 2 ? COMPOUND_STRING("CUSTOM BUILD OPTIONS") : COMPOUND_STRING("OAK'S DRAFT OPTIONS"));
         for(u32 i=0;i<3;i++) {
             AddTextPrinterParameterized3(0,FONT_SMALL,8,33+i*23,sTextColor_Headers,TEXT_SKIP_DRAW,labels[i]);
             RunSetup_DrawWideChoice(values[i],108,31+i*23,88,cursor==i);
@@ -3070,7 +3072,7 @@ static void Task_RunSetup_Input(u8 taskId)
     if (sRunSetupPage == RUN_SETUP_PAGE_PLAY_STYLE && !sRunSetupConfirm)
     {
         if (JOY_NEW(SELECT_BUTTON) && !IsIronmonDifficulty(sRunSetupDifficulty)) {
-            sRunSetupDraft ^= 1; sRunSetupStarter = sRunSetupDraft ? RUN_STARTER_DRAFT : RUN_STARTER_KANTO;
+            sRunSetupDraft = (sRunSetupDraft + 1) % 3; sRunSetupStarter = sRunSetupDraft == 2 ? RUN_STARTER_CUSTOM_BUILD : sRunSetupDraft ? RUN_STARTER_DRAFT : RUN_STARTER_KANTO;
             sRunSetupFilter=RUN_FILTER_NONE;sRunSetupType=TYPE_NONE;sRunSetupAbility=ABILITY_NONE;
             sRunSetupRandomizer=RUN_WILD_NORMAL;sRunSetupEvolutions=RUN_EVOLUTIONS_NORMAL;
             sRunSetupItemRandomization=sRunSetupCarePackages=sRunSetupEzCatch=FALSE;*cursor=0;
@@ -3115,6 +3117,13 @@ static void Task_RunSetup_Input(u8 taskId)
         return;
     }
 
+    if (sRunSetupDraft == 2 && sRunSetupPage == RUN_SETUP_PAGE_RANDOMIZER && !sRunSetupConfirm)
+    {
+        if(JOY_NEW(B_BUTTON)){sRunSetupPage=RUN_SETUP_PAGE_PLAY_STYLE;*cursor=5;}
+        else if(JOY_NEW(A_BUTTON)){sRunSetupPage=RUN_SETUP_PAGE_CONFIRM;*cursor=0;}
+        else return;
+        RunSetup_Draw(*cursor);return;
+    }
     if (sRunSetupDraft && sRunSetupPage == RUN_SETUP_PAGE_RANDOMIZER && !sRunSetupConfirm)
     {
         if(JOY_NEW(DPAD_UP))*cursor=(*cursor+4)%5;

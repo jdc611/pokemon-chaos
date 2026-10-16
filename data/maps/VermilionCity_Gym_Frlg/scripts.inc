@@ -461,6 +461,8 @@ VermilionCity_Gym_EventScript_GiveTM34Draft::
     special OaksDraftGiveGymTM
     goto_if_eq VAR_RESULT, FALSE, OaksDraft_GymNoRoom
     setflag FLAG_GOT_TM34_FROM_SURGE
+    goto_if_eq VAR_RESULT, 2, CustomBuild_GymFallback
     msgbox OaksDraft_Text_GymTM
+    special CustomBuildShowTM
     releaseall
     end

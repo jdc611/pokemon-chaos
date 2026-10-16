@@ -1,4 +1,5 @@
 #include "global.h"
+#include "custom_build.h"
 #include "oaks_draft.h"
 #include "ironmon.h"
 #include "run_settings.h"
@@ -853,7 +854,8 @@ static void Task_EvolutionScene(u8 taskId)
             FreeMonSpritesGfx();
             FREE_AND_SET_NULL(sEvoStructPtr);
             FreeAllWindowBuffers();
-            SetMainCallback2(gCB2_AfterEvolution);
+            if(!CustomBuildOpenGrowth(mon,gCB2_AfterEvolution))
+                SetMainCallback2(gCB2_AfterEvolution);
         }
         break;
     case EVOSTATE_CANCEL:

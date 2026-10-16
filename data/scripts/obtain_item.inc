@@ -180,7 +180,7 @@ EventScript_HiddenItemScript::
 	waitse
 	goto_if_eq VAR_0x8005, 0, EventScript_TryPickUpHiddenCoins
 	copyvar VAR_RESULT, VAR_0x8005
-	callnative ChaosRandomizeOverworldItem
+	callnative ChaosRandomizeHiddenItem
 	copyvar VAR_0x8005, VAR_RESULT
 	copyvar VAR_0x8006, VAR_0x8005
 	additem VAR_0x8005, VAR_0x8009

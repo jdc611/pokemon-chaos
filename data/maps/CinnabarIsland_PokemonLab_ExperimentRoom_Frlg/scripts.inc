@@ -13,6 +13,8 @@ CinnabarIsland_PokemonLab_ExperimentRoom_EventScript_Garett::
 	goto_if_eq VAR_RESULT, TRUE, Ironmon_EventScript_ServiceBlocked
 	call EventScript_GetInGameTradeSpeciesInfo
 	goto_if_set FLAG_DID_SEELOR_TRADE, CinnabarIsland_PokemonLab_ExperimentRoom_EventScript_AlreadyTraded
+    specialvar VAR_RESULT, IsCustomBuild
+    goto_if_eq VAR_RESULT, TRUE, CustomBuild_Trade_FLAG_DID_SEELOR_TRADE
 	msgbox Trade_Text_LookingForMonWannaTradeForMon, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, CinnabarIsland_PokemonLab_ExperimentRoom_EventScript_DeclineTrade
 	call EventScript_ChooseMonForInGameTrade
@@ -368,3 +370,11 @@ CinnabarIsland_PokemonLab_ExperimentRoom_Text_TakesTimeGoForWalk::
 CinnabarIsland_PokemonLab_ExperimentRoom_Text_YouComeAgain::
 	.string "Aiyah!\n"
 	.string "You come again!$"
+
+CustomBuild_Trade_FLAG_DID_SEELOR_TRADE::
+    special CustomBuildNPCTrade
+    goto_if_eq VAR_RESULT, 2, CustomBuild_Trade_FLAG_DID_SEELOR_TRADE_Decline
+    setflag FLAG_DID_SEELOR_TRADE
+CustomBuild_Trade_FLAG_DID_SEELOR_TRADE_Decline::
+    releaseall
+    end

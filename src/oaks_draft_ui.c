@@ -1,4 +1,5 @@
 #include "global.h"
+#include "custom_build.h"
 #include "oaks_draft.h"
 #include "main.h"
 #include "malloc.h"
@@ -192,15 +193,18 @@ static bool32 Open(u32 mode)
 }
 void OaksDraftOpenCrate(void)
 {
+    if(IsCustomBuild()){CustomBuildOpenCrate();return;}
     if(!IsOaksDraft() || gSpecialVar_0x8004 != gSaveBlock3Ptr->draft.round || gSaveBlock3Ptr->draft.round>=6){QueueFailure();return;}
     if(Open(0))for(u32 i=0;i<3;i++)OaksDraftCreateCandidate(&sDraftScreen->candidates[i],gSaveBlock3Ptr->draft.round*3+i,5);
 }
 void OaksDraftOpenReport(void)
 {
+    if(IsCustomBuild()){CustomBuildOpenReport();return;}
     if(Open(1))RefreshReport();
 }
 void OaksDraftOpenGift(void)
 {
+    if(IsCustomBuild()){CustomBuildOpenGift();return;}
     if(!gPartiesCount[B_TRAINER_PLAYER]){QueueFailure();return;}
     if(Open(2)){sDraftScreen->giftSpecies=gSpecialVar_0x8004;sDraftScreen->giftItem=gSpecialVar_0x8005;memcpy(sDraftScreen->candidates,gParties[B_TRAINER_PLAYER],sizeof(sDraftScreen->candidates));}
 }

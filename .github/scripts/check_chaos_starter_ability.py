@@ -31,6 +31,7 @@ enum Ability {ABILITY_NONE,ABILITY_ONE,ABILITY_TWO,ABILITY_FILTERED,ABILITIES_CO
 #define MON_DATA_CHAOS_STARTER_ABILITY 3
 struct BoxPokemon {u16 species,slot,override;};
 struct Pokemon {struct BoxPokemon box;};
+unsigned CustomBuildAbility(struct BoxPokemon *mon){return 0;}
 struct {u8 starterMode,abilityMode,filterMode;u16 filterValue;unsigned worldSeed;} save,*gSaveBlock3Ptr=&save;
 enum Ability gLastUsedAbility,required=ABILITY_FILTERED;
 u16 slots[4][2]={{0,0},{1,2},{2,1},{0,0}};

@@ -1,4 +1,5 @@
 #include "global.h"
+#include "custom_build.h"
 #include "ironmon.h"
 #include "chaos_arcade.h"
 #include "run_settings.h"
@@ -1931,6 +1932,7 @@ void CB2_OverworldBasic(void)
 
 void CB2_Overworld(void)
 {
+    if(CustomBuildResumePending())return;
     if (IronmonCheckRunOver()) return;
     bool32 fading = (gPaletteFade.active != 0);
     if (fading)

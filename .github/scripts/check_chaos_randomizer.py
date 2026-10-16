@@ -13,7 +13,7 @@ def function(path,name):
  return s[a:i]+'\n'
 def run(code):
  with tempfile.TemporaryDirectory() as d:
-  p=Path(d)/'check.c';p.write_text('int IsIronmonRun(void){return 0;}\nint IsOaksDraft(void){return 0;}\nint OaksDraftExternalItem(int item){return item;}\nunsigned IronmonOverworldItem(unsigned seed){return seed;}\n' + code)
+  p=Path(d)/'check.c';p.write_text('int IsIronmonRun(void){return 0;}\nint IsOaksDraft(void){return 0;}\nint IsCustomBuild(void){return 0;}\nint ChaosRemovedItem(int item){return 0;}\nunsigned IronmonMix(unsigned seed){return seed;}\nunsigned sCustomHiddenItem,gSpecialVar_0x8004,gSpecialVar_LastTalked;\nint OaksDraftExternalItem(int item){return item;}\nunsigned IronmonOverworldItem(unsigned seed){return seed;}\n' + code)
   subprocess.run(['cc','-std=gnu11','-Wall','-Werror','-iquote',str(root/'include'),str(p),'-o',d+'/check'],check=True)
   subprocess.run([d+'/check'],check=True)
 base=r'''
@@ -154,7 +154,8 @@ int main(void){
 '''
 run(code)
 obtain=(root/'data/scripts/obtain_item.inc').read_text()
-assert obtain.count('callnative ChaosRandomizeOverworldItem')==2
+assert obtain.count('callnative ChaosRandomizeOverworldItem')==1
+assert obtain.count('callnative ChaosRandomizeHiddenItem')==1
 assert 'callnative ChaosRandomizeOverworldItem' not in (root/'data/scripts/item_ball_scripts.inc').read_text()
 assert 'GetRandomizedScriptedSpecies(monTemplate.species, monTemplate.level, 0)' in (root/'src/script_pokemon_util.c').read_text()
 print('PASS: ordinary/hidden pickup script entry points and gift creation hook.')

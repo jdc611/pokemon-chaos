@@ -1,0 +1,60 @@
+{
+  "rom": "Pokemon-Chaos-Custom-Build-Playtest.gba",
+  "sha256": "7de18f086f0d4dc871f47a751d54ac8535409b725ecf988381cb9f5e8e5628ca",
+  "size": 33554432,
+  "build": {
+    "target": "firered",
+    "code": 0,
+    "ewram_bytes": 253976,
+    "iwram_bytes": 29372,
+    "rom_payload_bytes": 27252732
+  },
+  "native": [
+    {
+      "suite": "qa_custom_build_growth.py",
+      "code": 0,
+      "output": "PASS draft options, all choices, identities, name lock, save and three trainer stages 0 0\nPASS draft options, all choices, identities, name lock, save and three trainer stages 0 1\nPASS draft options, all choices, identities, name lock, save and three trainer stages 1 0\nPASS draft options, all choices, identities, name lock, save and three trainer stages 1 1\nPASS draft options, all choices, identities, name lock, save and three trainer stages 2 0\nPASS draft options, all choices, identities, name lock, save and three trainer stages 2 1\nPASS gifts, capture/egg blocking, living-only trade, ability cost/one-time marker and eight compatible exclusive TMs\nPASS opening Nuzlocke exemption, later grave removal and no vacancy exchange\nPASS eight seeded drafts have valid, distinct A/B/C candidates\nPASS six independent builds, uncapped HP allocation, ability options and actual flash save/reload\nPASS actual Custom Build startup, intro, all six crate/naming/ability/move/floor/allocation/confirmation flows\nPASS genuine Custom Build opening 6v6 with no removed battle gimmicks\nPASS actual two normal evolution animations, keep-ability choice, positive manually allocated growth and exact final potential 87 120\nPASS permanent Mega growth/ability/allocation, ordinary held item, no faint/end-battle reversion and flash persistence 149\nPASS boxed copy retains individual base stats and chosen ability\n"
+    },
+    {
+      "suite": "qa_custom_build_gifts.py",
+      "code": 0,
+      "output": "PASS draft options, all choices, identities, name lock, save and three trainer stages 0 0\nPASS draft options, all choices, identities, name lock, save and three trainer stages 0 1\nPASS draft options, all choices, identities, name lock, save and three trainer stages 1 0\nPASS draft options, all choices, identities, name lock, save and three trainer stages 1 1\nPASS draft options, all choices, identities, name lock, save and three trainer stages 2 0\nPASS draft options, all choices, identities, name lock, save and three trainer stages 2 1\nPASS gifts, capture/egg blocking, living-only trade, ability cost/one-time marker and eight compatible exclusive TMs\nPASS opening Nuzlocke exemption, later grave removal and no vacancy exchange\nPASS eight seeded drafts have valid, distinct A/B/C candidates\nPASS six independent builds, uncapped HP allocation, ability options and actual flash save/reload\nPASS actual Custom Build startup, intro, all six crate/naming/ability/move/floor/allocation/confirmation flows\nPASS genuine Custom Build opening 6v6 with no removed battle gimmicks\nPASS gift inspection can be declined without changing the roster\nPASS complete gift build cancels atomically or replaces exactly one living member with a persistent custom build\nPASS gift workflow requires a real current companion and does not fill vacancies\nPASS deterministic field rolls, protected HM and eight distinct compatible reserved Gym TMs\n"
+    },
+    {
+      "suite": "qa_oaks_draft_fixes.py",
+      "code": 0,
+      "output": "PASS draft options, all choices, identities, name lock, save and three trainer stages 0 0\nPASS draft options, all choices, identities, name lock, save and three trainer stages 0 1\nPASS draft options, all choices, identities, name lock, save and three trainer stages 1 0\nPASS draft options, all choices, identities, name lock, save and three trainer stages 1 1\nPASS draft options, all choices, identities, name lock, save and three trainer stages 2 0\nPASS draft options, all choices, identities, name lock, save and three trainer stages 2 1\nPASS gifts, capture/egg blocking, living-only trade, ability cost/one-time marker and eight compatible exclusive TMs\nPASS opening Nuzlocke exemption, later grave removal and no vacancy exchange\nPASS actual setup: Draft toggle, restricted options, seed/confirm and new-game persistence\nPASS real room/intro, sealed future crate, all six Summary screens, No/Yes confirmation and final report/return\nPASS genuine opening battle initializes 6v6\nPASS real 6v6 opening outcome, full heal and Nuzlocke exemption False 26\nPASS real 6v6 opening outcome, full heal and Nuzlocke exemption True 563\nPASS actual Oak Champion battle: six retained drafted identities\nPASS Oak victory reaches final comparison and actual Hall of Fame recording\nPASS all three post-battle starter balls stay empty, preserve party and release controls\nPASS three actual room visits/door exits resume movement with no script resets\nPASS all three actual rival approach triggers stay in the aisle and stop directly before the player\nPASS Dynamax is unavailable to player and rival in every play style\nPASS real Scyther evolution-branch switching and Summary exit\nPASS actual multi-condition evolution paging and Summary exit\n"
+    },
+    {
+      "suite": "qa_ironmon_startup.py",
+      "code": 0,
+      "output": "PASS IronMON core: mode isolation, save tail guard, preset/MGM/no caps, starter reentry, capture pivot/alias/floors, trainer byte determinism, Center use, Hardcore denial and end-state reset.\nPASS actual new-game callback mode 1 starter count 0\nPASS actual new-game callback mode 3 starter count 0\nPASS actual new-game callback mode 4 starter count 0\nPASS actual new-game callback mode 5 starter count 1\n"
+    },
+    {
+      "suite": "qa_oaks_draft_gyms.py",
+      "code": 0,
+      "output": "PASS draft options, all choices, identities, name lock, save and three trainer stages 0 0\nPASS draft options, all choices, identities, name lock, save and three trainer stages 0 1\nPASS draft options, all choices, identities, name lock, save and three trainer stages 1 0\nPASS draft options, all choices, identities, name lock, save and three trainer stages 1 1\nPASS draft options, all choices, identities, name lock, save and three trainer stages 2 0\nPASS draft options, all choices, identities, name lock, save and three trainer stages 2 1\nPASS gifts, capture/egg blocking, living-only trade, ability cost/one-time marker and eight compatible exclusive TMs\nPASS opening Nuzlocke exemption, later grave removal and no vacancy exchange\nPASS mapped Gym battle, badge and compatible unique TM PewterCity_Gym 591 304\nPASS mapped Gym battle, badge and compatible unique TM CeruleanCity_Gym 591 270\nPASS mapped Gym battle, badge and compatible unique TM VermilionCity_Gym 591 256\nPASS mapped Gym battle, badge and compatible unique TM CeladonCity_Gym 591 286\nPASS mapped Gym battle, badge and compatible unique TM FuchsiaCity_Gym 623 636\nPASS mapped Gym battle, badge and compatible unique TM SaffronCity_Gym 591 338\nPASS mapped Gym battle, badge and compatible unique TM CinnabarIsland_Gym 591 525\nPASS mapped Gym battle, badge and compatible unique TM ViridianCity_Gym 602 548\n"
+    },
+    {
+      "suite": "qa_custom_build_progression.py",
+      "code": 0,
+      "output": "PASS draft options, all choices, identities, name lock, save and three trainer stages 0 0\nPASS draft options, all choices, identities, name lock, save and three trainer stages 0 1\nPASS draft options, all choices, identities, name lock, save and three trainer stages 1 0\nPASS draft options, all choices, identities, name lock, save and three trainer stages 1 1\nPASS draft options, all choices, identities, name lock, save and three trainer stages 2 0\nPASS draft options, all choices, identities, name lock, save and three trainer stages 2 1\nPASS gifts, capture/egg blocking, living-only trade, ability cost/one-time marker and eight compatible exclusive TMs\nPASS opening Nuzlocke exemption, later grave removal and no vacancy exchange\nPASS eight seeded drafts have valid, distinct A/B/C candidates\nPASS six independent builds, uncapped HP allocation, ability options and actual flash save/reload\nPASS Custom rival and Oak identities, independent bases/abilities and byte-stable repeat encounters\nPASS Custom opening death exemption, later grave, capture/free-gift/egg restrictions\nPASS optional reward persistence and 200 IronMon generated items exclude removed mechanics\n"
+    },
+    {
+      "suite": "qa_custom_build_battles.py",
+      "code": 0,
+      "output": "PASS draft options, all choices, identities, name lock, save and three trainer stages 0 0\nPASS draft options, all choices, identities, name lock, save and three trainer stages 0 1\nPASS draft options, all choices, identities, name lock, save and three trainer stages 1 0\nPASS draft options, all choices, identities, name lock, save and three trainer stages 1 1\nPASS draft options, all choices, identities, name lock, save and three trainer stages 2 0\nPASS draft options, all choices, identities, name lock, save and three trainer stages 2 1\nPASS gifts, capture/egg blocking, living-only trade, ability cost/one-time marker and eight compatible exclusive TMs\nPASS opening Nuzlocke exemption, later grave removal and no vacancy exchange\nPASS eight seeded drafts have valid, distinct A/B/C candidates\nPASS six independent builds, uncapped HP allocation, ability options and actual flash save/reload\nPASS actual Custom Build startup, intro, all six crate/naming/ability/move/floor/allocation/confirmation flows\nPASS genuine Custom Build opening 6v6 with no removed battle gimmicks\nPASS real 6v6 opening outcome, full heal and Nuzlocke exemption False 32\nPASS real 6v6 opening outcome, full heal and Nuzlocke exemption True 510\nPASS actual Oak Champion battle: six retained drafted identities\nPASS Oak victory reaches final comparison and actual Hall of Fame recording\n"
+    }
+  ],
+  "limits": [
+    "mGBA 0.10.2; physical iOS Delta not available",
+    "Controlled HP/move battle fixtures validate scripts and rewards, not natural balance",
+    "No complete natural start-to-finish playthrough performed"
+  ],
+  "resolved_verification_issues": [
+    "IronMon generated-item pools initially included removed crystals; policy filtering now covers those pools and all startup modes pass.",
+    "Native state rewinds originally restored RAM without matching flash journals; the helper now restores both, and evolved/Mega persistence passes.",
+    "Battle fixture taps increased from two to eight frames to avoid sampling a press between game input updates."
+  ],
+  "bst": "PASS: 25,200 species/seed stat profiles; extremes 4.93%; 7,560 evolution selections.\n"
+}

@@ -1,4 +1,5 @@
 #include "global.h"
+#include "custom_build.h"
 #include "oaks_draft.h"
 #include "ironmon.h"
 #include "chaos_abilities.h"
@@ -1427,7 +1428,7 @@ void CalculateMonStatsCont(struct Pokemon *mon, bool32 updateSpeedStat)
         if (i == STAT_HP)
             continue;
 
-        u8 baseStat = GetSpeciesBaseStat(species, i);
+        u32 baseStat = CustomBuildBaseStat(mon, i);
         s32 n = (((2 * baseStat + iv[i] + ev[i] / 4) * level) / 100) + 5;
         n = ModifyStatByNature(nature, n, i);
         if (B_FRIENDSHIP_BOOST == TRUE)
@@ -1446,7 +1447,7 @@ void CalculateMonStatsCont(struct Pokemon *mon, bool32 updateSpeedStat)
     }
     else
     {
-        s32 n = 2 * GetSpeciesBaseHP(species) + iv[STAT_HP];
+        s32 n = 2 * CustomBuildBaseStat(mon, STAT_HP) + iv[STAT_HP];
         newMaxHP = (((n + ev[STAT_HP] / 4) * level) / 100) + level + 10;
     }
 
@@ -2137,6 +2138,7 @@ u32 GetBoxMonData3(struct BoxPokemon *boxMon, s32 field, u8 *data)
             break;
         case MON_DATA_HELD_ITEM:
             retVal = GetSubstruct0(boxMon)->heldItem;
+            if(ChaosRemovedItem(retVal))retVal=ITEM_NONE;
             break;
         case MON_DATA_EXP:
             retVal = GetSubstruct0(boxMon)->experience;
@@ -2149,15 +2151,19 @@ u32 GetBoxMonData3(struct BoxPokemon *boxMon, s32 field, u8 *data)
             break;
         case MON_DATA_MOVE1:
             retVal = GetSubstruct1(boxMon)->move1;
+            if(retVal>=MOVES_COUNT)retVal=MOVE_TACKLE;
             break;
         case MON_DATA_MOVE2:
             retVal = GetSubstruct1(boxMon)->move2;
+            if(retVal>=MOVES_COUNT)retVal=MOVE_TACKLE;
             break;
         case MON_DATA_MOVE3:
             retVal = GetSubstruct1(boxMon)->move3;
+            if(retVal>=MOVES_COUNT)retVal=MOVE_TACKLE;
             break;
         case MON_DATA_MOVE4:
             retVal = GetSubstruct1(boxMon)->move4;
+            if(retVal>=MOVES_COUNT)retVal=MOVE_TACKLE;
             break;
         case MON_DATA_PP1:
             retVal = GetSubstruct1(boxMon)->pp1;
@@ -2664,6 +2670,7 @@ void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg)
             break;
         }
         case MON_DATA_HELD_ITEM:
+            if(ChaosRemovedItem(*(const u16 *)dataArg)){GetSubstruct0(boxMon)->heldItem=ITEM_NONE;break;}
             SET16(GetSubstruct0(boxMon)->heldItem);
             break;
         case MON_DATA_EXP:
@@ -3163,6 +3170,8 @@ enum Ability GetAbilityBySpecies(enum Species species, u8 abilityNum)
 
 enum Ability GetBoxMonAbility(struct BoxPokemon *mon)
 {
+    enum Ability individual = CustomBuildAbility(mon);
+    if (individual) return gLastUsedAbility = individual;
     enum Ability ability = GetBoxMonData(mon, MON_DATA_CHAOS_STARTER_ABILITY);
     if (ability == CHAOS_ABILITY_NATIVE_HIDDEN)
     {
@@ -3327,7 +3336,9 @@ enum Ability GetRandomizedAbilityForSeed(enum Species species, u8 slot, u32 seed
         return ABILITY_NONE;
 
     hash = RunAbilityHash(seed ^ ((u32)species * 0x9E3779B9) ^ ((u32)slot * 0x85EBCA6B));
-    return 1 + (hash % (ABILITIES_COUNT - 1));
+    enum Ability ability=1+(hash%(ABILITIES_COUNT-1));
+    while(!ChaosUsableAbility(ability))ability=ability%(ABILITIES_COUNT-1)+1;
+    return ability;
 }
 
 enum Ability GetSpeciesAbility(enum Species species, u8 slot)
@@ -6759,6 +6770,7 @@ enum Species GetFormChangeTargetSpecies_Internal(struct FormChangeContext ctx)
 {
     u32 i;
     enum Species targetSpecies = ctx.currentSpecies;
+    if(IsCustomBuild() && gSpeciesInfo[ctx.currentSpecies].isMegaEvolution)return ctx.currentSpecies;
     const struct FormChange *formChanges = GetSpeciesFormChanges(ctx.currentSpecies);
 
     if (formChanges == NULL)
@@ -6766,6 +6778,7 @@ enum Species GetFormChangeTargetSpecies_Internal(struct FormChangeContext ctx)
 
     for (i = 0; formChanges[i].method != FORM_CHANGE_TERMINATOR; i++)
     {
+        if(gSpeciesInfo[formChanges[i].targetSpecies].isTeraForm || gSpeciesInfo[formChanges[i].targetSpecies].isGigantamax || gSpeciesInfo[formChanges[i].targetSpecies].isUltraBurst)continue;
         if (!(ctx.method == formChanges[i].method && ctx.currentSpecies != formChanges[i].targetSpecies))
             continue;
 

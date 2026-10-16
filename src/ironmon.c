@@ -1,5 +1,6 @@
 #include "global.h"
 #include "ironmon.h"
+#include "custom_build.h"
 #include "battle.h"
 #include "main.h"
 #include "caps.h"
@@ -129,7 +130,7 @@ enum Move IronmonStarterAttack(enum Species species)
 
 static bool32 IronmonHeldItemEligible(enum Item item)
 {
-    return GetItemHoldEffect(item) != HOLD_EFFECT_NONE && GetItemPocket(item) != POCKET_KEY_ITEMS
+    return !ChaosRemovedItem(item) && GetItemHoldEffect(item) != HOLD_EFFECT_NONE && GetItemPocket(item) != POCKET_KEY_ITEMS
         && GetItemPocket(item) != POCKET_TM_HM && !ItemIsMail(item);
 }
 
@@ -398,7 +399,7 @@ static bool32 OverworldItemEligible(enum Item item)
 {
     // Preserve progression objects at their sources; generated rewards use a
     // uniform ordinary pool. TMs, HMs, mail and unobtainable dummy IDs are out.
-    return item != ITEM_NONE && GetItemPocket(item) != POCKET_KEY_ITEMS
+    return item != ITEM_NONE && !ChaosRemovedItem(item) && GetItemPocket(item) != POCKET_KEY_ITEMS
         && GetItemPocket(item) != POCKET_TM_HM && !ItemIsMail(item)
         && GetItemPrice(item) > 0;
 }

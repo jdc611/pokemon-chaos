@@ -1,4 +1,5 @@
 #include "global.h"
+#include "custom_build.h"
 #include "oaks_draft.h"
 #include "ironmon.h"
 #include "debug.h"
@@ -224,11 +225,13 @@ static bool32 ChaosFieldItemIsProtected(enum Item item)
     return FALSE;
 }
 
+static bool8 sCustomHiddenItem;
 void ChaosRandomizeOverworldItem(void)
 {
     enum Item original = gSpecialVar_Result;
+    if(ChaosRemovedItem(original)){gSpecialVar_Result=ITEM_ORAN_BERRY;return;}
 
-    if (IsOaksDraft()) { gSpecialVar_Result=OaksDraftExternalItem(original);return; }
+    if (IsOaksDraft() && !IsCustomBuild()) { gSpecialVar_Result=OaksDraftExternalItem(original);return; }
     if (!gSaveBlock3Ptr->itemRandomization)
         return;
     u32 seed;
@@ -241,6 +244,7 @@ void ChaosRandomizeOverworldItem(void)
          ^ ((u32)gSaveBlock1Ptr->location.mapNum << 16)
          ^ ((u32)original << 1)
          ^ 0x4348414F; // "CHAO"
+    if(IsCustomBuild())seed ^= IronmonMix(sCustomHiddenItem?gSpecialVar_0x8004:gSpecialVar_LastTalked);
     roll = ChaosFieldItemHash(seed);
     if (IsIronmonRun())
     {
@@ -252,6 +256,7 @@ void ChaosRandomizeOverworldItem(void)
     if (original >= ITEM_TM01 && original <= ITEM_TM100)
     {
         gSpecialVar_Result = ITEM_TM01 + (roll % NUM_TECHNICAL_MACHINES);
+        if (IsCustomBuild()) gSpecialVar_Result = OaksDraftExternalItem(gSpecialVar_Result);
         return;
     }
 
@@ -321,6 +326,16 @@ void ChaosRandomizeOverworldItem(void)
         break;
     }
     }
+}
+
+// Explicitly opted-in, one-time exploration rewards share the location mapping.
+// Shops and story rewards never call this entry point.
+void CustomBuildOptionalReward(void)
+{
+    if (!IsCustomBuild()) return;
+    gSpecialVar_Result = gSpecialVar_0x8000;
+    ChaosRandomizeOverworldItem();
+    gSpecialVar_0x8000 = OaksDraftExternalItem(gSpecialVar_Result);
 }
 
 void Special_ShowDiploma(void)
@@ -6070,3 +6085,5 @@ void ReturnPlayerToLastPokemonCenter(void)
         SetWarpDestinationToLastHealLocation();
     DoWarp();
 }
+
+void ChaosRandomizeHiddenItem(void){sCustomHiddenItem=TRUE;ChaosRandomizeOverworldItem();sCustomHiddenItem=FALSE;}

@@ -1,4 +1,5 @@
 #include "global.h"
+#include "custom_build.h"
 #include "oaks_draft.h"
 #include "ironmon.h"
 #include "constants/maps.h"
@@ -802,6 +803,7 @@ static enum Item SanitizeItemId(enum Item itemId)
 static enum Item SanitizeBagItemId(enum Item itemId)
 {
     itemId = SanitizeItemId(itemId);
+    if(ChaosRemovedItem(itemId)) return ITEM_ORAN_BERRY;
 
     assertf(itemId != ITEM_NONE, "invalid bag item: ITEM_NONE")
     {
@@ -920,11 +922,15 @@ enum Pocket GetItemPocket(enum Item itemId)
 
 enum ItemType GetItemType(enum Item itemId)
 {
+    if(IsCustomBuild() && (GetItemHoldEffect(itemId)==HOLD_EFFECT_MEGA_STONE || itemId==ITEM_MEGA_RING))return ITEM_USE_PARTY_MENU;
     return gItemsInfo[SanitizeItemId(itemId)].type;
 }
 
+static void RemovedGimmickItem(u8 taskId){DisplayDadsAdviceCannotUseItemMessage(taskId,FALSE);}
 ItemUseFunc GetItemFieldFunc(enum Item itemId)
 {
+    if(ChaosRemovedItem(itemId))return RemovedGimmickItem;
+    if(IsCustomBuild() && (GetItemHoldEffect(itemId)==HOLD_EFFECT_MEGA_STONE || itemId==ITEM_MEGA_RING))return ItemUseOutOfBattle_CustomMega;
     return gItemsInfo[SanitizeItemId(itemId)].fieldUseFunc;
 }
 

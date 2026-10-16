@@ -199,6 +199,8 @@ CeruleanCity_Gym_EventScript_GiveTM03Draft::
     special OaksDraftGiveGymTM
     goto_if_eq VAR_RESULT, FALSE, OaksDraft_GymNoRoom
     setflag FLAG_GOT_TM03_FROM_MISTY
+    goto_if_eq VAR_RESULT, 2, CustomBuild_GymFallback
     msgbox OaksDraft_Text_GymTM
+    special CustomBuildShowTM
     releaseall
     end

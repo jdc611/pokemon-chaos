@@ -1,4 +1,5 @@
 #include "global.h"
+#include "custom_build.h"
 #include "oaks_draft.h"
 #include "ironmon.h"
 #include "random_mon_generation.h"
@@ -230,7 +231,7 @@ u32 ChaosCurrentStageRating(struct Pokemon *mon)
  const u16 *lists[]={GetSpeciesTeachableLearnset(species),GetSpeciesEggMoves(species)};
  for(u32 list=0;list<2;list++)for(u32 i=0;lists[list][i]!=MOVE_UNAVAILABLE;i++)
  {enum Move move=lists[list][i];if(move<MOVES_COUNT && !(seen[move/8]&(1u<<(move%8))) && (list==1 || GetTMHMItemIdFromMoveId(move)!=ITEM_NONE)){seen[move/8]|=1u<<(move%8);RatingMove(&moves,move,type1,type2);}}
- u32 stats[6];for(u32 i=0;i<6;i++)stats[i]=GetSpeciesBaseStat(species,i);
+ u32 stats[6];for(u32 i=0;i<6;i++)stats[i]=CustomBuildBaseStat(mon,i);
  enum Ability ability=GetMonAbility(mon);
  u32 atk=stats[STAT_ATK],spa=stats[STAT_SPATK];
  if(ability==ABILITY_HUGE_POWER || ability==ABILITY_PURE_POWER)atk*=2;

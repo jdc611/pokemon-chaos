@@ -13,6 +13,8 @@ CeruleanCity_House3_EventScript_Dontae::
 	goto_if_eq VAR_RESULT, TRUE, Ironmon_EventScript_ServiceBlocked
 	call EventScript_GetInGameTradeSpeciesInfo
 	goto_if_set FLAG_DID_ZYNX_TRADE, CeruleanCity_House3_EventScript_AlreadyTraded
+    specialvar VAR_RESULT, IsCustomBuild
+    goto_if_eq VAR_RESULT, TRUE, CustomBuild_Trade_FLAG_DID_ZYNX_TRADE
 	msgbox Trade_Text_DoYouHaveMonWouldYouTradeForMon, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, CeruleanCity_House3_EventScript_DeclineTrade
 	call EventScript_ChooseMonForInGameTrade
@@ -47,3 +49,11 @@ CeruleanCity_House3_Text_PleaseTradeWithMyHusband::
 	.string "POKéDEX, aren't you?\p"
 	.string "Would you please trade with him?$"
 
+
+CustomBuild_Trade_FLAG_DID_ZYNX_TRADE::
+    special CustomBuildNPCTrade
+    goto_if_eq VAR_RESULT, 2, CustomBuild_Trade_FLAG_DID_ZYNX_TRADE_Decline
+    setflag FLAG_DID_ZYNX_TRADE
+CustomBuild_Trade_FLAG_DID_ZYNX_TRADE_Decline::
+    releaseall
+    end

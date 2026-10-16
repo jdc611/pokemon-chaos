@@ -1,4 +1,5 @@
 #include "global.h"
+#include "custom_build.h"
 #include "oaks_draft.h"
 #include "ironmon.h"
 #include "run_settings.h"
@@ -66,12 +67,12 @@ static const u8 *const sNotes[] = {
 
 bool32 IsOaksDraft(void)
 {
-    return IS_FRLG && gSaveBlock3Ptr->starterMode == RUN_STARTER_DRAFT
+    return IS_FRLG && (gSaveBlock3Ptr->starterMode == RUN_STARTER_DRAFT || gSaveBlock3Ptr->starterMode == RUN_STARTER_CUSTOM_BUILD)
         && gSaveBlock3Ptr->draft.magic == OAKS_DRAFT_MAGIC;
 }
 void OaksDraftInitialize(void)
 {
-    if (gSaveBlock3Ptr->starterMode != RUN_STARTER_DRAFT) return;
+    if (gSaveBlock3Ptr->starterMode != RUN_STARTER_DRAFT && gSaveBlock3Ptr->starterMode != RUN_STARTER_CUSTOM_BUILD) return;
     memset(&gSaveBlock3Ptr->draft, 0, sizeof(gSaveBlock3Ptr->draft));
     gSaveBlock3Ptr->draft.magic = OAKS_DRAFT_MAGIC;
     memset(gSaveBlock3Ptr->draft.picks, 0xFF, 6);
@@ -81,6 +82,7 @@ void OaksDraftInitialize(void)
     gSaveBlock3Ptr->evolutionMode = RUN_EVOLUTIONS_NORMAL;
     gSaveBlock3Ptr->randomizerEnabled = RUN_WILD_NORMAL;
     gSaveBlock3Ptr->itemRandomization = FALSE;
+    CustomBuildInitialize();
 }
 bool32 OaksDraftSpeciesEligible(enum Species species)
 {
@@ -127,6 +129,7 @@ void OaksDraftGenerateSpecies(u16 result[18])
 }
 void OaksDraftSetNickname(struct Pokemon *mon, u32 index)
 {
+    if(IsCustomBuild())return;
     u32 member = FALSE;
     SetMonData(mon, MON_DATA_DRAFT_MEMBER, &member);
     u8 name[POKEMON_NAME_LENGTH + 1];
@@ -151,6 +154,7 @@ static void EnsureAttack(struct Pokemon *mon)
 }
 void OaksDraftCreateCandidate(struct Pokemon *mon, u32 index, u8 level)
 {
+    if(IsCustomBuild()) { struct CustomBuildRecord record;CustomBuildCandidate(mon,&record,index,0,level);return; }
     u16 species[18];
     OaksDraftGenerateSpecies(species);
     if(index>=18 || !species[index]) { ZeroMonData(mon);return; }
@@ -242,6 +246,7 @@ bool32 OaksDraftCreateTrainerParty(struct Pokemon *party, const struct Trainer *
     if (!IsOaksDraft() || gSaveBlock3Ptr->draft.round != 6) return FALSE;
     bool32 oak = trainer->trainerClass == TRAINER_CLASS_CHAMPION_FRLG;
     if (!oak && trainer->trainerClass != TRAINER_CLASS_RIVAL_EARLY_FRLG && trainer->trainerClass != TRAINER_CLASS_RIVAL_LATE_FRLG) return FALSE;
+    bool32 megaUsed=FALSE;
     u8 level = 5;
     for (u32 i = 0; i < trainer->partySize; i++) level = max(level, trainer->party[i].lvl);
     u32 count = (gBattleTypeFlags & BATTLE_TYPE_INGAME_PARTNER) && trainer->multiTeamSize == MULTI_TEAM_SIZE_HALF ? 3 : 6;
@@ -250,6 +255,8 @@ bool32 OaksDraftCreateTrainerParty(struct Pokemon *party, const struct Trainer *
         u32 pick = oak ? 3 - gSaveBlock3Ptr->draft.picks[i] - gSaveBlock3Ptr->draft.rival[i] : gSaveBlock3Ptr->draft.rival[i];
         OaksDraftCreateCandidate(&party[i], i * 3 + pick, 5);
         if (level > 5) Develop(&party[i], level);
+        if(IsCustomBuild()){struct Pokemon tmp;struct CustomBuildRecord build;CustomBuildCandidate(&tmp,&build,i*3+pick,0,5);SetMonData(&party[i],MON_DATA_CHAOS_STARTER_ABILITY,&build.ability);CalculateMonStats(&party[i]);}
+        if(IsCustomBuild() && level>=55 && !megaUsed){const struct FormChange *f=GetSpeciesFormChanges(GetMonData(&party[i],MON_DATA_SPECIES));if(f)for(u32 j=0;f[j].method!=FORM_CHANGE_TERMINATOR;j++)if(gSpeciesInfo[f[j].targetSpecies].isMegaEvolution){SetMonData(&party[i],MON_DATA_SPECIES,&f[j].targetSpecies);CalculateMonStats(&party[i]);HealPokemon(&party[i]);megaUsed=TRUE;break;}}
         if (level >= 20)
         {
             enum Item item = level >= 50 ? ITEM_LEFTOVERS : ITEM_SITRUS_BERRY;
@@ -305,11 +312,12 @@ bool32 OaksDraftRerollAbility(u32 slot)
     for (u32 i = 0; i < ABILITIES_COUNT * 2; i++)
     {
         enum Ability next = 1 + (rank + i) % (ABILITIES_COUNT - 1);
-        if (next != current) { ability = next; break; }
+        if (next != current && ChaosUsableAbility(next)) { ability = next; break; }
     }
     if (!ability) return FALSE;
     RemoveCoins(2000);
     SetMonData(mon,MON_DATA_CHAOS_STARTER_ABILITY,&ability);
+    struct CustomBuildRecord *build=CustomBuildFind(GetMonData(mon,MON_DATA_PERSONALITY));if(build)build->ability=ability;
     u32 used = TRUE;
     SetMonData(mon,MON_DATA_DRAFT_REROLLED,&used);
     StringCopy(gStringVar1,gAbilitiesInfo[ability].name);
@@ -358,7 +366,8 @@ void OaksDraftGiveGymTM(void)
     if (!selected) // All new compatible TMs exhausted: retain a legitimate compatible fallback.
         for (u32 item = ITEM_TM01; item <= ITEM_TM100 && !selected; item++)
             for (u32 i = 0; i < gPartiesCount[B_TRAINER_PLAYER]; i++)
-                if (CanLearnTeachableMove(GetMonData(&gParties[B_TRAINER_PLAYER][i],MON_DATA_SPECIES),GetItemTMHMMoveId(item))) { selected=item; break; }
+                if ((!IsCustomBuild() || !OaksDraftTMReserved(item)) && CanLearnTeachableMove(GetMonData(&gParties[B_TRAINER_PLAYER][i],MON_DATA_SPECIES),GetItemTMHMMoveId(item))) { selected=item; break; }
+    if(!selected && IsCustomBuild()){if(AddBagItem(ITEM_RARE_CANDY,1))gSpecialVar_Result=2;return;}
     if (!selected) return;
     sGymAward=TRUE;
     bool32 added=AddBagItem(selected,1);
@@ -382,6 +391,7 @@ void OaksDraftSetChampionGraphic(void)
 // The same mapping is used by field messages, shop lists and acquisition.
 enum Item OaksDraftExternalItem(enum Item item)
 {
+    if (ChaosRemovedItem(item)) return ITEM_ORAN_BERRY;
     if (!OaksDraftTMReserved(item)) return item;
     u32 start = IronmonMix(gSaveBlock3Ptr->worldSeed ^ item) % 100;
     for (u32 i = 0; i < 100; i++) {

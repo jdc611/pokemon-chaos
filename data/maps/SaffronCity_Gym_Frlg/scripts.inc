@@ -286,6 +286,8 @@ SaffronCity_Gym_EventScript_GiveTM04Draft::
     special OaksDraftGiveGymTM
     goto_if_eq VAR_RESULT, FALSE, OaksDraft_GymNoRoom
     setflag FLAG_GOT_TM04_FROM_SABRINA
+    goto_if_eq VAR_RESULT, 2, CustomBuild_GymFallback
     msgbox OaksDraft_Text_GymTM
+    special CustomBuildShowTM
     releaseall
     end

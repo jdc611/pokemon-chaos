@@ -1,0 +1,10 @@
+#include "global.h"
+#include "custom_build.h"
+#include "battle_gimmick.h"
+#include "pokemon_storage_system.h"
+#include "constants/species.h"
+#include "constants/items.h"
+#include "constants/form_change_types.h"
+#include "constants/battle.h"
+#include "constants/moves.h"
+const unsigned layout[]={SPECIES_BULBASAUR,SPECIES_IVYSAUR,SPECIES_VENUSAUR,SPECIES_VENUSAUR_MEGA,SPECIES_SCYTHER,SPECIES_SCIZOR,SPECIES_KLEAVOR,ITEM_VENUSAURITE,ITEM_MEGA_RING,ITEM_LEFTOVERS,FORM_CHANGE_END_BATTLE,FORM_CHANGE_FAINT,GIMMICK_MEGA,GIMMICK_Z_MOVE,GIMMICK_DYNAMAX,GIMMICK_TERA,ITEM_Z_POWER_RING,ITEM_DYNAMAX_BAND,ITEM_TERA_ORB,ITEM_FIRE_TERA_SHARD,ITEM_ORAN_BERRY,MON_DATA_ABILITY_NUM,offsetof(struct SaveBlock1,filler1),offsetof(struct SaveBlock2,pokedex.filler),sizeof(struct PokemonStorage),sizeof(struct SaveBlock1),sizeof(struct SaveBlock2),sizeof(struct SaveBlock3),sizeof(struct BoxPokemon)};

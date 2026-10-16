@@ -13,6 +13,8 @@ Route2_House_EventScript_Reyley::
 	goto_if_eq VAR_RESULT, TRUE, Ironmon_EventScript_ServiceBlocked
 	call EventScript_GetInGameTradeSpeciesInfo
 	goto_if_set FLAG_DID_MIMIEN_TRADE, Route2_House_EventScript_AlreadyTraded
+    specialvar VAR_RESULT, IsCustomBuild
+    goto_if_eq VAR_RESULT, TRUE, CustomBuild_Trade_FLAG_DID_MIMIEN_TRADE
 	msgbox Trade_Text_LookingForMonWannaTradeForMon, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, Route2_House_EventScript_DeclineTrade
 	call EventScript_ChooseMonForInGameTrade
@@ -47,3 +49,11 @@ Route2_House_Text_FaintedMonsCanUseFieldMoves::
 	.string "It can still use moves like CUT\n"
 	.string "outside of battle.$"
 
+
+CustomBuild_Trade_FLAG_DID_MIMIEN_TRADE::
+    special CustomBuildNPCTrade
+    goto_if_eq VAR_RESULT, 2, CustomBuild_Trade_FLAG_DID_MIMIEN_TRADE_Decline
+    setflag FLAG_DID_MIMIEN_TRADE
+CustomBuild_Trade_FLAG_DID_MIMIEN_TRADE_Decline::
+    releaseall
+    end

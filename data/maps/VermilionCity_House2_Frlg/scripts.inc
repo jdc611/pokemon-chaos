@@ -9,6 +9,8 @@ VermilionCity_House2_EventScript_Elyssa::
 	goto_if_eq VAR_RESULT, TRUE, Ironmon_EventScript_ServiceBlocked
 	call EventScript_GetInGameTradeSpeciesInfo
 	goto_if_set FLAG_DID_CH_DING_TRADE, VermilionCity_House2_EventScript_AlreadyTraded
+    specialvar VAR_RESULT, IsCustomBuild
+    goto_if_eq VAR_RESULT, TRUE, CustomBuild_Trade_FLAG_DID_CH_DING_TRADE
 	msgbox VermilionCity_House2_Text_DoYouHaveMonWantToTradeForMyMon, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, VermilionCity_House2_EventScript_DeclineTrade
 	call EventScript_ChooseMonForInGameTrade
@@ -57,3 +59,11 @@ VermilionCity_House2_Text_ThankYou::
 VermilionCity_House2_Text_HowIsMyOldMon::
 	.string "How is my old {STR_VAR_2}?\p"
 	.string "My {STR_VAR_1} is doing great!$"
+
+CustomBuild_Trade_FLAG_DID_CH_DING_TRADE::
+    special CustomBuildNPCTrade
+    goto_if_eq VAR_RESULT, 2, CustomBuild_Trade_FLAG_DID_CH_DING_TRADE_Decline
+    setflag FLAG_DID_CH_DING_TRADE
+CustomBuild_Trade_FLAG_DID_CH_DING_TRADE_Decline::
+    releaseall
+    end

@@ -723,3 +723,7 @@ gSpecials::
     def_special OaksDraftOpenAbilityReroll , waitstate=1
     def_special OaksDraftGiveGymTM
     def_special OaksDraftSetChampionGraphic
+
+	def_special IsCustomBuild
+	def_special CustomBuildNPCTrade
+	def_special CustomBuildShowTM
