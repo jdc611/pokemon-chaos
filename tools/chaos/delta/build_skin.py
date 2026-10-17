@@ -7,7 +7,7 @@ from pathlib import Path
 import argparse
 import json
 import zipfile
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 FONT = '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf'
 
@@ -58,7 +58,7 @@ def representation(output, name, w, h, landscape):
     items += [dict(inputs=[key], frame=f) for _,key,f in buttons]
     assets = {}
     for scale, size in ((1,'small'), (2,'medium'), (3,'large')):
-        image = Image.new('RGBA', (w*scale,h*scale), '#080a0e')
+        image = Image.new('RGBA', (w*scale,h*scale), '#171717')
         draw = ImageDraw.Draw(image)
         def rect(f, fill, outline=None, radius=10):
             x,y,fw,fh = (f[k]*scale for k in ('x','y','width','height'))
@@ -68,16 +68,29 @@ def representation(output, name, w, h, landscape):
             font = ImageFont.truetype(FONT, size*scale)
             draw.text(((f['x']+f['width']/2)*scale,(f['y']+f['height']/2)*scale),
                       text, font=font, fill=color, anchor='mm')
-        draw.rectangle((0,0,w*scale,18*scale), fill='#080a0e')
-        rect(frame(screen['x']-4,screen['y']-4,screen['width']+8,screen['height']+8), '#42576d')
+        def button(f, text, large=False):
+            # Neutral gray light only: no colored accents or background art.
+            # Composite the soft halo before drawing the crisp button face.
+            glow = Image.new('RGBA', image.size)
+            glow_draw = ImageDraw.Draw(glow)
+            x,y,fw,fh = (f[k]*scale for k in ('x','y','width','height'))
+            glow_draw.rounded_rectangle((x,y,x+fw,y+fh), 10*scale,
+                                        outline=(112,112,112,150), width=4*scale)
+            image.alpha_composite(glow.filter(ImageFilter.GaussianBlur(5*scale)))
+            rect(f, '#292929', '#777777')
+            inset = frame(f['x']+3,f['y']+3,f['width']-6,f['height']-6)
+            rect(inset, '#292929', '#383838', radius=7)
+            label(f,text,'#e5e5e5',23 if large else 12)
+        draw.rectangle((0,0,w*scale,18*scale), fill='#171717')
+        rect(frame(screen['x']-4,screen['y']-4,screen['width']+8,screen['height']+8), '#505050')
         # DeltaCore renders GameView below the controller artwork. The game
         # viewport must be transparent, or the artwork hides the entire ROM.
         rect(screen, (0, 0, 0, 0), radius=0)
-        rect(tracker, '#d5dae1', '#8993a0')
-        label(tracker, 'TRACKER', '#11151c')
+        button(tracker, 'TRACKER')
         for text,key,f in directions+buttons:
-            rect(f, '#b83c42' if key in ('a','b') else '#d5dae1')
-            label(f,text,'white' if key in ('a','b') else '#11151c',23 if key in ('a','b','up','down','left','right') else 12)
+            button(f,text,key in ('a','b','up','down','left','right'))
+        # Keep the complete game viewport transparent, including any halo spill.
+        rect(screen, (0, 0, 0, 0), radius=0)
         filename=f'{name}_{size}.png'
         image.save(output/filename)
         assets[size]=filename
@@ -131,7 +144,7 @@ def main():
     parser=argparse.ArgumentParser()
     parser.add_argument('--output',type=Path,default=Path('/tmp/chaos-delta-skin'))
     args=parser.parse_args();out=args.output;out.mkdir(parents=True,exist_ok=True)
-    info=dict(name='Pokemon Chaos Tracker Dark Comfort',identifier='com.jdc611.chaos.gba.tracker.comfort.dark',
+    info=dict(name='Pokemon Chaos Tracker Charcoal Neon',identifier='com.jdc611.chaos.gba.tracker.charcoal.neon',
               gameTypeIdentifier='com.rileytestut.delta.game.gba',debug=False,
               representations={})
     for device,variants in {'iphone':{'standard':(414,736),'edgeToEdge':(414,896)},
