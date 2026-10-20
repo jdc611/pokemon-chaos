@@ -32,10 +32,12 @@ static struct CustomBuildRecord *Record(u32 index)
  if(index<2)return (void *)(gSaveBlock1Ptr->filler1+index*26);
  return (void *)(gSaveBlock2Ptr->pokedex.filler+(index-2)*26);
 }
+bool32 CustomBuildAceRules(void){return IsCustomBuild() && gSaveBlock3Ptr->draft.customVersion==1;}
 bool32 IsCustomBuild(void){return IS_FRLG && gSaveBlock3Ptr && gSaveBlock3Ptr->starterMode==RUN_STARTER_CUSTOM_BUILD && gSaveBlock3Ptr->draft.magic==OAKS_DRAFT_MAGIC;}
 void CustomBuildInitialize(void)
 {
  if(!IsCustomBuild())return;
+ gSaveBlock3Ptr->draft.customVersion=1;
  for(u32 i=0;i<6;i++)memset(Record(i),0,26);
  gSaveBlock3Ptr->bstMode=RUN_BST_OFF;gSaveBlock3Ptr->abilityMode=RUN_ABILITIES_NORMAL;
  gSaveBlock3Ptr->movesetMode=RUN_MOVESETS_RANDOM;gSaveBlock3Ptr->itemRandomization=TRUE;
@@ -143,7 +145,23 @@ static void AutoAllocate(struct CustomBuildRecord *r,u32 bst)
  for(u32 i=0;i<6;i++)r->stats[i]=bst/6+(i<bst%6);
  u16 floors[6];CustomBuildFloors(r,floors);
  u32 left=bst;for(u32 i=0;i<6;i++){r->stats[i]=floors[i];left-=floors[i];}
+ if(CustomBuildAceRules()) {
+  u32 weights[6],total=0,spent=0;
+  for(u32 i=0;i<6;i++){weights[i]=1+IronmonMix(r->personality^(0x53544154u+i))%100;total+=weights[i];}
+  for(u32 i=0;i<6;i++){u32 points=left*weights[i]/total;r->stats[i]+=points;spent+=points;}
+  left-=spent;
+ }
  for(u32 i=0;left;i++){r->stats[IronmonMix(r->personality+i)%6]++;left--;}
+}
+// Candidate endpoints are independent draws, conditioned only on valid growth
+// and the promised immediate-power > Mega starting-budget relationship.
+static u32 RollPotential(u32 seed,u32 reserve,u32 gain,bool32 mega,bool32 ace,u32 retry)
+{
+ u32 hash=IronmonMix(seed^0x425354u^IronmonMix(retry+0x524f4c4cu));
+ u32 low=ace?550:300,high=700;
+ if(ace && IronmonMix(seed^0x4a41434bu^retry)%20==0){low=701;high=800;}
+ low=max(low,180+reserve+(mega?gain:0));
+ return min(low,high)+hash%(high-min(low,high)+1);
 }
 void CustomBuildCandidate(struct Pokemon *mon,struct CustomBuildRecord *r,u32 index,enum Species gift,u32 level)
 {
@@ -159,12 +177,35 @@ void CustomBuildCandidate(struct Pokemon *mon,struct CustomBuildRecord *r,u32 in
  if(!reserve && CustomBuildHasMega(sp))minimum=max(minimum,180+r->megaGain);
  r->finalBST=minimum+IronmonMix(potentialSeed^0x425354u)%(701-minimum);
  if(!reserve && CustomBuildHasMega(sp))r->finalBST=max(180,(s32)r->finalBST-r->megaGain);
+ if(CustomBuildAceRules()) {
+  bool32 mega=!reserve && CustomBuildHasMega(sp),ace=!gift && index>=15 && index<18;
+  for(u32 retry=0;retry<512;retry++) {
+   r->megaGain=40+IronmonMix(potentialSeed^0x4d454741u^retry)%121;
+   u32 endpoint=RollPotential(potentialSeed,reserve,r->megaGain,mega,ace,retry);
+   r->finalBST=endpoint-(mega?r->megaGain:0);
+   if(gift || index%3!=2)break;
+   u32 otherSeed=gSaveBlock3Ptr->worldSeed^(0x504f4b45u+index-1);
+   if(r->finalBST<RollPotential(otherSeed,0,0,FALSE,ace,0))break;
+   if(retry==511) {
+    // Bounded rejection always has a feasible conditional fallback, even if
+    // an adversarial seed exhausted every independent trial.
+    r->megaGain=160;u32 ceiling=min(700,RollPotential(otherSeed,0,0,FALSE,ace,0)+159);
+    u32 floor=ace?550:340;
+    r->finalBST=floor+IronmonMix(potentialSeed^0x46414c4cu)%(ceiling-floor+1)-160;
+   }
+  }
+ }
  AutoAllocate(r,r->finalBST-reserve);
  u16 abilities[3];CustomBuildAbilities(r,abilities,FALSE);r->ability=abilities[IronmonMix(r->personality^0x5049434bu)%3];
  rng_value_t old=gRngValue,old2=gRng2Value;SeedRng(r->personality);SeedRng2(r->personality);
  bool8 wasCreating=sCreating;sCreating=TRUE;
  CreateMonWithIVs(mon,sp,level,r->personality,OTID_STRUCT_PLAYER_ID,USE_RANDOM_IVS);
  sCreating=wasCreating;
+ if(CustomBuildAceRules() && !gift && index>=15 && index<18) {
+  u32 guaranteed=IronmonMix(gSaveBlock3Ptr->worldSeed^0x5348494eu)%3;
+  u32 shiny=index%3==guaranteed || IronmonMix(gSaveBlock3Ptr->worldSeed^(0x5348494eu+index))%4==0;
+  SetMonData(mon,MON_DATA_IS_SHINY,&shiny);
+ }
  u32 moveSeed=r->personality;
  for(u32 slot=0;slot<4;slot++) {
   enum Move move=1+IronmonMix(moveSeed+slot)%(MOVES_COUNT-1);
@@ -195,11 +236,11 @@ static struct CustomBuildRecord *Lookup(struct Pokemon *mon)
 }
 u32 CustomBuildBaseStat(struct Pokemon *mon,u32 stat)
 {
- struct CustomBuildRecord *r=Lookup(mon);return r && stat<6?r->stats[stat]:GetSpeciesBaseStat(GetMonData(mon,MON_DATA_SPECIES),stat);
+ struct CustomBuildRecord *r=Lookup(mon);return r && stat<6?r->stats[stat]:CustomBuildBossBaseStat(mon,stat);
 }
 u32 CustomBuildAbility(struct BoxPokemon *mon)
 {
- struct CustomBuildRecord *r=CustomBuildFind(GetBoxMonData(mon,MON_DATA_PERSONALITY));return r?r->ability:ABILITY_NONE;
+ struct CustomBuildRecord *r=CustomBuildFind(GetBoxMonData(mon,MON_DATA_PERSONALITY));return r?r->ability:CustomBuildBossAbility(mon);
 }
 bool32 CustomBuildGrowth(struct Pokemon *mon,struct CustomBuildRecord *out)
 {

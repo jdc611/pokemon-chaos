@@ -1,4 +1,5 @@
 #include "global.h"
+#include "custom_build.h"
 #include "ironmon.h"
 #include "run_settings.h"
 #include "main.h"
@@ -309,6 +310,9 @@ u64 GetAiFlags(u16 trainerId, enum BattlerId battler)
     // smart profile; no player-facing IronMON settings editor exposes this.
     if (IsIronmonRun() && gSaveBlock3Ptr->ironmon.aiProfile == 1 && trainerId != 0xFFFF)
         flags = AI_FLAG_BASIC_TRAINER;
+
+    if (trainerId != 0xFFFF && !IsSpecialTrainer(trainerId))
+        flags=CustomBuildBossAI(GetTrainerStructFromId(trainerId),flags);
 
     if (IsDoubleBattle() && flags != 0)
     {

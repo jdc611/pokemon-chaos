@@ -646,3 +646,5 @@ const u16 gObjectEventPic_ChaosJames[] = INCGFX_U16("graphics/object_events/pics
 const u16 gObjectEventPal_ChaosJames[] = INCGFX_U16("graphics/object_events/pics/people/chaos_james.png", ".gbapal");
 
 const u32 gObjectEventPic_ChaosEggDisplay[] = INCGFX_U32("graphics/object_events/pics/misc/chaos_egg_display.png", ".4bpp", "-mwidth 2 -mheight 4");
+
+const u16 gObjectEventPal_GoldenDraftBox[] = INCGFX_U16("graphics/object_events/palettes/golden_draft_box.pal", ".gbapal");

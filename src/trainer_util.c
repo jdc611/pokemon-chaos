@@ -1,4 +1,5 @@
 #include "global.h"
+#include "custom_build.h"
 #include "ironmon.h"
 #include "main.h"
 #include "data.h"
@@ -14,6 +15,7 @@
 rng_value_t GeneratePartySeed(const struct Trainer *trainer)
 {
     if (IsIronmonRun()) return LocalRandomSeed(IronmonTrainerSeed(trainer));
+    if (CustomBuildIsBoss(trainer)) return LocalRandomSeed(CustomBuildBossSeed(trainer));
     u32 seed = Crc32B((const u8 *)trainer, sizeof(struct Trainer)) ^ READ_OTID_FROM_SAVE;
     return LocalRandomSeed(seed);
 }
@@ -106,6 +108,8 @@ void MakeTrainerGenerator(struct TrainerGenerator *trainerGen, const struct Trai
     trainerGen->trainerClass = trainer->trainerClass;
     trainerGen->otID = OTID_STRUCT_RANDOM_NO_SHINY;
     trainerGen->localRngState = GeneratePartySeed(trainer);
+    if (CustomBuildIsBoss(trainer))
+        trainerGen->otID=OTID_STRUCT_PRESET(IronmonMix(CustomBuildBossSeed(trainer)));
     if (IsIronmonRun())
         trainerGen->otID = OTID_STRUCT_PRESET(IronmonMix(IronmonTrainerSeed(trainer)));
 }

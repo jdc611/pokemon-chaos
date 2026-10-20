@@ -43,6 +43,7 @@ struct CustomScreen {
  bool8 growth,script,ready,failed;
  u8 nickname[POKEMON_NAME_BUFFER_SIZE];
  void (*callback)(void);
+ u8 sparkleFrame;
 };
 static EWRAM_DATA struct CustomScreen *sCustom;
 static const u8 sColors[]={3,1,3};
@@ -59,7 +60,13 @@ static void Input(u8 task);
 static void Print(const u8 *text,u32 x,u32 y){AddTextPrinterParameterized4(0,FONT_SMALL,x,y,0,0,sInk,TEXT_SKIP_DRAW,text);}
 static void Fit(const u8 *text,u32 x,u32 y,u32 width){AddTextPrinterParameterized4(0,GetFontIdToFit(text,FONT_SMALL,0,width),x,y,0,0,sInk,TEXT_SKIP_DRAW,text);}
 static void Number(u32 n,u32 x,u32 y){u8 text[12];ConvertIntToDecimalStringN(text,n,STR_CONV_MODE_LEFT_ALIGN,4);Print(text,x,y);}
-static void Main(void){RunTasks();AnimateSprites();BuildOamBuffer();UpdatePaletteFade();}
+static void Main(void){RunTasks();AnimateSprites();BuildOamBuffer();UpdatePaletteFade();
+ if(sCustom && sCustom->ready && CustomBuildAceRules() && !sCustom->gift && gSaveBlock3Ptr->draft.round==5 && sCustom->page<=CB_PICK_CONFIRM && !gPaletteFade.active) {
+  u16 gold=(gMain.vblankCounter1/16)%2?RGB(24,16,3):RGB(28,20,5);
+  LoadPalette(&gold,BG_PLTT_ID(9)+5,2);
+  if(sCustom->sparkleFrame<72)sCustom->sparkleFrame++;
+ }
+}
 static void VBlank(void){LoadOam();ProcessSpriteCopyRequests();TransferPlttBuffer();}
 static void Close(bool32 given)
 {
@@ -117,7 +124,7 @@ static void Draw(void)
  u32 page=sCustom->page;sInk=sColors;
  if(page>=CB_FLOORS && page<=CB_REVIEW && sCustom->icon==SPRITE_NONE)Icon();
  if((page==CB_SAVE || page==CB_ABILITY || page==CB_MOVES) && sCustom->icon!=SPRITE_NONE){FreeAndDestroyMonPicSprite(sCustom->icon);sCustom->icon=SPRITE_NONE;}
- Header(page==12?COMPOUND_STRING("GYM LEADER TM REWARD"):sCustom->growth && page==CB_FLOORS?(gSpeciesInfo[Species()].isMegaEvolution?COMPOUND_STRING("PERMANENT MEGA: NEW POINTS"):CustomBuildDepth(Species())?COMPOUND_STRING("NEW EVOLUTION POINTS"):COMPOUND_STRING("FINAL NORMAL BST REVEALED")):page<=CB_PICK_CONFIRM?COMPOUND_STRING("OAK'S DRAFT: CUSTOM BUILD"):page==CB_GIFT_INSPECT || page==CB_REPLACE?COMPOUND_STRING("A NEW TEAMMATE"):sCustom->growth?COMPOUND_STRING("EVOLUTION: GROW YOUR BUILD"):COMPOUND_STRING("CREATE YOUR POKEMON"));
+ Header(CustomBuildAceRules() && !sCustom->gift && gSaveBlock3Ptr->draft.round==5 && page<=CB_PICK_CONFIRM?COMPOUND_STRING("OAK'S GOLDEN CRATE: CHOOSE YOUR ACE"):page==12?COMPOUND_STRING("GYM LEADER TM REWARD"):sCustom->growth && page==CB_FLOORS?(gSpeciesInfo[Species()].isMegaEvolution?COMPOUND_STRING("PERMANENT MEGA: NEW POINTS"):CustomBuildDepth(Species())?COMPOUND_STRING("NEW EVOLUTION POINTS"):COMPOUND_STRING("FINAL NORMAL BST REVEALED")):page<=CB_PICK_CONFIRM?COMPOUND_STRING("OAK'S DRAFT: CUSTOM BUILD"):page==CB_GIFT_INSPECT || page==CB_REPLACE?COMPOUND_STRING("A NEW TEAMMATE"):sCustom->growth?COMPOUND_STRING("EVOLUTION: GROW YOUR BUILD"):COMPOUND_STRING("CREATE YOUR POKEMON"));
  if(page==12) {
   enum Move move=GetItemTMHMMoveId(sCustom->giftItem);u8 itemName[32];CopyItemName(sCustom->giftItem,itemName);Fit(itemName,9,23,65);Fit(GetMoveName(move),83,23,130);
   Fit(gTypesInfo[GetMoveType(move)].name,9,41,66);Print(COMPOUND_STRING("PP"),83,41);Number(GetMovePP(move),104,41);Print(COMPOUND_STRING("POWER"),140,41);Number(GetMovePower(move),183,41);
@@ -127,12 +134,19 @@ static void Draw(void)
   for(u32 slot=0;slot<gPartiesCount[B_TRAINER_PLAYER];slot++){u8 name[POKEMON_NAME_BUFFER_SIZE];struct Pokemon *mon=&gParties[B_TRAINER_PLAYER][slot];GetMonData(mon,MON_DATA_NICKNAME,name);Fit(name,12,40+slot*12,104);struct CustomBuildRecord *r=CustomBuildFind(GetMonData(mon,MON_DATA_PERSONALITY));if(r)Number(CustomBuildSum(r),164,40+slot*12);}
   Print(COMPOUND_STRING("B: RETURN TO YOUR ADVENTURE"),9,124);
  } else if(page==CB_CRATE || page==CB_PICK_CONFIRM || page==CB_GIFT_INSPECT) {
+  if(CustomBuildAceRules() && !sCustom->gift && gSaveBlock3Ptr->draft.round==5 && sCustom->sparkleFrame<72) {
+   static const u8 goldInk[]={3,5,3};sInk=goldInk;
+   if((sCustom->sparkleFrame/12)%2){Print(COMPOUND_STRING("{STAR}"),13,28);Print(COMPOUND_STRING("{STAR}"),68,82);}
+   else {Print(COMPOUND_STRING("{STAR}"),68,30);Print(COMPOUND_STRING("{STAR}"),11,82);}
+   sInk=sColors;
+  }
   Fit(GetSpeciesName(Species()),88,23,125);
   Fit(gTypesInfo[GetSpeciesType(Species(),0)].name,88,39,64);
   Fit(gTypesInfo[GetSpeciesType(Species(),1)].name,153,39,60);
   Print(COMPOUND_STRING("CURRENT BST"),88,55);Number(sCustom->target,169,55);
   Fit(page==CB_GIFT_INSPECT?COMPOUND_STRING("GIFT EXCHANGE"):sCategories[sCustom->choice],88,71,125);
   Print(COMPOUND_STRING("EVOLUTIONS:"),88,86);Number(CustomBuildDepth(Species()),180,86);
+  if(GetMonData(&sCustom->mon,MON_DATA_IS_SHINY))Print(COMPOUND_STRING("SHINY"),169,105);
   Print(CustomBuildHasMega(Species())?COMPOUND_STRING("MEGA: ELIGIBLE"):COMPOUND_STRING("MEGA: NONE"),8,105);
   Print(page==CB_CRATE?COMPOUND_STRING("LEFT/RIGHT: COMPARE   A: CHOOSE"):page==CB_GIFT_INSPECT?COMPOUND_STRING("A: EXCHANGE   B: DECLINE"):COMPOUND_STRING("A: COMMIT PICK   B: GO BACK"),8,124);
  } else if(page==CB_REPLACE) {

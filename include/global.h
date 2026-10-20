@@ -294,6 +294,7 @@ struct OaksDraftState
     u8 seenTms[13];
     u8 round;
     u8 openingComplete;
+    u8 customVersion; // Former alignment byte; generation 0 remains reconstructible.
 };
 
 struct SaveBlock3

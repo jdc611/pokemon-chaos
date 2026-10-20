@@ -1,4 +1,5 @@
 #include "global.h"
+#include "custom_build.h"
 #include "oaks_draft.h"
 #include "ironmon.h"
 #include "chaos_records.h"
@@ -2536,7 +2537,7 @@ void CreateNPCTrainerPartyFromTrainer(struct Pokemon *party, const struct Traine
 
     ZeroPartyMons(party);
 
-    if (OaksDraftCreateTrainerParty(party, trainer)) return;
+    if (OaksDraftCreateTrainerParty(party, trainer)) { CustomBuildTuneBossParty(party,trainer);return; }
     if (!trainer->partySize || trainer->party == NULL) return;
     monsCount = IronmonTrainerPartySize(trainer);
     if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS && (B_MULTI_HALF_TEAMS || trainer->multiTeamSize == MULTI_TEAM_SIZE_HALF))
@@ -2591,6 +2592,7 @@ void CreateNPCTrainerPartyFromTrainer(struct Pokemon *party, const struct Traine
             GenerateMonFromTrainerMon(&party[i], entry, trainerGen);
     }
     Free(trainerGen);
+    CustomBuildTuneBossParty(party,trainer);
 }
 
 static void CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum)

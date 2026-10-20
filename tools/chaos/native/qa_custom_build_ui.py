@@ -28,10 +28,19 @@ assert not call('ArePlayerFieldControlsLocked')
 snap('custom-room-introduction')
 for round in range(6):
  call('ScriptContext_SetupScript',symbols['OaksDraftRoom_Crate'+str(round)]);frames(240)
+ for _ in range(24):
+  if ui():break
+  tap(1,35)
+ frames(90)
  assert ui() and page()==0,(round,ui(),page())
- for _ in range(round%3):tap(16)
+ for _ in range(round%3):tap(16,60)
+ frames(60)
+ assert rd(ui()+PAGE+2,1)==round%3,(round,"candidate navigation",rd(ui()+PAGE+2,1))
  snap('custom-crate-'+str(round))
- tap(1);assert page()==1
+ tap(1,60)
+ if page()!=1:
+  state("custom-first-pick-stall");snap("custom-first-pick-stall")
+ assert page()==1,(round,page(),ui())
  tap(2);assert page()==0 # confirmation can be declined before commitment
  tap(1);tap(1,300)
  assert rd('sNamingScreen')

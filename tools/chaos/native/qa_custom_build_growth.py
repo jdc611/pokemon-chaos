@@ -8,6 +8,8 @@ work=scratch+768;r=work+MS
 call6('CustomBuildCandidate',work,r,0,BULBA,16)
 assert call6('CustomBuildCommit',work,r,255,0,0)
 mon=p
+shinyfield=struct.unpack_from('<I',(ROOT/'ace-layout.bin').read_bytes(),20)[0]
+setdata(mon,shinyfield,1)
 record=call('CustomBuildFind',data(mon,PID));pid=data(mon,PID);ability=rd(record+22,2);final=rd(record+16,2)
 def finish_growth(label):
  global record
@@ -29,6 +31,7 @@ def finish_growth(label):
  frames(20);snap(label+'-allocation');tap(8);tap(1);tap(1,180)
  assert not ui()
  record=call('CustomBuildFind',pid)
+ assert data(mon,shinyfield)==1
  assert rd(record+22,2)==ability and data(mon,PID)==pid,(label,record,rd(record+22,2),ability,data(mon,PID),pid)
  assert all(rd(record+4+i*2,2)>=old[i] for i in range(6))
  return gain
@@ -58,6 +61,7 @@ assert data(mon,SP)==MEGAVENU
 setdata(mon,HELD,LEFTOVERS);assert data(mon,HELD)==LEFTOVERS
 call('SavePlayerParty');assert call('TrySavingData',0)==1
 call('ClearSav3');assert call('LoadGameSave',0)==1;call('LoadPlayerParty')
+assert data(mon,shinyfield)==1
 assert data(mon,SP)==MEGAVENU and call('GetMonAbility',mon)==ability, (data(mon,SP),MEGAVENU,call('GetMonAbility',mon),ability,data(mon,PID),pid,call('IsCustomBuild'),call('CustomBuildFind',pid))
 print('PASS permanent Mega growth/ability/allocation, ordinary held item, no faint/end-battle reversion and flash persistence',gain3,flush=True)
 # Boxing and returning uses the same per-individual bases and ability.

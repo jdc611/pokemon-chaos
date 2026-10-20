@@ -1,5 +1,10 @@
 OaksDraftRoom_MapScripts::
+    map_script MAP_SCRIPT_ON_TRANSITION, OaksDraftRoom_Graphics
     .byte 0
+
+OaksDraftRoom_Graphics::
+    callnative CustomBuildRoomGraphics
+    return
 
 OaksDraftRoom_Entrance::
     specialvar VAR_RESULT, IsOaksDraft
@@ -96,6 +101,8 @@ OaksDraftRoom_Crate5::
     lockall
     special OaksDraftGetRound
     goto_if_ne VAR_RESULT, 5, OaksDraftRoom_Locked
+    callnative CustomBuildGoldenRevealCheck
+    call_if_eq VAR_RESULT, TRUE, OaksDraftRoom_GoldenReveal
     setvar VAR_0x8004, 5
     special OaksDraftOpenCrate
     goto_if_eq VAR_RESULT, 2, OaksDraftRoom_Cancel
@@ -138,3 +145,10 @@ CustomBuild_GymFallback::
     end
 CustomBuild_Text_GymFallback:
     .string "Your team has no new compatible TM.\nTake this RARE CANDY instead.$"
+
+OaksDraftRoom_GoldenReveal::
+    playse SE_SHINY
+    msgbox OaksDraftRoom_Text_GoldenReveal
+    return
+OaksDraftRoom_Text_GoldenReveal:
+    .string "OAK: I saved something special\nfor your last choice!\pThis GOLDEN CRATE holds stronger\npotential and at least one shiny.\pChoose your ace carefully.\nTheir future is still a surprise!$"

@@ -8,7 +8,16 @@ struct __attribute__((packed)) CustomBuildRecord {
  u16 stats[6], finalBST, rootSpecies, builtSpecies, ability;
  u8 megaGain, flags;
 };
+struct Trainer;
 bool32 IsCustomBuild(void);
+bool32 CustomBuildAceRules(void);
+void CustomBuildTuneBossParty(struct Pokemon *party,const struct Trainer *trainer);
+u32 CustomBuildBossBaseStat(struct Pokemon *mon,u32 stat);
+u32 CustomBuildBossAbility(struct BoxPokemon *mon);
+bool32 CustomBuildIsBoss(const struct Trainer *trainer);
+u32 CustomBuildBossSeed(const struct Trainer *trainer);
+u64 CustomBuildBossAI(const struct Trainer *trainer,u64 flags);
+void CustomBuildRoomGraphics(void);
 void CustomBuildInitialize(void);
 struct CustomBuildRecord *CustomBuildFind(u32 personality);
 u32 CustomBuildBaseStat(struct Pokemon *mon,u32 stat);

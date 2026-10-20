@@ -29,6 +29,8 @@ void state(const char *path,int load){size_t size=c->stateSize(c);void *b=malloc
  if(load)save_restore(flash);else save_dump(flash);free(flash);
 }
 static unsigned extra[2];static int hasExtra;
+static unsigned returnHigh;
+unsigned call_high(void){return returnHigh;}
 unsigned call(unsigned fn,unsigned a,unsigned b,unsigned d,unsigned e){
  struct ARMCore *cpu=c->cpu;
  for(int safe=0; safe<1000000 && (cpu->privilegeMode != MODE_SYSTEM || cpu->executionMode != MODE_THUMB || (unsigned)cpu->gprs[15]<0x08000000); safe++) c->step(c);
@@ -42,7 +44,7 @@ unsigned call(unsigned fn,unsigned a,unsigned b,unsigned d,unsigned e){
  cpu->gprs[14]=0x03007f01;cpu->gprs[15]=fn&~1;ThumbWritePC(cpu);
  int i;for(i=0;i<20000000;i++){if((unsigned)cpu->gprs[15]==0x03007f02)break;
  if(traceTarget && (unsigned)cpu->gprs[15]==traceTarget+2 && traceCount<64){unsigned ptr=c->busRead32(c,cpu->gprs[13]+16);for(unsigned j=0;j<255;j++){unsigned ch=c->busRead8(c,ptr+j);traceText[traceCount][j]=ch;if(ch==255)break;}traceText[traceCount][255]=255;traceCount++;}c->step(c);}
- unsigned result=cpu->gprs[0];if(i==20000000)result=0xdeadbeef;
+ unsigned result=cpu->gprs[0];returnHigh=cpu->gprs[1];if(i==20000000)result=0xdeadbeef;
  cpu->regs=regs;cpu->privilegeMode=oldPrivilege;memcpy(cpu->bankedRegisters,oldBanks,sizeof(oldBanks));memcpy(cpu->bankedSPSRs,oldSpsrs,sizeof(oldSpsrs));cpu->executionMode=oldMode;cpu->halted=oldHalted;
  cpu->memory.setActiveRegion(cpu,(regs.gprs[15]-(oldMode==MODE_THUMB?2:4)));
  cpu->prefetch[0]=pre[0];cpu->prefetch[1]=pre[1];c->busWrite16(c,0x04000208,ime);return result;
