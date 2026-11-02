@@ -1,5 +1,6 @@
 #include "global.h"
 #include "gym_leader.h"
+#include "item.h"
 #include "event_data.h"
 #include "field_screen_effect.h"
 #include "constants/rgb.h"
@@ -21,6 +22,10 @@
 #include "constants/maps.h"
 #include "constants/pokemon.h"
 #include "constants/vars.h"
+
+// A separate preview array avoids the Summary screen's link-opponent path.
+// Passing the enemy party there makes it read an uninitialized link trainer name.
+static EWRAM_DATA struct Pokemon sDraftPreview[3] = {0};
 
 static const u8 *const sTownNames[] = {COMPOUND_STRING("SAFFRON"), COMPOUND_STRING("CELADON"), COMPOUND_STRING("FUCHSIA")};
 static const u8 *const sTypeNames[] = {
@@ -164,6 +169,7 @@ void GleTypeChoose(void)
         s->gymType = GLE_NONE;
         return;
     }
+    EnableNationalPokedex();
     s->openingStage = 2;
     gSpecialVar_Result = 1;
 }
@@ -189,9 +195,13 @@ void GleSignatureInfo(void)
 void GleSignatureChoose(void)
 {
     struct GleState *s = GymLeaderState();
+    gSpecialVar_Result = 0;
     if (IsGymLeaderRun() && s->openingStage == 2 && gSpecialVar_0x8007 < 3)
     {
+        if (!CheckBagHasItem(ITEM_GYM_SIGNATURE_TM, 1) && !AddBagItem(ITEM_GYM_SIGNATURE_TM, 1))
+            return;
         s->signatureMove = GymLeaderSignatureOption(s->gymType, gSpecialVar_0x8007);
+        gSpecialVar_Result = 1;
         s->openingStage = 3;
     }
 }
@@ -237,6 +247,7 @@ static void MakeDraftMon(struct Pokemon *mon, u32 index)
     u32 stat;
     CreateMonWithIVs(mon, s->draftSpecies[index], 5,
         GleMix(s->seed ^ index ^ 0xDFA7u), OTID_STRUCT_PLAYER_ID, 0);
+    GiveMonInitialMoveset(mon);
     for (stat = 0; stat < NUM_STATS; stat++)
     {
         u8 iv = GleMix(s->seed ^ (index * 31) ^ (stat * 257)) % 32;
@@ -246,20 +257,13 @@ static void MakeDraftMon(struct Pokemon *mon, u32 index)
     CalculateMonStats(mon);
 }
 
-static void ReturnFromDraftSummary(void)
-{
-    gMapHeader = *Overworld_GetMapHeaderByGroupAndId(gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum);
-    gMapHeader.mapLayout = GetMapLayout(gSaveBlock1Ptr->mapLayoutId);
-    CB2_ReturnToFieldContinueScript();
-}
-
 static void Task_DraftSummary(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
         ResetTasks();
         CleanupOverworldWindowsAndTilemaps();
-        ShowPokemonSummaryScreen(SUMMARY_MODE_NORMAL, gParties[B_TRAINER_OPPONENT_A], gSpecialVar_0x8007, 2, ReturnFromDraftSummary);
+        ShowPokemonSummaryScreen(SUMMARY_MODE_NORMAL, sDraftPreview, gSpecialVar_0x8007, 2, CB2_ReturnToFieldContinueScript);
     }
 }
 
@@ -273,7 +277,7 @@ void GleDraftSummary(void)
         return;
     }
     for (i = 0; i < 3; i++)
-        MakeDraftMon(&gParties[B_TRAINER_OPPONENT_A][i], s->draftRound * 3 + i);
+        MakeDraftMon(&sDraftPreview[i], s->draftRound * 3 + i);
     BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
     CreateTask(Task_DraftSummary, 10);
 }
@@ -335,7 +339,15 @@ void GleFinishOpening(void)
 {
     if (IsGymLeaderRun() && GymLeaderState()->openingStage == 4 && gPartiesCount[B_TRAINER_PLAYER] == 3)
     {
-        GymLeaderState()->openingStage = 5;
+        struct GleState *s = GymLeaderState();
+        u32 i;
+        s->openingStage = 5;
+        s->registeredCount = 3;
+        for (i = 0; i < 3; i++)
+        {
+            s->registeredPersonality[i] = GetMonData(&gParties[B_TRAINER_PLAYER][i], MON_DATA_PERSONALITY);
+            s->registeredTrainerId[i] = GetMonData(&gParties[B_TRAINER_PLAYER][i], MON_DATA_OT_ID);
+        }
         FlagSet(FLAG_SYS_POKEDEX_GET);
         FlagSet(FLAG_SYS_B_DASH);
     }
@@ -368,4 +380,22 @@ void GleGymPrepare(void)
         FlagSet(FLAG_TEMP_1);
     else
         FlagClear(FLAG_TEMP_1);
+}
+
+void GymLeaderGuideMenu(void)
+{
+    static const u8 *const names[] = {
+        COMPOUND_STRING("Defend GYM"), COMPOUND_STRING("Register team"),
+        COMPOUND_STRING("GYM status"), COMPOUND_STRING("Heal team"), COMPOUND_STRING("Back")
+    };
+    Menu(names, ARRAY_COUNT(names), FALSE);
+}
+
+void GymLeaderGuideStatus(void)
+{
+    struct GleState *s = GymLeaderState();
+    ConvertIntToDecimalStringN(gStringVar1, s->rank, STR_CONV_MODE_LEFT_ALIGN, 1);
+    ConvertIntToDecimalStringN(gStringVar2, GymLeaderLevelCap(), STR_CONV_MODE_LEFT_ALIGN, 3);
+    ConvertIntToDecimalStringN(gStringVar3, s->registeredCount, STR_CONV_MODE_LEFT_ALIGN, 1);
+    gSpecialVar_0x8004 = s->queueCount;
 }

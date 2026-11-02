@@ -21,6 +21,19 @@ const u8 gQuestionMarksItemName[] = _("????????");
 
 const struct ItemInfo gItemsInfo[] =
 {
+    [ITEM_GYM_SIGNATURE_TM] =
+    {
+        .name = ITEM_NAME("Signature TM"),
+        .price = 0,
+        .description = COMPOUND_STRING("Your permanent GYM\nTM. Teaches your\nsignature move."),
+        .importance = 1,
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_TMHM,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_TMCase,
+    },
+
     [ITEM_NONE] =
     {
         .name = gQuestionMarksItemName,

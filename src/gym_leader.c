@@ -7,7 +7,18 @@
 
 struct GleState *GymLeaderState(void)
 {
-    return gSaveBlock1Ptr == NULL ? NULL : &gSaveBlock1Ptr->gymLeader;
+    struct GleState *s;
+    if (gSaveBlock1Ptr == NULL)
+        return NULL;
+    s = &gSaveBlock1Ptr->gymLeader;
+    if (s->magic == GLE_MAGIC && s->version == 2)
+    {
+        s->registeredCount = 0;
+        memset(s->registeredPersonality, 0, sizeof(s->registeredPersonality));
+        memset(s->registeredTrainerId, 0, sizeof(s->registeredTrainerId));
+        s->version = GLE_VERSION;
+    }
+    return s;
 }
 
 bool32 IsGymLeaderRun(void)
@@ -51,27 +62,27 @@ bool32 GymLeaderSpeciesReserved(enum Species species)
     return FALSE;
 }
 
-bool32 GymLeaderOfficialTeamLegal(void)
+bool32 GymLeaderTeamLegal(struct Pokemon *party, u32 count)
 {
     struct GleState *state = GymLeaderState();
     u32 i, j, offType = 0;
     enum Type type;
     if (!IsGymLeaderRun() || state->gymType >= GLE_EXCLUSIVE_TYPES
-        || gPlayerPartyCount == 0 || gPlayerPartyCount > GymLeaderPartyLimit())
+        || count == 0 || count > GymLeaderPartyLimit())
         return FALSE;
     type = sGleTypes[state->gymType];
-    for (i = 0; i < gPlayerPartyCount; i++)
+    for (i = 0; i < count; i++)
     {
-        enum Species species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES);
+        enum Species species = GetMonData(&party[i], MON_DATA_SPECIES);
         if (species == SPECIES_NONE || species >= NUM_SPECIES
-            || GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG))
+            || GetMonData(&party[i], MON_DATA_IS_EGG))
             return FALSE;
         if (gSpeciesInfo[species].types[0] == type || gSpeciesInfo[species].types[1] == type)
             continue;
         if (++offType > 1 || state->signatureMove == MOVE_NONE)
             return FALSE;
         for (j = 0; j < MAX_MON_MOVES; j++)
-            if (GetMonData(&gPlayerParty[i], MON_DATA_MOVE1 + j) == state->signatureMove)
+            if (GetMonData(&party[i], MON_DATA_MOVE1 + j) == state->signatureMove)
                 break;
         if (j == MAX_MON_MOVES)
             return FALSE;
@@ -79,6 +90,11 @@ bool32 GymLeaderOfficialTeamLegal(void)
     // Levels are preserved across demotion. Official battle adapter must
     // normalize over-cap mons transactionally before calling a battle.
     return TRUE;
+}
+
+bool32 GymLeaderOfficialTeamLegal(void)
+{
+    return GymLeaderTeamLegal(gParties[B_TRAINER_PLAYER], gPartiesCount[B_TRAINER_PLAYER]);
 }
 
 void GymLeaderScriptStatus(void)

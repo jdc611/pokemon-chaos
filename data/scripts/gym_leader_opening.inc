@@ -70,6 +70,12 @@ GleGym_SignatureMenu::
 	compare VAR_RESULT, NO
 	goto_if_eq GleGym_SignatureMenu
 	special GleSignatureChoose
+	compare VAR_RESULT, 1
+	goto_if_eq GleGym_SignatureReceived
+	msgbox GleText_SignatureNoRoom, MSGBOX_DEFAULT
+	goto GleGym_SignatureMenu
+GleGym_SignatureReceived::
+	msgbox GleText_SignatureReceived, MSGBOX_DEFAULT
 	msgbox GleText_Draft, MSGBOX_DEFAULT
 GleGym_Draft::
 	closemessage
@@ -125,12 +131,62 @@ GleHall_Opening::
 GleGym_Guy::
 	lock
 	faceplayer
+	msgbox GleText_GuideWelcome, MSGBOX_DEFAULT
+GleGym_GuideMenu::
+	closemessage
+	special GymLeaderGuideMenu
+	compare VAR_RESULT, 0
+	goto_if_eq GleGym_Defend
+	compare VAR_RESULT, 1
+	goto_if_eq GleGym_Register
+	compare VAR_RESULT, 2
+	goto_if_eq GleGym_Status
+	compare VAR_RESULT, 3
+	goto_if_eq GleGym_Heal
+	release
+	end
+GleGym_Heal::
 	msgbox GleText_Heal, MSGBOX_DEFAULT
 	special HealPlayerParty
 	playfanfare MUS_RG_POKE_CENTER
 	waitfanfare
-	release
-	end
+	goto GleGym_GuideMenu
+GleGym_Register::
+	msgbox GleText_RegisterHelp, MSGBOX_DEFAULT
+	closemessage
+	special GymLeaderRegisterTeam
+	compare VAR_RESULT, 1
+	goto_if_eq GleGym_Registered
+	compare VAR_RESULT, 2
+	goto_if_eq GleGym_BadTeam
+	goto GleGym_GuideMenu
+GleGym_Registered::
+	msgbox GleText_Registered, MSGBOX_DEFAULT
+	goto GleGym_GuideMenu
+GleGym_BadTeam::
+	msgbox GleText_BadTeam, MSGBOX_DEFAULT
+	goto GleGym_GuideMenu
+GleGym_Status::
+	special GymLeaderGuideStatus
+	msgbox GleText_GymStatus, MSGBOX_DEFAULT
+	goto GleGym_GuideMenu
+GleGym_Defend::
+	msgbox GleText_DefendConfirm, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq GleGym_GuideMenu
+	closemessage
+	special GymLeaderStartDefense
+	compare VAR_RESULT, 1
+	goto_if_eq GleGym_DefenseWon
+	compare VAR_RESULT, 2
+	goto_if_eq GleGym_DefenseLost
+	goto GleGym_BadTeam
+GleGym_DefenseWon::
+	msgbox GleText_DefenseWon, MSGBOX_DEFAULT
+	goto GleGym_GuideMenu
+GleGym_DefenseLost::
+	msgbox GleText_DefenseLost, MSGBOX_DEFAULT
+	goto GleGym_GuideMenu
 GleGym_Oak::
 	lock
 	faceplayer
@@ -186,3 +242,25 @@ GleText_OakAdvice:
 	.string "OAK: A great LEADER learns from\nevery challenger. Take care of\lyour POKéMON and your town.$"
 GleText_HallAdvice:
 	.string "Explore KANTO and strengthen\nyour team. Your GYM GUIDE can\lheal your POKéMON whenever you return.$"
+
+GleText_GuideWelcome:
+	.string "Welcome, LEADER!\nYour GYM is open.\lHow can I help?$"
+GleText_RegisterHelp:
+	.string "Choose your official team from\nyour party, then select CONFIRM.\pIt must meet your GYM's type rules.\nOnce registered, we can find those\lPOKéMON in your party or PC.$"
+GleText_Registered:
+	.string "Your official team is registered!\nYour traveling party stays free.\pWe'll heal your defenders before\nand after each challenge.$"
+GleText_BadTeam:
+	.string "Please check your registered team.\nIt must fit your rank's team limit\land your GYM's type rules.\pMissing POKéMON or an evolution\nthat changes type may require\lyou to register again.$"
+GleText_GymStatus:
+	.string "GYM RANK: {STR_VAR_1}\nLevel cap: {STR_VAR_2}\lRegistered defenders: {STR_VAR_3}$"
+GleText_DefendConfirm:
+	.string "A challenger is ready!\nUse your registered team\lfor an official defense?$"
+GleText_DefenseWon:
+	.string "A successful defense!\nYour GYM gained rank experience.\pYour team has been healed.\nReady for another challenger?$"
+GleText_DefenseLost:
+	.string "That challenger earned a win.\nYour team has been healed.\pKeep training, LEADER!\nAnother challenger is ready\lwhenever you are.$"
+
+GleText_SignatureReceived:
+	.string "Your SIGNATURE TM is in\nKEY ITEMS. It is reusable.\pUse it to teach compatible\nPOKéMON your signature move.$"
+GleText_SignatureNoRoom:
+	.string "We couldn't place your TM.\nPlease check your KEY ITEMS.$"

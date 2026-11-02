@@ -14,7 +14,7 @@ static int Shiny(uint8_t k) { return k == GLE_SHINY || k == GLE_SHINY_ELITE; }
 static int GetBit(const uint8_t *p, uint16_t n) { return (p[n / 8] >> (n % 8)) & 1; }
 static void SetBit(uint8_t *p, uint16_t n) { p[n / 8] |= 1u << (n % 8); }
 uint32_t GleMix(uint32_t x) { x = (x ^ (x >> 16)) * 0x7feb352du; x = (x ^ (x >> 15)) * 0x846ca68bu; return x ^ (x >> 16); }
-int GleValid(const struct GleState *s) { return s && s->magic == GLE_MAGIC && s->version == GLE_VERSION && s->rank >= 1 && s->rank <= 8 && s->town < 3 && s->queueCount <= GLE_QUEUE && s->voucherCount <= GLE_VOUCHERS; }
+int GleValid(const struct GleState *s) { return s && s->magic == GLE_MAGIC && s->version == GLE_VERSION && s->rank >= 1 && s->rank <= 8 && s->town < 3 && s->queueCount <= GLE_QUEUE && s->voucherCount <= GLE_VOUCHERS && s->registeredCount <= 6; }
 void GleInit(struct GleState *s, uint32_t seed) {
     unsigned i;
     memset(s, 0, sizeof(*s));

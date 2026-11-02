@@ -276,8 +276,16 @@ static inline u16 GetPartnerIdFromTrainerId(u16 trainerId)
     return (trainerId - TRAINER_PARTNER(PARTNER_NONE));
 }
 
+const struct Trainer *GymLeaderBattleTrainer(void);
+
 static inline const struct Trainer *GetTrainerStructFromId(u16 trainerId)
 {
+    if (trainerId == TRAINER_NONE)
+    {
+        const struct Trainer *gleTrainer = GymLeaderBattleTrainer();
+        if (gleTrainer != NULL)
+            return gleTrainer;
+    }
     if (gIsDebugBattle) return GetDebugAiTrainer();
     enum DifficultyLevel difficulty;
 

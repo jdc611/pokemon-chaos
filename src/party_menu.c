@@ -1,5 +1,6 @@
 #include "chaos_input.h"
 #include "global.h"
+#include "gym_leader.h"
 #include "ironmon.h"
 #include "run_settings.h"
 #include "malloc.h"
@@ -2369,7 +2370,10 @@ static enum CanMoveBeLearned CanTeachMove(struct Pokemon *mon, enum Move move)
 {
     if (GetMonData(mon, MON_DATA_IS_EGG))
         return CANNOT_LEARN_MOVE_IS_EGG;
-    else if (!CanLearnTeachableMove(GetMonData(mon, MON_DATA_SPECIES_OR_EGG), move))
+    else if (!(gSpecialVar_ItemId == ITEM_GYM_SIGNATURE_TM && IsGymLeaderRun()
+        && move == GymLeaderState()->signatureMove
+        && GymLeaderCanLearnSignature(GetMonData(mon, MON_DATA_SPECIES_OR_EGG), move))
+        && !CanLearnTeachableMove(GetMonData(mon, MON_DATA_SPECIES_OR_EGG), move))
         return CANNOT_LEARN_MOVE;
     else if (MonKnowsMove(mon, move) == TRUE)
         return ALREADY_KNOWS_MOVE;
@@ -5610,6 +5614,8 @@ void ItemUseCB_PPUp(u8 taskId, TaskFunc task)
 
 enum Move ItemIdToBattleMoveId(enum Item item)
 {
+    if (item == ITEM_GYM_SIGNATURE_TM)
+        return IsGymLeaderRun() ? GymLeaderState()->signatureMove : MOVE_NONE;
     return (GetItemPocket(item) == POCKET_TM_HM) ? GetItemTMHMMoveId(item) : MOVE_NONE;
 }
 
@@ -7405,6 +7411,9 @@ static bool8 GetBattleEntryEligibility(struct Pokemon *mon)
 {
     enum Species species;
 
+    if (GymLeaderRegistering())
+        return GymLeaderTeamLegal(mon, 1);
+
     if (GetMonData(mon, MON_DATA_IS_EGG)
         || GetMonData(mon, MON_DATA_LEVEL) > GetBattleEntryLevelCap()
         || (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_BATTLE_FRONTIER_BATTLE_PYRAMID_LOBBY)
@@ -7509,6 +7518,8 @@ static void Task_ContinueChoosingHalfParty(u8 taskId)
 
 static u8 GetMaxBattleEntries(void)
 {
+    if (GymLeaderRegistering())
+        return GymLeaderPartyLimit();
     switch (VarGet(VAR_FRONTIER_FACILITY))
     {
     case FACILITY_MULTI_OR_EREADER:
@@ -7522,6 +7533,8 @@ static u8 GetMaxBattleEntries(void)
 
 static u8 GetMinBattleEntries(void)
 {
+    if (GymLeaderRegistering())
+        return 1;
     switch (VarGet(VAR_FRONTIER_FACILITY))
     {
     case FACILITY_MULTI_OR_EREADER:
@@ -7539,6 +7552,8 @@ static u8 GetMinBattleEntries(void)
 
 static u8 GetBattleEntryLevelCap(void)
 {
+    if (GymLeaderRegistering())
+        return MAX_LEVEL;
     switch (VarGet(VAR_FRONTIER_FACILITY))
     {
     case FACILITY_MULTI_OR_EREADER:

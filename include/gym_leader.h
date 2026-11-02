@@ -2,6 +2,7 @@
 #define GUARD_GYM_LEADER_H
 #include "gym_leader_state.h"
 struct Pokemon;
+struct Trainer;
 #define GLE_EXCLUSIVE_TYPES 18
 #define GLE_EXCLUSIVE_PER_TYPE 4
 struct GleEncounter { u16 species; u8 rank, project; };
@@ -12,6 +13,15 @@ u32 GymLeaderPartyLimit(void);
 enum Species GymLeaderExclusiveSpecies(u32 type, u32 location);
 bool32 GymLeaderSpeciesReserved(enum Species species);
 bool32 GymLeaderOfficialTeamLegal(void);
+bool32 GymLeaderTeamLegal(struct Pokemon *, u32 count);
+bool32 GymLeaderRegistering(void);
+const struct Trainer *GymLeaderBattleTrainer(void);
+u32 GymLeaderPrepareDefense(void);
+void GymLeaderFinishDefense(void);
+void GymLeaderRegisterTeam(void);
+void GymLeaderStartDefense(void);
+void GymLeaderGuideMenu(void);
+void GymLeaderGuideStatus(void);
 void GymLeaderInitialize(void);
 void GymLeaderScriptStatus(void);
 void GymLeaderScriptExclusive(void);

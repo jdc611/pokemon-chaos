@@ -34,7 +34,8 @@ def choose(index):
 until(lambda:menu_count()==3)
 assert stage()==0
 snap('opening-town-menu')
-choose(0) # Saffron
+town=int(os.environ.get('GLE_TEST_TOWN','0'))
+choose(town)
 until(yesno);choose(0)
 until(lambda:yesno() and stage()==1)
 if os.environ.get('GLE_TEST_TOWN_NAME'):
@@ -45,7 +46,8 @@ else:
 until(lambda:menu_count()==18)
 assert stage()==1
 snap('opening-type-menu')
-choose(4) # Grass
+gym_type=int(os.environ.get('GLE_TEST_TYPE','4'))
+choose(gym_type)
 until(lambda:menu_count()==3 and stage()==2)
 snap('opening-signature-menu')
 choose(0);until(yesno);choose(0)
@@ -53,7 +55,18 @@ until(lambda:menu_count()==3 and stage()==3)
 # Inspect first candidate in native Summary, then choose it.
 choose(0);until(lambda:menu_count()==3)
 choose(1);frames(150)
+assert rd('gMapHeader')!=0, 'Summary corrupted the field map header'
+# Profile data windows must exist and contain rendered glyphs.
+for i in range(20,24):
+ a=symbols['gWindows']+i*12
+ assert rd(a,1)==0 and rd(a+8)!=0, ('missing profile window',i)
+assert any(rd(rd(symbols['gWindows']+22*12+8)+i,1) for i in range(2304)), 'blank ability window'
+assert any(call('GetMonData2',symbols['sDraftPreview'],v[38]+j) for j in range(4)), 'preview has no moves'
 snap('opening-draft-summary')
+# Check stats, moves, and return to profile before leaving.
+for name in ['skills','moves','growth']:
+ press(16,35);snap('opening-summary-'+name)
+for _ in range(3):press(32,25)
 press(2,120)
 until(lambda:menu_count()==3)
 choose(0)
@@ -71,7 +84,8 @@ snap('opening-complete-hall')
 for i in range(3):
  mon=symbols['gPlayerParty']+i*v[5] if 'gPlayerParty' in symbols else symbols['gParties']+i*v[5]
  assert call('GetMonData2',mon,v[11])==5
-print('PASS controller-driven Saffron/Grass opening, native Summary, 3 level-5 starters and GLA tutorial',flush=True)
+ assert any(call('GetMonData2',mon,v[38]+j) for j in range(4)), 'starter has no moves'
+print(f'PASS controller-driven town={town} type={gym_type}, Summary profile/stats/moves, 3 level-5 starters and GLA tutorial',flush=True)
 
 # Walk out of the hall, then through the same native doorway back in.
 for _ in range(240):

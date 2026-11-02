@@ -737,3 +737,8 @@ gSpecials::
 	def_special GleWarpLeague
 	def_special GleFinishOpening
 	def_special GleGymPrepare
+
+	def_special GymLeaderGuideMenu, waitstate=1
+	def_special GymLeaderGuideStatus
+	def_special GymLeaderRegisterTeam, waitstate=1
+	def_special GymLeaderStartDefense, waitstate=1

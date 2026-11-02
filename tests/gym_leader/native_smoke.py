@@ -26,10 +26,12 @@ for ty in range(18):
  counts.append(count)
  assert count>=9,(ty,count)
 for ty,base,evolution in [(4,1,2),(1,4,5),(2,7,8)]:
- scratch=0x0203e000
+ scratch=call('Alloc_',1024,0)
+ assert scratch
  n=call('GymLeaderBuildStarterPool',ty,scratch,512)
  pool=[rd(scratch+2*i,2) for i in range(n)]
  assert base in pool and evolution not in pool,(ty,base,evolution)
+ call('Free',scratch)
 print('Native starter counts:',counts,flush=True)
 # Verify actual linked species data, not just the JSON source.
 for species,total in [(v[7],600),(v[8],615),(v[9],650)]:assert call('GetSpeciesBaseStatTotal',species)==total

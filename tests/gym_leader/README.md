@@ -42,4 +42,23 @@ GLE_TEST_TOWN_NAME=1 python3 tests/gym_leader/native_opening.py
 Uses the same environment as native_smoke.py. Only player/rival name entry is
 bypassed. Exercises hometown/type/signature menus, native Summary return, three
 starter picks and GLA introduction. This is a limited opening route, not a full
-playthrough. Summary profile text still has a documented presentation defect.
+playthrough. Summary profile/stats/moves now render and return safely.
+
+```
+python3 tests/gym_leader/run_opening_matrix.py
+python3 tests/gym_leader/native_defense.py
+```
+
+The matrix runs all 18 types across all three towns. The defense fixture uses
+actual guide registration and a real Fight/Powder Snow battle, then direct ARM
+transaction scenarios for PC storage, loss, EXP, level normalization, invalid
+teams, and registration persistence. No forced outcome/HP change is used in the
+controller-driven fight. Direct transaction scenarios explicitly set outcomes.
+
+```
+python3 tests/gym_leader/native_signature.py
+```
+
+This fixture uses a test gift for a naturally compatible off-type Pokémon, then
+teaches through the real bag and party menus. It checks the learned move, official
+legality and the protected item remaining. It is not all-options compatibility QA.

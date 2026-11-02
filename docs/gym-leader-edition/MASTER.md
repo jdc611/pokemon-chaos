@@ -26563,3 +26563,40 @@ Latest native checks pass after bounding evolution traversal, using raw catalog 
 ## 19. GitHub publication authorization — November 2, 2026
 
 Jack explicitly authorized uploading the game code and design documents, including the transcript-containing master, to jdc611/pokemon-chaos on gym-leader-edition. This supersedes the prior publication blocker. This permission does not change incomplete release gates or establish that the full ROM is finished.
+
+
+## 20. Native opening, defense and signature checkpoint — November 2, 2026
+
+This section supersedes earlier implementation-status paragraphs in this master;
+it does not replace any design decision or imply a completed V1 release.
+
+Implemented and verified in the native ROM:
+
+- Oak hometown choice and optional rename, Gym type, signature confirmation,
+  persistent three-round draft, basic Gym/GLA interiors and tutorial.
+- All 18 type opening paths across all three towns; native Summary profile,
+  stats and moves. Previews, starters and challengers have initial moves.
+- Gym Guide native party registration; identity tracking finds registered defenders
+  after deposits/reordering. Official defenses temporarily use the registered team
+  and restore the traveling party. Registration selection currently begins from
+  party; already registered Pokémon can then be used from PC storage.
+- Real defense battle victory, normal EXP writeback, healing, queue continuity,
+  loss bookkeeping, temporary over-cap normalization and native flash persistence.
+- Protected reusable signature TM in Key Items; native teaching to a compatible
+  off-type Pokémon and the resulting roster exception were exercised.
+
+Important bug fixes: previewing the enemy-party array wrongly activated Summary's
+link-trainer branch and corrupted memory while copying an uninitialized name.
+Draft previews now use a separate array; the normal return callback works. The
+modern creation API also required an explicit initial-moves call; empty moves are
+now checked. National Dex setup supports non-Kanto starters.
+
+The complete V1 remains unfinished. Major remaining work includes town building
+maps, inspectors and later-rank challenge balancing, rank-scaled wild encounters,
+research events/forms, GLA rewards/services, recruits/rival/honor/Rocket stories,
+tournaments/history/news, removal of legacy story/travel locks, and full campaign
+playthrough and device QA. Current ROM binaries remain internal QA only.
+
+The maintained implementation checklist is
+`docs/gym-leader-edition/runtime-integration-status.md` on the
+`gym-leader-edition` branch of `jdc611/pokemon-chaos`.

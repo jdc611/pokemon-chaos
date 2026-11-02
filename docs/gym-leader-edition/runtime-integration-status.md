@@ -9,7 +9,7 @@ release is approved as completion. The current binary is internal QA only.
 
 - Official ARM GCC 13.2.1/binutils/newlib/graphics toolchain works locally.
 - Compiled FireRed target: 32 MiB padded; current linked payload ~27.23 MB.
-- Pointer-free 1,280-byte GLE state uses an anonymous union with Hoenn secret-base
+- Pointer-free 1,328-byte GLE state uses an anonymous union with Hoenn secret-base
   storage. Compile-time fit assertion; following SaveBlock1 offsets preserved.
 - Rank XP, promotion and four inspection gates, protected demotion floors;
   current GLE cap queried through existing global cap function when active.
@@ -29,6 +29,16 @@ release is approved as completion. The current binary is internal QA only.
   three selected level-5 Pokémon are added to the real party and Pokédex.
 - Separate basic Gym and GLA interiors with healing NPC, dynamic town exits and
   redirection of the selected hometown Gym and Viridian Gym entrances.
+- Gym Guide uses native menus for status, healing, team registration and defenses.
+- Registration stores PID/OT identities. Defenses locate the real Pokémon in party
+  or PC storage, temporarily assemble the team, and restore the traveling party.
+- Normal battle EXP/moves/evolutions persist for defenders within the rank cap.
+  Over-cap defenders temporarily normalize and retain their original level/EXP.
+- Procedural novice challengers use real trainer battles, native moves, rank XP,
+  victory/loss returns, healing and a nonempty continuing queue.
+- A permanent protected signature TM is granted in KEY ITEMS. Native TM/party
+  screens teach compatible Pokémon and retain the reusable item; natural level-up
+  compatibility is supported alongside ordinary TM compatibility.
 - Stone Axe set to 60 BP and 95 accuracy, retaining its effect.
 
 ## Validation evidence and limits
@@ -40,21 +50,39 @@ pool counts >= 9, basic Bulbasaur/Charmander/Squirtle present and their next
 stages absent, Glastrier assignment, tested Corviknight/Annihilape/Palafin stat
 totals, and actual flash save/reload of the full new state.
 
-The controller-driven opening fixture passes Saffron/Grass, signature selection,
-Summary entry/return, all three starter picks, GLA tutorial, hall exit and native
-Viridian Gym doorway redirection. Optional native
-town naming was also exercised through confirmation. Name/player/rival entry is
-still bypassed by the fixture; real Oak naming-to-new-game flow needs testing.
-These checks are not a complete campaign playthrough or a collision/visual audit.
+The controller-driven opening matrix passes all 18 type menus and drafts,
+rotating through all three hometowns. It exercises signature selection, native
+Summary profile/stats/moves, three starters with moves, GLA tutorial, hall exit
+and native Viridian Gym doorway redirection. Optional native town naming passes.
+Player/rival naming is bypassed; the real Oak naming-to-new-game path still needs
+checking. This is not a complete campaign or collision/visual audit.
 
-Known presentation issue: the native Summary profile panel currently shows empty
-ability/memo text and a zero regional number for non-Kanto candidates. The draft's
-own detail message displays the candidate's ability. Summary display refinement,
-all-page review, and national Pokédex setup remain required. A Summary-to-field
-crash exposed a cleared map header; the draft return now reloads it from the saved
-map and reconstructs its layout before resuming the field. Draft palettes require
-visual refinement and overworld palette integration. Permanent history storage is
-not implemented.
+The Gym Guide fixture registers a defender through the native party selector,
+then wins a real battle using Fight/Powder Snow input with no altered enemy HP or
+forced outcome. It verifies travel-party restoration, healing, queue continuity,
+PC identity lookup, EXP writeback, loss bookkeeping, temporary cap normalization,
+invalid/missing team refusal and registered identities through flash save/reload.
+Additional adapter scenarios use direct ARM calls and explicit outcomes; they are
+transaction tests, not claims of full battle or balance coverage.
+
+A separate native signature fixture opens the real Key Items bag, uses the TM,
+selects a compatible off-type Pokémon, verifies the move is learned and that the
+one-off-type legality rule accepts it, and confirms the single copy is retained.
+Four-move replacement, repeated teaching, cancellation and all signature options'
+compatibility/balance still need broader UI coverage.
+
+Fixed issues: enemy-party previews triggered Summary's link-opponent branch and
+copied an uninitialized link trainer name, corrupting memory. A separate preview
+array now displays ability/memo correctly and safely returns through the normal
+field callback. National Pokédex setup fixes non-Kanto zero numbers. Modern
+CreateMonWithIVs does not assign moves; previews, starters and challengers now
+explicitly receive their native initial moves, checked by the fixtures.
+
+Registration currently selects from the traveling party; registered Pokémon may
+subsequently be deposited and found in the PC. Direct PC selection at registration,
+all ranks' native selection screens, full evolution/held-item scenarios and a
+long balance playthrough remain to be verified. Draft palettes require refinement
+and overworld palette integration. Permanent history storage is not implemented.
 
 A pool-generation timeout in the first native test was removed by using raw
 species catalog stats/evolution data and bounded evolution traversal. Future
@@ -66,18 +94,18 @@ status document saying those are current blockers is superseded by this file.
 
 ## Still required before release
 
-- Complete opening polish, native Summary text repair, all hometown/type and
-  cancellation paths, real Oak naming entry, save/load at each opening stage.
-  Signature choice is recorded; its reusable item/teaching UI is not yet granted.
+- Complete opening polish, cancellation paths, real Oak naming entry, and
+  save/load at each opening stage.
+  Signature choice and its protected reusable item/teaching UI are implemented.
 - Actual blank town maps, safe plots, building/interior transitions, restoration,
   collision/visual verification, three landmarks and habitat encounters.
-- Registered official teams, battle adapters, safe demotion normalization and
-  restoration, generated challengers/inspectors, queues/healing/rewards in game.
+- Direct PC registration, later-rank challenger composition and balancing,
+  inspectors/inspection scheduling, recruitment queue filtering and richer rewards.
 - Wild rank scaling, environment draws, deterministic full-species coverage,
   static encounter scripts, save prompts/retries and postgame distribution.
 - All research event scripts/NPCs, form upgrades, encounter progress and rewards.
-- GLA voucher UI and gifts, protected reusable signature teaching, tutor/supply
-  services, recruitment/rival/loyalty story integration and Training Room.
+- GLA voucher UI and gifts, general tutor/supply services, recruitment/rival/loyalty
+  story integration and Training Room.
 - Honor, Black Market, Rocket/NPC quests, town requests and passive-income hooks.
 - Tournaments, championship scheduling/history/team snapshots, news and betting.
 - Existing L-screen BP/PWR display and complete existing-feature/menu audit.

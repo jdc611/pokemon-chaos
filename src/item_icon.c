@@ -1,4 +1,5 @@
 #include "global.h"
+#include "gym_leader.h"
 #include "battle_main.h"
 #include "decompress.h"
 #include "graphics.h"
@@ -183,6 +184,8 @@ const void *GetItemIconPic(enum Item itemId)
 
 const u16 *GetItemIconPalette(enum Item itemId)
 {
+    if (itemId == ITEM_GYM_SIGNATURE_TM && IsGymLeaderRun())
+        return gTypesInfo[GetMoveType(GymLeaderState()->signatureMove)].paletteTMHM;
     if (itemId == ITEM_LIST_END)
         return gItemIconPalette_ReturnToFieldArrow;
     if (itemId >= ITEMS_COUNT)

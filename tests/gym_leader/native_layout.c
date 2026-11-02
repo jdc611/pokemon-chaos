@@ -2,6 +2,8 @@
 #include "pokemon.h"
 #include <stddef.h>
 #include "task.h"
+#include "constants/item.h"
+#include "pokemon_storage_system.h"
 const unsigned gleLayout[] = {
  offsetof(struct SaveBlock1, gymLeader), sizeof(struct GleState),
  offsetof(struct GleState, rank), offsetof(struct GleState, gymType),
@@ -16,4 +18,12 @@ const unsigned gleLayout[] = {
  offsetof(struct GleState, draftSpecies), offsetof(struct GleState, draftAbilities),
  MAP_GLE_GYM_INTERIOR, MAP_GLE_LEAGUE_HALL,
  offsetof(struct SaveBlock1, location),
+ offsetof(struct GleState, registeredCount),
+ offsetof(struct GleState, registeredPersonality), offsetof(struct GleState, registeredTrainerId),
+ offsetof(struct GleState, defenses), offsetof(struct GleState, losses), offsetof(struct GleState, rankXp),
+ offsetof(struct GleState, queueCount), sizeof(struct BoxPokemon), offsetof(struct PokemonStorage, boxes),
+ MON_DATA_EXP, MON_DATA_PERSONALITY, MON_DATA_OT_ID, MON_DATA_MOVE1, MON_DATA_HP,
+ MON_DATA_HP_EV, MON_DATA_HELD_ITEM,
+ ITEM_GYM_SIGNATURE_TM, POCKET_KEY_ITEMS, offsetof(struct GleState, signatureMove), MON_DATA_PP1,
+
 };
