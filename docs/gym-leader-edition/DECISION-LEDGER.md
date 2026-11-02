@@ -178,7 +178,7 @@ Do not infer approval from a short “yes” without recovering the preceding qu
   2. Power Plant — Latios
   3. Mt. Ember — Reshiram
   4. Cerulean Cave — Rayquaza
-- **UNRESOLVED — NORMAL:** An assistant proposal listed Type: Null, Meloetta, Regigigas, Arceus. Type: Null was subsequently removed because it was assigned to a universal research quest. No approved replacement was recovered. Do not treat the remaining three as finalized without source.
+- **UNRESOLVED — NORMAL (proposal history only, NOT approved):** An assistant proposed Seafoam Islands—Meloetta; Power Plant—Regigigas; Mt. Ember—Terapagos; Cerulean Cave—Arceus. Type: Null / Silvally were reserved for a universal research quest. The later Regigigas assignment was disputed. Do not treat this Normal list as approved or assign Regigigas without resolving the dispute.
 - **UNRECOVERED:** Exact species and location assignments for the other 16 Gym types. Do not invent or infer them. Recover original conversations or ask the user only if source recovery fails.
 
 ## 12. Legendary research quests and special encounters
