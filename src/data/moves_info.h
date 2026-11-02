@@ -20059,9 +20059,9 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .description = COMPOUND_STRING(
             "Leaves stones under the foe."),
         .effect = EFFECT_STONE_AXE,
-        .power = 65,
+        .power = 60,
         .type = TYPE_ROCK,
-        .accuracy = 90,
+        .accuracy = 95,
         .pp = 15,
         .target = TARGET_SELECTED,
         .priority = 0,

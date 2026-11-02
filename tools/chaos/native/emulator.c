@@ -7,6 +7,9 @@
 #include <mgba-util/vfs.h>
 #include <stdlib.h>
 #include <string.h>
+#ifndef CHAOS_NATIVE_CALL_STEPS
+#define CHAOS_NATIVE_CALL_STEPS 20000000
+#endif
 static struct mCore *c;
 static void quiet(struct mLogger *l,int cat,enum mLogLevel level,const char *format,va_list args){}
 static struct mLogger logger={.log=quiet};
@@ -24,8 +27,8 @@ unsigned call6(unsigned fn,unsigned a,unsigned b,unsigned d,unsigned e,unsigned 
  cpu->halted=0;_ARMSetMode(cpu,MODE_THUMB);cpu->gprs[0]=a;cpu->gprs[1]=b;cpu->gprs[2]=d;cpu->gprs[3]=e;
  cpu->gprs[13]-=8;c->busWrite32(c,cpu->gprs[13],f);c->busWrite32(c,cpu->gprs[13]+4,g);
  cpu->gprs[14]=0x03007f01;cpu->gprs[15]=fn&~1;ThumbWritePC(cpu);
- int i;for(i=0;i<20000000;i++){if((unsigned)cpu->gprs[15]==0x03007f02)break;c->step(c);}
- unsigned result=cpu->gprs[0];if(i==20000000)result=0xdeadbeef;
+ int i;for(i=0;i<CHAOS_NATIVE_CALL_STEPS;i++){if((unsigned)cpu->gprs[15]==0x03007f02)break;c->step(c);}
+ unsigned result=cpu->gprs[0];if(i==CHAOS_NATIVE_CALL_STEPS)result=0xdeadbeef;
  cpu->regs=regs;cpu->executionMode=oldMode;cpu->halted=oldHalted;
  cpu->memory.setActiveRegion(cpu,(regs.gprs[15]-(oldMode==MODE_THUMB?2:4)));
  cpu->prefetch[0]=pre[0];cpu->prefetch[1]=pre[1];c->busWrite16(c,0x04000208,ime);return result;

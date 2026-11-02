@@ -5,6 +5,7 @@
 #include <limits.h>
 #include "config/general.h" // we need to define config before gba headers as print stuff needs the functions nulled before defines.
 #include "gba/gba.h"
+#include "gym_leader_state.h"
 #include "assertf.h"
 #include "gametypes.h"
 #include "siirtc.h"
@@ -1232,7 +1233,12 @@ struct SaveBlock1
     /*0x139C*/ u16 vars[VARS_COUNT];
     /*0x159C*/ u32 gameStats[NUM_GAME_STATS];
     /*0x169C*/ struct BerryTree berryTrees[BERRY_TREES_COUNT];
-    /*0x1A9C*/ struct SecretBase secretBases[SECRET_BASES_COUNT];
+    /*0x1A9C*/ union {
+        struct SecretBase secretBases[SECRET_BASES_COUNT];
+        // GLE is a separate edition: reuses Hoenn-only secret-base storage.
+        // Same union extent preserves every following SaveBlock1 offset.
+        struct GleState gymLeader;
+    };
     /*0x271C*/ u8 playerRoomDecorations[DECOR_MAX_PLAYERS_HOUSE];
     /*0x2728*/ u8 playerRoomDecorationPositions[DECOR_MAX_PLAYERS_HOUSE];
     /*0x2734*/ u8 decorationDesks[10];

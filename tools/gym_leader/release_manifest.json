@@ -1,0 +1,17 @@
+{
+  "release_name": "Pokemon Chaos Gym Leader Edition",
+  "complete_release": false,
+  "gates": {
+    "native_opening_and_draft": false,
+    "all_three_towns_and_landmarks": false,
+    "official_battle_progression": false,
+    "wild_and_unique_encounter_integration": false,
+    "research_and_form_upgrades": false,
+    "gla_services_and_voucher_ui": false,
+    "recruitment_rival_honor_rocket": false,
+    "tournaments_history_news": false,
+    "native_ui_and_bp_pwr": false,
+    "full_species_coverage_audit": false,
+    "complete_playthrough_and_save_qa": false
+  }
+}

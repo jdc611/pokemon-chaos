@@ -1,0 +1,380 @@
+[
+  {
+    "constant": "SPECIES_GLE_AWAKENED_SLAKING",
+    "base": "SPECIES_SLAKING",
+    "name": "Awk.Slaking",
+    "stats": [
+      150,
+      160,
+      100,
+      95,
+      65,
+      100
+    ],
+    "bst": 670,
+    "ability": "ABILITY_TRUANT",
+    "moves": [
+      "MOVE_BODY_SLAM",
+      "MOVE_HAMMER_ARM",
+      "MOVE_SLACK_OFF",
+      "MOVE_PLAY_ROUGH"
+    ]
+  },
+  {
+    "constant": "SPECIES_GLE_RAZORSTONE_KLEAVOR",
+    "base": "SPECIES_KLEAVOR",
+    "name": "RazorKleavor",
+    "stats": [
+      70,
+      135,
+      95,
+      45,
+      70,
+      85
+    ],
+    "bst": 500,
+    "ability": "ABILITY_TECHNICIAN",
+    "moves": [
+      "MOVE_STONE_AXE",
+      "MOVE_ROCK_BLAST",
+      "MOVE_ACCELEROCK",
+      "MOVE_X_SCISSOR"
+    ]
+  },
+  {
+    "constant": "SPECIES_GLE_UNCROWNED_BISHARP",
+    "base": "SPECIES_BISHARP",
+    "name": "Unc.Bisharp",
+    "stats": [
+      85,
+      145,
+      110,
+      60,
+      90,
+      90
+    ],
+    "bst": 580,
+    "ability": "ABILITY_SHARPNESS",
+    "moves": [
+      "MOVE_NIGHT_SLASH",
+      "MOVE_IRON_HEAD",
+      "MOVE_SACRED_SWORD",
+      "MOVE_X_SCISSOR"
+    ]
+  },
+  {
+    "constant": "SPECIES_GLE_OVERCHARGED_ELECTIVIRE",
+    "base": "SPECIES_ELECTIVIRE",
+    "name": "Ovr.Electiv",
+    "stats": [
+      85,
+      143,
+      85,
+      95,
+      95,
+      112
+    ],
+    "bst": 615,
+    "ability": "ABILITY_TOUGH_CLAWS",
+    "moves": [
+      "MOVE_PLASMA_FISTS",
+      "MOVE_ICE_PUNCH",
+      "MOVE_DRAIN_PUNCH",
+      "MOVE_FIRE_PUNCH"
+    ]
+  },
+  {
+    "constant": "SPECIES_GLE_ANCIENT_RILLABOOM",
+    "base": "SPECIES_RILLABOOM",
+    "name": "Anc.Rillabm",
+    "stats": [
+      110,
+      145,
+      105,
+      60,
+      85,
+      95
+    ],
+    "bst": 600,
+    "ability": "ABILITY_GRASSY_SURGE",
+    "moves": [
+      "MOVE_DRUM_BEATING",
+      "MOVE_GRASSY_GLIDE",
+      "MOVE_DRAIN_PUNCH",
+      "MOVE_HIGH_HORSEPOWER"
+    ]
+  },
+  {
+    "constant": "SPECIES_GLE_FROSTBOUND_BAXCALIBUR",
+    "base": "SPECIES_BAXCALIBUR",
+    "name": "FrostBaxcal",
+    "stats": [
+      115,
+      145,
+      92,
+      75,
+      86,
+      87
+    ],
+    "bst": 600,
+    "ability": "ABILITY_SLUSH_RUSH",
+    "moves": [
+      "MOVE_GLAIVE_RUSH",
+      "MOVE_ICICLE_CRASH",
+      "MOVE_ICE_SHARD",
+      "MOVE_SWORDS_DANCE"
+    ]
+  },
+  {
+    "constant": "SPECIES_GLE_THUNDERLORD_LUXRAY",
+    "base": "SPECIES_LUXRAY",
+    "name": "ThndrLuxray",
+    "stats": [
+      95,
+      120,
+      95,
+      95,
+      90,
+      120
+    ],
+    "bst": 615,
+    "ability": "ABILITY_STRONG_JAW",
+    "moves": [
+      "MOVE_THUNDER_FANG",
+      "MOVE_PSYCHIC_FANGS",
+      "MOVE_CRUNCH",
+      "MOVE_ICE_FANG"
+    ]
+  },
+  {
+    "constant": "SPECIES_GLE_ETERNAL_HERO_PALAFIN",
+    "base": "SPECIES_PALAFIN_HERO",
+    "name": "Etr.Palafin",
+    "stats": [
+      100,
+      160,
+      97,
+      106,
+      87,
+      100
+    ],
+    "bst": 650,
+    "ability": "ABILITY_WATER_VEIL",
+    "moves": [
+      "MOVE_JET_PUNCH",
+      "MOVE_WAVE_CRASH",
+      "MOVE_DRAIN_PUNCH",
+      "MOVE_ICE_PUNCH"
+    ]
+  },
+  {
+    "constant": "SPECIES_GLE_ABYSSAL_DONDOZO",
+    "base": "SPECIES_DONDOZO",
+    "name": "Aby.Dondozo",
+    "stats": [
+      150,
+      100,
+      115,
+      65,
+      65,
+      35
+    ],
+    "bst": 530,
+    "ability": "ABILITY_REGENERATOR",
+    "moves": [
+      "MOVE_WAVE_CRASH",
+      "MOVE_BODY_PRESS",
+      "MOVE_REST",
+      "MOVE_SLEEP_TALK"
+    ]
+  },
+  {
+    "constant": "SPECIES_GLE_REVENANT_ANNIHILAPE",
+    "base": "SPECIES_ANNIHILAPE",
+    "name": "Rev.Annhlap",
+    "stats": [
+      120,
+      125,
+      105,
+      50,
+      110,
+      105
+    ],
+    "bst": 615,
+    "ability": "ABILITY_STAMINA",
+    "moves": [
+      "MOVE_RAGE_FIST",
+      "MOVE_DRAIN_PUNCH",
+      "MOVE_BULK_UP",
+      "MOVE_SHADOW_SNEAK"
+    ]
+  },
+  {
+    "constant": "SPECIES_GLE_ROYAL_CORVIKNIGHT",
+    "base": "SPECIES_CORVIKNIGHT",
+    "name": "RoyalCorvik",
+    "stats": [
+      110,
+      115,
+      135,
+      53,
+      105,
+      82
+    ],
+    "bst": 600,
+    "ability": "ABILITY_ROCK_HEAD",
+    "moves": [
+      "MOVE_BRAVE_BIRD",
+      "MOVE_HEAD_SMASH",
+      "MOVE_IRON_HEAD",
+      "MOVE_ROOST"
+    ]
+  },
+  {
+    "constant": "SPECIES_GLE_STORMBORN_KILOWATTREL",
+    "base": "SPECIES_KILOWATTREL",
+    "name": "StrmKilowat",
+    "stats": [
+      75,
+      70,
+      65,
+      155,
+      65,
+      160
+    ],
+    "bst": 590,
+    "ability": "ABILITY_DRIZZLE",
+    "moves": [
+      "MOVE_THUNDER",
+      "MOVE_HURRICANE",
+      "MOVE_WEATHER_BALL",
+      "MOVE_VOLT_SWITCH"
+    ]
+  },
+  {
+    "constant": "SPECIES_GLE_PHOENIX_TALONFLAME",
+    "base": "SPECIES_TALONFLAME",
+    "name": "PhnxTalonfl",
+    "stats": [
+      95,
+      125,
+      85,
+      90,
+      85,
+      140
+    ],
+    "bst": 620,
+    "ability": "ABILITY_MAGIC_GUARD",
+    "moves": [
+      "MOVE_BRAVE_BIRD",
+      "MOVE_FLARE_BLITZ",
+      "MOVE_ROOST",
+      "MOVE_SWORDS_DANCE"
+    ]
+  },
+  {
+    "constant": "SPECIES_GLE_ABYSSAL_TOXAPEX",
+    "base": "SPECIES_TOXAPEX",
+    "name": "Aby.Toxapex",
+    "stats": [
+      85,
+      63,
+      160,
+      53,
+      155,
+      35
+    ],
+    "bst": 551,
+    "ability": "ABILITY_FUR_COAT",
+    "moves": [
+      "MOVE_BANEFUL_BUNKER",
+      "MOVE_RECOVER",
+      "MOVE_TOXIC",
+      "MOVE_LIQUIDATION"
+    ]
+  },
+  {
+    "constant": "SPECIES_GLE_OVERDRIVE_TOXTRICITY",
+    "base": "SPECIES_TOXTRICITY_AMPED",
+    "name": "Ovr.Toxtric",
+    "stats": [
+      85,
+      98,
+      80,
+      155,
+      80,
+      115
+    ],
+    "bst": 613,
+    "ability": "ABILITY_PUNK_ROCK",
+    "moves": [
+      "MOVE_OVERDRIVE",
+      "MOVE_BOOMBURST",
+      "MOVE_SLUDGE_WAVE",
+      "MOVE_NASTY_PLOT"
+    ]
+  },
+  {
+    "constant": "SPECIES_GLE_VENOM_QUEEN_SALAZZLE",
+    "base": "SPECIES_SALAZZLE",
+    "name": "VenomQueen",
+    "stats": [
+      95,
+      64,
+      75,
+      135,
+      95,
+      136
+    ],
+    "bst": 600,
+    "ability": "ABILITY_CORROSION",
+    "moves": [
+      "MOVE_TOXIC",
+      "MOVE_VENOSHOCK",
+      "MOVE_PROTECT",
+      "MOVE_FLAMETHROWER"
+    ]
+  },
+  {
+    "constant": "SPECIES_GLE_GUARDIAN_CELEBI",
+    "base": "SPECIES_CELEBI",
+    "name": "Gdn.Celebi",
+    "stats": [
+      100,
+      100,
+      100,
+      100,
+      100,
+      100
+    ],
+    "bst": 600,
+    "ability": "ABILITY_WONDER_GUARD",
+    "moves": [
+      "MOVE_PSYCHIC",
+      "MOVE_GIGA_DRAIN",
+      "MOVE_RECOVER",
+      "MOVE_NASTY_PLOT"
+    ]
+  },
+  {
+    "constant": "SPECIES_GLE_AWAKENED_REGIGIGAS",
+    "base": "SPECIES_REGIGIGAS",
+    "name": "Awk.Regigas",
+    "stats": [
+      110,
+      160,
+      110,
+      80,
+      110,
+      100
+    ],
+    "bst": 670,
+    "ability": "ABILITY_CLEAR_BODY",
+    "moves": [
+      "MOVE_CRUSH_GRIP",
+      "MOVE_DRAIN_PUNCH",
+      "MOVE_ICE_PUNCH",
+      "MOVE_EARTHQUAKE"
+    ]
+  }
+]

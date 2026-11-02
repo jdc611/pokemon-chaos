@@ -1,5 +1,6 @@
 #include "global.h"
 #include "ironmon.h"
+#include "gym_leader.h"
 #include "battle.h"
 #include "event_data.h"
 #include "caps.h"
@@ -20,6 +21,7 @@ void ClearDebugImportantBattleLevelCap(void)
 
 u32 GetCurrentLevelCap(void)
 {
+    if (IsGymLeaderRun()) return GymLeaderLevelCap();
     if (IsIronmonRun()) return MAX_LEVEL;
     static const u32 sLevelCapFlagMap[][2] =
     {

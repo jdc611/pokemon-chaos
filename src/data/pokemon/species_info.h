@@ -95,6 +95,8 @@
 #define FLIP    0
 #define NO_FLIP 1
 
+#include "gle_form_assets.h"
+
 const struct SpeciesInfo gSpeciesInfo[] =
 {
     [SPECIES_NONE] =
@@ -159,6 +161,8 @@ const struct SpeciesInfo gSpeciesInfo[] =
     #include "species_info/gen_7_families.h"
     #include "species_info/gen_8_families.h"
     #include "species_info/gen_9_families.h"
+
+    #include "gle_forms.h"
 
     [SPECIES_EGG] =
     {

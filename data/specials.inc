@@ -715,3 +715,7 @@ gSpecials::
 	def_special IsIronmonHardcore
 
 	def_special IsIronmonRun
+	def_special GymLeaderInitialize
+	def_special GymLeaderScriptStatus
+	def_special GymLeaderScriptExclusive
+	def_special GymLeaderScriptChooseIdentity
