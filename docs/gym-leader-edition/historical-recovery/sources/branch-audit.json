@@ -1,0 +1,104 @@
+[
+  {
+    "ref": "origin",
+    "sha": "c682247de55e99009adb692482b2232126c89c03",
+    "candidate_paths": [
+      "data/maps/CinnabarIsland_PokemonLab_ResearchRoom_Frlg/map.json",
+      "data/maps/CinnabarIsland_PokemonLab_ResearchRoom_Frlg/scripts.inc"
+    ],
+    "matching_commits": []
+  },
+  {
+    "ref": "origin/backup-kanto-before-working-baseline-reset",
+    "sha": "fdd9f1e9c8b1baaf5809333c7e6d53d6482f5427",
+    "candidate_paths": [
+      "data/maps/CinnabarIsland_PokemonLab_ResearchRoom_Frlg/map.json",
+      "data/maps/CinnabarIsland_PokemonLab_ResearchRoom_Frlg/scripts.inc"
+    ],
+    "matching_commits": []
+  },
+  {
+    "ref": "origin/chaos-firered",
+    "sha": "dffbcb88c6431262284e4c043221919b437699a6",
+    "candidate_paths": [
+      "data/maps/CinnabarIsland_PokemonLab_ResearchRoom_Frlg/map.json",
+      "data/maps/CinnabarIsland_PokemonLab_ResearchRoom_Frlg/scripts.inc"
+    ],
+    "matching_commits": []
+  },
+  {
+    "ref": "origin/chaos-v2-checkpoint-2026-10-08",
+    "sha": "c22af0a72f12d932046622bf61e4032fb8cbfe3a",
+    "candidate_paths": [
+      "data/maps/CinnabarIsland_PokemonLab_ResearchRoom_Frlg/map.json",
+      "data/maps/CinnabarIsland_PokemonLab_ResearchRoom_Frlg/scripts.inc"
+    ],
+    "matching_commits": []
+  },
+  {
+    "ref": "origin/chaos-v3",
+    "sha": "2421e94573a9b98f76cac488930ff18a89a0ed44",
+    "candidate_paths": [
+      "data/maps/CinnabarIsland_PokemonLab_ResearchRoom_Frlg/map.json",
+      "data/maps/CinnabarIsland_PokemonLab_ResearchRoom_Frlg/scripts.inc"
+    ],
+    "matching_commits": []
+  },
+  {
+    "ref": "origin/custom-build",
+    "sha": "6fff7893220db9b7421ef146a00e9a9bb81f1641",
+    "candidate_paths": [
+      "data/maps/CinnabarIsland_PokemonLab_ResearchRoom_Frlg/map.json",
+      "data/maps/CinnabarIsland_PokemonLab_ResearchRoom_Frlg/scripts.inc"
+    ],
+    "matching_commits": []
+  },
+  {
+    "ref": "origin/emerald-legacy",
+    "sha": "f55acb0aa002820af4e506f28721a5756fddc65b",
+    "candidate_paths": [
+      "data/maps/CinnabarIsland_PokemonLab_ResearchRoom_Frlg/map.json",
+      "data/maps/CinnabarIsland_PokemonLab_ResearchRoom_Frlg/scripts.inc"
+    ],
+    "matching_commits": []
+  },
+  {
+    "ref": "origin/gym-leader-edition",
+    "sha": "c9db7884e17fa86ec109ccde32a7ebcd7da17a65",
+    "candidate_paths": [
+      "data/maps/CinnabarIsland_PokemonLab_ResearchRoom_Frlg/map.json",
+      "data/maps/CinnabarIsland_PokemonLab_ResearchRoom_Frlg/scripts.inc",
+      "docs/gym-leader-edition/DECISION-LEDGER.md"
+    ],
+    "matching_commits": [
+      "02f9d475faf70687f25b98fa6972b6b34f09591a Add Gym Leader Edition historical decision ledger"
+    ]
+  },
+  {
+    "ref": "origin/ironmon-development",
+    "sha": "27692a2a0bac1cdbd3748c9c1e39d6a58f96285f",
+    "candidate_paths": [
+      "data/maps/CinnabarIsland_PokemonLab_ResearchRoom_Frlg/map.json",
+      "data/maps/CinnabarIsland_PokemonLab_ResearchRoom_Frlg/scripts.inc"
+    ],
+    "matching_commits": []
+  },
+  {
+    "ref": "origin/master",
+    "sha": "c682247de55e99009adb692482b2232126c89c03",
+    "candidate_paths": [
+      "data/maps/CinnabarIsland_PokemonLab_ResearchRoom_Frlg/map.json",
+      "data/maps/CinnabarIsland_PokemonLab_ResearchRoom_Frlg/scripts.inc"
+    ],
+    "matching_commits": []
+  },
+  {
+    "ref": "origin/oaks-draft",
+    "sha": "722f6d937c7c6093db1463cc0fffeed3c79fc527",
+    "candidate_paths": [
+      "data/maps/CinnabarIsland_PokemonLab_ResearchRoom_Frlg/map.json",
+      "data/maps/CinnabarIsland_PokemonLab_ResearchRoom_Frlg/scripts.inc"
+    ],
+    "matching_commits": []
+  }
+]

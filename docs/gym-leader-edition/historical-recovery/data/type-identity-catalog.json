@@ -1,0 +1,200 @@
+[
+  {
+    "gym_type": "Normal",
+    "exact_starter_pool": null,
+    "exact_signature_tm_pool": null,
+    "pool_status": "UNRECOVERED",
+    "proposed_habitat_name": "Pokémon Ranch",
+    "proposed_habitat_plot": "Large",
+    "habitat_catalog_status": "PROPOSED catalog inside accepted habitat concept",
+    "catalog_source": "T0094",
+    "acceptance_scope": "T0095 accepts optional early habitat and tier/rank gating, not a separate approval of every catalog detail"
+  },
+  {
+    "gym_type": "Fire",
+    "exact_starter_pool": null,
+    "exact_signature_tm_pool": null,
+    "pool_status": "UNRECOVERED",
+    "proposed_habitat_name": "Volcanic Cavern",
+    "proposed_habitat_plot": "Large",
+    "habitat_catalog_status": "PROPOSED catalog inside accepted habitat concept",
+    "catalog_source": "T0094",
+    "acceptance_scope": "T0095 accepts optional early habitat and tier/rank gating, not a separate approval of every catalog detail"
+  },
+  {
+    "gym_type": "Water",
+    "exact_starter_pool": null,
+    "exact_signature_tm_pool": null,
+    "pool_status": "UNRECOVERED",
+    "proposed_habitat_name": "Aquarium",
+    "proposed_habitat_plot": "Large",
+    "habitat_catalog_status": "PROPOSED catalog inside accepted habitat concept",
+    "catalog_source": "T0094",
+    "acceptance_scope": "T0095 accepts optional early habitat and tier/rank gating, not a separate approval of every catalog detail"
+  },
+  {
+    "gym_type": "Electric",
+    "exact_starter_pool": null,
+    "exact_signature_tm_pool": null,
+    "pool_status": "UNRECOVERED",
+    "proposed_habitat_name": "Power Plant",
+    "proposed_habitat_plot": "Large",
+    "habitat_catalog_status": "PROPOSED catalog inside accepted habitat concept",
+    "catalog_source": "T0094",
+    "acceptance_scope": "T0095 accepts optional early habitat and tier/rank gating, not a separate approval of every catalog detail"
+  },
+  {
+    "gym_type": "Grass",
+    "exact_starter_pool": null,
+    "exact_signature_tm_pool": null,
+    "pool_status": "UNRECOVERED",
+    "proposed_habitat_name": "Botanical Garden",
+    "proposed_habitat_plot": "Medium",
+    "habitat_catalog_status": "PROPOSED catalog inside accepted habitat concept",
+    "catalog_source": "T0094",
+    "acceptance_scope": "T0095 accepts optional early habitat and tier/rank gating, not a separate approval of every catalog detail"
+  },
+  {
+    "gym_type": "Ice",
+    "exact_starter_pool": null,
+    "exact_signature_tm_pool": null,
+    "pool_status": "UNRECOVERED",
+    "proposed_habitat_name": "Frozen Cavern",
+    "proposed_habitat_plot": "Medium",
+    "habitat_catalog_status": "PROPOSED catalog inside accepted habitat concept",
+    "catalog_source": "T0094",
+    "acceptance_scope": "T0095 accepts optional early habitat and tier/rank gating, not a separate approval of every catalog detail"
+  },
+  {
+    "gym_type": "Fighting",
+    "exact_starter_pool": null,
+    "exact_signature_tm_pool": null,
+    "pool_status": "UNRECOVERED",
+    "proposed_habitat_name": "Martial Arts Dojo",
+    "proposed_habitat_plot": "Medium",
+    "habitat_catalog_status": "PROPOSED catalog inside accepted habitat concept",
+    "catalog_source": "T0094",
+    "acceptance_scope": "T0095 accepts optional early habitat and tier/rank gating, not a separate approval of every catalog detail"
+  },
+  {
+    "gym_type": "Poison",
+    "exact_starter_pool": null,
+    "exact_signature_tm_pool": null,
+    "pool_status": "UNRECOVERED",
+    "proposed_habitat_name": "Toxic Laboratory",
+    "proposed_habitat_plot": "Medium",
+    "habitat_catalog_status": "PROPOSED catalog inside accepted habitat concept",
+    "catalog_source": "T0094",
+    "acceptance_scope": "T0095 accepts optional early habitat and tier/rank gating, not a separate approval of every catalog detail"
+  },
+  {
+    "gym_type": "Ground",
+    "exact_starter_pool": null,
+    "exact_signature_tm_pool": null,
+    "pool_status": "UNRECOVERED",
+    "proposed_habitat_name": "Excavation Site",
+    "proposed_habitat_plot": "Large",
+    "habitat_catalog_status": "PROPOSED catalog inside accepted habitat concept",
+    "catalog_source": "T0094",
+    "acceptance_scope": "T0095 accepts optional early habitat and tier/rank gating, not a separate approval of every catalog detail"
+  },
+  {
+    "gym_type": "Flying",
+    "exact_starter_pool": null,
+    "exact_signature_tm_pool": null,
+    "pool_status": "UNRECOVERED",
+    "proposed_habitat_name": "Aviary",
+    "proposed_habitat_plot": "Medium",
+    "habitat_catalog_status": "PROPOSED catalog inside accepted habitat concept",
+    "catalog_source": "T0094",
+    "acceptance_scope": "T0095 accepts optional early habitat and tier/rank gating, not a separate approval of every catalog detail"
+  },
+  {
+    "gym_type": "Psychic",
+    "exact_starter_pool": null,
+    "exact_signature_tm_pool": null,
+    "pool_status": "UNRECOVERED",
+    "proposed_habitat_name": "Psychic Research Institute",
+    "proposed_habitat_plot": "Medium",
+    "habitat_catalog_status": "PROPOSED catalog inside accepted habitat concept",
+    "catalog_source": "T0094",
+    "acceptance_scope": "T0095 accepts optional early habitat and tier/rank gating, not a separate approval of every catalog detail"
+  },
+  {
+    "gym_type": "Bug",
+    "exact_starter_pool": null,
+    "exact_signature_tm_pool": null,
+    "pool_status": "UNRECOVERED",
+    "proposed_habitat_name": "Insect Conservatory",
+    "proposed_habitat_plot": "Medium",
+    "habitat_catalog_status": "PROPOSED catalog inside accepted habitat concept",
+    "catalog_source": "T0094",
+    "acceptance_scope": "T0095 accepts optional early habitat and tier/rank gating, not a separate approval of every catalog detail"
+  },
+  {
+    "gym_type": "Rock",
+    "exact_starter_pool": null,
+    "exact_signature_tm_pool": null,
+    "pool_status": "UNRECOVERED",
+    "proposed_habitat_name": "Fossil Museum",
+    "proposed_habitat_plot": "Large",
+    "habitat_catalog_status": "PROPOSED catalog inside accepted habitat concept",
+    "catalog_source": "T0094",
+    "acceptance_scope": "T0095 accepts optional early habitat and tier/rank gating, not a separate approval of every catalog detail"
+  },
+  {
+    "gym_type": "Ghost",
+    "exact_starter_pool": null,
+    "exact_signature_tm_pool": null,
+    "pool_status": "UNRECOVERED",
+    "proposed_habitat_name": "Haunted House",
+    "proposed_habitat_plot": "Medium",
+    "habitat_catalog_status": "PROPOSED catalog inside accepted habitat concept",
+    "catalog_source": "T0094",
+    "acceptance_scope": "T0095 accepts optional early habitat and tier/rank gating, not a separate approval of every catalog detail"
+  },
+  {
+    "gym_type": "Dragon",
+    "exact_starter_pool": null,
+    "exact_signature_tm_pool": null,
+    "pool_status": "UNRECOVERED",
+    "proposed_habitat_name": "Dragon Sanctuary",
+    "proposed_habitat_plot": "Large",
+    "habitat_catalog_status": "PROPOSED catalog inside accepted habitat concept",
+    "catalog_source": "T0094",
+    "acceptance_scope": "T0095 accepts optional early habitat and tier/rank gating, not a separate approval of every catalog detail"
+  },
+  {
+    "gym_type": "Dark",
+    "exact_starter_pool": null,
+    "exact_signature_tm_pool": null,
+    "pool_status": "UNRECOVERED",
+    "proposed_habitat_name": "Shadow Hideout",
+    "proposed_habitat_plot": "Medium",
+    "habitat_catalog_status": "PROPOSED catalog inside accepted habitat concept",
+    "catalog_source": "T0094",
+    "acceptance_scope": "T0095 accepts optional early habitat and tier/rank gating, not a separate approval of every catalog detail"
+  },
+  {
+    "gym_type": "Steel",
+    "exact_starter_pool": null,
+    "exact_signature_tm_pool": null,
+    "pool_status": "UNRECOVERED",
+    "proposed_habitat_name": "Steelworks Factory",
+    "proposed_habitat_plot": "Large",
+    "habitat_catalog_status": "PROPOSED catalog inside accepted habitat concept",
+    "catalog_source": "T0094",
+    "acceptance_scope": "T0095 accepts optional early habitat and tier/rank gating, not a separate approval of every catalog detail"
+  },
+  {
+    "gym_type": "Fairy",
+    "exact_starter_pool": null,
+    "exact_signature_tm_pool": null,
+    "pool_status": "UNRECOVERED",
+    "proposed_habitat_name": "Enchanted Garden",
+    "proposed_habitat_plot": "Medium",
+    "habitat_catalog_status": "PROPOSED catalog inside accepted habitat concept",
+    "catalog_source": "T0094",
+    "acceptance_scope": "T0095 accepts optional early habitat and tier/rank gating, not a separate approval of every catalog detail"
+  }
+]

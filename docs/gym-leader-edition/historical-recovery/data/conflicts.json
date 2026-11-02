@@ -1,0 +1,228 @@
+[
+  {
+    "id": "C01",
+    "title": "Articuno duplicated",
+    "evidence": "T0377 accepts Ice Articuno at Seafoam. T0537 explicitly moves all six birds to a universal quest. T0576 still lists Ice Articuno.",
+    "status": "UNRESOLVED",
+    "action": "Do not allocate Articuno twice. Confirm Ice replacement or explicitly revise the universal quest; no replacement invented.",
+    "source_turns": [
+      377,
+      537,
+      538,
+      576
+    ]
+  },
+  {
+    "id": "C02",
+    "title": "One-time legendary attempt versus availability guarantee",
+    "evidence": "T0333 says no repeats; T0334 says defeat finishes encounter; T0346 says capture/defeat/flee exhaust. T0596 says uncaught encounters remain available. T0823 requires every species available each playthrough.",
+    "status": "UNRESOLVED",
+    "action": "Clarify failure/retry versus merely never-started encounters. Later completion text does not clearly authorize respawns.",
+    "source_turns": [
+      333,
+      334,
+      335,
+      346,
+      596,
+      823
+    ]
+  },
+  {
+    "id": "C03",
+    "title": "Demotion and global level cap",
+    "evidence": "Earlier highest-earned cap/world scaling recommendations were not accepted directly. T0303 requires official cap equal overall cap and rejects need for scaling; demotion can lower rank after Pokémon were trained higher.",
+    "status": "UNRESOLVED",
+    "action": "Preserve trained levels; exact legality/scaling response after demotion needs a design resolution, not silent implementation.",
+    "source_turns": [
+      29,
+      31,
+      57,
+      59,
+      303
+    ]
+  },
+  {
+    "id": "C04",
+    "title": "Slaking initial ability",
+    "evidence": "User T0425 text is literally “Slaking with a truant I was already thinking”. T0426 interprets starting Truant then Vital Spirit research. Later recaps/asset describe Vital Spirit form.",
+    "status": "UNRESOLVED",
+    "action": "Clarify whether Vital Spirit is obtained immediately or through research; no typo correction presented as exact approval.",
+    "source_turns": [
+      424,
+      425,
+      426,
+      457
+    ]
+  },
+  {
+    "id": "C05",
+    "title": "Recruit returns and permanence",
+    "evidence": "Earlier no-permanent-lockout recommendation followed delegated choice. Later T0667 says sometimes convince back; T0668 assistant adds permanent departures. Old issue/ledger says return always possible.",
+    "status": "UNRESOLVED",
+    "action": "Sometimes return is explicit; permanent departure for particular characters is not explicitly confirmed. Do not guarantee all returns or invent irreversible loss.",
+    "source_turns": [
+      172,
+      173,
+      174,
+      666,
+      667,
+      668
+    ]
+  },
+  {
+    "id": "C06",
+    "title": "Potential fixed versus rare increase",
+    "evidence": "T0259 accepts rare one-star quest increases. Later assistant T0632 says Potential fixed without acknowledging exception.",
+    "status": "UNRESOLVED",
+    "action": "Preserve earlier accepted rare increase unless later explicit user reversal recovered.",
+    "source_turns": [
+      258,
+      259,
+      260,
+      632
+    ]
+  },
+  {
+    "id": "C07",
+    "title": "Recruit counts",
+    "evidence": "Early collect as many as discovered; later T0661 asks a maximum. 10 total / 5 active and upgrade ladder are assistant defaults following delegation.",
+    "status": "DEFERRED",
+    "action": "Latest finite-cap direction supersedes unlimited roster. Numeric ladder remains tunable, not a user-picked final.",
+    "source_turns": [
+      167,
+      661,
+      662,
+      663,
+      664
+    ]
+  },
+  {
+    "id": "C08",
+    "title": "GLA double-battle opponent misrecorded",
+    "evidence": "Original user T0069 puts both displaced leaders into GLA and makes them the double-battle duo. Issue 2/old ledger later say optional doubles against Rival.",
+    "status": "UNRESOLVED secondary-source conflict; original opponent recovered",
+    "action": "Original dialogue establishes two displaced leaders as opponents. Rival co-op/special battles separate; do not replace duo with rival.",
+    "source_turns": [
+      67,
+      68,
+      69,
+      70,
+      71
+    ]
+  },
+  {
+    "id": "C09",
+    "title": "Voucher catalog versus fixed tier random three",
+    "evidence": "Early T0075 wants expanding curated catalog retaining old tiers; later T0762 type-pool random choices, T0764 no reroll, T0766 fixed tier.",
+    "status": "APPROVED later supersession / UNRESOLVED catalog scope",
+    "action": "Use latest explicit fixed-tier three-choice policy; exact species pool membership remains unrecovered.",
+    "source_turns": [
+      75,
+      761,
+      762,
+      764,
+      766
+    ]
+  },
+  {
+    "id": "C10",
+    "title": "Voucher duplicate rules and abilities",
+    "evidence": "User delegates normal/shiny duplicate policy T0784. Assistant proposes separate shiny claims. T0760 “I like that” answers mixed default/HA-guarantee question, no precise guarantee picked.",
+    "status": "DEFERRED duplicates / UNRESOLVED HA guarantee",
+    "action": "Do not mark proposed normal/shiny duplicate separation or guaranteed HA as explicit approval.",
+    "source_turns": [
+      759,
+      760,
+      783,
+      784,
+      785
+    ]
+  },
+  {
+    "id": "C11",
+    "title": "Queue replacement",
+    "evidence": "T0279 accepts maximum five and priority without deleting waiting challengers. T0606 delegates full-queue behavior; T0607 recommends important arrivals replacing regulars.",
+    "status": "DEFERRED revision",
+    "action": "Do not silently call both immutable no-replacement and replacement approved.",
+    "source_turns": [
+      278,
+      279,
+      605,
+      606,
+      607
+    ]
+  },
+  {
+    "id": "C12",
+    "title": "Gym appearance and trophies",
+    "evidence": "Early type-specific automatic theme/trophies; later T0651 says choose theme and T0695 choose displayed trophies.",
+    "status": "APPROVED later refinement",
+    "action": "Preserve independent theme choice; automatic certificates can coexist but trophy display is selected.",
+    "source_turns": [
+      251,
+      253,
+      651,
+      695
+    ]
+  },
+  {
+    "id": "C13",
+    "title": "Unique type encounters versus every species every save",
+    "evidence": "Type-exclusive main encounters leave other types absent before postgame. T0347 allows more postgame methods; T0823 requires all species obtainable. No exact reliable postgame redistribution table recovered.",
+    "status": "UNRESOLVED coverage / UNRECOVERED allocation table",
+    "action": "Do not pretend random vouchers alone guarantee absent species or invent postgame encounters.",
+    "source_turns": [
+      347,
+      348,
+      823,
+      824,
+      825
+    ]
+  },
+  {
+    "id": "C14",
+    "title": "Concept art stat discrepancy",
+    "evidence": "Annihilape source T0531 SpA50 totals615. Asset extracted text appears SpA30 while still printing615. Slaking artwork has HP170/Spe40 rather than assumed normal distribution.",
+    "status": "UNRESOLVED asset authority",
+    "action": "Text extraction is imperfect. Exact pixel/art inspection and explicit stat authority needed; transcript numbers retained separately.",
+    "source_turns": [
+      531,
+      532,
+      534
+    ]
+  },
+  {
+    "id": "C15",
+    "title": "Regigigas and early legendary table",
+    "evidence": "Early Normal includes Regigigas; user later removes whole Regi group and chooses special Slaking. Prior ledger says Normal unfinished and only Dragon recovered.",
+    "status": "APPROVED supersession recovered",
+    "action": "Do not use stale provisional Normal or old missing-set report. Latest chain preserves Slaking and universal Regis.",
+    "source_turns": [
+      419,
+      421,
+      423,
+      425,
+      426,
+      576
+    ]
+  },
+  {
+    "id": "C16",
+    "title": "Celebi and move display proposals",
+    "evidence": "670-stat Celebi, Magic Bounce/Triage, damage range DMG and other ideas were explored; final user selects Wonder Guard600 with Magic Bounce/Magic Guard boosted backups; BP/PWR instead of damage.",
+    "status": "APPROVED supersession",
+    "action": "Retain alternatives as backups only and do not implement predicted HP damage from old proposal.",
+    "source_turns": [
+      522,
+      524,
+      526,
+      527,
+      528,
+      581,
+      583,
+      585,
+      586,
+      587
+    ]
+  }
+]

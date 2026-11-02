@@ -1,0 +1,31 @@
+{
+  "exclusive_rows": 72,
+  "exclusive_distinct_names": 72,
+  "acquisition_collisions": {
+    "Articuno": [
+      "EX-ICE-1",
+      "Q13"
+    ]
+  },
+  "unrecovered_pools": [
+    "wild_environment_pools",
+    "starter_draft_pools",
+    "Game_Corner_prizes",
+    "Safari_configurable_pools",
+    "Black_Market_stock",
+    "ordinary_gifts",
+    "fossils",
+    "voucher_Standard",
+    "voucher_Rare",
+    "voucher_Elite",
+    "voucher_Shiny",
+    "voucher_Shiny_Elite"
+  ],
+  "complete_coverage": false,
+  "warnings": [
+    "Names/forms are historical design identifiers, not validated engine constants.",
+    "Special form base families may exist ordinarily; reserve the unique form rather than prohibiting all ordinary members.",
+    "Cross-form evolution/fusion can duplicate unique access and requires later implementation validation.",
+    "No invented allocation resolves Articuno."
+  ]
+}

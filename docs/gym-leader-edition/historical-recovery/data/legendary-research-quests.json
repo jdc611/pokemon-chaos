@@ -1,0 +1,443 @@
+[
+  {
+    "quest_id": "Q01",
+    "name": "Type: Null research",
+    "species": [
+      "Type: Null",
+      "Silvally"
+    ],
+    "status": "APPROVED",
+    "approval_scope": "Universal Type: Null access accepted; full quest deferred",
+    "source_turns": [
+      355,
+      356,
+      357
+    ],
+    "stages_and_rewards": "Obtain Type: Null; high-friendship evolution; 17 Memories via research/quests/GLA; RKS System legality rechecked on Memory change. Exact acquisition NPC/location/reward schedule not recovered.",
+    "exact_named_npc": null,
+    "exact_map": null,
+    "exact_extra_item_reward": null,
+    "unrecovered_fields": [
+      "exact_named_npc",
+      "exact_map",
+      "exact_extra_item_reward"
+    ],
+    "note": "Null means not recovered, not intentionally absent."
+  },
+  {
+    "quest_id": "Q02",
+    "name": "The Paradox of Evolution",
+    "species": [
+      "Cyclizar",
+      "Koraidon",
+      "Miraidon"
+    ],
+    "status": "APPROVED",
+    "approval_scope": "Both legendary rewards APPROVED at T0401",
+    "source_turns": [
+      397,
+      398,
+      399,
+      400,
+      401,
+      402
+    ],
+    "stages_and_rewards": "The Missing Link: bring Cyclizar for examination, retained by player. Echoes of the Past: ancient Kanto ruin/evidence unlocks Koraidon. A Glimpse of Tomorrow: unusual technology/second project reveals Miraidon. Three Eras, One Lineage: related eras, not forced evolutions. Chapter names/stage detail are assistant proposals; both captures accepted.",
+    "exact_named_npc": null,
+    "exact_map": null,
+    "exact_extra_item_reward": null,
+    "unrecovered_fields": [
+      "exact_named_npc",
+      "exact_map",
+      "exact_extra_item_reward"
+    ],
+    "note": "Null means not recovered, not intentionally absent."
+  },
+  {
+    "quest_id": "Q03",
+    "name": "Fractures in Time and Space / Creation Trio",
+    "species": [
+      "Dialga",
+      "Palkia",
+      "Giratina"
+    ],
+    "status": "UNRESOLVED",
+    "approval_scope": "Dialga/Palkia APPROVED; adding Giratina accepted tentatively as \"Yes probably\"",
+    "source_turns": [
+      405,
+      406,
+      407,
+      508
+    ],
+    "stages_and_rewards": "Investigate dimensional disturbances; separate encounters for time/space. Giratina moved out of Ghost ultimate; exact Distortion location, NPC and stages not specified.",
+    "exact_named_npc": null,
+    "exact_map": null,
+    "exact_extra_item_reward": null,
+    "unrecovered_fields": [
+      "exact_named_npc",
+      "exact_map",
+      "exact_extra_item_reward"
+    ],
+    "note": "Null means not recovered, not intentionally absent."
+  },
+  {
+    "quest_id": "Q04",
+    "name": "The Ancient Titans",
+    "species": [
+      "Regirock",
+      "Regice",
+      "Registeel",
+      "Regieleki",
+      "Regidrago",
+      "Regigigas"
+    ],
+    "status": "APPROVED",
+    "approval_scope": "Complete group and discovery requirement APPROVED",
+    "source_turns": [
+      419,
+      420,
+      421,
+      422,
+      423,
+      457,
+      458,
+      459
+    ],
+    "stages_and_rewards": "Regirock: stone markings. Regice: icy chamber puzzle. Registeel: abandoned metal facility. Regieleki: ancient generator. Regidrago: sealed dragon chamber. First five any order; discovering chambers, not capturing, unlocks final Regigigas temple. Exact maps/NPCs unspecified; thematic objectives proposed.",
+    "exact_named_npc": null,
+    "exact_map": null,
+    "exact_extra_item_reward": null,
+    "unrecovered_fields": [
+      "exact_named_npc",
+      "exact_map",
+      "exact_extra_item_reward"
+    ],
+    "note": "Null means not recovered, not intentionally absent."
+  },
+  {
+    "quest_id": "Q05",
+    "name": "Ancient Awakening",
+    "species": [
+      "Regigigas"
+    ],
+    "status": "APPROVED",
+    "approval_scope": "Clear Body replacement APPROVED",
+    "source_turns": [
+      363,
+      364,
+      365,
+      366,
+      457
+    ],
+    "stages_and_rewards": "Capture Regigigas, then complete research to permanently replace Slow Start with Clear Body. One-time upgrade; exact tasks delegated. This is an upgrade to Q04 reward, not a duplicate encounter.",
+    "exact_named_npc": null,
+    "exact_map": null,
+    "exact_extra_item_reward": null,
+    "unrecovered_fields": [
+      "exact_named_npc",
+      "exact_map",
+      "exact_extra_item_reward"
+    ],
+    "note": "Null means not recovered, not intentionally absent."
+  },
+  {
+    "quest_id": "Q06",
+    "name": "The Four Winds",
+    "species": [
+      "Tornadus",
+      "Thundurus",
+      "Landorus",
+      "Enamorus"
+    ],
+    "status": "APPROVED",
+    "approval_scope": "Group relocation APPROVED",
+    "source_turns": [
+      460,
+      461,
+      464,
+      465
+    ],
+    "stages_and_rewards": "Weather investigation; roaming tracked with PokéRider. Landorus and Enamorus removed from exclusive pools. Named researcher, route positions, exact stages/rewards beyond encounters not specified.",
+    "exact_named_npc": null,
+    "exact_map": null,
+    "exact_extra_item_reward": null,
+    "unrecovered_fields": [
+      "exact_named_npc",
+      "exact_map",
+      "exact_extra_item_reward"
+    ],
+    "note": "Null means not recovered, not intentionally absent."
+  },
+  {
+    "quest_id": "Q07",
+    "name": "Swords of Justice",
+    "species": [
+      "Cobalion",
+      "Terrakion",
+      "Virizion",
+      "Keldeo"
+    ],
+    "status": "APPROVED",
+    "approval_scope": "Group relocation APPROVED",
+    "source_turns": [
+      465,
+      466,
+      467
+    ],
+    "stages_and_rewards": "Protect Kanto habitats from exploitation; connected universal storyline. Exact NPC/stages/map coordinates/reward items not specified.",
+    "exact_named_npc": null,
+    "exact_map": null,
+    "exact_extra_item_reward": null,
+    "unrecovered_fields": [
+      "exact_named_npc",
+      "exact_map",
+      "exact_extra_item_reward"
+    ],
+    "note": "Null means not recovered, not intentionally absent."
+  },
+  {
+    "quest_id": "Q08",
+    "name": "Cursed Treasures",
+    "species": [
+      "Wo-Chien",
+      "Chien-Pao",
+      "Ting-Lu",
+      "Chi-Yu"
+    ],
+    "status": "APPROVED",
+    "approval_scope": "Group relocation APPROVED",
+    "source_turns": [
+      471,
+      472,
+      473
+    ],
+    "stages_and_rewards": "Four sealed shrines across Kanto; independent encounters. Exact shrine maps/puzzles/NPCs not specified.",
+    "exact_named_npc": null,
+    "exact_map": null,
+    "exact_extra_item_reward": null,
+    "unrecovered_fields": [
+      "exact_named_npc",
+      "exact_map",
+      "exact_extra_item_reward"
+    ],
+    "note": "Null means not recovered, not intentionally absent."
+  },
+  {
+    "quest_id": "Q09",
+    "name": "Lakes of the Mind",
+    "species": [
+      "Uxie",
+      "Mesprit",
+      "Azelf"
+    ],
+    "status": "APPROVED",
+    "approval_scope": "Group relocation APPROVED",
+    "source_turns": [
+      479,
+      480,
+      481
+    ],
+    "stages_and_rewards": "Three mysterious lakes/chambers around Kanto. Exact locations, NPC names, individual stages and non-Pokémon rewards unspecified.",
+    "exact_named_npc": null,
+    "exact_map": null,
+    "exact_extra_item_reward": null,
+    "unrecovered_fields": [
+      "exact_named_npc",
+      "exact_map",
+      "exact_extra_item_reward"
+    ],
+    "note": "Null means not recovered, not intentionally absent."
+  },
+  {
+    "quest_id": "Q10",
+    "name": "Guardian Shrines",
+    "species": [
+      "Tapu Koko",
+      "Tapu Lele",
+      "Tapu Bulu",
+      "Tapu Fini"
+    ],
+    "status": "APPROVED",
+    "approval_scope": "Group relocation APPROVED",
+    "source_turns": [
+      483,
+      484,
+      485
+    ],
+    "stages_and_rewards": "Four ancient shrines; Tapu Bulu and Tapu Fini removed from exclusives. Exact maps/stages/NPC names unspecified.",
+    "exact_named_npc": null,
+    "exact_map": null,
+    "exact_extra_item_reward": null,
+    "unrecovered_fields": [
+      "exact_named_npc",
+      "exact_map",
+      "exact_extra_item_reward"
+    ],
+    "note": "Null means not recovered, not intentionally absent."
+  },
+  {
+    "quest_id": "Q11",
+    "name": "Echoes of the Past",
+    "species": [
+      "Suicune",
+      "Walking Wake",
+      "Entei",
+      "Gouging Fire",
+      "Raikou",
+      "Raging Bolt"
+    ],
+    "status": "APPROVED",
+    "approval_scope": "Three connected beast/Paradox pairs APPROVED",
+    "source_turns": [
+      488,
+      489,
+      490
+    ],
+    "stages_and_rewards": "Investigate present beasts and ancient counterparts; no required captures; all three pairs universal. Quest title also used as a chapter of Q02; retain naming collision.",
+    "exact_named_npc": null,
+    "exact_map": null,
+    "exact_extra_item_reward": null,
+    "unrecovered_fields": [
+      "exact_named_npc",
+      "exact_map",
+      "exact_extra_item_reward"
+    ],
+    "note": "Null means not recovered, not intentionally absent."
+  },
+  {
+    "quest_id": "Q12",
+    "name": "Jungle Guardian",
+    "species": [
+      "Zarude"
+    ],
+    "status": "APPROVED",
+    "approval_scope": "Quest intention preserved; Toxic Zarude withdrawal APPROVED",
+    "source_turns": [
+      381,
+      382,
+      553,
+      554,
+      555,
+      556
+    ],
+    "stages_and_rewards": "Researcher/NPC reports aggressive guardian in secluded forest; investigate territory then static encounter. Rank 4–5 suggested, not final. Zarude stays Dark/Grass; no Toxic Zarude.",
+    "exact_named_npc": null,
+    "exact_map": null,
+    "exact_extra_item_reward": null,
+    "unrecovered_fields": [
+      "exact_named_npc",
+      "exact_map",
+      "exact_extra_item_reward"
+    ],
+    "note": "Null means not recovered, not intentionally absent."
+  },
+  {
+    "quest_id": "Q13",
+    "name": "Wings of Kanto",
+    "species": [
+      "Articuno",
+      "Zapdos",
+      "Moltres",
+      "Galarian Articuno",
+      "Galarian Zapdos",
+      "Galarian Moltres"
+    ],
+    "status": "APPROVED",
+    "approval_scope": "All six birds in universal quest APPROVED",
+    "source_turns": [
+      536,
+      537,
+      538
+    ],
+    "stages_and_rewards": "Unusual migrations, independent captures; Flying replacements approved. Ice Articuno not replaced in subsequent audit: unresolved collision.",
+    "exact_named_npc": null,
+    "exact_map": null,
+    "exact_extra_item_reward": null,
+    "unrecovered_fields": [
+      "exact_named_npc",
+      "exact_map",
+      "exact_extra_item_reward"
+    ],
+    "note": "Null means not recovered, not intentionally absent."
+  },
+  {
+    "quest_id": "Q14",
+    "name": "The Toxic Pact",
+    "species": [
+      "Okidogi",
+      "Munkidori",
+      "Fezandipiti"
+    ],
+    "status": "APPROVED",
+    "approval_scope": "Loyal Three universal quest APPROVED",
+    "source_turns": [
+      551,
+      552
+    ],
+    "stages_and_rewards": "Connected origin mystery and separate encounters. Exact maps/NPC names/objectives/rewards not specified.",
+    "exact_named_npc": null,
+    "exact_map": null,
+    "exact_extra_item_reward": null,
+    "unrecovered_fields": [
+      "exact_named_npc",
+      "exact_map",
+      "exact_extra_item_reward"
+    ],
+    "note": "Null means not recovered, not intentionally absent."
+  },
+  {
+    "quest_id": "Q15",
+    "name": "Slaking ability research",
+    "species": [
+      "Awakened Slaking"
+    ],
+    "status": "UNRESOLVED",
+    "approval_scope": "Special Slaking accepted; initial ability sequence ambiguous",
+    "source_turns": [
+      423,
+      424,
+      425,
+      426,
+      457
+    ],
+    "stages_and_rewards": "Truant initially then Vital Spirit research proposed; later asset/recap says Vital Spirit. Preserve initial-vs-upgraded ability ambiguity. Rank 5 upgrade is proposed.",
+    "exact_named_npc": null,
+    "exact_map": null,
+    "exact_extra_item_reward": null,
+    "unrecovered_fields": [
+      "exact_named_npc",
+      "exact_map",
+      "exact_extra_item_reward"
+    ],
+    "note": "Null means not recovered, not intentionally absent."
+  },
+  {
+    "quest_id": "Q16",
+    "name": "Form research",
+    "species": [
+      "Kyurem",
+      "Zygarde",
+      "Necrozma",
+      "Zacian"
+    ],
+    "status": "PROPOSED",
+    "approval_scope": "PROPOSED conditional form upgrades",
+    "source_turns": [
+      377,
+      378,
+      383,
+      386,
+      414
+    ],
+    "stages_and_rewards": "Kyurem Black/White; Zygarde Complete; potentially Necrozma alternate forms; Zacian Crowned/Rusted Sword. Subject to engine support. Not additional Pokémon captures. Exact projects, fusion partners, items, ranks, NPCs not recovered.",
+    "exact_named_npc": null,
+    "exact_map": null,
+    "exact_extra_item_reward": null,
+    "unrecovered_fields": [
+      "exact_named_npc",
+      "exact_map",
+      "exact_extra_item_reward"
+    ],
+    "note": "Null means not recovered, not intentionally absent."
+  }
+]

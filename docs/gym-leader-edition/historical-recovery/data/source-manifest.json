@@ -1,0 +1,207 @@
+[
+  {
+    "path": "01-Master-Design-Specification.md",
+    "bytes": 15962,
+    "sha256": "0dfe7e378a59bad0f91d38db17ef7e4891f8534c30803786819269fe77a9e420"
+  },
+  {
+    "path": "02-Legendary-and-Pokemon-Allocation-Database.md",
+    "bytes": 15185,
+    "sha256": "14f876e0da2c9192cad07472d2bb58814cfd83de120bdc83adcf5ff157e50d20"
+  },
+  {
+    "path": "03-Voucher-Pool-Database.md",
+    "bytes": 4360,
+    "sha256": "a248d90d74452caec6291f91c17c171a489186a7b75ec4683d9ac199e8c95f85"
+  },
+  {
+    "path": "04-Legendary-Research-Quest-Database.md",
+    "bytes": 16426,
+    "sha256": "1a84c3bfa8ebdaf60a5e35df491e71d9dd657c6ae99d791aa9a183703a06d119"
+  },
+  {
+    "path": "05-Honor-and-NPC-Interactions.md",
+    "bytes": 4099,
+    "sha256": "1fc31f90da6b3f8e6ae81a2626c0ff85da790ffe8dba2f30fe27035ec4e9cd51"
+  },
+  {
+    "path": "06-Recruitment-and-Rival.md",
+    "bytes": 10635,
+    "sha256": "f94cb6d52adc44f52ebe230f6a079ad4bdd96f6496f1ef65751307641037688e"
+  },
+  {
+    "path": "07-Competitions-and-Tournaments.md",
+    "bytes": 7025,
+    "sha256": "516b1c7946d6cb3495512934e37add582c3dacc3b657b7506ef231e5a372ec15"
+  },
+  {
+    "path": "08-Town-Development-and-Economy.md",
+    "bytes": 8267,
+    "sha256": "9bff9a436e663b3967d4f13de50d393a03127360ffa0caabc5921842e0c426fd"
+  },
+  {
+    "path": "09-Complete-Historical-Decision-Ledger.md",
+    "bytes": 164894,
+    "sha256": "4a7df694b3c5bf1f1cfb4c7f1ce7a2624f5862c8f9e9834066eb3bcfd3d6600e"
+  },
+  {
+    "path": "10-Missing-Decisions-and-Conflicts.md",
+    "bytes": 13058,
+    "sha256": "48b29c90d1edf79604190bfc6b7eb358a86011393bff3340d0f6a15d9abe46f7"
+  },
+  {
+    "path": "11-Special-Pokemon-and-Assets.md",
+    "bytes": 7931,
+    "sha256": "6fd83198bc2138424c6b748870c84057122fcad3d2519d3399e9aec9117676cc"
+  },
+  {
+    "path": "12-Repository-and-Source-Audit.md",
+    "bytes": 5475,
+    "sha256": "6dfbd6c2630bb51e1b0a4b429ef65d44ab586624071c9a7c3dc5495b294873a9"
+  },
+  {
+    "path": "13-Type-Identity-and-Pool-Catalog.md",
+    "bytes": 2535,
+    "sha256": "e1a7cf28efef02e79a0966b10abeeb0738a03839ad314ddd03c2ee5929e1736c"
+  },
+  {
+    "path": "README.md",
+    "bytes": 3497,
+    "sha256": "05c01d579b000d5df0f8cf695f8b944a1859f79962bedacbfedb2df51ac2e9bc"
+  },
+  {
+    "path": "data/all-source-allocations.json",
+    "bytes": 23074,
+    "sha256": "bb805ec4d4f2e2ae9363369c5975d478980bb7089c896c096939739b5bcd888a"
+  },
+  {
+    "path": "data/allocation-audit.json",
+    "bytes": 891,
+    "sha256": "4c0e8a5014bc01287ed42bcc022a28ee94eead8a7b37929c0195693149b15827"
+  },
+  {
+    "path": "data/baseline-scripted-species-inventory.csv",
+    "bytes": 15953,
+    "sha256": "3c195f03038be418ee2bc69df709af2989f22a8f65dbcfb012812c83bdadbaff"
+  },
+  {
+    "path": "data/conflicts.json",
+    "bytes": 8332,
+    "sha256": "884190f862a48282805c460902d5c11244f123f30ce79b75cdf7d539a1d82127"
+  },
+  {
+    "path": "data/documentation-validation.json",
+    "bytes": 669,
+    "sha256": "d70d325e61e3cf2b14a3320d673da5474294b42e2736df1840c4df25447a3c8d"
+  },
+  {
+    "path": "data/historical-decision-ledger.csv",
+    "bytes": 1177977,
+    "sha256": "9b6f6156ce93beebcbc082f360d78288d19cb77a00c2e71ed7f0735a1b266e78"
+  },
+  {
+    "path": "data/historical-decision-ledger.json",
+    "bytes": 1377177,
+    "sha256": "a2066a009db0e5e28e869e1a479bf55ca853ae9afd4c15b5e7695243b90041e6"
+  },
+  {
+    "path": "data/legendary-research-quests.json",
+    "bytes": 12726,
+    "sha256": "2b7368b7185226f4df5f13e9a2d74bf625631d8d503b0842ef4967426a28c4ea"
+  },
+  {
+    "path": "data/type-exclusive-allocations.csv",
+    "bytes": 7844,
+    "sha256": "816c38acb920aa3f89a16bce442ac6eeb88c4ac5526d2982ebf65afd0df5d257"
+  },
+  {
+    "path": "data/type-exclusive-allocations.json",
+    "bytes": 23850,
+    "sha256": "a2359d33aaba042e53407f337723378e5c7e37c5df19a23c516a890ce7c20c01"
+  },
+  {
+    "path": "data/type-identity-catalog.json",
+    "bytes": 8457,
+    "sha256": "e76dee9b594b10a58da25fc3522932e40356e442b90a8fc45bc876ca19d18030"
+  },
+  {
+    "path": "data/voucher-pools.csv",
+    "bytes": 12129,
+    "sha256": "2d1faa1e4c638d32f78fbc54390fcbe77e86327e2572f896a8724004b877a9fa"
+  },
+  {
+    "path": "data/voucher-pools.json",
+    "bytes": 28797,
+    "sha256": "82ddc2aec0bc2cbeb842232e6da4e498db28c50f64e945329b3d69e1c7b802b6"
+  },
+  {
+    "path": "sources/branch-audit.json",
+    "bytes": 3531,
+    "sha256": "8c32a8b2ee8a5278fc00f7a357d1cb18ffb56bfb7fca67da5d0a7a080e25f27c"
+  },
+  {
+    "path": "sources/conversation-01.md",
+    "bytes": 216712,
+    "sha256": "c4a5fac01af72991daf92b1ffe25d39b8b722524bd9444891c7a4c4823564ae5"
+  },
+  {
+    "path": "sources/conversation-02.md",
+    "bytes": 144330,
+    "sha256": "6c9938ccca1276f508c36387f103094d411c2631dd10a1b90946d681ae876b1b"
+  },
+  {
+    "path": "sources/conversation-03.md",
+    "bytes": 111282,
+    "sha256": "269d766735361527a0bd5052f7aced5205bb7e2b64060e1bffd8025191ea74d0"
+  },
+  {
+    "path": "sources/conversation-04.md",
+    "bytes": 126376,
+    "sha256": "248e5a095e8b8a9cac39eb2ff26162fe1dd1e3396c1573358047e2c3429d3145"
+  },
+  {
+    "path": "sources/conversation-05.md",
+    "bytes": 97154,
+    "sha256": "ebda56f47fc8a211c2a4ede16a39208c63c188833ad69cda97beca3333671931"
+  },
+  {
+    "path": "sources/conversation-06.md",
+    "bytes": 99323,
+    "sha256": "5e03887ec468202f1caf7642b35a778dc79e8d054ea269059726373e0c8af76a"
+  },
+  {
+    "path": "sources/conversation-07.md",
+    "bytes": 76982,
+    "sha256": "7ba7202a8f6288234dc4c98123feb7a91008446f5abb77767867c02173e903a5"
+  },
+  {
+    "path": "sources/conversation-08.md",
+    "bytes": 73686,
+    "sha256": "3828e5b7433a04c5274d63bd597af289e7f29e431cf27122caea705509f9dfef"
+  },
+  {
+    "path": "sources/conversation-09.md",
+    "bytes": 68943,
+    "sha256": "8e3d96c8726c13835be66139f2a6a63c77f11ce2fd8309cdcfa5f111f0679200"
+  },
+  {
+    "path": "sources/conversation.json",
+    "bytes": 983615,
+    "sha256": "ca36519ba2d6459f178cee25010a2d55d70fd44f4d4d6845e230eca3af8dc718"
+  },
+  {
+    "path": "sources/github-issue-2.json",
+    "bytes": 71662,
+    "sha256": "30fcc2a03bcf0a427ac38d048ed7d869029b1569f42885d886fb889841009c85"
+  },
+  {
+    "path": "sources/github-issue-2.md",
+    "bytes": 36936,
+    "sha256": "3bb2e0f026b6cee258f171649c51031c5fbde854346a4c0c0e76115c645516a9"
+  },
+  {
+    "path": "sources/library-asset-extractions.json",
+    "bytes": 6718,
+    "sha256": "193cc00ac71c96157d6eaba98afbed46ac4cb45d16d3d6d87f7f5ef5fcc667ef"
+  }
+]

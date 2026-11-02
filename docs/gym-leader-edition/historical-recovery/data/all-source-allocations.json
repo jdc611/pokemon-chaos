@@ -1,0 +1,975 @@
+[
+  {
+    "source_id": "EX-NORMAL-1",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Meloetta",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-NORMAL-2",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Awakened Slaking",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-NORMAL-3",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Terapagos",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-NORMAL-4",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Arceus",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-FIRE-1",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Iron Moth",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-FIRE-2",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Heatran",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-FIRE-3",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Volcanion",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-FIRE-4",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Ho-Oh",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-WATER-1",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Eternal Hero Palafin",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-WATER-2",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Abyssal Dondozo",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-WATER-3",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Urshifu (Rapid Strike)",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-WATER-4",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Kyogre",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-ELECTRIC-1",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Thunderlord Luxray",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-ELECTRIC-2",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Overcharged Electivire",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-ELECTRIC-3",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Zeraora",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-ELECTRIC-4",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Zekrom",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-GRASS-1",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Brute Bonnet",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-GRASS-2",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Ancient Rillaboom",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-GRASS-3",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Ogerpon",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-GRASS-4",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Celebi",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-ICE-1",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Articuno",
+    "acquisition": true,
+    "status": "UNRESOLVED"
+  },
+  {
+    "source_id": "EX-ICE-2",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Iron Bundle",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-ICE-3",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Frostbound Baxcalibur",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-ICE-4",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Kyurem",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-FIGHTING-1",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Iron Hands",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-FIGHTING-2",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Iron Valiant",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-FIGHTING-3",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Marshadow",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-FIGHTING-4",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Zamazenta",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-POISON-1",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Abyssal Toxapex",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-POISON-2",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Overdrive Toxtricity",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-POISON-3",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Venom Queen Salazzle",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-POISON-4",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Eternatus",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-GROUND-1",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Great Tusk",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-GROUND-2",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Bloodmoon Ursaluna",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-GROUND-3",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Zygarde",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-GROUND-4",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Groudon",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-FLYING-1",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Royal Corviknight",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-FLYING-2",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Stormborn Kilowattrel",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-FLYING-3",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Phoenix Talonflame",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-FLYING-4",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Lugia",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-PSYCHIC-1",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Iron Leaves",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-PSYCHIC-2",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Cresselia",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-PSYCHIC-3",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Necrozma",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-PSYCHIC-4",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Mewtwo",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-BUG-1",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Slither Wing",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-BUG-2",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Buzzwole",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-BUG-3",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Pheromosa",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-BUG-4",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Genesect",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-ROCK-1",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Razorstone Kleavor",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-ROCK-2",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Stakataka",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-ROCK-3",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Iron Thorns",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-ROCK-4",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Diancie",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-GHOST-1",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Spectrier",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-GHOST-2",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Blacephalon",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-GHOST-3",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Lunala",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-GHOST-4",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Revenant Annihilape",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-DRAGON-1",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Latias",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-DRAGON-2",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Latios",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-DRAGON-3",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Reshiram",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-DRAGON-4",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Rayquaza",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-DARK-1",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Roaring Moon",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-DARK-2",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Iron Jugulis",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-DARK-3",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Darkrai",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-DARK-4",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Yveltal",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-STEEL-1",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Uncrowned Bisharp",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-STEEL-2",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Celesteela",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-STEEL-3",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Melmetal",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-STEEL-4",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Solgaleo",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-FAIRY-1",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Flutter Mane",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-FAIRY-2",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Magearna",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-FAIRY-3",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Zacian",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "EX-FAIRY-4",
+    "source_kind": "exclusive_encounter",
+    "species_or_form": "Xerneas",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q01",
+    "source_kind": "research_encounter",
+    "species_or_form": "Type: Null",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q01",
+    "source_kind": "research_prerequisite_or_evolution",
+    "species_or_form": "Silvally",
+    "acquisition": false,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q02",
+    "source_kind": "research_prerequisite_or_evolution",
+    "species_or_form": "Cyclizar",
+    "acquisition": false,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q02",
+    "source_kind": "research_encounter",
+    "species_or_form": "Koraidon",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q02",
+    "source_kind": "research_encounter",
+    "species_or_form": "Miraidon",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q03",
+    "source_kind": "research_encounter",
+    "species_or_form": "Dialga",
+    "acquisition": true,
+    "status": "UNRESOLVED"
+  },
+  {
+    "source_id": "Q03",
+    "source_kind": "research_encounter",
+    "species_or_form": "Palkia",
+    "acquisition": true,
+    "status": "UNRESOLVED"
+  },
+  {
+    "source_id": "Q03",
+    "source_kind": "research_encounter",
+    "species_or_form": "Giratina",
+    "acquisition": true,
+    "status": "UNRESOLVED"
+  },
+  {
+    "source_id": "Q04",
+    "source_kind": "research_encounter",
+    "species_or_form": "Regirock",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q04",
+    "source_kind": "research_encounter",
+    "species_or_form": "Regice",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q04",
+    "source_kind": "research_encounter",
+    "species_or_form": "Registeel",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q04",
+    "source_kind": "research_encounter",
+    "species_or_form": "Regieleki",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q04",
+    "source_kind": "research_encounter",
+    "species_or_form": "Regidrago",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q04",
+    "source_kind": "research_encounter",
+    "species_or_form": "Regigigas",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q05",
+    "source_kind": "research_upgrade",
+    "species_or_form": "Regigigas",
+    "acquisition": false,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q06",
+    "source_kind": "research_encounter",
+    "species_or_form": "Tornadus",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q06",
+    "source_kind": "research_encounter",
+    "species_or_form": "Thundurus",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q06",
+    "source_kind": "research_encounter",
+    "species_or_form": "Landorus",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q06",
+    "source_kind": "research_encounter",
+    "species_or_form": "Enamorus",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q07",
+    "source_kind": "research_encounter",
+    "species_or_form": "Cobalion",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q07",
+    "source_kind": "research_encounter",
+    "species_or_form": "Terrakion",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q07",
+    "source_kind": "research_encounter",
+    "species_or_form": "Virizion",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q07",
+    "source_kind": "research_encounter",
+    "species_or_form": "Keldeo",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q08",
+    "source_kind": "research_encounter",
+    "species_or_form": "Wo-Chien",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q08",
+    "source_kind": "research_encounter",
+    "species_or_form": "Chien-Pao",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q08",
+    "source_kind": "research_encounter",
+    "species_or_form": "Ting-Lu",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q08",
+    "source_kind": "research_encounter",
+    "species_or_form": "Chi-Yu",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q09",
+    "source_kind": "research_encounter",
+    "species_or_form": "Uxie",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q09",
+    "source_kind": "research_encounter",
+    "species_or_form": "Mesprit",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q09",
+    "source_kind": "research_encounter",
+    "species_or_form": "Azelf",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q10",
+    "source_kind": "research_encounter",
+    "species_or_form": "Tapu Koko",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q10",
+    "source_kind": "research_encounter",
+    "species_or_form": "Tapu Lele",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q10",
+    "source_kind": "research_encounter",
+    "species_or_form": "Tapu Bulu",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q10",
+    "source_kind": "research_encounter",
+    "species_or_form": "Tapu Fini",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q11",
+    "source_kind": "research_encounter",
+    "species_or_form": "Suicune",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q11",
+    "source_kind": "research_encounter",
+    "species_or_form": "Walking Wake",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q11",
+    "source_kind": "research_encounter",
+    "species_or_form": "Entei",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q11",
+    "source_kind": "research_encounter",
+    "species_or_form": "Gouging Fire",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q11",
+    "source_kind": "research_encounter",
+    "species_or_form": "Raikou",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q11",
+    "source_kind": "research_encounter",
+    "species_or_form": "Raging Bolt",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q12",
+    "source_kind": "research_encounter",
+    "species_or_form": "Zarude",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q13",
+    "source_kind": "research_encounter",
+    "species_or_form": "Articuno",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q13",
+    "source_kind": "research_encounter",
+    "species_or_form": "Zapdos",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q13",
+    "source_kind": "research_encounter",
+    "species_or_form": "Moltres",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q13",
+    "source_kind": "research_encounter",
+    "species_or_form": "Galarian Articuno",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q13",
+    "source_kind": "research_encounter",
+    "species_or_form": "Galarian Zapdos",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q13",
+    "source_kind": "research_encounter",
+    "species_or_form": "Galarian Moltres",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q14",
+    "source_kind": "research_encounter",
+    "species_or_form": "Okidogi",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q14",
+    "source_kind": "research_encounter",
+    "species_or_form": "Munkidori",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q14",
+    "source_kind": "research_encounter",
+    "species_or_form": "Fezandipiti",
+    "acquisition": true,
+    "status": "APPROVED"
+  },
+  {
+    "source_id": "Q15",
+    "source_kind": "research_upgrade",
+    "species_or_form": "Awakened Slaking",
+    "acquisition": false,
+    "status": "UNRESOLVED"
+  },
+  {
+    "source_id": "Q16",
+    "source_kind": "research_upgrade",
+    "species_or_form": "Kyurem",
+    "acquisition": false,
+    "status": "PROPOSED"
+  },
+  {
+    "source_id": "Q16",
+    "source_kind": "research_upgrade",
+    "species_or_form": "Zygarde",
+    "acquisition": false,
+    "status": "PROPOSED"
+  },
+  {
+    "source_id": "Q16",
+    "source_kind": "research_upgrade",
+    "species_or_form": "Necrozma",
+    "acquisition": false,
+    "status": "PROPOSED"
+  },
+  {
+    "source_id": "Q16",
+    "source_kind": "research_upgrade",
+    "species_or_form": "Zacian",
+    "acquisition": false,
+    "status": "PROPOSED"
+  },
+  {
+    "source_id": "wild_environment_pools",
+    "source_kind": "unrecovered_pool",
+    "species_or_form": null,
+    "acquisition": null,
+    "status": "UNRECOVERED"
+  },
+  {
+    "source_id": "starter_draft_pools",
+    "source_kind": "unrecovered_pool",
+    "species_or_form": null,
+    "acquisition": null,
+    "status": "UNRECOVERED"
+  },
+  {
+    "source_id": "Game_Corner_prizes",
+    "source_kind": "unrecovered_pool",
+    "species_or_form": null,
+    "acquisition": null,
+    "status": "UNRECOVERED"
+  },
+  {
+    "source_id": "Safari_configurable_pools",
+    "source_kind": "unrecovered_pool",
+    "species_or_form": null,
+    "acquisition": null,
+    "status": "UNRECOVERED"
+  },
+  {
+    "source_id": "Black_Market_stock",
+    "source_kind": "unrecovered_pool",
+    "species_or_form": null,
+    "acquisition": null,
+    "status": "UNRECOVERED"
+  },
+  {
+    "source_id": "ordinary_gifts",
+    "source_kind": "unrecovered_pool",
+    "species_or_form": null,
+    "acquisition": null,
+    "status": "UNRECOVERED"
+  },
+  {
+    "source_id": "fossils",
+    "source_kind": "unrecovered_pool",
+    "species_or_form": null,
+    "acquisition": null,
+    "status": "UNRECOVERED"
+  },
+  {
+    "source_id": "voucher_Standard",
+    "source_kind": "unrecovered_pool",
+    "species_or_form": null,
+    "acquisition": null,
+    "status": "UNRECOVERED"
+  },
+  {
+    "source_id": "voucher_Rare",
+    "source_kind": "unrecovered_pool",
+    "species_or_form": null,
+    "acquisition": null,
+    "status": "UNRECOVERED"
+  },
+  {
+    "source_id": "voucher_Elite",
+    "source_kind": "unrecovered_pool",
+    "species_or_form": null,
+    "acquisition": null,
+    "status": "UNRECOVERED"
+  },
+  {
+    "source_id": "voucher_Shiny",
+    "source_kind": "unrecovered_pool",
+    "species_or_form": null,
+    "acquisition": null,
+    "status": "UNRECOVERED"
+  },
+  {
+    "source_id": "voucher_Shiny_Elite",
+    "source_kind": "unrecovered_pool",
+    "species_or_form": null,
+    "acquisition": null,
+    "status": "UNRECOVERED"
+  }
+]

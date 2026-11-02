@@ -1,0 +1,73 @@
+allocation_id,gym_type,location,species_or_form,status,approval_evidence_turns,late_audit_turn,caveat,source
+EX-NORMAL-1,Normal,Seafoam Islands,Meloetta,APPROVED,"T0359,T0360,T0423,T0424,T0425,T0426,T0457",T0576,Normal revised lineup is established by replacement chain and later audit; early entire Normal table was provisional.,Choose Rebuild Town
+EX-NORMAL-2,Normal,Power Plant,Awakened Slaking,APPROVED,"T0423,T0424,T0425,T0426,T0457",T0576,Normal revised lineup is established by replacement chain and later audit; early entire Normal table was provisional.,Choose Rebuild Town
+EX-NORMAL-3,Normal,Mt. Ember,Terapagos,APPROVED,"T0360,T0366,T0576",T0576,Normal revised lineup is established by replacement chain and later audit; early entire Normal table was provisional.,Choose Rebuild Town
+EX-NORMAL-4,Normal,Cerulean Cave,Arceus,APPROVED,"T0360,T0366,T0576",T0576,Normal revised lineup is established by replacement chain and later audit; early entire Normal table was provisional.,Choose Rebuild Town
+EX-FIRE-1,Fire,Seafoam Islands,Iron Moth,APPROVED,"T0490,T0491,T0492",T0576,,Choose Rebuild Town
+EX-FIRE-2,Fire,Power Plant,Heatran,APPROVED,"T0366,T0367",T0576,,Choose Rebuild Town
+EX-FIRE-3,Fire,Mt. Ember,Volcanion,APPROVED,"T0366,T0367",T0576,,Choose Rebuild Town
+EX-FIRE-4,Fire,Cerulean Cave,Ho-Oh,APPROVED,"T0366,T0367",T0576,,Choose Rebuild Town
+EX-WATER-1,Water,Seafoam Islands,Eternal Hero Palafin,APPROVED,"T0502,T0503,T0504",T0576,,Choose Rebuild Town
+EX-WATER-2,Water,Power Plant,Abyssal Dondozo,APPROVED,"T0505,T0506,T0507",T0576,,Choose Rebuild Town
+EX-WATER-3,Water,Mt. Ember,Urshifu (Rapid Strike),APPROVED,"T0368,T0369",T0576,,Choose Rebuild Town
+EX-WATER-4,Water,Cerulean Cave,Kyogre,APPROVED,"T0368,T0369",T0576,,Choose Rebuild Town
+EX-ELECTRIC-1,Electric,Seafoam Islands,Thunderlord Luxray,APPROVED,"T0493,T0494,T0495,T0496,T0497,T0498,T0500,T0501",T0576,,Choose Rebuild Town
+EX-ELECTRIC-2,Electric,Power Plant,Overcharged Electivire,APPROVED,"T0449,T0450,T0451",T0576,,Choose Rebuild Town
+EX-ELECTRIC-3,Electric,Mt. Ember,Zeraora,APPROVED,"T0370,T0371",T0576,,Choose Rebuild Town
+EX-ELECTRIC-4,Electric,Cerulean Cave,Zekrom,APPROVED,"T0370,T0371",T0576,,Choose Rebuild Town
+EX-GRASS-1,Grass,Seafoam Islands,Brute Bonnet,APPROVED,"T0467,T0468",T0576,,Choose Rebuild Town
+EX-GRASS-2,Grass,Power Plant,Ancient Rillaboom,APPROVED,"T0485,T0486,T0487",T0576,,Choose Rebuild Town
+EX-GRASS-3,Grass,Mt. Ember,Ogerpon,APPROVED,"T0374,T0375",T0576,,Choose Rebuild Town
+EX-GRASS-4,Grass,Cerulean Cave,Celebi,APPROVED,"T0374,T0375,T0577,T0585,T0586",T0576,,Choose Rebuild Town
+EX-ICE-1,Ice,Seafoam Islands,Articuno,UNRESOLVED,"T0376,T0377,T0536,T0537,T0538,T0576",T0576,Articuno remains in late table despite approved transfer of all six birds to Wings of Kanto. Do not implement both.,Choose Rebuild Town
+EX-ICE-2,Ice,Power Plant,Iron Bundle,APPROVED,"T0426,T0427",T0576,,Choose Rebuild Town
+EX-ICE-3,Ice,Mt. Ember,Frostbound Baxcalibur,APPROVED,"T0473,T0474",T0576,,Choose Rebuild Town
+EX-ICE-4,Ice,Cerulean Cave,Kyurem,APPROVED,"T0376,T0377",T0576,,Choose Rebuild Town
+EX-FIGHTING-1,Fighting,Seafoam Islands,Iron Hands,APPROVED,"T0469,T0470",T0576,,Choose Rebuild Town
+EX-FIGHTING-2,Fighting,Power Plant,Iron Valiant,APPROVED,"T0469,T0470",T0576,,Choose Rebuild Town
+EX-FIGHTING-3,Fighting,Mt. Ember,Marshadow,APPROVED,"T0378,T0379",T0576,,Choose Rebuild Town
+EX-FIGHTING-4,Fighting,Cerulean Cave,Zamazenta,APPROVED,"T0378,T0379",T0576,,Choose Rebuild Town
+EX-POISON-1,Poison,Seafoam Islands,Abyssal Toxapex,APPROVED,"T0552,T0556,T0557,T0558",T0576,,Choose Rebuild Town
+EX-POISON-2,Poison,Power Plant,Overdrive Toxtricity,APPROVED,"T0552,T0560,T0561",T0576,,Choose Rebuild Town
+EX-POISON-3,Poison,Mt. Ember,Venom Queen Salazzle,APPROVED,"T0552,T0562,T0563,T0564,T0565",T0576,,Choose Rebuild Town
+EX-POISON-4,Poison,Cerulean Cave,Eternatus,APPROVED,"T0380,T0381",T0576,,Choose Rebuild Town
+EX-GROUND-1,Ground,Seafoam Islands,Great Tusk,APPROVED,"T0461,T0462",T0576,,Choose Rebuild Town
+EX-GROUND-2,Ground,Power Plant,Bloodmoon Ursaluna,APPROVED,"T0475,T0476",T0576,,Choose Rebuild Town
+EX-GROUND-3,Ground,Mt. Ember,Zygarde,APPROVED,"T0382,T0383",T0576,,Choose Rebuild Town
+EX-GROUND-4,Ground,Cerulean Cave,Groudon,APPROVED,"T0382,T0383",T0576,,Choose Rebuild Town
+EX-FLYING-1,Flying,Seafoam Islands,Royal Corviknight,APPROVED,"T0538,T0539,T0540,T0541,T0542,T0543",T0576,,Choose Rebuild Town
+EX-FLYING-2,Flying,Power Plant,Stormborn Kilowattrel,APPROVED,"T0544,T0545,T0546,T0547",T0576,,Choose Rebuild Town
+EX-FLYING-3,Flying,Mt. Ember,Phoenix Talonflame,APPROVED,"T0548,T0549,T0550",T0576,,Choose Rebuild Town
+EX-FLYING-4,Flying,Cerulean Cave,Lugia,APPROVED,"T0384,T0385",T0576,,Choose Rebuild Town
+EX-PSYCHIC-1,Psychic,Seafoam Islands,Iron Leaves,APPROVED,"T0481,T0482",T0576,,Choose Rebuild Town
+EX-PSYCHIC-2,Psychic,Power Plant,Cresselia,APPROVED,"T0388,T0389",T0576,,Choose Rebuild Town
+EX-PSYCHIC-3,Psychic,Mt. Ember,Necrozma,APPROVED,"T0388,T0389",T0576,,Choose Rebuild Town
+EX-PSYCHIC-4,Psychic,Cerulean Cave,Mewtwo,APPROVED,"T0388,T0389",T0576,,Choose Rebuild Town
+EX-BUG-1,Bug,Seafoam Islands,Slither Wing,APPROVED,"T0390,T0391",T0576,,Choose Rebuild Town
+EX-BUG-2,Bug,Power Plant,Buzzwole,APPROVED,"T0390,T0391",T0576,,Choose Rebuild Town
+EX-BUG-3,Bug,Mt. Ember,Pheromosa,APPROVED,"T0390,T0391",T0576,,Choose Rebuild Town
+EX-BUG-4,Bug,Cerulean Cave,Genesect,APPROVED,"T0390,T0391",T0576,,Choose Rebuild Town
+EX-ROCK-1,Rock,Seafoam Islands,Razorstone Kleavor,APPROVED,"T0430,T0431,T0432,T0433,T0434,T0435,T0436,T0437,T0438,T0439,T0440",T0576,,Choose Rebuild Town
+EX-ROCK-2,Rock,Power Plant,Stakataka,APPROVED,"T0392,T0393",T0576,,Choose Rebuild Town
+EX-ROCK-3,Rock,Mt. Ember,Iron Thorns,APPROVED,"T0392,T0393",T0576,,Choose Rebuild Town
+EX-ROCK-4,Rock,Cerulean Cave,Diancie,APPROVED,"T0392,T0393",T0576,,Choose Rebuild Town
+EX-GHOST-1,Ghost,Seafoam Islands,Spectrier,APPROVED,"T0394,T0395",T0576,,Choose Rebuild Town
+EX-GHOST-2,Ghost,Power Plant,Blacephalon,APPROVED,"T0394,T0395",T0576,,Choose Rebuild Town
+EX-GHOST-3,Ghost,Mt. Ember,Lunala,APPROVED,"T0394,T0395",T0576,,Choose Rebuild Town
+EX-GHOST-4,Ghost,Cerulean Cave,Revenant Annihilape,APPROVED,"T0508,T0509,T0516,T0531,T0532,T0533,T0534,T0535",T0576,,Choose Rebuild Town
+EX-DRAGON-1,Dragon,Seafoam Islands,Latias,APPROVED,"T0402,T0403,T0571,T0572",T0576,,Choose Rebuild Town
+EX-DRAGON-2,Dragon,Power Plant,Latios,APPROVED,"T0402,T0403,T0571,T0572",T0576,,Choose Rebuild Town
+EX-DRAGON-3,Dragon,Mt. Ember,Reshiram,APPROVED,"T0406,T0407,T0571,T0572",T0576,,Choose Rebuild Town
+EX-DRAGON-4,Dragon,Cerulean Cave,Rayquaza,APPROVED,"T0402,T0403,T0571,T0572",T0576,,Choose Rebuild Town
+EX-DARK-1,Dark,Seafoam Islands,Roaring Moon,APPROVED,"T0477,T0478",T0576,,Choose Rebuild Town
+EX-DARK-2,Dark,Power Plant,Iron Jugulis,APPROVED,"T0477,T0478",T0576,,Choose Rebuild Town
+EX-DARK-3,Dark,Mt. Ember,Darkrai,APPROVED,"T0408,T0409",T0576,,Choose Rebuild Town
+EX-DARK-4,Dark,Cerulean Cave,Yveltal,APPROVED,"T0408,T0409",T0576,,Choose Rebuild Town
+EX-STEEL-1,Steel,Seafoam Islands,Uncrowned Bisharp,APPROVED,"T0441,T0442,T0443,T0444,T0445,T0446,T0447",T0576,,Choose Rebuild Town
+EX-STEEL-2,Steel,Power Plant,Celesteela,APPROVED,"T0410,T0411",T0576,,Choose Rebuild Town
+EX-STEEL-3,Steel,Mt. Ember,Melmetal,APPROVED,"T0410,T0411",T0576,,Choose Rebuild Town
+EX-STEEL-4,Steel,Cerulean Cave,Solgaleo,APPROVED,"T0410,T0411",T0576,,Choose Rebuild Town
+EX-FAIRY-1,Fairy,Seafoam Islands,Flutter Mane,APPROVED,"T0463,T0464",T0576,,Choose Rebuild Town
+EX-FAIRY-2,Fairy,Power Plant,Magearna,APPROVED,"T0412,T0413",T0576,,Choose Rebuild Town
+EX-FAIRY-3,Fairy,Mt. Ember,Zacian,APPROVED,"T0412,T0413",T0576,,Choose Rebuild Town
+EX-FAIRY-4,Fairy,Cerulean Cave,Xerneas,APPROVED,"T0412,T0413",T0576,,Choose Rebuild Town

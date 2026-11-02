@@ -1,0 +1,1532 @@
+[
+  {
+    "gym_type": "Normal",
+    "category": "Standard",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Normal",
+    "category": "Rare",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Normal",
+    "category": "Elite",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Normal",
+    "category": "Shiny",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Normal",
+    "category": "Shiny Elite",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Fire",
+    "category": "Standard",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Fire",
+    "category": "Rare",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Fire",
+    "category": "Elite",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Fire",
+    "category": "Shiny",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Fire",
+    "category": "Shiny Elite",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Water",
+    "category": "Standard",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Water",
+    "category": "Rare",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Water",
+    "category": "Elite",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Water",
+    "category": "Shiny",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Water",
+    "category": "Shiny Elite",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Electric",
+    "category": "Standard",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Electric",
+    "category": "Rare",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Electric",
+    "category": "Elite",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Electric",
+    "category": "Shiny",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Electric",
+    "category": "Shiny Elite",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Grass",
+    "category": "Standard",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Grass",
+    "category": "Rare",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Grass",
+    "category": "Elite",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Grass",
+    "category": "Shiny",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Grass",
+    "category": "Shiny Elite",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Ice",
+    "category": "Standard",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Ice",
+    "category": "Rare",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Ice",
+    "category": "Elite",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Ice",
+    "category": "Shiny",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Ice",
+    "category": "Shiny Elite",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Fighting",
+    "category": "Standard",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Fighting",
+    "category": "Rare",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Fighting",
+    "category": "Elite",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Fighting",
+    "category": "Shiny",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Fighting",
+    "category": "Shiny Elite",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Poison",
+    "category": "Standard",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Poison",
+    "category": "Rare",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Poison",
+    "category": "Elite",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Poison",
+    "category": "Shiny",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Poison",
+    "category": "Shiny Elite",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Ground",
+    "category": "Standard",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Ground",
+    "category": "Rare",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Ground",
+    "category": "Elite",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Ground",
+    "category": "Shiny",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Ground",
+    "category": "Shiny Elite",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Flying",
+    "category": "Standard",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Flying",
+    "category": "Rare",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Flying",
+    "category": "Elite",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Flying",
+    "category": "Shiny",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Flying",
+    "category": "Shiny Elite",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Psychic",
+    "category": "Standard",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Psychic",
+    "category": "Rare",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Psychic",
+    "category": "Elite",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Psychic",
+    "category": "Shiny",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Psychic",
+    "category": "Shiny Elite",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Bug",
+    "category": "Standard",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Bug",
+    "category": "Rare",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Bug",
+    "category": "Elite",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Bug",
+    "category": "Shiny",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Bug",
+    "category": "Shiny Elite",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Rock",
+    "category": "Standard",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Rock",
+    "category": "Rare",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Rock",
+    "category": "Elite",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Rock",
+    "category": "Shiny",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Rock",
+    "category": "Shiny Elite",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Ghost",
+    "category": "Standard",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Ghost",
+    "category": "Rare",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Ghost",
+    "category": "Elite",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Ghost",
+    "category": "Shiny",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Ghost",
+    "category": "Shiny Elite",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Dragon",
+    "category": "Standard",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Dragon",
+    "category": "Rare",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Dragon",
+    "category": "Elite",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Dragon",
+    "category": "Shiny",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Dragon",
+    "category": "Shiny Elite",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Dark",
+    "category": "Standard",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Dark",
+    "category": "Rare",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Dark",
+    "category": "Elite",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Dark",
+    "category": "Shiny",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Dark",
+    "category": "Shiny Elite",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Steel",
+    "category": "Standard",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Steel",
+    "category": "Rare",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Steel",
+    "category": "Elite",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Steel",
+    "category": "Shiny",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Steel",
+    "category": "Shiny Elite",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Fairy",
+    "category": "Standard",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Fairy",
+    "category": "Rare",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Fairy",
+    "category": "Elite",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Fairy",
+    "category": "Shiny",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  },
+  {
+    "gym_type": "Fairy",
+    "category": "Shiny Elite",
+    "exact_species_pool": null,
+    "status": "UNRECOVERED",
+    "design_authority": "DEFERRED to Work mode in T0762; no exact list recovered",
+    "source_turns": [
+      761,
+      762,
+      773,
+      774,
+      775,
+      776,
+      783,
+      784
+    ]
+  }
+]

@@ -1,0 +1,17 @@
+{
+  "visible_turns": 856,
+  "user_turns": 422,
+  "assistant_turns": 434,
+  "exclusive_allocation_rows": 72,
+  "distinct_exclusive_names": 72,
+  "voucher_cells": 90,
+  "voucher_membership_known": 0,
+  "known_unique_acquisition_collision": "Articuno EX-ICE-1 / Q13",
+  "all_file_links_valid": true,
+  "all_source_turn_anchors_valid": true,
+  "all_short_answer_rows_have_preceding_context": true,
+  "old_ledger_unchanged": true,
+  "gameplay_tests_run": false,
+  "reason_no_gameplay_tests": "Documentation-only recovery; no gameplay code changed.",
+  "scope": "Archive/reference/data integrity; does not validate ROM species support or full obtainable-species coverage."
+}

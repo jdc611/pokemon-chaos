@@ -1,0 +1,1079 @@
+[
+  {
+    "allocation_id": "EX-NORMAL-1",
+    "gym_type": "Normal",
+    "location": "Seafoam Islands",
+    "species_or_form": "Meloetta",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      359,
+      360,
+      423,
+      424,
+      425,
+      426,
+      457
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "Normal revised lineup is established by replacement chain and later audit; early entire Normal table was provisional.",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-NORMAL-2",
+    "gym_type": "Normal",
+    "location": "Power Plant",
+    "species_or_form": "Awakened Slaking",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      423,
+      424,
+      425,
+      426,
+      457
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "Normal revised lineup is established by replacement chain and later audit; early entire Normal table was provisional.",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-NORMAL-3",
+    "gym_type": "Normal",
+    "location": "Mt. Ember",
+    "species_or_form": "Terapagos",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      360,
+      366,
+      576
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "Normal revised lineup is established by replacement chain and later audit; early entire Normal table was provisional.",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-NORMAL-4",
+    "gym_type": "Normal",
+    "location": "Cerulean Cave",
+    "species_or_form": "Arceus",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      360,
+      366,
+      576
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "Normal revised lineup is established by replacement chain and later audit; early entire Normal table was provisional.",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-FIRE-1",
+    "gym_type": "Fire",
+    "location": "Seafoam Islands",
+    "species_or_form": "Iron Moth",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      490,
+      491,
+      492
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-FIRE-2",
+    "gym_type": "Fire",
+    "location": "Power Plant",
+    "species_or_form": "Heatran",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      366,
+      367
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-FIRE-3",
+    "gym_type": "Fire",
+    "location": "Mt. Ember",
+    "species_or_form": "Volcanion",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      366,
+      367
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-FIRE-4",
+    "gym_type": "Fire",
+    "location": "Cerulean Cave",
+    "species_or_form": "Ho-Oh",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      366,
+      367
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-WATER-1",
+    "gym_type": "Water",
+    "location": "Seafoam Islands",
+    "species_or_form": "Eternal Hero Palafin",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      502,
+      503,
+      504
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-WATER-2",
+    "gym_type": "Water",
+    "location": "Power Plant",
+    "species_or_form": "Abyssal Dondozo",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      505,
+      506,
+      507
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-WATER-3",
+    "gym_type": "Water",
+    "location": "Mt. Ember",
+    "species_or_form": "Urshifu (Rapid Strike)",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      368,
+      369
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-WATER-4",
+    "gym_type": "Water",
+    "location": "Cerulean Cave",
+    "species_or_form": "Kyogre",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      368,
+      369
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-ELECTRIC-1",
+    "gym_type": "Electric",
+    "location": "Seafoam Islands",
+    "species_or_form": "Thunderlord Luxray",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      493,
+      494,
+      495,
+      496,
+      497,
+      498,
+      500,
+      501
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-ELECTRIC-2",
+    "gym_type": "Electric",
+    "location": "Power Plant",
+    "species_or_form": "Overcharged Electivire",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      449,
+      450,
+      451
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-ELECTRIC-3",
+    "gym_type": "Electric",
+    "location": "Mt. Ember",
+    "species_or_form": "Zeraora",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      370,
+      371
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-ELECTRIC-4",
+    "gym_type": "Electric",
+    "location": "Cerulean Cave",
+    "species_or_form": "Zekrom",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      370,
+      371
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-GRASS-1",
+    "gym_type": "Grass",
+    "location": "Seafoam Islands",
+    "species_or_form": "Brute Bonnet",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      467,
+      468
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-GRASS-2",
+    "gym_type": "Grass",
+    "location": "Power Plant",
+    "species_or_form": "Ancient Rillaboom",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      485,
+      486,
+      487
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-GRASS-3",
+    "gym_type": "Grass",
+    "location": "Mt. Ember",
+    "species_or_form": "Ogerpon",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      374,
+      375
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-GRASS-4",
+    "gym_type": "Grass",
+    "location": "Cerulean Cave",
+    "species_or_form": "Celebi",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      374,
+      375,
+      577,
+      585,
+      586
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-ICE-1",
+    "gym_type": "Ice",
+    "location": "Seafoam Islands",
+    "species_or_form": "Articuno",
+    "status": "UNRESOLVED",
+    "approval_evidence_turns": [
+      376,
+      377,
+      536,
+      537,
+      538,
+      576
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "Articuno remains in late table despite approved transfer of all six birds to Wings of Kanto. Do not implement both.",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-ICE-2",
+    "gym_type": "Ice",
+    "location": "Power Plant",
+    "species_or_form": "Iron Bundle",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      426,
+      427
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-ICE-3",
+    "gym_type": "Ice",
+    "location": "Mt. Ember",
+    "species_or_form": "Frostbound Baxcalibur",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      473,
+      474
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-ICE-4",
+    "gym_type": "Ice",
+    "location": "Cerulean Cave",
+    "species_or_form": "Kyurem",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      376,
+      377
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-FIGHTING-1",
+    "gym_type": "Fighting",
+    "location": "Seafoam Islands",
+    "species_or_form": "Iron Hands",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      469,
+      470
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-FIGHTING-2",
+    "gym_type": "Fighting",
+    "location": "Power Plant",
+    "species_or_form": "Iron Valiant",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      469,
+      470
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-FIGHTING-3",
+    "gym_type": "Fighting",
+    "location": "Mt. Ember",
+    "species_or_form": "Marshadow",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      378,
+      379
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-FIGHTING-4",
+    "gym_type": "Fighting",
+    "location": "Cerulean Cave",
+    "species_or_form": "Zamazenta",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      378,
+      379
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-POISON-1",
+    "gym_type": "Poison",
+    "location": "Seafoam Islands",
+    "species_or_form": "Abyssal Toxapex",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      552,
+      556,
+      557,
+      558
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-POISON-2",
+    "gym_type": "Poison",
+    "location": "Power Plant",
+    "species_or_form": "Overdrive Toxtricity",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      552,
+      560,
+      561
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-POISON-3",
+    "gym_type": "Poison",
+    "location": "Mt. Ember",
+    "species_or_form": "Venom Queen Salazzle",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      552,
+      562,
+      563,
+      564,
+      565
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-POISON-4",
+    "gym_type": "Poison",
+    "location": "Cerulean Cave",
+    "species_or_form": "Eternatus",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      380,
+      381
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-GROUND-1",
+    "gym_type": "Ground",
+    "location": "Seafoam Islands",
+    "species_or_form": "Great Tusk",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      461,
+      462
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-GROUND-2",
+    "gym_type": "Ground",
+    "location": "Power Plant",
+    "species_or_form": "Bloodmoon Ursaluna",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      475,
+      476
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-GROUND-3",
+    "gym_type": "Ground",
+    "location": "Mt. Ember",
+    "species_or_form": "Zygarde",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      382,
+      383
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-GROUND-4",
+    "gym_type": "Ground",
+    "location": "Cerulean Cave",
+    "species_or_form": "Groudon",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      382,
+      383
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-FLYING-1",
+    "gym_type": "Flying",
+    "location": "Seafoam Islands",
+    "species_or_form": "Royal Corviknight",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      538,
+      539,
+      540,
+      541,
+      542,
+      543
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-FLYING-2",
+    "gym_type": "Flying",
+    "location": "Power Plant",
+    "species_or_form": "Stormborn Kilowattrel",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      544,
+      545,
+      546,
+      547
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-FLYING-3",
+    "gym_type": "Flying",
+    "location": "Mt. Ember",
+    "species_or_form": "Phoenix Talonflame",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      548,
+      549,
+      550
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-FLYING-4",
+    "gym_type": "Flying",
+    "location": "Cerulean Cave",
+    "species_or_form": "Lugia",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      384,
+      385
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-PSYCHIC-1",
+    "gym_type": "Psychic",
+    "location": "Seafoam Islands",
+    "species_or_form": "Iron Leaves",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      481,
+      482
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-PSYCHIC-2",
+    "gym_type": "Psychic",
+    "location": "Power Plant",
+    "species_or_form": "Cresselia",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      388,
+      389
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-PSYCHIC-3",
+    "gym_type": "Psychic",
+    "location": "Mt. Ember",
+    "species_or_form": "Necrozma",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      388,
+      389
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-PSYCHIC-4",
+    "gym_type": "Psychic",
+    "location": "Cerulean Cave",
+    "species_or_form": "Mewtwo",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      388,
+      389
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-BUG-1",
+    "gym_type": "Bug",
+    "location": "Seafoam Islands",
+    "species_or_form": "Slither Wing",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      390,
+      391
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-BUG-2",
+    "gym_type": "Bug",
+    "location": "Power Plant",
+    "species_or_form": "Buzzwole",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      390,
+      391
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-BUG-3",
+    "gym_type": "Bug",
+    "location": "Mt. Ember",
+    "species_or_form": "Pheromosa",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      390,
+      391
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-BUG-4",
+    "gym_type": "Bug",
+    "location": "Cerulean Cave",
+    "species_or_form": "Genesect",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      390,
+      391
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-ROCK-1",
+    "gym_type": "Rock",
+    "location": "Seafoam Islands",
+    "species_or_form": "Razorstone Kleavor",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      430,
+      431,
+      432,
+      433,
+      434,
+      435,
+      436,
+      437,
+      438,
+      439,
+      440
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-ROCK-2",
+    "gym_type": "Rock",
+    "location": "Power Plant",
+    "species_or_form": "Stakataka",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      392,
+      393
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-ROCK-3",
+    "gym_type": "Rock",
+    "location": "Mt. Ember",
+    "species_or_form": "Iron Thorns",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      392,
+      393
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-ROCK-4",
+    "gym_type": "Rock",
+    "location": "Cerulean Cave",
+    "species_or_form": "Diancie",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      392,
+      393
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-GHOST-1",
+    "gym_type": "Ghost",
+    "location": "Seafoam Islands",
+    "species_or_form": "Spectrier",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      394,
+      395
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-GHOST-2",
+    "gym_type": "Ghost",
+    "location": "Power Plant",
+    "species_or_form": "Blacephalon",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      394,
+      395
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-GHOST-3",
+    "gym_type": "Ghost",
+    "location": "Mt. Ember",
+    "species_or_form": "Lunala",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      394,
+      395
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-GHOST-4",
+    "gym_type": "Ghost",
+    "location": "Cerulean Cave",
+    "species_or_form": "Revenant Annihilape",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      508,
+      509,
+      516,
+      531,
+      532,
+      533,
+      534,
+      535
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-DRAGON-1",
+    "gym_type": "Dragon",
+    "location": "Seafoam Islands",
+    "species_or_form": "Latias",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      402,
+      403,
+      571,
+      572
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-DRAGON-2",
+    "gym_type": "Dragon",
+    "location": "Power Plant",
+    "species_or_form": "Latios",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      402,
+      403,
+      571,
+      572
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-DRAGON-3",
+    "gym_type": "Dragon",
+    "location": "Mt. Ember",
+    "species_or_form": "Reshiram",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      406,
+      407,
+      571,
+      572
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-DRAGON-4",
+    "gym_type": "Dragon",
+    "location": "Cerulean Cave",
+    "species_or_form": "Rayquaza",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      402,
+      403,
+      571,
+      572
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-DARK-1",
+    "gym_type": "Dark",
+    "location": "Seafoam Islands",
+    "species_or_form": "Roaring Moon",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      477,
+      478
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-DARK-2",
+    "gym_type": "Dark",
+    "location": "Power Plant",
+    "species_or_form": "Iron Jugulis",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      477,
+      478
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-DARK-3",
+    "gym_type": "Dark",
+    "location": "Mt. Ember",
+    "species_or_form": "Darkrai",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      408,
+      409
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-DARK-4",
+    "gym_type": "Dark",
+    "location": "Cerulean Cave",
+    "species_or_form": "Yveltal",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      408,
+      409
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-STEEL-1",
+    "gym_type": "Steel",
+    "location": "Seafoam Islands",
+    "species_or_form": "Uncrowned Bisharp",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      441,
+      442,
+      443,
+      444,
+      445,
+      446,
+      447
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-STEEL-2",
+    "gym_type": "Steel",
+    "location": "Power Plant",
+    "species_or_form": "Celesteela",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      410,
+      411
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-STEEL-3",
+    "gym_type": "Steel",
+    "location": "Mt. Ember",
+    "species_or_form": "Melmetal",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      410,
+      411
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-STEEL-4",
+    "gym_type": "Steel",
+    "location": "Cerulean Cave",
+    "species_or_form": "Solgaleo",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      410,
+      411
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-FAIRY-1",
+    "gym_type": "Fairy",
+    "location": "Seafoam Islands",
+    "species_or_form": "Flutter Mane",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      463,
+      464
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-FAIRY-2",
+    "gym_type": "Fairy",
+    "location": "Power Plant",
+    "species_or_form": "Magearna",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      412,
+      413
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-FAIRY-3",
+    "gym_type": "Fairy",
+    "location": "Mt. Ember",
+    "species_or_form": "Zacian",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      412,
+      413
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  },
+  {
+    "allocation_id": "EX-FAIRY-4",
+    "gym_type": "Fairy",
+    "location": "Cerulean Cave",
+    "species_or_form": "Xerneas",
+    "status": "APPROVED",
+    "approval_evidence_turns": [
+      412,
+      413
+    ],
+    "late_audit_turn": "T0576",
+    "caveat": "",
+    "source": "Choose Rebuild Town"
+  }
+]
