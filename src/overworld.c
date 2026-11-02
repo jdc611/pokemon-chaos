@@ -1,5 +1,6 @@
 #include "global.h"
 #include "ironmon.h"
+#include "gym_leader.h"
 #include "chaos_arcade.h"
 #include "run_settings.h"
 #include "challenge_reset.h"
@@ -727,6 +728,7 @@ void WarpIntoMap(void)
 
 void SetWarpDestination(s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y)
 {
+    GymLeaderRedirectWarp(&mapGroup, &mapNum, &warpId, &x, &y);
     SetWarpData(&sWarpDestination, mapGroup, mapNum, warpId, x, y);
 }
 
@@ -2026,6 +2028,18 @@ void CB2_NewGame(void)
         gDebugForceKantoNewGame = FALSE;
     }
 
+    if (IsGymLeaderRun())
+    {
+        VarSet(VAR_MAP_SCENE_PALLET_TOWN_PROFESSOR_OAKS_LAB, 14);
+        VarSet(VAR_MAP_SCENE_PALLET_TOWN_OAK, 3);
+        FlagClear(FLAG_HIDE_OAK_IN_HIS_LAB);
+        FlagSet(FLAG_HIDE_RIVAL_IN_LAB);
+        FlagSet(FLAG_HIDE_BULBASAUR_BALL);
+        FlagSet(FLAG_HIDE_CHARMANDER_BALL);
+        FlagSet(FLAG_HIDE_SQUIRTLE_BALL);
+        SetWarpDestination(MAP_GROUP(MAP_PALLET_TOWN_PROFESSOR_OAKS_LAB), MAP_NUM(MAP_PALLET_TOWN_PROFESSOR_OAKS_LAB), WARP_ID_NONE, 6, 10);
+        WarpIntoMap();
+    }
     ResetInitialPlayerAvatarState();
     PlayTimeCounter_Start();
     ScriptContext_Init();

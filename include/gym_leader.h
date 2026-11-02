@@ -24,4 +24,5 @@ u32 GymLeaderPoolCount(u32 type, u32 tier, u32 kind, bool32 starters);
 bool32 GymLeaderSignaturePoolsMatchTypes(void);
 bool32 GymLeaderCanLearnSignature(enum Species species, enum Move move);
 u32 GymLeaderBuildStarterPool(u32 type, u16 *out, u32 capacity);
+void GymLeaderRedirectWarp(s8 *group, s8 *number, s8 *warp, s8 *x, s8 *y);
 #endif

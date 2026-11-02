@@ -1,5 +1,6 @@
 #include "global.h"
 #include "ironmon.h"
+#include "gym_leader.h"
 #include "clock.h"
 #include "new_game.h"
 #include "random.h"
@@ -318,6 +319,7 @@ VarSet(VAR_CHAOS_EZ_CATCH, gRunSetupEzCatch);
 VarSet(VAR_CHAOS_CARE_PACKAGES, gRunSetupCarePackages);
 gSaveBlock3Ptr->futureEvolutionEligible = FALSE;
 IronmonInitializeRun();
+    if (IS_FRLG) GymLeaderInitialize();
     ClearFollowerNPCData();
 }
 

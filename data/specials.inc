@@ -719,3 +719,21 @@ gSpecials::
 	def_special GymLeaderScriptStatus
 	def_special GymLeaderScriptExclusive
 	def_special GymLeaderScriptChooseIdentity
+	def_special GleOpeningStage
+	def_special GleTownMenu, waitstate=1
+	def_special GleTownChoose
+	def_special GleTownRename, waitstate=1
+	def_special GleTypeMenu, waitstate=1
+	def_special GleTypeChoose
+	def_special GleSignatureMenu, waitstate=1
+	def_special GleSignatureInfo
+	def_special GleSignatureChoose
+	def_special GleDraftMenu, waitstate=1
+	def_special GleDraftInfo
+	def_special GleDraftActions, waitstate=1
+	def_special GleDraftSummary, waitstate=1
+	def_special GleDraftChoose
+	def_special GleWarpHome
+	def_special GleWarpLeague
+	def_special GleFinishOpening
+	def_special GleGymPrepare

@@ -2,7 +2,7 @@
 import sys,struct
 sys.path.insert(0,'tools/chaos/native')
 from qa import *
-v=struct.unpack('<17I',(ROOT/'layout.bin').read_bytes())
+data=(ROOT/'layout.bin').read_bytes();v=struct.unpack('<'+'I'*(len(data)//4),data)
 assert lib.boot(str(repo/'pokefirered.gba').encode())
 frames(1800);frames(3,8);frames(100)
 assert rd('gSaveBlock3Ptr')!=0

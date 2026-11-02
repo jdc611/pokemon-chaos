@@ -13,6 +13,7 @@ enum {
     NAMING_SCREEN_CODE,
     NAMING_SCREEN_RIVAL,
     NAMING_SCREEN_SEED,
+    NAMING_SCREEN_GLE_TOWN,
 };
 
 extern void BattleMainCB2(void);

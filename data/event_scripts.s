@@ -1746,3 +1746,7 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 	.include "data/scripts/wild_encounter.inc"
 
 	.include "data/maps/ChaosPokemonRanch/scripts.inc"
+
+	.include "data/maps/GleGymInterior/scripts.inc"
+	.include "data/maps/GleLeagueHall/scripts.inc"
+	.include "data/scripts/gym_leader_opening.inc"

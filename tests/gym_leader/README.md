@@ -31,3 +31,15 @@ The fixture bypasses name entry/ordinary new-game setup, then explicitly activat
 GLE state. It tests real linked ARM functions and flash sectors. It does not
 exercise a player-facing GLE opening or claim a full playthrough. Always regenerate
 fixtures after rebuilding; no old emulator states are imported.
+
+Controller-driven opening fixture:
+
+```
+python3 tests/gym_leader/native_opening.py
+GLE_TEST_TOWN_NAME=1 python3 tests/gym_leader/native_opening.py
+```
+
+Uses the same environment as native_smoke.py. Only player/rival name entry is
+bypassed. Exercises hometown/type/signature menus, native Summary return, three
+starter picks and GLA introduction. This is a limited opening route, not a full
+playthrough. Summary profile text still has a documented presentation defect.

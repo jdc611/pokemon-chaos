@@ -2134,7 +2134,24 @@ static void RunSetup_StartForFireRed(bool8 quickStart)
 #endif
         sRunSetupPage = RUN_SETUP_PAGE_RANDOMIZER;
     }
-    CB2_RunSetup_Init();
+    // Gym Leader Edition uses the native Oak naming flow, then starts its
+    // in-world hometown/type/draft tutorial instead of another mode selector.
+    gRunSetupRandomizerEnabled = RUN_WILD_NORMAL;
+    gRunSetupSeedIsCustom = FALSE;
+    gRunSetupStarterMode = RUN_STARTER_KANTO;
+    gRunSetupWorldSeed = sRunSetupSeed;
+    gRunSetupFilterMode = RUN_FILTER_NONE;
+    gRunSetupFilterValue = 0;
+    gRunSetupBstMode = RUN_BST_OFF;
+    gRunSetupAbilityMode = RUN_ABILITIES_NORMAL;
+    gRunSetupMinimalGrindingMode = FALSE;
+    gRunSetupDifficulty = RUN_DIFFICULTY_NORMAL;
+    gRunSetupNuzlocke = gRunSetupEzCatch = gRunSetupCarePackages = FALSE;
+    gRunSetupMovesetMode = RUN_MOVESETS_NORMAL;
+    gRunSetupEvolutionMode = RUN_EVOLUTIONS_NORMAL;
+    gRunSetupItemRandomization = FALSE;
+    FreeAllWindowBuffers();
+    SetMainCallback2(CB2_NewGame);
 }
 
 void CB2_RunSetupForFireRed(void)

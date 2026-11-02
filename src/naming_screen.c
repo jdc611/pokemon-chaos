@@ -1845,6 +1845,7 @@ static void (*const sDrawTextEntryBoxFuncs[])(void) =
 {
     [NAMING_SCREEN_PLAYER]     = DrawNormalTextEntryBox,
     [NAMING_SCREEN_BOX]        = DrawNormalTextEntryBox,
+    [NAMING_SCREEN_GLE_TOWN]   = DrawNormalTextEntryBox,
     [NAMING_SCREEN_CAUGHT_MON] = DrawMonTextEntryBox,
     [NAMING_SCREEN_NICKNAME]   = DrawMonTextEntryBox,
     [NAMING_SCREEN_WALDA]      = DrawNormalTextEntryBox,
@@ -2282,6 +2283,15 @@ static const struct NamingScreenTemplate sRivalNamingScreenTemplate =
     .title = sText_RivalsName,
 };
 
+static const struct NamingScreenTemplate sGleTownNamingTemplate =
+{
+    .copyExistingString = TRUE,
+    .maxChars = 12,
+    .iconFunction = 2,
+    .initialPage = KBPAGE_LETTERS_UPPER,
+    .title = COMPOUND_STRING("TOWN NAME?"),
+};
+
 static const struct NamingScreenTemplate *const sNamingScreenTemplates[] =
 {
     [NAMING_SCREEN_PLAYER]     = &sPlayerNamingScreenTemplate,
@@ -2292,6 +2302,7 @@ static const struct NamingScreenTemplate *const sNamingScreenTemplates[] =
     [NAMING_SCREEN_CODE]       = &sCodeScreenTemplate,
     [NAMING_SCREEN_RIVAL]      = &sRivalNamingScreenTemplate,
     [NAMING_SCREEN_SEED]       = &sSeedScreenTemplate,
+    [NAMING_SCREEN_GLE_TOWN]   = &sGleTownNamingTemplate,
 };
 
 static const struct OamData sOam_8x8 =
