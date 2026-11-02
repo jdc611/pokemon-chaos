@@ -143,6 +143,10 @@ GleGym_GuideMenu::
 	goto_if_eq GleGym_Status
 	compare VAR_RESULT, 3
 	goto_if_eq GleGym_Heal
+	compare VAR_RESULT, 4
+	goto_if_eq GleGym_Inspection
+	compare VAR_RESULT, 5
+	goto_if_eq GleGym_VisitGLA
 	release
 	end
 GleGym_Heal::
@@ -169,6 +173,8 @@ GleGym_BadTeam::
 GleGym_Status::
 	special GymLeaderGuideStatus
 	msgbox GleText_GymStatus, MSGBOX_DEFAULT
+	special GymLeaderRankInfo
+	msgbox GleText_RankProgress, MSGBOX_DEFAULT
 	goto GleGym_GuideMenu
 GleGym_Defend::
 	msgbox GleText_DefendConfirm, MSGBOX_YESNO
@@ -197,6 +203,19 @@ GleHall_Guy::
 	lock
 	faceplayer
 	msgbox GleText_HallAdvice, MSGBOX_DEFAULT
+	msgbox GleText_ReturnHome, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq GleHall_Stay
+	closemessage
+	special GleWarpHome
+	waitstate
+GleHall_Stay::
+	release
+	end
+GleGym_VisitGLA::
+	closemessage
+	special GleWarpLeague
+	waitstate
 	release
 	end
 
@@ -264,3 +283,40 @@ GleText_SignatureReceived:
 	.string "Your SIGNATURE TM is in\nKEY ITEMS. It is reusable.\pUse it to teach compatible\nPOKéMON your signature move.$"
 GleText_SignatureNoRoom:
 	.string "We couldn't place your TM.\nPlease check your KEY ITEMS.$"
+
+GleGym_Inspection::
+	special GymLeaderInspectionInfo
+	compare VAR_RESULT, 1
+	goto_if_eq GleGym_InspectionReady
+	msgbox GleText_NoInspection, MSGBOX_DEFAULT
+	goto GleGym_GuideMenu
+GleGym_InspectionReady::
+	msgbox GleText_InspectionConfirm, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq GleGym_GuideMenu
+	closemessage
+	special GymLeaderStartInspection
+	compare VAR_RESULT, 3
+	goto_if_eq GleGym_InspectionPassed
+	compare VAR_RESULT, 4
+	goto_if_eq GleGym_InspectionFailed
+	goto GleGym_BadTeam
+GleGym_InspectionPassed::
+	msgbox GleText_InspectionPassed, MSGBOX_DEFAULT
+	goto GleGym_GuideMenu
+GleGym_InspectionFailed::
+	msgbox GleText_InspectionFailed, MSGBOX_DEFAULT
+	goto GleGym_GuideMenu
+GleText_RankProgress:
+	.string "Rank EXP: {STR_VAR_1} / {STR_VAR_2}\nOfficial team limit: {STR_VAR_3}\pMilestone promotions require\na LEAGUE INSPECTION victory.\lChoose it here when ready.$"
+GleText_NoInspection:
+	.string "No inspection is due yet.\nKeep defending your GYM to\lbuild rank experience.$"
+GleText_InspectionConfirm:
+	.string "{STR_VAR_1} is ready to inspect\nyour GYM.\p{STR_VAR_2}\pBattle with your registered team?$"
+GleText_InspectionPassed:
+	.string "Inspection passed!\nYour GYM RANK has increased.\pYour level cap and official\nteam allowance follow your rank.$"
+GleText_InspectionFailed:
+	.string "The inspection is not passed yet.\nYour team has been healed.\pYour rank EXP is preserved.\nYou can request another\linspection when ready.$"
+
+GleText_ReturnHome:
+	.string "Arrange free travel back\nto your GYM?$"

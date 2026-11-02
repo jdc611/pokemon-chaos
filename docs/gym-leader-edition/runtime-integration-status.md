@@ -9,7 +9,7 @@ release is approved as completion. The current binary is internal QA only.
 
 - Official ARM GCC 13.2.1/binutils/newlib/graphics toolchain works locally.
 - Compiled FireRed target: 32 MiB padded; current linked payload ~27.23 MB.
-- Pointer-free 1,328-byte GLE state uses an anonymous union with Hoenn secret-base
+- Pointer-free 1,332-byte GLE state uses an anonymous union with Hoenn secret-base
   storage. Compile-time fit assertion; following SaveBlock1 offsets preserved.
 - Rank XP, promotion and four inspection gates, protected demotion floors;
   current GLE cap queried through existing global cap function when active.
@@ -39,6 +39,15 @@ release is approved as completion. The current binary is internal QA only.
 - A permanent protected signature TM is granted in KEY ITEMS. Native TM/party
   screens teach compatible Pokémon and retain the reusable item; natural level-up
   compatibility is supported alongside ordinary TM compatibility.
+- All four native inspection gates use fixed traditional Elite Four rosters,
+  cap-scaled teams, honor dialogue, preserved retry XP/queue and promotion results.
+- Player/rival towns replace their events and construction layout while retaining
+  native map IDs, connections and the unselected town. Plot signs call persistent
+  construction transactions; Centers/Marts have native functional interiors.
+- Housing capacity, gradual population, visitor NPCs and passive deposits are
+  connected to exploration activity. Constructed Habitats generate rank-scaled,
+  type-matching ordinary wild Pokémon. Other ordinary wild levels follow rank.
+- GLA/home travel and a home-Gym whiteout return prevent early recovery dead ends.
 - Stone Axe set to 60 BP and 95 accuracy, retaining its effect.
 
 ## Validation evidence and limits
@@ -78,6 +87,14 @@ field callback. National Pokédex setup fixes non-Kanto zero numbers. Modern
 CreateMonWithIVs does not assign moves; previews, starters and challengers now
 explicitly receive their native initial moves, checked by the fixtures.
 
+The construction fixture passes all three hometowns: actual sign purchase, money,
+Center door/collision, native Nurse healing, dynamic exit, housing capacity,
+gradual population/deposits and actual flash/map restoration. The Saffron fixture
+also passes home-Gym whiteout and actual walking-generated Habitat wild encounter.
+The inspection fixture checks all gates and deterministic retries with explicit
+transaction outcomes, plus an actual unassisted Lorelei loss and safe retry menu.
+These are not complete campaign/balance/collision coverage.
+
 Registration currently selects from the traveling party; registered Pokémon may
 subsequently be deposited and found in the PC. Direct PC selection at registration,
 all ranks' native selection screens, full evolution/held-item scenarios and a
@@ -97,11 +114,11 @@ status document saying those are current blockers is superseded by this file.
 - Complete opening polish, cancellation paths, real Oak naming entry, and
   save/load at each opening stage.
   Signature choice and its protected reusable item/teaching UI are implemented.
-- Actual blank town maps, safe plots, building/interior transitions, restoration,
-  collision/visual verification, three landmarks and habitat encounters.
+- Further town visual/collision polish, landmark construction/services, all building
+  service roles and tiers, and wider route-edge/plot/interior audits.
 - Direct PC registration, later-rank challenger composition and balancing,
-  inspectors/inspection scheduling, recruitment queue filtering and richer rewards.
-- Wild rank scaling, environment draws, deterministic full-species coverage,
+  inspection victory balance coverage, recruitment queue filtering and richer rewards.
+- Environment-wide species redistribution and deterministic full-species coverage,
   static encounter scripts, save prompts/retries and postgame distribution.
 - All research event scripts/NPCs, form upgrades, encounter progress and rewards.
 - GLA voucher UI and gifts, general tutor/supply services, recruitment/rival/loyalty

@@ -1161,6 +1161,10 @@
     "PewterCity_House2_Frlg",
     "ChaosPokemonRanch",
     "GleGymInterior",
-    "GleLeagueHall"
+    "GleLeagueHall",
+    "GleBuildingInterior",
+    "GleCenterInterior",
+    "GleMartInterior",
+    "GleRivalGym"
   ]
 }

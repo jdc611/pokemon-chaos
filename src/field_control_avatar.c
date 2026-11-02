@@ -1,4 +1,5 @@
 #include "global.h"
+#include "gym_leader.h"
 #include "chaos_tracker.h"
 #include "ironmon.h"
 #include "chaos_v2.h"
@@ -226,6 +227,9 @@ int ProcessPlayerFieldInput(struct FieldInput *input)
     if (input->tookStep)
     {
         IncrementGameStat(GAME_STAT_STEPS);
+        if (IsGymLeaderRun() && GymLeaderState()->openingStage == 5
+            && (GetGameStat(GAME_STAT_STEPS) & 63) == 0)
+            GymLeaderAdvanceActivity();
         IncrementBirthIslandRockStepCount();
         DespawnAllOverworldWildEncounters(OWE_GENERATED, WILD_CHECK_REPEL);
         if (FindTaskIdByFunc(Task_FollowerNPCOutOfDoor) == TASK_NONE && TryStartStepBasedScript(&position, metatileBehavior, playerDirection) == TRUE)

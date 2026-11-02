@@ -742,3 +742,15 @@ gSpecials::
 	def_special GymLeaderGuideStatus
 	def_special GymLeaderRegisterTeam, waitstate=1
 	def_special GymLeaderStartDefense, waitstate=1
+
+	def_special GymLeaderInspectionInfo
+	def_special GymLeaderRankInfo
+	def_special GymLeaderStartInspection, waitstate=1
+
+	def_special GleTownDraw
+	def_special GlePlotInfo
+	def_special GlePlotMenu, waitstate=1
+	def_special GlePlotBuildInfo
+	def_special GlePlotConstruct
+	def_special GleTownStatus
+	def_special GleBuildingInfo

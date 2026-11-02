@@ -38,7 +38,7 @@ static const u8 *const sTypeNames[] = {
 };
 static const u8 sCounterTypes[] = {6,2,3,8,1,6,10,8,2,3,15,1,2,15,17,6,1,7};
 
-static void Menu(const u8 *const *names, u32 count, bool8 ignoreB)
+void GymLeaderMenu(const u8 *const *names, u32 count, bool8 ignoreB)
 {
     struct ListMenuItem *items = AllocZeroed(count * sizeof(*items));
     u32 i;
@@ -74,7 +74,7 @@ void GleOpeningStage(void)
 
 void GleTownMenu(void)
 {
-    Menu(sTownNames, ARRAY_COUNT(sTownNames), TRUE);
+    GymLeaderMenu(sTownNames, ARRAY_COUNT(sTownNames), TRUE);
 }
 
 void GleTownChoose(void)
@@ -102,7 +102,7 @@ void GleTownRename(void)
 
 void GleTypeMenu(void)
 {
-    Menu(sTypeNames, ARRAY_COUNT(sTypeNames), TRUE);
+    GymLeaderMenu(sTypeNames, ARRAY_COUNT(sTypeNames), TRUE);
 }
 
 static bool32 RollDraft(void)
@@ -180,7 +180,7 @@ void GleSignatureMenu(void)
     u32 i;
     for (i = 0; i < 3; i++)
         names[i] = GetMoveName(GymLeaderSignatureOption(GymLeaderState()->gymType, i));
-    Menu(names, 3, TRUE);
+    GymLeaderMenu(names, 3, TRUE);
 }
 
 void GleSignatureInfo(void)
@@ -219,7 +219,7 @@ void GleDraftMenu(void)
     }
     for (i = 0; i < 3; i++)
         names[i] = GetSpeciesName(s->draftSpecies[s->draftRound * 3 + i]);
-    Menu(names, 3, TRUE);
+    GymLeaderMenu(names, 3, TRUE);
 }
 
 void GleDraftInfo(void)
@@ -238,7 +238,7 @@ void GleDraftInfo(void)
 void GleDraftActions(void)
 {
     static const u8 *const names[] = {COMPOUND_STRING("Choose"), COMPOUND_STRING("Summary"), COMPOUND_STRING("Back")};
-    Menu(names, 3, FALSE);
+    GymLeaderMenu(names, 3, FALSE);
 }
 
 static void MakeDraftMon(struct Pokemon *mon, u32 index)
@@ -307,6 +307,11 @@ static void SetTownExit(bool32 league)
     static const u16 towns[] = {MAP_SAFFRON_CITY, MAP_CELADON_CITY, MAP_FUCHSIA_CITY};
     static const u16 gyms[] = {MAP_SAFFRON_CITY_GYM, MAP_CELADON_CITY_GYM, MAP_FUCHSIA_CITY_GYM};
     u16 town = league ? MAP_VIRIDIAN_CITY : towns[GymLeaderState()->town];
+    if (!league)
+    {
+        SetDynamicWarpWithCoords(0, MAP_GROUP(town), MAP_NUM(town), -1, 10, 9);
+        return;
+    }
     u16 gym = league ? MAP_VIRIDIAN_CITY_GYM : gyms[GymLeaderState()->town];
     const struct MapHeader *map = Overworld_GetMapHeaderByGroupAndId(MAP_GROUP(town), MAP_NUM(town));
     u32 i;
@@ -359,6 +364,8 @@ void GymLeaderRedirectWarp(s8 *group, s8 *number, s8 *warp, s8 *x, s8 *y)
     struct GleState *s = GymLeaderState();
     bool32 league;
     u16 destination;
+    if (GymLeaderTownWarp(group, number, warp, x, y))
+        return;
     if (!IsGymLeaderRun() || s->openingStage == 0)
         return;
     destination = (u8)*number | ((u8)*group << 8);
@@ -386,9 +393,10 @@ void GymLeaderGuideMenu(void)
 {
     static const u8 *const names[] = {
         COMPOUND_STRING("Defend GYM"), COMPOUND_STRING("Register team"),
-        COMPOUND_STRING("GYM status"), COMPOUND_STRING("Heal team"), COMPOUND_STRING("Back")
+        COMPOUND_STRING("GYM status"), COMPOUND_STRING("Heal team"),
+        COMPOUND_STRING("League Inspection"), COMPOUND_STRING("Visit GLA"), COMPOUND_STRING("Back")
     };
-    Menu(names, ARRAY_COUNT(names), FALSE);
+    GymLeaderMenu(names, ARRAY_COUNT(names), FALSE);
 }
 
 void GymLeaderGuideStatus(void)
@@ -398,4 +406,24 @@ void GymLeaderGuideStatus(void)
     ConvertIntToDecimalStringN(gStringVar2, GymLeaderLevelCap(), STR_CONV_MODE_LEFT_ALIGN, 3);
     ConvertIntToDecimalStringN(gStringVar3, s->registeredCount, STR_CONV_MODE_LEFT_ALIGN, 1);
     gSpecialVar_0x8004 = s->queueCount;
+}
+
+void GymLeaderInspectionInfo(void)
+{
+    static const u8 *const names[] = {COMPOUND_STRING("LORELEI"), COMPOUND_STRING("BRUNO"), COMPOUND_STRING("AGATHA"), COMPOUND_STRING("LANCE")};
+    struct GleState *s = GymLeaderState();
+    gSpecialVar_Result = 0;
+    if (!IsGymLeaderRun() || s->pendingInspection < 1 || s->pendingInspection > 4)
+        return;
+    StringCopy(gStringVar1, names[s->pendingInspection - 1]);
+    StringCopy(gStringVar2, s->honor >= 100 ? COMPOUND_STRING("Your good standing is noted.") : s->honor <= -100 ? COMPOUND_STRING("Your methods raise concerns.") : COMPOUND_STRING("Let's assess your leadership."));
+    gSpecialVar_Result = 1;
+}
+
+void GymLeaderRankInfo(void)
+{
+    struct GleState *s = GymLeaderState();
+    ConvertIntToDecimalStringN(gStringVar1, s->rankXp, STR_CONV_MODE_LEFT_ALIGN, 6);
+    ConvertIntToDecimalStringN(gStringVar2, GleXpNeeded(s), STR_CONV_MODE_LEFT_ALIGN, 6);
+    ConvertIntToDecimalStringN(gStringVar3, GymLeaderPartyLimit(), STR_CONV_MODE_LEFT_ALIGN, 1);
 }

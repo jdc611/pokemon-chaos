@@ -11,11 +11,16 @@ struct GleState *GymLeaderState(void)
     if (gSaveBlock1Ptr == NULL)
         return NULL;
     s = &gSaveBlock1Ptr->gymLeader;
-    if (s->magic == GLE_MAGIC && s->version == 2)
+    if (s->magic == GLE_MAGIC && (s->version == 2 || s->version == 3))
     {
-        s->registeredCount = 0;
-        memset(s->registeredPersonality, 0, sizeof(s->registeredPersonality));
-        memset(s->registeredTrainerId, 0, sizeof(s->registeredTrainerId));
+        if (s->version == 2)
+        {
+            s->registeredCount = 0;
+            memset(s->registeredPersonality, 0, sizeof(s->registeredPersonality));
+            memset(s->registeredTrainerId, 0, sizeof(s->registeredTrainerId));
+        }
+        s->interiorPlot = s->interiorTown = GLE_NONE;
+        s->landmarkTier = 0;
         s->version = GLE_VERSION;
     }
     return s;

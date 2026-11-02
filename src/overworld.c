@@ -678,12 +678,14 @@ static void LoadCurrentMapData(void)
     gMapHeader = *Overworld_GetMapHeaderByGroupAndId(gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum);
     gSaveBlock1Ptr->mapLayoutId = gMapHeader.mapLayoutId;
     gMapHeader.mapLayout = GetMapLayout(gMapHeader.mapLayoutId);
+    GymLeaderConfigureTown(&gMapHeader);
 }
 
 static void LoadSaveblockMapHeader(void)
 {
     gMapHeader = *Overworld_GetMapHeaderByGroupAndId(gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum);
     gMapHeader.mapLayout = GetMapLayout(gSaveBlock1Ptr->mapLayoutId);
+    GymLeaderConfigureTown(&gMapHeader);
 }
 
 static void SetPlayerCoordsFromWarp(void)
@@ -773,6 +775,8 @@ static void EnsureValidLastHealLocation(void)
 
 static bool32 IsWhiteoutCutscene(void)
 {
+    if (IsGymLeaderRun())
+        return FALSE;
     if (OW_WHITEOUT_CUTSCENE < GEN_4)
         return FALSE;
     return GetHealNpcLocalId(GetHealLocationIndexByWarpData(&gSaveBlock1Ptr->lastHealLocation)) != LOCALID_NONE;
@@ -780,6 +784,14 @@ static bool32 IsWhiteoutCutscene(void)
 
 void SetWarpDestinationToLastHealLocation(void)
 {
+    if (IsGymLeaderRun())
+    {
+        static const u16 towns[] = {MAP_SAFFRON_CITY, MAP_CELADON_CITY, MAP_FUCHSIA_CITY};
+        u16 town = towns[GymLeaderState()->town];
+        SetDynamicWarpWithCoords(0, MAP_GROUP(town), MAP_NUM(town), -1, 10, 9);
+        SetWarpDestination(MAP_GROUP(MAP_GLE_GYM_INTERIOR), MAP_NUM(MAP_GLE_GYM_INTERIOR), -1, 6, 7);
+        return;
+    }
     EnsureValidLastHealLocation();
     if (IsWhiteoutCutscene())
         SetWhiteoutRespawnWarpAndHealerNPC(&sWarpDestination);
@@ -789,6 +801,11 @@ void SetWarpDestinationToLastHealLocation(void)
 
 void SetWarpDestinationForTeleport(void)
 {
+    if (IsGymLeaderRun())
+    {
+        SetWarpDestinationToLastHealLocation();
+        return;
+    }
     EnsureValidLastHealLocation();
     sWarpDestination = gSaveBlock1Ptr->lastHealLocation;
 }

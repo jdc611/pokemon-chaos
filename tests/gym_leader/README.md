@@ -62,3 +62,19 @@ python3 tests/gym_leader/native_signature.py
 This fixture uses a test gift for a naturally compatible off-type Pokémon, then
 teaches through the real bag and party menus. It checks the learned move, official
 legality and the protected item remaining. It is not all-options compatibility QA.
+
+
+```sh
+python3 tests/gym_leader/native_inspection.py
+python3 tests/gym_leader/native_town.py
+GLE_TEST_TOWN=1 python3 tests/gym_leader/native_town.py
+GLE_TEST_TOWN=2 python3 tests/gym_leader/native_town.py
+```
+
+Inspection gates use explicit outcomes for transaction checks and real UI input
+for launch/loss/return. Town tests purchase a Center through its sign, use its Nurse
+and door, test housing/growth/deposits and flash/map restoration. Development funds
+are supplied for the Habitat fixture; its walking-generated wild encounter is real.
+The direct whiteout callback fixture verifies home recovery, not a full wild loss.
+Build with conservative parallelism if a compiler job is killed by memory pressure;
+remove any resulting zero-byte generated objects before rebuilding.

@@ -1,4 +1,5 @@
 #include "global.h"
+#include "gym_leader.h"
 #include "ironmon.h"
 #include "battle_setup.h"
 #include "battle_pike.h"
@@ -412,6 +413,14 @@ u8 ChooseWildMonLevel(const struct WildPokemon *wildPokemon, u8 wildMonIndex, en
     u8 range;
     u8 rand;
 
+    if (IsGymLeaderRun())
+    {
+        u32 cap = GymLeaderLevelCap();
+        u32 low = max(3, (s32)(cap / 2) - 3);
+        u32 high = GymLeaderState()->rank == 1 ? 8 : cap - 3;
+        return low + Random() % (high - low + 1);
+    }
+
     if (LURE_STEP_COUNT == 0)
     {
         // Make sure minimum level is less than maximum level
@@ -457,6 +466,12 @@ u8 ChooseWildMonLevel(const struct WildPokemon *wildPokemon, u8 wildMonIndex, en
 u16 GetCurrentMapWildMonHeaderId(void)
 {
     u16 i;
+    if (GymLeaderHabitatActive())
+    {
+        for (i=0;gWildMonHeaders[i].mapGroup != MAP_GROUP(MAP_UNDEFINED);i++)
+            if(gWildMonHeaders[i].mapGroup==MAP_GROUP(MAP_ROUTE1) && gWildMonHeaders[i].mapNum==MAP_NUM(MAP_ROUTE1))
+                return i;
+    }
 
     for (i = 0; ; i++)
     {
@@ -879,7 +894,10 @@ bool8 TryGenerateWildMon(const struct WildPokemonInfo *wildMonInfo, enum WildPok
     if (gMapHeader.mapLayoutId != LAYOUT_BATTLE_FRONTIER_BATTLE_PIKE_ROOM_WILD_MONS && flags & WILD_CHECK_KEEN_EYE && !IsAbilityAllowingEncounter(level))
         return FALSE;
 
-    if (gSaveBlock3Ptr->randomizerEnabled)
+    u16 habitatSpecies = GymLeaderHabitatSpecies(wildMonIndex);
+    if (habitatSpecies != SPECIES_NONE)
+        CreateWildMon(habitatSpecies,level);
+    else if (gSaveBlock3Ptr->randomizerEnabled)
         CreateWildMon(GetRandomizedWildSpecies(wildMonInfo, area, wildMonIndex), level);
     else
         CreateWildMon(wildMonInfo->wildPokemon[wildMonIndex].species, level);

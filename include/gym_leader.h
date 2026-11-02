@@ -3,6 +3,7 @@
 #include "gym_leader_state.h"
 struct Pokemon;
 struct Trainer;
+struct MapHeader;
 #define GLE_EXCLUSIVE_TYPES 18
 #define GLE_EXCLUSIVE_PER_TYPE 4
 struct GleEncounter { u16 species; u8 rank, project; };
@@ -17,6 +18,10 @@ bool32 GymLeaderTeamLegal(struct Pokemon *, u32 count);
 bool32 GymLeaderRegistering(void);
 const struct Trainer *GymLeaderBattleTrainer(void);
 u32 GymLeaderPrepareDefense(void);
+u32 GymLeaderPrepareInspection(void);
+void GymLeaderStartInspection(void);
+void GymLeaderInspectionInfo(void);
+void GymLeaderRankInfo(void);
 void GymLeaderFinishDefense(void);
 void GymLeaderRegisterTeam(void);
 void GymLeaderStartDefense(void);
@@ -35,4 +40,16 @@ bool32 GymLeaderSignaturePoolsMatchTypes(void);
 bool32 GymLeaderCanLearnSignature(enum Species species, enum Move move);
 u32 GymLeaderBuildStarterPool(u32 type, u16 *out, u32 capacity);
 void GymLeaderRedirectWarp(s8 *group, s8 *number, s8 *warp, s8 *x, s8 *y);
+void GymLeaderMenu(const u8 *const *names, u32 count, bool8 ignoreB);
+void GymLeaderConfigureTown(struct MapHeader *header);
+bool32 GymLeaderTownWarp(s8 *group, s8 *number, s8 *warp, s8 *x, s8 *y);
+bool32 GymLeaderHabitatActive(void);
+u16 GymLeaderHabitatSpecies(u32 slot);
+void GleTownDraw(void);
+void GlePlotInfo(void);
+void GlePlotMenu(void);
+void GlePlotBuildInfo(void);
+void GlePlotConstruct(void);
+void GleTownStatus(void);
+void GleBuildingInfo(void);
 #endif

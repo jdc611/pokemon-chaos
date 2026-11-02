@@ -1,4 +1,5 @@
 #include "global.h"
+#include "gym_leader.h"
 #include "chaos_arcade.h"
 #include "main.h"
 #include "text.h"
@@ -1961,7 +1962,13 @@ u8 *GetMapName(u8 *dest, mapsec_u16_t regionMapId, u16 padLength)
     u8 *str;
     u16 i;
 
-    if (regionMapId == MAPSEC_SECRET_BASE)
+    static const u16 gleTowns[] = {MAPSEC_SAFFRON_CITY, MAPSEC_CELADON_CITY, MAPSEC_FUCHSIA_CITY};
+    if (IsGymLeaderRun() && GymLeaderState()->openingStage >= 1
+        && regionMapId == gleTowns[GymLeaderState()->town])
+    {
+        str = StringCopy(dest, GymLeaderState()->townName);
+    }
+    else if (regionMapId == MAPSEC_SECRET_BASE)
     {
         str = GetSecretBaseMapName(dest);
     }

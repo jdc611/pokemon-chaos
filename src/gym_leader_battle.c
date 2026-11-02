@@ -7,6 +7,7 @@
 #include "event_data.h"
 #include "field_screen_effect.h"
 #include "main.h"
+#include "money.h"
 #include "malloc.h"
 #include "overworld.h"
 #include "party_menu.h"
@@ -27,6 +28,7 @@
 // stores identities, not cloned Pokémon, so deposits and party reordering work.
 static EWRAM_DATA bool8 sRegistering = FALSE;
 static EWRAM_DATA bool8 sActive = FALSE;
+static EWRAM_DATA u8 sInspection = 0;
 static EWRAM_DATA u16 sOldFacility = 0;
 static EWRAM_DATA u8 sTravelCount = 0;
 static EWRAM_DATA struct Pokemon sTravelParty[PARTY_SIZE] = {0};
@@ -135,6 +137,45 @@ static bool32 FindRegisteredMon(u32 index, struct Pokemon *out, s16 *source)
     return FALSE;
 }
 
+static bool32 PrepareInspector(u32 inspection)
+{
+    static const u16 teams[4][PARTY_SIZE] = {
+        {SPECIES_DEWGONG, SPECIES_CLOYSTER, SPECIES_LAPRAS},
+        {SPECIES_ONIX, SPECIES_HITMONCHAN, SPECIES_HITMONLEE, SPECIES_MACHAMP},
+        {SPECIES_ARBOK, SPECIES_CROBAT, SPECIES_WEEZING, SPECIES_MISMAGIUS, SPECIES_GENGAR},
+        {SPECIES_GYARADOS, SPECIES_AERODACTYL, SPECIES_KINGDRA, SPECIES_SALAMENCE, SPECIES_DRAGONITE, SPECIES_DRAGONITE}
+    };
+    static const u8 counts[] = {3, 4, 5, 6};
+    static const u16 pictures[] = {TRAINER_PIC_ELITE_FOUR_LORELEI_FRLG, TRAINER_PIC_ELITE_FOUR_BRUNO_FRLG, TRAINER_PIC_ELITE_FOUR_AGATHA_FRLG, TRAINER_PIC_ELITE_FOUR_LANCE_FRLG};
+    static const u8 *const names[] = {COMPOUND_STRING("LORELEI"), COMPOUND_STRING("BRUNO"), COMPOUND_STRING("AGATHA"), COMPOUND_STRING("LANCE")};
+    u32 i, id = inspection - 1;
+    u32 seed = GleMix(GymLeaderState()->seed ^ (inspection << 24) ^ 0xE411);
+    if (inspection < 1 || inspection > 4)
+        return FALSE;
+    memset(&sChallenger, 0, sizeof(sChallenger));
+    sChallenger.partySize = counts[id];
+    sChallenger.trainerClass = TRAINER_CLASS_ELITE_FOUR;
+    sChallenger.trainerPic = pictures[id];
+    sChallenger.gender = id == 0 || id == 2;
+    StringCopy(sChallenger.trainerName, names[id]);
+    sChallenger.aiFlags = AI_FLAG_CHECK_BAD_MOVE | AI_FLAG_CHECK_VIABILITY | AI_FLAG_TRY_TO_FAINT;
+    sChallenger.party = sChallengerEntries;
+    ZeroEnemyPartyMons();
+    for (i = 0; i < counts[id]; i++)
+    {
+        u8 level = GymLeaderLevelCap();
+        enum Item item = i + 1 == counts[id] ? ITEM_SITRUS_BERRY : ITEM_NONE;
+        CreateMonWithIVs(&gParties[B_TRAINER_OPPONENT_A][i], teams[id][i], level,
+            GleMix(seed ^ i), OTID_STRUCT_PRESET(seed), 20 + inspection * 2);
+        GiveMonInitialMoveset(&gParties[B_TRAINER_OPPONENT_A][i]);
+        SetMonData(&gParties[B_TRAINER_OPPONENT_A][i], MON_DATA_HELD_ITEM, &item);
+        sChallengerEntries[i].species = teams[id][i];
+        sChallengerEntries[i].lvl = level;
+    }
+    gPartiesCount[B_TRAINER_OPPONENT_A] = counts[id];
+    return TRUE;
+}
+
 static bool32 PrepareChallenger(void)
 {
     struct GleState *s = GymLeaderState();
@@ -146,6 +187,8 @@ static bool32 PrepareChallenger(void)
         average += GetMonData(&sOriginalTeam[i], MON_DATA_LEVEL);
     average = min(average / sTeamCount, GymLeaderLevelCap());
     // Early novices bring fewer Pokémon; later ranks use the full allowance.
+    memset(&sChallenger, 0, sizeof(sChallenger));
+    memset(sChallengerEntries, 0, sizeof(sChallengerEntries));
     sChallenger.partySize = s->rank == 1 ? 1 + seed % min(2, sTeamCount) : sTeamCount;
     sChallenger.trainerClass = TRAINER_CLASS_PKMN_TRAINER_1;
     sChallenger.trainerPic = TRAINER_PIC_CAMPER_FRLG;
@@ -177,11 +220,11 @@ static bool32 PrepareChallenger(void)
 }
 
 // Returns 1 on success. Failure never changes the traveling party or queue.
-u32 GymLeaderPrepareDefense(void)
+static u32 PrepareOfficialBattle(u32 inspection)
 {
     struct GleState *s = GymLeaderState();
     u32 i, j;
-    if (!IsGymLeaderRun() || s->openingStage != 5 || sActive || !s->queueCount)
+    if (!IsGymLeaderRun() || s->openingStage != 5 || sActive || (!inspection && !s->queueCount))
         return 0;
     if (!s->registeredCount || s->registeredCount > GymLeaderPartyLimit())
         return 2;
@@ -196,7 +239,9 @@ u32 GymLeaderPrepareDefense(void)
     }
     if (!GymLeaderTeamLegal(sOriginalTeam, sTeamCount))
         return 2;
-    if (!PrepareChallenger())
+    if (inspection && (s->pendingInspection != inspection || s->rankXp < GleXpNeeded(s)))
+        return 4;
+    if (!(inspection ? PrepareInspector(inspection) : PrepareChallenger()))
         return 0;
     memcpy(sTravelParty, gParties[B_TRAINER_PLAYER], sizeof(sTravelParty));
     sTravelCount = gPartiesCount[B_TRAINER_PLAYER];
@@ -218,8 +263,18 @@ u32 GymLeaderPrepareDefense(void)
     gPartiesCount[B_TRAINER_PLAYER] = sTeamCount;
     HealPlayerParty();
     sActive = TRUE;
-    GleTakeChallenger(s);
+    sInspection = inspection;
+    if (!inspection)
+        GleTakeChallenger(s);
     return 1;
+}
+
+u32 GymLeaderPrepareDefense(void) { return PrepareOfficialBattle(0); }
+u32 GymLeaderPrepareInspection(void)
+{
+    if (!IsGymLeaderRun() || !GymLeaderState()->pendingInspection)
+        return 4;
+    return PrepareOfficialBattle(GymLeaderState()->pendingInspection);
 }
 
 void GymLeaderFinishDefense(void)
@@ -246,13 +301,21 @@ void GymLeaderFinishDefense(void)
     memcpy(gParties[B_TRAINER_PLAYER], sTravelParty, sizeof(sTravelParty));
     gPartiesCount[B_TRAINER_PLAYER] = sTravelCount;
     HealPlayerParty();
-    GleDefenseResult(s, (gBattleOutcome & 0x7F) == B_OUTCOME_WON);
+    if (sInspection)
+        GleInspectionResult(s, (gBattleOutcome & 0x7F) == B_OUTCOME_WON);
+    else
+    {
+        if ((gBattleOutcome & 0x7F) == B_OUTCOME_WON)
+            AddMoney(&gSaveBlock1Ptr->money, 250 * s->rank + 5 * s->population);
+        GleDefenseResult(s, (gBattleOutcome & 0x7F) == B_OUTCOME_WON);
+    }
     GymLeaderAdvanceActivity();
     // Preserve a reliable queue while visiting the Gym; never force waiting.
     if (!s->queueCount)
         GleEnqueue(s, 0);
-    gSpecialVar_Result = (gBattleOutcome & 0x7F) == B_OUTCOME_WON ? 1 : 2;
+    gSpecialVar_Result = (gBattleOutcome & 0x7F) == B_OUTCOME_WON ? (sInspection ? 3 : 1) : (sInspection ? 4 : 2);
     sActive = FALSE;
+    sInspection = 0;
 }
 
 static void ReturnFromDefense(void)
@@ -271,9 +334,9 @@ static void Task_StartDefense(u8 taskId)
     }
 }
 
-void GymLeaderStartDefense(void)
+static void StartOfficialBattle(bool32 inspection)
 {
-    gSpecialVar_Result = GymLeaderPrepareDefense();
+    gSpecialVar_Result = inspection ? GymLeaderPrepareInspection() : GymLeaderPrepareDefense();
     if (gSpecialVar_Result != 1)
     {
         gSpecialVar_Result += 10;
@@ -288,3 +351,6 @@ void GymLeaderStartDefense(void)
     PlayMapChosenOrBattleBGM(0);
     BattleTransition_StartOnField(GetTrainerBattleTransition());
 }
+
+void GymLeaderStartDefense(void) { StartOfficialBattle(FALSE); }
+void GymLeaderStartInspection(void) { StartOfficialBattle(TRUE); }

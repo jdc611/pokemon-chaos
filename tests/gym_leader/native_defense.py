@@ -8,7 +8,7 @@ call('GleWarpHome');frames(240)
 # Move from the introduction spawn to the Gym Guide and interact normally.
 frames(32,16);frames(64,128);frames(20)
 press(1)
-until(lambda:menu_count()==5)
+until(lambda:menu_count()==7)
 snap('guide-menu')
 choose(1)
 until(lambda:call('GymLeaderRegistering'))
@@ -18,7 +18,7 @@ press(16,25);press(128,25)
 press(1,25);press(1,25)
 press(128)
 press(1,100)
-until(lambda:menu_count()==5)
+until(lambda:menu_count()==7)
 assert rd(current()+v[26],1)==1
 snap('guide-registered')
 # Accept one real defense through the guide.
@@ -35,7 +35,7 @@ for i in range(1200):
  if call('GymLeaderBattleTrainer')==0:break
 else:
  snap('guide-defense-timeout');raise AssertionError('defense did not return')
-until(lambda:menu_count()==5)
+until(lambda:menu_count()==7)
 assert rd('gPartiesCount',1)==3, 'traveling party was not restored'
 assert rd(current()+v[29],2)==before+1, ('expected win',rd('gBattleOutcome',1))
 for i in range(3):

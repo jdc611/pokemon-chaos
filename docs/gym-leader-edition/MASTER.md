@@ -26600,3 +26600,24 @@ playthrough and device QA. Current ROM binaries remain internal QA only.
 The maintained implementation checklist is
 `docs/gym-leader-edition/runtime-integration-status.md` on the
 `gym-leader-edition` branch of `jdc611/pokemon-chaos`.
+
+
+## 21. Inspection and town runtime checkpoint — November 2, 2026
+
+Native inspection scheduling now follows Lorelei, Bruno, Agatha and Lance with
+fixed traditional teams and rank caps. Retry losses preserve Gym XP and do not
+count as failed defenses. All gate transactions and an actual Lorelei loss/return
+have been exercised; inspector victory balance is not yet a complete playthrough.
+
+The two selected towns now use original map IDs/connections with construction
+plots, a home/rival Gym and replacement events. The third town remains normal.
+Plot-sign purchases, native Centers/Marts, housing, population, income, save/map
+restoration, recovery and Habitat encounters are connected. Center construction,
+Nurse healing and dynamic entrance/exit pass in Saffron, Celadon and Fuchsia.
+Ordinary wild levels scale by rank. GLA/home travel and home-Gym whiteout recovery
+are implemented. House appearance uses complete native city templates.
+
+Remaining work continues in the maintained runtime checklist: landmarks, wider
+building/tier and route-edge QA, complete encounters/research/services/stories,
+competitions/history, legacy lock removal, and full campaign/device validation.
+This checkpoint does not certify a finished release.

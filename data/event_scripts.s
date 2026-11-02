@@ -1750,3 +1750,13 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 	.include "data/maps/GleGymInterior/scripts.inc"
 	.include "data/maps/GleLeagueHall/scripts.inc"
 	.include "data/scripts/gym_leader_opening.inc"
+
+	.include "data/maps/GleBuildingInterior/scripts.inc"
+
+	.include "data/maps/GleCenterInterior/scripts.inc"
+
+	.include "data/maps/GleMartInterior/scripts.inc"
+
+	.include "data/maps/GleRivalGym/scripts.inc"
+
+	.include "data/scripts/gym_leader_town.inc"
