@@ -1,4 +1,5 @@
 #include "global.h"
+#include "gym_leader.h"
 #include "ironmon.h"
 #include "chaos_records.h"
 #include "chaos_abilities.h"
@@ -4034,6 +4035,8 @@ static u32 GetTrainerMoneyToGive(u16 trainerId)
     u32 moneyReward;
     u8 trainerMoney = 0;
 
+    if (GymLeaderTrainingActive())
+        return 0;
     if (trainerId == TRAINER_SECRET_BASE)
     {
         moneyReward = 20 * gBattleResources->secretBase->party.levels[0] * gBattleStruct->moneyMultiplier;
@@ -4064,7 +4067,11 @@ static void Cmd_getmoneyreward(void)
     u32 money;
     u8 sPartyLevel = 1;
 
-    if (gBattleOutcome == B_OUTCOME_WON)
+    if (GymLeaderTrainingActive())
+    {
+        money = 0;
+    }
+    else if (gBattleOutcome == B_OUTCOME_WON)
     {
         money = GetTrainerMoneyToGive(TRAINER_BATTLE_PARAM.opponentA);
         if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS)
@@ -5760,7 +5767,7 @@ static void Cmd_givepaydaymoney(void)
 {
     CMD_ARGS();
 
-    if (!(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED_LINK)) && gPaydayMoney != 0)
+    if (!GymLeaderTrainingActive() && !(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED_LINK)) && gPaydayMoney != 0)
     {
         u32 bonusMoney = gPaydayMoney * gBattleStruct->moneyMultiplier;
         AddMoney(&gSaveBlock1Ptr->money, bonusMoney);

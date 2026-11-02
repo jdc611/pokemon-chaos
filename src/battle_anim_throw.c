@@ -451,6 +451,13 @@ static const struct PokeBallParticles sBallParticles[POKEBALL_COUNT] =
         .particleAnimationFunc = UltraBallOpenParticleAnimation,
     },
 
+    [BALL_GLA] =
+    {
+        POKE_BALL_ANIMATION(65058, gBattleAnimSpriteGfx_Particles, gBattleAnimSpritePal_CircleImpact),
+        .openFadeColor = RGB(20,23,31),
+        .animNums = 5,
+        .particleAnimationFunc = UltraBallOpenParticleAnimation,
+    },
     [BALL_CHERISH] =
     {
         POKE_BALL_ANIMATION(TAG_PARTICLES_CHERISH_BALL, gBattleAnimSpriteGfx_Particles2, gBattleAnimSpritePal_Particles2),

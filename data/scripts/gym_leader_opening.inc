@@ -203,12 +203,7 @@ GleHall_Guy::
 	lock
 	faceplayer
 	msgbox GleText_HallAdvice, MSGBOX_DEFAULT
-	msgbox GleText_ReturnHome, MSGBOX_YESNO
-	compare VAR_RESULT, NO
-	goto_if_eq GleHall_Stay
-	closemessage
-	special GleWarpHome
-	waitstate
+	goto GleHall_Services
 GleHall_Stay::
 	release
 	end
@@ -320,3 +315,5 @@ GleText_InspectionFailed:
 
 GleText_ReturnHome:
 	.string "Arrange free travel back\nto your GYM?$"
+
+	.include "data/scripts/gym_leader_services.inc"

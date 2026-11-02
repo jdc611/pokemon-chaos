@@ -33,6 +33,11 @@ const unsigned gleLayout[] = {
  MAP_SAFFRON_CITY, MAP_CELADON_CITY, MAP_FUCHSIA_CITY,
  MAP_GLE_CENTER_INTERIOR, MAP_GLE_MART_INTERIOR, MAP_GLE_BUILDING_INTERIOR,
  offsetof(struct SaveBlock1, money),
+ offsetof(struct GleState, landmarkTier), offsetof(struct GleState, voucherCount),
+ offsetof(struct GleState, vouchers), sizeof(struct GleVoucher), offsetof(struct GleState, milestoneRewardMask),
+ MON_DATA_POKEBALL, MON_DATA_IS_SHINY, offsetof(struct GleState, highestRank),
+ MAP_SILPH_CO_1F, MAP_CELADON_CITY_GAME_CORNER, MAP_FUCHSIA_CITY_SAFARI_ZONE_ENTRANCE,
+ TOTAL_BOXES_COUNT, IN_BOX_COUNT, offsetof(struct GleState, version), offsetof(struct GleVoucher, level),
 
 
 

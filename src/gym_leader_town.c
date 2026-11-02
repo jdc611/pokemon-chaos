@@ -14,7 +14,7 @@
 #include "constants/flags.h"
 #include "constants/maps.h"
 
-extern const u8 GleTown_MapScripts[], GleTownResident[];
+extern const u8 GleTown_MapScripts[], GleTownResident[], GleLandmarkSign[], GleSilphResearch[], GleSilphPrivate[];
 extern const u8 GleTownPlot0[];
 extern const u8 GleTownPlot1[];
 extern const u8 GleTownPlot2[];
@@ -41,6 +41,7 @@ extern const u8 GleTownPlot22[];
 extern const u8 GleTownPlot23[];
 static const u8 *const sPlotScripts[] = {GleTownPlot0,GleTownPlot1,GleTownPlot2,GleTownPlot3,GleTownPlot4,GleTownPlot5,GleTownPlot6,GleTownPlot7,GleTownPlot8,GleTownPlot9,GleTownPlot10,GleTownPlot11,GleTownPlot12,GleTownPlot13,GleTownPlot14,GleTownPlot15,GleTownPlot16,GleTownPlot17,GleTownPlot18,GleTownPlot19,GleTownPlot20,GleTownPlot21,GleTownPlot22,GleTownPlot23};
 static const u16 sTowns[] = {MAP_SAFFRON_CITY, MAP_CELADON_CITY, MAP_FUCHSIA_CITY};
+static const u16 sLandmarks[] = {MAP_SILPH_CO_1F, MAP_CELADON_CITY_GAME_CORNER, MAP_FUCHSIA_CITY_SAFARI_ZONE_ENTRANCE};
 static const u16 sGyms[] = {MAP_SAFFRON_CITY_GYM, MAP_CELADON_CITY_GYM, MAP_FUCHSIA_CITY_GYM};
 static const u16 sHouses[] = {MAP_SAFFRON_CITY_COPYCATS_HOUSE_1F, MAP_CELADON_CITY_HOUSE1, MAP_FUCHSIA_CITY_HOUSE1};
 static const u8 *const sBuildings[] = {
@@ -50,7 +51,7 @@ static const u8 *const sBuildings[] = {
 };
 static EWRAM_DATA struct MapEvents sEvents = {0};
 static EWRAM_DATA struct WarpEvent sWarps[64] = {0};
-static EWRAM_DATA struct BgEvent sSigns[GLE_PLOTS] = {0};
+static EWRAM_DATA struct BgEvent sSigns[GLE_PLOTS+1] = {0};
 static EWRAM_DATA struct ObjectEventTemplate sResidents[8] = {0};
 static EWRAM_DATA u8 sOriginalWarpCount = 0;
 
@@ -77,6 +78,9 @@ static u32 PlotBuilding(u32 town, u32 plot)
         return GLE_EMPTY;
     return plot == 0 ? GLE_CENTER : plot == 1 ? GLE_MART : plot % 4 == 0 ? GLE_HOTEL : GLE_HOUSE;
 }
+static u32 LandmarkTier(u32 town) { return town==GymLeaderState()->town?GymLeaderState()->landmarkTier:(GymLeaderState()->activity>=400); }
+static s32 LandmarkX(u32 town) { return town==0?59:town==1?49:37; }
+static s32 LandmarkY(u32 town) { return town==0?19:7; }
 static const struct MapHeader *OriginalTown(u32 town)
 {
     return Overworld_GetMapHeaderByGroupAndId(MAP_GROUP(sTowns[town]), MAP_NUM(sTowns[town]));
@@ -104,7 +108,27 @@ void GymLeaderConfigureTown(struct MapHeader *header)
             header->regionMapSectionId = OriginalTown(GymLeaderState()->interiorTown)->regionMapSectionId;
     }
     if (town < 0)
+    {
+        // The restored Silph public laboratory replaces the old Rocket siege.
+        // Closed staff stair/elevator doors cannot launch the vanilla campaign.
+        if(IsGymLeaderRun() && CurrentMapId()==MAP_SILPH_CO_1F
+            && (GymLeaderState()->town==0 || GymLeaderState()->rivalTown==0))
+        {
+            sEvents=*header->events;
+            sEvents.warpCount=3;
+            sResidents[0]=(struct ObjectEventTemplate){.localId=1,.graphicsId=OBJ_EVENT_GFX_WORKER_F,.x=3,.y=7,.elevation=3,.movementType=MOVEMENT_TYPE_FACE_DOWN,.script=GleSilphResearch};
+            sResidents[1]=(struct ObjectEventTemplate){.localId=2,.graphicsId=OBJ_EVENT_GFX_SCIENTIST_1,.x=31,.y=2,.elevation=3,.movementType=MOVEMENT_TYPE_FACE_DOWN,.script=GleSilphPrivate};
+            sResidents[2]=(struct ObjectEventTemplate){.localId=3,.graphicsId=OBJ_EVENT_GFX_SCIENTIST_1,.x=22,.y=3,.elevation=3,.movementType=MOVEMENT_TYPE_FACE_DOWN,.script=GleSilphPrivate};
+            sEvents.objectEventCount=3;sEvents.objectEvents=sResidents;
+            header->events=&sEvents;
+        }
+        else if(IsGymLeaderRun() && CurrentMapId()==MAP_CELADON_CITY_GAME_CORNER)
+        {
+            sEvents=*header->events;sEvents.warpCount=3;header->events=&sEvents;
+            FlagSet(FLAG_HIDE_GAME_CORNER_ROCKET);
+        }
         return;
+    }
     source = OriginalTown(town)->events;
     sOriginalWarpCount = source->warpCount;
     memset(&sEvents, 0, sizeof(sEvents));
@@ -123,8 +147,13 @@ void GymLeaderConfigureTown(struct MapHeader *header)
     visitors = town == GymLeaderState()->town ? min(8, GymLeaderState()->population / 3) : min(8, GymLeaderState()->activity / 80);
     for (i = 0; i < visitors; i++)
         sResidents[i] = (struct ObjectEventTemplate){.localId=i+1,.graphicsId=i%2 ? OBJ_EVENT_GFX_LASS_FRLG : OBJ_EVENT_GFX_GENTLEMAN_FRLG,.x=4+i*5,.y=16+(i%3)*7,.elevation=3,.movementType=MOVEMENT_TYPE_WANDER_LEFT_AND_RIGHT,.movementRangeX=1,.movementRangeY=0,.script=GleTownResident};
-    sEvents.warpCount = sOriginalWarpCount + 1 + GLE_PLOTS;
-    sEvents.warps = sWarps; sEvents.bgEventCount = GLE_PLOTS; sEvents.bgEvents = sSigns;
+    {
+        u32 index=sOriginalWarpCount+1+GLE_PLOTS;
+        sWarps[index]=(struct WarpEvent){LandmarkX(town),LandmarkY(town),0,town==0?1:town==1?0:2,MAP_NUM(sLandmarks[town]),MAP_GROUP(sLandmarks[town])};
+        sSigns[GLE_PLOTS]=(struct BgEvent){.x=LandmarkX(town)+2,.y=LandmarkY(town)+1,.elevation=0,.kind=BG_EVENT_PLAYER_FACING_ANY,.bgUnion.script=GleLandmarkSign};
+    }
+    sEvents.warpCount = sOriginalWarpCount + 2 + GLE_PLOTS;
+    sEvents.warps = sWarps; sEvents.bgEventCount = GLE_PLOTS+1; sEvents.bgEvents = sSigns;
     sEvents.objectEventCount = visitors; sEvents.objectEvents = sResidents;
     header->events = &sEvents;
     header->mapScripts = GleTown_MapScripts;
@@ -237,6 +266,10 @@ void GleTownDraw(void)
         }
         MapGridSetMetatileIdAt(PlotX(i)+5+7,PlotY(i)+5+7,0x0402);
     }
+    if(LandmarkTier(town))
+        DrawBuilding(town,sLandmarks[town],LandmarkX(town)-(town==0?4:3),LandmarkY(town)-(town==0?9:4),town==0?9:7,town==0?10:5);
+    if(LandmarkTier(town))MapGridSetMetatileIdAt(LandmarkX(town)+7,LandmarkY(town)+7,0x0462);
+    MapGridSetMetatileIdAt(LandmarkX(town)+2+7,LandmarkY(town)+1+7,0x0402);
     FlagSet(town == 0 ? FLAG_WORLD_MAP_SAFFRON_CITY : town == 1 ? FLAG_WORLD_MAP_CELADON_CITY : FLAG_WORLD_MAP_FUCHSIA_CITY);
 }
 
@@ -249,6 +282,18 @@ bool32 GymLeaderTownWarp(s8 *group, s8 *number, s8 *warp, s8 *x, s8 *y)
     if (!IsGymLeaderRun())
         return FALSE;
     s = GymLeaderState();
+    if(s->interiorPlot==GLE_PLOTS && s->interiorTown<3
+        && CurrentMapId()==sLandmarks[s->interiorTown] && destination==sTowns[s->interiorTown])
+    {
+        *warp=-1;*x=LandmarkX(s->interiorTown);*y=LandmarkY(s->interiorTown)+1;
+        s->interiorPlot=GLE_NONE;
+        return TRUE;
+    }
+    if(town>=0 && destination==sLandmarks[town] && LandmarkTier(town))
+    {
+        s->interiorPlot=GLE_PLOTS;s->interiorTown=town;
+        return TRUE;
+    }
     if (town >= 0 && destination == MAP_GLE_GYM_INTERIOR)
     {
         SetDynamicWarpWithCoords(0, MAP_GROUP(sTowns[town]), MAP_NUM(sTowns[town]), -1, 10, 9);
@@ -408,4 +453,40 @@ u16 GymLeaderHabitatSpecies(u32 slot)
         species=pool[GleMix(s->seed ^ s->rank ^ (slot*7919))%count];
     Free(pool);
     return species;
+}
+
+void GleLandmarkInfo(void)
+{
+    static const u8 *const names[]={COMPOUND_STRING("SILPH CO."),COMPOUND_STRING("GAME CORNER"),COMPOUND_STRING("SAFARI ZONE")};
+    static const u32 costs[]={8000,6000,5000};
+    s32 town=TownIndex(CurrentMapId());
+    u32 tier;
+    gSpecialVar_Result=0;
+    if(town<0)return;
+    if(town!=GymLeaderState()->town){gSpecialVar_Result=2;return;}
+    tier=GymLeaderState()->landmarkTier+1;
+    StringCopy(gStringVar1,names[town]);
+    ConvertIntToDecimalStringN(gStringVar2,costs[town]*tier*tier,STR_CONV_MODE_LEFT_ALIGN,6);
+    ConvertIntToDecimalStringN(gStringVar3,tier,STR_CONV_MODE_LEFT_ALIGN,1);
+    gSpecialVar_Result=tier<=3?1:3;
+}
+void GleLandmarkConstruct(void)
+{
+    static const u32 costs[]={8000,6000,5000};
+    s32 town=TownIndex(CurrentMapId());
+    struct GleState *s=GymLeaderState();
+    u32 tier=s->landmarkTier+1,cost;
+    gSpecialVar_Result=0;
+    if(town<0 || town!=s->town || tier>3)return;
+    if(s->rank<1+tier*2 || s->population<(tier-1)*12)return;
+    if(gSaveBlock1Ptr->pos.x>=LandmarkX(town)-(town==0?4:3)
+        && gSaveBlock1Ptr->pos.x<=LandmarkX(town)+(town==0?4:3)
+        && gSaveBlock1Ptr->pos.y>=LandmarkY(town)-(town==0?9:4)
+        && gSaveBlock1Ptr->pos.y<=LandmarkY(town))return;
+    cost=costs[town]*tier*tier;
+    if(!IsEnoughMoney(&gSaveBlock1Ptr->money,cost))return;
+    RemoveMoney(&gSaveBlock1Ptr->money,cost);
+    s->landmarkTier=tier;
+    GymLeaderConfigureTown(&gMapHeader);GleTownDraw();DrawWholeMapView();
+    gSpecialVar_Result=1;
 }

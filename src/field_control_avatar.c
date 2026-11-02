@@ -1201,7 +1201,7 @@ static bool8 TryDoorWarp(struct MapPosition *position, u16 metatileBehavior, enu
                  && door->mapGroup == MAP_GROUP(MAP_CELADON_CITY_GAME_CORNER)
                  && (door->mapNum == MAP_NUM(MAP_CELADON_CITY_GAME_CORNER)
                   || door->mapNum == MAP_NUM(MAP_CELADON_CITY_GAME_CORNER_PRIZE_ROOM))
-                 && !FlagGet(FLAG_BADGE04_GET))
+                 && !IsGymLeaderRun() && !FlagGet(FLAG_BADGE04_GET))
                 {
                     extern const u8 ChaosArcade_Construction[];
                     ScriptContext_SetupScript(ChaosArcade_Construction);

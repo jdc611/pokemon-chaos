@@ -56,13 +56,8 @@ GleBuilding_Clerk::
 	release
 	end
 GleBuilding_Dojo::
-	msgbox GleTown_TextDojo, MSGBOX_YESNO
-	compare VAR_RESULT, NO
-	goto_if_eq GleBuilding_Done
-	closemessage
-	release
-	callnative ChooseMonForTrainToCap
-	end
+	call GleTraining_Challenge
+	goto GleBuilding_Done
 GleBuilding_Restaurant::
 	msgbox GleTown_TextRestaurant, MSGBOX_DEFAULT
 	special HealPlayerParty
@@ -228,3 +223,28 @@ GleTownPlot22::
 GleTownPlot23::
 	setvar VAR_0x8007, 23
 	goto GleTownPlot
+
+GleLandmarkSign::
+	lockall
+	special GleLandmarkInfo
+	compare VAR_RESULT, 2
+	goto_if_eq GleTown_RivalPlot
+	compare VAR_RESULT, 3
+	goto_if_eq GleLandmark_Finished
+	msgbox GleLandmark_TextConfirm, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq GleTown_PlotDone
+	special GleLandmarkConstruct
+	compare VAR_RESULT, 1
+	goto_if_eq GleTown_PlotBuilt
+	msgbox GleLandmark_TextLocked, MSGBOX_DEFAULT
+	goto GleTown_PlotDone
+GleLandmark_Finished::
+	msgbox GleLandmark_TextFinished, MSGBOX_DEFAULT
+	goto GleTown_PlotDone
+GleLandmark_TextConfirm:
+	.string "{STR_VAR_1} / TIER {STR_VAR_3}\nRestoration cost: ${STR_VAR_2}\pRestore or upgrade your landmark?$"
+GleLandmark_TextLocked:
+	.string "Landmark tiers need ranks 3, 5, 7.\nHigher tiers also need 12 or 24\lresidents, and enough money.\pStand south of the sign\nto keep the work site clear.$"
+GleLandmark_TextFinished:
+	.string "Your town's landmark is fully\nrestored. Thank you, LEADER!$"

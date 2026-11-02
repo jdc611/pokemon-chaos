@@ -754,3 +754,20 @@ gSpecials::
 	def_special GlePlotConstruct
 	def_special GleTownStatus
 	def_special GleBuildingInfo
+
+	def_special GleLandmarkInfo
+	def_special GleLandmarkConstruct
+
+	def_special GymLeaderTrainingMenu, waitstate=1
+	def_special GymLeaderStartTraining, waitstate=1
+	def_special GleServicesMenu, waitstate=1
+	def_special GleMilestoneRewards
+	def_special GleVoucherMenu, waitstate=1
+	def_special GleVoucherOpen
+	def_special GleVoucherChoices, waitstate=1
+	def_special GleVoucherInfo
+	def_special GleVoucherSummary, waitstate=1
+	def_special GleVoucherClaim
+
+	def_special GleResearchMenu, waitstate=1
+	def_special GleResearchInfo

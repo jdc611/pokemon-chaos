@@ -11,7 +11,7 @@ struct GleState *GymLeaderState(void)
     if (gSaveBlock1Ptr == NULL)
         return NULL;
     s = &gSaveBlock1Ptr->gymLeader;
-    if (s->magic == GLE_MAGIC && (s->version == 2 || s->version == 3))
+    if (s->magic == GLE_MAGIC && s->version >= 2 && s->version < GLE_VERSION)
     {
         if (s->version == 2)
         {
@@ -19,8 +19,16 @@ struct GleState *GymLeaderState(void)
             memset(s->registeredPersonality, 0, sizeof(s->registeredPersonality));
             memset(s->registeredTrainerId, 0, sizeof(s->registeredTrainerId));
         }
-        s->interiorPlot = s->interiorTown = GLE_NONE;
-        s->landmarkTier = 0;
+        if (s->version < 4)
+        {
+            s->interiorPlot = s->interiorTown = GLE_NONE;
+            s->landmarkTier = 0;
+        }
+        {
+            u32 i;
+            for(i=0;i<GLE_VOUCHERS;i++)s->vouchers[i].level=0;
+        }
+        s->milestoneRewardMask = 0;
         s->version = GLE_VERSION;
     }
     return s;

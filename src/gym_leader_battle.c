@@ -29,6 +29,8 @@
 static EWRAM_DATA bool8 sRegistering = FALSE;
 static EWRAM_DATA bool8 sActive = FALSE;
 static EWRAM_DATA u8 sInspection = 0;
+static EWRAM_DATA u8 sTraining = 0;
+static EWRAM_DATA u8 sTrainingStyle = 0;
 static EWRAM_DATA u16 sOldFacility = 0;
 static EWRAM_DATA u8 sTravelCount = 0;
 static EWRAM_DATA struct Pokemon sTravelParty[PARTY_SIZE] = {0};
@@ -38,6 +40,8 @@ static EWRAM_DATA u8 sTeamCount = 0;
 static EWRAM_DATA struct Trainer sChallenger = {0};
 static EWRAM_DATA struct TrainerMon sChallengerEntries[PARTY_SIZE] = {0};
 static const u8 sDefeatText[] = _("That was a great GYM challenge!");
+
+bool32 GymLeaderTrainingActive(void) { return sActive && sTraining; }
 
 bool32 GymLeaderRegistering(void) { return sRegistering; }
 const struct Trainer *GymLeaderBattleTrainer(void) { return sActive ? &sChallenger : NULL; }
@@ -198,10 +202,10 @@ static bool32 PrepareChallenger(void)
     ZeroEnemyPartyMons();
     for (i = 0; i < sChallenger.partySize; i++)
     {
-        u32 count, type = GleMix(seed ^ i) % 18;
-        u8 level = max(3, average > 2 ? average - 2 : 3);
+        u32 count, type = sTraining ? (sTrainingStyle == 0 ? s->gymType : GleMix(seed ^ i) % 18) : GleMix(seed ^ i) % 18;
+        u8 level = sTraining ? min(GymLeaderLevelCap(), max(5, average + (sTrainingStyle >= 2 ? 2 * (sTrainingStyle - 1) : 0))) : max(3, average > 2 ? average - 2 : 3);
         enum Species species;
-        count = GymLeaderBuildSpeciesPool(type, s->rank, GLE_STANDARD, s->rank == 1, pool, GLE_SPECIES_LIMIT);
+        count = GymLeaderBuildSpeciesPool(type, s->rank, sTraining && sTrainingStyle == 3 ? GLE_ELITE : GLE_STANDARD, s->rank == 1, pool, GLE_SPECIES_LIMIT);
         if (!count)
         {
             Free(pool);
@@ -209,7 +213,7 @@ static bool32 PrepareChallenger(void)
         }
         species = pool[GleMix(seed ^ (i * 73)) % count];
         CreateMonWithIVs(&gParties[B_TRAINER_OPPONENT_A][i], species, level,
-            GleMix(seed ^ i ^ 0xC411), OTID_STRUCT_PRESET(seed), 10 + s->rank);
+            GleMix(seed ^ i ^ 0xC411), OTID_STRUCT_PRESET(seed), 10 + s->rank + (sTraining ? 4 * sTrainingStyle : 0));
         GiveMonInitialMoveset(&gParties[B_TRAINER_OPPONENT_A][i]);
         sChallengerEntries[i].species = species;
         sChallengerEntries[i].lvl = level;
@@ -224,7 +228,7 @@ static u32 PrepareOfficialBattle(u32 inspection)
 {
     struct GleState *s = GymLeaderState();
     u32 i, j;
-    if (!IsGymLeaderRun() || s->openingStage != 5 || sActive || (!inspection && !s->queueCount))
+    if (!IsGymLeaderRun() || s->openingStage != 5 || sActive || (!inspection && !sTraining && !s->queueCount))
         return 0;
     if (!s->registeredCount || s->registeredCount > GymLeaderPartyLimit())
         return 2;
@@ -264,7 +268,7 @@ static u32 PrepareOfficialBattle(u32 inspection)
     HealPlayerParty();
     sActive = TRUE;
     sInspection = inspection;
-    if (!inspection)
+    if (!inspection && !sTraining)
         GleTakeChallenger(s);
     return 1;
 }
@@ -301,7 +305,9 @@ void GymLeaderFinishDefense(void)
     memcpy(gParties[B_TRAINER_PLAYER], sTravelParty, sizeof(sTravelParty));
     gPartiesCount[B_TRAINER_PLAYER] = sTravelCount;
     HealPlayerParty();
-    if (sInspection)
+    if (sTraining)
+        ; // Real Pokémon EXP persists; practice never awards official progress.
+    else if (sInspection)
         GleInspectionResult(s, (gBattleOutcome & 0x7F) == B_OUTCOME_WON);
     else
     {
@@ -309,13 +315,15 @@ void GymLeaderFinishDefense(void)
             AddMoney(&gSaveBlock1Ptr->money, 250 * s->rank + 5 * s->population);
         GleDefenseResult(s, (gBattleOutcome & 0x7F) == B_OUTCOME_WON);
     }
-    GymLeaderAdvanceActivity();
+    if (!sTraining)
+        GymLeaderAdvanceActivity();
     // Preserve a reliable queue while visiting the Gym; never force waiting.
-    if (!s->queueCount)
+    if (!sTraining && !s->queueCount)
         GleEnqueue(s, 0);
     gSpecialVar_Result = (gBattleOutcome & 0x7F) == B_OUTCOME_WON ? (sInspection ? 3 : 1) : (sInspection ? 4 : 2);
     sActive = FALSE;
     sInspection = 0;
+    sTraining = 0;
 }
 
 static void ReturnFromDefense(void)
@@ -340,6 +348,7 @@ static void StartOfficialBattle(bool32 inspection)
     if (gSpecialVar_Result != 1)
     {
         gSpecialVar_Result += 10;
+        sTraining = 0;
         ScriptContext_Enable();
         return;
     }
@@ -354,3 +363,21 @@ static void StartOfficialBattle(bool32 inspection)
 
 void GymLeaderStartDefense(void) { StartOfficialBattle(FALSE); }
 void GymLeaderStartInspection(void) { StartOfficialBattle(TRUE); }
+
+void GymLeaderTrainingMenu(void)
+{
+    static const u8 *const styles[] = {COMPOUND_STRING("Specialty practice"), COMPOUND_STRING("Random matchup"), COMPOUND_STRING("Advanced practice"), COMPOUND_STRING("Expert practice"), COMPOUND_STRING("Back")};
+    GymLeaderMenu(styles, ARRAY_COUNT(styles), FALSE);
+}
+void GymLeaderStartTraining(void)
+{
+    if (gSpecialVar_Result > 3 || (gSpecialVar_Result == 2 && GymLeaderState()->rank < 4) || (gSpecialVar_Result == 3 && GymLeaderState()->rank < 7))
+    {
+        gSpecialVar_Result = 14;
+        ScriptContext_Enable();
+        return;
+    }
+    sTrainingStyle = gSpecialVar_Result;
+    sTraining = TRUE;
+    StartOfficialBattle(FALSE);
+}

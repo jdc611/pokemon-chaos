@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "battle.h"
 #include "battle_anim.h"
 #include "decompress.h"
@@ -210,8 +211,16 @@ static const union AffineAnimCmd *const sAffineAnim_BallRotate[] =
         .callback = SpriteCB_BallThrow,        \
     }
 
+// Navy shell, silver lower half and gold League trim. Cosmetic only.
+static const u16 sGlaBallPalette[16] = {
+    RGB(31,31,31), RGB(2,3,8), RGB(3,5,12), RGB(5,8,17),
+    RGB(9,13,22), RGB(31,31,31), RGB(23,25,28), RGB(15,17,21),
+    RGB(7,8,11), RGB(31,31,19), RGB(31,27,13), RGB(31,23,7),
+    RGB(31,19,1), RGB(25,20,9), RGB(18,14,5), RGB(31,31,31)
+};
 const struct PokeBallSprite gPokeBalls[POKEBALL_COUNT] =
 {
+    [BALL_GLA] = { POKE_BALL_SPRITE(55028, gBallGfx_Luxury, sGlaBallPalette), .itemId = ITEM_GLA_BALL },
     [BALL_STRANGE] =
     {
         POKE_BALL_SPRITE(GFX_TAG_STRANGE_BALL, gBallGfx_Strange, gBallPal_Strange),

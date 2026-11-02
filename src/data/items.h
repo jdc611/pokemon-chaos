@@ -21,6 +21,19 @@ const u8 gQuestionMarksItemName[] = _("????????");
 
 const struct ItemInfo gItemsInfo[] =
 {
+    [ITEM_GLA_BALL] =
+    {
+        .name = ITEM_NAME("GLA Ball"),
+        .price = 0,
+        .description = COMPOUND_STRING("A commemorative GLA\nBall. Awarded with\na voucher partner."),
+        .importance = 1,
+        .pocket = POCKET_POKE_BALLS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .secondaryId = BALL_GLA,
+        .iconPic = gItemIcon_LuxuryBall,
+        .iconPalette = gItemIconPalette_LuxuryBall,
+    },
     [ITEM_GYM_SIGNATURE_TM] =
     {
         .name = ITEM_NAME("Signature TM"),

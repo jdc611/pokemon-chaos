@@ -601,6 +601,9 @@ static bool32 IsRandomItemAllowed(const struct RandomItemGeneratorOptions *optio
 {
     enum HoldEffect holdEffect = GetItemHoldEffect(item);
 
+    if (item == ITEM_GLA_BALL)
+        return FALSE;
+
     if (GetItemPocket(item) == POCKET_KEY_ITEMS)
         return FALSE;
     if (GetItemPocket(item) == POCKET_TM_HM && GetItemPrice(item) == 0)
@@ -698,7 +701,7 @@ enum Item GetRandomItem(u32 optionId, const struct FilterFuncArgs *filterFuncArg
 
 enum PokeBall GetRandomBall(void)
 {
-    return RandomUniform(RNG_RANDOM_BALL, BALL_POKE, POKEBALL_COUNT - 1);
+    return RandomUniform(RNG_RANDOM_BALL, BALL_POKE, BALL_CHERISH);
 }
 
 static bool32 MoveOrder(enum Move moveA, enum Move moveB)

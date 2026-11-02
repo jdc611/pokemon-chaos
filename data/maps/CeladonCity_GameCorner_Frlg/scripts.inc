@@ -385,6 +385,8 @@ CeladonCity_GameCorner_EventScript_SlotMachineNoCoinCase::
 
 CeladonCity_GameCorner_EventScript_Poster::
 	lockall
+	special GymLeaderScriptStatus
+	goto_if_eq VAR_RESULT, TRUE, GleArcade_Poster
 	msgbox CeladonCity_GameCorner_Text_SwitchBehindPosterPushIt
 	call_if_unset FLAG_OPENED_ROCKET_HIDEOUT, CeladonCity_GameCorner_EventScript_OpenRocketHideout
 	releaseall
@@ -609,7 +611,10 @@ CeladonCity_GameCorner_Text_SomeonesKeys::
 ChaosArcade_OnTransition::
 	setvar VAR_CHAOS_ARCADE_SCENE, 1
 	goto_if_set FLAG_CHAOS_ARCADE_WELCOME, ChaosArcade_TransitionEnd
+	special GymLeaderScriptStatus
+	goto_if_eq VAR_RESULT, TRUE, GleArcadeBadgeBypass0
 	goto_if_unset FLAG_BADGE04_GET, ChaosArcade_TransitionEnd
+GleArcadeBadgeBypass0::
 	setvar VAR_CHAOS_ARCADE_SCENE, 0
 ChaosArcade_TransitionEnd::
 	end
@@ -768,7 +773,10 @@ ChaosArcade_RefillClock::
 	goto CeladonCity_GameCorner_EventScript_ClerkEnd
 ChaosArcade_Checkers::
 	lockall
+	special GymLeaderScriptStatus
+	goto_if_eq VAR_RESULT, TRUE, GleArcadeBadgeBypass1
 	goto_if_unset FLAG_BADGE04_GET, ChaosArcade_Construction
+GleArcadeBadgeBypass1::
 	checkitem ITEM_COIN_CASE
 	goto_if_eq VAR_RESULT, FALSE, CeladonCity_GameCorner_EventScript_SlotMachineNoCoinCase
 	msgbox ChaosArcade_Text_CheckersChallenge, MSGBOX_YESNO
@@ -814,7 +822,10 @@ ChaosArcade_Text_CheckersChallenge:
 
 ChaosArcade_MemoryCabinet::
  lockall
+	special GymLeaderScriptStatus
+	goto_if_eq VAR_RESULT, TRUE, GleArcadeBadgeBypass2
  goto_if_unset FLAG_BADGE04_GET, ChaosArcade_Construction
+GleArcadeBadgeBypass2::
  checkitem ITEM_COIN_CASE
  goto_if_eq VAR_RESULT, FALSE, CeladonCity_GameCorner_EventScript_SlotMachineNoCoinCase
  msgbox ChaosArcade_MemoryWelcome, MSGBOX_YESNO
@@ -825,7 +836,10 @@ ChaosArcade_MemoryCabinet::
  end
 ChaosArcade_TypeCabinet::
  lockall
+	special GymLeaderScriptStatus
+	goto_if_eq VAR_RESULT, TRUE, GleArcadeBadgeBypass3
  goto_if_unset FLAG_BADGE04_GET, ChaosArcade_Construction
+GleArcadeBadgeBypass3::
  checkitem ITEM_COIN_CASE
  goto_if_eq VAR_RESULT, FALSE, CeladonCity_GameCorner_EventScript_SlotMachineNoCoinCase
  msgbox ChaosArcade_TypeWelcome, MSGBOX_YESNO
@@ -847,7 +861,10 @@ ChaosArcade_TypeWelcome:
 
 ChaosArcade_RiskCabinet::
  lockall
+	special GymLeaderScriptStatus
+	goto_if_eq VAR_RESULT, TRUE, GleArcadeBadgeBypass4
  goto_if_unset FLAG_BADGE04_GET, ChaosArcade_Construction
+GleArcadeBadgeBypass4::
  checkitem ITEM_COIN_CASE
  goto_if_eq VAR_RESULT, FALSE, CeladonCity_GameCorner_EventScript_SlotMachineNoCoinCase
  msgbox ChaosArcade_RiskWelcome, MSGBOX_YESNO
@@ -861,7 +878,10 @@ ChaosArcade_RiskWelcome:
 
 ChaosArcade_BerryCabinet::
  lockall
+	special GymLeaderScriptStatus
+	goto_if_eq VAR_RESULT, TRUE, GleArcadeBadgeBypass5
  goto_if_unset FLAG_BADGE04_GET, ChaosArcade_Construction
+GleArcadeBadgeBypass5::
  checkitem ITEM_COIN_CASE
  goto_if_eq VAR_RESULT, FALSE, CeladonCity_GameCorner_EventScript_SlotMachineNoCoinCase
  msgbox ChaosArcade_BerryWelcome, MSGBOX_YESNO
@@ -872,3 +892,10 @@ ChaosArcade_BerryCabinet::
  end
 ChaosArcade_BerryWelcome:
  .string "BERRY TIMING! Catch twenty berries.\nPress A in the green window!\pFree entry! Timing earns COINS.\nWant to play?$"
+
+GleArcade_Poster::
+	msgbox GleArcade_TextHistory, MSGBOX_DEFAULT
+	releaseall
+	end
+GleArcade_TextHistory:
+	.string "The renovated GAME CORNER honors\nKANTO's history. The old service\lstairs are permanently closed.$"

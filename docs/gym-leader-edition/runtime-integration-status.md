@@ -114,15 +114,15 @@ status document saying those are current blockers is superseded by this file.
 - Complete opening polish, cancellation paths, real Oak naming entry, and
   save/load at each opening stage.
   Signature choice and its protected reusable item/teaching UI are implemented.
-- Further town visual/collision polish, landmark construction/services, all building
+- Further town visual/collision polish, Safari species configuration, all building
   service roles and tiers, and wider route-edge/plot/interior audits.
 - Direct PC registration, later-rank challenger composition and balancing,
   inspection victory balance coverage, recruitment queue filtering and richer rewards.
 - Environment-wide species redistribution and deterministic full-species coverage,
   static encounter scripts, save prompts/retries and postgame distribution.
 - All research event scripts/NPCs, form upgrades, encounter progress and rewards.
-- GLA voucher UI and gifts, general tutor/supply services, recruitment/rival/loyalty
-  story integration and Training Room.
+- General GLA tutor/supply services, recruitment/rival/loyalty story integration,
+  practice difficulty balancing and optional Elite Four rematches.
 - Honor, Black Market, Rocket/NPC quests, town requests and passive-income hooks.
 - Tournaments, championship scheduling/history/team snapshots, news and betting.
 - Existing L-screen BP/PWR display and complete existing-feature/menu audit.
@@ -130,3 +130,15 @@ status document saying those are current blockers is superseded by this file.
   failure-path testing and final release packaging.
 
 Do not rename the currently compiled internal ROM as the completed edition.
+
+## GLA and landmarks checkpoint
+
+Native voucher desk/first-view locking, Summary, milestone rewards, cosmetic GLA
+Ball, actual party/PC delivery, full-storage refusal and save migration pass the
+new native service fixture. Actual Training Room battles retain Pokémon EXP but
+award no money (including Pay Day), official progress or town activity. Native
+landmark purchases and relocated entrance/exit pass for all three hometowns.
+Silph's public lab avoids the old Rocket campaign; Game Corner opens independently
+of Erika's badge. Research notebook displays persisted evidence; research quest
+events and owner Safari species configuration are not yet integrated.
+See MASTER section 22 for delegated tuning and artwork limitations.

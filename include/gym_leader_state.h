@@ -4,7 +4,7 @@
  * to exercise long progression histories independently of GBA presentation. */
 #include <stdint.h>
 #define GLE_MAGIC 0x474C4531u
-#define GLE_VERSION 4
+#define GLE_VERSION 5
 #define GLE_PLOTS 24
 #define GLE_RECRUITS 10
 #define GLE_QUEUE 5
@@ -19,7 +19,7 @@ enum GleBuilding { GLE_EMPTY, GLE_CENTER, GLE_MART, GLE_HOUSE, GLE_HOTEL, GLE_RE
 enum GleResult { GLE_OK, GLE_INVALID, GLE_NO_ROOM, GLE_NOT_READY, GLE_NOT_ENOUGH_MONEY, GLE_DUPLICATE, GLE_INSPECTION_NEEDED };
 struct GlePlot { uint8_t building, tier, size, type; };
 struct GleRecruit { uint16_t id, wins, losses; uint8_t potential, loyalty, warnings, active, away, questBond; };
-struct GleVoucher { uint16_t species[3]; uint32_t seed; uint8_t kind, tier, count, viewed; };
+struct GleVoucher { uint16_t species[3]; uint8_t level; uint32_t seed; uint8_t kind, tier, count, viewed; };
 struct GleState {
     uint32_t magic, seed, activity, rankXp, serial;
     uint16_t version, population, capacity, reputation, defenses, losses;
@@ -40,7 +40,7 @@ struct GleState {
     uint8_t openingStage;
     uint8_t registeredCount;
     uint32_t registeredPersonality[6], registeredTrainerId[6];
-    uint8_t interiorPlot, interiorTown, landmarkTier;
+    uint8_t interiorPlot, interiorTown, landmarkTier, milestoneRewardMask;
 };
 extern const uint8_t gGleRankCaps[8], gGleRankTeamSizes[8];
 void GleInit(struct GleState *, uint32_t seed);

@@ -1056,6 +1056,7 @@ enum __attribute__((packed)) Item
     ITEM_STRANGE_FOSSIL,
     ITEM_ARCANITE,
     ITEM_GYM_SIGNATURE_TM,
+    ITEM_GLA_BALL,
     ITEMS_COUNT,
     ITEM_FIELD_ARROW = ITEMS_COUNT,
 };
