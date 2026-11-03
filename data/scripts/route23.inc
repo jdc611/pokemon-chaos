@@ -31,6 +31,8 @@ Route23_EventScript_AlreadyRecognizedBadge::
 
 @ Duplicate of the below, only used for Boulder Badge
 Route22_NorthEntrance_EventScript_BadgeGuard::
+	special GymLeaderScriptStatus
+	goto_if_eq VAR_RESULT, TRUE, GleLeague_TravelPermit
 	goto_if_ge VAR_MAP_SCENE_ROUTE23, VAR_TEMP_1, Route23_EventScript_AlreadyRecognizedBoulderBadge
 	switch VAR_TEMP_1
 	case 1, Route23_EventScript_CheckBoulderBadge
@@ -44,6 +46,8 @@ Route22_NorthEntrance_EventScript_BadgeGuard::
 	end
 
 Route23_EventScript_BadgeGuard::
+	special GymLeaderScriptStatus
+	goto_if_eq VAR_RESULT, TRUE, GleLeague_TravelPermit
 	goto_if_ge VAR_MAP_SCENE_ROUTE23, VAR_TEMP_1, Route23_EventScript_AlreadyRecognizedBadge
 	switch VAR_TEMP_1
 	case 1, Route23_EventScript_CheckBoulderBadge
@@ -113,6 +117,8 @@ Route23_EventScript_RecognizeBadge::
 	end
 
 Route23_EventScript_BadgeGuardTrigger::
+	special GymLeaderScriptStatus
+	goto_if_eq VAR_RESULT, TRUE, GleLeague_TravelPermit
 	textcolor NPC_TEXT_COLOR_MALE
 	applymovement VAR_0x8009, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
@@ -240,3 +246,10 @@ Text_OnlyPassWithBadgeOhGoAhead::
 	.string "Okay, then.\n"
 	.string "Please, go right ahead.$"
 
+
+GleLeague_TravelPermit::
+	msgbox GleLeague_TextTravelPermit, MSGBOX_DEFAULT
+	releaseall
+	end
+GleLeague_TextTravelPermit:
+	.string "Your GLA travel permit is valid.\nThe LEAGUE welcomes visiting\lGYM LEADERS. Please go ahead.$"

@@ -771,3 +771,9 @@ gSpecials::
 
 	def_special GleResearchMenu, waitstate=1
 	def_special GleResearchInfo
+
+	def_special GleSafariOwner
+	def_special GleSafariSlots, waitstate=1
+	def_special GleSafariSpeciesMenu, waitstate=1
+	def_special GleSafariPrice
+	def_special GleSafariConfigure

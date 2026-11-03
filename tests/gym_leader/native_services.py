@@ -72,7 +72,7 @@ assert rd('gSpecialVar_Result',2)==0
 for i in range(3):assert call('GetMonData2',symbols['sVoucherPreview']+i*v[5],v[71])==1
 # Original save migration preserves identities, town and opened vouchers.
 wr(current()+20,4,2);call('GymLeaderState')
-assert rd(current()+20,2)==5 and rd(current()+v[26],1)==1
+assert rd(current()+20,2)==v[100] and rd(current()+v[26],1)==1
 assert rd(current()+v[66],1)==1
 print('PASS one-time milestones, persistent choices, native Summary, GLA Ball delivery/claim, shiny guarantees and v4 migration',flush=True)
 

@@ -895,6 +895,8 @@ bool8 TryGenerateWildMon(const struct WildPokemonInfo *wildMonInfo, enum WildPok
         return FALSE;
 
     u16 habitatSpecies = GymLeaderHabitatSpecies(wildMonIndex);
+    if (habitatSpecies == SPECIES_NONE && (area == WILD_AREA_LAND || area == WILD_AREA_HIDDEN))
+        habitatSpecies = GymLeaderSafariSpecies(wildMonIndex);
     if (habitatSpecies != SPECIES_NONE)
         CreateWildMon(habitatSpecies,level);
     else if (gSaveBlock3Ptr->randomizerEnabled)

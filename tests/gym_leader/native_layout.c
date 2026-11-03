@@ -1,4 +1,10 @@
 #include "global.h"
+#include "wild_encounter.h"
+#include "constants/flags.h"
+#include "data.h"
+#include "random.h"
+#include "trainer_util.h"
+#include "constants/vars.h"
 #include "pokemon.h"
 #include "battle.h"
 #include <stddef.h>
@@ -38,6 +44,15 @@ const unsigned gleLayout[] = {
  MON_DATA_POKEBALL, MON_DATA_IS_SHINY, offsetof(struct GleState, highestRank),
  MAP_SILPH_CO_1F, MAP_CELADON_CITY_GAME_CORNER, MAP_FUCHSIA_CITY_SAFARI_ZONE_ENTRANCE,
  TOTAL_BOXES_COUNT, IN_BOX_COUNT, offsetof(struct GleState, version), offsetof(struct GleVoucher, level),
+ FLAG_BADGE01_GET, FLAG_BADGE02_GET, FLAG_BADGE03_GET, FLAG_BADGE04_GET,
+ FLAG_BADGE05_GET, FLAG_BADGE06_GET, FLAG_BADGE07_GET, FLAG_BADGE08_GET,
+ FLAG_SYS_GAME_CLEAR, VAR_CHAOS_POKERIDER_UNLOCKED, VAR_MAP_SCENE_ROUTE23,
+ VAR_MAP_SCENE_VIRIDIAN_CITY_OLD_MAN, MAP_ROUTE22_NORTH_ENTRANCE, MAP_ROUTE23,
+ MAP_ROUTE5_SOUTH_ENTRANCE, VAR_MAP_SCENE_ROUTE5_ROUTE6_ROUTE7_ROUTE8_GATES,
+ ITEM_HM_SURF, ITEM_BICYCLE, TRAINER_LEADER_BLAINE, sizeof(struct TrainerGenerator),
+ GLE_VERSION, sizeof(struct Trainer), offsetof(struct Trainer, party), DIFFICULTY_NORMAL, TRAINERS_COUNT,
+ offsetof(struct GleState, safariSpecies), MAP_SAFARI_ZONE_CENTER,
+ sizeof(struct WildPokemonHeader), offsetof(struct WildPokemonHeader, encounterTypes), sizeof(struct WildEncounterTypes),
 
 
 

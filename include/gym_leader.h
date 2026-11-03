@@ -67,4 +67,11 @@ void GleVoucherSummary(void);
 void GleVoucherClaim(void);
 void GleResearchMenu(void);
 void GleResearchInfo(void);
+void GymLeaderUnlockTravel(void);
+void GleSafariOwner(void);
+void GleSafariSlots(void);
+void GleSafariSpeciesMenu(void);
+void GleSafariPrice(void);
+void GleSafariConfigure(void);
+u16 GymLeaderSafariSpecies(u32 slot);
 #endif

@@ -9,7 +9,7 @@ release is approved as completion. The current binary is internal QA only.
 
 - Official ARM GCC 13.2.1/binutils/newlib/graphics toolchain works locally.
 - Compiled FireRed target: 32 MiB padded; current linked payload ~27.23 MB.
-- Pointer-free 1,332-byte GLE state uses an anonymous union with Hoenn secret-base
+- Pointer-free 1,344-byte GLE state uses an anonymous union with Hoenn secret-base
   storage. Compile-time fit assertion; following SaveBlock1 offsets preserved.
 - Rank XP, promotion and four inspection gates, protected demotion floors;
   current GLE cap queried through existing global cap function when active.
@@ -114,7 +114,7 @@ status document saying those are current blockers is superseded by this file.
 - Complete opening polish, cancellation paths, real Oak naming entry, and
   save/load at each opening stage.
   Signature choice and its protected reusable item/teaching UI are implemented.
-- Further town visual/collision polish, Safari species configuration, all building
+- Further town visual/collision polish, all building
   service roles and tiers, and wider route-edge/plot/interior audits.
 - Direct PC registration, later-rank challenger composition and balancing,
   inspection victory balance coverage, recruitment queue filtering and richer rewards.
@@ -140,5 +140,16 @@ award no money (including Pay Day), official progress or town activity. Native
 landmark purchases and relocated entrance/exit pass for all three hometowns.
 Silph's public lab avoids the old Rocket campaign; Game Corner opens independently
 of Erika's badge. Research notebook displays persisted evidence; research quest
-events and owner Safari species configuration are not yet integrated.
+events still require integration. Owner Safari species configuration is now implemented
+and tested as described in MASTER section 23.
 See MASTER section 22 for delegated tuning and artwork limitations.
+
+## Travel and Safari checkpoint
+
+Native rank-one League/Saffron gate crossings, equipment/PokéRider permissions,
+no manufactured badges/Champion flag, and all-rank native trainer scaling pass.
+The owner Safari desk, tiered slots, settlement cost confirmation, distinct forms,
+persistence/migration, cancellation and actual wild-generation adapter pass.
+Save state is now version 6, 1,344 bytes; previous offsets remain unchanged.
+These targeted tests do not replace the remaining complete overworld/story audit
+or all Safari walking/biome/collision checks. MASTER section 23 records tuning.

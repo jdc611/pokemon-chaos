@@ -249,7 +249,7 @@ GleText_LeagueVisit:
 GleText_LeagueWelcome:
 	.string "Welcome to the GLA!\nYour GYM's success and your town's\lfuture are in your hands.$"
 GleText_LeagueRules:
-	.string "GYM RANK sets your level cap\nand official team size.\pAn off-type POKéMON may join your\nofficial team if it knows your\lsignature move. Only one at a time.\pOutside official battles,\nyou may train any POKéMON.\lExplore, catch, and build your team!$"
+	.string "GYM RANK sets your level cap\nand official team size.\pAn off-type POKéMON may join your\nofficial team if it knows your\lsignature move. Only one at a time.\pOutside official battles,\nyou may train any POKéMON.\lExplore, catch, and build your team!\pThe GLA provides HMs, a BICYCLE,\na POKé FLUTE and travel permits.\lPOKéRIDER is on the START menu.$"
 GleText_Heal:
 	.string "Welcome back, LEADER!\nLet's get your team ready.$"
 GleText_OakAdvice:

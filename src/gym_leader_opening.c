@@ -62,7 +62,8 @@ void GymLeaderMenu(const u8 *const *names, u32 count, bool8 ignoreB)
         }
         StringCopy(name, names[i]);
         items[i].name = name;
-        items[i].id = i;
+        // Preserve the native B-cancel sentinel even in long species lists.
+        items[i].id = i < 127 ? i : i + 1;
     }
     ScriptMenu_MultichoiceDynamic(1, 1, count, items, ignoreB, 6, 0, 0);
 }
@@ -355,6 +356,7 @@ void GleFinishOpening(void)
         }
         FlagSet(FLAG_SYS_POKEDEX_GET);
         FlagSet(FLAG_SYS_B_DASH);
+        GymLeaderUnlockTravel();
     }
 }
 
@@ -426,4 +428,44 @@ void GymLeaderRankInfo(void)
     ConvertIntToDecimalStringN(gStringVar1, s->rankXp, STR_CONV_MODE_LEFT_ALIGN, 6);
     ConvertIntToDecimalStringN(gStringVar2, GleXpNeeded(s), STR_CONV_MODE_LEFT_ALIGN, 6);
     ConvertIntToDecimalStringN(gStringVar3, GymLeaderPartyLimit(), STR_CONV_MODE_LEFT_ALIGN, 1);
+}
+
+// Travel permissions are independent of earned badges and League titles. Bit 0
+// of milestoneRewardMask records this one-time setup; rank rewards use bits 1-7.
+void GymLeaderUnlockTravel(void)
+{
+    static const u16 flags[] = {
+        FLAG_HIDE_CERULEAN_RIVAL, FLAG_HIDE_SS_ANNE_RIVAL,
+        FLAG_HIDE_SILPH_RIVAL, FLAG_HIDE_ROUTE_22_RIVAL, FLAG_HIDE_TOWER_RIVAL,
+        FLAG_HIDE_CERULEAN_CAVE_GUARD, FLAG_GOT_SS_TICKET, FLAG_GOT_BICYCLE,
+        FLAG_HIDE_PEWTER_CITY_GYM_GUIDE, FLAG_HIDE_SAFFRON_ROCKETS, FLAG_HIDE_SILPH_ROCKETS
+    };
+    static const u16 scenes[][2] = {
+        {VAR_MAP_SCENE_VIRIDIAN_CITY_OLD_MAN,2},
+        {VAR_MAP_SCENE_VIRIDIAN_CITY_GYM_DOOR,1},
+        {VAR_MAP_SCENE_CERULEAN_CITY_RIVAL,1},
+        {VAR_MAP_SCENE_ROUTE22,4},
+        {VAR_MAP_SCENE_PALLET_TOWN_OAK,3},
+        {VAR_MAP_SCENE_VIRIDIAN_CITY_MART,1},
+        {VAR_MAP_SCENE_POKEMON_TOWER_2F,1},
+        {VAR_MAP_SCENE_POKEMON_TOWER_6F,1},
+        {VAR_MAP_SCENE_SILPH_CO_7F,1},
+        {VAR_MAP_SCENE_S_S_ANNE_2F_CORRIDOR,1},
+        {VAR_MAP_SCENE_PALLET_TOWN_PROFESSOR_OAKS_LAB,4},
+        {VAR_MAP_SCENE_ROUTE5_ROUTE6_ROUTE7_ROUTE8_GATES,1},
+        {VAR_MAP_SCENE_ROUTE23,8}
+    };
+    static const u16 equipment[] = {
+        ITEM_BICYCLE,ITEM_SS_TICKET,ITEM_POKE_FLUTE,ITEM_SILPH_SCOPE,ITEM_SECRET_KEY,ITEM_CARD_KEY,
+        ITEM_HM01,ITEM_HM02,ITEM_HM03,ITEM_HM04,ITEM_HM05,ITEM_HM06,ITEM_HM07,ITEM_HM08
+    };
+    struct GleState *s=GymLeaderState();u32 i;
+    if(!IsGymLeaderRun() || s->openingStage!=5 || (s->milestoneRewardMask&1))return;
+    for(i=0;i<ARRAY_COUNT(equipment);i++)
+        if(!CheckBagHasItem(equipment[i],1) && !AddBagItem(equipment[i],1))return;
+    for(i=0;i<ARRAY_COUNT(flags);i++)FlagSet(flags[i]);
+    for(i=0;i<ARRAY_COUNT(scenes);i++)VarSet(scenes[i][0],scenes[i][1]);
+    FlagClear(FLAG_HIDE_SAFFRON_CIVILIANS);
+    VarSet(VAR_CHAOS_POKERIDER_UNLOCKED,1);
+    s->milestoneRewardMask|=1;
 }

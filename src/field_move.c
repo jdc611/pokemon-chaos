@@ -1,4 +1,5 @@
 #include "global.h"
+#include "gym_leader.h"
 #include "event_data.h"
 #include "field_move.h"
 #include "fldeff.h"
@@ -21,7 +22,7 @@ static bool32 IsAlwaysTrue(enum FieldMove fieldMove)
 
 static bool32 HasBadgeForFieldMove(enum FieldMove fieldMove)
 {
-    return FlagGet(gFieldMoveInfo[fieldMove].arg + FLAG_BADGE01_GET);
+    return IsGymLeaderRun() || FlagGet(gFieldMoveInfo[fieldMove].arg + FLAG_BADGE01_GET);
 }
 
 const struct FieldMoveUnlock gFieldMoveUnlocks[FIELD_MOVE_UNLOCK_COUNT] =

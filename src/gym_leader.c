@@ -24,11 +24,14 @@ struct GleState *GymLeaderState(void)
             s->interiorPlot = s->interiorTown = GLE_NONE;
             s->landmarkTier = 0;
         }
+        if(s->version<5)
         {
             u32 i;
             for(i=0;i<GLE_VOUCHERS;i++)s->vouchers[i].level=0;
+            s->milestoneRewardMask=0;
         }
-        s->milestoneRewardMask = 0;
+        memset(s->safariSpecies,0,sizeof(s->safariSpecies));
+        s->milestoneRewardMask &= ~1u; // Refresh travel permits, preserve rank rewards.
         s->version = GLE_VERSION;
     }
     return s;

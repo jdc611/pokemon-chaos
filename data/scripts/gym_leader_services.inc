@@ -127,3 +127,37 @@ GleResearch_TextStatus:
 	.string "{STR_VAR_1}\nEvidence stage: {STR_VAR_2}\l{STR_VAR_3}$"
 GleResearch_TextPrivate:
 	.string "These floors are for laboratory\nstaff. Our public research desk\lis in the lobby.$"
+
+GleSafari_Desk::
+	msgbox GleSafari_TextWelcome, MSGBOX_DEFAULT
+GleSafari_SelectSlot::
+	closemessage
+	special GleSafariSlots
+	compare VAR_RESULT, 6
+	goto_if_ge GleHall_Stay
+	copyvar VAR_0x8008, VAR_RESULT
+	closemessage
+	special GleTypeMenu
+	special GleSafariSpeciesMenu
+	special GleSafariPrice
+	compare VAR_RESULT, 1
+	goto_if_ne GleSafari_SelectSlot
+	msgbox GleSafari_TextPrice, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq GleSafari_SelectSlot
+	special GleSafariConfigure
+	compare VAR_RESULT, 0
+	goto_if_ne GleSafari_Failed
+	msgbox GleSafari_TextPlaced, MSGBOX_DEFAULT
+	goto GleSafari_SelectSlot
+GleSafari_Failed::
+	msgbox GleSafari_TextFailed, MSGBOX_DEFAULT
+	goto GleSafari_SelectSlot
+GleSafari_TextWelcome:
+	.string "Manage SAFARI grass habitats.\nEach slot supports one species.\lLandmark upgrades open more slots.\pSelect a slot, then a type.\nStronger species cost more to\lsettle here. Native wildlife stays\lwhere you leave a slot unchanged.$"
+GleSafari_TextPrice:
+	.string "Settle {STR_VAR_1}\nfor ${STR_VAR_2}?\pThis replaces the selected slot.\nOther slots stay as they are.$"
+GleSafari_TextPlaced:
+	.string "The habitat is ready!\nYour selected species now lives\lin the SAFARI ZONE.$"
+GleSafari_TextFailed:
+	.string "That species is already settled,\nor the funds are insufficient.\lYour wildlife is unchanged.$"

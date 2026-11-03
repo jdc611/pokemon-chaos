@@ -175,6 +175,9 @@ FuchsiaCity_SafariZone_Entrance_Movement_EnterSafariZoneLeft::
 FuchsiaCity_SafariZone_Entrance_EventScript_InfoAttendant::
 	lock
 	faceplayer
+	special GleSafariOwner
+	compare VAR_RESULT, 1
+	goto_if_eq GleSafari_Desk
 	msgbox FuchsiaCity_SafariZone_Entrance_Text_ChaosWelcome, MSGBOX_DEFAULT
 	release
 	end

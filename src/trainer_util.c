@@ -1,4 +1,5 @@
 #include "global.h"
+#include "gym_leader.h"
 #include "ironmon.h"
 #include "main.h"
 #include "data.h"
@@ -140,7 +141,10 @@ void GenerateMonFromTrainerMon(struct Pokemon *mon, const struct TrainerMon *tra
         errorf("Unkwown trainer mon gender value %d", trainerMon->gender);
     personality |= genderValue;
     ModifyPersonalityForNature(&personality, trainerMon->nature);
-    CreateMon(mon, trainerMon->species, trainerMon->lvl, personality, trainer->otID);
+    u8 level=trainerMon->lvl;
+    if(IsGymLeaderRun() && GymLeaderBattleTrainer()==NULL)
+        level=max(3,GymLeaderLevelCap()-3-(personality%4));
+    CreateMon(mon, trainerMon->species, level, personality, trainer->otID);
     if (trainerMon->nickname != NULL)
         SetMonData(mon, MON_DATA_NICKNAME, trainerMon->nickname);
     if (trainerMon->ev) //ev in struct TrainerMon are stored in Showdown order not vanilla Emerald order
@@ -154,7 +158,10 @@ void GenerateMonFromTrainerMon(struct Pokemon *mon, const struct TrainerMon *tra
     }
 
     SetMonData(mon, MON_DATA_IVS, &trainerMon->iv);
-    CustomTrainerPartyAssignMoves(mon, trainerMon);
+    if(IsGymLeaderRun() && GymLeaderBattleTrainer()==NULL && GymLeaderState()->rank<=3)
+        GiveMonInitialMoveset(mon);
+    else
+        CustomTrainerPartyAssignMoves(mon, trainerMon);
     SetMonData(mon, MON_DATA_HELD_ITEM, &trainerMon->heldItem);
 
     bool32 abilitySet = FALSE;

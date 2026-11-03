@@ -98,6 +98,7 @@ void GymLeaderConfigureTown(struct MapHeader *header)
     s32 town = TownIndex(CurrentMapId());
     const struct MapEvents *source;
     u32 i, visitors;
+    GymLeaderUnlockTravel();
     if (IsGymLeaderRun())
     {
         u16 map = CurrentMapId();
@@ -111,8 +112,7 @@ void GymLeaderConfigureTown(struct MapHeader *header)
     {
         // The restored Silph public laboratory replaces the old Rocket siege.
         // Closed staff stair/elevator doors cannot launch the vanilla campaign.
-        if(IsGymLeaderRun() && CurrentMapId()==MAP_SILPH_CO_1F
-            && (GymLeaderState()->town==0 || GymLeaderState()->rivalTown==0))
+        if(IsGymLeaderRun() && CurrentMapId()==MAP_SILPH_CO_1F)
         {
             sEvents=*header->events;
             sEvents.warpCount=3;
