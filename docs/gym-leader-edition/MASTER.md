@@ -26672,3 +26672,22 @@ The details below are new implementation choices under the user's delegated tuni
 - Save state remains version 6 and 1,344 bytes; Type: Null uses capture bit 72 after the 72 exclusive allocations, with existing project fields. No following SaveBlock1 offsets move. Runtime supply storage adds 100 bytes; linked EWRAM is approximately 255,992/262,144 bytes and ROM payload 27.25 MB before 32 MiB padding.
 
 Native mGBA checks passed: actual clerk interaction and purchase with Bag/money verification; all eight ranks and five categories; stock uniqueness, positive prices and protected-item exclusion; standing discount; Type: Null's rank refusal, gift acceptance, near-cap level/moves, repeat refusal, Silvally report and native flash reload; Memory unlock; special Slaking's rank gate and ordinary-species isolation; full-storage preservation followed by actual PC delivery. The real Bag/party Ability Patch interface refuses the special Slaking before research without consuming the item, then permits and consumes a patch after research. Separate native controller tests pass empty vouchers, locked expert practice and unregistered defense refusal without queue/record mutation, then return field control. Registered defense, real training, voucher/shiny/GLA Ball delivery, full storage and version-4 migration regression still pass. Other research projects, staff/rival/Rocket systems, competitions/history, tutors and full-campaign coverage remain separate release requirements.
+
+## 26. Wings of Kanto field integration — November 2, 2026
+
+All six approved birds now have independent universal research encounters. The following roosts and rank schedule are new delegated implementation choices, not recovered historical map assignments.
+
+| Bird | Research sighting | Rank |
+| --- | --- | --- |
+| Articuno | Seafoam Islands B3F | 3 |
+| Zapdos | Power Plant, eastern machinery hall | 4 |
+| Moltres | Pokémon Mansion 3F | 5 |
+| Galarian Articuno | Rock Tunnel B1F | 6 |
+| Galarian Zapdos | Cycling Road / Route 17 | 7 |
+| Galarian Moltres | Viridian Forest, secluded northern grove | 8 |
+
+The shared GLA/Silph notebook begins migration tracking at rank 3 and lists each sighting and survey rank. Each roost appears when its own rank is reached; no bird requires catching another. Actual overworld species sprites, native save/approach prompts, near-player-cap legendary battles and normal catching are used. All six remain excluded from ordinary voucher/habitat allocations. Articuno's research roost is on B3F; the type-dependent Seafoam B4F encounter remains Glastrier for Ice leaders. Power Plant's research Zapdos and the type-dependent exclusive resident have separate coordinates and capture records.
+
+Capture bits 73–78 follow Type: Null's bit 72. Only successful native captures consume a roost. Defeat/flee preserves retry access. The notebook counts captures; party/PC transfers or releases cannot duplicate a roost. Returning after saving does not respawn a captured bird. Native object templates are appended only in Gym Leader mode and preserve original map objects, warps and type-exclusive encounters. No save version or offsets change. EWRAM is approximately 256,784/262,144 bytes; ROM payload is about 27.26 MB, padded to one 32 MiB ROM.
+
+Native checks pass all six ranks/species/moves, walkable placement and adjacent approach tiles, actual object-script save prompts and declined approach, plus defeat/flee transaction fixtures. A nonsequential six-capture fixture verifies independent order and no duplicate roosts. A separate actual Articuno battle uses a supplied Master Ball test item, without forcing capture outcome or altering enemy HP; party delivery, research-only ledger, native flash reload and no respawn pass. This does not claim catch-rate balance, six complete dungeon traversals or a full campaign playthrough.

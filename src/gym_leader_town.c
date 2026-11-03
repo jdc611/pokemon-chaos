@@ -1,6 +1,7 @@
 #include "global.h"
 #include "gym_leader.h"
 #include "gym_leader_script.h"
+#include "gym_leader_research.h"
 #include "event_data.h"
 #include "fieldmap.h"
 #include "field_camera.h"
@@ -101,6 +102,7 @@ void GymLeaderConfigureTown(struct MapHeader *header)
     u32 i, visitors;
     GymLeaderUnlockTravel();
     GymLeaderConfigureExclusiveMap(header);
+    GymLeaderConfigureResearchMap(header);
     if (IsGymLeaderRun())
     {
         u16 map = CurrentMapId();

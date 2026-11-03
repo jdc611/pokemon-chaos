@@ -119,6 +119,8 @@ GleResearch_Notebook::
 	goto_if_eq GleResearch_Null
 	compare VAR_RESULT, 14
 	goto_if_eq GleResearch_Slaking
+	compare VAR_RESULT, 12
+	goto_if_eq GleResearch_Wings
 	special GleResearchInfo
 	msgbox GleResearch_TextStatus, MSGBOX_DEFAULT
 	goto GleResearch_Notebook
@@ -259,3 +261,63 @@ GleResearch_TextSlakingKnown:
 
 GleResearch_TextNullFull:
 	.string "There is no room for a partner.\nMake space in your party or PC.\lYour placement will wait here.$"
+
+GleResearch_Wings::
+	special GleWingsNotebook
+	compare VAR_RESULT, 0
+	goto_if_eq GleResearch_WingsLocked
+	msgbox GleResearch_TextWings, MSGBOX_DEFAULT
+GleResearch_WingsMenu::
+	closemessage
+	special GleWingsMenu
+	compare VAR_RESULT, 6
+	goto_if_ge GleResearch_Notebook
+	special GleWingsReport
+	compare VAR_RESULT, 1
+	goto_if_eq GleResearch_WingsRecorded
+	msgbox GleResearch_TextWingsReport, MSGBOX_DEFAULT
+	goto GleResearch_WingsMenu
+GleResearch_WingsRecorded::
+	msgbox GleResearch_TextWingsRecorded, MSGBOX_DEFAULT
+	goto GleResearch_WingsMenu
+GleResearch_WingsLocked::
+	msgbox GleResearch_TextWingsLocked, MSGBOX_DEFAULT
+	goto GleResearch_Notebook
+GleResearch_TextWingsLocked:
+	.string "Migration surveys open at rank 3.\nAll six birds are independent\lresearch encounters.$"
+GleResearch_TextWings:
+	.string "Wings of Kanto: {STR_VAR_1}/6 recorded.\nUnusual migrations bring six rare\lbirds to distant roosts.\pReview our sightings, then explore.\nEach bird can be approached on its\lown. None requires another capture.$"
+GleResearch_TextWingsReport:
+	.string "{STR_VAR_1}\nLast sighted: {STR_VAR_2}\lSurvey rank: {STR_VAR_3}$"
+GleResearch_TextWingsRecorded:
+	.string "{STR_VAR_1}\nIts capture is already recorded.\lOther birds remain independent.$"
+GleWings_Approach::
+	lockall
+	faceplayer
+	special GleWingsInfo
+	compare VAR_RESULT, 2
+	goto_if_eq GleExclusive_AlreadyCaught
+	compare VAR_RESULT, 1
+	goto_if_ne GleExclusive_Locked
+	msgbox GleExclusive_TextSave, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq GleWings_Confirm
+	call Common_EventScript_SaveGame
+GleWings_Confirm::
+	special GleWingsInfo
+	msgbox GleExclusive_TextConfirm, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq GleExclusive_Done
+	closemessage
+	special GleWingsStart
+	special GleWingsFinish
+	compare VAR_RESULT, 1
+	goto_if_eq GleWings_Caught
+	msgbox GleExclusive_TextRetry, MSGBOX_DEFAULT
+	goto GleExclusive_Done
+GleWings_Caught::
+	removeobject 250
+	msgbox GleResearch_TextWingsCaught, MSGBOX_DEFAULT
+	goto GleExclusive_Done
+GleResearch_TextWingsCaught:
+	.string "This migration is now recorded!\nYour partner is safe in your party\lor PC. Other birds still await.$"

@@ -792,3 +792,10 @@ gSpecials::
 	def_special GleNullClaim
 
 	def_special GleSlakingResearch
+
+	def_special GleWingsNotebook
+	def_special GleWingsMenu, waitstate=1
+	def_special GleWingsReport
+	def_special GleWingsInfo
+	def_special GleWingsStart, waitstate=1
+	def_special GleWingsFinish

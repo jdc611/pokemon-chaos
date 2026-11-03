@@ -176,3 +176,11 @@ all stock tiers, one-time delivery, full-storage/PC recovery and flash persisten
 An implicit-waitstate rejection softlock is fixed; native empty-voucher, locked
 practice and unregistered-defense interactions return control normally. MASTER
 section 25 records the delegated tuning, test boundaries and remaining systems.
+
+## Wings of Kanto
+
+All six universal birds now have independent field encounters and notebook
+sightings, with ranks 3–8. Actual Articuno capture/save/no-respawn passes and does
+not consume Ice's separate Glastrier record. All six native approach/decline,
+placement, rank and retry checks pass. MASTER section 26 records the new map
+choices, capture-order fixtures and dungeon-traversal coverage limits.
