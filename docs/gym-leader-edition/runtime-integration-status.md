@@ -119,13 +119,14 @@ status document saying those are current blockers is superseded by this file.
 - Direct PC registration, later-rank challenger composition and balancing,
   inspection victory balance coverage, recruitment queue filtering and richer rewards.
 - Environment-wide species redistribution and deterministic full-species coverage,
-  static encounter scripts, save prompts/retries and postgame distribution.
+  remaining universal/research encounter events and postgame distribution.
 - All research event scripts/NPCs, form upgrades, encounter progress and rewards.
 - General GLA tutor/supply services, recruitment/rival/loyalty story integration,
   practice difficulty balancing and optional Elite Four rematches.
 - Honor, Black Market, Rocket/NPC quests, town requests and passive-income hooks.
 - Tournaments, championship scheduling/history/team snapshots, news and betting.
-- Existing L-screen BP/PWR display and complete existing-feature/menu audit.
+- Existing L-screen BP/PWR display and the remaining existing-feature/menu audit.
+  Native Trainer Card rank/EXP bar, Gym records and safe front/back flips pass.
 - Legacy badge/travel/story lock removal, end-to-end progression, save/load and
   failure-path testing and final release packaging.
 
@@ -153,3 +154,14 @@ persistence/migration, cancellation and actual wild-generation adapter pass.
 Save state is now version 6, 1,344 bytes; previous offsets remain unchanged.
 These targeted tests do not replace the remaining complete overworld/story audit
 or all Safari walking/biome/collision checks. MASTER section 23 records tuning.
+
+## Exclusive encounters and native career card checkpoint
+
+The four actual map encounters now resolve all 72 established assignments and
+rank/cap rules. Native save prompting, capture-only consumption, species sprites
+and retries are integrated; a real Glastrier capture and flash persistence pass.
+The GLA expedition guide reaches each area's entrance. The native Trainer Card
+now renders rank EXP and career records; a discovered back-flip invalid-species
+crash is fixed. All 17 Memory/Plate typing pairs and stale-form handling pass.
+Old free editors and Train to Cap cannot bypass the mode's reward progression.
+See MASTER section 24 for fixture boundaries and the current memory budget.

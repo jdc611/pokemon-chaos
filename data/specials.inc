@@ -777,3 +777,11 @@ gSpecials::
 	def_special GleSafariSpeciesMenu, waitstate=1
 	def_special GleSafariPrice
 	def_special GleSafariConfigure
+
+	def_special GleExclusiveInfo
+	def_special GleExclusiveStart, waitstate=1
+	def_special GleExclusiveFinish
+
+	def_special GleExclusiveRefresh
+	def_special GleExpeditionMenu, waitstate=1
+	def_special GleExpeditionTravel

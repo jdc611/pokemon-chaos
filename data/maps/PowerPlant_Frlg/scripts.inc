@@ -33,6 +33,8 @@ PowerPlant_EventScript_ShowElectrode2::
 	return
 
 PowerPlant_EventScript_Zapdos::
+	special GymLeaderScriptStatus
+	goto_if_eq VAR_RESULT, TRUE, GleExclusive_PowerPlant
 	lock
 	faceplayer
 	setwildbattle SPECIES_ZAPDOS, 50

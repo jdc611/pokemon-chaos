@@ -74,4 +74,12 @@ void GleSafariSpeciesMenu(void);
 void GleSafariPrice(void);
 void GleSafariConfigure(void);
 u16 GymLeaderSafariSpecies(u32 slot);
+void GymLeaderConfigureExclusiveMap(struct MapHeader *header);
+void GleExclusiveInfo(void);
+u32 GymLeaderPrepareExclusiveBattle(void);
+void GleExclusiveStart(void);
+void GleExclusiveFinish(void);
+void GleExclusiveRefresh(void);
+void GleExpeditionMenu(void);
+void GleExpeditionTravel(void);
 #endif

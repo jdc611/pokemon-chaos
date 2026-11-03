@@ -1,4 +1,5 @@
 #include "global.h"
+#include "gym_leader.h"
 #include "ironmon.h"
 extern const u8 EventScript_ChaosTrainToCap[];
 #include "config/save.h"
@@ -440,7 +441,7 @@ static void BuildNormalStartMenu(void)
 
     if (sQuickToolsMode)
     {
-        if (IsIronmonRun() || (IS_FRLG && !VarGet(VAR_CHAOS_CHANGERS_UNLOCKED)))
+        if (IsGymLeaderRun() || IsIronmonRun() || (IS_FRLG && !VarGet(VAR_CHAOS_CHANGERS_UNLOCKED)))
             sStartMenuPage = 0;
         if (sStartMenuPage == 0)
         {
@@ -491,7 +492,7 @@ static void BuildNormalStartMenu(void)
     }
     else
     {
-        if (!IsIronmonRun() && (!IS_FRLG || (VarGet(VAR_CHAOS_TRAINING_UNLOCKED) || VarGet(VAR_MAP_SCENE_PEWTER_CITY) >= 2)))
+        if (!IsGymLeaderRun() && !IsIronmonRun() && (!IS_FRLG || (VarGet(VAR_CHAOS_TRAINING_UNLOCKED) || VarGet(VAR_MAP_SCENE_PEWTER_CITY) >= 2)))
         {
             AddStartMenuAction(MENU_ACTION_TRAIN_TO_CAP);
 
@@ -828,7 +829,7 @@ static bool8 HandleStartMenuInput(void)
         sStartMenuCursorPos = Menu_MoveCursor(1);
     }
     if (!sGameOptionsMode && JOY_NEW(DPAD_RIGHT | DPAD_LEFT)
-     && (!sQuickToolsMode || !IS_FRLG || VarGet(VAR_CHAOS_CHANGERS_UNLOCKED)))
+     && (!sQuickToolsMode || (!IsGymLeaderRun() && (!IS_FRLG || VarGet(VAR_CHAOS_CHANGERS_UNLOCKED)))))
     {
         PlaySE(SE_SELECT);
 

@@ -1,5 +1,6 @@
 #include "chaos_input.h"
 #include "global.h"
+#include "gym_leader.h"
 #include "ironmon.h"
 #include "chaos_v2.h"
 #include "pokemon_icon.h"
@@ -1772,7 +1773,7 @@ static void Task_HandleInput(u8 taskId)
 {
     if (MenuHelpers_ShouldWaitForLinkRecv() != TRUE && !gPaletteFade.active)
     {
-        if (IS_FRLG && !IsIronmonRun() && JOY_NEW(SELECT_BUTTON) && !gMain.inBattle
+        if (IS_FRLG && !IsGymLeaderRun() && !IsIronmonRun() && JOY_NEW(SELECT_BUTTON) && !gMain.inBattle
          && sMonSummaryScreen->currPageIndex == PSS_PAGE_INFO
          && !sMonSummaryScreen->isBoxMon && sMonSummaryScreen->monList.mons == gParties[B_TRAINER_PLAYER]
          && !sMonSummaryScreen->summary.isEgg && !sMonSummaryScreen->lockMovesFlag
@@ -4962,7 +4963,7 @@ static inline void ShowUtilityPrompt(s16 mode)
     if (IS_FRLG && sMonSummaryScreen->currPageIndex == PSS_PAGE_INFO)
     {
         FillWindowPixelBuffer(PSS_LABEL_WINDOW_PROMPT_UTILITY, PIXEL_FILL(0));
-        if (!IsIronmonRun() && !gMain.inBattle && !sMonSummaryScreen->isBoxMon
+        if (!IsGymLeaderRun() && !IsIronmonRun() && !gMain.inBattle && !sMonSummaryScreen->isBoxMon
          && sMonSummaryScreen->monList.mons == gParties[B_TRAINER_PLAYER]
          && !sMonSummaryScreen->summary.isEgg && !sMonSummaryScreen->lockMovesFlag
          && VarGet(VAR_CHAOS_CHANGERS_UNLOCKED) == 1)

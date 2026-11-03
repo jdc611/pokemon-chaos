@@ -22,6 +22,8 @@ MtEmber_Summit_EventScript_ShowMoltres::
 	return
 
 MtEmber_Summit_EventScript_Moltres::
+	special GymLeaderScriptStatus
+	goto_if_eq VAR_RESULT, TRUE, GleExclusive_Ember
 	lock
 	faceplayer
 	setwildbattle SPECIES_MOLTRES, 50

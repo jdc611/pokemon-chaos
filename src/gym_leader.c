@@ -93,7 +93,17 @@ bool32 GymLeaderTeamLegal(struct Pokemon *party, u32 count)
         if (species == SPECIES_NONE || species >= NUM_SPECIES
             || GetMonData(&party[i], MON_DATA_IS_EGG))
             return FALSE;
-        if (gSpeciesInfo[species].types[0] == type || gSpeciesInfo[species].types[1] == type)
+        // Evaluate held-item forms without mutating the real Pokémon. This
+        // rechecks RKS System/Multitype when a Memory or Plate changes, even
+        // if the stored party/PC species has not yet refreshed its form.
+        struct FormChangeContext form = {
+            .method=FORM_CHANGE_ITEM_HOLD,.currentSpecies=species,
+            .heldItem=GetMonData(&party[i],MON_DATA_HELD_ITEM),
+            .ability=GetMonAbility(&party[i])
+        };
+        enum Species effective=GetFormChangeTargetSpecies_Internal(form);
+        if(effective>=NUM_SPECIES)return FALSE;
+        if (gSpeciesInfo[effective].types[0] == type || gSpeciesInfo[effective].types[1] == type)
             continue;
         if (++offType > 1 || state->signatureMove == MOVE_NONE)
             return FALSE;

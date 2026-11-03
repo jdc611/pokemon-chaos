@@ -1,4 +1,6 @@
 #include "global.h"
+#include "item.h"
+#include "item_menu.h"
 #include "wild_encounter.h"
 #include "constants/flags.h"
 #include "data.h"
@@ -53,6 +55,11 @@ const unsigned gleLayout[] = {
  GLE_VERSION, sizeof(struct Trainer), offsetof(struct Trainer, party), DIFFICULTY_NORMAL, TRAINERS_COUNT,
  offsetof(struct GleState, safariSpecies), MAP_SAFARI_ZONE_CENTER,
  sizeof(struct WildPokemonHeader), offsetof(struct WildPokemonHeader, encounterTypes), sizeof(struct WildEncounterTypes),
+ MAP_SEAFOAM_ISLANDS_B4F, MAP_POWER_PLANT, MAP_MT_EMBER_SUMMIT, MAP_CERULEAN_CAVE_B1F,
+ offsetof(struct GleState, uniqueObtained), ITEM_MASTER_BALL, sizeof(struct ObjectEventTemplate), offsetof(struct ObjectEventTemplate, graphicsId),
+ sizeof(struct BagPocket), offsetof(struct BagPosition, pocket), POCKET_POKE_BALLS, offsetof(struct BagPosition, cursorPosition), offsetof(struct BagPosition, scrollPosition), sizeof(struct ItemSlot), BAG_POKEBALLS_COUNT,
+ MAP_SEAFOAM_ISLANDS_1F, MAP_POWER_PLANT, MAP_MT_EMBER_EXTERIOR, MAP_CERULEAN_CAVE_1F, MAP_ROUTE20,
+ SPECIES_SILVALLY_NORMAL, SPECIES_SILVALLY_FIRE, SPECIES_ARCEUS, SPECIES_ARCEUS_FIRE, ITEM_FIRE_MEMORY, ITEM_FLAME_PLATE,
 
 
 

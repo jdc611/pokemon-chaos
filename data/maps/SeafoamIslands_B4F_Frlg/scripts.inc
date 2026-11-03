@@ -152,6 +152,8 @@ SeafoamIslands_B4F_Movement_WalkUp::
 	step_end
 
 SeafoamIslands_B4F_EventScript_Articuno::
+	special GymLeaderScriptStatus
+	goto_if_eq VAR_RESULT, TRUE, GleExclusive_Seafoam
 	lock
 	faceplayer
 	setwildbattle SPECIES_ARTICUNO, 50

@@ -1,4 +1,6 @@
 #include "global.h"
+#include "gym_leader.h"
+#include "pokemon.h"
 #include "scanline_effect.h"
 #include "palette.h"
 #include "task.h"
@@ -128,6 +130,8 @@ static void SetUpTrainerCardTask(void);
 static void InitTrainerCardData(void);
 static u8 GetSetCardType(void);
 static void PrintNameOnCardFront(void);
+static void PrintGymRankOnCard(void);
+static void PrintGymRecordsOnCard(void);
 static void PrintIdOnCard(void);
 static void PrintMoneyOnCard(void);
 static void PrintPokedexOnCard(void);
@@ -762,6 +766,20 @@ static void SetPlayerCardData(struct TrainerCard *trainerCard, u8 cardType)
         trainerCard->monSpecies[3] = VarGet(VAR_TRAINER_CARD_MON_ICON_4);
         trainerCard->monSpecies[4] = VarGet(VAR_TRAINER_CARD_MON_ICON_5);
         trainerCard->monSpecies[5] = VarGet(VAR_TRAINER_CARD_MON_ICON_6);
+        if(IsGymLeaderRun())
+        {
+            // The merged engine reuses these FRLG decoration vars for Hoenn
+            // systems (including the National Dex). They are not species IDs.
+            trainerCard->shouldDrawStickers=FALSE;
+            memset(trainerCard->stickers,0,sizeof(trainerCard->stickers));
+            trainerCard->monIconTint=0;
+            for(i=0;i<PARTY_SIZE;i++)
+            {
+                u16 species=i<gPartiesCount[B_TRAINER_PLAYER]?GetMonData(&gParties[B_TRAINER_PLAYER][i],MON_DATA_SPECIES):SPECIES_NONE;
+                trainerCard->monSpecies[i]=species<NUM_SPECIES?species:SPECIES_NONE;
+                if(i<gPartiesCount[B_TRAINER_PLAYER] && GetMonData(&gParties[B_TRAINER_PLAYER][i],MON_DATA_IS_EGG))trainerCard->monSpecies[i]=SPECIES_NONE;
+            }
+        }
         break;
     }
 }
@@ -952,6 +970,7 @@ static bool8 PrintAllOnCardFront(void)
         break;
     case 5:
         PrintProfilePhraseOnCard();
+        PrintGymRankOnCard();
         break;
     default:
         sData->printState = 0;
@@ -963,6 +982,17 @@ static bool8 PrintAllOnCardFront(void)
 
 static bool8 PrintAllOnCardBack(void)
 {
+    if(!sData->isLink && sData->cardType==CARD_TYPE_FRLG && IsGymLeaderRun())
+    {
+        switch(sData->printState)
+        {
+        case 0: PrintNameOnCardBack();break;
+        case 1: PrintGymRecordsOnCard();break;
+        case 2: PrintPokemonIconsOnCard();break;
+        default:sData->printState=0;return TRUE;
+        }
+        sData->printState++;return FALSE;
+    }
     switch (sData->printState)
     {
     case 0:
@@ -1158,6 +1188,58 @@ static void PrintTimeOnCard(void)
     x += width;
     ConvertIntToDecimalStringN(gStringVar4, minutes, STR_CONV_MODE_LEADING_ZEROS, 2);
     AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_NORMAL, x, y, sTrainerCardTextColors, TEXT_SKIP_DRAW, gStringVar4);
+}
+
+static void PrintGymRankOnCard(void)
+{
+    struct GleState *state;
+    u8 label[32],progress[32];u8 *end;
+    u32 needed,filled;
+    if(sData->isLink || sData->cardType!=CARD_TYPE_FRLG || !IsGymLeaderRun())return;
+    state=GymLeaderState();needed=GleXpNeeded(state);
+    end=StringCopy(label,COMPOUND_STRING("GYM RANK "));
+    ConvertIntToDecimalStringN(end,state->rank,STR_CONV_MODE_LEFT_ALIGN,1);
+    if(state->rank==8)StringCopy(progress,COMPOUND_STRING("MAX"));
+    else if(state->pendingInspection && state->rankXp>=needed)StringCopy(progress,COMPOUND_STRING("INSPECTION"));
+    else
+    {
+        end=ConvertIntToDecimalStringN(progress,state->rankXp,STR_CONV_MODE_LEFT_ALIGN,6);
+        end=StringCopy(end,COMPOUND_STRING("/"));
+        ConvertIntToDecimalStringN(end,needed,STR_CONV_MODE_LEFT_ALIGN,4);
+    }
+    FillWindowPixelRect(WIN_CARD_TEXT,PIXEL_FILL(0),20,103,124,16);
+    AddTextPrinterParameterized3(WIN_CARD_TEXT,FONT_SMALL,20,103,sTrainerCardTextColors,TEXT_SKIP_DRAW,label);
+    AddTextPrinterParameterized3(WIN_CARD_TEXT,FONT_SMALL,20+GetStringRightAlignXOffset(FONT_SMALL,progress,124),103,sTrainerCardTextColors,TEXT_SKIP_DRAW,progress);
+    filled=needed?min(state->rankXp,needed)*122/needed:122;
+    FillWindowPixelRect(WIN_CARD_TEXT,PIXEL_FILL(TEXT_COLOR_DARK_GRAY),20,115,124,4);
+    FillWindowPixelRect(WIN_CARD_TEXT,PIXEL_FILL(TEXT_COLOR_WHITE),21,116,122,2);
+    if(filled)FillWindowPixelRect(WIN_CARD_TEXT,PIXEL_FILL(TEXT_COLOR_LIGHT_BLUE),21,116,filled,2);
+}
+
+static void PrintGymRecordsOnCard(void)
+{
+    struct GleState *s=GymLeaderState();u8 text[32],*end;u32 slot,caught=0;
+    end=StringCopy(text,COMPOUND_STRING("W "));
+    end=ConvertIntToDecimalStringN(end,s->defenses,STR_CONV_MODE_LEFT_ALIGN,5);
+    end=StringCopy(end,COMPOUND_STRING(" / L "));
+    ConvertIntToDecimalStringN(end,s->losses,STR_CONV_MODE_LEFT_ALIGN,5);
+    PrintStatOnBackOfCard(0,COMPOUND_STRING("GYM DEFENSES"),text,sTrainerCardTextColors);
+    end=ConvertIntToDecimalStringN(text,s->population,STR_CONV_MODE_LEFT_ALIGN,5);
+    end=StringCopy(end,COMPOUND_STRING("/"));
+    ConvertIntToDecimalStringN(end,s->capacity,STR_CONV_MODE_LEFT_ALIGN,5);
+    PrintStatOnBackOfCard(1,COMPOUND_STRING("POPULATION"),text,sTrainerCardTextColors);
+    ConvertIntToDecimalStringN(text,s->reputation,STR_CONV_MODE_LEFT_ALIGN,5);
+    PrintStatOnBackOfCard(2,COMPOUND_STRING("TOWN REPUTATION"),text,sTrainerCardTextColors);
+    StringCopy(text,s->honor>=100?COMPOUND_STRING("HONORABLE"):s->honor<=-100?COMPOUND_STRING("NOTORIOUS"):COMPOUND_STRING("NEUTRAL"));
+    PrintStatOnBackOfCard(3,COMPOUND_STRING("STANDING"),text,sTrainerCardTextColors);
+    for(slot=0;s->gymType<GLE_EXCLUSIVE_TYPES && slot<4;slot++)
+    {
+        u32 bit=s->gymType*4+slot;
+        caught+=(s->uniqueObtained[bit/8]>>(bit%8))&1;
+    }
+    end=ConvertIntToDecimalStringN(text,caught,STR_CONV_MODE_LEFT_ALIGN,1);
+    StringCopy(end,COMPOUND_STRING("/4"));
+    PrintStatOnBackOfCard(4,COMPOUND_STRING("RARE PARTNERS"),text,sTrainerCardTextColors);
 }
 
 static void PrintProfilePhraseOnCard(void)
@@ -1506,6 +1588,10 @@ static void DrawCardFrontOrBack(u16 *ptr)
                 dst[32 * i + j] = ptr[0];
         }
     }
+    // Gym progress occupies the former BADGES caption strip. Keep every
+    // actual badge tile and its native position, clearing only that caption.
+    if(ptr==sData->frontTilemap && !sData->isLink && sData->cardType==CARD_TYPE_FRLG && IsGymLeaderRun())
+        for(j=2;j<=8;j++)dst[15*32+j]=ptr[15*30+12];
     CopyBgTilemapBufferToVram(0);
 }
 

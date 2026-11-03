@@ -317,3 +317,5 @@ GleText_ReturnHome:
 	.string "Arrange free travel back\nto your GYM?$"
 
 	.include "data/scripts/gym_leader_services.inc"
+
+	.include "data/scripts/gym_leader_encounter.inc"

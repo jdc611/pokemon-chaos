@@ -22,6 +22,8 @@ CeruleanCave_B1F_EventScript_ShowMewtwo::
 	return
 
 CeruleanCave_B1F_EventScript_Mewtwo::
+	special GymLeaderScriptStatus
+	goto_if_eq VAR_RESULT, TRUE, GleExclusive_Cave
 	lock
 	faceplayer
 	waitse

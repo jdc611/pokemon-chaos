@@ -254,6 +254,7 @@ static u32 PrepareOfficialBattle(u32 inspection)
     {
         struct Pokemon *mon = &gParties[B_TRAINER_PLAYER][i];
         *mon = sOriginalTeam[i];
+        TryFormChange(mon, FORM_CHANGE_ITEM_HOLD, B_TRAINER_PLAYER);
         if (GetMonData(mon, MON_DATA_LEVEL) > GymLeaderLevelCap())
         {
             enum Species species = GetMonData(mon, MON_DATA_SPECIES);

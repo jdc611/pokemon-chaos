@@ -99,6 +99,7 @@ void GymLeaderConfigureTown(struct MapHeader *header)
     const struct MapEvents *source;
     u32 i, visitors;
     GymLeaderUnlockTravel();
+    GymLeaderConfigureExclusiveMap(header);
     if (IsGymLeaderRun())
     {
         u16 map = CurrentMapId();
