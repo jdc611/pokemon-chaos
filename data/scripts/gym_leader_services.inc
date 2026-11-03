@@ -162,7 +162,7 @@ GleSafari_Failed::
 GleSafari_TextWelcome:
 	.string "Manage SAFARI grass habitats.\nEach slot supports one species.\lLandmark upgrades open more slots.\pSelect a slot, then a type.\nStronger species cost more to\lsettle here. Native wildlife stays\lwhere you leave a slot unchanged.$"
 GleSafari_TextPrice:
-	.string "Settle {STR_VAR_1}\nfor ${STR_VAR_2}?\pThis replaces the selected slot.\nOther slots stay as they are.$"
+	.string "This replaces the selected slot.\nOther slots stay as they are.\pSettle {STR_VAR_1}\nfor ¥{STR_VAR_2}?$"
 GleSafari_TextPlaced:
 	.string "The habitat is ready!\nYour selected species now lives\lin the SAFARI ZONE.$"
 GleSafari_TextFailed:

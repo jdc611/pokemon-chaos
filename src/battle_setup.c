@@ -1,4 +1,5 @@
 #include "global.h"
+#include "gym_leader_recruit.h"
 #include "ironmon.h"
 #include "chaos_records.h"
 #include "data.h"
@@ -1306,6 +1307,7 @@ static bool32 IsPlayerDefeated(u32 battleOutcome)
 
 void InitTrainerBattleParameter(void)
 {
+    GymLeaderRecruitResetOffer();
     sIronmonPairPhase = 0;
     memset(gTrainerBattleParameter.data, 0, sizeof(TrainerBattleParameter));
     sTrainerBattleEndScript = NULL;

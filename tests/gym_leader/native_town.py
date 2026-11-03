@@ -22,7 +22,7 @@ px=13 if town==0 else 3
 walkto(px+4,16);walkto(px+5,16);press(64);press(1)
 until(lambda:menu_count()==11)
 snap('town-plot-menu')
-choose(0);until(yesno)
+choose(0);until(yesno);snap('town-build-price-confirm')
 money_addr=rd('gSaveBlock1Ptr')+v[64]
 before=call('GetMoney',money_addr)
 choose(0)

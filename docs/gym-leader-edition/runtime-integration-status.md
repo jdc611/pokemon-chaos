@@ -204,3 +204,15 @@ access respects current level, owned TMs and unlocked tutors. State version 7
 is 1,348 bytes in the unchanged save union; exact version-6 preservation and
 older Safari/voucher migration regressions pass. MASTER section 28 records the
 complete lesson/price catalog and coverage boundaries.
+
+## Basic recruitment and staff loop
+
+Existing defeated trainers can offer recruitment with seeded willingness,
+Potential, loyalty and paid hiring. The native staff office assigns/reserves,
+shows teams in Summary, runs real practice and confirms dismissal. Staff are
+visible in the home Gym/town; departed rival staff and conditional returns retain
+records. Active staff filter ordinary queue entries with their own statistics,
+without player rank gains or consuming the final/important challenger. Native
+hire/save/relocation/preview/practice/dismissal and host progression tests pass.
+Prices are now visible on native final confirmations. MASTER section 29 records
+exact tuning, fixture boundaries and still-separate rival/Rocket/quest systems.

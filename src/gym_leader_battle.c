@@ -1,6 +1,7 @@
 #include "global.h"
 #include "gym_leader.h"
 #include "gym_leader_script.h"
+#include "gym_leader_recruit.h"
 #include "battle.h"
 #include "battle_setup.h"
 #include "battle_transition.h"
@@ -183,6 +184,7 @@ static bool32 PrepareInspector(u32 inspection)
 
 static bool32 PrepareChallenger(void)
 {
+    if(sTraining && sTrainingStyle>=4)return GymLeaderPrepareStaffRoster(sTrainingStyle-4,&sChallenger,sChallengerEntries,FALSE);
     struct GleState *s = GymLeaderState();
     u16 *pool = Alloc(GLE_SPECIES_LIMIT * sizeof(u16));
     u32 i, average = 0, seed = GleMix(s->seed ^ s->defenses ^ ((u32)s->losses << 16));
@@ -382,4 +384,12 @@ void GymLeaderStartTraining(void)
     sTrainingStyle = gSpecialVar_Result;
     sTraining = TRUE;
     StartOfficialBattle(FALSE);
+}
+
+void GymLeaderStartStaffPractice(void)
+{
+    u32 slot=gSpecialVar_0x8007;
+    if(slot>=GLE_RECRUITS || !GymLeaderState()->recruits[slot].id || GymLeaderState()->recruits[slot].away)
+    {gSpecialVar_Result=14;GymLeaderResumeScriptNextFrame();return;}
+    sTrainingStyle=4+slot;sTraining=TRUE;StartOfficialBattle(FALSE);
 }

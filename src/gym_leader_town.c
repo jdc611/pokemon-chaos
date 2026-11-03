@@ -2,6 +2,7 @@
 #include "gym_leader.h"
 #include "gym_leader_script.h"
 #include "gym_leader_research.h"
+#include "gym_leader_recruit.h"
 #include "event_data.h"
 #include "fieldmap.h"
 #include "field_camera.h"
@@ -131,6 +132,7 @@ void GymLeaderConfigureTown(struct MapHeader *header)
             sEvents=*header->events;sEvents.warpCount=3;header->events=&sEvents;
             FlagSet(FLAG_HIDE_GAME_CORNER_ROCKET);
         }
+        GymLeaderConfigureStaffMap(header);
         return;
     }
     source = OriginalTown(town)->events;
@@ -161,6 +163,7 @@ void GymLeaderConfigureTown(struct MapHeader *header)
     sEvents.objectEventCount = visitors; sEvents.objectEvents = sResidents;
     header->events = &sEvents;
     header->mapScripts = GleTown_MapScripts;
+    GymLeaderConfigureStaffMap(header);
 }
 
 // Copy real native building blocks from the original city's own tileset. We

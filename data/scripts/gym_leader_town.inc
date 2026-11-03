@@ -124,7 +124,7 @@ GleRival_Leader::
 GleTown_TextPlot:
 	.string "PLOT {STR_VAR_1} / {STR_VAR_2}\nCurrent: {STR_VAR_3}\pChoose a building or upgrade.\nPlace small buildings anywhere;\llarger projects need larger plots.$"
 GleTown_TextBuildConfirm:
-	.string "{STR_VAR_1}\nTier {STR_VAR_3} / Cost: ${STR_VAR_2}\pBuild here now?$"
+	.string "{STR_VAR_1}: TIER {STR_VAR_3}\nBuild / upgrade for ¥{STR_VAR_2}?$"
 GleTown_TextBuildFailed:
 	.string "This project can't proceed yet.\nCheck money, plot size, rank,\lpopulation and unique buildings.\pStand south of the plot sign\nso construction has a clear site.\lThe BLACK MARKET needs notoriety.$"
 GleTown_TextBuilt:
@@ -256,7 +256,7 @@ GleLandmark_Finished::
 	msgbox GleLandmark_TextFinished, MSGBOX_DEFAULT
 	goto GleTown_PlotDone
 GleLandmark_TextConfirm:
-	.string "{STR_VAR_1} / TIER {STR_VAR_3}\nRestoration cost: ${STR_VAR_2}\pRestore or upgrade your landmark?$"
+	.string "{STR_VAR_1}: TIER {STR_VAR_3}\nDevelop for ¥{STR_VAR_2}?$"
 GleLandmark_TextLocked:
 	.string "Landmark tiers need ranks 3, 5, 7.\nHigher tiers also need 12 or 24\lresidents, and enough money.\pStand south of the sign\nto keep the work site clear.$"
 GleLandmark_TextFinished:

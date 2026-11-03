@@ -34,7 +34,7 @@ for _ in range(60):
  press(1,25)
 # Silph's only active warps are the three public exits, not Rocket-story floors.
 if town==0:
- events=rd(symbols['gMapHeader']+8)
+ events=rd(symbols['gMapHeader']+v[157])
  # Explicit warp result checks below also verify the dynamic entrance mapping.
 for _ in range(320):
  frames(1,128)

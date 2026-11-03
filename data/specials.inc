@@ -809,3 +809,17 @@ gSpecials::
 	def_special GleTutorMenu, waitstate=1
 	def_special GleTutorInfo
 	def_special GleTutorPurchase
+
+	def_special GleRecruitInfo
+	def_special GleRecruitHire
+	def_special GleStaffMenu, waitstate=1
+	def_special GleStaffSelect
+	def_special GleStaffMemberSelect
+	def_special GleStaffInfo
+	def_special GleStaffDevelopment
+	def_special GleStaffActions, waitstate=1
+	def_special GleStaffAction
+	def_special GleStaffDismiss
+	def_special GleStaffOfficeInfo
+	def_special GleStaffSummary, waitstate=1
+	def_special GymLeaderStartStaffPractice, waitstate=1

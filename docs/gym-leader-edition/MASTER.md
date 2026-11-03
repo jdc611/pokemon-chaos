@@ -1,14 +1,18 @@
 # Pokémon Chaos: Gym Leader Edition — Master Design and Decision Record
 
-Updated November 2, 2026. Owner: Jack Coleman.
+Updated November 3, 2026. Owner: Jack Coleman.
 
 ## Authority and scope
 
-This master consolidates the recovered “Choose Rebuild Town” conversation, the original handoff quoted in that conversation, and the present instruction to compile all Gym Leader decisions and fix Articuno's slot. It is a design record, not proof of implemented or tested gameplay. Original message text is preserved in the final appendix so smaller decisions, numerical proposals, and revisions are not lost.
+This master consolidates the recovered “Choose Rebuild Town” conversation, the original handoff quoted in that conversation, and the present instruction to compile all Gym Leader decisions and fix Articuno's slot. Sections 1–16 preserve design/source authority; sections 17–29 separately record implementation choices and their specific validation. This is not a completed-release declaration. Original message text is preserved in the final appendix so smaller decisions, numerical proposals, and revisions are not lost.
 
 Read the current decisions first. Use source messages to recover exact context. Explicit user decisions override assistant suggestions; later explicit revisions override earlier choices. An assistant saying “locked in” is not sufficient evidence on its own. Unanswered suggestions remain proposed. Short answers must be read with their preceding question. Numeric tuning delegated to implementation is not a missing user decision. Source excerpts preserve historical claims without independently verifying them.
 
 Status vocabulary: APPROVED (explicit user direction), DELEGATED (implementation/balance discretion), PROPOSED (not explicitly accepted), SUPERSEDED (replaced later), UNRESOLVED (conflict or unspecified rule), CURRENT FIX (selected now under the user's instruction).
+
+## Current implementation status
+
+The latest tested checkpoints cover native opening/draft/registration/defenses and inspections; town construction, landmarks, all-type habitats and Safari configuration; GLA vouchers/supplies/permanent tutors; the 72 exclusive assignments and six universal birds; native career-card records; and the basic recruitment/staff loop. Exact test boundaries and delegated tuning are recorded in sections 17–29. Remaining universal projects/form upgrades, complete rival/Rocket/competition/history systems, full species coverage and campaign validation still gate a finished V1 release.
 
 ## Contents
 
@@ -28,6 +32,15 @@ Status vocabulary: APPROVED (explicit user direction), DELEGATED (implementation
 14. Conflicts, delegated work and implementation status
 15. Contextual user-decision ledger
 16. Complete recovered source appendix
+
+Implementation checkpoints follow the preserved appendix. Latest additions:
+
+24. Exclusive encounters, native career card and progression safeguards
+25. Supplies, Type: Null/Slaking research and refused-action recovery
+26. Six independent Wings of Kanto encounters
+27. All-type habitats and evolution access
+28. Permanent tutor catalog and save version 7
+29. Native recruitment, staff records, practice and queue filtering
 
 ## 1. Current Articuno correction — CURRENT FIX
 
@@ -26744,3 +26757,30 @@ The relearner cannot bypass these purchases: tutor lists filter to unlocked move
 Save version 7 appends a 32-bit license mask after existing Safari data. The state is 1,348 bytes inside its unchanged 3,200-byte SaveBlock1 union. Earlier field offsets and all following SaveBlock1 offsets remain unchanged. No original story flags are repurposed. Version-6 migration initializes only the new field and version; Safari species, travel permits, vouchers, registration, research and all other prior bytes are preserved. Older migrations retain their existing version-specific initialization. Current linked EWRAM is 256,820/262,144 bytes and payload 27,258,192 bytes, padded to one 32 MiB ROM.
 
 Native checks pass compatibility-filtered offers, declined unlock, insufficient funds without charge, honored pricing, actual lesson teaching to a party Pokémon, permanent license after native flash reload, exact version-6 migration byte preservation and free repeat teaching to a PC Pokémon after demotion. Current-level move recall, owned/unowned TM recall and unlicensed bulk-tutor refusal pass direct ARM catalog fixtures. Registered defense/PC/EXP, actual training, milestone/voucher/shiny/GLA Ball/full-storage flows and version-4 migration regression pass; native Fuchsia restoration/configuration/flash, version-5 migration and actual Safari wild-generation regression also pass. These do not replace remaining research/staff/rival/Rocket/competition/history implementation or full-campaign release gates.
+
+## 29. Native recruitment, staff management and queue filtering — November 3, 2026
+
+This checkpoint implements the basic staff loop. Rates, prices, capacity staging and development below are delegated V1 tuning; the named cast is drawn from the ROM's existing trainers, not invented recovered identities.
+
+- A generated catalog maps 206 existing Kanto/Sevii trainer identities to original map, local object and sprite. Eligibility further excludes leaders, Elite Four, champions, rivals, Giovanni's boss class, professors/player roles and Rocket grunts. Seeded contextual eligibility leaves some trainers unavailable. Eligible defeated trainers can be approached after victory or again later. An offer follows the native speaker when a paired battle addresses trainer B. Failed funds or declining preserve later approaches. Joining depends on current rank, reputation and standing against a fixed run-seeded willingness value; repeatedly asking without meaningful progress cannot reroll it. Notorious leaders are refused by Ace/Cooltrainer classes.
+- Potential is 1–5 stars. Stronger talent opens with rank; signing support costs 500 plus 250 per star (750–1,750). Actual successful recruitment precedes payment. Initial loyalty is seeded at 55 plus four per Potential star plus 0–19. Hire adds a reserve record, never usable Pokémon, and the trainer leaves their original location on the next map visit. A failed or duplicate transaction changes no money. Current rank limits total retained records to rank plus two, capped at ten.
+
+| Rank | Staff records | Active positions |
+| --- | --- | --- |
+| 1 | 3 | 1 |
+| 2 | 4 | 1 |
+| 3 | 5 | 2 |
+| 4 | 6 | 2 |
+| 5 | 7 | 3 |
+| 6 | 8 | 3 |
+| 7 | 9 | 4 |
+| 8 | 10 | 5 |
+
+- The native staff officer in the home Gym manages assignment, reserve, team Summary, practice and confirmed dismissal. Records show Potential, loyalty, wins/losses, win percentage, experience as completed staff battles, warnings and bond status. Reserves retain records and development. Demotion moves excess active members into reserve without erasing them. Dismissal explicitly warns that the record/history is erased; it removes a visible staff actor immediately and prevents lazy-spawn reappearance. Temporary flags 2–11 are reserved for staff visibility only in the new Gym/rebuilt-town contexts; original persistent story flags are not reused.
+- Up to five active trainers appear inside the home Gym, up to five reserves appear near the rebuilt town's Gym, and departed staff who join the rival are visible in the rival Gym. Original native identities/sprites remain attached to their records. Physical reporting for assignment/return occurs on the next map visit, while record changes apply immediately.
+- Staff develop their own rank/Potential-based teams; they do not borrow or clone the player's Pokémon. Their first native roster species remains the ace and follows level evolution; other slots develop from its type catalog. Potential affects catalog strength, team expansion and IVs. Unique/research allocations are excluded. Native Summary uses a separate preview array, native OT names and the trainer's original map/ace met level. Preview development retains the highest attained Gym rank; actual practice follows the current rank cap/team allowance. Practice uses the player's registered roster and retains the existing real-EXP, healing, no-cash/no-Gym-XP/no-official-record/no-queue-farming rules.
+- Active staff simulate an ordinary challenger attempt at six-activity intervals when at least two challengers are queued. Win chance starts at 35 plus seven per Potential star, with a five-point experience bonus after twenty matches. The challenger can face each active trainer until one wins or all lose, so additional staff increase coverage. Trainers gain their own wins/losses and loyalty changes. A win removes only that ordinary queued challenger. At least one challenger remains, important challengers pass to the player, and staff results do not award player Gym Rank XP or defense records. Reserves do not filter the queue.
+- At twelve-activity intervals, reputation below 60 plus a player loss streak of at least three gives unbonded active staff a warning. After three warnings, a later qualifying interval can trigger departure when loyalty is below 60. Departures split between returning to the original location and joining the rival. Return requests require improved rank/reputation/standing and a fixed seeded willingness check; not all returns are guaranteed. Accepted returns preserve identity, Potential and results and begin in reserve. Personal bonding quests, fuller rival recruitment/poaching events and Rocket staff assistance remain separate work.
+- Construction, landmark, Safari and recruitment price prompts now use the native currency glyph. Literal dollar markers had ended the encoded text before the amount. Final confirmation pages now keep the price visible with the decision. Native screenshots were visually reviewed.
+
+Validation: host ASan/UBSan passes active-versus-reserve filtering, reliable remaining queue, protected important challengers, no player rank/record awards, demotion capacity preservation and three-warning departures. Native tests win an actual ordinary trainer battle using a supplied level-cap Fire partner fixture, then verify failed-funds/declined-offer retries, paid hire, unchanged player party count, native flash persistence and original NPC relocation. Native reserve/active visibility, office assignment, separate roster Summary, an actual staff practice battle and no official/money/queue farming pass. Explicit progression/departure fixtures verify retained development/current-cap normalization, a visible rival defector, low-rank refusal and improved-Gym return without losing identity/results. Confirmed native dismissal removes the record and actor without viewport respawn. Boss/leader exclusions and A/B speaker selection have direct ARM fixtures. Registered battle/training/voucher and town/landmark/Safari regressions pass. This is targeted coverage of the basic loop, not an all-206-trainer dialogue traversal or completion of rival/Rocket/quest/competition systems. Save state remains version 7, 1,348 bytes. Linked EWRAM is 258,232/262,144 bytes; further runtime buffers must respect the remaining 3,912 bytes.

@@ -319,3 +319,5 @@ GleText_ReturnHome:
 	.include "data/scripts/gym_leader_services.inc"
 
 	.include "data/scripts/gym_leader_encounter.inc"
+
+	.include "data/scripts/gym_leader_staff.inc"

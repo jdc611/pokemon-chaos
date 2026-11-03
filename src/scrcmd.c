@@ -1,4 +1,6 @@
 #include "global.h"
+#include "gym_leader_recruit.h"
+extern const u8 GleRecruit_AfterBattle[];
 #include "frontier_util.h"
 #include "battle_setup.h"
 #include "battle_util.h"
@@ -2458,6 +2460,7 @@ bool8 ScrCmd_gotopostbattlescript(struct ScriptContext *ctx)
     Script_RequestEffects(SCREFF_V1);
 
     ctx->scriptPtr = BattleSetup_GetScriptAddrAfterBattle();
+    if(GymLeaderRecruitOffer(TRAINER_BATTLE_PARAM.opponentA))ScriptCall(ctx,GleRecruit_AfterBattle);
     return FALSE;
 }
 
@@ -2466,6 +2469,7 @@ bool8 ScrCmd_gotobeatenscript(struct ScriptContext *ctx)
     Script_RequestEffects(SCREFF_V1);
 
     ctx->scriptPtr = BattleSetup_GetTrainerPostBattleScript();
+    if(GymLeaderRecruitPostBattleOffer())ScriptCall(ctx,GleRecruit_AfterBattle);
     return FALSE;
 }
 

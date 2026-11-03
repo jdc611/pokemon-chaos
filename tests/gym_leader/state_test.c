@@ -30,5 +30,43 @@ int main(void) {
  for(i=0;i<10;i++) { assert(GleRecruitTrainer(&s,i+1,3,40)==GLE_OK); }
  assert(GleRecruitTrainer(&s,20,3,40)==GLE_NO_ROOM);
  saved=s; memcpy(&s,&saved,sizeof(s)); assert(GleValid(&s));
+ {
+  struct GleState staff;uint32_t funds=0;unsigned matches,active;
+  GleInit(&staff,91);assert(GleChooseIdentity(&staff,0,4,1)==GLE_OK);
+  assert(GleRecruitTrainer(&staff,14,3,80)==GLE_OK);
+  for(i=0;i<60;i++)GleActivity(&staff,&funds);
+  assert(staff.recruits[0].wins+staff.recruits[0].losses==0);
+  assert(GleAssignTrainer(&staff,0,1)==GLE_OK);
+  for(i=0;i<120;i++)GleActivity(&staff,&funds);
+  matches=staff.recruits[0].wins+staff.recruits[0].losses;
+  assert(matches>0 && staff.queueCount>=1 && staff.rank==1 && !staff.rankXp && !staff.defenses && !staff.losses);
+  staff.queue[0]=2;staff.queueCount=2;
+  for(i=0;i<60;i++)GleActivity(&staff,&funds);
+  assert(staff.queue[0]==2 && staff.recruits[0].wins+staff.recruits[0].losses==matches);
+  staff.rank=8;staff.rankFloor=6;
+  for(i=1;i<5;i++)assert(GleRecruitTrainer(&staff,14+i,3,80)==GLE_OK);
+  for(i=0;i<5;i++)assert(GleAssignTrainer(&staff,i,1)==GLE_OK);
+  for(i=0;i<5;i++)GleDefenseResult(&staff,0);
+  active=0;for(i=0;i<10;i++)active+=staff.recruits[i].active;
+  assert(staff.rank==7 && active==4 && staff.recruits[4].id && !staff.recruits[4].active);
+  GleInit(&staff,91);assert(GleChooseIdentity(&staff,0,4,1)==GLE_OK);
+  assert(GleRecruitTrainer(&staff,14,1,40)==GLE_OK && GleAssignTrainer(&staff,0,1)==GLE_OK);
+  staff.reputation=40;staff.lossStreak=3;
+  for(i=0;i<36;i++)GleActivity(&staff,&funds);
+  assert(staff.recruits[0].warnings==3 && !staff.recruits[0].away);
+  for(i=0;i<12;i++)GleActivity(&staff,&funds);
+  assert(staff.recruits[0].away && !staff.recruits[0].active);
+ }
+ {
+  struct GleState solo,team;uint32_t funds=0,seed;
+  for(seed=0;seed<1000;seed++)if(GleMix(seed^6u^15u)%100>=42 && GleMix(seed^6u^14u)%100<42)break;
+  assert(seed<1000);GleInit(&solo,seed);GleChooseIdentity(&solo,0,4,1);solo.rank=3;solo.activity=5;solo.queueClock=5;
+  team=solo;assert(GleRecruitTrainer(&solo,15,1,80)==GLE_OK && GleAssignTrainer(&solo,0,1)==GLE_OK);
+  assert(GleRecruitTrainer(&team,14,1,80)==GLE_OK && GleRecruitTrainer(&team,15,1,80)==GLE_OK);
+  assert(GleAssignTrainer(&team,0,1)==GLE_OK && GleAssignTrainer(&team,1,1)==GLE_OK);
+  GleActivity(&solo,&funds);GleActivity(&team,&funds);
+  assert(solo.recruits[0].losses==1 && team.recruits[1].losses==1 && team.recruits[0].wins==1);
+  assert(team.queueCount+1==solo.queueCount && !team.rankXp && !solo.rankXp);
+ }
  printf("GLE state scenarios passed; state size %zu bytes\n",sizeof(s));
 }

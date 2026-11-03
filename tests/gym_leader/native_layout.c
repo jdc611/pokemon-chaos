@@ -10,6 +10,7 @@
 #include "constants/vars.h"
 #include "pokemon.h"
 #include "battle.h"
+#include "battle_setup.h"
 #include <stddef.h>
 #include "task.h"
 #include "constants/item.h"
@@ -68,4 +69,8 @@ const unsigned gleLayout[] = {
  offsetof(struct MapHeader, events), offsetof(struct MapEvents, objectEvents),
  MOVE_ICE_PUNCH, SPECIES_ELECTABUZZ, MOVE_RELEARNER_TUTOR_MOVES, MOVE_RELEARNER_LEVEL_UP_MOVES, MOVE_RELEARNER_TM_MOVES,
  offsetof(struct GleState, tutorLessons), MOVE_THUNDERBOLT, ITEM_TM_THUNDERBOLT,
+ offsetof(struct GleState,recruits),sizeof(struct GleRecruit),offsetof(struct GleRecruit,id),offsetof(struct GleRecruit,wins),
+ offsetof(struct GleRecruit,losses),offsetof(struct GleRecruit,potential),offsetof(struct GleRecruit,loyalty),offsetof(struct GleRecruit,warnings),
+ offsetof(struct GleRecruit,active),offsetof(struct GleRecruit,away),TRAINER_BUG_CATCHER_RICK,SPECIES_SNOVER,MOVE_ICY_WIND,MOVE_POWDER_SNOW,MAP_GLE_RIVAL_GYM,SPECIES_CHARMANDER,MOVE_EMBER,TRAINER_BOSS_GIOVANNI,TRAINER_LEADER_ERIKA,
+ offsetof(TrainerBattleParameter,params.opponentA),offsetof(TrainerBattleParameter,params.opponentB),SPECIES_ARCANINE,
 };

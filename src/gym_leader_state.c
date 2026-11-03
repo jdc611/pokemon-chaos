@@ -74,6 +74,9 @@ void GleDefenseResult(struct GleState *s, int won) {
         if (s->reputation) s->reputation--;
         if (s->lossStreak >= 5 && s->rank > s->rankFloor) {
             s->rank--; s->rankXp = 0; s->pendingInspection = 0; s->lossStreak = 0;
+            {unsigned i,n=0,limit=(s->rank+1)/2+(s->rank==8);
+             for(i=0;i<GLE_RECRUITS;i++)if(s->recruits[i].active && !s->recruits[i].away)
+                 if(++n>limit)s->recruits[i].active=0;}
         }
     }
 }
@@ -85,11 +88,24 @@ static void Recount(struct GleState *s) {
         if (p->building == GLE_HOTEL) s->capacity += 20 * p->tier;
     }
 }
+static void FilterStaffChallenger(struct GleState *s) {
+    unsigned i,start=s->activity/6%GLE_RECRUITS;
+    if(s->queueCount<2 || s->queue[0]!=0)return;
+    for(i=0;i<GLE_RECRUITS;i++) {
+        struct GleRecruit *r=&s->recruits[(start+i)%GLE_RECRUITS];unsigned chance;
+        if(!r->id || !r->active || r->away)continue;
+        chance=35+7*r->potential+(r->wins+r->losses>20?5:0);
+        if(GleMix(s->seed^s->activity^r->id)%100<chance) {
+            r->wins=Add16(r->wins,1);if(r->loyalty<100)r->loyalty++;
+            memmove(s->queue,s->queue+1,--s->queueCount);return;
+        } else {r->losses=Add16(r->losses,1);if(r->loyalty)r->loyalty--;}
+    }
+}
 void GleActivity(struct GleState *s, uint32_t *money) {
     unsigned i, revenue = 0;
     if (!GleValid(s) || !money) return;
     s->activity++;
-    if (++s->queueClock >= 6) { GleEnqueue(s, GleMix(s->seed ^ s->activity) % 25 == 0 ? 2 : 0); s->queueClock = 0; }
+    if (++s->queueClock >= 6) { GleEnqueue(s, GleMix(s->seed ^ s->activity) % 25 == 0 ? 2 : 0); s->queueClock = 0; FilterStaffChallenger(s); }
     if (s->activity % 12) return;
     Recount(s);
     if (s->reputation >= 100 && s->population < s->capacity) s->population++;
@@ -102,7 +118,7 @@ void GleActivity(struct GleState *s, uint32_t *money) {
         if (!r->id || r->away || !r->active) continue;
         if (s->reputation < 60 && s->lossStreak >= 3 && !r->questBond) {
             if (r->warnings < 3) r->warnings++;
-            else if (r->loyalty < 60) { r->away = 1; r->active = 0; }
+            else if (r->loyalty < 60) { r->away = 1+GleMix(s->seed^r->id)%2; r->active = 0; }
         } else r->warnings = 0;
     }
 }
