@@ -1,4 +1,5 @@
 #include "global.h"
+#include "gym_leader.h"
 #include "ironmon.h"
 #include "chaos_abilities.h"
 #include "chaos_mega.h"
@@ -5689,6 +5690,12 @@ enum Obedience GetAttackerObedienceForAction(void)
     s32 calc;
     u8 obedienceLevel = 0;
     u8 levelReferenced;
+
+    // Gym careers replace badge progression with the current global rank cap.
+    // Legal current-cap partners, including trades and temporarily normalized
+    // registered defenders, must not depend on unearned vanilla badges.
+    if(IsGymLeaderRun() && gBattleMons[gBattlerAttacker].level<=GymLeaderLevelCap())
+        return OBEYS;
 
     // Important-battle debug teams are test fixtures; bypass badge/met-level obedience only for them.
     if (FlagGet(FLAG_TEMP_2))

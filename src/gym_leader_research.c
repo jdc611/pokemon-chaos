@@ -2,6 +2,7 @@
 #include "gym_leader.h"
 #include "gym_leader_research.h"
 #include "gym_leader_script.h"
+#include "gym_leader_colleagues.h"
 #include "battle.h"
 #include "battle_setup.h"
 #include "event_data.h"
@@ -94,7 +95,7 @@ static u32 CaptureCount(void)
 }
 void GymLeaderConfigureResearchMap(struct MapHeader *header)
 {
-    u32 slot,count;const struct GleMigration *m;const u8 *script;u8 localId;
+    u32 slot,count;const struct GleMigration *m;const u8 *script;u8 localId;bool32 colleagues;
     if(!IsGymLeaderRun() || header->events==NULL)return;
     count=header->events->objectEventCount;
     if(count>=ARRAY_COUNT(sResearchObjects))return;
@@ -121,7 +122,8 @@ void GymLeaderConfigureResearchMap(struct MapHeader *header)
             .x=m->x,.y=m->y,.elevation=3,.movementType=MOVEMENT_TYPE_FACE_DOWN,.script=script};
     sResearchEvents.objectEvents=sResearchObjects;sResearchEvents.objectEventCount=count;
     GymLeaderConfigureFieldResearch(&sResearchEvents,sResearchObjects,ARRAY_COUNT(sResearchObjects));
-    if(sResearchEvents.objectEventCount!=header->events->objectEventCount)header->events=&sResearchEvents;
+    colleagues=GymLeaderConfigureColleagues(&sResearchEvents,sResearchObjects,ARRAY_COUNT(sResearchObjects));
+    if(colleagues || sResearchEvents.objectEventCount!=header->events->objectEventCount)header->events=&sResearchEvents;
 }
 void GleWingsNotebook(void)
 {

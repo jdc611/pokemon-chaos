@@ -539,3 +539,62 @@ GleField_TextCaught:
 	.string "This encounter is recorded!\nYour partner is in your party or PC.\lOther encounters stay independent.$"
 GleField_TextEvidence:
 	.string "A poisonous chain holds firm.\nTrace the pact's other sites on\lROUTE 15, ROUTE 8 and ROUTE 18.\pDiscoveries are enough.\nNo other capture is required.$"
+
+GleColleague_Leader::
+	lockall
+	faceplayer
+	call GleColleague_Challenge
+	releaseall
+	end
+GleColleague_LeagueDesk::
+	lockall
+	faceplayer
+	msgbox GleColleague_TextLeagueWelcome, MSGBOX_DEFAULT
+GleColleague_LeagueMenu::
+	closemessage
+	special GleColleagueLeagueMenu
+	special GleColleagueLeagueSelect
+	compare VAR_RESULT, 0
+	goto_if_eq GleColleague_Leave
+	call GleColleague_Challenge
+	goto GleColleague_LeagueMenu
+GleColleague_Leave::
+	releaseall
+	end
+GleColleague_Challenge::
+	special GleColleagueInfo
+	compare VAR_RESULT, 0
+	goto_if_ne GleColleague_Completed
+	msgbox GleColleague_TextChallenge, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq GleColleague_Return
+	closemessage
+	special GymLeaderStartColleagueFriendly
+	compare VAR_RESULT, 1
+	goto_if_eq GleColleague_Won
+	compare VAR_RESULT, 2
+	goto_if_eq GleColleague_Lost
+	msgbox GleColleague_TextInvalid, MSGBOX_DEFAULT
+	return
+GleColleague_Won::
+	msgbox GleColleague_TextWon, MSGBOX_DEFAULT
+	return
+GleColleague_Lost::
+	msgbox GleColleague_TextLost, MSGBOX_DEFAULT
+	return
+GleColleague_Completed::
+	msgbox GleColleague_TextCompleted, MSGBOX_DEFAULT
+GleColleague_Return::
+	return
+GleColleague_TextChallenge:
+	.string "{STR_VAR_1} welcomes a fellow leader!\pLet's use your registered team,\nlevel cap {STR_VAR_2}, and up to\l{STR_VAR_3} partners on either side.\pThis friendly won't change rank.\nYour traveling team is restored\land healed afterward. Battle?$"
+GleColleague_TextWon:
+	.string "A fine battle! Your first win\nthis rank earns a GLA stipend.\pElite Four wins also earn a\nStandard voucher of this rank.\lFull accounts keep it pending.$"
+GleColleague_TextLost:
+	.string "A useful lesson for both of us.\nYour rank and funds are safe.\lCome back when you're ready!$"
+GleColleague_TextCompleted:
+	.string "We've completed this rank's match.\nReturn at a new rank to battle again.\pAny pending Elite Four vouchers\nare collected here when your\laccount has room.$"
+GleColleague_TextInvalid:
+	.string "Please register a legal team\nwith your Gym Guide first.\lThe match has not started.$"
+GleColleague_TextLeagueWelcome:
+	.string "Optional Elite Four rematches\nuse your current Gym rank rules.\pEach member accepts one victory\nper rank. Losses can be retried.\lThese are separate from inspections.$"

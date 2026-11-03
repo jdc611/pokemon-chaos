@@ -37,8 +37,16 @@ struct GleState *GymLeaderState(void)
         }
         if (s->version < 7)
             s->tutorLessons=0;
-        s->rivalStarter = s->rivalFriendlyWins = s->rivalFriendlyLosses = 0;
-        s->rivalFriendlyMask = 0;
+        if(s->version<8)
+        {
+            s->rivalStarter = s->rivalFriendlyWins = s->rivalFriendlyLosses = 0;
+            s->rivalFriendlyMask = 0;
+        }
+        if(s->version<9)
+        {
+            memset(s->colleagueWins,0,sizeof(s->colleagueWins));
+            memset(s->colleaguePendingVouchers,0,sizeof(s->colleaguePendingVouchers));
+        }
         s->version = GLE_VERSION;
     }
     return s;

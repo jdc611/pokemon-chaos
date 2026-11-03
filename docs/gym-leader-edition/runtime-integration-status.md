@@ -453,3 +453,73 @@ regressions pass after adding the new sites. Current EWRAM is 257,632 bytes and
 ROM payload 27,287,096 bytes before 32 MiB padding. This is targeted native
 integration coverage; full route traversal, legendary difficulty/catch-rate
 balance and the separate remaining campaign/release gates remain outstanding.
+
+## 36. Kanto colleague friendlies, Elite Four rematches and rank obedience
+
+Implemented November 3, 2026. Battle rewards, current-rank rosters and relocation
+details below are delegated implementation choices.
+
+- Brock, Misty, Lt. Surge, Erika, Koga, Sabrina and Blaine offer optional native
+  friendlies in their original Gyms. When the player's or rival's town replaces
+  Celadon/Fuchsia/Saffron, its displaced Erika/Koga/Sabrina appears at GLA HQ
+  instead. Both displaced leaders are present for all six town pairings.
+- Indigo's lobby now has an optional Elite Four rematch coordinator. Lorelei,
+  Bruno, Agatha and Lance can each be fought independently using current-rank
+  rules. This does not reopen the old Elite Four/Champion/Hall-of-Fame ending,
+  and does not substitute for milestone inspections or the final Oak challenge.
+- All eleven opponents use their traditional type, current Gym level cap and
+  official team allowance. They use actual standard species data, native moves,
+  normal abilities and a developing classic ace. Remaining partners come from
+  their rank/type catalog, with distinct species when possible and no reserved
+  research/exclusive species. IV tuning is 16 plus rank; rank-4+ aces hold Sitrus.
+- These battles use actual registered party/PC identities, existing temporary
+  over-cap normalization, normal Pokemon EXP, healing and traveling-party
+  restoration. Results do not change Gym XP, rank, defense/loss records, queue
+  or activity. Normal prize/blackout/Pay Day money is suppressed.
+- Each opponent permits one victory per rank; losses can be retried. Persistent
+  per-opponent rank masks prevent repeat and demotion/re-promotion farming.
+  First Kanto-leader wins pay 400 times rank; Elite Four wins pay 600 times rank.
+  Both grant 2 Town Reputation. Each Elite Four victory also earns a Standard
+  voucher fixed to the rank at which it was earned. A full account preserves
+  that voucher in a pending mask; speaking to that member's coordinator entry
+  collects it when space exists, without repeating cash or battle rewards.
+
+A real battle exposed two inherited-rule leaks. Legal current-cap partners could
+disobey because the career has no vanilla badges, and generated opponents could
+automatically use battle gimmicks because they bypass normal trainer-generation
+blocking sentinels. Within-cap partners now obey in Gym Leader mode independent
+of badges/met-level/trade ownership. The career battle adapter sets the ordinary
+AI no-Dynamax/no-Tera sentinels on generated opponents. Controlled career battles
+also refuse Dynamax on both sides. Other modes retain their existing paths.
+
+Save version 9 appends eleven rank-win bytes and four pending-voucher bytes,
+aligned after the exact previous 1,356-byte prefix. State size is 1,372 bytes
+inside the unchanged 3,200-byte union. Version-8 migration preserves every prior
+byte except the version marker, including the former tail padding; it clears
+only the new masks. A newly avoided migration hazard: saved rival starter,
+results and friendly masks reset only when upgrading saves older than version
+8, not on every future version change.
+
+Native tests pass all eleven opponents at ranks 1/4/8 for traditional typing,
+distinct species, current caps/team limits, normal abilities, native moves and
+reserved-species exclusion. A controller-played Brock win uses three supplied
+level-15 Torterra with Giga Drain, without altered enemy HP or injected outcome;
+it verifies decline, invalid registration refusal, one-time cash, healed real
+identities, rank/queue/record/activity neutrality and repeat refusal. Direct
+ARM fixtures exercise every opponent's loss/retry and independent per-rank
+settlement, pending Elite voucher/full-account/earned-tier/flash behavior and
+demotion guards. Real battle calls verify cap obedience without badges or the
+temporary debug bypass and reject automatic opponent gimmicks. Actual League
+menu decline/cancel and both relocated leaders across all town pairings pass.
+
+Exact version-8 prefix and native flash tests preserve seeded prior rival,
+tutor, exclusive, bird/titan, field, resident and Cyclizar-study records while
+initializing new masks. Host ASan/UBSan state scenarios pass with the new size.
+Registered defense/PC/EXP and all eighteen rival specialties/actual rival
+battle/legacy-ending guards regress successfully after the battle-rule fixes.
+Tutor/PC teaching and Paradox capture/study regressions also pass the version-9
+integration. These remain targeted integration checks, not all-eleven-opponent
+difficulty playthroughs or a completed campaign.
+
+Linked EWRAM is 257,640/262,144 bytes; ROM payload is 27,290,664 bytes before
+padding to the existing single 32 MiB ROM.

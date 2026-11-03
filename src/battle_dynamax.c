@@ -72,6 +72,10 @@ static const struct GMaxMove sGMaxMoveTable[] =
 // Returns whether a battler can Dynamax.
 bool32 CanDynamax(enum BattlerId battler)
 {
+    // These career matches generate their own legal rosters and do not grant
+    // a Dynamax Band. Do not inherit automatic NPC-only transformations.
+    if(GymLeaderBattleTrainer()!=NULL)
+        return FALSE;
     enum Species species = GetBattlerVisualSpecies(battler);
     enum HoldEffect holdEffect = GetBattlerHoldEffectIgnoreNegation(battler);
 

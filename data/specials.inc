@@ -851,3 +851,7 @@ gSpecials::
 	def_special GleResidentRequestChoices, waitstate=1
 	def_special GleResidentRequestResolve
 	def_special GleTownStandingInfo
+	def_special GleColleagueInfo
+	def_special GleColleagueLeagueMenu, waitstate=1
+	def_special GleColleagueLeagueSelect
+	def_special GymLeaderStartColleagueFriendly, waitstate=1
