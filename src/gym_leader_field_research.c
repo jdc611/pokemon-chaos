@@ -7,6 +7,7 @@
 #include "event_data.h"
 #include "overworld.h"
 #include "pokemon.h"
+#include "pokemon_storage_system.h"
 #include "random.h"
 #include "script.h"
 #include "string_util.h"
@@ -40,6 +41,9 @@ static const struct GleFieldSite sSites[]={
     {SPECIES_MUNKIDORI, MAP_ROUTE8, 26, 9, 6, 13, 0, COMPOUND_STRING("ROUTE 8"), COMPOUND_STRING("A sly pact lingers in the air.\nWhat exposes a poisonous promise?"), {COMPOUND_STRING("Truth"),COMPOUND_STRING("Blind trust"),COMPOUND_STRING("Silence")}},
     {SPECIES_FEZANDIPITI, MAP_ROUTE18, 22, 9, 7, 13, 1, COMPOUND_STRING("ROUTE 18"), COMPOUND_STRING("Lovely feathers hide a dark pact.\nHow should a leader judge others?"), {COMPOUND_STRING("Appearance"),COMPOUND_STRING("Actions"),COMPOUND_STRING("Rumors")}},
     {SPECIES_ZARUDE, MAP_VIRIDIAN_FOREST, 40, 48, 4, 11, 2, COMPOUND_STRING("DEEP VIRIDIAN FOREST"), COMPOUND_STRING("The guardian protects its young.\nHow should you enter its home?"), {COMPOUND_STRING("Make threats"),COMPOUND_STRING("Take a trophy"),COMPOUND_STRING("Show respect")}},
+    {SPECIES_CYCLIZAR, MAP_ROUTE16, 30, 9, 2, 1, 0, COMPOUND_STRING("ROUTE 16 STUDY SITE"), COMPOUND_STRING("A swift partner watches the road.\nHow should a researcher begin?"), {COMPOUND_STRING("With patience"),COMPOUND_STRING("With threats"),COMPOUND_STRING("With a trap")}},
+    {SPECIES_KORAIDON, MAP_MT_MOON_B2F, 16, 21, 5, 1, 1, COMPOUND_STRING("MT. MOON ANCIENT TRACE"), COMPOUND_STRING("Ancient tracks cross the stone.\nHow should this past be studied?"), {COMPOUND_STRING("Erase it"),COMPOUND_STRING("Preserve it"),COMPOUND_STRING("Ignore it")}},
+    {SPECIES_MIRAIDON, MAP_POWER_PLANT, 35, 12, 6, 1, 2, COMPOUND_STRING("POWER PLANT SIGNAL"), COMPOUND_STRING("An unknown signal fills the air.\nHow should new knowledge be used?"), {COMPOUND_STRING("For control"),COMPOUND_STRING("For profit only"),COMPOUND_STRING("For discovery")}},
 };
 _Static_assert(ARRAY_COUNT(sSites)<=35,"Research bit reservations overlap");
 static EWRAM_DATA u8 sFieldSlot=0;
@@ -68,6 +72,8 @@ static bool32 EvidenceReady(u32 slot)
 {
     // The Loyal Three's common origin is revealed by all three sites, never
     // by catching a different member of the group.
+    if(sSites[slot].project==1 && slot!=15)
+        return HasBit(208) && (slot==16 || HasBit(FIELD_FIRST_DISCOVERY+16));
     return sSites[slot].project!=13 || ProjectCount(13,FIELD_FIRST_DISCOVERY)==3;
 }
 void GymLeaderConfigureFieldResearch(struct MapEvents *events,struct ObjectEventTemplate *objects,u32 capacity)
@@ -87,6 +93,20 @@ void GymLeaderConfigureFieldResearch(struct MapEvents *events,struct ObjectEvent
     }
     events->objectEvents=objects;events->objectEventCount=count;
 }
+static bool32 StudyCyclizar(void)
+{
+    u32 i,box;
+    if(HasBit(208))return TRUE;
+    for(i=0;i<PARTY_SIZE;i++)
+        if(GetMonData(&gParties[B_TRAINER_PLAYER][i],MON_DATA_SPECIES)==SPECIES_CYCLIZAR
+            && !GetMonData(&gParties[B_TRAINER_PLAYER][i],MON_DATA_IS_EGG))goto found;
+    for(box=0;box<TOTAL_BOXES_COUNT;box++)for(i=0;i<IN_BOX_COUNT;i++)
+        if(GetBoxMonData(&gPokemonStoragePtr->boxes[box][i],MON_DATA_SPECIES)==SPECIES_CYCLIZAR
+            && !GetBoxMonData(&gPokemonStoragePtr->boxes[box][i],MON_DATA_IS_EGG))goto found;
+    return FALSE;
+found:
+    GleUniqueCapture(GymLeaderState(),208);return TRUE;
+}
 void GleFieldNotebook(void)
 {
     u32 project=gSpecialVar_Result;gSpecialVar_Result=0;
@@ -94,6 +114,10 @@ void GleFieldNotebook(void)
     sFieldProject=project;
     switch(project)
     {
+    case 1:
+        if(StudyCyclizar())StringCopy(gStringVar4,COMPOUND_STRING("Paradox of Evolution\nOur live CYCLIZAR study is complete.\lYour partner remains unchanged.\pSurvey ancient traces in MT. MOON\nB2F, then investigate a strange\lsignal in the POWER PLANT.\pKORAIDON and MIRAIDON are separate\npartners, never evolutions.\lNo other capture is required."));
+        else StringCopy(gStringVar4,COMPOUND_STRING("Paradox of Evolution\nA rare CYCLIZAR visits ROUTE 16.\pBring one in your party or PC\nfor a non-invasive live study.\lReturn to this notebook to begin.\pYour partner is never consumed\nor evolved by the research.\lEarly field evidence is remembered."));
+        break;
     case 7:
         StringCopy(gStringVar4,COMPOUND_STRING("Cursed Treasures\nFour old grudges sealed in Kanto.\pSeek leaves in VIRIDIAN FOREST,\nice in SEAFOAM B2F, a vessel in\lROCK TUNNEL 1F, and MANSION fire.\pRead each seal and choose wisely.\nAll four encounters are independent."));break;
     case 8:
@@ -145,7 +169,12 @@ void GleFieldInfo(void)
     ConvertIntToDecimalStringN(gStringVar3,sSites[slot].rank,STR_CONV_MODE_LEFT_ALIGN,1);
     if(HasBit(FIELD_FIRST_CAPTURE+slot)){gSpecialVar_Result=2;return;}
     if(!EarnedRank(slot))return;
-    if(!EvidenceReady(slot)){gSpecialVar_Result=4;return;}
+    if(!EvidenceReady(slot))
+    {
+        if(sSites[slot].project==1)StringCopy(gStringVar4,COMPOUND_STRING("The trace is not understood yet.\nBring CYCLIZAR in your party or PC\lto the GLA Paradox notebook.\pStudy MT. MOON's ancient trace\nbefore investigating the future.\lNo other capture is required."));
+        else StringCopy(gStringVar4,COMPOUND_STRING("A poisonous chain holds firm.\nTrace the pact's other sites on\lROUTE 15, ROUTE 8 and ROUTE 18.\pDiscoveries are enough.\nNo other capture is required."));
+        gSpecialVar_Result=4;return;
+    }
     gSpecialVar_Result=HasBit(FIELD_FIRST_SEAL+slot)?1:3;
 }
 void GleFieldClue(void)

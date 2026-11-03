@@ -1,8 +1,9 @@
 """Five research projects: native clues, field seals, captures and flash records."""
 import runpy,json
 ctx=runpy.run_path('tests/gym_leader/native_opening.py');globals().update(ctx)
-sites=json.load(open('docs/gym-leader-edition/field-research-sites.json'))
-species=v[-45:-30];assert len(species)==len(sites)==15
+catalog=json.load(open('docs/gym-leader-edition/field-research-sites.json'))
+sites=catalog[:15];species=v[-(len(catalog)+30):-30][:15]
+assert len(species)==len(sites)==15
 highest=v[-1]
 def warp(slot):
  site=sites[slot];m=site['map_id'];lib.call6(symbols['SetWarpDestination'],m>>8,m&255,-1,site['x'],site['y']+1,0)

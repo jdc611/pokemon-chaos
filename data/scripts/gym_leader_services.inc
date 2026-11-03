@@ -125,6 +125,8 @@ GleResearch_Notebook::
 	goto_if_eq GleResearch_Titans
 	compare VAR_RESULT, 12
 	goto_if_eq GleResearch_Wings
+	compare VAR_RESULT, 1
+	goto_if_eq GleResearch_Field
 	compare VAR_RESULT, 7
 	goto_if_eq GleResearch_Field
 	compare VAR_RESULT, 8
@@ -531,7 +533,7 @@ GleField_Caught::
 	msgbox GleField_TextCaught, MSGBOX_DEFAULT
 	goto GleExclusive_Done
 GleField_MoreEvidence::
-	msgbox GleField_TextEvidence, MSGBOX_DEFAULT
+	msgbox gStringVar4, MSGBOX_DEFAULT
 	goto GleExclusive_Done
 GleField_TextCaught:
 	.string "This encounter is recorded!\nYour partner is in your party or PC.\lOther encounters stay independent.$"

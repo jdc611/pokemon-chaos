@@ -283,5 +283,62 @@
     ],
     "answer": 2,
     "index": 14
+  },
+  {
+    "map": "MAP_ROUTE16",
+    "map_name": "Route16",
+    "x": 30,
+    "y": 9,
+    "map_id": 9501,
+    "species": "SPECIES_CYCLIZAR",
+    "project": 1,
+    "rank": 2,
+    "location": "ROUTE 16 STUDY SITE",
+    "clue": "A swift partner watches the road.\\nHow should a researcher begin?",
+    "answers": [
+      "With patience",
+      "With threats",
+      "With a trap"
+    ],
+    "answer": 0,
+    "index": 15
+  },
+  {
+    "map": "MAP_MT_MOON_B2F",
+    "map_name": "MtMoon_B2F",
+    "x": 16,
+    "y": 21,
+    "map_id": 8962,
+    "species": "SPECIES_KORAIDON",
+    "project": 1,
+    "rank": 5,
+    "location": "MT. MOON ANCIENT TRACE",
+    "clue": "Ancient tracks cross the stone.\\nHow should this past be studied?",
+    "answers": [
+      "Erase it",
+      "Preserve it",
+      "Ignore it"
+    ],
+    "answer": 1,
+    "index": 16
+  },
+  {
+    "map": "MAP_POWER_PLANT",
+    "map_name": "PowerPlant",
+    "x": 35,
+    "y": 12,
+    "map_id": 9054,
+    "species": "SPECIES_MIRAIDON",
+    "project": 1,
+    "rank": 6,
+    "location": "POWER PLANT SIGNAL",
+    "clue": "An unknown signal fills the air.\\nHow should new knowledge be used?",
+    "answers": [
+      "For control",
+      "For profit only",
+      "For discovery"
+    ],
+    "answer": 2,
+    "index": 17
   }
 ]

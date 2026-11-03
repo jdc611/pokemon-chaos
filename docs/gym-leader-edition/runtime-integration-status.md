@@ -399,3 +399,57 @@ whiteout/Habitat regressions pass.
 Current linked EWRAM is 257,632/262,144 bytes; ROM payload is 27,285,424 bytes,
 padded to one 32 MiB ROM. Complete remaining research, Rocket/competition/history,
 full species ecology, native BP/PWR and campaign/device release gates remain.
+
+## 35. Paradox of Evolution: live study and two independent encounters
+
+Implemented November 3, 2026. Locations/ranks/seal wording below are delegated
+implementation choices, not recovered prior approvals of specific coordinates.
+
+- A rare Cyclizar visits Route 16's study site at earned rank 2. It uses a real
+  native encounter, ordinary catching and a one-time research capture record.
+  This supplies a supported route to the already-reserved study species, rather
+  than making the player search ordinary pools that deliberately exclude it.
+- Open Paradox of Evolution at GLA with a non-Egg Cyclizar in party or PC.
+  The researcher records a non-invasive study. The actual Pokemon's identity,
+  stats, moves and form remain byte-for-byte unchanged; it is never consumed,
+  transformed, cloned or awarded again. Study completion persists after storage,
+  release or demotion.
+- Koraidon appears at the ancient trace in Mt. Moon B2F at earned rank 5 after
+  the live study. Miraidon's Power Plant signal opens at earned rank 6 after
+  that study and discovery of the ancient trace. Early evidence persists.
+  Miraidon does not require catching or defeating Koraidon. Both are separately
+  capturable partners; neither evolves from or replaces Cyclizar.
+- All three sites use the existing native field clue/seal/save/confirm/battle
+  flow, standard species data and moves, current-rank cap, capture-only
+  consumption, defeat/flee retries and demotion-safe earned access. The native
+  GLA notebook gives live-study instructions and the ancient/future leads.
+  Power Plant's separate exclusive and bird research remain intact.
+- Field entries append at slots 15–17 without renumbering the prior fifteen.
+  Capture bits are 110–112, discovery bits 145–147 and solved-seal bits 180–182.
+  Bit 208 records the Cyclizar study independently from resident settlements
+  (200–207). Eighteen entries now use the existing field reservations.
+  State remains version 8, 1,356 bytes with unchanged save offsets.
+
+Native checks pass the actual GLA notebook with and without a study partner,
+pre-study refusal, early remembered ancient/future evidence, all three real
+actors and dry walkable approach tiles, reserved-species policy, a real Cyclizar
+fight/Master Ball capture without altered HP or injected outcome, non-consuming
+native party study with exact Pokemon-byte preservation, and native flash.
+Both legendary seals/species/moves/current caps, independent capture transaction
+records, no Koraidon-capture prerequisite, defeat/flee retries, demotion and
+no-respawn flash records pass. A native PC-held study preserves the actual
+captured Cyclizar's complete box record through flash reload without delivering
+a gift or changing the traveling-party count. Nearby original trainer completions
+and disabled ordinary random grass battles are interaction-test fixtures only.
+
+The PC test initially restored an older RAM snapshot against newer emulated
+flash. Flash is not part of this emulator helper's raw RAM snapshots; its newer
+save counter must be retained for an independent restored branch, otherwise a
+subsequent load correctly selects the newer preexisting flash save. The fixture
+now keeps flash generation monotonic. No gameplay PC/save change was required.
+
+The fifteen earlier field encounters and six-bird/actual-Articuno-capture
+regressions pass after adding the new sites. Current EWRAM is 257,632 bytes and
+ROM payload 27,287,096 bytes before 32 MiB padding. This is targeted native
+integration coverage; full route traversal, legendary difficulty/catch-rate
+balance and the separate remaining campaign/release gates remain outstanding.
