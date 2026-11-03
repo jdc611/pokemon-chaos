@@ -1,5 +1,6 @@
 #include "global.h"
 #include "gym_leader.h"
+#include "gym_leader_preview.h"
 #include "gym_leader_recruit.h"
 #include "gym_leader_script.h"
 #include "battle_setup.h"
@@ -28,7 +29,6 @@ struct GleRecruitSource {u16 trainer,map,graphics;u8 localId,x,y;};
 #include "data/gym_leader_recruit_sources.h"
 static EWRAM_DATA struct MapEvents sStaffEvents={0};
 static EWRAM_DATA struct ObjectEventTemplate sStaffObjects[32]={0};
-static EWRAM_DATA struct Pokemon sStaffPreview[PARTY_SIZE]={0};
 static EWRAM_DATA u8 sPreviewCount=0;
 static EWRAM_DATA u16 sRecruitTrainer=0;
 static EWRAM_DATA bool8 sRecruitShown=FALSE;
@@ -281,7 +281,7 @@ static void Task_StaffSummary(u8 taskId)
     if(!gPaletteFade.active)
     {
         DestroyTask(taskId);ResetTasks();CleanupOverworldWindowsAndTilemaps();
-        ShowPokemonSummaryScreen(SUMMARY_MODE_NORMAL,sStaffPreview,0,sPreviewCount-1,CB2_ReturnToFieldContinueScript);
+        ShowPokemonSummaryScreen(SUMMARY_MODE_NORMAL,gGlePreviewParty,0,sPreviewCount-1,CB2_ReturnToFieldContinueScript);
     }
 }
 void GleStaffSummary(void)
@@ -290,6 +290,6 @@ void GleStaffSummary(void)
     if(!GymLeaderPrepareStaffRoster(sStaffSlot,&trainer,entries,TRUE))
     {GymLeaderResumeScriptNextFrame();return;}
     sPreviewCount=trainer.partySize;
-    for(i=0;i<sPreviewCount;i++)sStaffPreview[i]=gParties[B_TRAINER_OPPONENT_A][i];
+    for(i=0;i<sPreviewCount;i++)gGlePreviewParty[i]=gParties[B_TRAINER_OPPONENT_A][i];
     BeginNormalPaletteFade(PALETTES_ALL,0,0,16,RGB_BLACK);CreateTask(Task_StaffSummary,10);
 }

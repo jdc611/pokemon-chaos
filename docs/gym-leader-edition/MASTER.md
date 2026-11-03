@@ -4,7 +4,7 @@ Updated November 3, 2026. Owner: Jack Coleman.
 
 ## Authority and scope
 
-This master consolidates the recovered “Choose Rebuild Town” conversation, the original handoff quoted in that conversation, and the present instruction to compile all Gym Leader decisions and fix Articuno's slot. Sections 1–16 preserve design/source authority; sections 17–29 separately record implementation choices and their specific validation. This is not a completed-release declaration. Original message text is preserved in the final appendix so smaller decisions, numerical proposals, and revisions are not lost.
+This master consolidates the recovered “Choose Rebuild Town” conversation, the original handoff quoted in that conversation, and the present instruction to compile all Gym Leader decisions and fix Articuno's slot. Sections 1–16 preserve design/source authority; sections 17–30 separately record implementation choices and their specific validation. This is not a completed-release declaration. Original message text is preserved in the final appendix so smaller decisions, numerical proposals, and revisions are not lost.
 
 Read the current decisions first. Use source messages to recover exact context. Explicit user decisions override assistant suggestions; later explicit revisions override earlier choices. An assistant saying “locked in” is not sufficient evidence on its own. Unanswered suggestions remain proposed. Short answers must be read with their preceding question. Numeric tuning delegated to implementation is not a missing user decision. Source excerpts preserve historical claims without independently verifying them.
 
@@ -12,7 +12,7 @@ Status vocabulary: APPROVED (explicit user direction), DELEGATED (implementation
 
 ## Current implementation status
 
-The latest tested checkpoints cover native opening/draft/registration/defenses and inspections; town construction, landmarks, all-type habitats and Safari configuration; GLA vouchers/supplies/permanent tutors; the 72 exclusive assignments and six universal birds; native career-card records; and the basic recruitment/staff loop. Exact test boundaries and delegated tuning are recorded in sections 17–29. Remaining universal projects/form upgrades, complete rival/Rocket/competition/history systems, full species coverage and campaign validation still gate a finished V1 release.
+The latest tested checkpoints cover native opening/draft/registration/defenses and inspections; town construction, landmarks, all-type habitats and Safari configuration; GLA vouchers/supplies/permanent tutors; the 72 exclusive assignments and six universal birds; native career-card records; the basic recruitment/staff loop, and current-rank rival friendlies. Exact test boundaries and delegated tuning are recorded in sections 17–30. Remaining universal projects/form upgrades, complete rival/Rocket/competition/history systems, full species coverage and campaign validation still gate a finished V1 release.
 
 ## Contents
 
@@ -41,6 +41,7 @@ Implementation checkpoints follow the preserved appendix. Latest additions:
 27. All-type habitats and evolution access
 28. Permanent tutor catalog and save version 7
 29. Native recruitment, staff records, practice and queue filtering
+30. Rival friendlies, preserved starter identity and legacy-ending protection
 
 ## 1. Current Articuno correction — CURRENT FIX
 
@@ -26784,3 +26785,30 @@ This checkpoint implements the basic staff loop. Rates, prices, capacity staging
 - Construction, landmark, Safari and recruitment price prompts now use the native currency glyph. Literal dollar markers had ended the encoded text before the amount. Final confirmation pages now keep the price visible with the decision. Native screenshots were visually reviewed.
 
 Validation: host ASan/UBSan passes active-versus-reserve filtering, reliable remaining queue, protected important challengers, no player rank/record awards, demotion capacity preservation and three-warning departures. Native tests win an actual ordinary trainer battle using a supplied level-cap Fire partner fixture, then verify failed-funds/declined-offer retries, paid hire, unchanged player party count, native flash persistence and original NPC relocation. Native reserve/active visibility, office assignment, separate roster Summary, an actual staff practice battle and no official/money/queue farming pass. Explicit progression/departure fixtures verify retained development/current-cap normalization, a visible rival defector, low-rank refusal and improved-Gym return without losing identity/results. Confirmed native dismissal removes the record and actor without viewport respawn. Boss/leader exclusions and A/B speaker selection have direct ARM fixtures. Registered battle/training/voucher and town/landmark/Safari regressions pass. This is targeted coverage of the basic loop, not an all-206-trainer dialogue traversal or completion of rival/Rocket/quest/competition systems. Save state remains version 7, 1,348 bytes. Linked EWRAM is 258,232/262,144 bytes; further runtime buffers must respect the remaining 3,912 bytes.
+
+
+## 30. Rival friendlies, preserved starter identity and legacy-ending protection
+
+Implemented November 3, 2026. This checkpoint adds the actual optional rival friendly, not the still-separate displaced-leader GLA doubles, rival competitions, recruitment disputes or championship systems.
+
+### Native rival friendly
+
+- Talk to the rival inside their existing, visitable rebuilt-town Gym. The native dialogue reveals their specialty there, explains the player's current cap/team allowance and rank-neutral result, and offers Yes/No. No new custom screen is introduced. A missing/invalid registered team is refused with control restored.
+- The rival's counter type and randomly selected remaining hometown retain the existing opening rules. Their original starter is selected deterministically from that type's actual basic starter pool and stored on first roster preparation. The starter's saved base species, ace PID and OT remain stable through rank changes and demotion. Standard level evolutions occur only when the resulting species still matches the rival's Gym type. Stone/friendship evolution support for this NPC ace is not implied by this implementation.
+- Both sides use the player's current rank cap and official team allowance. The rival uses only their own Gym type, so does not need the permitted off-type exception. Their remaining team develops from the rank's standard species catalog; reserved exclusive/research species are excluded. Distinct species are preferred when the catalog permits. All have normal abilities, native level-appropriate moves and unmodified species base stats. Trainer IV tuning is 16 + rank. The rival retains their saved name and actual native rival portrait.
+- The existing registered-team adapter finds real party/PC identities, temporarily normalizes over-cap defenders, awards normal Pokémon battle EXP where applicable, heals and returns the original traveling party. Friendly results do not change either Gym's rank, official defense record, loss streak, challenger queue or town activity. Normal trainer prize/blackout money and Pay Day are suppressed for this controlled battle.
+- Delegated V1 rewards: first victory at each rank deposits 500 × current rank Pokédollars and adds 2 town reputation. Eight persistent victory bits prevent duplicate rewards and demotion/re-promotion farming. A loss permits another attempt, with separate saturating rival-friendly win/loss counters. These counters do not overwrite championship history. After a win, native dialogue asks the player to return at a new rank.
+
+### Save and memory
+
+- Save version 8 appends the starter, friendly results and rank completion mask. The pointer-free state is 1,356 bytes inside the same unchanged 3,200-byte save union; following SaveBlock1 fields keep their offsets. Version-seven migration preserves every previous byte apart from the version marker, including paid tutor bits, Safari choices, research, town, staff and registered identities. Older migration retains its prior refresh rules. A newly discovered migration hazard was corrected: tutor licenses are cleared only for saves older than version 7, not on every future version change.
+- Draft, voucher and staff Summary screens now share one separate six-mon preview buffer, since those workflows cannot overlap. It remains separate from the actual enemy party to avoid the previously fixed Summary link-name crash. Actual preview/claim/staff flows regress successfully. The built ROM uses 257,624 EWRAM bytes, leaving 4,520 bytes; IWRAM is 29,076 bytes, and ROM payload is 27,271,492 bytes before padding to one 32 MiB image. Memory remains a release constraint, not an unlimited budget.
+
+### Legacy ending protection and test boundaries
+
+- In this edition, the native Indigo lobby guard occupies the old Elite Four entry and explains that inspectors visit the player's Gym. All six old E4/Champion/Hall-of-Fame room warp targets redirect safely to the lobby. This prevents the inherited badge campaign from awarding its rival-Champion ending, including when stale story flags exist. Other modes retain their normal path. The intended Gym Leader competitions/final Oak challenge still require their own implementation; this guard is not a replacement tournament.
+- Native mGBA fixtures cover all 18 rival types at ranks 1, 4 and 8 and back to 1: actual enemy typing, cap/team allowance, normal abilities, reserved-species exclusion and persistent ace PID/OT. The actual in-world victory uses three explicitly supplied level-15, fixed-IV Torterra with Earthquake. Controller input handles forced switches; enemy HP/outcome are not injected. It validates battle integration and settlement, not starter-draft difficulty or all-type balance. Native decline/refusal, one-time payment, restored/healed identities, repeat refusal, adapter loss/retry and demotion guards pass. Exact version-seven prefix preservation and native flash anti-refarm persistence pass.
+- Native Indigo walking/interaction and all six legacy room warp attempts pass at ranks 1 and 8, including a stale Champion-flag fixture. Native opening/real defense/PC restoration, real practice, voucher preview/claim/full storage and staff recruitment/preview/practice/dismissal regressions pass. Targeted tests remain distinct from full-campaign playthrough and device validation.
+
+- The normal title → New Game → Oak introduction → native player-name keyboard → rival-name preset → Gym Leader hometown menu passes using controller input only. No injected names, debug-newgame flag, callback jump or Gym state fixture is used. This closes the previously untested normal-startup path for that route; it does not substitute for the complete campaign audit.
+- Native permanent tutor party and PC teaching, payment, flash license and exact version-six migration also regress successfully. The PC check now resolves the current storage pointer after leaving the selector, because the native engine can relocate save/storage memory on return; a stale test address had produced a false missing-move failure. No gameplay tutor change was needed.

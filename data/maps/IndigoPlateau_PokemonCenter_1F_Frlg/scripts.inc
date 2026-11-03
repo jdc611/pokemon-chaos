@@ -5,8 +5,15 @@ IndigoPlateau_PokemonCenter_1F_Frlg_MapScripts::
 
 IndigoPlateau_PokemonCenter_1F_OnTransition::
 	setrespawn HEAL_LOCATION_INDIGO_PLATEAU
+	special GymLeaderScriptStatus
+	compare VAR_RESULT, 1
+	goto_if_eq IndigoPlateau_GleDoor
 	specialvar VAR_RESULT, IsNationalPokedexEnabled
 	call_if_eq VAR_RESULT, TRUE, IndigoPlateau_PokemonCenter_1F_EventScript_CheckBlockDoor
+	end
+
+IndigoPlateau_GleDoor::
+	setobjectxyperm LOCALID_LEAGUE_DOOR_GUARD, 4, 2
 	end
 
 IndigoPlateau_PokemonCenter_1F_EventScript_CheckBlockDoor::
@@ -17,6 +24,9 @@ IndigoPlateau_PokemonCenter_1F_EventScript_CheckBlockDoor::
 IndigoPlateau_PokemonCenter_1F_EventScript_DoorGuard::
 	lock
 	faceplayer
+	special GymLeaderScriptStatus
+	compare VAR_RESULT, 1
+	goto_if_eq IndigoPlateau_GleGuide
 	specialvar VAR_RESULT, IsNationalPokedexEnabled
 	goto_if_eq VAR_RESULT, TRUE, IndigoPlateau_PokemonCenter_1F_EventScript_CheckSeviiIslandComplete
 	msgbox IndigoPlateau_PokemonCenter_1F_Text_FaceEliteFourGoodLuck
@@ -35,8 +45,21 @@ IndigoPlateau_PokemonCenter_1F_EventScript_SeviiIslandComplete::
 	end
 
 IndigoPlateau_PokemonCenter_1F_EventScript_GymGuy::
+	special GymLeaderScriptStatus
+	compare VAR_RESULT, 1
+	goto_if_eq IndigoPlateau_GleGuideNpc
 	msgbox IndigoPlateau_PokemonCenter_1F_Text_GymGuyAdvice, MSGBOX_NPC
 	end
+
+IndigoPlateau_GleGuide::
+	msgbox IndigoPlateau_TextGleInspections, MSGBOX_DEFAULT
+	release
+	end
+IndigoPlateau_GleGuideNpc::
+	msgbox IndigoPlateau_TextGleInspections, MSGBOX_NPC
+	end
+IndigoPlateau_TextGleInspections:
+	.string "GYM LEADERS follow a different\nLeague career. The ELITE FOUR\lvisit your GYM for inspections.\pThe GLA in VIRIDIAN provides\nservices for your career.$"
 
 IndigoPlateau_PokemonCenter_1F_EventScript_Clerk::
 	lock

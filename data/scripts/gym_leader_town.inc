@@ -118,7 +118,29 @@ GleMart_Items:
 GleRival_Leader::
 	lock
 	faceplayer
-	msgbox GleTown_TextRival, MSGBOX_DEFAULT
+	special GleRivalInfo
+	compare VAR_RESULT, 0
+	goto_if_ne GleRival_Completed
+	msgbox GleTown_TextRival, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq GleRival_Done
+	closemessage
+	special GymLeaderStartRivalFriendly
+	compare VAR_RESULT, 1
+	goto_if_eq GleRival_Won
+	compare VAR_RESULT, 2
+	goto_if_eq GleRival_Lost
+	msgbox GleText_BadTeam, MSGBOX_DEFAULT
+	goto GleRival_Done
+GleRival_Completed::
+	msgbox GleTown_TextRivalCompleted, MSGBOX_DEFAULT
+	goto GleRival_Done
+GleRival_Won::
+	msgbox GleTown_TextRivalWon, MSGBOX_DEFAULT
+	goto GleRival_Done
+GleRival_Lost::
+	msgbox GleTown_TextRivalLost, MSGBOX_DEFAULT
+GleRival_Done::
 	release
 	end
 GleTown_TextPlot:
@@ -140,7 +162,13 @@ GleTown_TextDojo:
 GleTown_TextRestaurant:
 	.string "Take a seat, LEADER.\nA good meal restores your team.$"
 GleTown_TextRival:
-	.string "This GYM and town are my project.\nKeep an eye on what I build!$"
+	.string "{RIVAL}: My GYM specializes in\n{STR_VAR_1} POKéMON.\pWe'll use your current rank rules:\n{STR_VAR_3} POKéMON, level cap {STR_VAR_2}.\pIf I'm ahead, I'll scale down.\nOur ranks won't change.\pBring your registered GYM team.\nReady for a friendly?$"
+GleTown_TextRivalCompleted:
+	.string "{RIVAL}: You won this rank's\nfriendly. Come back at a new rank!\pThis town is still my project.\nKeep an eye on what I build!$"
+GleTown_TextRivalWon:
+	.string "{RIVAL}: Good match, LEADER!\nYour GYM has come a long way.\pYour one-time prize was deposited.\nOur ranks stay as they were.$"
+GleTown_TextRivalLost:
+	.string "{RIVAL}: Keep working, LEADER!\nWe can try this friendly again.\pYour team is healed.\nYour rank hasn't changed.$"
 GleTownPlot0::
 	setvar VAR_0x8007, 0
 	goto GleTownPlot

@@ -3,7 +3,12 @@
 #include "gym_leader_state.h"
 struct Pokemon;
 struct Trainer;
+struct TrainerMon;
 struct MapHeader;
+void GleRivalInfo(void);
+void GymLeaderStartRivalFriendly(void);
+u32 GymLeaderPrepareRivalFriendly(void);
+bool32 GymLeaderPrepareRivalRoster(struct Trainer *, struct TrainerMon *);
 #define GLE_EXCLUSIVE_TYPES 18
 #define GLE_EXCLUSIVE_PER_TYPE 4
 struct GleEncounter { u16 species; u8 rank, project; };

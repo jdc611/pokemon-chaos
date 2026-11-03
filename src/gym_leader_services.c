@@ -1,5 +1,6 @@
 #include "global.h"
 #include "gym_leader.h"
+#include "gym_leader_preview.h"
 #include "gym_leader_script.h"
 #include "data.h"
 #include "event_data.h"
@@ -17,7 +18,6 @@
 #include "constants/maps.h"
 #include "constants/rgb.h"
 
-static EWRAM_DATA struct Pokemon sVoucherPreview[3] = {0};
 static EWRAM_DATA u8 sVoucherSlot = 0;
 static const u8 *const sVoucherNames[] = {
     COMPOUND_STRING("Standard"), COMPOUND_STRING("Rare"), COMPOUND_STRING("Elite"),
@@ -108,7 +108,7 @@ void GleVoucherOpen(void)
         if(gSpecialVar_Result!=GLE_OK)return;
     }
     if(!s->vouchers[slot].level)s->vouchers[slot].level=max(5,GymLeaderLevelCap()-3);
-    for(i=0;i<s->vouchers[slot].count;i++)MakeVoucherMon(&sVoucherPreview[i],i);
+    for(i=0;i<s->vouchers[slot].count;i++)MakeVoucherMon(&gGlePreviewParty[i],i);
     gSpecialVar_Result=GLE_OK;
 }
 void GleVoucherChoices(void)
@@ -125,8 +125,8 @@ void GleVoucherInfo(void)
     u32 choice=gSpecialVar_0x8007;
     if(v==NULL || choice>=v->count)return;
     StringCopy(gStringVar1,GetSpeciesName(v->species[choice]));
-    StringCopy(gStringVar2,gAbilitiesInfo[GetMonAbility(&sVoucherPreview[choice])].name);
-    ConvertIntToDecimalStringN(gStringVar3,GetMonData(&sVoucherPreview[choice],MON_DATA_LEVEL),STR_CONV_MODE_LEFT_ALIGN,3);
+    StringCopy(gStringVar2,gAbilitiesInfo[GetMonAbility(&gGlePreviewParty[choice])].name);
+    ConvertIntToDecimalStringN(gStringVar3,GetMonData(&gGlePreviewParty[choice],MON_DATA_LEVEL),STR_CONV_MODE_LEFT_ALIGN,3);
 }
 static void Task_VoucherSummary(u8 taskId)
 {
@@ -134,7 +134,7 @@ static void Task_VoucherSummary(u8 taskId)
     {
         const struct GleVoucher *v=CurrentVoucher();
         ResetTasks();CleanupOverworldWindowsAndTilemaps();
-        ShowPokemonSummaryScreen(SUMMARY_MODE_NORMAL,sVoucherPreview,gSpecialVar_0x8007,v->count-1,CB2_ReturnToFieldContinueScript);
+        ShowPokemonSummaryScreen(SUMMARY_MODE_NORMAL,gGlePreviewParty,gSpecialVar_0x8007,v->count-1,CB2_ReturnToFieldContinueScript);
     }
 }
 void GleVoucherSummary(void)
@@ -152,7 +152,7 @@ void GleVoucherClaim(void)
     if(v==NULL || !v->viewed || choice>=v->count)return;
     if(GleSpeciesClaimed(GymLeaderState(),v->species[choice],v->kind)){gSpecialVar_Result=GLE_DUPLICATE;return;}
     if(IsPlayerPartyAndPokemonStorageFull()){gSpecialVar_Result=GLE_NO_ROOM;return;}
-    result=GiveScriptedMonToPlayer(&sVoucherPreview[choice],PARTY_SIZE);
+    result=GiveScriptedMonToPlayer(&gGlePreviewParty[choice],PARTY_SIZE);
     if(result==MON_CANT_GIVE){gSpecialVar_Result=GLE_NO_ROOM;return;}
     // The checks above make the remaining state transaction infallible. No
     // voucher is consumed for a full party/PC or for browsing the desk.

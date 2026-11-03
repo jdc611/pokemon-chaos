@@ -104,8 +104,8 @@ choose(0);until(lambda:menu_count()==6)
 assert rd(record()+v[175],1)==1
 choose(2);frames(180)
 assert rd('gMapHeader')!=0
-assert call('GetMonData2',symbols['sStaffPreview'],v[11])==15
-assert any(call('GetMonData2',symbols['sStaffPreview'],v[38]+j) for j in range(4))
+assert call('GetMonData2',symbols['gGlePreviewParty'],v[11])==15
+assert any(call('GetMonData2',symbols['gGlePreviewParty'],v[38]+j) for j in range(4))
 snap('staff-native-summary')
 press(2,120);until(lambda:menu_count()==6)
 press(2);until(lambda:menu_count()==2);press(2);frames(50)

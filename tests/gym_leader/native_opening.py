@@ -61,7 +61,7 @@ for i in range(20,24):
  a=symbols['gWindows']+i*12
  assert rd(a,1)==0 and rd(a+8)!=0, ('missing profile window',i)
 assert any(rd(rd(symbols['gWindows']+22*12+8)+i,1) for i in range(2304)), 'blank ability window'
-assert any(call('GetMonData2',symbols['sDraftPreview'],v[38]+j) for j in range(4)), 'preview has no moves'
+assert any(call('GetMonData2',symbols['gGlePreviewParty'],v[38]+j) for j in range(4)), 'preview has no moves'
 snap('opening-draft-summary')
 # Check stats, moves, and return to profile before leaving.
 for name in ['skills','moves','growth']:

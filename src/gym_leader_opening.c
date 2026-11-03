@@ -1,5 +1,6 @@
 #include "global.h"
 #include "gym_leader.h"
+#include "gym_leader_preview.h"
 #include "gym_leader_script.h"
 #include "item.h"
 #include "event_data.h"
@@ -26,7 +27,6 @@
 
 // A separate preview array avoids the Summary screen's link-opponent path.
 // Passing the enemy party there makes it read an uninitialized link trainer name.
-static EWRAM_DATA struct Pokemon sDraftPreview[3] = {0};
 
 static const u8 *const sTownNames[] = {COMPOUND_STRING("SAFFRON"), COMPOUND_STRING("CELADON"), COMPOUND_STRING("FUCHSIA")};
 static const u8 *const sTypeNames[] = {
@@ -265,7 +265,7 @@ static void Task_DraftSummary(u8 taskId)
     {
         ResetTasks();
         CleanupOverworldWindowsAndTilemaps();
-        ShowPokemonSummaryScreen(SUMMARY_MODE_NORMAL, sDraftPreview, gSpecialVar_0x8007, 2, CB2_ReturnToFieldContinueScript);
+        ShowPokemonSummaryScreen(SUMMARY_MODE_NORMAL, gGlePreviewParty, gSpecialVar_0x8007, 2, CB2_ReturnToFieldContinueScript);
     }
 }
 
@@ -279,7 +279,7 @@ void GleDraftSummary(void)
         return;
     }
     for (i = 0; i < 3; i++)
-        MakeDraftMon(&sDraftPreview[i], s->draftRound * 3 + i);
+        MakeDraftMon(&gGlePreviewParty[i], s->draftRound * 3 + i);
     BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
     CreateTask(Task_DraftSummary, 10);
 }
@@ -372,6 +372,22 @@ void GymLeaderRedirectWarp(s8 *group, s8 *number, s8 *warp, s8 *x, s8 *y)
     if (!IsGymLeaderRun() || s->openingStage == 0)
         return;
     destination = (u8)*number | ((u8)*group << 8);
+    // The old badge campaign must not award a rival Champion/Hall of Fame
+    // ending in a Gym Leader career. Inspections run at the player's Gym.
+    if (destination == MAP_POKEMON_LEAGUE_LORELEIS_ROOM
+        || destination == MAP_POKEMON_LEAGUE_BRUNOS_ROOM
+        || destination == MAP_POKEMON_LEAGUE_AGATHAS_ROOM
+        || destination == MAP_POKEMON_LEAGUE_LANCES_ROOM
+        || destination == MAP_POKEMON_LEAGUE_CHAMPIONS_ROOM
+        || destination == MAP_POKEMON_LEAGUE_HALL_OF_FAME)
+    {
+        *group = MAP_GROUP(MAP_INDIGO_PLATEAU_POKEMON_CENTER_1F);
+        *number = MAP_NUM(MAP_INDIGO_PLATEAU_POKEMON_CENTER_1F);
+        *warp = -1;
+        *x = 4;
+        *y = 3;
+        return;
+    }
     league = destination == MAP_VIRIDIAN_CITY_GYM;
     if (!league && destination != gyms[s->town])
         return;

@@ -39,7 +39,7 @@ choose(0);until(lambda:menu_count()==1);choose(0)
 until(lambda:menu_count()==3)
 # Save the account after the choices lock. Preview data remains deterministic.
 voucher=bytes(rd(current()+v[67]+i,1) for i in range(v[68]))
-preview=bytes(rd(symbols['sVoucherPreview']+i,1) for i in range(3*v[5]))
+preview=bytes(rd(symbols['gGlePreviewParty']+i,1) for i in range(3*v[5]))
 expected=bytes(rd(current()+i,1) for i in range(v[1]))
 assert call('TrySavingData',0)==1
 wr(current()+v[67],0,2)
@@ -47,15 +47,15 @@ assert call('LoadGameSave',0)==1
 assert bytes(rd(current()+i,1) for i in range(v[1]))==expected
 choose(0);until(lambda:menu_count()==3);choose(1);frames(150)
 snap('gla-voucher-summary')
-assert call('GetMonData2',symbols['sVoucherPreview'],v[11])==22
-assert call('GetMonData2',symbols['sVoucherPreview'],v[70])==28
+assert call('GetMonData2',symbols['gGlePreviewParty'],v[11])==22
+assert call('GetMonData2',symbols['gGlePreviewParty'],v[70])==28
 press(2,120);until(lambda:menu_count()==3)
 choose(2);until(lambda:menu_count()==3)
 press(2);until(lambda:menu_count()==5)
 choose(0);until(lambda:menu_count()==1);choose(0);until(lambda:menu_count()==3)
 assert bytes(rd(current()+v[67]+i,1) for i in range(v[68]))==voucher
-assert bytes(rd(symbols['sVoucherPreview']+i,1) for i in range(3*v[5]))==preview
-species=call('GetMonData2',symbols['sVoucherPreview'],v[10])
+assert bytes(rd(symbols['gGlePreviewParty']+i,1) for i in range(3*v[5]))==preview
+species=call('GetMonData2',symbols['gGlePreviewParty'],v[10])
 choose(0);until(lambda:menu_count()==3);choose(0);until(yesno);choose(0)
 until(lambda:menu_count()==5)
 assert rd(current()+v[66],1)==0
@@ -69,7 +69,7 @@ snap('gla-voucher-claimed')
 assert call('GleAwardVoucher',current(),3,2)==0
 wr('gSpecialVar_Result',0,2);call('GleVoucherOpen')
 assert rd('gSpecialVar_Result',2)==0
-for i in range(3):assert call('GetMonData2',symbols['sVoucherPreview']+i*v[5],v[71])==1
+for i in range(3):assert call('GetMonData2',symbols['gGlePreviewParty']+i*v[5],v[71])==1
 # Original save migration preserves identities, town and opened vouchers.
 wr(current()+20,4,2);call('GymLeaderState')
 assert rd(current()+20,2)==v[100] and rd(current()+v[26],1)==1
@@ -78,7 +78,7 @@ print('PASS one-time milestones, persistent choices, native Summary, GLA Ball de
 
 # Both storage destinations full: no delivery and no consumed account reward.
 state('services-before-full')
-mondata=bytes(rd(symbols['sVoucherPreview']+i,1) for i in range(v[5]))
+mondata=bytes(rd(symbols['gGlePreviewParty']+i,1) for i in range(v[5]))
 for slot in range(6):
  for i,b in enumerate(mondata):wr(symbols['gParties']+slot*v[5]+i,b,1)
 wr('gPartiesCount',6,1)

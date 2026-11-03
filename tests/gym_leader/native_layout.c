@@ -73,4 +73,7 @@ const unsigned gleLayout[] = {
  offsetof(struct GleRecruit,losses),offsetof(struct GleRecruit,potential),offsetof(struct GleRecruit,loyalty),offsetof(struct GleRecruit,warnings),
  offsetof(struct GleRecruit,active),offsetof(struct GleRecruit,away),TRAINER_BUG_CATCHER_RICK,SPECIES_SNOVER,MOVE_ICY_WIND,MOVE_POWDER_SNOW,MAP_GLE_RIVAL_GYM,SPECIES_CHARMANDER,MOVE_EMBER,TRAINER_BOSS_GIOVANNI,TRAINER_LEADER_ERIKA,
  offsetof(TrainerBattleParameter,params.opponentA),offsetof(TrainerBattleParameter,params.opponentB),SPECIES_ARCANINE,
+ offsetof(struct GleState,rivalStarter),offsetof(struct GleState,rivalFriendlyWins),offsetof(struct GleState,rivalFriendlyLosses),offsetof(struct GleState,rivalFriendlyMask),
+ offsetof(struct SpeciesInfo,types),sizeof(struct SpeciesInfo),offsetof(struct GleState,rivalType),
+ MAP_INDIGO_PLATEAU_POKEMON_CENTER_1F,MAP_POKEMON_LEAGUE_LORELEIS_ROOM,MAP_POKEMON_LEAGUE_BRUNOS_ROOM,MAP_POKEMON_LEAGUE_AGATHAS_ROOM,MAP_POKEMON_LEAGUE_LANCES_ROOM,MAP_POKEMON_LEAGUE_CHAMPIONS_ROOM,MAP_POKEMON_LEAGUE_HALL_OF_FAME,FLAG_IS_CHAMPION,
 };

@@ -94,9 +94,14 @@ wr(current()+v[2],1,1) # Paid lessons stay available after demotion.
 ice();until(yesno);choose(0)
 until(lambda:task('Task_PokeStorageMain')<16);frames(100)
 assert rd('sCursorArea',1)==0 and rd('sCursorPosition',1)==0
-press(1,30);press(1,30)
-until(lambda:any(call('GetBoxMonData2',storage,v[38]+j)==v[159] for j in range(4)))
+press(1,60);press(1,60)
+# Avoid injecting native getter calls while the box selector/teaching
+# callbacks are active; inspect the result after the field menu returns.
 until(lambda:menu_count()>1)
+# Returning from the PC may relocate save/storage memory. Resolve its
+# current address before inspecting the actual taught partner.
+storage=rd('gPokemonStoragePtr')+v[34]
+assert any(call('GetBoxMonData2',storage,v[38]+j)==v[159] for j in range(4))
 assert call('GetMoney',rd('gSaveBlock1Ptr')+v[64])==36500
 assert call('GymLeaderTutorUnlocked',v[159])
 snap('gla-tutor-reused-pc')

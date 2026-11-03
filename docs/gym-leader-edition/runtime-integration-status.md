@@ -216,3 +216,23 @@ without player rank gains or consuming the final/important challenger. Native
 hire/save/relocation/preview/practice/dismissal and host progression tests pass.
 Prices are now visible on native final confirmations. MASTER section 29 records
 exact tuning, fixture boundaries and still-separate rival/Rocket/quest systems.
+
+
+## Rival friendlies and legacy ending protection
+
+The visitable rival Gym now offers a native friendly using current registered-team
+rules. A persisted basic starter and deterministic ace identity survive rank
+changes; all eighteen specialties and current caps/team limits pass fixtures.
+An actual controller-played win, first-win reward, repeat/loss/demotion guards,
+party restoration and flash persistence pass. Save version 8 is 1,356 bytes;
+version-seven tutor licenses and every prior field are preserved. Shared Summary
+preview memory leaves 4,520 EWRAM bytes free. The Indigo guard and all six old
+ending-room warp targets now prevent the inherited rival-Champion ending in
+this edition. MASTER section 30 records exact tuning and test limitations;
+GLA doubles, broader rival events and the intended final competition remain
+separate release requirements.
+
+Normal title/New Game/Oak/player keyboard/rival preset to hometown selection now
+passes a controller-only test without debug or injected-name bypasses. Actual
+party/PC tutor regression passes; its test refreshes the native relocated PC
+pointer after returning to the field.

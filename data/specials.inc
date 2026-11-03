@@ -823,3 +823,5 @@ gSpecials::
 	def_special GleStaffOfficeInfo
 	def_special GleStaffSummary, waitstate=1
 	def_special GymLeaderStartStaffPractice, waitstate=1
+	def_special GleRivalInfo
+	def_special GymLeaderStartRivalFriendly, waitstate=1

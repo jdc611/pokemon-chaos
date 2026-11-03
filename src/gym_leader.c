@@ -35,11 +35,18 @@ struct GleState *GymLeaderState(void)
             memset(s->safariSpecies,0,sizeof(s->safariSpecies));
             s->milestoneRewardMask &= ~1u; // Refresh travel permits, preserve rank rewards.
         }
-        s->tutorLessons=0;
+        if (s->version < 7)
+            s->tutorLessons=0;
+        s->rivalStarter = s->rivalFriendlyWins = s->rivalFriendlyLosses = 0;
+        s->rivalFriendlyMask = 0;
         s->version = GLE_VERSION;
     }
     return s;
 }
+
+// Draft, voucher and staff Summary screens are mutually exclusive. Keep this
+// separate from the enemy party: Summary otherwise selects its link-name path.
+EWRAM_DATA struct Pokemon gGlePreviewParty[PARTY_SIZE] = {0};
 
 bool32 IsGymLeaderRun(void)
 {
