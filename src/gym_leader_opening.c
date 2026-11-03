@@ -1,5 +1,6 @@
 #include "global.h"
 #include "gym_leader.h"
+#include "gym_leader_script.h"
 #include "item.h"
 #include "event_data.h"
 #include "field_screen_effect.h"
@@ -45,7 +46,7 @@ void GymLeaderMenu(const u8 *const *names, u32 count, bool8 ignoreB)
     if (items == NULL)
     {
         gSpecialVar_Result = 255;
-        ScriptContext_Enable();
+        GymLeaderResumeScriptNextFrame();
         return;
     }
     for (i = 0; i < count; i++)
@@ -57,7 +58,7 @@ void GymLeaderMenu(const u8 *const *names, u32 count, bool8 ignoreB)
                 Free((void *)items[--i].name);
             Free(items);
             gSpecialVar_Result = 255;
-            ScriptContext_Enable();
+            GymLeaderResumeScriptNextFrame();
             return;
         }
         StringCopy(name, names[i]);
@@ -215,7 +216,7 @@ void GleDraftMenu(void)
     if (!IsGymLeaderRun() || s->draftRound >= 3)
     {
         gSpecialVar_Result = 255;
-        ScriptContext_Enable();
+        GymLeaderResumeScriptNextFrame();
         return;
     }
     for (i = 0; i < 3; i++)
@@ -274,7 +275,7 @@ void GleDraftSummary(void)
     u32 i;
     if (!IsGymLeaderRun() || s->draftRound >= 3 || gSpecialVar_0x8007 >= 3)
     {
-        ScriptContext_Enable();
+        GymLeaderResumeScriptNextFrame();
         return;
     }
     for (i = 0; i < 3; i++)
@@ -460,7 +461,11 @@ void GymLeaderUnlockTravel(void)
         ITEM_HM01,ITEM_HM02,ITEM_HM03,ITEM_HM04,ITEM_HM05,ITEM_HM06,ITEM_HM07,ITEM_HM08
     };
     struct GleState *s=GymLeaderState();u32 i;
-    if(!IsGymLeaderRun() || s->openingStage!=5 || (s->milestoneRewardMask&1))return;
+    if(!IsGymLeaderRun() || s->openingStage!=5)return;
+    // The modern engine treats Escape Rope as reusable field equipment.
+    // Also provision existing V1 saves whose travel permit predates this item.
+    if(!CheckBagHasItem(ITEM_ESCAPE_ROPE,1) && !AddBagItem(ITEM_ESCAPE_ROPE,1))return;
+    if(s->milestoneRewardMask&1)return;
     for(i=0;i<ARRAY_COUNT(equipment);i++)
         if(!CheckBagHasItem(equipment[i],1) && !AddBagItem(equipment[i],1))return;
     for(i=0;i<ARRAY_COUNT(flags);i++)FlagSet(flags[i]);
@@ -468,4 +473,14 @@ void GymLeaderUnlockTravel(void)
     FlagClear(FLAG_HIDE_SAFFRON_CIVILIANS);
     VarSet(VAR_CHAOS_POKERIDER_UNLOCKED,1);
     s->milestoneRewardMask|=1;
+}
+
+static void Task_GleResumeScript(u8 taskId)
+{
+    DestroyTask(taskId);
+    ScriptContext_Enable();
+}
+void GymLeaderResumeScriptNextFrame(void)
+{
+    CreateTask(Task_GleResumeScript,0);
 }

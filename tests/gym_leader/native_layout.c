@@ -60,7 +60,6 @@ const unsigned gleLayout[] = {
  sizeof(struct BagPocket), offsetof(struct BagPosition, pocket), POCKET_POKE_BALLS, offsetof(struct BagPosition, cursorPosition), offsetof(struct BagPosition, scrollPosition), sizeof(struct ItemSlot), BAG_POKEBALLS_COUNT,
  MAP_SEAFOAM_ISLANDS_1F, MAP_POWER_PLANT, MAP_MT_EMBER_EXTERIOR, MAP_CERULEAN_CAVE_1F, MAP_ROUTE20,
  SPECIES_SILVALLY_NORMAL, SPECIES_SILVALLY_FIRE, SPECIES_ARCEUS, SPECIES_ARCEUS_FIRE, ITEM_FIRE_MEMORY, ITEM_FLAME_PLATE,
-
-
-
+ offsetof(struct GleState, honor), offsetof(struct GleState, projectStage), offsetof(struct GleState, projectUnlocked),
+ ITEM_POTION, ITEM_EXP_SHARE, ITEM_ABILITY_PATCH, SPECIES_TYPE_NULL, SPECIES_GLE_AWAKENED_SLAKING, SPECIES_SLAKING,
 };

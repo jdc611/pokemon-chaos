@@ -5126,6 +5126,8 @@ void Task_AbilityPatch(u8 taskId)
         // Can't use.
         if (GetSpeciesAbility(tSpecies, tAbilityNum) == 0
             || !tSpecies
+            || (IsGymLeaderRun() && tSpecies == SPECIES_GLE_AWAKENED_SLAKING
+                && tAbilityNum == 2 && GymLeaderState()->projectStage[14] < 2)
             )
         {
             gPartyMenuUseExitCallback = FALSE;

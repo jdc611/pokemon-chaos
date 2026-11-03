@@ -1,5 +1,6 @@
 #include "global.h"
 #include "gym_leader.h"
+#include "gym_leader_script.h"
 #include "event_data.h"
 #include "malloc.h"
 #include "money.h"
@@ -32,7 +33,7 @@ static void SafariName(u8 *out,u16 species)
 void GleSafariSlots(void)
 {
     u8 labels[6][36];const u8 *names[6];u32 i;
-    if(!Owner()){gSpecialVar_Result=255;ScriptContext_Enable();return;}
+    if(!Owner()){gSpecialVar_Result=255;GymLeaderResumeScriptNextFrame();return;}
     for(i=0;i<SafariSlots();i++)
     {
         u8 *end=ConvertIntToDecimalStringN(labels[i],i+1,STR_CONV_MODE_LEFT_ALIGN,1);
@@ -62,7 +63,7 @@ void GleSafariSpeciesMenu(void)
     Free(labels);Free(names);return;
 failed:
     if(sSafariPool){Free(sSafariPool);sSafariPool=NULL;}
-    sSafariPoolCount=0;gSpecialVar_Result=255;ScriptContext_Enable();
+    sSafariPoolCount=0;gSpecialVar_Result=255;GymLeaderResumeScriptNextFrame();
 }
 static u32 SafariCost(u16 species)
 {

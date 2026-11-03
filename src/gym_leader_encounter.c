@@ -1,5 +1,6 @@
 #include "global.h"
 #include "gym_leader.h"
+#include "gym_leader_script.h"
 #include "battle.h"
 #include "battle_setup.h"
 #include "event_data.h"
@@ -68,7 +69,7 @@ u32 GymLeaderPrepareExclusiveBattle(void)
 }
 void GleExclusiveStart(void)
 {
-    if(!GymLeaderPrepareExclusiveBattle()){gSpecialVar_Result=0;ScriptContext_Enable();return;}
+    if(!GymLeaderPrepareExclusiveBattle()){gSpecialVar_Result=0;GymLeaderResumeScriptNextFrame();return;}
     BattleSetup_StartLegendaryBattle();
 }
 void GleExclusiveFinish(void)

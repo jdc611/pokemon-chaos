@@ -785,3 +785,10 @@ gSpecials::
 	def_special GleExclusiveRefresh
 	def_special GleExpeditionMenu, waitstate=1
 	def_special GleExpeditionTravel
+
+	def_special GleSupplyMenu, waitstate=1
+	def_special GleSupplyOpen, waitstate=1
+	def_special GleNullStatus
+	def_special GleNullClaim
+
+	def_special GleSlakingResearch

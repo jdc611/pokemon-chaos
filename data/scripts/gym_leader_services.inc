@@ -115,6 +115,10 @@ GleResearch_Notebook::
 	special GleResearchMenu
 	compare VAR_RESULT, 16
 	goto_if_ge GleHall_Stay
+	compare VAR_RESULT, 0
+	goto_if_eq GleResearch_Null
+	compare VAR_RESULT, 14
+	goto_if_eq GleResearch_Slaking
 	special GleResearchInfo
 	msgbox GleResearch_TextStatus, MSGBOX_DEFAULT
 	goto GleResearch_Notebook
@@ -161,3 +165,97 @@ GleSafari_TextPlaced:
 	.string "The habitat is ready!\nYour selected species now lives\lin the SAFARI ZONE.$"
 GleSafari_TextFailed:
 	.string "That species is already settled,\nor the funds are insufficient.\lYour wildlife is unchanged.$"
+
+GleSupply_Clerk::
+	lock
+	faceplayer
+	msgbox GleSupply_TextWelcome, MSGBOX_DEFAULT
+GleSupply_Category::
+	closemessage
+	special GleSupplyMenu
+	compare VAR_RESULT, 5
+	goto_if_ge GleHall_Stay
+	special GleSupplyOpen
+	compare VAR_RESULT, 0
+	goto_if_eq GleSupply_Locked
+	goto GleSupply_Category
+GleSupply_Locked::
+	msgbox GleSupply_TextLocked, MSGBOX_DEFAULT
+	goto GleSupply_Category
+GleSupply_TextWelcome:
+	.string "GLA supply desk! Stock expands\nwith your rank. Honorable leaders\lreceive a 10 percent discount.$"
+GleSupply_TextLocked:
+	.string "No supplies in that category yet.\nRaise your rank or begin the\lTYPE: NULL research placement.$"
+GleResearch_Gla::
+	lock
+	faceplayer
+	msgbox GleResearch_TextGla, MSGBOX_DEFAULT
+	goto GleResearch_Notebook
+GleResearch_Null::
+	special GleNullStatus
+	compare VAR_RESULT, 0
+	goto_if_eq GleResearch_NullLocked
+	compare VAR_RESULT, 1
+	goto_if_eq GleResearch_NullOffer
+	compare VAR_RESULT, 3
+	goto_if_eq GleResearch_NullDone
+	msgbox GleResearch_TextNullCare, MSGBOX_DEFAULT
+	goto GleResearch_Notebook
+GleResearch_NullLocked::
+	msgbox GleResearch_TextNullLocked, MSGBOX_DEFAULT
+	goto GleResearch_Notebook
+GleResearch_NullOffer::
+	msgbox GleResearch_TextNullOffer, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq GleResearch_Notebook
+	special GleNullClaim
+	compare VAR_RESULT, 0
+	goto_if_ne GleResearch_NullFull
+	playfanfare MUS_EVOLVED
+	msgbox GleResearch_TextNullGiven, MSGBOX_DEFAULT
+	waitfanfare
+	goto GleResearch_Notebook
+GleResearch_NullFull::
+	msgbox GleResearch_TextNullFull, MSGBOX_DEFAULT
+	goto GleResearch_Notebook
+GleResearch_NullDone::
+	msgbox GleResearch_TextNullDone, MSGBOX_DEFAULT
+	goto GleResearch_Notebook
+GleResearch_TextGla:
+	.string "GLA field research desk.\nLet's review your notebook and\lcare for unusual partners.$"
+GleResearch_TextNullLocked:
+	.string "TYPE: NULL needs a patient leader.\nReach rank 3 to qualify for our\lrehabilitation placement.$"
+GleResearch_TextNullOffer:
+	.string "Will you care for TYPE: NULL?\nEarn its trust through friendship\land report its evolution to us.$"
+GleResearch_TextNullGiven:
+	.string "TYPE: NULL has joined you!\nCheck your party or PC. MEMORIES\lare now stocked at the GLA desk.$"
+GleResearch_TextNullCare:
+	.string "Raise TYPE: NULL with friendship.\nA SOOTHE BELL can help. Return\lwith SILVALLY in your party or PC.$"
+GleResearch_TextNullDone:
+	.string "SILVALLY has accepted you!\nPlacement complete. Held MEMORIES\llet it change its type.$"
+
+GleResearch_Slaking::
+	special GleSlakingResearch
+	compare VAR_RESULT, 1
+	goto_if_eq GleResearch_SlakingDone
+	compare VAR_RESULT, 2
+	goto_if_eq GleResearch_SlakingKnown
+	msgbox GleResearch_TextSlakingCare, MSGBOX_DEFAULT
+	goto GleResearch_Notebook
+GleResearch_SlakingDone::
+	playfanfare MUS_EVOLVED
+	msgbox GleResearch_TextSlakingDone, MSGBOX_DEFAULT
+	waitfanfare
+	goto GleResearch_Notebook
+GleResearch_SlakingKnown::
+	msgbox GleResearch_TextSlakingKnown, MSGBOX_DEFAULT
+	goto GleResearch_Notebook
+GleResearch_TextSlakingCare:
+	.string "At rank 5, bring your special\nSLAKING in your party or PC.\lWe can awaken its VITAL SPIRIT.$"
+GleResearch_TextSlakingDone:
+	.string "Our research has awakened your\nspecial SLAKING's VITAL SPIRIT!\lOrdinary SLAKING are unchanged.$"
+GleResearch_TextSlakingKnown:
+	.string "Your special SLAKING's awakening\nis complete. Keep exploring and\ltraining together!$"
+
+GleResearch_TextNullFull:
+	.string "There is no room for a partner.\nMake space in your party or PC.\lYour placement will wait here.$"

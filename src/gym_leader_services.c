@@ -1,5 +1,6 @@
 #include "global.h"
 #include "gym_leader.h"
+#include "gym_leader_script.h"
 #include "data.h"
 #include "event_data.h"
 #include "field_screen_effect.h"
@@ -49,7 +50,7 @@ void GleVoucherMenu(void)
     const u8 *names[GLE_VOUCHERS];
     u32 i;
     if(gSaveBlock1Ptr->location.mapGroup!=MAP_GROUP(MAP_GLE_LEAGUE_HALL)
-        || gSaveBlock1Ptr->location.mapNum!=MAP_NUM(MAP_GLE_LEAGUE_HALL) || !s->voucherCount){gSpecialVar_Result=255;ScriptContext_Enable();return;}
+        || gSaveBlock1Ptr->location.mapNum!=MAP_NUM(MAP_GLE_LEAGUE_HALL) || !s->voucherCount){gSpecialVar_Result=255;GymLeaderResumeScriptNextFrame();return;}
     for(i=0;i<s->voucherCount;i++)
     {
         u8 *end=StringCopy(labels[i],sVoucherNames[s->vouchers[i].kind]);
@@ -114,7 +115,7 @@ void GleVoucherChoices(void)
 {
     const struct GleVoucher *v=CurrentVoucher();
     const u8 *names[3];u32 i;
-    if(v==NULL || !v->viewed){gSpecialVar_Result=255;ScriptContext_Enable();return;}
+    if(v==NULL || !v->viewed){gSpecialVar_Result=255;GymLeaderResumeScriptNextFrame();return;}
     for(i=0;i<v->count;i++)names[i]=GetSpeciesName(v->species[i]);
     GymLeaderMenu(names,v->count,FALSE);
 }
@@ -139,7 +140,7 @@ static void Task_VoucherSummary(u8 taskId)
 void GleVoucherSummary(void)
 {
     const struct GleVoucher *v=CurrentVoucher();
-    if(v==NULL || gSpecialVar_0x8007>=v->count){ScriptContext_Enable();return;}
+    if(v==NULL || gSpecialVar_0x8007>=v->count){GymLeaderResumeScriptNextFrame();return;}
     BeginNormalPaletteFade(PALETTES_ALL,0,0,16,RGB_BLACK);
     CreateTask(Task_VoucherSummary,10);
 }

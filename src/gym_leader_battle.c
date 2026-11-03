@@ -1,5 +1,6 @@
 #include "global.h"
 #include "gym_leader.h"
+#include "gym_leader_script.h"
 #include "battle.h"
 #include "battle_setup.h"
 #include "battle_transition.h"
@@ -97,7 +98,7 @@ void GymLeaderRegisterTeam(void)
     gSpecialVar_Result = 0;
     if (!IsGymLeaderRun() || GymLeaderState()->openingStage != 5 || sActive)
     {
-        ScriptContext_Enable();
+        GymLeaderResumeScriptNextFrame();
         return;
     }
     sOldFacility = VarGet(VAR_FRONTIER_FACILITY);
@@ -350,7 +351,7 @@ static void StartOfficialBattle(bool32 inspection)
     {
         gSpecialVar_Result += 10;
         sTraining = 0;
-        ScriptContext_Enable();
+        GymLeaderResumeScriptNextFrame();
         return;
     }
     InitTrainerBattleParameter();
@@ -375,7 +376,7 @@ void GymLeaderStartTraining(void)
     if (gSpecialVar_Result > 3 || (gSpecialVar_Result == 2 && GymLeaderState()->rank < 4) || (gSpecialVar_Result == 3 && GymLeaderState()->rank < 7))
     {
         gSpecialVar_Result = 14;
-        ScriptContext_Enable();
+        GymLeaderResumeScriptNextFrame();
         return;
     }
     sTrainingStyle = gSpecialVar_Result;

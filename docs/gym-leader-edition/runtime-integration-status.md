@@ -165,3 +165,14 @@ now renders rank EXP and career records; a discovered back-flip invalid-species
 crash is fixed. All 17 Memory/Plate typing pairs and stale-form handling pass.
 Old free editors and Train to Cap cannot bypass the mode's reward progression.
 See MASTER section 24 for fixture boundaries and the current memory budget.
+
+## Supplies, research placement and refused-action recovery
+
+GLA stock now uses the native Buy/Sell interface, rank tiers and honorable discount.
+Type: Null placement, native friendship-evolution reporting and Memory unlock are
+integrated. Special Slaking's rank-five awakening preserves ordinary Slaking and
+blocks pre-research Ability Patch access. Native tests cover actual purchasing,
+all stock tiers, one-time delivery, full-storage/PC recovery and flash persistence.
+An implicit-waitstate rejection softlock is fixed; native empty-voucher, locked
+practice and unregistered-defense interactions return control normally. MASTER
+section 25 records the delegated tuning, test boundaries and remaining systems.

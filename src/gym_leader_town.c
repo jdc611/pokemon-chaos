@@ -1,5 +1,6 @@
 #include "global.h"
 #include "gym_leader.h"
+#include "gym_leader_script.h"
 #include "event_data.h"
 #include "fieldmap.h"
 #include "field_camera.h"
@@ -344,7 +345,7 @@ void GlePlotMenu(void)
 {
     const u8 *names[GLE_BUILDING_COUNT];
     u32 i,plot=gSpecialVar_0x8007;
-    if (plot >= GLE_PLOTS) {gSpecialVar_Result=255;ScriptContext_Enable();return;}
+    if (plot >= GLE_PLOTS) {gSpecialVar_Result=255;GymLeaderResumeScriptNextFrame();return;}
     if (GymLeaderState()->plots[plot].building)
     {
         u32 building=GymLeaderState()->plots[plot].building;
