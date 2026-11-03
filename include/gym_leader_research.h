@@ -3,4 +3,5 @@
 struct MapHeader;
 void GymLeaderConfigureResearchMap(struct MapHeader *header);
 u32 GymLeaderPrepareWingsBattle(void);
+u32 GymLeaderPrepareTitanBattle(void);
 #endif

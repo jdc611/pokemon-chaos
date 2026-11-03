@@ -65,7 +65,7 @@ GleExpedition_Guide::
 GleExpedition_Choose::
 	closemessage
 	special GleExpeditionMenu
-	compare VAR_RESULT, 4
+	compare VAR_RESULT, 5
 	goto_if_ge GleExclusive_Done
 	special GleExpeditionTravel
 	compare VAR_RESULT, 1

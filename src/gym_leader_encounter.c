@@ -91,17 +91,17 @@ void GleExclusiveRefresh(void)
 }
 void GleExpeditionMenu(void)
 {
-    static const u8 *const names[]={COMPOUND_STRING("Seafoam Islands"),COMPOUND_STRING("Power Plant"),COMPOUND_STRING("Mt. Ember"),COMPOUND_STRING("Cerulean Cave"),COMPOUND_STRING("Back")};
+    static const u8 *const names[]={COMPOUND_STRING("Seafoam Islands"),COMPOUND_STRING("Power Plant"),COMPOUND_STRING("Mt. Ember"),COMPOUND_STRING("Cerulean Cave"),COMPOUND_STRING("Tanoby Ruins"),COMPOUND_STRING("Back")};
     GymLeaderMenu(names,ARRAY_COUNT(names),FALSE);
 }
 void GleExpeditionTravel(void)
 {
-    static const u16 maps[]={MAP_SEAFOAM_ISLANDS_1F,MAP_POWER_PLANT,MAP_MT_EMBER_EXTERIOR,MAP_CERULEAN_CAVE_1F};
-    static const u8 positions[][2]={{6,20},{4,38},{28,47},{33,20}};
-    u32 slot=gSpecialVar_Result;
-    if(!IsGymLeaderRun() || slot>=4){gSpecialVar_Result=0;return;}
-    ConvertIntToDecimalStringN(gStringVar3,sRanks[slot],STR_CONV_MODE_LEFT_ALIGN,1);
-    if(GymLeaderState()->rank<sRanks[slot]){gSpecialVar_Result=0;return;}
+    static const u16 maps[]={MAP_SEAFOAM_ISLANDS_1F,MAP_POWER_PLANT,MAP_MT_EMBER_EXTERIOR,MAP_CERULEAN_CAVE_1F,MAP_SEVEN_ISLAND_TANOBY_RUINS};
+    static const u8 positions[][2]={{6,20},{4,38},{28,47},{33,20},{35,6}};
+    u32 slot=gSpecialVar_Result,rank=slot==4?4:slot<4?sRanks[slot]:0;
+    if(!IsGymLeaderRun() || slot>=5){gSpecialVar_Result=0;return;}
+    ConvertIntToDecimalStringN(gStringVar3,rank,STR_CONV_MODE_LEFT_ALIGN,1);
+    if(max(GymLeaderState()->rank,GymLeaderState()->highestRank)<rank){gSpecialVar_Result=0;return;}
     SetWarpDestination(MAP_GROUP(maps[slot]),MAP_NUM(maps[slot]),-1,positions[slot][0],positions[slot][1]);
     DoWarp();gSpecialVar_Result=1;
 }

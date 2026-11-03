@@ -825,3 +825,14 @@ gSpecials::
 	def_special GymLeaderStartStaffPractice, waitstate=1
 	def_special GleRivalInfo
 	def_special GymLeaderStartRivalFriendly, waitstate=1
+
+	def_special GleTitansNotebook
+	def_special GleTitansMenu, waitstate=1
+	def_special GleTitansReport
+	def_special GleTitansInfo
+	def_special GleTitansClue
+	def_special GleTitansSealMenu, waitstate=1
+	def_special GleTitansSolve
+	def_special GleTitansStart, waitstate=1
+	def_special GleTitansFinish
+	def_special GleRegigigasResearch

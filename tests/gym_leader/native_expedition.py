@@ -1,4 +1,4 @@
-"""Native GLA expedition guide, rank refusal and four entrance transports."""
+"""Native GLA expedition guide, rank refusal and five entrance transports."""
 import runpy
 ctx=runpy.run_path('tests/gym_leader/native_opening.py');globals().update(ctx)
 def mapid():
@@ -13,18 +13,18 @@ def walkto(x,y):
  raise AssertionError(('expedition walk blocked',pos(),(x,y)))
 def guide():
  walkto(6,13);walkto(4,13);press(64);press(1)
- until(lambda:menu_count()==5)
-guide();choose(0);until(lambda:menu_count()==5)
+ until(lambda:menu_count()==6)
+guide();choose(0);until(lambda:menu_count()==6)
 assert mapid()==v[24],'rank-one transport should be refused'
 press(2);frames(50)
 assert not call('ScriptContext_IsEnabled')
 wr(current()+v[2],8,1)
-for slot,expected in enumerate([(6,20),(4,38),(28,47),(33,20)]):
+for slot,expected in enumerate([(6,20),(4,38),(28,47),(33,20),(35,6)]):
  if mapid()!=v[24]:call('GleWarpLeague');frames(240)
  guide();snap('expedition-guide-menu');choose(slot)
  for _ in range(500):
   frames(1)
-  if mapid()==v[125+slot]:break
+  if mapid()==(v[125+slot] if slot<4 else v[-14]):break
  else:raise AssertionError(('transport failed',slot,hex(mapid())))
  frames(220)
  assert pos()==expected,(slot,pos(),expected)
@@ -35,4 +35,4 @@ for slot,expected in enumerate([(6,20),(4,38),(28,47),(33,20)]):
    if mapid()==v[129]:break
   else:raise AssertionError('Seafoam entrance transport did not permit a native exit')
   frames(140)
-print('PASS native expedition guide rank refusal, four entrance transports and Seafoam entrance exit',flush=True)
+print('PASS native expedition guide rank refusal, five entrance transports and Seafoam entrance exit',flush=True)

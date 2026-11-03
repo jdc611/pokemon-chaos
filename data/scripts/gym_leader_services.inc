@@ -119,6 +119,10 @@ GleResearch_Notebook::
 	goto_if_eq GleResearch_Null
 	compare VAR_RESULT, 14
 	goto_if_eq GleResearch_Slaking
+	compare VAR_RESULT, 4
+	goto_if_eq GleResearch_Regigigas
+	compare VAR_RESULT, 3
+	goto_if_eq GleResearch_Titans
 	compare VAR_RESULT, 12
 	goto_if_eq GleResearch_Wings
 	special GleResearchInfo
@@ -363,3 +367,100 @@ GleTutor_TextKnown:
 	.string "{STR_VAR_1} is already unlocked.\nTeach it again for free?$"
 GleTutor_TextNoMoney:
 	.string "The lesson wasn't unlocked.\nCheck your funds and rank.\lYour money is unchanged.$"
+
+GleResearch_Titans::
+	special GleTitansNotebook
+	msgbox GleTitans_TextNotebook, MSGBOX_DEFAULT
+GleTitans_NotebookMenu::
+	closemessage
+	special GleTitansMenu
+	compare VAR_RESULT, 6
+	goto_if_ge GleResearch_Notebook
+	special GleTitansReport
+	msgbox GleTitans_TextReport, MSGBOX_DEFAULT
+	goto GleTitans_NotebookMenu
+GleTitans_TextNotebook:
+	.string "Ancient Titans: {STR_VAR_1}/5 chambers.\nExplore Tanoby's first five chambers\land read each titan's seal.\pDiscover all five to open Rixy.\nNo other titan must be caught!\lGLA expeditions reach the ruins.$"
+GleTitans_TextReport:
+	.string "{STR_VAR_1}\n{STR_VAR_2}\lSurvey rank: {STR_VAR_3}.\pEarned access survives demotion.$"
+GleTitans_Approach::
+	lockall
+	faceplayer
+	special GleTitansInfo
+	compare VAR_RESULT, 2
+	goto_if_eq GleExclusive_AlreadyCaught
+	compare VAR_RESULT, 4
+	goto_if_eq GleTitans_Sealed
+	compare VAR_RESULT, 3
+	goto_if_eq GleTitans_Puzzle
+	compare VAR_RESULT, 1
+	goto_if_ne GleExclusive_Locked
+	goto GleTitans_Save
+GleTitans_Puzzle::
+	special GleTitansClue
+	msgbox gStringVar4, MSGBOX_DEFAULT
+	closemessage
+	special GleTitansSealMenu
+	special GleTitansSolve
+	compare VAR_RESULT, 1
+	goto_if_ne GleTitans_Wrong
+	msgbox GleTitans_TextSolved, MSGBOX_DEFAULT
+GleTitans_Save::
+	special GleTitansInfo
+	msgbox GleExclusive_TextSave, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq GleTitans_Confirm
+	call Common_EventScript_SaveGame
+GleTitans_Confirm::
+	special GleTitansInfo
+	msgbox GleExclusive_TextConfirm, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq GleExclusive_Done
+	closemessage
+	special GleTitansStart
+	special GleTitansFinish
+	compare VAR_RESULT, 1
+	goto_if_eq GleTitans_Caught
+	msgbox GleExclusive_TextRetry, MSGBOX_DEFAULT
+	goto GleExclusive_Done
+GleTitans_Caught::
+	removeobject 251
+	msgbox GleTitans_TextCaught, MSGBOX_DEFAULT
+	goto GleExclusive_Done
+GleTitans_Sealed::
+	msgbox GleTitans_TextSealed, MSGBOX_DEFAULT
+	goto GleExclusive_Done
+GleTitans_Wrong::
+	msgbox GleTitans_TextWrong, MSGBOX_DEFAULT
+	goto GleExclusive_Done
+GleTitans_TextSolved:
+	.string "The seal glows and opens!\nIts meaning is permanently recorded.$"
+GleTitans_TextWrong:
+	.string "The seal remains silent.\nStudy the inscription and try again.$"
+GleTitans_TextSealed:
+	.string "Five ancient powers bind this seal.\nDiscover Monean, Liptoo, Weepth,\lDilford and Scufib chambers.\pCaptures are not required.\nEarly discoveries are remembered.$"
+GleTitans_TextCaught:
+	.string "This titan's capture is recorded!\nYour partner is in your party or PC.\lThe other titans remain independent.$"
+
+GleResearch_Regigigas::
+	special GleRegigigasResearch
+	compare VAR_RESULT, 1
+	goto_if_eq GleResearch_RegigigasDone
+	compare VAR_RESULT, 2
+	goto_if_eq GleResearch_RegigigasKnown
+	msgbox GleResearch_TextRegigigasCare, MSGBOX_DEFAULT
+	goto GleResearch_Notebook
+GleResearch_RegigigasDone::
+	playfanfare MUS_EVOLVED
+	msgbox GleResearch_TextRegigigasDone, MSGBOX_DEFAULT
+	waitfanfare
+	goto GleResearch_Notebook
+GleResearch_RegigigasKnown::
+	msgbox GleResearch_TextRegigigasKnown, MSGBOX_DEFAULT
+	goto GleResearch_Notebook
+GleResearch_TextRegigigasCare:
+	.string "Survey the five outer chambers\nand catch Rixy's REGIGIGAS.\pBring it in your party or PC.\nWith the complete inscriptions,\lwe can overcome its SLOW START.$"
+GleResearch_TextRegigigasDone:
+	.string "The five inscriptions reveal how\nto awaken your REGIGIGAS!\pIts SLOW START is permanently\nreplaced by CLEAR BODY.\lOther REGIGIGAS remain unchanged.$"
+GleResearch_TextRegigigasKnown:
+	.string "Your REGIGIGAS's awakening is\ncomplete. Its CLEAR BODY endures\lwherever your journey leads.$"

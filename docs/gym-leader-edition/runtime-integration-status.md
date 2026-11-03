@@ -252,3 +252,56 @@ flash-reload access, delayed notebook activation, nonsequential capture records,
 and a real Articuno Master Ball capture/save/no-respawn regression. No save layout
 or version change is needed; EWRAM remains 257,624 bytes. This checkpoint fixes
 research persistence and does not certify the remaining campaign/release gates.
+
+
+## 32. Ancient Titans and Ancient Awakening — November 3, 2026
+
+The following locations, ranks and inscription choices are implementation tuning
+under Jack's delegated authority, not newly recovered historical decisions.
+
+- Tanoby's Monean/Liptoo/Weepth/Dilford/Scufib chambers hold Regirock, Regice,
+  Registeel, Regieleki and Regidrago respectively. Each opens its native battle
+  at earned rank 4 after a short three-choice inscription puzzle about stone,
+  ice, steel, electricity or dragons. Wrong answers and cancellation permit
+  retries without payment or consumption. Correct answers persist.
+- Entering each of those five chambers records an independent discovery even
+  before encounter eligibility. Any order works. Rixy holds Regigigas at
+  earned rank 6 and requires all five discoveries, never the other captures or
+  victories. Each titan uses the player's current cap and standard species data,
+  initial moves, native overworld sprite and ordinary legendary capture flow.
+- The native research notebook lists all six chambers, their species, discovery
+  or capture status and survey rank. The GLA expedition guide adds free rank-4
+  transport to Tanoby's outdoor shore; it does not teleport into the chambers.
+  Earned expedition access and titan encounter access survive demotion.
+- Save prompts precede battle confirmation. Only a native capture consumes a
+  titan; defeat/flee leaves it available. Unique bits 79–84 store captures,
+  85–89 store the five discoveries, and 90–94 store solved inscriptions.
+  Existing bird, Type: Null and exclusive records are preserved. No new save
+  version, state size or offsets are required.
+- After the five discoveries and the recorded Regigigas capture, the GLA's
+  Ancient Awakening entry finds a non-Egg Regigigas in party or PC and permanently
+  grants Clear Body. This uses the engine's existing per-Pokemon saved ability
+  override and marks project 4 complete. Ordinary Regigigas species data and
+  other Pokemon remain unchanged. No duplicate Regigigas is awarded.
+- Research object templates share the existing buffer with bird sites, since
+  the supported sites are on separate maps. EWRAM remains 257,624 bytes of
+  262,144; ROM payload is 27,276,060 bytes, padded to the existing 32 MiB image.
+
+Native mGBA checks pass all five any-order early discoveries, final-temple refusal
+before discovery, no-capture final unlock, all six walkable object/approach
+placements, all five real inscription menus/wrong-answer retries, cancel
+transaction refusal, solved-seal persistence, save/approach declines, all-six
+species/levels/moves, defeat/flee retry, demotion/current-cap behavior, flash
+persistence, nonsequential capture records and no duplicate respawn. A real
+Regirock fight uses a supplied Master Ball without altered enemy HP or injected
+outcome and verifies party delivery, flash persistence and no respawn. Awakening
+tests exercise the native GLA menu for a party target and an explicit PC-storage
+fixture, pre-capture refusal, one-time completion, party/PC flash persistence and
+unchanged ordinary species ability. The five-destination expedition guide and
+six-bird/actual-Articuno-capture regressions pass.
+
+Tests directly warp to chamber approach tiles and use explicit outcomes for
+all-six capture transactions; only Regirock has a controller-played capture in
+this checkpoint. These are not full island traversals, six catch-rate/balance
+playthroughs or a complete campaign. Other universal projects, story systems,
+competitions/history and the remaining release gates still require work.

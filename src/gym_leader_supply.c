@@ -167,3 +167,34 @@ completed:
     s->projectUnlocked[14]=1;s->projectStage[14]=2;
     gSpecialVar_Result=1;
 }
+
+// Reuse the engine's persisted per-Pokemon ability field. No global species
+// record changes: unresearched Regigigas retain Slow Start in every mode.
+void GleRegigigasResearch(void)
+{
+    struct GleState *s=GymLeaderState();u32 i,box;
+    enum Ability ability=ABILITY_CLEAR_BODY;
+    gSpecialVar_Result=0;
+    if(!IsGymLeaderRun())return;
+    if(s->projectStage[4]>=2){gSpecialVar_Result=2;return;}
+    if(!(s->uniqueObtained[84/8]&(1u<<(84%8))) || s->projectStage[3]<5)return;
+    for(i=0;i<PARTY_SIZE;i++)
+        if(GetMonData(&gParties[B_TRAINER_PLAYER][i],MON_DATA_SPECIES)==SPECIES_REGIGIGAS
+            && !GetMonData(&gParties[B_TRAINER_PLAYER][i],MON_DATA_IS_EGG))
+        {
+            SetMonData(&gParties[B_TRAINER_PLAYER][i],MON_DATA_CHAOS_STARTER_ABILITY,&ability);
+            goto completed;
+        }
+    for(box=0;box<TOTAL_BOXES_COUNT;box++)for(i=0;i<IN_BOX_COUNT;i++)
+    {
+        struct BoxPokemon *mon=GetBoxedMonPtr(box,i);
+        if(GetBoxMonData(mon,MON_DATA_SPECIES)==SPECIES_REGIGIGAS && !GetBoxMonData(mon,MON_DATA_IS_EGG))
+        {
+            SetBoxMonData(mon,MON_DATA_CHAOS_STARTER_ABILITY,&ability);
+            goto completed;
+        }
+    }
+    return;
+completed:
+    s->projectUnlocked[4]=1;s->projectStage[4]=2;gSpecialVar_Result=1;
+}
