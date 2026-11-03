@@ -1,0 +1,287 @@
+[
+  {
+    "map": "MAP_VIRIDIAN_FOREST",
+    "map_name": "ViridianForest",
+    "x": 23,
+    "y": 31,
+    "map_id": 9745,
+    "species": "SPECIES_WO_CHIEN",
+    "project": 7,
+    "rank": 5,
+    "location": "VIRIDIAN FOREST",
+    "clue": "A grudge is carved into old leaves.\\nWhat lets the forest heal?",
+    "answers": [
+      "Forgiveness",
+      "More grudges",
+      "Burning it"
+    ],
+    "answer": 0,
+    "index": 0
+  },
+  {
+    "map": "MAP_SEAFOAM_ISLANDS_B2F",
+    "map_name": "SeafoamIslands_B2F",
+    "x": 14,
+    "y": 15,
+    "map_id": 9044,
+    "species": "SPECIES_CHIEN_PAO",
+    "project": 7,
+    "rank": 5,
+    "location": "SEAFOAM B2F",
+    "clue": "A shattered sword sleeps in ice.\\nWhat should guide a drawn blade?",
+    "answers": [
+      "Anger",
+      "Restraint",
+      "Greed"
+    ],
+    "answer": 1,
+    "index": 1
+  },
+  {
+    "map": "MAP_ROCK_TUNNEL_1F",
+    "map_name": "RockTunnel_1F",
+    "x": 28,
+    "y": 22,
+    "map_id": 9040,
+    "species": "SPECIES_TING_LU",
+    "project": 7,
+    "rank": 5,
+    "location": "ROCK TUNNEL 1F",
+    "clue": "An ancient vessel holds old fear.\\nWhat makes its burden lighter?",
+    "answers": [
+      "Wealth",
+      "Silence",
+      "Compassion"
+    ],
+    "answer": 2,
+    "index": 2
+  },
+  {
+    "map": "MAP_POKEMON_MANSION_B1F",
+    "map_name": "PokemonMansion_B1F",
+    "x": 24,
+    "y": 12,
+    "map_id": 9021,
+    "species": "SPECIES_CHI_YU",
+    "project": 7,
+    "rank": 5,
+    "location": "MANSION B1F",
+    "clue": "Envious beads feed a hidden flame.\\nWhat breaks the curse of envy?",
+    "answers": [
+      "Gratitude",
+      "Hoarding",
+      "Revenge"
+    ],
+    "answer": 0,
+    "index": 3
+  },
+  {
+    "map": "MAP_ROUTE10",
+    "map_name": "Route10",
+    "x": 17,
+    "y": 33,
+    "map_id": 9495,
+    "species": "SPECIES_TAPU_KOKO",
+    "project": 9,
+    "rank": 4,
+    "location": "ROUTE 10 SHRINE",
+    "clue": "Thunder guards this old shrine.\\nHow should a leader use power?",
+    "answers": [
+      "Domination",
+      "Protection",
+      "Showing off"
+    ],
+    "answer": 1,
+    "index": 4
+  },
+  {
+    "map": "MAP_ROUTE25",
+    "map_name": "Route25",
+    "x": 50,
+    "y": 7,
+    "map_id": 9511,
+    "species": "SPECIES_TAPU_LELE",
+    "project": 9,
+    "rank": 5,
+    "location": "ROUTE 25 SHRINE",
+    "clue": "This guardian senses your intent.\\nWhat earns a guardian's trust?",
+    "answers": [
+      "Flattery",
+      "Payment",
+      "Sincerity"
+    ],
+    "answer": 2,
+    "index": 5
+  },
+  {
+    "map": "MAP_SAFARI_ZONE_WEST",
+    "map_name": "SafariZone_West",
+    "x": 14,
+    "y": 14,
+    "map_id": 9025,
+    "species": "SPECIES_TAPU_BULU",
+    "project": 9,
+    "rank": 6,
+    "location": "SAFARI WEST SHRINE",
+    "clue": "Roots bind this ancient shrine.\\nWhat keeps a habitat thriving?",
+    "answers": [
+      "Balance",
+      "Overgrowth",
+      "Exploitation"
+    ],
+    "answer": 0,
+    "index": 6
+  },
+  {
+    "map": "MAP_ROUTE19",
+    "map_name": "Route19",
+    "x": 13,
+    "y": 8,
+    "map_id": 9504,
+    "species": "SPECIES_TAPU_FINI",
+    "project": 9,
+    "rank": 7,
+    "location": "ROUTE 19 SHRINE",
+    "clue": "Mist veils the guardian's pool.\\nWhat clears a troubled mind?",
+    "answers": [
+      "Haste",
+      "Reflection",
+      "Denial"
+    ],
+    "answer": 1,
+    "index": 7
+  },
+  {
+    "map": "MAP_ROUTE22",
+    "map_name": "Route22",
+    "x": 20,
+    "y": 12,
+    "map_id": 9508,
+    "species": "SPECIES_UXIE",
+    "project": 8,
+    "rank": 3,
+    "location": "ROUTE 22 LAKE",
+    "clue": "Knowledge sleeps beside the lake.\\nWhat makes wisdom grow?",
+    "answers": [
+      "Guessing",
+      "Pretending",
+      "Learning"
+    ],
+    "answer": 2,
+    "index": 8
+  },
+  {
+    "map": "MAP_SAFARI_ZONE_EAST",
+    "map_name": "SafariZone_East",
+    "x": 21,
+    "y": 20,
+    "map_id": 9023,
+    "species": "SPECIES_MESPRIT",
+    "project": 8,
+    "rank": 4,
+    "location": "SAFARI EAST LAKE",
+    "clue": "A feeling echoes over the water.\\nHow can another heart be heard?",
+    "answers": [
+      "Empathy",
+      "Indifference",
+      "Boasting"
+    ],
+    "answer": 0,
+    "index": 9
+  },
+  {
+    "map": "MAP_ROUTE12",
+    "map_name": "Route12",
+    "x": 13,
+    "y": 53,
+    "map_id": 9497,
+    "species": "SPECIES_AZELF",
+    "project": 8,
+    "rank": 5,
+    "location": "ROUTE 12 LAKE",
+    "clue": "Resolve stirs beside the water.\\nWhat carries a leader through?",
+    "answers": [
+      "Giving up",
+      "Perseverance",
+      "Shortcuts"
+    ],
+    "answer": 1,
+    "index": 10
+  },
+  {
+    "map": "MAP_ROUTE15",
+    "map_name": "Route15",
+    "x": 42,
+    "y": 5,
+    "map_id": 9500,
+    "species": "SPECIES_OKIDOGI",
+    "project": 13,
+    "rank": 5,
+    "location": "ROUTE 15",
+    "clue": "Broken chains scar this ground.\\nWhat makes a bond worth keeping?",
+    "answers": [
+      "Fear",
+      "Strength alone",
+      "Loyalty"
+    ],
+    "answer": 2,
+    "index": 11
+  },
+  {
+    "map": "MAP_ROUTE8",
+    "map_name": "Route8",
+    "x": 26,
+    "y": 9,
+    "map_id": 9493,
+    "species": "SPECIES_MUNKIDORI",
+    "project": 13,
+    "rank": 6,
+    "location": "ROUTE 8",
+    "clue": "A sly pact lingers in the air.\\nWhat exposes a poisonous promise?",
+    "answers": [
+      "Truth",
+      "Blind trust",
+      "Silence"
+    ],
+    "answer": 0,
+    "index": 12
+  },
+  {
+    "map": "MAP_ROUTE18",
+    "map_name": "Route18",
+    "x": 22,
+    "y": 9,
+    "map_id": 9503,
+    "species": "SPECIES_FEZANDIPITI",
+    "project": 13,
+    "rank": 7,
+    "location": "ROUTE 18",
+    "clue": "Lovely feathers hide a dark pact.\\nHow should a leader judge others?",
+    "answers": [
+      "Appearance",
+      "Actions",
+      "Rumors"
+    ],
+    "answer": 1,
+    "index": 13
+  },
+  {
+    "map": "MAP_VIRIDIAN_FOREST",
+    "map_name": "ViridianForest",
+    "x": 40,
+    "y": 48,
+    "map_id": 9745,
+    "species": "SPECIES_ZARUDE",
+    "project": 11,
+    "rank": 4,
+    "location": "DEEP VIRIDIAN FOREST",
+    "clue": "The guardian protects its young.\\nHow should you enter its home?",
+    "answers": [
+      "Make threats",
+      "Take a trophy",
+      "Show respect"
+    ],
+    "answer": 2,
+    "index": 14
+  }
+]

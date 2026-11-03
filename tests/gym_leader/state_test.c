@@ -68,5 +68,22 @@ int main(void) {
   assert(solo.recruits[0].losses==1 && team.recruits[1].losses==1 && team.recruits[0].wins==1);
   assert(team.queueCount+1==solo.queueCount && !team.rankXp && !solo.rankXp);
  }
+ {
+  struct GleState residents,copy;uint32_t funds=0,old;
+  GleInit(&residents,91);GleChooseIdentity(&residents,0,1,2);
+  copy=residents;assert(GleResolveResidentTask(&residents,0,0,&funds)==GLE_NOT_READY && !funds && !memcmp(&copy,&residents,sizeof(copy)));
+  residents.plots[0].building=GLE_CENTER;residents.plots[0].tier=1;
+  assert(GleResolveResidentTask(&residents,0,0,&funds)==GLE_OK && funds==500 && residents.honor==10);
+  copy=residents;old=funds;
+  assert(GleResolveResidentTask(&residents,0,0,&funds)==GLE_DUPLICATE && funds==old && !memcmp(&copy,&residents,sizeof(copy)));
+  assert(GleResolveResidentTask(&residents,8,0,&funds)==GLE_INVALID);
+  assert(GleResolveResidentTask(&residents,1,1,&funds)==GLE_INVALID);
+  for(i=4;i<8;i++)assert(GleResolveResidentTask(&residents,i,0,&funds)==GLE_OK);
+  assert(residents.honor==170 && residents.reputation==125);
+  assert(!memcmp(residents.uniqueObtained,copy.uniqueObtained,25));
+  GleInit(&residents,92);GleChooseIdentity(&residents,1,1,2);
+  for(i=4;i<8;i++)assert(GleResolveResidentTask(&residents,i,1,&funds)==GLE_OK);
+  assert(residents.honor==-240 && residents.reputation==88);
+ }
  printf("GLE state scenarios passed; state size %zu bytes\n",sizeof(s));
 }

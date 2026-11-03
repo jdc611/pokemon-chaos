@@ -98,27 +98,30 @@ void GymLeaderConfigureResearchMap(struct MapHeader *header)
     if(!IsGymLeaderRun() || header->events==NULL)return;
     count=header->events->objectEventCount;
     if(count>=ARRAY_COUNT(sResearchObjects))return;
+    sResearchEvents=*header->events;
+    memcpy(sResearchObjects,header->events->objectEvents,count*sizeof(*sResearchObjects));
+    m=NULL;script=NULL;localId=0;
     slot=CurrentTitan();
     if(slot<ARRAY_COUNT(sTitans))
     {
         struct GleState *s=GymLeaderState();
         if(slot<5)GleUniqueCapture(s,TITANS_DISCOVERY+slot);
-        s->projectUnlocked[TITANS_PROJECT]=1;
-        s->projectStage[TITANS_PROJECT]=TitanDiscoveries();
-        if(ResearchBit(TITANS_CAPTURE+slot))return;
-        m=&sTitans[slot];script=GleTitans_Approach;localId=251;
+        s->projectUnlocked[TITANS_PROJECT]=1;s->projectStage[TITANS_PROJECT]=TitanDiscoveries();
+        if(!ResearchBit(TITANS_CAPTURE+slot))
+        {m=&sTitans[slot];script=GleTitans_Approach;localId=251;}
     }
     else
     {
         slot=CurrentMigration();
-        if(!MigrationUnlocked(slot) || Captured(slot))return;
-        m=&sMigrations[slot];script=GleWings_Approach;localId=WINGS_LOCAL_ID;
+        if(MigrationUnlocked(slot) && !Captured(slot))
+        {m=&sMigrations[slot];script=GleWings_Approach;localId=WINGS_LOCAL_ID;}
     }
-    sResearchEvents=*header->events;
-    memcpy(sResearchObjects,header->events->objectEvents,count*sizeof(*sResearchObjects));
-    sResearchObjects[count]=(struct ObjectEventTemplate){.localId=localId,.graphicsId=OBJ_EVENT_MON|m->species,
-        .x=m->x,.y=m->y,.elevation=3,.movementType=MOVEMENT_TYPE_FACE_DOWN,.script=script};
-    sResearchEvents.objectEvents=sResearchObjects;sResearchEvents.objectEventCount=count+1;header->events=&sResearchEvents;
+    if(m!=NULL)
+        sResearchObjects[count++]=(struct ObjectEventTemplate){.localId=localId,.graphicsId=OBJ_EVENT_MON|m->species,
+            .x=m->x,.y=m->y,.elevation=3,.movementType=MOVEMENT_TYPE_FACE_DOWN,.script=script};
+    sResearchEvents.objectEvents=sResearchObjects;sResearchEvents.objectEventCount=count;
+    GymLeaderConfigureFieldResearch(&sResearchEvents,sResearchObjects,ARRAY_COUNT(sResearchObjects));
+    if(sResearchEvents.objectEventCount!=header->events->objectEventCount)header->events=&sResearchEvents;
 }
 void GleWingsNotebook(void)
 {

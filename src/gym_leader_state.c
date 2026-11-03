@@ -212,3 +212,32 @@ int GleClaimVoucher(struct GleState *s, uint8_t slot, uint8_t choice, uint16_t *
     *out = species; memmove(v, v + 1, (--s->voucherCount - slot) * sizeof(*v));
     memset(&s->vouchers[s->voucherCount], 0, sizeof(*v)); return GLE_OK;
 }
+
+/* Eight finite resident stories use their own reserved ledger bits, 200–207.
+ * Research reserves bits 95–199. No save layout changes or story flags. */
+int GleResidentTaskReady(const struct GleState *s, uint8_t request)
+{
+    static const uint8_t buildings[4]={GLE_CENTER,GLE_HABITAT,GLE_RESTAURANT,GLE_MUSEUM};
+    unsigned i;
+    if(!GleValid(s) || request>=8)return GLE_INVALID;
+    if(GetBit(s->uniqueObtained,200+request))return GLE_DUPLICATE;
+    if(request>=4)return GLE_OK;
+    for(i=0;i<GLE_PLOTS;i++)if(s->plots[i].building==buildings[request] && s->plots[i].tier)return GLE_OK;
+    return GLE_NOT_READY;
+}
+int GleResolveResidentTask(struct GleState *s, uint8_t request, uint8_t choice, uint32_t *money)
+{
+    static const uint16_t honestRewards[8]={500,1000,800,1200,400,400,1000,0};
+    static const uint16_t shadyRewards[4]={1500,800,5000,2000};
+    static const int8_t shadyHonor[4]={-60,-50,-80,-50};
+    int status,honor;
+    if(!money || request>=8 || choice>1 || (request<4 && choice))return GLE_INVALID;
+    status=GleResidentTaskReady(s,request);if(status!=GLE_OK)return status;
+    *money=Add32(*money,choice?shadyRewards[request-4]:honestRewards[request]);
+    if(*money>GLE_MAX_MONEY)*money=GLE_MAX_MONEY;
+    honor=s->honor+(choice?shadyHonor[request-4]:request<4?10:40);
+    s->honor=honor<INT16_MIN?INT16_MIN:honor>INT16_MAX?INT16_MAX:honor;
+    if(choice)s->reputation=s->reputation>3?s->reputation-3:0;
+    else s->reputation=Add16(s->reputation,5);
+    SetBit(s->uniqueObtained,200+request);return GLE_OK;
+}

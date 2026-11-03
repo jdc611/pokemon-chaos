@@ -64,6 +64,8 @@ uint32_t GleBuildCost(uint8_t building, uint8_t tier);
 int GleConstruct(struct GleState *, uint8_t plot, uint8_t building, uint32_t *money);
 int GleRecruitTrainer(struct GleState *, uint16_t id, uint8_t potential, uint8_t loyalty);
 int GleAssignTrainer(struct GleState *, uint8_t recruit, int active);
+int GleResidentTaskReady(const struct GleState *, uint8_t request);
+int GleResolveResidentTask(struct GleState *, uint8_t request, uint8_t choice, uint32_t *money);
 int GleResearchDiscover(struct GleState *, uint8_t project, uint8_t stage);
 int GleUniqueCapture(struct GleState *, uint8_t allocation);
 int GleAwardVoucher(struct GleState *, uint8_t kind, uint8_t tier);

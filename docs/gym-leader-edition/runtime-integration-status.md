@@ -305,3 +305,97 @@ all-six capture transactions; only Regirock has a controller-played capture in
 this checkpoint. These are not full island traversals, six catch-rate/balance
 playthroughs or a complete campaign. Other universal projects, story systems,
 competitions/history and the remaining release gates still require work.
+
+## 33. Five additional field-research projects — November 3, 2026
+
+Fifteen research-only encounters are now connected to native Kanto maps and the
+existing GLA notebook. Locations, rank pacing, inscription questions and narrative
+clues below are new implementation tuning under delegated authority.
+
+| Project | Field encounters and initial earned rank |
+| --- | --- |
+| Cursed Treasures | Wo-Chien in Viridian Forest, Chien-Pao in Seafoam B2F, Ting-Lu in Rock Tunnel 1F, Chi-Yu in Mansion B1F; rank 5 |
+| Guardian Shrines | Tapu Koko on Route 10 (4), Tapu Lele on Route 25 (5), Tapu Bulu in Safari West (6), Tapu Fini on Route 19 (7) |
+| Lakes of the Mind | Uxie on Route 22 (3), Mesprit in Safari East (4), Azelf on Route 12 (5) |
+| Toxic Pact | Okidogi on Route 15 (5), Munkidori on Route 8 (6), Fezandipiti on Route 18 (7) |
+| Jungle Guardian | Standard Dark/Grass Zarude deep in Viridian Forest; rank 4 |
+
+Each encounter uses an individual three-choice native inscription/approach menu,
+then the existing save prompt, battle confirmation, standard species/moves,
+current-cap legendary battle and capture-only consumption. Wrong answers,
+cancellation, defeat and fleeing preserve retries. Earned access survives
+demotion. Toxic Pact requires discovering its three separate route sites in
+any order; no other capture is required. Its clues connect the three poisonous
+chains. The other four projects have independent encounters.
+
+The native notebook provides each project's contextual lead, individual species,
+location, discovery/seal/capture status and survey rank. Ordinary map objects
+remain intact. The shared research map buffer now appends multiple sites:
+Viridian's Wo-Chien, Zarude and Galarian Moltres coexist with distinct IDs.
+Field captures reserve bits 95–129, discoveries 130–164 and solved seals 165–199;
+fifteen entries currently use each reservation. No state version/size change.
+
+Native checks pass all fifteen linked species/reservations, dry walkable object
+and adjacent approach tiles, actual actors, early discoveries, rank refusal,
+Toxic Pact evidence gate, all fifteen real seal menus/wrong-answer retries,
+cancel transaction refusal, saved solutions, declined saves/battles, moves,
+defeat/flee retry, current-cap demotion behavior, flash persistence, all-fifteen
+nonsequential capture records and no respawn. All five actual GLA notebook/report
+return flows pass. A real Uxie fight/capture uses a supplied Master Ball without
+altered enemy HP or injected capture outcome and verifies party delivery,
+flash persistence and no respawn.
+
+For deterministic interaction testing, ordinary random encounters are disabled
+and native trainers are marked previously fought in the fixture only. Gameplay
+retains them. Fixtures warp to approach tiles; they do not certify complete
+walking routes, all species' catch-rate balance or full campaign traversal.
+The six-bird and six-titan regressions, including actual Articuno/Regirock capture
+and Regigigas party/PC awakening, pass after sharing the map buffer.
+
+## 34. Finite resident requests, decisions and accessible Honor — November 3, 2026
+
+Home-town resident speakers now offer eight persistent optional stories as
+population brings their existing native actors into town. First four requests
+accept already-built services and never require rebuilding or collecting items.
+These prices, rewards and choices are delegated implementation tuning.
+
+| Speaker | Request / decision | Honest contribution or reward | Alternative |
+| --- | --- | --- | --- |
+| 1 | Open a Center | 500 | Optional, can claim later |
+| 2 | Open any type of Habitat | 1,000 | Optional, can claim later |
+| 3 | Open a Restaurant | 800 | Optional, can claim later |
+| 4 | Open a Museum | 1,200 | Optional, can claim later |
+| 5 | Visitor's lost purse | Return: 400 | Keep: 1,500 |
+| 6 | Young food thief offers amends | Second chance: 400 | Banish: 800 |
+| 7 | An unearthed relic | Public preservation: 1,000 | Unrecorded sale: 5,000 |
+| 8 | Merchant requests an unfair monopoly | Refuse payment | Accept private payment: 2,000 |
+
+Construction support grants 10 Honor and 5 Town Reputation. Honest decisions
+grant 40 Honor and 5 Reputation. Shady decisions grant -60/-50/-80/-50 Honor
+respectively and reduce Reputation by 3. All transactions saturate safely and
+use ordinary Pokédollars. Each speaker can settle once per run; deciding later,
+declining a contribution or missing a requested building leaves it available.
+Other towns cannot settle the player's requests. These are finite resident
+stories, not a completed procedural errand/Rocket/personal-bond quest system.
+
+Speaker 1 also explains the current Honorable/Neutral/Notorious standing in
+native dialogue and the actual existing GLA-price/Ace-recruitment/Black-Market
+construction effects. No honor bar or extra popularity meter is added. These
+choices make both positive and negative Honor reachable through normal play.
+Dialogue does not award Gym XP, defense records or research captures.
+
+Reserved ledger bits 200–207 persist settlements independently from research.
+State remains version 8, 1,356 bytes with unchanged offsets. Host ASan/UBSan
+scenarios pass missing-objective refusal without mutation, valid/repeated/invalid
+transactions, honest and shady thresholds and unchanged research bytes. Native
+checks pass actual pending Center dialogue, declined and accepted support,
+repeat anti-farm, decide-later retries, other-town refusal, all four honest and
+all four shady choice menus, ordinary-money settlement, Honor transitions and
+flash persistence. Population/rank and wandering-NPC positions are explicit
+fixtures; actual Center plot purchase is covered by the separate town regression.
+Native registered defense/PC/EXP and town construction/Nurse/housing/income/
+whiteout/Habitat regressions pass.
+
+Current linked EWRAM is 257,632/262,144 bytes; ROM payload is 27,285,424 bytes,
+padded to one 32 MiB ROM. Complete remaining research, Rocket/competition/history,
+full species ecology, native BP/PWR and campaign/device release gates remain.

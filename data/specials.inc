@@ -836,3 +836,18 @@ gSpecials::
 	def_special GleTitansStart, waitstate=1
 	def_special GleTitansFinish
 	def_special GleRegigigasResearch
+
+	def_special GleFieldNotebook
+	def_special GleFieldMenu, waitstate=1
+	def_special GleFieldReport
+	def_special GleFieldInfo
+	def_special GleFieldClue
+	def_special GleFieldSealMenu, waitstate=1
+	def_special GleFieldSolve
+	def_special GleFieldStart, waitstate=1
+	def_special GleFieldFinish
+
+	def_special GleResidentRequestInfo
+	def_special GleResidentRequestChoices, waitstate=1
+	def_special GleResidentRequestResolve
+	def_special GleTownStandingInfo

@@ -51,6 +51,16 @@ GleTown_RivalPlot::
 GleTownResident::
 	lock
 	faceplayer
+	special GleResidentRequestInfo
+	compare VAR_RESULT, 3
+	goto_if_eq GleResident_Completed
+	compare VAR_RESULT, 4
+	goto_if_eq GleResident_Decision
+	compare VAR_RESULT, 2
+	goto_if_eq GleResident_BuildingReady
+	compare VAR_RESULT, 1
+	goto_if_eq GleResident_Pending
+GleResident_Status::
 	special GleTownStatus
 	msgbox GleTown_TextResidents, MSGBOX_DEFAULT
 	release
@@ -292,3 +302,45 @@ GleLandmark_TextFinished:
 
 GleTown_TextHabitatType:
 	.string "Choose this habitat's type.\nAny type is welcome in your town.\lUpgrades preserve your choice.$"
+
+GleResident_Pending::
+	msgbox gStringVar4, MSGBOX_DEFAULT
+	goto GleResident_Standing
+GleResident_BuildingReady::
+	msgbox gStringVar4, MSGBOX_DEFAULT
+	msgbox GleResident_TextCollect, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq GleResident_Standing
+	setvar VAR_RESULT, 0
+	special GleResidentRequestResolve
+	goto GleResident_Result
+GleResident_Decision::
+	msgbox gStringVar4, MSGBOX_DEFAULT
+	closemessage
+	special GleResidentRequestChoices
+	compare VAR_RESULT, 2
+	goto_if_ge GleResident_Standing
+	special GleResidentRequestResolve
+GleResident_Result::
+	compare VAR_RESULT, 0
+	goto_if_ne GleResident_Completed
+	playfanfare MUS_OBTAIN_ITEM
+	msgbox GleResident_TextResolved, MSGBOX_DEFAULT
+	waitfanfare
+	goto GleResident_Standing
+GleResident_Completed::
+	msgbox GleResident_TextThanks, MSGBOX_DEFAULT
+GleResident_Standing::
+	compare VAR_LAST_TALKED, 1
+	goto_if_ne GleResident_End
+	special GleTownStandingInfo
+	msgbox gStringVar4, MSGBOX_DEFAULT
+GleResident_End::
+	release
+	end
+GleResident_TextCollect:
+	.string "The requested building is open!\nAccept the one-time contribution?$"
+GleResident_TextResolved:
+	.string "Your decision is recorded.\nThe funds and town records\lhave been updated.$"
+GleResident_TextThanks:
+	.string "Thank you for hearing us out.\nOur earlier decision is recorded.\lKeep making this town your own!$"

@@ -125,6 +125,16 @@ GleResearch_Notebook::
 	goto_if_eq GleResearch_Titans
 	compare VAR_RESULT, 12
 	goto_if_eq GleResearch_Wings
+	compare VAR_RESULT, 7
+	goto_if_eq GleResearch_Field
+	compare VAR_RESULT, 8
+	goto_if_eq GleResearch_Field
+	compare VAR_RESULT, 9
+	goto_if_eq GleResearch_Field
+	compare VAR_RESULT, 11
+	goto_if_eq GleResearch_Field
+	compare VAR_RESULT, 13
+	goto_if_eq GleResearch_Field
 	special GleResearchInfo
 	msgbox GleResearch_TextStatus, MSGBOX_DEFAULT
 	goto GleResearch_Notebook
@@ -464,3 +474,66 @@ GleResearch_TextRegigigasDone:
 	.string "The five inscriptions reveal how\nto awaken your REGIGIGAS!\pIts SLOW START is permanently\nreplaced by CLEAR BODY.\lOther REGIGIGAS remain unchanged.$"
 GleResearch_TextRegigigasKnown:
 	.string "Your REGIGIGAS's awakening is\ncomplete. Its CLEAR BODY endures\lwherever your journey leads.$"
+
+GleResearch_Field::
+	special GleFieldNotebook
+	msgbox gStringVar4, MSGBOX_DEFAULT
+GleField_NotebookMenu::
+	closemessage
+	special GleFieldMenu
+	special GleFieldReport
+	compare VAR_RESULT, 0
+	goto_if_eq GleResearch_Notebook
+	msgbox gStringVar4, MSGBOX_DEFAULT
+	goto GleField_NotebookMenu
+GleField_Approach::
+	lockall
+	faceplayer
+	special GleFieldInfo
+	compare VAR_RESULT, 2
+	goto_if_eq GleExclusive_AlreadyCaught
+	compare VAR_RESULT, 4
+	goto_if_eq GleField_MoreEvidence
+	compare VAR_RESULT, 3
+	goto_if_eq GleField_Puzzle
+	compare VAR_RESULT, 1
+	goto_if_ne GleExclusive_Locked
+	goto GleField_Save
+GleField_Puzzle::
+	special GleFieldClue
+	msgbox gStringVar4, MSGBOX_DEFAULT
+	closemessage
+	special GleFieldSealMenu
+	special GleFieldSolve
+	compare VAR_RESULT, 1
+	goto_if_ne GleTitans_Wrong
+	msgbox GleTitans_TextSolved, MSGBOX_DEFAULT
+GleField_Save::
+	special GleFieldInfo
+	msgbox GleExclusive_TextSave, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq GleField_Confirm
+	call Common_EventScript_SaveGame
+GleField_Confirm::
+	special GleFieldInfo
+	msgbox GleExclusive_TextConfirm, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq GleExclusive_Done
+	closemessage
+	special GleFieldStart
+	special GleFieldFinish
+	compare VAR_RESULT, 1
+	goto_if_eq GleField_Caught
+	msgbox GleExclusive_TextRetry, MSGBOX_DEFAULT
+	goto GleExclusive_Done
+GleField_Caught::
+	removeobject VAR_LAST_TALKED
+	msgbox GleField_TextCaught, MSGBOX_DEFAULT
+	goto GleExclusive_Done
+GleField_MoreEvidence::
+	msgbox GleField_TextEvidence, MSGBOX_DEFAULT
+	goto GleExclusive_Done
+GleField_TextCaught:
+	.string "This encounter is recorded!\nYour partner is in your party or PC.\lOther encounters stay independent.$"
+GleField_TextEvidence:
+	.string "A poisonous chain holds firm.\nTrace the pact's other sites on\lROUTE 15, ROUTE 8 and ROUTE 18.\pDiscoveries are enough.\nNo other capture is required.$"
