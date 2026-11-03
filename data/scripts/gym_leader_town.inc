@@ -335,6 +335,8 @@ GleResident_Standing::
 	goto_if_ne GleResident_End
 	special GleTownStandingInfo
 	msgbox gStringVar4, MSGBOX_DEFAULT
+	special GleRocketJournal
+	msgbox gStringVar4, MSGBOX_DEFAULT
 GleResident_End::
 	release
 	end
@@ -344,3 +346,62 @@ GleResident_TextResolved:
 	.string "Your decision is recorded.\nThe funds and town records\lhave been updated.$"
 GleResident_TextThanks:
 	.string "Thank you for hearing us out.\nOur earlier decision is recorded.\lKeep making this town your own!$"
+
+GleRocket_Contact::
+	lockall
+	faceplayer
+GleRocket_Status::
+	special GleRocketInfo
+	compare VAR_RESULT, 2
+	goto_if_eq GleRocket_Decision
+	compare VAR_RESULT, 1
+	goto_if_ne GleRocket_Done
+	msgbox GleRocket_TextIncident, MSGBOX_DEFAULT
+	special GleRocketInfo
+	msgbox gStringVar4, MSGBOX_DEFAULT
+	msgbox GleRocket_TextChallenge, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq GleRocket_Done
+	closemessage
+	special GymLeaderStartTownDefense
+	compare VAR_RESULT, 1
+	goto_if_eq GleRocket_Won
+	compare VAR_RESULT, 2
+	goto_if_eq GleRocket_Lost
+	msgbox GleRocket_TextInvalid, MSGBOX_DEFAULT
+	goto GleRocket_Done
+GleRocket_Won::
+	msgbox GleRocket_TextWon, MSGBOX_DEFAULT
+	goto GleRocket_Status
+GleRocket_Lost::
+	msgbox GleRocket_TextLost, MSGBOX_DEFAULT
+	goto GleRocket_Done
+GleRocket_Decision::
+	msgbox GleRocket_TextDecision, MSGBOX_DEFAULT
+	closemessage
+	special GleRocketDecisionMenu
+	compare VAR_RESULT, 2
+	goto_if_ge GleRocket_Done
+	special GleRocketResolve
+	compare VAR_RESULT, 0
+	goto_if_ne GleRocket_Done
+	removeobject 235
+	special GleRocketRefresh
+	msgbox GleRocket_TextResolved, MSGBOX_DEFAULT
+GleRocket_Done::
+	releaseall
+	end
+GleRocket_TextIncident:
+	.string "A {STR_VAR_3}!\nYour staff held off {STR_VAR_2} groups.\l{STR_VAR_1} battles remain for you.$"
+GleRocket_TextChallenge:
+	.string "Use your traveling party to fight?\nAny type is allowed. These fights\lwon't change your Gym Rank.\pYour team is restored and healed\nafter each fight. Ready?$"
+GleRocket_TextWon:
+	.string "That group has been driven back!\nYour town's defense continues.$"
+GleRocket_TextLost:
+	.string "Rocket still holds its position.\nYour team has been restored.\lRegroup and try again.$"
+GleRocket_TextInvalid:
+	.string "Bring at least one healthy partner.\nNo registered-team rules apply\lto these town-defense battles.$"
+GleRocket_TextDecision:
+	.string "The raid has been defeated.\nRocket offers hush money to leave\lwithout being reported.\pThe GLA also pays for turning\nraiders over. How will you handle it?\lYou may decide later.$"
+GleRocket_TextResolved:
+	.string "The incident is resolved.\nYour funds, standing and town\lrecords have been updated.\pOrdinary town income resumes.\nBuildings and their upgrades\lremain in place.$"

@@ -4,7 +4,7 @@
  * to exercise long progression histories independently of GBA presentation. */
 #include <stdint.h>
 #define GLE_MAGIC 0x474C4531u
-#define GLE_VERSION 9
+#define GLE_VERSION 10
 #define GLE_PLOTS 24
 #define GLE_RECRUITS 10
 #define GLE_QUEUE 5
@@ -20,6 +20,11 @@ enum GleResult { GLE_OK, GLE_INVALID, GLE_NO_ROOM, GLE_NOT_READY, GLE_NOT_ENOUGH
 struct GlePlot { uint8_t building, tier, size, type; };
 struct GleRecruit { uint16_t id, wins, losses; uint8_t potential, loyalty, warnings, active, away, questBond; };
 struct GleVoucher { uint16_t species[3]; uint8_t level; uint32_t seed; uint8_t kind, tier, count, viewed; };
+struct GleRocketState {
+    uint32_t nextAt;
+    uint16_t serial, cleared, losses, stolen, recovered;
+    uint8_t stage, kind, remaining, staffHelp, heist, bossDefeated;
+};
 struct GleState {
     uint32_t magic, seed, activity, rankXp, serial;
     uint16_t version, population, capacity, reputation, defenses, losses;
@@ -47,6 +52,7 @@ struct GleState {
     uint8_t rivalFriendlyMask;
     _Alignas(4) uint8_t colleagueWins[11];
     uint8_t colleaguePendingVouchers[4];
+    _Alignas(4) struct GleRocketState rocket;
 };
 extern const uint8_t gGleRankCaps[8], gGleRankTeamSizes[8];
 void GleInit(struct GleState *, uint32_t seed);
@@ -66,6 +72,9 @@ uint32_t GleBuildCost(uint8_t building, uint8_t tier);
 int GleConstruct(struct GleState *, uint8_t plot, uint8_t building, uint32_t *money);
 int GleRecruitTrainer(struct GleState *, uint16_t id, uint8_t potential, uint8_t loyalty);
 int GleAssignTrainer(struct GleState *, uint8_t recruit, int active);
+void GleRocketActivity(struct GleState *);
+int GleRocketBattleResult(struct GleState *, int won);
+int GleResolveRocket(struct GleState *, uint8_t choice, uint32_t *money);
 int GleResidentTaskReady(const struct GleState *, uint8_t request);
 int GleResolveResidentTask(struct GleState *, uint8_t request, uint8_t choice, uint32_t *money);
 int GleResearchDiscover(struct GleState *, uint8_t project, uint8_t stage);

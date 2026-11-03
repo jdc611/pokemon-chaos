@@ -17,6 +17,7 @@
 #include "constants/flags.h"
 #include "constants/maps.h"
 
+extern const u8 GleRocket_Contact[];
 extern const u8 GleTown_MapScripts[], GleTownResident[], GleLandmarkSign[], GleSilphResearch[], GleSilphPrivate[];
 extern const u8 GleTownPlot0[];
 extern const u8 GleTownPlot1[];
@@ -55,7 +56,7 @@ static const u8 *const sBuildings[] = {
 static EWRAM_DATA struct MapEvents sEvents = {0};
 static EWRAM_DATA struct WarpEvent sWarps[64] = {0};
 static EWRAM_DATA struct BgEvent sSigns[GLE_PLOTS+1] = {0};
-static EWRAM_DATA struct ObjectEventTemplate sResidents[8] = {0};
+static EWRAM_DATA struct ObjectEventTemplate sResidents[9] = {0};
 static EWRAM_DATA u8 sOriginalWarpCount = 0;
 
 static s32 TownIndex(u16 map)
@@ -160,6 +161,9 @@ void GymLeaderConfigureTown(struct MapHeader *header)
     }
     sEvents.warpCount = sOriginalWarpCount + 2 + GLE_PLOTS;
     sEvents.warps = sWarps; sEvents.bgEventCount = GLE_PLOTS+1; sEvents.bgEvents = sSigns;
+    if(town==GymLeaderState()->town && GymLeaderState()->rocket.stage)
+        sResidents[visitors++]=(struct ObjectEventTemplate){.localId=235,.graphicsId=OBJ_EVENT_GFX_ROCKET_M,
+            .x=15,.y=8,.elevation=3,.movementType=MOVEMENT_TYPE_FACE_DOWN,.script=GleRocket_Contact};
     sEvents.objectEventCount = visitors; sEvents.objectEvents = sResidents;
     header->events = &sEvents;
     header->mapScripts = GleTown_MapScripts;

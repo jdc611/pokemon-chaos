@@ -47,6 +47,11 @@ struct GleState *GymLeaderState(void)
             memset(s->colleagueWins,0,sizeof(s->colleagueWins));
             memset(s->colleaguePendingVouchers,0,sizeof(s->colleaguePendingVouchers));
         }
+        if(s->version<10)
+        {
+            memset(&s->rocket,0,sizeof(s->rocket));
+            s->rocket.nextAt=s->activity>UINT32_MAX-80?UINT32_MAX:s->activity+80;
+        }
         s->version = GLE_VERSION;
     }
     return s;

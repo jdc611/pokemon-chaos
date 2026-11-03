@@ -4,7 +4,7 @@ Updated November 3, 2026. Owner: Jack Coleman.
 
 ## Authority and scope
 
-This master consolidates the recovered “Choose Rebuild Town” conversation, the original handoff quoted in that conversation, and the present instruction to compile all Gym Leader decisions and fix Articuno's slot. Sections 1–16 preserve design/source authority; sections 17–36 separately record implementation choices and their specific validation. This is not a completed-release declaration. Original message text is preserved in the final appendix so smaller decisions, numerical proposals, and revisions are not lost.
+This master consolidates the recovered “Choose Rebuild Town” conversation, the original handoff quoted in that conversation, and the present instruction to compile all Gym Leader decisions and fix Articuno's slot. Sections 1–16 preserve design/source authority; sections 17–37 separately record implementation choices and their specific validation. This is not a completed-release declaration. Original message text is preserved in the final appendix so smaller decisions, numerical proposals, and revisions are not lost.
 
 Read the current decisions first. Use source messages to recover exact context. Explicit user decisions override assistant suggestions; later explicit revisions override earlier choices. An assistant saying “locked in” is not sufficient evidence on its own. Unanswered suggestions remain proposed. Short answers must be read with their preceding question. Numeric tuning delegated to implementation is not a missing user decision. Source excerpts preserve historical claims without independently verifying them.
 
@@ -12,7 +12,7 @@ Status vocabulary: APPROVED (explicit user direction), DELEGATED (implementation
 
 ## Current implementation status
 
-The latest tested checkpoints cover native opening/draft/registration/defenses and inspections; town construction, landmarks, all-type habitats and Safari configuration; GLA vouchers/supplies/permanent tutors; the 72 exclusive assignments and six universal birds; native career-card records; the basic recruitment/staff loop, current-rank rival friendlies, Ancient Titans/Ancient Awakening, five additional field-research groups and finite resident requests/Honor choices, Paradox of Evolution, and Kanto colleague/Elite Four rematches. Exact test boundaries and delegated tuning are recorded in sections 17–36. Remaining universal projects/form upgrades, complete rival/Rocket/competition/history systems, full species coverage and campaign validation still gate a finished V1 release.
+The latest tested checkpoints cover native opening/draft/registration/defenses and inspections; town construction, landmarks, all-type habitats and Safari configuration; GLA vouchers/supplies/permanent tutors; the 72 exclusive assignments and six universal birds; native career-card records; the basic recruitment/staff loop, current-rank rival friendlies, Ancient Titans/Ancient Awakening, five additional field-research groups and finite resident requests/Honor choices, Paradox of Evolution, Kanto colleague/Elite Four rematches, and persistent Rocket town incidents. Exact test boundaries and delegated tuning are recorded in sections 17–37. Remaining universal projects/form upgrades, complete rival/Rocket/competition/history systems, full species coverage and campaign validation still gate a finished V1 release.
 
 ## Contents
 
@@ -27098,3 +27098,17 @@ difficulty playthroughs or a completed campaign.
 
 Linked EWRAM is 257,640/262,144 bytes; ROM payload is 27,290,664 bytes before
 padding to the existing single 32 MiB ROM.
+
+## 37. Persistent Rocket town incidents
+
+Implemented activity-triggered street, habitat and museum incidents in the player's rebuilt hometown. Rank 2, population 6 and two constructed buildings unlock incidents. Active incidents reduce revenue; active available staff Potential reduces the required fights, with at least one fight retained. Native contact placement, refusal and settlement work in all three hometowns.
+
+These informal town defenses accept a healthy traveling party of up to six Pokémon of any type without Gym registration. Normal Gym defenses still require the registered legal team. Town battles preserve identity and earned EXP, restore/heal the traveling party, and do not change official queues, rank, defense records or activity. Generated opponents use ordinary abilities and native moves, with reserved research species excluded and career battle gimmicks disabled.
+
+After the final fight, the player can defer the persistent decision, turn Rocket over to the GLA for cash/Honor/reputation, or accept hush money at an Honor/reputation cost. Museum heists can succeed independently of a battle victory. Missing artifacts remain recorded; after three cleared incidents at rank 7, a later Giovanni raid can recover them through the honorable resolution. These are abstract museum artifacts, never confiscated player Pokémon. Resident dialogue exposes the persistent security record.
+
+Save version 10 appends the incident state after the exact version-9 prefix. State size is 1,392 bytes inside the unchanged 3,200-byte union. Native flash tests preserve pending decisions, theft/recovery records and the exact prior prefix, including colleague wins and pending vouchers. Host ASan/UBSan scenarios pass activation, staff assistance, retry and one-time settlements.
+
+A controller-played native street victory uses an unregistered mixed-type six-member fixture party without changing enemy HP or injecting its result. Native checks cover decline/unhealthy refusal, deferred choice/reload, settlement cash and contact removal, loss/retry, all four roster kinds at ranks 2/5/8, theft persistence and later boss recovery. Direct ARM fixtures cover the latter outcomes; they are not full battle difficulty playthroughs. All-three-town contact/collision checks and registered defense, resident and colleague regression suites pass.
+
+Linked EWRAM is 257,664/262,144 bytes; ROM payload is 27,296,108 bytes before 32 MiB padding. This completes the town-incident slice, not the wider rival/Rocket narrative, remaining research, competition/history systems or full campaign validation.

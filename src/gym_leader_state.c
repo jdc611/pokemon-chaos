@@ -19,6 +19,7 @@ void GleInit(struct GleState *s, uint32_t seed) {
     unsigned i;
     memset(s, 0, sizeof(*s));
     s->magic = GLE_MAGIC; s->version = GLE_VERSION; s->seed = seed;
+    s->rocket.nextAt=120;
     s->rank = s->rankFloor = s->highestRank = 1; s->gymType = GLE_NONE; s->interiorPlot = s->interiorTown = GLE_NONE; s->reputation = 100;
     for (i = 0; i < GLE_PLOTS; i++) s->plots[i].size = i < 12 ? 1 : i < 20 ? 2 : 3;
     for (i = 0; i < 3; i++) GleEnqueue(s, 0);
@@ -105,6 +106,7 @@ void GleActivity(struct GleState *s, uint32_t *money) {
     unsigned i, revenue = 0;
     if (!GleValid(s) || !money) return;
     s->activity++;
+    GleRocketActivity(s);
     if (++s->queueClock >= 6) { GleEnqueue(s, GleMix(s->seed ^ s->activity) % 25 == 0 ? 2 : 0); s->queueClock = 0; FilterStaffChallenger(s); }
     if (s->activity % 12) return;
     Recount(s);
@@ -112,6 +114,7 @@ void GleActivity(struct GleState *s, uint32_t *money) {
     else if (s->reputation < 60 && s->population) s->population--;
     for (i = 0; i < GLE_PLOTS; i++) if (s->plots[i].building >= GLE_HOTEL) revenue += 4 * s->plots[i].tier;
     revenue += s->population / 2;
+    if(s->rocket.stage)revenue/=2;
     *money = *money >= GLE_MAX_MONEY || revenue > GLE_MAX_MONEY - *money ? GLE_MAX_MONEY : *money + revenue;
     for (i = 0; i < GLE_RECRUITS; i++) {
         struct GleRecruit *r = &s->recruits[i];
@@ -240,4 +243,53 @@ int GleResolveResidentTask(struct GleState *s, uint8_t request, uint8_t choice, 
     if(choice)s->reputation=s->reputation>3?s->reputation-3:0;
     else s->reputation=Add16(s->reputation,5);
     SetBit(s->uniqueObtained,200+request);return GLE_OK;
+}
+
+void GleRocketActivity(struct GleState *s)
+{
+    unsigned i,buildings=0,habitat=0,museum=0,power=0,base,help;uint32_t roll;
+    if(!GleValid(s))return;
+    if(s->rocket.stage)
+    {
+        if(s->activity%24==0 && s->reputation)s->reputation--;
+        return;
+    }
+    if(s->rank<2 || s->population<6 || s->activity<s->rocket.nextAt)return;
+    for(i=0;i<GLE_PLOTS;i++)if(s->plots[i].building)
+    {buildings++;habitat|=s->plots[i].building==GLE_HABITAT;museum|=s->plots[i].building==GLE_MUSEUM;}
+    if(buildings<2)return;
+    s->rocket.serial=Add16(s->rocket.serial,1);roll=GleMix(s->seed^s->rocket.serial^0x524F434Bu);
+    s->rocket.kind=museum && roll%3==0?2:habitat && roll%2==0?1:0;
+    if(!s->rocket.bossDefeated && s->rank>=7 && s->rocket.cleared>=3 && s->rocket.stolen)s->rocket.kind=3;
+    s->rocket.heist=s->rocket.kind==2 && GleMix(roll^0x48454953u)%4==0;
+    if(s->rocket.heist)s->rocket.stolen=Add16(s->rocket.stolen,1);
+    for(i=0;i<GLE_RECRUITS;i++)if(s->recruits[i].id && s->recruits[i].active && !s->recruits[i].away)power+=s->recruits[i].potential;
+    base=1+s->rank/3+(s->population>=20)+(s->population>=40)+(s->rocket.kind==3);
+    if(base>5)base=5;
+    help=power>=15?2:power>=7?1:0;
+    if(help>=base)help=base-1;
+    s->rocket.staffHelp=help;s->rocket.remaining=base-help;s->rocket.stage=1;
+}
+int GleRocketBattleResult(struct GleState *s,int won)
+{
+    if(!GleValid(s) || s->rocket.stage!=1 || !s->rocket.remaining)return GLE_NOT_READY;
+    if(!won){s->rocket.losses=Add16(s->rocket.losses,1);return GLE_OK;}
+    if(!--s->rocket.remaining)s->rocket.stage=2;
+    return GLE_OK;
+}
+int GleResolveRocket(struct GleState *s,uint8_t choice,uint32_t *money)
+{
+    int honor;
+    if(!GleValid(s) || !money || choice>1)return GLE_INVALID;
+    if(s->rocket.stage!=2)return GLE_NOT_READY;
+    *money=Add32(*money,(choice?1500u:1000u)*s->rank);if(*money>GLE_MAX_MONEY)*money=GLE_MAX_MONEY;
+    honor=s->honor+(choice?-30:20);s->honor=honor<INT16_MIN?INT16_MIN:honor>INT16_MAX?INT16_MAX:honor;
+    if(choice)s->reputation=s->reputation>5?s->reputation-5:0;else s->reputation=Add16(s->reputation,10);
+    if(s->rocket.kind==3 && !choice)
+    {
+        s->rocket.recovered=Add16(s->rocket.recovered,s->rocket.stolen);s->rocket.stolen=0;s->rocket.bossDefeated=1;
+    }
+    s->rocket.cleared=Add16(s->rocket.cleared,1);s->rocket.stage=0;s->rocket.remaining=0;
+    s->rocket.nextAt=Add32(s->activity,80+GleMix(s->seed^s->rocket.serial)%80);
+    return GLE_OK;
 }

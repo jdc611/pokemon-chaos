@@ -3,6 +3,7 @@
 #include "gym_leader_script.h"
 #include "gym_leader_recruit.h"
 #include "gym_leader_colleagues.h"
+#include "gym_leader_rocket.h"
 #include "battle.h"
 #include "battle_setup.h"
 #include "battle_transition.h"
@@ -36,6 +37,7 @@ static EWRAM_DATA u8 sTraining = 0;
 static EWRAM_DATA u8 sTrainingStyle = 0;
 static EWRAM_DATA bool8 sRivalFriendly = FALSE;
 static EWRAM_DATA bool8 sColleagueFriendly = FALSE;
+static EWRAM_DATA bool8 sTownDefense = FALSE;
 static EWRAM_DATA u16 sOldFacility = 0;
 static EWRAM_DATA u8 sTravelCount = 0;
 static EWRAM_DATA struct Pokemon sTravelParty[PARTY_SIZE] = {0};
@@ -45,10 +47,11 @@ static EWRAM_DATA u8 sTeamCount = 0;
 static EWRAM_DATA struct Trainer sChallenger = {0};
 static EWRAM_DATA struct TrainerMon sChallengerEntries[PARTY_SIZE] = {0};
 static const u8 sDefeatText[] = _("That was a great GYM challenge!");
+static const u8 sRocketDefeatText[] = _("I underestimated this town!");
 
 // Friendly rewards settle once in the adapter, never through normal trainer
 // prize/blackout/Pay Day handling. Real Pokémon EXP still works normally.
-bool32 GymLeaderTrainingActive(void) { return sActive && (sTraining || sRivalFriendly || sColleagueFriendly); }
+bool32 GymLeaderTrainingActive(void) { return sActive && (sTraining || sRivalFriendly || sColleagueFriendly || sTownDefense); }
 
 bool32 GymLeaderRegistering(void) { return sRegistering; }
 const struct Trainer *GymLeaderBattleTrainer(void) { return sActive ? &sChallenger : NULL; }
@@ -189,6 +192,8 @@ static bool32 PrepareInspector(u32 inspection)
 
 static bool32 PrepareChallenger(void)
 {
+    if(sTownDefense)
+        return GymLeaderPrepareRocketRoster(&sChallenger,sChallengerEntries);
     if (sColleagueFriendly)
         return GymLeaderPrepareColleagueRoster(&sChallenger,sChallengerEntries);
     if (sRivalFriendly)
@@ -240,21 +245,36 @@ static u32 PrepareOfficialBattle(u32 inspection)
 {
     struct GleState *s = GymLeaderState();
     u32 i, j;
-    if (!IsGymLeaderRun() || s->openingStage != 5 || sActive || (!inspection && !sTraining && !sRivalFriendly && !sColleagueFriendly && !s->queueCount))
+    if (!IsGymLeaderRun() || s->openingStage != 5 || sActive || (!inspection && !sTraining && !sRivalFriendly && !sColleagueFriendly && !sTownDefense && !s->queueCount))
         return 0;
-    if (!s->registeredCount || s->registeredCount > GymLeaderPartyLimit())
-        return 2;
-    sTeamCount = s->registeredCount;
-    for (i = 0; i < sTeamCount; i++)
+    if(sTownDefense)
     {
-        if (!FindRegisteredMon(i, &sOriginalTeam[i], &sSources[i]))
-            return 3;
-        for (j = 0; j < i; j++)
-            if (sSources[i] == sSources[j])
-                return 3;
+        bool32 usable=FALSE;
+        sTeamCount=gPartiesCount[B_TRAINER_PLAYER];if(!sTeamCount || sTeamCount>PARTY_SIZE)return 2;
+        for(i=0;i<sTeamCount;i++)
+        {
+            sOriginalTeam[i]=gParties[B_TRAINER_PLAYER][i];sSources[i]=-1-i;
+            if(GetMonData(&sOriginalTeam[i],MON_DATA_SPECIES) && !GetMonData(&sOriginalTeam[i],MON_DATA_IS_EGG)
+                && GetMonData(&sOriginalTeam[i],MON_DATA_HP))usable=TRUE;
+        }
+        if(!usable)return 2;
     }
-    if (!GymLeaderTeamLegal(sOriginalTeam, sTeamCount))
-        return 2;
+    else
+    {
+        if (!s->registeredCount || s->registeredCount > GymLeaderPartyLimit())
+            return 2;
+        sTeamCount = s->registeredCount;
+        for (i = 0; i < sTeamCount; i++)
+        {
+            if (!FindRegisteredMon(i, &sOriginalTeam[i], &sSources[i]))
+                return 3;
+            for (j = 0; j < i; j++)
+                if (sSources[i] == sSources[j])
+                    return 3;
+        }
+        if (!GymLeaderTeamLegal(sOriginalTeam, sTeamCount))
+            return 2;
+    }
     if (inspection && (s->pendingInspection != inspection || s->rankXp < GleXpNeeded(s)))
         return 4;
     if (!(inspection ? PrepareInspector(inspection) : PrepareChallenger()))
@@ -275,7 +295,7 @@ static u32 PrepareOfficialBattle(u32 inspection)
         struct Pokemon *mon = &gParties[B_TRAINER_PLAYER][i];
         *mon = sOriginalTeam[i];
         TryFormChange(mon, FORM_CHANGE_ITEM_HOLD, B_TRAINER_PLAYER);
-        if (GetMonData(mon, MON_DATA_LEVEL) > GymLeaderLevelCap())
+        if (!sTownDefense && GetMonData(mon, MON_DATA_LEVEL) > GymLeaderLevelCap())
         {
             enum Species species = GetMonData(mon, MON_DATA_SPECIES);
             u32 exp = gExperienceTables[gSpeciesInfo[species].growthRate][GymLeaderLevelCap()];
@@ -289,7 +309,7 @@ static u32 PrepareOfficialBattle(u32 inspection)
     HealPlayerParty();
     sActive = TRUE;
     sInspection = inspection;
-    if (!inspection && !sTraining && !sRivalFriendly && !sColleagueFriendly)
+    if (!inspection && !sTraining && !sRivalFriendly && !sColleagueFriendly && !sTownDefense)
         GleTakeChallenger(s);
     return 1;
 }
@@ -314,6 +334,12 @@ u32 GymLeaderPrepareColleagueFriendly(void)
     sColleagueFriendly=TRUE;result=PrepareOfficialBattle(0);
     if(result!=1)sColleagueFriendly=FALSE;
     return result;
+}
+u32 GymLeaderPrepareTownDefense(void)
+{
+    u32 result;
+    if(!IsGymLeaderRun() || sActive || !GymLeaderRocketBattleAvailable())return 4;
+    sTownDefense=TRUE;result=PrepareOfficialBattle(0);if(result!=1)sTownDefense=FALSE;return result;
 }
 u32 GymLeaderPrepareInspection(void)
 {
@@ -346,7 +372,9 @@ void GymLeaderFinishDefense(void)
     memcpy(gParties[B_TRAINER_PLAYER], sTravelParty, sizeof(sTravelParty));
     gPartiesCount[B_TRAINER_PLAYER] = sTravelCount;
     HealPlayerParty();
-    if(sColleagueFriendly)
+    if(sTownDefense)
+        GleRocketBattleResult(s,(gBattleOutcome & 0x7F)==B_OUTCOME_WON);
+    else if(sColleagueFriendly)
         GymLeaderSettleColleague((gBattleOutcome & 0x7F)==B_OUTCOME_WON);
     else if (sRivalFriendly)
     {
@@ -375,10 +403,10 @@ void GymLeaderFinishDefense(void)
             AddMoney(&gSaveBlock1Ptr->money, 250 * s->rank + 5 * s->population);
         GleDefenseResult(s, (gBattleOutcome & 0x7F) == B_OUTCOME_WON);
     }
-    if (!sTraining && !sRivalFriendly && !sColleagueFriendly)
+    if (!sTraining && !sRivalFriendly && !sColleagueFriendly && !sTownDefense)
         GymLeaderAdvanceActivity();
     // Preserve a reliable queue while visiting the Gym; never force waiting.
-    if (!sTraining && !sRivalFriendly && !sColleagueFriendly && !s->queueCount)
+    if (!sTraining && !sRivalFriendly && !sColleagueFriendly && !sTownDefense && !s->queueCount)
         GleEnqueue(s, 0);
     gSpecialVar_Result = (gBattleOutcome & 0x7F) == B_OUTCOME_WON ? (sInspection ? 3 : 1) : (sInspection ? 4 : 2);
     sActive = FALSE;
@@ -386,6 +414,7 @@ void GymLeaderFinishDefense(void)
     sTraining = 0;
     sRivalFriendly = FALSE;
     sColleagueFriendly = FALSE;
+    sTownDefense = FALSE;
 }
 
 static void ReturnFromDefense(void)
@@ -406,7 +435,8 @@ static void Task_StartDefense(u8 taskId)
 
 static void StartOfficialBattle(bool32 inspection)
 {
-    gSpecialVar_Result = sColleagueFriendly ? GymLeaderPrepareColleagueFriendly()
+    gSpecialVar_Result = sTownDefense ? GymLeaderPrepareTownDefense()
+        : sColleagueFriendly ? GymLeaderPrepareColleagueFriendly()
         : sRivalFriendly ? GymLeaderPrepareRivalFriendly()
         : inspection ? GymLeaderPrepareInspection() : GymLeaderPrepareDefense();
     if (gSpecialVar_Result != 1)
@@ -415,12 +445,13 @@ static void StartOfficialBattle(bool32 inspection)
         sTraining = 0;
         sRivalFriendly = FALSE;
         sColleagueFriendly = FALSE;
+        sTownDefense = FALSE;
         GymLeaderResumeScriptNextFrame();
         return;
     }
     InitTrainerBattleParameter();
     TRAINER_BATTLE_PARAM.opponentA = TRAINER_NONE;
-    TRAINER_BATTLE_PARAM.defeatTextA = (u8 *)sDefeatText;
+    TRAINER_BATTLE_PARAM.defeatTextA = (u8 *)(sTownDefense?sRocketDefeatText:sDefeatText);
     gBattleTypeFlags = BATTLE_TYPE_TRAINER;
     CreateTask(Task_StartDefense, 1);
     PlayMapChosenOrBattleBGM(0);
@@ -471,4 +502,10 @@ void GymLeaderStartColleagueFriendly(void)
 {
     if(sActive){gSpecialVar_Result=14;GymLeaderResumeScriptNextFrame();return;}
     sColleagueFriendly=TRUE;StartOfficialBattle(FALSE);
+}
+
+void GymLeaderStartTownDefense(void)
+{
+    if(sActive){gSpecialVar_Result=14;GymLeaderResumeScriptNextFrame();return;}
+    sTownDefense=TRUE;StartOfficialBattle(FALSE);
 }

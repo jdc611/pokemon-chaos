@@ -523,3 +523,17 @@ difficulty playthroughs or a completed campaign.
 
 Linked EWRAM is 257,640/262,144 bytes; ROM payload is 27,290,664 bytes before
 padding to the existing single 32 MiB ROM.
+
+## 37. Persistent Rocket town incidents
+
+Implemented activity-triggered street, habitat and museum incidents in the player's rebuilt hometown. Rank 2, population 6 and two constructed buildings unlock incidents. Active incidents reduce revenue; active available staff Potential reduces the required fights, with at least one fight retained. Native contact placement, refusal and settlement work in all three hometowns.
+
+These informal town defenses accept a healthy traveling party of up to six Pokémon of any type without Gym registration. Normal Gym defenses still require the registered legal team. Town battles preserve identity and earned EXP, restore/heal the traveling party, and do not change official queues, rank, defense records or activity. Generated opponents use ordinary abilities and native moves, with reserved research species excluded and career battle gimmicks disabled.
+
+After the final fight, the player can defer the persistent decision, turn Rocket over to the GLA for cash/Honor/reputation, or accept hush money at an Honor/reputation cost. Museum heists can succeed independently of a battle victory. Missing artifacts remain recorded; after three cleared incidents at rank 7, a later Giovanni raid can recover them through the honorable resolution. These are abstract museum artifacts, never confiscated player Pokémon. Resident dialogue exposes the persistent security record.
+
+Save version 10 appends the incident state after the exact version-9 prefix. State size is 1,392 bytes inside the unchanged 3,200-byte union. Native flash tests preserve pending decisions, theft/recovery records and the exact prior prefix, including colleague wins and pending vouchers. Host ASan/UBSan scenarios pass activation, staff assistance, retry and one-time settlements.
+
+A controller-played native street victory uses an unregistered mixed-type six-member fixture party without changing enemy HP or injecting its result. Native checks cover decline/unhealthy refusal, deferred choice/reload, settlement cash and contact removal, loss/retry, all four roster kinds at ranks 2/5/8, theft persistence and later boss recovery. Direct ARM fixtures cover the latter outcomes; they are not full battle difficulty playthroughs. All-three-town contact/collision checks and registered defense, resident and colleague regression suites pass.
+
+Linked EWRAM is 257,664/262,144 bytes; ROM payload is 27,296,108 bytes before 32 MiB padding. This completes the town-incident slice, not the wider rival/Rocket narrative, remaining research, competition/history systems or full campaign validation.

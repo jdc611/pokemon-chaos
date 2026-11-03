@@ -855,3 +855,9 @@ gSpecials::
 	def_special GleColleagueLeagueMenu, waitstate=1
 	def_special GleColleagueLeagueSelect
 	def_special GymLeaderStartColleagueFriendly, waitstate=1
+	def_special GleRocketInfo
+	def_special GleRocketDecisionMenu, waitstate=1
+	def_special GleRocketResolve
+	def_special GleRocketRefresh
+	def_special GymLeaderStartTownDefense, waitstate=1
+	def_special GleRocketJournal
