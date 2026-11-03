@@ -4,7 +4,7 @@
  * to exercise long progression histories independently of GBA presentation. */
 #include <stdint.h>
 #define GLE_MAGIC 0x474C4531u
-#define GLE_VERSION 6
+#define GLE_VERSION 7
 #define GLE_PLOTS 24
 #define GLE_RECRUITS 10
 #define GLE_QUEUE 5
@@ -42,6 +42,7 @@ struct GleState {
     uint32_t registeredPersonality[6], registeredTrainerId[6];
     uint8_t interiorPlot, interiorTown, landmarkTier, milestoneRewardMask;
     uint16_t safariSpecies[6];
+    uint32_t tutorLessons;
 };
 extern const uint8_t gGleRankCaps[8], gGleRankTeamSizes[8];
 void GleInit(struct GleState *, uint32_t seed);

@@ -321,3 +321,45 @@ GleWings_Caught::
 	goto GleExclusive_Done
 GleResearch_TextWingsCaught:
 	.string "This migration is now recorded!\nYour partner is safe in your party\lor PC. Other birds still await.$"
+
+GleTutor_Desk::
+	lockall
+	faceplayer
+	msgbox GleTutor_TextWelcome, MSGBOX_DEFAULT
+GleTutor_Menu::
+	closemessage
+	special GleTutorMenu
+	special GleTutorInfo
+	compare VAR_RESULT, 2
+	goto_if_eq GleExclusive_Done
+	compare VAR_RESULT, 1
+	goto_if_eq GleTutor_Known
+	msgbox GleTutor_TextUnlock, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq GleTutor_Menu
+	special GleTutorPurchase
+	compare VAR_RESULT, 0
+	goto_if_ne GleTutor_NoMoney
+	msgbox GleTutor_TextUnlocked, MSGBOX_DEFAULT
+	goto GleTutor_Lesson
+GleTutor_Known::
+	msgbox GleTutor_TextKnown, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq GleTutor_Menu
+GleTutor_Lesson::
+	closemessage
+	call MoveTutor_EventScript_OpenBox
+	goto GleTutor_Menu
+GleTutor_NoMoney::
+	msgbox GleTutor_TextNoMoney, MSGBOX_DEFAULT
+	goto GleTutor_Menu
+GleTutor_TextWelcome:
+	.string "GLA move tutoring. New lessons\nopen from rank 2. I offer moves\lyour current party can learn.\pUnlock each lesson once, then\nreuse it freely with compatible\lpartners from your party or PC.$"
+GleTutor_TextUnlock:
+	.string "{STR_VAR_1}: {STR_VAR_2} POKéDOLLARS.\nUnlock this permanent lesson?\lHonorable discounts apply.$"
+GleTutor_TextUnlocked:
+	.string "The lesson is permanently yours!\nCancelling teaching keeps it.\lChoose a compatible partner.$"
+GleTutor_TextKnown:
+	.string "{STR_VAR_1} is already unlocked.\nTeach it again for free?$"
+GleTutor_TextNoMoney:
+	.string "The lesson wasn't unlocked.\nCheck your funds and rank.\lYour money is unchanged.$"

@@ -1,5 +1,7 @@
 #include "chaos_input.h"
 #include "global.h"
+#include "gym_leader.h"
+#include "gym_leader_tutor.h"
 #include "ironmon.h"
 #include "main.h"
 #include "battle.h"
@@ -961,7 +963,7 @@ static void SortMovesAlphabetically(u16 *moves, u32 numMoves)
 
 static bool32 IsTmAvailable(enum Item item)
 {
-    if (P_ENABLE_ALL_TM_MOVES)
+    if (!IsGymLeaderRun() && P_ENABLE_ALL_TM_MOVES)
         return TRUE;
     return CheckBagHasItem(item, 1);
 }
@@ -969,7 +971,7 @@ static bool32 IsTmAvailable(enum Item item)
 static u32 GetRelearnerLevelUpMoves(struct BoxPokemon *mon, u16 *moves)
 {
     enum Species species = GetBoxMonData(mon, MON_DATA_SPECIES);
-    u32 level = (!IsIronmonRun() && P_ENABLE_ALL_LEVEL_UP_MOVES ? MAX_LEVEL : GetLevelFromBoxMonExp(mon));
+    u32 level = (!IsIronmonRun() && !IsGymLeaderRun() && P_ENABLE_ALL_LEVEL_UP_MOVES ? MAX_LEVEL : GetLevelFromBoxMonExp(mon));
     u32 numMoves = 0;
     do
     {
@@ -1054,7 +1056,7 @@ static u32 GetRelearnerTutorMoves(struct BoxPokemon *mon, u16 *moves)
     {
         enum Move move = gTutorMoves[i];
 
-        if (!CanLearnTeachableMove(species, move))
+        if (!GymLeaderTutorUnlocked(move) || !CanLearnTeachableMove(species, move))
             continue;
 
         if (!BoxMonKnowsMove(mon, move))
@@ -1092,7 +1094,7 @@ bool32 HasMoveToRelearn(struct BoxPokemon *boxMon, enum MoveRelearnerStates stat
 static bool32 HasRelearnerLevelUpMoves(struct BoxPokemon *boxMon)
 {
     enum Species species = GetBoxMonData(boxMon, MON_DATA_SPECIES);
-    u32 level = (!IsIronmonRun() && P_ENABLE_ALL_LEVEL_UP_MOVES == TRUE) ? MAX_LEVEL : GetLevelFromBoxMonExp(boxMon);
+    u32 level = (!IsIronmonRun() && !IsGymLeaderRun() && P_ENABLE_ALL_LEVEL_UP_MOVES == TRUE) ? MAX_LEVEL : GetLevelFromBoxMonExp(boxMon);
 
     do
     {
@@ -1165,7 +1167,7 @@ static bool32 HasRelearnerTutorMoves(struct BoxPokemon *boxMon)
     {
         enum Move move = gTutorMoves[i];
 
-        if (!CanLearnTeachableMove(species, move))
+        if (!GymLeaderTutorUnlocked(move) || !CanLearnTeachableMove(species, move))
             continue;
 
         if (!BoxMonKnowsMove(boxMon, move))

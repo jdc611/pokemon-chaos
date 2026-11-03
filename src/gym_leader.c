@@ -30,8 +30,12 @@ struct GleState *GymLeaderState(void)
             for(i=0;i<GLE_VOUCHERS;i++)s->vouchers[i].level=0;
             s->milestoneRewardMask=0;
         }
-        memset(s->safariSpecies,0,sizeof(s->safariSpecies));
-        s->milestoneRewardMask &= ~1u; // Refresh travel permits, preserve rank rewards.
+        if(s->version<6)
+        {
+            memset(s->safariSpecies,0,sizeof(s->safariSpecies));
+            s->milestoneRewardMask &= ~1u; // Refresh travel permits, preserve rank rewards.
+        }
+        s->tutorLessons=0;
         s->version = GLE_VERSION;
     }
     return s;

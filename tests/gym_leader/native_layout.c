@@ -2,6 +2,7 @@
 #include "item.h"
 #include "item_menu.h"
 #include "wild_encounter.h"
+#include "move_relearner.h"
 #include "constants/flags.h"
 #include "data.h"
 #include "random.h"
@@ -65,4 +66,6 @@ const unsigned gleLayout[] = {
  MAP_SEAFOAM_ISLANDS_B3F, MAP_POWER_PLANT, MAP_POKEMON_MANSION_3F, MAP_ROCK_TUNNEL_B1F, MAP_ROUTE17, MAP_VIRIDIAN_FOREST,
  SPECIES_ARTICUNO, SPECIES_ZAPDOS, SPECIES_MOLTRES, SPECIES_ARTICUNO_GALAR, SPECIES_ZAPDOS_GALAR, SPECIES_MOLTRES_GALAR,
  offsetof(struct MapHeader, events), offsetof(struct MapEvents, objectEvents),
+ MOVE_ICE_PUNCH, SPECIES_ELECTABUZZ, MOVE_RELEARNER_TUTOR_MOVES, MOVE_RELEARNER_LEVEL_UP_MOVES, MOVE_RELEARNER_TM_MOVES,
+ offsetof(struct GleState, tutorLessons), MOVE_THUNDERBOLT, ITEM_TM_THUNDERBOLT,
 };

@@ -26700,3 +26700,47 @@ Native checks pass all six ranks/species/moves, walkable placement and adjacent 
 - Migration notebook records remain readable after a later demotion below the initial survey rank. Research map configuration also guards missing event tables before reading them; ordinary non-Gym-Leader maps are unaffected.
 
 Validation: native type-menu cancel/no-charge, Dark habitat construction in a Grass Gym town, paid upgrade/type preservation and flash reload pass. All 18 selected-type habitat catalog adapters pass, followed by a real walking encounter from the selected Dark catalog. Host ASan/UBSan state tests also pass theme preservation and existing progression transactions. Native supply regression passes all stock ranks/categories, positive prices, long evolution stock after native filtering, protected exclusions and research/PC/save flows. The six-bird encounter/capture regression still passes after notebook/map guards. These checks are targeted integration tests, not a complete species availability or campaign audit.
+
+
+## 28. Permanent GLA tutor lessons and save version 7 — November 3, 2026
+
+These rank/price choices use delegated balancing authority; they are not new historical approvals. The native GLA tutor offers only lessons compatible with a non-Egg Pokémon in the current traveling party. Lessons open with rank. Unlock each move once for the listed price, then use it freely on compatible party or PC partners through the existing native selector and move-learning/replacement interface. Honorable standing reduces the unlock price by 10%. Declining or lacking funds changes nothing. Paying buys the permanent lesson; cancelling the subsequent teaching screen retains it. Unlocked lessons remain usable after demotion.
+
+| Native lesson | Initial rank | Permanent unlock price |
+| --- | --- | --- |
+| Body Slam | 3 | 15,000 |
+| Counter | 3 | 15,000 |
+| Defense Curl | 2 | 10,000 |
+| Double Edge | 4 | 20,000 |
+| Dream Eater | 3 | 15,000 |
+| Dynamic Punch | 4 | 20,000 |
+| Endure | 3 | 15,000 |
+| Explosion | 5 | 25,000 |
+| Fire Punch | 3 | 15,000 |
+| Fury Cutter | 2 | 10,000 |
+| Ice Punch | 3 | 15,000 |
+| Icy Wind | 3 | 15,000 |
+| Mega Kick | 4 | 20,000 |
+| Mega Punch | 3 | 15,000 |
+| Metronome | 3 | 15,000 |
+| Mimic | 3 | 15,000 |
+| Mud Slap | 2 | 10,000 |
+| Psych Up | 3 | 15,000 |
+| Rock Slide | 4 | 20,000 |
+| Rollout | 2 | 10,000 |
+| Seismic Toss | 3 | 15,000 |
+| Sleep Talk | 3 | 15,000 |
+| Snore | 2 | 10,000 |
+| Soft Boiled | 4 | 20,000 |
+| Substitute | 4 | 20,000 |
+| Swagger | 3 | 15,000 |
+| Swift | 2 | 10,000 |
+| Swords Dance | 4 | 20,000 |
+| Thunder Punch | 3 | 15,000 |
+| Thunder Wave | 3 | 15,000 |
+
+The relearner cannot bypass these purchases: tutor lists filter to unlocked moves, TM recall requires the actual TM/HM in the Bag, and level-up recall follows the Pokémon's actual level rather than the old mode's all-levels switch. Normal compatibility checks remain native. Other game modes retain their prior behavior.
+
+Save version 7 appends a 32-bit license mask after existing Safari data. The state is 1,348 bytes inside its unchanged 3,200-byte SaveBlock1 union. Earlier field offsets and all following SaveBlock1 offsets remain unchanged. No original story flags are repurposed. Version-6 migration initializes only the new field and version; Safari species, travel permits, vouchers, registration, research and all other prior bytes are preserved. Older migrations retain their existing version-specific initialization. Current linked EWRAM is 256,820/262,144 bytes and payload 27,258,192 bytes, padded to one 32 MiB ROM.
+
+Native checks pass compatibility-filtered offers, declined unlock, insufficient funds without charge, honored pricing, actual lesson teaching to a party Pokémon, permanent license after native flash reload, exact version-6 migration byte preservation and free repeat teaching to a PC Pokémon after demotion. Current-level move recall, owned/unowned TM recall and unlicensed bulk-tutor refusal pass direct ARM catalog fixtures. Registered defense/PC/EXP, actual training, milestone/voucher/shiny/GLA Ball/full-storage flows and version-4 migration regression pass; native Fuchsia restoration/configuration/flash, version-5 migration and actual Safari wild-generation regression also pass. These do not replace remaining research/staff/rival/Rocket/competition/history implementation or full-campaign release gates.

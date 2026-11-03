@@ -805,3 +805,7 @@ gSpecials::
 	def_special GlePlotApplyHabitatType
 
 	def_special GlePlotHabitatName
+
+	def_special GleTutorMenu, waitstate=1
+	def_special GleTutorInfo
+	def_special GleTutorPurchase

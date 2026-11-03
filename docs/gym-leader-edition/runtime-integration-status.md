@@ -193,3 +193,14 @@ all-type catalog and flash tests pass. GLA evolution stock covers regional
 apples/pots/teacups, sweets, Galarica items, armor and other ordinary evolution
 items; its actual native long list survives legacy shop filtering. See MASTER
 section 27 for tuning and remaining ecology/coverage limits.
+
+
+## Permanent tutor lessons and save version 7
+
+Thirty native move lessons unlock once with money, rank and party compatibility;
+subsequent party/PC teaching is free, including after demotion. Actual native
+party and PC teaching, payment/refusal and flash persistence pass. Relearner
+access respects current level, owned TMs and unlocked tutors. State version 7
+is 1,348 bytes in the unchanged save union; exact version-6 preservation and
+older Safari/voucher migration regressions pass. MASTER section 28 records the
+complete lesson/price catalog and coverage boundaries.
