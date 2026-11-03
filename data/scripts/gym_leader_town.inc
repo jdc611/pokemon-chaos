@@ -6,11 +6,13 @@ GleTown_OnLoad::
 	end
 GleTownPlot::
 	lockall
+	setvar VAR_0x8009, 255
 	special GlePlotInfo
 	compare VAR_RESULT, 2
 	goto_if_eq GleTown_RivalPlot
 	compare VAR_RESULT, 1
 	goto_if_ne GleTown_PlotDone
+	special GlePlotHabitatName
 	msgbox GleTown_TextPlot, MSGBOX_DEFAULT
 	closemessage
 	special GlePlotMenu
@@ -20,12 +22,23 @@ GleTownPlot::
 	msgbox GleTown_TextBuildConfirm, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq GleTown_PlotDone
+	special GlePlotNeedsHabitatType
+	compare VAR_RESULT, 1
+	goto_if_ne GleTown_PlotConstruct
+	msgbox GleTown_TextHabitatType, MSGBOX_DEFAULT
+	closemessage
+	special GleHabitatTypeMenu
+	compare VAR_RESULT, 18
+	goto_if_ge GleTown_PlotDone
+	copyvar VAR_0x8009, VAR_RESULT
+GleTown_PlotConstruct::
 	special GlePlotConstruct
 	compare VAR_RESULT, 0
 	goto_if_eq GleTown_PlotBuilt
 	msgbox GleTown_TextBuildFailed, MSGBOX_DEFAULT
 	goto GleTown_PlotDone
 GleTown_PlotBuilt::
+	special GlePlotApplyHabitatType
 	playfanfare MUS_EVOLVED
 	msgbox GleTown_TextBuilt, MSGBOX_DEFAULT
 	waitfanfare
@@ -248,3 +261,6 @@ GleLandmark_TextLocked:
 	.string "Landmark tiers need ranks 3, 5, 7.\nHigher tiers also need 12 or 24\lresidents, and enough money.\pStand south of the sign\nto keep the work site clear.$"
 GleLandmark_TextFinished:
 	.string "Your town's landmark is fully\nrestored. Thank you, LEADER!$"
+
+GleTown_TextHabitatType:
+	.string "Choose this habitat's type.\nAny type is welcome in your town.\lUpgrades preserve your choice.$"

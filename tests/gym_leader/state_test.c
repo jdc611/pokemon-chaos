@@ -15,6 +15,8 @@ int main(void) {
  for(i=0;i<120;i++) { GleActivity(&s,&money); }
  assert(s.population>0 && s.population<=s.capacity);
  assert(GleConstruct(&s,1,GLE_CENTER,&money)==GLE_OK); saved=s; {uint32_t old=money;assert(GleConstruct(&s,2,GLE_CENTER,&money)==GLE_DUPLICATE);assert(money==old && !memcmp(&saved,&s,sizeof(s)));}
+ {struct GleState themed=s;uint32_t budget=100000;themed.population=24;themed.plots[0].type=17;
+ assert(GleConstruct(&themed,0,GLE_HOUSE,&budget)==GLE_OK && themed.plots[0].type==17);}
  assert(GleAwardVoucher(&s,GLE_STANDARD,1)==GLE_OK); assert(GleViewVoucher(&s,0,pool,4)==GLE_OK); saved=s;
  assert(GleViewVoucher(&s,0,pool+1,3)==GLE_OK && !memcmp(&saved,&s,sizeof(s))); assert(GleClaimVoucher(&s,0,0,&out)==GLE_OK); assert(GleSpeciesClaimed(&s,out,GLE_RARE)); assert(!GleSpeciesClaimed(&s,out,GLE_SHINY));
  assert(GleAwardVoucher(&s,GLE_RARE,2)==GLE_OK);

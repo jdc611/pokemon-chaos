@@ -29,6 +29,12 @@ static const struct GleSupply sStock[] = {
     STOCK(RAZOR_CLAW,3,1), STOCK(RAZOR_FANG,3,1), STOCK(PROTECTOR,3,1),
     STOCK(REAPER_CLOTH,3,1), STOCK(PRISM_SCALE,3,1), STOCK(ELECTIRIZER,3,1),
     STOCK(MAGMARIZER,3,1), STOCK(SACHET,3,1), STOCK(WHIPPED_DREAM,3,1),
+    STOCK(SWEET_APPLE,3,1), STOCK(TART_APPLE,3,1), STOCK(CRACKED_POT,3,1), STOCK(CHIPPED_POT,3,1),
+    STOCK(GALARICA_CUFF,3,1), STOCK(GALARICA_WREATH,3,1), STOCK(BLACK_AUGURITE,3,1), STOCK(PEAT_BLOCK,3,1),
+    STOCK(STRAWBERRY_SWEET,3,1), STOCK(LOVE_SWEET,3,1), STOCK(BERRY_SWEET,3,1), STOCK(CLOVER_SWEET,3,1),
+    STOCK(FLOWER_SWEET,3,1), STOCK(STAR_SWEET,3,1), STOCK(RIBBON_SWEET,3,1),
+    STOCK(AUSPICIOUS_ARMOR,4,1), STOCK(MALICIOUS_ARMOR,4,1), STOCK(LEADERS_CREST,4,1),
+    STOCK(SYRUPY_APPLE,4,1), STOCK(UNREMARKABLE_TEACUP,4,1), STOCK(MASTERPIECE_TEACUP,4,1),
     STOCK(SOOTHE_BELL,2,2), STOCK(POWER_WEIGHT,3,2), STOCK(POWER_BRACER,3,2),
     STOCK(POWER_BELT,3,2), STOCK(POWER_LENS,3,2), STOCK(POWER_BAND,3,2), STOCK(POWER_ANKLET,3,2),
     STOCK(LEFTOVERS,4,2), STOCK(EVIOLITE,4,2), STOCK(FOCUS_SASH,4,2),
@@ -65,7 +71,7 @@ void GleSupplyOpen(void)
     if(IsGymLeaderRun() && category<5)
     {
         for(i=0;i<ARRAY_COUNT(sStock);i++)
-            if(sStock[i].category==category && s->rank>=sStock[i].rank
+            if(sSupplyCount<ARRAY_COUNT(sSupplyItems)-1 && sStock[i].category==category && s->rank>=sStock[i].rank
                 && GetItemPrice(sStock[i].item)>0 && !GetItemImportance(sStock[i].item))
                 sSupplyItems[sSupplyCount++]=sStock[i].item;
         if(category==3 && s->rank>=4)

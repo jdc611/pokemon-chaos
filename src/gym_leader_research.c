@@ -50,9 +50,11 @@ static u32 CaptureCount(void)
 }
 void GymLeaderConfigureResearchMap(struct MapHeader *header)
 {
-    struct GleState *s=GymLeaderState();u32 slot=CurrentMigration(),count=header->events->objectEventCount;
+    struct GleState *s=GymLeaderState();u32 slot,count;
     const struct GleMigration *m;
-    if(!IsGymLeaderRun() || slot>=ARRAY_COUNT(sMigrations) || !s->projectUnlocked[WINGS_PROJECT]
+    if(!IsGymLeaderRun() || header->events==NULL)return;
+    slot=CurrentMigration();count=header->events->objectEventCount;
+    if(slot>=ARRAY_COUNT(sMigrations) || !s->projectUnlocked[WINGS_PROJECT]
         || s->rank<sMigrations[slot].rank || Captured(slot) || count>=ARRAY_COUNT(sResearchObjects))return;
     m=&sMigrations[slot];sResearchEvents=*header->events;
     memcpy(sResearchObjects,header->events->objectEvents,count*sizeof(*sResearchObjects));
@@ -63,7 +65,7 @@ void GymLeaderConfigureResearchMap(struct MapHeader *header)
 void GleWingsNotebook(void)
 {
     struct GleState *s=GymLeaderState();gSpecialVar_Result=0;
-    if(!IsGymLeaderRun() || s->rank<3)return;
+    if(!IsGymLeaderRun() || (s->rank<3 && !s->projectUnlocked[WINGS_PROJECT]))return;
     s->projectUnlocked[WINGS_PROJECT]=1;
     s->projectStage[WINGS_PROJECT]=CaptureCount();
     ConvertIntToDecimalStringN(gStringVar1,s->projectStage[WINGS_PROJECT],STR_CONV_MODE_LEFT_ALIGN,1);

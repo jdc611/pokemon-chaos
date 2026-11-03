@@ -799,3 +799,9 @@ gSpecials::
 	def_special GleWingsInfo
 	def_special GleWingsStart, waitstate=1
 	def_special GleWingsFinish
+
+	def_special GleHabitatTypeMenu, waitstate=1
+	def_special GlePlotNeedsHabitatType
+	def_special GlePlotApplyHabitatType
+
+	def_special GlePlotHabitatName

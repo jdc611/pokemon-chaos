@@ -54,6 +54,20 @@ for rank in (1,2,3,4,5,6,7,8):
     wr(current()+v[136],honor&65535,2)
     assert call('GymLeaderSupplyPrice',stock[0])==call('GetItemPrice',stock[0])*(9 if honor==100 else 10)//10
 print('PASS all ranks/categories, positive prices, protected-item exclusions and standing discount',flush=True)
+# The actual long evolution stock must survive native shop filtering/scrolling.
+state('supply-after-buy',1);wr(current()+v[2],4,1)
+choose(1);waitfor(lambda:task('Task_ShopMenu')<16)
+stock=listing()
+import re
+item_ids={name:int(value) for name,value in re.findall(r'\b(ITEM_[A-Z0-9_]+) = (\d+)',(repo/'include/constants/items.h').read_text())}
+for name in ['ITEM_TART_APPLE','ITEM_BLACK_AUGURITE','ITEM_PEAT_BLOCK','ITEM_GALARICA_CUFF','ITEM_GALARICA_WREATH',
+ 'ITEM_CRACKED_POT','ITEM_CHIPPED_POT','ITEM_STRAWBERRY_SWEET','ITEM_RIBBON_SWEET','ITEM_AUSPICIOUS_ARMOR',
+ 'ITEM_MALICIOUS_ARMOR','ITEM_LEADERS_CREST','ITEM_SYRUPY_APPLE','ITEM_UNREMARKABLE_TEACUP','ITEM_MASTERPIECE_TEACUP']:
+ assert item_ids[name] in stock,name
+press(1);waitfor(lambda:task('Task_BuyMenu')<16);frames(100)
+assert rd(symbols['sMartInfo']+12,2)==len(stock)
+snap('gla-evolution-supplies')
+print('PASS native long evolution shop, regional items and no hidden legacy-badge filtering',flush=True)
 # Research is a one-time delivery and actual evolved partner report, not a free form change.
 state('supply-after-buy',1);press(2);frames(40)
 walkto(6,11);walkto(6,9);walkto(5,9);walkto(5,8);press(32);press(1)

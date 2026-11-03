@@ -184,3 +184,12 @@ sightings, with ranks 3–8. Actual Articuno capture/save/no-respawn passes and 
 not consume Ice's separate Glastrier record. All six native approach/decline,
 placement, rank and retry checks pass. MASTER section 26 records the new map
 choices, capture-order fixtures and dungeon-traversal coverage limits.
+
+## All-type habitats and evolution access
+
+Initial habitat construction now offers all 18 types independently of Gym type;
+cancel is free and upgrades retain the theme. Native selected-type encounter,
+all-type catalog and flash tests pass. GLA evolution stock covers regional
+apples/pots/teacups, sweets, Galarica items, armor and other ordinary evolution
+items; its actual native long list survives legacy shop filtering. See MASTER
+section 27 for tuning and remaining ecology/coverage limits.

@@ -484,3 +484,19 @@ void GymLeaderResumeScriptNextFrame(void)
 {
     CreateTask(Task_GleResumeScript,0);
 }
+
+void GleHabitatTypeMenu(void)
+{
+    GymLeaderMenu(sTypeNames,ARRAY_COUNT(sTypeNames),FALSE);
+}
+
+void GlePlotHabitatName(void)
+{
+    u32 plot=gSpecialVar_0x8007;
+    struct GleState *s=GymLeaderState();
+    if(plot<GLE_PLOTS && s->plots[plot].building==GLE_HABITAT && s->plots[plot].type<ARRAY_COUNT(sTypeNames))
+    {
+        StringCopy(gStringVar3,sTypeNames[s->plots[plot].type]);
+        StringAppend(gStringVar3,COMPOUND_STRING(" HABITAT"));
+    }
+}

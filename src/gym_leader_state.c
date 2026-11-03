@@ -122,7 +122,9 @@ int GleConstruct(struct GleState *s, uint8_t slot, uint8_t b, uint32_t *money) {
     if (tier > 1 && s->population < (tier - 1) * 8) return GLE_NOT_READY;
     cost = GleBuildCost(b, tier);
     if (*money < cost) return GLE_NOT_ENOUGH_MONEY;
-    *money -= cost; p->building = b; p->tier = tier; p->type = s->gymType;
+    *money -= cost;
+    if (!p->tier) p->type = s->gymType;
+    p->building = b; p->tier = tier;
     s->reputation = Add16(s->reputation, b == GLE_MARKET ? 0 : 2);
     Recount(s); return GLE_OK;
 }

@@ -432,31 +432,48 @@ void GleBuildingInfo(void)
     StringCopy(gStringVar1,sBuildings[gSpecialVar_Result]);
 }
 
-bool32 GymLeaderHabitatActive(void)
+static s32 HabitatPlot(void)
 {
     u32 i;
     s32 town=TownIndex(CurrentMapId());
-    if(town<0 || town!=GymLeaderState()->town)return FALSE;
+    if(town<0 || town!=GymLeaderState()->town)return -1;
     for(i=0;i<GLE_PLOTS;i++)
         if(GymLeaderState()->plots[i].building==GLE_HABITAT
             && gSaveBlock1Ptr->pos.x>PlotX(i) && gSaveBlock1Ptr->pos.x<PlotX(i)+4
             && gSaveBlock1Ptr->pos.y>PlotY(i) && gSaveBlock1Ptr->pos.y<PlotY(i)+4)
-            return TRUE;
-    return FALSE;
+            return i;
+    return -1;
 }
+bool32 GymLeaderHabitatActive(void) {return HabitatPlot()>=0;}
 u16 GymLeaderHabitatSpecies(u32 slot)
 {
     u16 *pool,species=SPECIES_NONE;
-    u32 count;
+    u32 count,tier;
+    s32 plot=HabitatPlot();
     struct GleState *s=GymLeaderState();
-    if(!GymLeaderHabitatActive())return SPECIES_NONE;
+    if(plot<0 || s->plots[plot].type>=18)return SPECIES_NONE;
     pool=Alloc(GLE_SPECIES_LIMIT*sizeof(u16));
     if(pool==NULL)return SPECIES_NONE;
-    count=GymLeaderBuildSpeciesPool(s->gymType,s->rank,GLE_STANDARD,FALSE,pool,GLE_SPECIES_LIMIT);
+    tier=min(8,s->rank+s->plots[plot].tier-1);
+    // Upgrades broaden normal ecology. They never turn habitats into a
+    // legendary/Paradox voucher pool or bypass unique research encounters.
+    count=GymLeaderBuildSpeciesPool(s->plots[plot].type,tier,GLE_STANDARD,FALSE,pool,GLE_SPECIES_LIMIT);
     if(count && count<=GLE_SPECIES_LIMIT)
-        species=pool[GleMix(s->seed ^ s->rank ^ (slot*7919))%count];
+        species=pool[GleMix(s->seed ^ s->rank ^ (plot*104729u) ^ (s->plots[plot].tier*919u) ^ (slot*7919u))%count];
     Free(pool);
     return species;
+}
+void GlePlotNeedsHabitatType(void)
+{
+    u32 plot=gSpecialVar_0x8007;
+    gSpecialVar_Result=plot<GLE_PLOTS && gSpecialVar_0x8006==GLE_HABITAT && !GymLeaderState()->plots[plot].building;
+}
+void GlePlotApplyHabitatType(void)
+{
+    u32 plot=gSpecialVar_0x8007,type=gSpecialVar_0x8009;
+    if(IsGymLeaderRun() && TownIndex(CurrentMapId())==GymLeaderState()->town
+        && plot<GLE_PLOTS && type<18 && GymLeaderState()->plots[plot].building==GLE_HABITAT)
+        GymLeaderState()->plots[plot].type=type;
 }
 
 void GleLandmarkInfo(void)
