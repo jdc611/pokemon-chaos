@@ -76,4 +76,5 @@ const unsigned gleLayout[] = {
  offsetof(struct GleState,rivalStarter),offsetof(struct GleState,rivalFriendlyWins),offsetof(struct GleState,rivalFriendlyLosses),offsetof(struct GleState,rivalFriendlyMask),
  offsetof(struct SpeciesInfo,types),sizeof(struct SpeciesInfo),offsetof(struct GleState,rivalType),
  MAP_INDIGO_PLATEAU_POKEMON_CENTER_1F,MAP_POKEMON_LEAGUE_LORELEIS_ROOM,MAP_POKEMON_LEAGUE_BRUNOS_ROOM,MAP_POKEMON_LEAGUE_AGATHAS_ROOM,MAP_POKEMON_LEAGUE_LANCES_ROOM,MAP_POKEMON_LEAGUE_CHAMPIONS_ROOM,MAP_POKEMON_LEAGUE_HALL_OF_FAME,FLAG_IS_CHAMPION,
+ offsetof(struct GleState,highestRank),
 };

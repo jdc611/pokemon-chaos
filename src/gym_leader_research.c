@@ -43,6 +43,14 @@ static bool32 Captured(u32 slot)
     u32 bit=WINGS_FIRST_CAPTURE+slot;
     return slot<ARRAY_COUNT(sMigrations) && (GymLeaderState()->uniqueObtained[bit/8]&(1u<<(bit%8)));
 }
+/* Research access is earned permanently; battle strength still uses the
+ * current rank cap. Include current rank for older saves/entry fixtures. */
+static bool32 MigrationUnlocked(u32 slot)
+{
+    const struct GleState *s=GymLeaderState();
+    return slot<ARRAY_COUNT(sMigrations) && s->projectUnlocked[WINGS_PROJECT]
+        && (s->rank>=sMigrations[slot].rank || s->highestRank>=sMigrations[slot].rank);
+}
 static u32 CaptureCount(void)
 {
     u32 i,count=0;for(i=0;i<ARRAY_COUNT(sMigrations);i++)count+=!!Captured(i);
@@ -50,12 +58,11 @@ static u32 CaptureCount(void)
 }
 void GymLeaderConfigureResearchMap(struct MapHeader *header)
 {
-    struct GleState *s=GymLeaderState();u32 slot,count;
+    u32 slot,count;
     const struct GleMigration *m;
     if(!IsGymLeaderRun() || header->events==NULL)return;
     slot=CurrentMigration();count=header->events->objectEventCount;
-    if(slot>=ARRAY_COUNT(sMigrations) || !s->projectUnlocked[WINGS_PROJECT]
-        || s->rank<sMigrations[slot].rank || Captured(slot) || count>=ARRAY_COUNT(sResearchObjects))return;
+    if(slot>=ARRAY_COUNT(sMigrations) || !MigrationUnlocked(slot) || Captured(slot) || count>=ARRAY_COUNT(sResearchObjects))return;
     m=&sMigrations[slot];sResearchEvents=*header->events;
     memcpy(sResearchObjects,header->events->objectEvents,count*sizeof(*sResearchObjects));
     sResearchObjects[count]=(struct ObjectEventTemplate){.localId=WINGS_LOCAL_ID,.graphicsId=OBJ_EVENT_MON|m->species,
@@ -65,7 +72,7 @@ void GymLeaderConfigureResearchMap(struct MapHeader *header)
 void GleWingsNotebook(void)
 {
     struct GleState *s=GymLeaderState();gSpecialVar_Result=0;
-    if(!IsGymLeaderRun() || (s->rank<3 && !s->projectUnlocked[WINGS_PROJECT]))return;
+    if(!IsGymLeaderRun() || (s->rank<3 && s->highestRank<3 && !s->projectUnlocked[WINGS_PROJECT]))return;
     s->projectUnlocked[WINGS_PROJECT]=1;
     s->projectStage[WINGS_PROJECT]=CaptureCount();
     ConvertIntToDecimalStringN(gStringVar1,s->projectStage[WINGS_PROJECT],STR_CONV_MODE_LEFT_ALIGN,1);
@@ -95,13 +102,13 @@ void GleWingsInfo(void)
     ConvertIntToDecimalStringN(gStringVar2,GymLeaderLevelCap(),STR_CONV_MODE_LEFT_ALIGN,3);
     ConvertIntToDecimalStringN(gStringVar3,sMigrations[slot].rank,STR_CONV_MODE_LEFT_ALIGN,1);
     if(Captured(slot)){gSpecialVar_Result=2;return;}
-    if(GymLeaderState()->projectUnlocked[WINGS_PROJECT] && GymLeaderState()->rank>=sMigrations[slot].rank)gSpecialVar_Result=1;
+    if(MigrationUnlocked(slot))gSpecialVar_Result=1;
 }
 u32 GymLeaderPrepareWingsBattle(void)
 {
     u32 slot=sWingsSlot;
     if(!IsGymLeaderRun() || slot>=ARRAY_COUNT(sMigrations) || CurrentMap()!=sMigrations[slot].map
-        || !GymLeaderState()->projectUnlocked[WINGS_PROJECT] || GymLeaderState()->rank<sMigrations[slot].rank || Captured(slot))return 0;
+        || !MigrationUnlocked(slot) || Captured(slot))return 0;
     ZeroEnemyPartyMons();
     CreateMonWithIVs(&gParties[B_TRAINER_OPPONENT_A][0],sMigrations[slot].species,GymLeaderLevelCap(),
         Random32(),OTID_STRUCT_PLAYER_ID,USE_RANDOM_IVS);

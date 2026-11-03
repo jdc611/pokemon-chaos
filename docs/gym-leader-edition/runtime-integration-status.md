@@ -236,3 +236,19 @@ Normal title/New Game/Oak/player keyboard/rival preset to hometown selection now
 passes a controller-only test without debug or injected-name bypasses. Actual
 party/PC tutor regression passes; its test refreshes the native relocated PC
 pointer after returning to the field.
+
+
+## Permanent research access after demotion — November 3, 2026
+
+Wings of Kanto roost visibility, approach permission and battle preparation now
+use the highest earned rank as well as current rank. Demotion preserves earned
+research access; encounters continue using the current cap. The notebook can
+also be opened for the first time after demotion once rank 3 was earned.
+Unreached survey ranks remain locked, and captured birds remain consumed.
+
+The rebuilt native fixture passes all six original rank/placement/decline/retry
+checks, all six demotion-access checks, future-rank refusal, current-cap levels,
+flash-reload access, delayed notebook activation, nonsequential capture records,
+and a real Articuno Master Ball capture/save/no-respawn regression. No save layout
+or version change is needed; EWRAM remains 257,624 bytes. This checkpoint fixes
+research persistence and does not certify the remaining campaign/release gates.

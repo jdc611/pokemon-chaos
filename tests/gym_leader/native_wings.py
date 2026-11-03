@@ -32,6 +32,8 @@ def objects():
 def bird():return next((p for p in objects() if rd(p,1)==250),None)
 def captured(slot):
  bit=73+slot;return bool(rd(current()+v[114]+bit//8,1)&(1<<(bit%8)))
+highest_rank=v[-1]
+wr(current()+highest_rank,1,1)
 enemy=symbols['gParties']+6*v[5]
 for slot,rank in enumerate([3,4,5,6,7,8]):
  wr(current()+v[2],rank-1,1);warp(slot)
@@ -58,6 +60,28 @@ for slot,rank in enumerate([3,4,5,6,7,8]):
  assert not call('ScriptContext_IsEnabled')
  assert not captured(slot)
 print('PASS six independent migration sites, ranks, actual native approach/decline, collision, species/levels/moves and defeat/flee retries',flush=True)
+# Earned sightings remain available after demotion, at the current level cap.
+for slot,rank in enumerate([3,4,5,6,7,8]):
+ wr(current()+highest_rank,rank,1);wr(current()+v[2],1,1);warp(slot)
+ assert bird(),('demotion removed unlocked roost',slot)
+ call('GleWingsInfo');assert rd('gSpecialVar_Result',2)==1
+ assert call('GymLeaderPrepareWingsBattle')==1
+ assert call('GetMonData2',enemy,v[11])==call('GymLeaderLevelCap')==15
+ if slot<5:
+  warp(slot+1);call('GleWingsInfo')
+  assert not bird() and rd('gSpecialVar_Result',2)==0
+  assert call('GymLeaderPrepareWingsBattle')==0
+assert call('TrySavingData',0)==1
+assert call('LoadGameSave',0)==1
+warp(5);call('GleWingsInfo')
+assert bird() and rd('gSpecialVar_Result',2)==1
+assert call('GymLeaderPrepareWingsBattle')==1
+assert call('GetMonData2',enemy,v[11])==15
+wr(current()+v[138]+12,0,1)
+wr(current()+highest_rank,3,1)
+call('GleWingsNotebook');assert rd('gSpecialVar_Result',2)==1
+assert rd(current()+v[138]+12,1)==1
+print('PASS permanent earned roost access after demotion/flash reload, current-cap levels and future-rank refusal',flush=True)
 # Capture order is independent; no project enforces another bird's capture.
 for slot in [5,1,4,0,3,2]:
  wr(current()+v[2],8,1);warp(slot);call('GleWingsInfo')
