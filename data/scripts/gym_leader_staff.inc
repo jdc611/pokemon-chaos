@@ -68,6 +68,8 @@ GleStaff_ActionMenu::
 	goto_if_eq GleStaff_Practice
 	compare VAR_RESULT, 22
 	goto_if_eq GleStaff_Summary
+	compare VAR_RESULT, 23
+	goto_if_eq GleStaff_Personal
 	compare VAR_RESULT, 0
 	goto_if_eq GleStaff_Changed
 	compare VAR_RESULT, 1
@@ -127,3 +129,24 @@ GleStaff_TextDismiss:
 	.string "Dismiss this trainer's record?\nTheir staff history will be erased.\lYou may need to persuade them again.$"
 GleStaff_TextDismissed:
 	.string "The staff record was released.$"
+
+GleStaff_Personal::
+	special GleStaffPersonalInfo
+	copyvar VAR_0x8006, VAR_RESULT
+	msgbox gStringVar4, MSGBOX_DEFAULT
+	compare VAR_0x8006, 1
+	goto_if_ne GleStaff_ActionMenu
+	msgbox GleStaff_TextPersonalClaim, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq GleStaff_ActionMenu
+	special GleStaffPersonalClaim
+	compare VAR_RESULT, 0
+	goto_if_ne GleStaff_ActionMenu
+	playfanfare MUS_OBTAIN_ITEM
+	msgbox GleStaff_TextPersonalDone, MSGBOX_DEFAULT
+	waitfanfare
+	goto GleStaff_Selected
+GleStaff_TextPersonalClaim:
+	.string "This personal request is complete.\nAccept the one-time bond reward?$"
+GleStaff_TextPersonalDone:
+	.string "Your trainer's loyalty has grown.\nThey'll stand with your Gym\lthrough difficult seasons.\pYou received ¥1,500 and town standing.\nYour bond is remembered if you end\lthis contract and later rehire them.$"

@@ -885,3 +885,7 @@ gSpecials::
 	def_special GleFinalOakCredits, waitstate=1
 	def_special GleWindsTrack
 	def_special GleWindsCanTrack
+	def_special GleRivalDoubleInfo
+	def_special GymLeaderStartRivalDouble, waitstate=1
+	def_special GleStaffPersonalInfo
+	def_special GleStaffPersonalClaim

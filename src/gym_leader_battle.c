@@ -5,6 +5,7 @@
 #include "gym_leader_colleagues.h"
 #include "gym_leader_rocket.h"
 #include "gym_leader_finale.h"
+#include "gym_leader_doubles.h"
 #include "gym_leader_competitions_native.h"
 #include "battle.h"
 #include "battle_setup.h"
@@ -38,6 +39,7 @@ static EWRAM_DATA u8 sInspection = 0;
 static EWRAM_DATA u8 sTraining = 0;
 static EWRAM_DATA u8 sTrainingStyle = 0;
 static EWRAM_DATA bool8 sRivalFriendly = FALSE;
+static EWRAM_DATA bool8 sRivalDouble = FALSE;
 static EWRAM_DATA bool8 sColleagueFriendly = FALSE;
 static EWRAM_DATA bool8 sTownDefense = FALSE;
 static EWRAM_DATA bool8 sCompetition = FALSE;
@@ -285,6 +287,7 @@ static u32 PrepareOfficialBattle(u32 inspection)
         return 4;
     if (!(inspection ? PrepareInspector(inspection) : PrepareChallenger()))
         return 0;
+    if(sRivalDouble)sChallenger.battleType=TRAINER_BATTLE_TYPE_DOUBLES;
     // Generated opponents follow the normal trainer-data convention: no
     // automatic battle gimmick unless this career explicitly unlocks one.
     for(i=0;i<gPartiesCount[B_TRAINER_OPPONENT_A];i++)
@@ -325,7 +328,7 @@ u32 GymLeaderPrepareRivalFriendly(void)
 {
     u32 result;
     struct GleState *s = GymLeaderState();
-    if (!IsGymLeaderRun() || sActive || (s->rivalFriendlyMask & (1u << (s->rank - 1))))
+    if (!IsGymLeaderRun() || sActive || (sRivalDouble?!GymLeaderDoubleAvailable():(s->rivalFriendlyMask & (1u << (s->rank - 1)))))
         return 4;
     sRivalFriendly = TRUE;
     result = PrepareOfficialBattle(0);
@@ -387,10 +390,11 @@ void GymLeaderFinishDefense(void)
         GymLeaderSettleColleague((gBattleOutcome & 0x7F)==B_OUTCOME_WON);
     else if (sRivalFriendly)
     {
+        if(sRivalDouble)GymLeaderSettleRivalDouble((gBattleOutcome & 0x7F)==B_OUTCOME_WON);
         if ((gBattleOutcome & 0x7F) == B_OUTCOME_WON)
         {
             u32 bit = 1u << (s->rank - 1);
-            if (!(s->rivalFriendlyMask & bit))
+            if (!sRivalDouble && !(s->rivalFriendlyMask & bit))
             {
                 s->rivalFriendlyMask |= bit;
                 AddMoney(&gSaveBlock1Ptr->money, 500 * s->rank);
@@ -422,6 +426,7 @@ void GymLeaderFinishDefense(void)
     sInspection = 0;
     sTraining = 0;
     sRivalFriendly = FALSE;
+    sRivalDouble = FALSE;
     sColleagueFriendly = FALSE;
     sTownDefense = FALSE;
     sCompetition = FALSE;
@@ -446,7 +451,8 @@ static void Task_StartDefense(u8 taskId)
 
 static void StartOfficialBattle(bool32 inspection)
 {
-    gSpecialVar_Result = sFinalOak ? GymLeaderPrepareFinalOak()
+    gSpecialVar_Result = sRivalDouble ? GymLeaderPrepareRivalDouble()
+        : sFinalOak ? GymLeaderPrepareFinalOak()
         : sCompetition ? GymLeaderPrepareCompetition()
         : sTownDefense ? GymLeaderPrepareTownDefense()
         : sColleagueFriendly ? GymLeaderPrepareColleagueFriendly()
@@ -457,6 +463,7 @@ static void StartOfficialBattle(bool32 inspection)
         gSpecialVar_Result += 10;
         sTraining = 0;
         sRivalFriendly = FALSE;
+        sRivalDouble = FALSE;
         sColleagueFriendly = FALSE;
         sTownDefense = FALSE;
     sCompetition = FALSE;
@@ -467,7 +474,7 @@ static void StartOfficialBattle(bool32 inspection)
     InitTrainerBattleParameter();
     TRAINER_BATTLE_PARAM.opponentA = TRAINER_NONE;
     TRAINER_BATTLE_PARAM.defeatTextA = (u8 *)(sTownDefense?sRocketDefeatText:sDefeatText);
-    gBattleTypeFlags = BATTLE_TYPE_TRAINER;
+    gBattleTypeFlags = BATTLE_TYPE_TRAINER | (sRivalDouble?BATTLE_TYPE_DOUBLE:0);
     CreateTask(Task_StartDefense, 1);
     PlayMapChosenOrBattleBGM(0);
     BattleTransition_StartOnField(GetTrainerBattleTransition());
@@ -483,6 +490,7 @@ void GymLeaderStartRivalFriendly(void)
         GymLeaderResumeScriptNextFrame();
         return;
     }
+    sRivalDouble = FALSE;
     sRivalFriendly = TRUE;
     StartOfficialBattle(FALSE);
 }
@@ -530,3 +538,6 @@ void GymLeaderStartCompetition(void){if(sActive){gSpecialVar_Result=14;GymLeader
 
 u32 GymLeaderPrepareFinalOak(void){u32 result;if(!IsGymLeaderRun()||sActive||!GymLeaderFinalOakEligible())return 4;sFinalOak=TRUE;result=PrepareOfficialBattle(0);if(result!=1)sFinalOak=FALSE;return result;}
 void GymLeaderStartFinalOak(void){if(sActive){gSpecialVar_Result=14;GymLeaderResumeScriptNextFrame();return;}sFinalOak=TRUE;StartOfficialBattle(FALSE);}
+
+u32 GymLeaderPrepareRivalDouble(void){u32 result;if(!IsGymLeaderRun()||sActive||!GymLeaderDoubleAvailable())return 4;if(GymLeaderState()->registeredCount<2)return 2;sRivalDouble=TRUE;result=GymLeaderPrepareRivalFriendly();if(result!=1)sRivalDouble=FALSE;return result;}
+void GymLeaderStartRivalDouble(void){if(sActive){gSpecialVar_Result=14;GymLeaderResumeScriptNextFrame();return;}sRivalFriendly=TRUE;sRivalDouble=TRUE;StartOfficialBattle(FALSE);}

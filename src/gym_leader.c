@@ -1,5 +1,6 @@
 #include "global.h"
 #include "gym_leader.h"
+#include "gym_leader_recruit.h"
 #include "gym_leader_competitions_native.h"
 #include "pokemon.h"
 #include "event_data.h"
@@ -55,6 +56,7 @@ struct GleState *GymLeaderState(void)
         }
         if(s->version<11)GleCompetitionInit(s);
         if(s->version<12){memset(&s->winds,0,sizeof(s->winds));s->winds.selected=GLE_NONE;}
+        if(s->version<13)GymLeaderMigratePersonalBonds(s);
         s->version = GLE_VERSION;
     }
     return s;

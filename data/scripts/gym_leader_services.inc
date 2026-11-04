@@ -856,3 +856,44 @@ GleWinds_TextTracked:
 	.string "The signal is being tracked!\nThe POKéRIDER map shows its route.\pFleeing preserves its HP and status.\nA fainted wind can recover through\lthe GLA notebook with the same identity.$"
 GleWinds_TextNotReady:
 	.string "Open that wind's weather seal\nat the required survey rank first.\lA captured partner cannot\lbe released again.$"
+
+GleRivalDouble_Desk::
+	lockall
+	faceplayer
+	special GleRivalDoubleInfo
+	compare VAR_RESULT, 1
+	goto_if_eq GleRivalDouble_Completed
+	compare VAR_RESULT, 0
+	goto_if_ne GleRivalDouble_End
+	msgbox GleRivalDouble_TextChallenge, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq GleRivalDouble_End
+	closemessage
+	special GymLeaderStartRivalDouble
+	compare VAR_RESULT, 1
+	goto_if_eq GleRivalDouble_Won
+	compare VAR_RESULT, 2
+	goto_if_eq GleRivalDouble_Lost
+	msgbox GleRivalDouble_TextInvalid, MSGBOX_DEFAULT
+	goto GleRivalDouble_End
+GleRivalDouble_Won::
+	msgbox GleRivalDouble_TextWon, MSGBOX_DEFAULT
+	goto GleRivalDouble_End
+GleRivalDouble_Lost::
+	msgbox GleRivalDouble_TextLost, MSGBOX_DEFAULT
+	goto GleRivalDouble_End
+GleRivalDouble_Completed::
+	msgbox GleRivalDouble_TextComplete, MSGBOX_DEFAULT
+GleRivalDouble_End::
+	releaseall
+	end
+GleRivalDouble_TextChallenge:
+	.string "{RIVAL}: Ready for a GLA double battle?\nWe'll use our Gym types, level cap\l{STR_VAR_2}, and up to {STR_VAR_3} partners.\pRegister at least two partners.\nYour team is restored and healed.\lRank and challengers are unaffected.\pEach rank's first double victory\nearns money and a voucher, separate\lfrom our ordinary friendly. Battle?$"
+GleRivalDouble_TextWon:
+	.string "{RIVAL}: A well-earned double win!\nThe GLA has awarded your rank's\lmoney and voucher.\pStandard vouchers: ranks 1 to 3.\nRare: ranks 4 to 6. Elite: 7 to 8.\lFull accounts retain pending rewards.$"
+GleRivalDouble_TextLost:
+	.string "{RIVAL}: That was good practice!\nYour team, rank and funds are safe.\lCome back and try again.$"
+GleRivalDouble_TextComplete:
+	.string "{RIVAL}: We've completed this rank's\ndouble match. Return at a new rank\lfor another GLA challenge.\pPending vouchers are collected\nhere when your account has room.\lOur ordinary friendly stays separate.$"
+GleRivalDouble_TextInvalid:
+	.string "Please register at least two\neligible Gym partners. The rank's\lteam limit and type rules apply.$"

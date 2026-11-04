@@ -5,7 +5,7 @@
 #include <stdint.h>
 #include "gym_leader_competitions.h"
 #define GLE_MAGIC 0x474C4531u
-#define GLE_VERSION 12
+#define GLE_VERSION 13
 #define GLE_PLOTS 24
 #define GLE_RECRUITS 10
 #define GLE_QUEUE 5
@@ -62,6 +62,7 @@ struct GleState {
     _Alignas(4) struct GleRocketState rocket;
     struct GleCompetitionState competitions;
     struct GleWindsState winds;
+    uint8_t personalBonds[32];
 };
 extern const uint8_t gGleRankCaps[8], gGleRankTeamSizes[8];
 void GleInit(struct GleState *, uint32_t seed);

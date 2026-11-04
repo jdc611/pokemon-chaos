@@ -1,6 +1,8 @@
 #ifndef GUARD_GYM_LEADER_RECRUIT_H
 #define GUARD_GYM_LEADER_RECRUIT_H
 struct MapHeader;
+struct GleState;
+void GymLeaderMigratePersonalBonds(struct GleState *s);
 struct Trainer;
 struct TrainerMon;
 void GymLeaderRecruitResetOffer(void);

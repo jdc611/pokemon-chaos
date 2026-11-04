@@ -42,6 +42,11 @@ static const struct GleRecruitSource *Source(u16 trainer)
     u32 i;if(!trainer)return NULL;for(i=0;i<ARRAY_COUNT(sRecruitSources);i++)if(sRecruitSources[i].trainer==trainer)return &sRecruitSources[i];
     return NULL;
 }
+// Source indices are append-only and shared with the permanent bond ledger.
+_Static_assert(ARRAY_COUNT(sRecruitSources)<=256,"Personal bond ledger capacity");
+static s32 BondIndex(u16 trainer){u32 i;for(i=0;i<ARRAY_COUNT(sRecruitSources);i++)if(sRecruitSources[i].trainer==trainer)return i;return -1;}
+static bool32 BondClaimed(u16 trainer){s32 i=BondIndex(trainer);return i>=0&&!!(GymLeaderState()->personalBonds[i/8]&(1u<<(i%8)));}
+void GymLeaderMigratePersonalBonds(struct GleState *s){u32 i;s32 index;memset(s->personalBonds,0,sizeof(s->personalBonds));for(i=0;i<GLE_RECRUITS;i++)if(s->recruits[i].id&&s->recruits[i].questBond&&(index=BondIndex(s->recruits[i].id))>=0)s->personalBonds[index/8]|=1u<<(index%8);}
 static s32 Record(u16 trainer)
 {
     u32 i;for(i=0;i<GLE_RECRUITS;i++)if(GymLeaderState()->recruits[i].id==trainer)return i;
@@ -106,7 +111,7 @@ static u32 ReturnRecruit(u32 slot)
     r=&s->recruits[slot];
     if(!r->id || !r->away)return GLE_INVALID;
     if(s->rank<3+r->potential/2 || s->reputation<100 || (s->honor<=-100 && Ace(r->id))
-        || GleMix(s->seed^r->id^0x524554u)%100>=65+3*s->rank)return GLE_NOT_READY;
+        || (s->rank<8 && !r->questBond && GleMix(s->seed^r->id^(s->activity/80)^0x524554u)%100>=65+3*s->rank))return GLE_NOT_READY;
     r->away=0;r->active=0;r->warnings=0;r->loyalty=max(r->loyalty,60);
     return GLE_OK;
 }
@@ -120,7 +125,7 @@ void GleRecruitHire(void)
     if(RosterCount()>=min(GLE_RECRUITS,s->rank+2)){gSpecialVar_Result=GLE_NO_ROOM;return;}
     if(!IsEnoughMoney(&gSaveBlock1Ptr->money,fee)){gSpecialVar_Result=GLE_NOT_ENOUGH_MONEY;return;}
     gSpecialVar_Result=GleRecruitTrainer(s,sRecruitTrainer,p,55+4*p+GleMix(s->seed^sRecruitTrainer^0x4C4F59u)%20);
-    if(gSpecialVar_Result==GLE_OK)RemoveMoney(&gSaveBlock1Ptr->money,fee);
+    if(gSpecialVar_Result==GLE_OK){RemoveMoney(&gSaveBlock1Ptr->money,fee);slot=Record(sRecruitTrainer);if(slot>=0&&BondClaimed(sRecruitTrainer)){s->recruits[slot].questBond=1;s->recruits[slot].loyalty=max(80,s->recruits[slot].loyalty);}}
 }
 void GleStaffMenu(void)
 {
@@ -156,7 +161,7 @@ void GleStaffInfo(void)
 }
 void GleStaffActions(void)
 {
-    static const u8 *const own[]={COMPOUND_STRING("Assign to GYM"),COMPOUND_STRING("Keep in reserve"),COMPOUND_STRING("View team"),COMPOUND_STRING("Practice battle"),COMPOUND_STRING("Dismiss"),COMPOUND_STRING("Back")};
+    static const u8 *const own[]={COMPOUND_STRING("Assign to GYM"),COMPOUND_STRING("Keep in reserve"),COMPOUND_STRING("View team"),COMPOUND_STRING("Practice battle"),COMPOUND_STRING("Dismiss"),COMPOUND_STRING("Personal request"),COMPOUND_STRING("Back")};
     static const u8 *const away[]={COMPOUND_STRING("Ask to return"),COMPOUND_STRING("View team"),COMPOUND_STRING("Dismiss record"),COMPOUND_STRING("Back")};
     if(GymLeaderState()->recruits[sStaffSlot].away)GymLeaderMenu(away,ARRAY_COUNT(away),FALSE);
     else GymLeaderMenu(own,ARRAY_COUNT(own),FALSE);
@@ -171,6 +176,7 @@ void GleStaffAction(void)
     else if(action==2)gSpecialVar_Result=22;
     else if(action==3)gSpecialVar_Result=21;
     else if(action==4)gSpecialVar_Result=20;
+    else if(action==5)gSpecialVar_Result=23;
 }
 void GleStaffDismiss(void)
 {
@@ -292,4 +298,30 @@ void GleStaffSummary(void)
     sPreviewCount=trainer.partySize;
     for(i=0;i<sPreviewCount;i++)gGlePreviewParty[i]=gParties[B_TRAINER_OPPONENT_A][i];
     BeginNormalPaletteFade(PALETTES_ALL,0,0,16,RGB_BLACK);CreateTask(Task_StaffSummary,10);
+}
+
+static u32 PersonalKind(const struct GleRecruit *r){return GleMix(GymLeaderState()->seed^r->id^0xB04D51u)%4;}
+static bool32 PersonalBuilding(u32 kind){u32 i;for(i=0;i<GLE_PLOTS;i++)if(GymLeaderState()->plots[i].building==kind&&GymLeaderState()->plots[i].tier)return TRUE;return FALSE;}
+static bool32 PersonalReady(const struct GleRecruit *r){switch(PersonalKind(r)){case 0:return (u32)r->wins+r->losses>=3;case 1:return PersonalBuilding(GLE_DOJO);case 2:return GymLeaderState()->population>=12&&(PersonalBuilding(GLE_HOUSE)||PersonalBuilding(GLE_HOTEL));default:return GymLeaderState()->rocket.cleared>=1;}}
+void GleStaffPersonalInfo(void)
+{
+    struct GleRecruit *r;gSpecialVar_Result=0;
+    StringCopy(gStringVar4,COMPOUND_STRING("Renew our contract before\nwe discuss a personal request."));
+    if(!IsGymLeaderRun()||sStaffSlot>=GLE_RECRUITS||!(r=&GymLeaderState()->recruits[sStaffSlot])->id||r->away)return;
+    StringCopy(gStringVar4,GetTrainerNameFromId(r->id));StringAppend(gStringVar4,COMPOUND_STRING(":\p"));
+    if(r->questBond||BondClaimed(r->id)){r->questBond=1;StringAppend(gStringVar4,COMPOUND_STRING("You've already helped me.\nOur personal bond goes beyond\la contract. Thank you!"));gSpecialVar_Result=2;return;}
+    switch(PersonalKind(r)){
+    case 0:StringAppend(gStringVar4,COMPOUND_STRING("I want to learn how to teach.\nLet me face three challengers\lthrough our Gym's trainer filter.\pWins and losses both teach us.\nCome back to me afterward."));break;
+    case 1:StringAppend(gStringVar4,COMPOUND_STRING("I'd like a place to coach.\nOpen a Dojo in our town.\pI want to help other trainers\ngrow alongside my own partners."));break;
+    case 2:StringAppend(gStringVar4,COMPOUND_STRING("My family needs room to settle.\nBuild a House or Hotel, and help\lour population reach twelve.\pA growing town could give us\na place to belong."));break;
+    default:StringAppend(gStringVar4,COMPOUND_STRING("I joined to protect this place.\nResolve a Rocket incident\lin our hometown.\pTell me how it went afterward.\nI'd like to know we're safe."));break;
+    }
+    gSpecialVar_Result=PersonalReady(r)?1:0;
+}
+void GleStaffPersonalClaim(void)
+{
+    struct GleState *s=GymLeaderState();struct GleRecruit *r;s32 index;gSpecialVar_Result=GLE_NOT_READY;
+    if(!IsGymLeaderRun()||sStaffSlot>=GLE_RECRUITS||!(r=&s->recruits[sStaffSlot])->id||r->away||r->questBond||BondClaimed(r->id)||!PersonalReady(r)||(index=BondIndex(r->id))<0)return;
+    s->personalBonds[index/8]|=1u<<(index%8);r->questBond=1;r->loyalty=min(100,r->loyalty+25);r->warnings=0;
+    s->honor=min(1000,s->honor+5);s->reputation=min(65535,s->reputation+3);AddMoney(&gSaveBlock1Ptr->money,1500);gSpecialVar_Result=GLE_OK;
 }

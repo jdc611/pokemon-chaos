@@ -93,21 +93,21 @@ assert bytes(rd(record()+i,1) for i in range(v[168]))==expected
 warp(v[150],47,46);assert 3 not in objectids()
 print('PASS actual ordinary trainer victory, offer retry after failed funds/decline, paid hire, no Pokémon gift, flash record and original NPC relocation',flush=True)
 warp(v[58+town],14,9);assert 230 in objectids()
-press(64);press(1);until(lambda:menu_count()==6)
+press(64);press(1);until(lambda:menu_count()==7)
 snap('staff-visible-reserve')
 press(2);until(lambda:menu_count()==2);press(2);frames(50)
 call('GleWarpHome');frames(240)
 walkto(3,12);press(32);press(1);until(lambda:menu_count()==2)
-choose(0);until(lambda:menu_count()==6)
+choose(0);until(lambda:menu_count()==7)
 snap('staff-office-record')
-choose(0);until(lambda:menu_count()==6)
+choose(0);until(lambda:menu_count()==7)
 assert rd(record()+v[175],1)==1
 choose(2);frames(180)
 assert rd('gMapHeader')!=0
 assert call('GetMonData2',symbols['gGlePreviewParty'],v[11])==15
 assert any(call('GetMonData2',symbols['gGlePreviewParty'],v[38]+j) for j in range(4))
 snap('staff-native-summary')
-press(2,120);until(lambda:menu_count()==6)
+press(2,120);until(lambda:menu_count()==7)
 press(2);until(lambda:menu_count()==2);press(2);frames(50)
 call('GleWarpHome');frames(240);assert 230 in objectids()
 snap('staff-active-gym')
@@ -118,7 +118,7 @@ press(16,25);press(128,25);press(1,25);press(1,25);press(128);press(1,100)
 until(lambda:menu_count()==7);assert rd(current()+v[26],1)==1
 press(2);frames(50)
 walkto(3,12);press(32);press(1);until(lambda:menu_count()==2)
-choose(0);until(lambda:menu_count()==6)
+choose(0);until(lambda:menu_count()==7)
 xp=rd(current()+v[31]);q=rd(current()+v[32],1);wins=rd(current()+v[29],2);losses=rd(current()+v[30],2)
 money=call('GetMoney',rd('gSaveBlock1Ptr')+v[64])
 choose(3);until(lambda:call('GymLeaderTrainingActive'));frames(300)
@@ -127,7 +127,7 @@ for _ in range(1400):
  press(1,18)
  if not call('GymLeaderBattleTrainer'):break
 else:raise AssertionError('staff practice did not return')
-until(lambda:menu_count()==6)
+until(lambda:menu_count()==7)
 assert rd(current()+v[31])==xp and rd(current()+v[32],1)==q
 assert rd(current()+v[29],2)==wins and rd(current()+v[30],2)==losses
 assert call('GetMoney',rd('gSaveBlock1Ptr')+v[64])==money
@@ -164,7 +164,7 @@ print('PASS retained developed roster/current-cap practice fixtures, visible riv
 state('staff-before-progression',1)
 press(2);until(lambda:menu_count()==2);press(2);frames(50)
 call('GleWarpHome');frames(240)
-walkto(2,6);press(64);press(1);until(lambda:menu_count()==6)
+walkto(2,6);press(64);press(1);until(lambda:menu_count()==7)
 choose(4);until(yesno);choose(0);until(lambda:menu_count()==1)
 assert rd(record(),2)==0
 press(2);frames(50)
