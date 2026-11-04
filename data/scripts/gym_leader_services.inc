@@ -113,10 +113,14 @@ GleSilphResearch::
 GleResearch_Notebook::
 	closemessage
 	special GleResearchMenu
-	compare VAR_RESULT, 16
+	compare VAR_RESULT, 17
 	goto_if_ge GleHall_Stay
 	compare VAR_RESULT, 0
 	goto_if_eq GleResearch_Null
+	compare VAR_RESULT, 16
+	goto_if_eq GleLineage_Desk
+	compare VAR_RESULT, 15
+	goto_if_eq GleResearch_Field
 	compare VAR_RESULT, 14
 	goto_if_eq GleResearch_Slaking
 	compare VAR_RESULT, 4
@@ -897,3 +901,45 @@ GleRivalDouble_TextComplete:
 	.string "{RIVAL}: We've completed this rank's\ndouble match. Return at a new rank\lfor another GLA challenge.\pPending vouchers are collected\nhere when your account has room.\lOur ordinary friendly stays separate.$"
 GleRivalDouble_TextInvalid:
 	.string "Please register at least two\neligible Gym partners. The rank's\lteam limit and type rules apply.$"
+
+GleLineage_Desk::
+	msgbox GleLineage_TextIntro, MSGBOX_DEFAULT
+GleLineage_Select::
+	closemessage
+	special GleLineageMenu
+	compare VAR_RESULT, 4
+	goto_if_ge GleResearch_Notebook
+	special GleLineageInfo
+	compare VAR_RESULT, 1
+	goto_if_eq GleLineage_Recorded
+	compare VAR_RESULT, 0
+	goto_if_ne GleLineage_Locked
+	msgbox GleLineage_TextOffer, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq GleLineage_Select
+	special GleLineageClaim
+	compare VAR_RESULT, 0
+	goto_if_ne GleLineage_Full
+	playfanfare MUS_OBTAIN_ITEM
+	msgbox GleLineage_TextGiven, MSGBOX_DEFAULT
+	waitfanfare
+	goto GleLineage_Select
+GleLineage_Recorded::
+	msgbox GleLineage_TextRecorded, MSGBOX_DEFAULT
+	goto GleLineage_Select
+GleLineage_Locked::
+	msgbox GleLineage_TextLocked, MSGBOX_DEFAULT
+	goto GleResearch_Notebook
+GleLineage_Full::
+	msgbox GleResearch_TextNullFull, MSGBOX_DEFAULT
+	goto GleLineage_Select
+GleLineage_TextIntro:
+	.string "Our rare-lineage nursery cares\nfor four young research partners.\pAfter OAK's final examination,\nyou may provide each one a home.\lEvery placement is recorded once.$"
+GleLineage_TextOffer:
+	.string "Will you care for {STR_VAR_1}?\nThis research partner starts at\llevel 5, with a normal ability.$"
+GleLineage_TextGiven:
+	.string "Your research partner is safe!\nCheck your party or PC.\lRaise it with care.$"
+GleLineage_TextRecorded:
+	.string "{STR_VAR_1}'s placement is recorded.\nMoving or releasing your partner\ldoes not create another placement.$"
+GleLineage_TextLocked:
+	.string "Pass OAK's final examination\nto qualify for these placements.\lYour research partners will wait.$"

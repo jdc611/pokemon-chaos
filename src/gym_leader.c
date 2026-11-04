@@ -96,14 +96,14 @@ enum Species GymLeaderExclusiveSpecies(u32 type, u32 location)
 
 bool32 GymLeaderSpeciesReserved(enum Species species)
 {
-    u32 i, j;
-    for (i = 0; i < GLE_EXCLUSIVE_TYPES; i++)
-        for (j = 0; j < GLE_EXCLUSIVE_PER_TYPE; j++)
-            if (sGleExclusive[i][j] == species)
-                return TRUE;
-    for (i = 0; i < ARRAY_COUNT(sGleResearchSpecies); i++)
-        if (sGleResearchSpecies[i] == species)
-            return TRUE;
+    u32 i,j;
+    enum Species base;
+    if(species<=SPECIES_NONE || species>=NUM_SPECIES)return FALSE;
+    base=GetFormSpeciesId(species,0);
+    for(i=0;i<GLE_EXCLUSIVE_TYPES;i++)for(j=0;j<GLE_EXCLUSIVE_PER_TYPE;j++)
+        if(GetFormSpeciesId(sGleExclusive[i][j],0)==base)return TRUE;
+    for(i=0;i<ARRAY_COUNT(sGleResearchSpecies);i++)
+        if(GetFormSpeciesId(sGleResearchSpecies[i],0)==base)return TRUE;
     return FALSE;
 }
 

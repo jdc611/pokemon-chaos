@@ -96,7 +96,7 @@
   },
   {
     "map": "MAP_ROUTE25",
-    "map_name": "Route25",
+    "map_name": "Route25_Frlg",
     "x": 50,
     "y": 7,
     "map_id": 9511,
@@ -667,5 +667,24 @@
     "answer": 0,
     "index": 34,
     "roaming": true
+  },
+  {
+    "map": "MAP_ROUTE25",
+    "map_name": "Route25_Frlg",
+    "x": 38,
+    "y": 7,
+    "map_id": 9511,
+    "species": "SPECIES_SHAYMIN",
+    "project": 15,
+    "rank": 6,
+    "location": "ROUTE 25 GRATITUDE GARDEN",
+    "clue": "A quiet flower carries gratitude.\\nWhat helps a shared home flourish?",
+    "answers": [
+      "Care and kindness",
+      "Taking without giving",
+      "Chasing everyone away"
+    ],
+    "answer": 0,
+    "index": 35
   }
 ]

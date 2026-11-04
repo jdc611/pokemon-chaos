@@ -131,7 +131,7 @@ def walkto(x,y):
   frames(16,16 if px<x else 32 if px>x else 128 if py<y else 64);frames(1)
  raise AssertionError(('research desk blocked',pos(),(x,y)))
 walkto(6,9);walkto(5,9);walkto(5,8);press(32);press(1)
-until(lambda:menu_count()==16);choose(4);until(lambda:menu_count()==16)
+until(lambda:menu_count()==17);choose(4);until(lambda:menu_count()==17)
 mon=symbols['gParties']+3*v[5]
 assert call('GetMonAbility',mon)==v[-15] and rd(current()+v[137]+4,1)==2
 snap('titans-regigigas-awakening')

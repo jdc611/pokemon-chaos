@@ -892,3 +892,6 @@ gSpecials::
 
 	def_special GleExclusivePostgame
 	def_special GleExclusiveSelect
+	def_special GleLineageMenu, waitstate=1
+	def_special GleLineageInfo
+	def_special GleLineageClaim

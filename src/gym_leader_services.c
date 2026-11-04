@@ -161,13 +161,13 @@ void GleVoucherClaim(void)
     sVoucherSlot=GLE_NONE;
 }
 
-static const u8 *const sResearchNames[GLE_PROJECTS] = {
+static const u8 *const sResearchNames[] = {
     COMPOUND_STRING("Type: Null"),COMPOUND_STRING("Paradox of Evolution"),COMPOUND_STRING("Time and Space"),COMPOUND_STRING("Ancient Titans"),
     COMPOUND_STRING("Ancient Awakening"),COMPOUND_STRING("Four Winds"),COMPOUND_STRING("Swords of Justice"),COMPOUND_STRING("Cursed Treasures"),
     COMPOUND_STRING("Lakes of the Mind"),COMPOUND_STRING("Guardian Shrines"),COMPOUND_STRING("Echoes of the Past"),COMPOUND_STRING("Jungle Guardian"),
-    COMPOUND_STRING("Wings of Kanto"),COMPOUND_STRING("Toxic Pact"),COMPOUND_STRING("Slaking research"),COMPOUND_STRING("Form research")
+    COMPOUND_STRING("Wings of Kanto"),COMPOUND_STRING("Toxic Pact"),COMPOUND_STRING("Slaking research"),COMPOUND_STRING("Nature's Gratitude"),COMPOUND_STRING("Rare lineages")
 };
-void GleResearchMenu(void) { GymLeaderMenu(sResearchNames,GLE_PROJECTS,FALSE); }
+void GleResearchMenu(void) { GymLeaderMenu(sResearchNames,ARRAY_COUNT(sResearchNames),FALSE); }
 void GleResearchInfo(void)
 {
     struct GleState *s=GymLeaderState();u32 project=gSpecialVar_Result;

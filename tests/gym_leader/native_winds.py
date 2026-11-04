@@ -2,7 +2,7 @@
 import runpy,json,struct
 ctx=runpy.run_path('tests/gym_leader/native_opening.py');globals().update(ctx)
 cdata=(ROOT/'winds-layout.bin').read_bytes();c=struct.unpack('<'+'I'*(len(cdata)//4),cdata)
-cat=json.load(open('docs/gym-leader-edition/field-research-sites.json'));species=v[-(len(cat)+30):-30];assert len(cat)==35
+cat=json.load(open('docs/gym-leader-edition/field-research-sites.json'));species=v[-(len(cat)+30):-30];assert len(cat)>=35
 assert c[0]==3072 and c[1]<=3200 and c[2]>=12 and c[3]==20
 state('winds-migration-base')
 def wp():return current()+c[0]

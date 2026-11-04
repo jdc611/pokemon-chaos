@@ -62,8 +62,9 @@ static const struct GleFieldSite sSites[]={
     {SPECIES_THUNDURUS, MAP_ROUTE11, 28, 12, 4, 5, 1, COMPOUND_STRING("ROUTE 11 STORM STATION"), COMPOUND_STRING("Electric air gathers before a storm.\nHow should a storm be observed?"), {COMPOUND_STRING("From an exposed peak"),COMPOUND_STRING("From a safe station"),COMPOUND_STRING("Without a plan")}},
     {SPECIES_LANDORUS, MAP_ROUTE23, 10, 18, 5, 5, 2, COMPOUND_STRING("ROUTE 23 EARTH STATION"), COMPOUND_STRING("Rich soil follows the changing wind.\nWhat connects weather and the land?"), {COMPOUND_STRING("Nothing at all"),COMPOUND_STRING("Only strength"),COMPOUND_STRING("A living cycle")}},
     {SPECIES_ENAMORUS, MAP_ROUTE18, 21, 7, 6, 5, 0, COMPOUND_STRING("ROUTE 18 SPRING STATION"), COMPOUND_STRING("New life follows a returning breeze.\nWhat does a careful survey preserve?"), {COMPOUND_STRING("Patterns across seasons"),COMPOUND_STRING("Only one moment"),COMPOUND_STRING("Only the strongest storm")}},
+    {SPECIES_SHAYMIN, MAP_ROUTE25, 38, 7, 6, 15, 0, COMPOUND_STRING("ROUTE 25 GRATITUDE GARDEN"), COMPOUND_STRING("A quiet flower carries gratitude.\nWhat helps a shared home flourish?"), {COMPOUND_STRING("Care and kindness"),COMPOUND_STRING("Taking without giving"),COMPOUND_STRING("Chasing everyone away")}},
 };
-_Static_assert(ARRAY_COUNT(sSites)<=35,"Research bit reservations overlap");
+_Static_assert(ARRAY_COUNT(sSites)<=36,"Research bit reservations overlap");
 static EWRAM_DATA u8 sFieldSlot=0;
 static EWRAM_DATA u8 sFieldProject=0;
 extern const u8 GleField_Approach[],GleWinds_Station[];
@@ -75,10 +76,20 @@ static bool32 HasBit(u32 bit)
 {
     return !!(GymLeaderState()->uniqueObtained[bit/8]&(1u<<(bit%8)));
 }
+// The original 35 slots retain their exact bits. The appended gratitude
+// site uses the next three free bits, beyond Oak and rival-double ledgers.
+static u32 FieldBit(u32 first,u32 slot){return slot<35?first+slot:first==FIELD_FIRST_CAPTURE?240:first==FIELD_FIRST_DISCOVERY?241:242;}
+static bool32 GratitudeReady(void)
+{
+    const struct GleState *s=GymLeaderState();u32 i;
+    if(s->population<12)return FALSE;
+    for(i=0;i<GLE_PLOTS;i++)if(s->plots[i].building==GLE_HABITAT && s->plots[i].tier>=2 && s->plots[i].type==4)return TRUE;
+    return FALSE;
+}
 static u32 ProjectCount(u32 project,u32 firstBit)
 {
     u32 i,n=0;for(i=0;i<ARRAY_COUNT(sSites);i++)
-        if(sSites[i].project==project && HasBit(firstBit+i))n++;
+        if(sSites[i].project==project && HasBit(FieldBit(firstBit,i)))n++;
     return n;
 }
 static bool32 EarnedRank(u32 slot)
@@ -88,12 +99,13 @@ static bool32 EarnedRank(u32 slot)
 }
 static bool32 EvidenceReady(u32 slot)
 {
+    if(slot==35)return GratitudeReady();
     // The Loyal Three's common origin is revealed by all three sites, never
     // by catching a different member of the group.
     if(sSites[slot].project==1 && slot!=15)
         return HasBit(208) && (slot==16 || HasBit(FIELD_FIRST_DISCOVERY+16));
     if(slot==21)return HasBit(FIELD_FIRST_DISCOVERY+18)&&HasBit(FIELD_FIRST_DISCOVERY+19)&&HasBit(FIELD_FIRST_DISCOVERY+20);
-    if(slot>=25&&slot<=27)return HasBit(FIELD_FIRST_DISCOVERY+slot-3);
+    if(slot>=25&&slot<=27)return HasBit(FieldBit(FIELD_FIRST_DISCOVERY,slot)-3);
     if(slot==30)return HasBit(FIELD_FIRST_DISCOVERY+28)&&HasBit(FIELD_FIRST_DISCOVERY+29);
     return sSites[slot].project!=13 || ProjectCount(13,FIELD_FIRST_DISCOVERY)==3;
 }
@@ -104,10 +116,10 @@ void GymLeaderConfigureFieldResearch(struct MapEvents *events,struct ObjectEvent
     {
         const struct GleFieldSite *site=&sSites[i];
         if(site->map!=CurrentMap())continue;
-        GleUniqueCapture(s,FIELD_FIRST_DISCOVERY+i);
+        GleUniqueCapture(s,FieldBit(FIELD_FIRST_DISCOVERY,i));
         s->projectUnlocked[site->project]=1;
         s->projectStage[site->project]=ProjectCount(site->project,FIELD_FIRST_DISCOVERY);
-        if(HasBit(FIELD_FIRST_CAPTURE+i) || count>=capacity)continue;
+        if(HasBit(FieldBit(FIELD_FIRST_CAPTURE,i)) || count>=capacity)continue;
         objects[count++]=(struct ObjectEventTemplate){.localId=FIELD_LOCAL_ID+i,
             .graphicsId=site->project==5?OBJ_EVENT_GFX_SCIENTIST_1:OBJ_EVENT_MON|site->species,.x=site->x,.y=site->y,.elevation=3,
             .movementType=MOVEMENT_TYPE_FACE_DOWN,.script=site->project==5?GleWinds_Station:GleField_Approach};
@@ -145,6 +157,8 @@ void GleFieldNotebook(void)
         StringCopy(gStringVar4,COMPOUND_STRING("Swords of Justice\nSeek three teachings in ROCK\lTUNNEL B1F, VICTORY ROAD 2F,\land the ROUTE 25 grove.\pTheir discoveries reveal KELDEO's\ntraining pool in SEAFOAM B1F.\lCatching the teachers is optional."));break;
     case 10:
         StringCopy(gStringVar4,COMPOUND_STRING("Echoes of the Past\nRecord modern traces at the POWER\lPLANT, MANSION 2F and ROUTE 24.\pCorresponding ancient echoes wait\nin ROCK TUNNEL B1F, MT. EMBER's\lsummit and SEAFOAM B4F.\pEach pair shares field evidence.\nCaptures are independent. No beast\levolves into its ancient counterpart."));break;
+    case 15:
+        StringCopy(gStringVar4,COMPOUND_STRING("Nature's Gratitude\nA flower garden waits on ROUTE 25.\pReach rank 6, grow our town to\ntwelve residents, and provide a\lGrass habitat upgraded to tier 2.\pEvery Gym type can build one.\nCare for this shared home, then\lapproach SHAYMIN in the garden."));break;
     case 5:
         StringCopy(gStringVar4,COMPOUND_STRING("The Four Winds\nSurvey weather stations on ROUTES\l9, 11, 23 and 18. Open each seal\land release its independent wind.\pChoose a signal here to track it.\nThe POKéRIDER map shows its route.\lChanging signals never rerolls it.\pFled partners keep HP and status.\nA fainted wind can recover here.\lCaptures are never prerequisites."));break;
     case 7:
@@ -178,9 +192,9 @@ void GleFieldReport(void)
         sFieldSlot=i;
         StringCopy(gStringVar1,GetSpeciesName(sSites[i].species));
         StringCopy(gStringVar2,sSites[i].location);
-        StringCopy(gStringVar3,HasBit(FIELD_FIRST_CAPTURE+i)?COMPOUND_STRING("CAPTURE RECORDED"):
-            HasBit(FIELD_FIRST_SEAL+i)?COMPOUND_STRING("SEAL OPENED"):
-            HasBit(FIELD_FIRST_DISCOVERY+i)?COMPOUND_STRING("FIELD EVIDENCE RECORDED"):COMPOUND_STRING("AWAITING EXPLORATION"));
+        StringCopy(gStringVar3,HasBit(FieldBit(FIELD_FIRST_CAPTURE,i))?COMPOUND_STRING("CAPTURE RECORDED"):
+            HasBit(FieldBit(FIELD_FIRST_SEAL,i))?COMPOUND_STRING("SEAL OPENED"):
+            HasBit(FieldBit(FIELD_FIRST_DISCOVERY,i))?COMPOUND_STRING("FIELD EVIDENCE RECORDED"):COMPOUND_STRING("AWAITING EXPLORATION"));
         StringExpandPlaceholders(gStringVar4,COMPOUND_STRING("{STR_VAR_1}\n{STR_VAR_2}\l{STR_VAR_3}\pSurvey rank: "));
         ConvertIntToDecimalStringN(gStringVar1,sSites[i].rank,STR_CONV_MODE_LEFT_ALIGN,1);
         StringAppend(gStringVar4,gStringVar1);
@@ -198,18 +212,19 @@ void GleFieldInfo(void)
     StringCopy(gStringVar1,GetSpeciesName(sSites[slot].species));
     ConvertIntToDecimalStringN(gStringVar2,GymLeaderLevelCap(),STR_CONV_MODE_LEFT_ALIGN,3);
     ConvertIntToDecimalStringN(gStringVar3,sSites[slot].rank,STR_CONV_MODE_LEFT_ALIGN,1);
-    if(HasBit(FIELD_FIRST_CAPTURE+slot)){gSpecialVar_Result=2;return;}
+    if(HasBit(FieldBit(FIELD_FIRST_CAPTURE,slot))){gSpecialVar_Result=2;return;}
     if(!EarnedRank(slot))return;
     if(!EvidenceReady(slot))
     {
-        if(sSites[slot].project==1)StringCopy(gStringVar4,COMPOUND_STRING("The trace is not understood yet.\nBring CYCLIZAR in your party or PC\lto the GLA Paradox notebook.\pStudy MT. MOON's ancient trace\nbefore investigating the future.\lNo other capture is required."));
+        if(slot==35)StringCopy(gStringVar4,COMPOUND_STRING("SHAYMIN seeks a caring home.\nHelp our town reach twelve people\land upgrade a Grass habitat\lto tier 2. Any Gym type can do so."));
+        else if(sSites[slot].project==1)StringCopy(gStringVar4,COMPOUND_STRING("The trace is not understood yet.\nBring CYCLIZAR in your party or PC\lto the GLA Paradox notebook.\pStudy MT. MOON's ancient trace\nbefore investigating the future.\lNo other capture is required."));
         else if(sSites[slot].project==6)StringCopy(gStringVar4,COMPOUND_STRING("KELDEO awaits all three teachings.\nSurvey ROCK TUNNEL B1F, VICTORY\lROAD 2F and ROUTE 25 first.\pDiscoveries are enough.\nNo other capture is required."));
         else if(sSites[slot].project==10)StringCopy(gStringVar4,COMPOUND_STRING("The ancient echo lacks context.\nSurvey its modern counterpart's\ltrace first. Consult the notebook.\pA field observation is enough.\nNo other capture is required."));
         else if(sSites[slot].project==2)StringCopy(gStringVar4,COMPOUND_STRING("The distortion is not understood.\nSurvey POKEMON TOWER 7F and\lSEAFOAM B3F first.\pBoth observations are enough.\nNo other capture is required."));
         else StringCopy(gStringVar4,COMPOUND_STRING("A poisonous chain holds firm.\nTrace the pact's other sites on\lROUTE 15, ROUTE 8 and ROUTE 18.\pDiscoveries are enough.\nNo other capture is required."));
         gSpecialVar_Result=4;return;
     }
-    gSpecialVar_Result=HasBit(FIELD_FIRST_SEAL+slot)?1:3;
+    gSpecialVar_Result=HasBit(FieldBit(FIELD_FIRST_SEAL,slot))?1:3;
 }
 void GleFieldClue(void)
 {
@@ -225,14 +240,14 @@ void GleFieldSolve(void)
     u32 choice=gSpecialVar_Result,slot=sFieldSlot;gSpecialVar_Result=0;
     if(!IsGymLeaderRun() || slot>=ARRAY_COUNT(sSites) || CurrentMap()!=sSites[slot].map
         || !EarnedRank(slot) || !EvidenceReady(slot) || choice!=sSites[slot].answer)return;
-    GleUniqueCapture(GymLeaderState(),FIELD_FIRST_SEAL+slot);gSpecialVar_Result=1;
+    GleUniqueCapture(GymLeaderState(),FieldBit(FIELD_FIRST_SEAL,slot));gSpecialVar_Result=1;
 }
 u32 GymLeaderPrepareFieldBattle(void)
 {
     u32 slot=sFieldSlot;
     if(!IsGymLeaderRun() || slot>=ARRAY_COUNT(sSites) || CurrentMap()!=sSites[slot].map
-        || sSites[slot].project==5 || !EarnedRank(slot) || !EvidenceReady(slot) || !HasBit(FIELD_FIRST_SEAL+slot)
-        || HasBit(FIELD_FIRST_CAPTURE+slot))return 0;
+        || sSites[slot].project==5 || !EarnedRank(slot) || !EvidenceReady(slot) || !HasBit(FieldBit(FIELD_FIRST_SEAL,slot))
+        || HasBit(FieldBit(FIELD_FIRST_CAPTURE,slot)))return 0;
     ZeroEnemyPartyMons();
     CreateMonWithIVs(&gParties[B_TRAINER_OPPONENT_A][0],sSites[slot].species,GymLeaderLevelCap(),Random32(),OTID_STRUCT_PLAYER_ID,USE_RANDOM_IVS);
     GiveMonInitialMoveset(&gParties[B_TRAINER_OPPONENT_A][0]);gPartiesCount[B_TRAINER_OPPONENT_A]=1;return 1;
@@ -246,7 +261,7 @@ void GleFieldFinish(void)
 {
     u32 slot=sFieldSlot;gSpecialVar_Result=0;
     if(!IsGymLeaderRun() || slot>=ARRAY_COUNT(sSites) || CurrentMap()!=sSites[slot].map || gBattleOutcome!=B_OUTCOME_CAUGHT)return;
-    if(GleUniqueCapture(GymLeaderState(),FIELD_FIRST_CAPTURE+slot)==GLE_OK)gSpecialVar_Result=1;
+    if(GleUniqueCapture(GymLeaderState(),FieldBit(FIELD_FIRST_CAPTURE,slot))==GLE_OK)gSpecialVar_Result=1;
 }
 
 u32 GymLeaderFieldSelected(void){return sFieldSlot;}

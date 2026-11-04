@@ -91,10 +91,10 @@ def walkto(x,y):
   frames(16,16 if px<x else 32 if px>x else 128 if py<y else 64);frames(1)
  raise AssertionError(('field desk blocked',pos(),(x,y)))
 walkto(6,9);walkto(5,9);walkto(5,8);press(32);press(1)
-until(lambda:menu_count()==16)
+until(lambda:menu_count()==17)
 for project,n in [(7,5),(8,4),(9,5),(11,2),(13,4)]:
  choose(project);until(lambda:menu_count()==n);choose(0);until(lambda:menu_count()==n)
- snap('field-notebook-'+str(project));press(2);until(lambda:menu_count()==16)
+ snap('field-notebook-'+str(project));press(2);until(lambda:menu_count()==17)
 press(2);settle()
 print('PASS five actual native GLA project notebooks, detailed reports and cancel/return flow',flush=True)
 # Capture uses a real Uxie battle and test-supplied Master Ball, not forced HP/outcome.
