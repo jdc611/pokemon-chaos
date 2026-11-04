@@ -21,6 +21,7 @@ static void Finish(struct GleState *s,uint32_t *money){
     if(winner==0){if(!kind)s->regionalWinner=1;
         if(kind){unsigned k,all=1;for(k=209;k<217;k++)if(!(s->uniqueObtained[k/8]&(1u<<(k%8))))all=0;if(all)Pay(money,5000);}
         Pay(money,(kind?5000:2000)*s->rank);s->reputation=s->reputation>65515?65535:s->reputation+20;}
+    GleHostingFinish(s,money);
     c->stage=0;c->joined=0;c->wager=0;c->betOn=GLE_NONE;c->nextAt=Later(s->activity,140+GleMix(s->seed^c->count)%101);
 }
 static void Advance(struct GleState *s,uint32_t *money){
@@ -30,7 +31,7 @@ static void Advance(struct GleState *s,uint32_t *money){
 void GleCompetitionActivity(struct GleState *s,uint32_t *money){
     struct GleCompetitionState *c=&s->competitions;unsigned ids[8],i,j,t,kind;
     if(!GleValid(s)||!money)return;
-    if(c->stage==1 && s->activity>=c->closesAt){c->stage=2;Advance(s,money);return;}
+    if(c->stage==1 && s->activity>=c->closesAt){GleHostingStart(s);c->stage=2;Advance(s,money);return;}
     if(c->stage||c->count>=GLE_EVENT_HISTORY||s->activity<c->nextAt)return;
     /* Every third event is Kanto, including before player qualification. */
     kind=c->count%3==2;
@@ -42,8 +43,8 @@ void GleCompetitionActivity(struct GleState *s,uint32_t *money){
     memset(&c->current,0,sizeof(c->current));c->current.winners=0xffffffffu;
     for(i=0;i<8;i++)c->current.entrants|=ids[i]<<(i*4);
     /* A reigning player is invited, but absent participation is simulated. */
-    c->current.kindRank=kind|((s->rank-1)<<1);c->current.host=kind?3:GleMix(s->seed^c->count)%3;
-    c->stage=1;c->joined=0;c->wager=0;c->betOn=GLE_NONE;c->closesAt=Later(s->activity,64);
+    c->current.kindRank=kind|((s->rank-1)<<1);c->current.host=3;
+    c->stage=1;c->joined=0;c->wager=0;c->betOn=GLE_NONE;c->closesAt=Later(s->activity,64);GleHostingAnnouncement(s);
 }
 int GleCompetitionJoin(struct GleState *s){
     struct GleCompetitionState *c=&s->competitions;unsigned i,replace=8,id;

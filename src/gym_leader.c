@@ -57,6 +57,7 @@ struct GleState *GymLeaderState(void)
         if(s->version<11)GleCompetitionInit(s);
         if(s->version<12){memset(&s->winds,0,sizeof(s->winds));s->winds.selected=GLE_NONE;}
         if(s->version<13)GymLeaderMigratePersonalBonds(s);
+        if(s->version<14)GleHostingInit(s);
         s->version = GLE_VERSION;
     }
     return s;
