@@ -1,4 +1,5 @@
 #include "global.h"
+#include "gym_leader.h"
 #include "ironmon.h"
 #include "coins.h"
 #include "event_data.h"
@@ -172,7 +173,7 @@ void ChaosArcadePrizePrepare(void)
     gSpecialVar_Result = 2;
     if (sPrizeDraft == NULL || sPrizeDraft->prize >= ARRAY_COUNT(sPrizes) || tier >= ARRAY_COUNT(sTiers) || ((tier & 1) && !HasHidden(sPrizeDraft->species))) return;
     struct Pokemon *mon = &sPrizeDraft->mon;
-    CreateMonWithIVs(mon, sPrizeDraft->species, 20, Random32(), OTID_STRUCT_PLAYER_ID, USE_RANDOM_IVS);
+    CreateMonWithIVs(mon, sPrizeDraft->species, IsGymLeaderRun()?min(20,GymLeaderLevelCap()):20, Random32(), OTID_STRUCT_PLAYER_ID, USE_RANDOM_IVS);
     GiveMonInitialMoveset(mon);
     if (tier & 1)
     {
@@ -224,7 +225,8 @@ void ChaosArcadePrizeSetNickname(void)
 void ChaosArcadePrizeBuy(void)
 {
     gSpecialVar_Result = 4;
-    if (IsIronmonRun() || sPrizeDraft == NULL || !sPrizeDraft->prepared || !FlagGet(FLAG_BADGE04_GET) || !CheckBagHasItem(ITEM_COIN_CASE, 1)) goto done;
+    if (IsIronmonRun() || sPrizeDraft == NULL || !sPrizeDraft->prepared || !ChaosArcadeUnlocked() || !CheckBagHasItem(ITEM_COIN_CASE, 1)) goto done;
+    if (IsGymLeaderRun() && GymLeaderSpeciesReserved(sPrizeDraft->species)) goto done;
     if (GetCoins() < sPrizeDraft->price) {gSpecialVar_Result = 2; goto done;}
     u32 delivered = GiveScriptedMonToPlayer(&sPrizeDraft->mon, PARTY_SIZE);
     if (delivered == MON_CANT_GIVE) {gSpecialVar_Result = 3; goto done;}
@@ -414,7 +416,7 @@ void ChaosArcadeItemBuy(void)
 {
     const struct ArcadeItemPrize *prize = ChosenItem();
     gSpecialVar_Result = 4;
-    if (prize == NULL || (IsIronmonRun() && sItemCategory != 2) || !FlagGet(FLAG_BADGE04_GET) || !CheckBagHasItem(ITEM_COIN_CASE,1)) return;
+    if (prize == NULL || (IsIronmonRun() && sItemCategory != 2) || !ChaosArcadeUnlocked() || !CheckBagHasItem(ITEM_COIN_CASE,1)) return;
     if (sItemCategory < 2 && CheckBagHasItem(prize->item,1)) {gSpecialVar_Result=5;return;}
     if (GetCoins() < prize->price) {gSpecialVar_Result=2;return;}
     if (!AddBagItem(prize->item,1)) {gSpecialVar_Result=3;return;}
@@ -517,7 +519,7 @@ void ChaosArcadeCosmeticPreview(void)
 void ChaosArcadeCosmeticBuy(void)
 {
     gSpecialVar_Result=4;
-    if(sCosmeticChoice>=ARRAY_COUNT(sCosmetics)||!FlagGet(FLAG_BADGE04_GET)||!CheckBagHasItem(ITEM_COIN_CASE,1))return;
+    if(sCosmeticChoice>=ARRAY_COUNT(sCosmetics)||!ChaosArcadeUnlocked()||!CheckBagHasItem(ITEM_COIN_CASE,1))return;
     const struct ArcadeCosmetic *c=&sCosmetics[sCosmeticChoice];
     u32 bit=1u<<(sCosmeticChoice%32);
     u32 price=CosmeticOwned(sCosmeticChoice)?0:c->price;

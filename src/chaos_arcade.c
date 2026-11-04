@@ -1,4 +1,6 @@
 #include "global.h"
+#include "gym_leader.h"
+#include "chaos_arcade.h"
 #include "bg.h"
 #include "coins.h"
 #include "event_data.h"
@@ -66,7 +68,7 @@ void ChaosArcadeRefill(void)
 {
     ChaosArcadeEnsureSave();
     gSpecialVar_Result = 4;
-    if (!FlagGet(FLAG_BADGE04_GET) || !CheckBagHasItem(ITEM_COIN_CASE, 1))
+    if (!ChaosArcadeUnlocked() || !CheckBagHasItem(ITEM_COIN_CASE, 1))
         return;
     u32 now = ArcadeRealTime();
     gSpecialVar_Result = 2;
@@ -391,7 +393,7 @@ static void Task_CheckersLaunchFailed(u8 taskId)
 void ChaosArcadeCheckers(void)
 {
     gSpecialVar_Result = FALSE;
-    if (!FlagGet(FLAG_BADGE04_GET) || !CheckBagHasItem(ITEM_COIN_CASE, 1))
+    if (!ChaosArcadeUnlocked() || !CheckBagHasItem(ITEM_COIN_CASE, 1))
     {
         CreateTask(Task_CheckersLaunchFailed, 0);
         return;
@@ -406,3 +408,6 @@ void ChaosArcadeCheckers(void)
     FadeScreen(FADE_TO_BLACK, 0);
     CreateTask(Task_LaunchCheckers, 0);
 }
+
+// GLE has its own career progression; inherited badge checks must not gate it.
+bool32 ChaosArcadeUnlocked(void){return IsGymLeaderRun()||FlagGet(FLAG_BADGE04_GET);}

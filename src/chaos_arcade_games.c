@@ -1,4 +1,6 @@
 #include "global.h"
+#include "gym_leader.h"
+#include "chaos_arcade.h"
 #include "bg.h"
 #include "coins.h"
 #include "event_data.h"
@@ -304,7 +306,7 @@ static void Task_GameFailed(u8 taskId){ScriptContext_Enable();DestroyTask(taskId
 static void LaunchGame(u32 game)
 {
     gSpecialVar_Result=0;
-    if(!FlagGet(FLAG_BADGE04_GET)||!CheckBagHasItem(ITEM_COIN_CASE,1)){CreateTask(Task_GameFailed,0);return;}
+    if(!ChaosArcadeUnlocked()||!CheckBagHasItem(ITEM_COIN_CASE,1)){CreateTask(Task_GameFailed,0);return;}
     sArcadeGame=AllocZeroed(sizeof(*sArcadeGame));
     if(!sArcadeGame){CreateTask(Task_GameFailed,0);return;}
     sArcadeGame->initialRedraw=TRUE;

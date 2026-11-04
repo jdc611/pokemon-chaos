@@ -14,7 +14,8 @@ CeladonCity_GameCorner_PrizeRoom_EventScript_PrizeClerkMons::
 	faceplayer
 	specialvar VAR_RESULT, IsIronmonRun
 	goto_if_eq VAR_RESULT, TRUE, Ironmon_EventScript_ServiceBlocked
-	goto_if_unset FLAG_BADGE04_GET, ChaosArcadePrize_Construction
+	specialvar VAR_RESULT, ChaosArcadeUnlocked
+	goto_if_eq VAR_RESULT, FALSE, ChaosArcadePrize_Construction
 	checkitem ITEM_COIN_CASE
 	goto_if_eq VAR_RESULT, FALSE, CeladonCity_GameCorner_PrizeRoom_EventScript_NeedCoinCase
 	showcoinsbox 20, 0
@@ -318,7 +319,8 @@ ChaosArcadePrize_NoHiddenText:
 ChaosArcadeItemCounter::
 	lock
 	faceplayer
-	goto_if_unset FLAG_BADGE04_GET, ChaosArcadePrize_Construction
+	specialvar VAR_RESULT, ChaosArcadeUnlocked
+	goto_if_eq VAR_RESULT, FALSE, ChaosArcadePrize_Construction
 	checkitem ITEM_COIN_CASE
 	goto_if_eq VAR_RESULT, FALSE, CeladonCity_GameCorner_PrizeRoom_EventScript_NeedCoinCase
 	showcoinsbox 20, 0
@@ -380,7 +382,8 @@ ChaosArcadeItem_OwnedText:
 ChaosArcadeCosmeticCounter::
  lock
  faceplayer
- goto_if_unset FLAG_BADGE04_GET, ChaosArcadePrize_Construction
+ specialvar VAR_RESULT, ChaosArcadeUnlocked
+	goto_if_eq VAR_RESULT, FALSE, ChaosArcadePrize_Construction
  checkitem ITEM_COIN_CASE
  goto_if_eq VAR_RESULT, FALSE, CeladonCity_GameCorner_PrizeRoom_EventScript_NeedCoinCase
  showcoinsbox 20, 0

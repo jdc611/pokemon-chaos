@@ -1,4 +1,5 @@
 #include "global.h"
+#include "gym_leader.h"
 #include "ironmon.h"
 #include "battle.h"
 #include "battle_gfx_sfx_util.h"
@@ -392,6 +393,15 @@ void SetTeraType(struct ScriptContext *ctx)
 u32 ScriptGiveMonParameterized(u8 side, u8 slot, struct PokemonTemplate *monTemplate)
 {
     struct Pokemon mon;
+    struct PokemonTemplate gleTemplate;
+
+    if(side==B_SIDE_PLAYER && IsGymLeaderRun())
+    {
+        if(GymLeaderSpeciesReserved(monTemplate->species))return MON_CANT_GIVE;
+        gleTemplate=*monTemplate;
+        gleTemplate.level=min(gleTemplate.level,GymLeaderLevelCap());
+        monTemplate=&gleTemplate;
+    }
 
     CreateMonFromTemplate(&mon, monTemplate);
     if (side == B_SIDE_PLAYER)
@@ -412,6 +422,12 @@ u32 ScriptGiveMon(enum Species species, u8 level, enum Item item)
 {
     struct Pokemon mon;
     u8 heldItem[2];
+
+    if(IsGymLeaderRun())
+    {
+        if(GymLeaderSpeciesReserved(species))return MON_CANT_GIVE;
+        level=min(level,GymLeaderLevelCap());
+    }
 
     CreateRandomMon(&mon, species, level);
     if (item)

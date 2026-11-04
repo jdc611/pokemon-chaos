@@ -922,3 +922,5 @@ gSpecials::
 	def_special GleHostingDeclineNative
 	def_special GleHostingTravel
 	def_special GleHostingRefreshVenue
+
+	def_special ChaosArcadeUnlocked

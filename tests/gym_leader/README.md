@@ -1,7 +1,7 @@
 # Gym Leader internal checks
 
 These validate implemented foundations, not a completed Gym Leader Edition.
-Opening/menu/map/event integration is still incomplete. Do not publish the local
+Complete campaign/release validation remains open. Do not publish the local
 ROM as the requested finished game.
 
 Host scenarios:
@@ -82,3 +82,5 @@ remove any resulting zero-byte generated objects before rebuilding.
 Hosting checks: compile `hosting_layout.c` and `competition_layout.c` alongside the shared layout, then run `native_hosting.py` with `GLE_TEST_TOWN=0`, `1`, and `2` in separate QA directories. `hosting_state_test.c` links the state, competition core and hosting-state sources and covers invitations/rival bids and Kanto settlement.
 
 Ecology checks: generate the ROM candidate header with `generate_ecology_catalog.py`, compile `ecology_layout.c` into `ecology-layout.bin` alongside the shared layout and run `native_ecology.py`. It covers all eight ranks, actual forest wild generation, DexNav display/search caps, RNG/cache behavior and the non-GLE adapter. Run native town and Safari regressions for configured encounter overrides.
+
+Inherited-service checks: compile `arcade_layout.c` and `gift_layout.c` into their matching QA directories, alongside the shared layout, then run `native_arcade_access.py` and `native_gift_caps.py`. They exercise actual prize/TM/cabinet and Eevee scripts in addition to delivery adapters, flash and mode-isolation fixtures.
