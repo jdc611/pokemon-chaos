@@ -1,4 +1,5 @@
 #include "global.h"
+#include "gym_leader.h"
 #include "ironmon.h"
 #include "battle_main.h"
 #include "battle_setup.h"
@@ -1320,6 +1321,9 @@ static u8 DexNavTryGenerateMonLevel(enum Species species, enum EncounterType env
     if (Random() % 100 < 4)
         levelBonus += 10; //4% chance of having a +10 level
 
+    if (IsGymLeaderRun())
+        return min(GymLeaderLevelCap(), levelBase + levelBonus);
+
     if (levelBase + levelBonus > MAX_LEVEL)
         return MAX_LEVEL;
     else
@@ -1599,7 +1603,7 @@ static u8 GetEncounterLevelFromMapData(enum Species species, enum EncounterType 
 
         for (i = 0; i < NUM_LAND_MONS_ENCOUNTER_SLOTS; i++)
         {
-            if ((gSaveBlock3Ptr->randomizerEnabled ? GetRandomizedWildSpecies(landMonsInfo, WILD_AREA_LAND, i) : landMonsInfo->wildPokemon[i].species) == species)
+            if (((IsGymLeaderRun() || gSaveBlock3Ptr->randomizerEnabled) ? GetRandomizedWildSpecies(landMonsInfo, WILD_AREA_LAND, i) : landMonsInfo->wildPokemon[i].species) == species)
             {
                 min = (min < landMonsInfo->wildPokemon[i].minLevel) ? min : landMonsInfo->wildPokemon[i].minLevel;
                 max = (max > landMonsInfo->wildPokemon[i].maxLevel) ? max : landMonsInfo->wildPokemon[i].maxLevel;
@@ -1615,7 +1619,7 @@ static u8 GetEncounterLevelFromMapData(enum Species species, enum EncounterType 
 
         for (i = 0; i < NUM_WATER_MONS_ENCOUNTER_SLOTS; i++)
         {
-            if ((gSaveBlock3Ptr->randomizerEnabled ? GetRandomizedWildSpecies(waterMonsInfo, WILD_AREA_WATER, i) : waterMonsInfo->wildPokemon[i].species) == species)
+            if (((IsGymLeaderRun() || gSaveBlock3Ptr->randomizerEnabled) ? GetRandomizedWildSpecies(waterMonsInfo, WILD_AREA_WATER, i) : waterMonsInfo->wildPokemon[i].species) == species)
             {
                 min = (min < waterMonsInfo->wildPokemon[i].minLevel) ? min : waterMonsInfo->wildPokemon[i].minLevel;
                 max = (max > waterMonsInfo->wildPokemon[i].maxLevel) ? max : waterMonsInfo->wildPokemon[i].maxLevel;
@@ -1631,7 +1635,7 @@ static u8 GetEncounterLevelFromMapData(enum Species species, enum EncounterType 
 
         for (i = 0; i < NUM_FISHING_MONS_ENCOUNTER_SLOTS; i++)
         {
-            if ((gSaveBlock3Ptr->randomizerEnabled ? GetRandomizedWildSpecies(fishingMonsInfo, WILD_AREA_FISHING, i) : fishingMonsInfo->wildPokemon[i].species) == species)
+            if (((IsGymLeaderRun() || gSaveBlock3Ptr->randomizerEnabled) ? GetRandomizedWildSpecies(fishingMonsInfo, WILD_AREA_FISHING, i) : fishingMonsInfo->wildPokemon[i].species) == species)
             {
                 min = (min < fishingMonsInfo->wildPokemon[i].minLevel) ? min : fishingMonsInfo->wildPokemon[i].minLevel;
                 max = (max > fishingMonsInfo->wildPokemon[i].maxLevel) ? max : fishingMonsInfo->wildPokemon[i].maxLevel;
@@ -1647,7 +1651,7 @@ static u8 GetEncounterLevelFromMapData(enum Species species, enum EncounterType 
 
         for (i = 0; i < NUM_HIDDEN_MONS_ENCOUNTER_SLOTS; i++)
         {
-            if (hiddenMonsInfo->wildPokemon[i].species == species)
+            if (((IsGymLeaderRun() || gSaveBlock3Ptr->randomizerEnabled) ? GetRandomizedWildSpecies(hiddenMonsInfo, WILD_AREA_HIDDEN, i) : hiddenMonsInfo->wildPokemon[i].species) == species)
             {
                 min = (min < hiddenMonsInfo->wildPokemon[i].minLevel) ? min : hiddenMonsInfo->wildPokemon[i].minLevel;
                 max = (max > hiddenMonsInfo->wildPokemon[i].maxLevel) ? max : hiddenMonsInfo->wildPokemon[i].maxLevel;
@@ -1667,6 +1671,7 @@ static u8 GetEncounterLevelFromMapData(enum Species species, enum EncounterType 
     if (max == 0)
         return MON_LEVEL_NONEXISTENT;
 
+    if(IsGymLeaderRun())return ChooseWildMonLevel(NULL,0,WILD_AREA_LAND);
     return RandomUniform(RNG_DEXNAV_ENCOUNTER_LEVEL, min, max);
 }
 
@@ -1925,7 +1930,7 @@ static bool8 CapturedAllFishingMons(u32 headerId)
     {
         for (i = 0; i < NUM_FISHING_MONS_ENCOUNTER_SLOTS; ++i)
         {
-            species = gSaveBlock3Ptr->randomizerEnabled
+            species = (IsGymLeaderRun() || gSaveBlock3Ptr->randomizerEnabled)
                     ? GetRandomizedWildSpecies(fishingMonsInfo, WILD_AREA_FISHING, i)
                     : fishingMonsInfo->wildPokemon[i].species;
             if (species != SPECIES_NONE)
@@ -2085,7 +2090,7 @@ static void DexNavLoadEncounterData(void)
     {
         for (i = 0; i < NUM_LAND_MONS_ENCOUNTER_SLOTS; i++)
         {
-            if (gSaveBlock3Ptr->randomizerEnabled)
+            if ((IsGymLeaderRun() || gSaveBlock3Ptr->randomizerEnabled))
                 species = GetRandomizedWildSpecies(landMonsInfo, WILD_AREA_LAND, i);
             else
                 species = landMonsInfo->wildPokemon[i].species;
@@ -2097,12 +2102,12 @@ static void DexNavLoadEncounterData(void)
     // Retain all source entries, displaying twelve per page with exact methods.
     if (waterMonsInfo != NULL && waterMonsInfo->encounterRate != 0)
         for (i = 0; i < NUM_WATER_MONS_ENCOUNTER_SLOTS; i++)
-            AddWaterEncounter(gSaveBlock3Ptr->randomizerEnabled
+            AddWaterEncounter((IsGymLeaderRun() || gSaveBlock3Ptr->randomizerEnabled)
                 ? GetRandomizedWildSpecies(waterMonsInfo, WILD_AREA_WATER, i)
                 : waterMonsInfo->wildPokemon[i].species, 0, &waterIndex);
     if (fishingMonsInfo != NULL && fishingMonsInfo->encounterRate != 0)
         for (i = 0; i < NUM_FISHING_MONS_ENCOUNTER_SLOTS; i++)
-            AddWaterEncounter(gSaveBlock3Ptr->randomizerEnabled
+            AddWaterEncounter((IsGymLeaderRun() || gSaveBlock3Ptr->randomizerEnabled)
                 ? GetRandomizedWildSpecies(fishingMonsInfo, WILD_AREA_FISHING, i)
                 : fishingMonsInfo->wildPokemon[i].species,
                 i < 2 ? FISHING_ROD_OLD : i < 5 ? FISHING_ROD_GOOD : FISHING_ROD_SUPER, &waterIndex);

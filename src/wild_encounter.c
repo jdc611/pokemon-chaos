@@ -669,6 +669,7 @@ static enum Species GetEarlyKantoFilteredSpecies(enum WildPokemonArea area, u8 w
 
 static enum Species GenerateRandomizedWildSpeciesForMap(const struct WildPokemonInfo *wildMonInfo, enum WildPokemonArea area, u8 wildMonIndex, u8 mapGroup, u8 mapNum, enum TimeOfDay timeOfDay)
 {
+    if(IsGymLeaderRun())return GymLeaderEcologySpecies((mapGroup<<8)|mapNum,area,wildMonIndex,timeOfDay);
     if (IS_FRLG && gSaveBlock3Ptr->filterMode != RUN_FILTER_NONE
      && IsEarlyKantoFilteredArea(mapGroup, mapNum)
      && (area == WILD_AREA_LAND || (area == WILD_AREA_FISHING && wildMonIndex < 2)))
@@ -832,6 +833,7 @@ enum Species GetRandomizedWildSpeciesForMap(const struct WildPokemonInfo *wildMo
 
 enum Species GetRandomizedWildSpecies(const struct WildPokemonInfo *wildMonInfo, enum WildPokemonArea area, u8 wildMonIndex)
 {
+    if(IsGymLeaderRun()&&(area==WILD_AREA_LAND||area==WILD_AREA_HIDDEN)){u16 species=GymLeaderHabitatSpecies(wildMonIndex);if(!species)species=GymLeaderSafariSpecies(wildMonIndex);if(species)return species;}
     u32 headerId = GetCurrentMapWildMonHeaderId();
     enum TimeOfDay timeOfDay = headerId == HEADER_NONE ? TIME_OF_DAY_DEFAULT : GetTimeOfDayForEncounters(headerId, area);
 
@@ -894,12 +896,12 @@ bool8 TryGenerateWildMon(const struct WildPokemonInfo *wildMonInfo, enum WildPok
     if (gMapHeader.mapLayoutId != LAYOUT_BATTLE_FRONTIER_BATTLE_PIKE_ROOM_WILD_MONS && flags & WILD_CHECK_KEEN_EYE && !IsAbilityAllowingEncounter(level))
         return FALSE;
 
-    u16 habitatSpecies = GymLeaderHabitatSpecies(wildMonIndex);
+    u16 habitatSpecies = (area == WILD_AREA_LAND || area == WILD_AREA_HIDDEN) ? GymLeaderHabitatSpecies(wildMonIndex) : SPECIES_NONE;
     if (habitatSpecies == SPECIES_NONE && (area == WILD_AREA_LAND || area == WILD_AREA_HIDDEN))
         habitatSpecies = GymLeaderSafariSpecies(wildMonIndex);
     if (habitatSpecies != SPECIES_NONE)
         CreateWildMon(habitatSpecies,level);
-    else if (gSaveBlock3Ptr->randomizerEnabled)
+    else if (IsGymLeaderRun() || gSaveBlock3Ptr->randomizerEnabled)
         CreateWildMon(GetRandomizedWildSpecies(wildMonInfo, area, wildMonIndex), level);
     else
         CreateWildMon(wildMonInfo->wildPokemon[wildMonIndex].species, level);
@@ -909,7 +911,7 @@ bool8 TryGenerateWildMon(const struct WildPokemonInfo *wildMonInfo, enum WildPok
 static u16 GenerateFishingWildMon(const struct WildPokemonInfo *wildMonInfo, u8 rod)
 {
     u8 wildMonIndex = ChooseWildMonIndex_Fishing(rod);
-    enum Species wildMonSpecies = gSaveBlock3Ptr->randomizerEnabled
+    enum Species wildMonSpecies = (IsGymLeaderRun() || gSaveBlock3Ptr->randomizerEnabled)
             ? GetRandomizedWildSpecies(wildMonInfo, WILD_AREA_FISHING, wildMonIndex)
             : wildMonInfo->wildPokemon[wildMonIndex].species;
     u8 level = ChooseWildMonLevel(wildMonInfo->wildPokemon, wildMonIndex, WILD_AREA_FISHING);
@@ -1058,7 +1060,7 @@ bool8 StandardWildEncounter(u16 curMetatileBehavior, u16 prevMetatileBehavior)
             }
             else
             {
-                if (DoMassOutbreakEncounterTest() == TRUE && SetUpMassOutbreakEncounter(WILD_CHECK_REPEL | WILD_CHECK_KEEN_EYE) == TRUE)
+                if (!IsGymLeaderRun() && DoMassOutbreakEncounterTest() == TRUE && SetUpMassOutbreakEncounter(WILD_CHECK_REPEL | WILD_CHECK_KEEN_EYE) == TRUE)
                 {
                     BattleSetup_StartWildBattle();
                     return TRUE;
@@ -1226,7 +1228,7 @@ bool8 SweetScentWildEncounter(void)
                 return TRUE;
             }
 
-            if (DoMassOutbreakEncounterTest() == TRUE)
+            if (!IsGymLeaderRun() && DoMassOutbreakEncounterTest() == TRUE)
                 SetUpMassOutbreakEncounter(0);
             else
                 TryGenerateWildMon(gWildMonHeaders[headerId].encounterTypes[timeOfDay].landMonsInfo, WILD_AREA_LAND, 0);
@@ -1320,22 +1322,22 @@ u16 GetLocalWildMon(bool8 *isWaterMon)
         return SPECIES_NONE;
     // Land Pokémon
     else if (landMonsInfo != NULL && waterMonsInfo == NULL)
-        return landMonsInfo->wildPokemon[ChooseWildMonIndex_Land()].species;
+        return IsGymLeaderRun()?GetRandomizedWildSpecies(landMonsInfo,WILD_AREA_LAND,ChooseWildMonIndex_Land()):landMonsInfo->wildPokemon[ChooseWildMonIndex_Land()].species;
     // Water Pokémon
     else if (landMonsInfo == NULL && waterMonsInfo != NULL)
     {
         *isWaterMon = TRUE;
-        return waterMonsInfo->wildPokemon[ChooseWildMonIndex_Water()].species;
+        return IsGymLeaderRun()?GetRandomizedWildSpecies(waterMonsInfo,WILD_AREA_WATER,ChooseWildMonIndex_Water()):waterMonsInfo->wildPokemon[ChooseWildMonIndex_Water()].species;
     }
     // Either land or water Pokémon
     if ((Random() % 100) < 80)
     {
-        return landMonsInfo->wildPokemon[ChooseWildMonIndex_Land()].species;
+        return IsGymLeaderRun()?GetRandomizedWildSpecies(landMonsInfo,WILD_AREA_LAND,ChooseWildMonIndex_Land()):landMonsInfo->wildPokemon[ChooseWildMonIndex_Land()].species;
     }
     else
     {
         *isWaterMon = TRUE;
-        return waterMonsInfo->wildPokemon[ChooseWildMonIndex_Water()].species;
+        return IsGymLeaderRun()?GetRandomizedWildSpecies(waterMonsInfo,WILD_AREA_WATER,ChooseWildMonIndex_Water()):waterMonsInfo->wildPokemon[ChooseWildMonIndex_Water()].species;
     }
 }
 
@@ -1351,7 +1353,7 @@ u16 GetLocalWaterMon(void)
         const struct WildPokemonInfo *waterMonsInfo = gWildMonHeaders[headerId].encounterTypes[timeOfDay].waterMonsInfo;
 
         if (waterMonsInfo)
-            return waterMonsInfo->wildPokemon[ChooseWildMonIndex_Water()].species;
+            return IsGymLeaderRun()?GetRandomizedWildSpecies(waterMonsInfo,WILD_AREA_WATER,ChooseWildMonIndex_Water()):waterMonsInfo->wildPokemon[ChooseWildMonIndex_Water()].species;
     }
     return SPECIES_NONE;
 }
@@ -1446,7 +1448,9 @@ static bool8 TryGetRandomWildMonIndexByType(const struct WildPokemon *wildMon, e
 
     for (validMonCount = 0, i = 0; i < numMon; i++)
     {
-        if (GetSpeciesType(wildMon[i].species, 0) == type || GetSpeciesType(wildMon[i].species, 1) == type)
+        enum Species species=wildMon[i].species;
+        if(IsGymLeaderRun()){struct WildPokemonInfo info={.encounterRate=1,.wildPokemon=wildMon};species=GetRandomizedWildSpecies(&info,numMon==NUM_WATER_MONS_ENCOUNTER_SLOTS?WILD_AREA_WATER:WILD_AREA_LAND,i);}
+        if (GetSpeciesType(species, 0) == type || GetSpeciesType(species, 1) == type)
             validIndexes[validMonCount++] = i;
     }
 

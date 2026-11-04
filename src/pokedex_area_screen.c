@@ -1,4 +1,5 @@
 #include "global.h"
+#include "gym_leader.h"
 #include "bg.h"
 #include "decompress.h"
 #include "event_data.h"
@@ -500,7 +501,7 @@ static bool8 MonListHasSpecies(const struct WildPokemonInfo *info, enum Species 
     {
         for (i = 0; i < size; i++)
         {
-            enum Species slotSpecies = gSaveBlock3Ptr->randomizerEnabled
+            enum Species slotSpecies = (IsGymLeaderRun() || gSaveBlock3Ptr->randomizerEnabled)
                 ? GetRandomizedWildSpeciesForMap(info, area, i, mapGroup, mapNum, timeOfDay)
                 : info->wildPokemon[i].species;
 
