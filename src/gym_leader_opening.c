@@ -64,7 +64,7 @@ void GymLeaderMenu(const u8 *const *names, u32 count, bool8 ignoreB)
         StringCopy(name, names[i]);
         items[i].name = name;
         // Preserve the native B-cancel sentinel even in long species lists.
-        items[i].id = i < 127 ? i : i + 1;
+        items[i].id = i + (i >= 127) + (i >= 254);
     }
     ScriptMenu_MultichoiceDynamic(1, 1, count, items, ignoreB, 6, 0, 0);
 }

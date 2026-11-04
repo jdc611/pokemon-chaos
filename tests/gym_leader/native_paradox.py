@@ -32,8 +32,8 @@ def walkto(x,y):
 def notebook():
  call('GleWarpLeague');frames(240)
  walkto(6,9);walkto(5,9);walkto(5,8);press(32);press(1)
- until(lambda:menu_count()==17);choose(1);until(lambda:menu_count()==4)
- press(2);until(lambda:menu_count()==17);press(2);settle()
+ until(lambda:menu_count()==18);choose(1);until(lambda:menu_count()==4)
+ press(2);until(lambda:menu_count()==18);press(2);settle()
 enemy=symbols['gParties']+6*v[5]
 notebook();assert not bit(208)
 wr(current()+v[2],8,1);wr(current()+v[-1],8,1)

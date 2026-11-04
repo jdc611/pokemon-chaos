@@ -65,10 +65,10 @@ print('PASS gratitude site floor/approach/events, early discovery/rank, native G
 warp(v[24],4,9);wr('gSpecialVar_Result',0,2);call('GleLineageInfo');assert result()==2
 call('GleLineageClaim');assert result()==3 and not bit(243)
 wr(current()+v[114]+27,rd(current()+v[114]+27,1)|128,1)
-press(64);press(1);until(lambda:menu_count()==17);choose(16);until(lambda:menu_count()==5)
+press(64);press(1);until(lambda:menu_count()==18);choose(16);until(lambda:menu_count()==5)
 choose(0);until(yesno);snap('rare-lineage-placement');choose(1);until(lambda:menu_count()==5);assert not bit(243)
 choose(0);until(yesno);choose(0);until(lambda:menu_count()==5);assert bit(243)
-press(2);until(lambda:menu_count()==17);press(2);settle()
+press(2);until(lambda:menu_count()==18);press(2);settle()
 funds=call('GetMoney',rd('gSaveBlock1Ptr')+v[64])
 for slot in range(4):
  wr('gSpecialVar_Result',slot,2);call('GleLineageInfo');assert result()==(1 if slot==0 else 0)

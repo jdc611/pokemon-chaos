@@ -9,15 +9,15 @@ def walkto(x,y):
   frames(16,16 if px<x else 32 if px>x else 128 if py<y else 64);frames(1)
  raise AssertionError(('walk blocked',pos(),(x,y)))
 walkto(6,9);walkto(5,9);walkto(5,8);press(32);press(1)
-until(lambda:menu_count()==17)
-choose(12);until(lambda:menu_count()==17)
+until(lambda:menu_count()==18)
+choose(12);until(lambda:menu_count()==18)
 assert not rd(current()+v[138]+12,1)
 wr(current()+v[2],3,1)
 choose(12);until(lambda:menu_count()==7)
 assert rd(current()+v[138]+12,1)==1
 choose(0);until(lambda:menu_count()==7)
 snap('wings-notebook')
-press(2);until(lambda:menu_count()==17);press(2);frames(50)
+press(2);until(lambda:menu_count()==18);press(2);frames(50)
 assert not call('ScriptContext_IsEnabled')
 state('wings-opened')
 spots=[(14,18),(41,24),(30,7),(39,27),(17,93),(43,7)]

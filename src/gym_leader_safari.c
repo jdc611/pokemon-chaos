@@ -77,7 +77,7 @@ void GleSafariPrice(void)
     gSpecialVar_Result=0;
     if(index!=127 && index!=255 && sSafariPool)
     {
-        if(index>127)index--;
+        if(index>255)index-=2;else if(index>127)index--;
         if(index<sSafariPoolCount)
         {
             species=sSafariPool[index];

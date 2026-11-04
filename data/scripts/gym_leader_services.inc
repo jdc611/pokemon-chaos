@@ -113,10 +113,12 @@ GleSilphResearch::
 GleResearch_Notebook::
 	closemessage
 	special GleResearchMenu
-	compare VAR_RESULT, 17
+	compare VAR_RESULT, 18
 	goto_if_ge GleHall_Stay
 	compare VAR_RESULT, 0
 	goto_if_eq GleResearch_Null
+	compare VAR_RESULT, 17
+	goto_if_eq GleCatalog_Desk
 	compare VAR_RESULT, 16
 	goto_if_eq GleLineage_Desk
 	compare VAR_RESULT, 15
@@ -954,3 +956,81 @@ GleLineage_TextRecorded:
 	.string "{STR_VAR_1}'s placement is recorded.\nMoving or releasing your partner\ldoes not create another placement.$"
 GleLineage_TextLocked:
 	.string "Pass OAK's final examination\nto qualify for these placements.\lYour research partners will wait.$"
+
+GleCatalog_Desk::
+	special GleCatalogStatus
+	compare VAR_RESULT, 1
+	goto_if_ne GleLineage_Locked
+	msgbox GleCatalog_TextWelcome, MSGBOX_DEFAULT
+GleCatalog_Type::
+	special GleCatalogCancel
+	closemessage
+	special GleHabitatTypeMenu
+	compare VAR_RESULT, 18
+	goto_if_ge GleResearch_Notebook
+	special GleCatalogMenu
+	compare VAR_RESULT, 127
+	goto_if_eq GleCatalog_Type
+	compare VAR_RESULT, 255
+	goto_if_eq GleCatalog_Empty
+	special GleCatalogQuote
+	compare VAR_RESULT, 0
+	goto_if_ne GleCatalog_Type
+GleCatalog_Actions::
+	special GleCatalogDetails
+	msgbox GleCatalog_TextOffer, MSGBOX_DEFAULT
+	closemessage
+	special GleCatalogActions
+	compare VAR_RESULT, 0
+	goto_if_eq GleCatalog_Summary
+	compare VAR_RESULT, 1
+	goto_if_ne GleCatalog_Type
+	special GleCatalogDetails
+	msgbox GleCatalog_TextConfirm, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq GleCatalog_Actions
+	special GleCatalogClaim
+	compare VAR_RESULT, 0
+	goto_if_eq GleCatalog_Given
+	compare VAR_RESULT, 2
+	goto_if_eq GleCatalog_Full
+	compare VAR_RESULT, 4
+	goto_if_eq GleCatalog_Funds
+	compare VAR_RESULT, 5
+	goto_if_eq GleCatalog_Recorded
+	msgbox GleCatalog_TextHeld, MSGBOX_DEFAULT
+	goto GleCatalog_Actions
+GleCatalog_Summary::
+	special GleCatalogSummary
+	goto GleCatalog_Actions
+GleCatalog_Given::
+	playfanfare MUS_OBTAIN_ITEM
+	msgbox GleLineage_TextGiven, MSGBOX_DEFAULT
+	waitfanfare
+	goto GleCatalog_Type
+GleCatalog_Empty::
+	msgbox GleCatalog_TextEmpty, MSGBOX_DEFAULT
+	goto GleCatalog_Type
+GleCatalog_Full::
+	msgbox GleResearch_TextNullFull, MSGBOX_DEFAULT
+	goto GleCatalog_Actions
+GleCatalog_Funds::
+	msgbox GleCatalog_TextFunds, MSGBOX_DEFAULT
+	goto GleCatalog_Actions
+GleCatalog_Recorded::
+	msgbox GleCatalog_TextRecorded, MSGBOX_DEFAULT
+	goto GleCatalog_Type
+GleCatalog_TextWelcome:
+	.string "Our placement directory opens\nafter OAK's final examination.\pChoose any type, then inspect\na young partner in the SUMMARY.\lPlacements start at level 5.\pSpecial and quest partners keep\ntheir own research routes. Each\lnormal placement is recorded once.\pPartners offered by open vouchers\nremain reserved for those vouchers.$"
+GleCatalog_TextOffer:
+	.string "{STR_VAR_1} / Lv.5\nPlacement fee: ¥{STR_VAR_2}\lYou may inspect its SUMMARY first.$"
+GleCatalog_TextConfirm:
+	.string "Arrange {STR_VAR_1}'s placement\nfor ¥{STR_VAR_2}?$"
+GleCatalog_TextEmpty:
+	.string "No placements remain for that type,\nor the directory is unavailable.\lYour earlier records are safe.$"
+GleCatalog_TextFunds:
+	.string "You need more funds for this\nplacement. No money was spent.\lYour chosen partner can wait.$"
+GleCatalog_TextHeld:
+	.string "This partner is offered by an open\nvoucher. Complete that voucher\lbefore arranging a placement.$"
+GleCatalog_TextRecorded:
+	.string "This normal placement is already\nrecorded. Moving or releasing a\lpartner does not reset its record.$"

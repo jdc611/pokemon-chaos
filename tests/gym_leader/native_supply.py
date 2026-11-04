@@ -71,20 +71,20 @@ print('PASS native long evolution shop, regional items and no hidden legacy-badg
 # Research is a one-time delivery and actual evolved partner report, not a free form change.
 state('supply-after-buy',1);press(2);frames(40)
 walkto(6,11);walkto(6,9);walkto(5,9);walkto(5,8);press(32);press(1)
-until(lambda:menu_count()==17);choose(0);until(lambda:menu_count()==17)
+until(lambda:menu_count()==18);choose(0);until(lambda:menu_count()==18)
 assert not rd(current()+v[138],1)
 wr(current()+v[2],3,1)
-choose(0);until(yesno);choose(0);until(lambda:menu_count()==17)
+choose(0);until(yesno);choose(0);until(lambda:menu_count()==18)
 assert rd(current()+v[137],1)==1 and rd(current()+v[138],1)==1
 assert rd(current()+v[114]+9,1)&1
 mon=symbols['gParties']+3*v[5]
 assert rd('gPartiesCount',1)==4 and call('GetMonData2',mon,v[10])==v[142]
 assert call('GetMonData2',mon,v[11])==32
 assert any(call('GetMonData2',mon,v[38]+i) for i in range(4))
-choose(0);until(lambda:menu_count()==17);assert rd('gPartiesCount',1)==4
+choose(0);until(lambda:menu_count()==18);assert rd('gPartiesCount',1)==4
 # Use native form/evolution data setter only as a reporting fixture.
 ptr=symbols['gStringVar4'];wr(ptr,v[130],2);call('SetMonData',mon,v[10],ptr)
-choose(0);until(lambda:menu_count()==17);assert rd(current()+v[137],1)==2
+choose(0);until(lambda:menu_count()==18);assert rd(current()+v[137],1)==2
 expected=bytes(rd(current()+i,1) for i in range(v[1]))
 assert call('TrySavingData',0)==1
 wr(current()+v[137],0,1);assert call('LoadGameSave',0)==1

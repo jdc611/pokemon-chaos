@@ -898,3 +898,12 @@ gSpecials::
 
 	def_special GleCompetitionHallMenu, waitstate=1
 	def_special GleCompetitionHallView, waitstate=1
+	def_special GleCatalogStatus
+	def_special GleCatalogMenu, waitstate=1
+	def_special GleCatalogQuote
+	def_special GleCatalogActions, waitstate=1
+	def_special GleCatalogDetails
+	def_special GleCatalogSummary, waitstate=1
+	def_special GleCatalogClaim
+
+	def_special GleCatalogCancel
