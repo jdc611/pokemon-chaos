@@ -889,3 +889,6 @@ gSpecials::
 	def_special GymLeaderStartRivalDouble, waitstate=1
 	def_special GleStaffPersonalInfo
 	def_special GleStaffPersonalClaim
+
+	def_special GleExclusivePostgame
+	def_special GleExclusiveSelect

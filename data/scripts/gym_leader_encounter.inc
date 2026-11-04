@@ -12,7 +12,18 @@ GleExclusive_Cave::
 GleExclusive_Approach::
 	lockall
 	faceplayer
+	special GleExclusivePostgame
+	compare VAR_RESULT, 1
+	goto_if_eq GleExclusive_Research
 	special GleExclusiveInfo
+	goto GleExclusive_Check
+GleExclusive_Research::
+	msgbox GleExclusive_TextResearch, MSGBOX_DEFAULT
+	special GleHabitatTypeMenu
+	compare VAR_RESULT, 18
+	goto_if_ge GleExclusive_Done
+	special GleExclusiveSelect
+GleExclusive_Check::
 	compare VAR_RESULT, 2
 	goto_if_eq GleExclusive_AlreadyCaught
 	compare VAR_RESULT, 1
@@ -34,7 +45,11 @@ GleExclusive_Confirm::
 	msgbox GleExclusive_TextRetry, MSGBOX_DEFAULT
 	goto GleExclusive_Done
 GleExclusive_Caught::
+	special GleExclusivePostgame
+	compare VAR_RESULT, 1
+	goto_if_eq GleExclusive_CaughtText
 	removeobject VAR_LAST_TALKED
+GleExclusive_CaughtText::
 	msgbox GleExclusive_TextCaught, MSGBOX_DEFAULT
 	goto GleExclusive_Done
 GleExclusive_AlreadyCaught::
@@ -45,6 +60,8 @@ GleExclusive_Locked::
 GleExclusive_Done::
 	releaseall
 	end
+GleExclusive_TextResearch:
+	.string "OAK has opened our field records.\nChoose a Gym type to investigate\lits rare partner at this site.\pEach partner can join you once.\nYour own type's records still count.$"
 GleExclusive_TextSave:
 	.string "A rare presence is waiting.\nWould you like to save before\lyou approach?$"
 GleExclusive_TextConfirm:

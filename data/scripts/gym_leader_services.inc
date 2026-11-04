@@ -792,9 +792,9 @@ GleFinalOak_TextLocked:
 GleFinalOak_TextLost:
 	.string "OAK: An examination is a lesson.\nYour rank and title are safe.\lYour team has been restored.\pPrepare, learn, and challenge\nme again when you're ready!$"
 GleFinalOak_TextWon:
-	.string "OAK: Extraordinary! Your partners\nand leadership have passed\lmy final examination!\pYou received the EARTHBADGE!\nYour final victory is permanent.\lThe GLA awards you ¥20,000.\pYour career continues. Keep\nbuilding, researching, and defending\lyour Gym with your partners!$"
+	.string "OAK: Extraordinary! Your partners\nand leadership have passed\lmy final examination!\pYou received the EARTHBADGE!\nYour final victory is permanent.\lThe GLA awards you ¥20,000.\pYour career continues. Keep\nbuilding, researching, and defending\lyour Gym with your partners!\pField researchers now await at\nSeafoam, the Power Plant, Mt. Ember\land Cerulean Cave.\pThey can guide you to the rare\npartners of every Gym type.\lYour past catches remain recorded!$"
 GleFinalOak_TextComplete:
-	.string "OAK: Your final examination\nand Badge are already recorded.\lYou've earned this recognition.\pYour town and Gym still need you.\nYou may continue your career\land watch the credits again.$"
+	.string "OAK: Your final examination\nand Badge are already recorded.\lYou've earned this recognition.\pYour town and Gym still need you.\nYou may continue your career\land watch the credits again.\pVisit the four rare encounter\nsites for postgame research\linto every Gym type's partners.$"
 GleFinalOak_TextCredits:
 	.string "Save your progress and view\nthe native ending credits now?\pThe credits return to the title\nscreen. Continue from your save\lto resume your Gym career.$"
 GleFinalOak_TextSaveFailed:
