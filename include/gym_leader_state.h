@@ -3,8 +3,9 @@
 /* Pointer-free, fixed-width persistence. This core is also compiled on the host
  * to exercise long progression histories independently of GBA presentation. */
 #include <stdint.h>
+#include "gym_leader_competitions.h"
 #define GLE_MAGIC 0x474C4531u
-#define GLE_VERSION 10
+#define GLE_VERSION 11
 #define GLE_PLOTS 24
 #define GLE_RECRUITS 10
 #define GLE_QUEUE 5
@@ -53,6 +54,7 @@ struct GleState {
     _Alignas(4) uint8_t colleagueWins[11];
     uint8_t colleaguePendingVouchers[4];
     _Alignas(4) struct GleRocketState rocket;
+    struct GleCompetitionState competitions;
 };
 extern const uint8_t gGleRankCaps[8], gGleRankTeamSizes[8];
 void GleInit(struct GleState *, uint32_t seed);

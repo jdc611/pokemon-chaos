@@ -1,6 +1,7 @@
 #include "chaos_input.h"
 #include "global.h"
 #include "gym_leader.h"
+#include "gym_leader_competitions_native.h"
 #include "ironmon.h"
 #include "run_settings.h"
 #include "malloc.h"
@@ -5706,7 +5707,7 @@ static void Task_LearnedMove(u8 taskId)
     if (gPartyMenu.learnMoveState == 0)
     {
         AdjustFriendship(mon, FRIENDSHIP_EVENT_LEARN_TMHM);
-        if (!GetItemImportance(item))
+        if (!GetItemImportance(item) && !GymLeaderChampionTMReusable(item))
             RemoveBagItem(item, 1);
     }
     GetMonNickname(mon, gStringVar1);

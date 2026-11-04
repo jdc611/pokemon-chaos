@@ -861,3 +861,22 @@ gSpecials::
 	def_special GleRocketRefresh
 	def_special GymLeaderStartTownDefense, waitstate=1
 	def_special GleRocketJournal
+	def_special GleCompetitionMenu, waitstate=1
+	def_special GleCompetitionInfo
+	def_special GleCompetitionEnter
+	def_special GleCompetitionHistoryStart
+	def_special GleCompetitionHistoryInfo
+	def_special GleCompetitionHistoryMenu, waitstate=1
+	def_special GleCompetitionHistoryMove
+	def_special GleCompetitionBetMenu, waitstate=1
+	def_special GleCompetitionPlaceBet
+	def_special GleCompetitionHallStart
+	def_special GleCompetitionHallMove
+	def_special GleCompetitionHallInfo
+	def_special GymLeaderStartCompetition, waitstate=1
+	def_special GleCompetitionPrizeMenu, waitstate=1
+	def_special GleCompetitionPrizeClaim
+	def_special GleCompetitionTrophySlots, waitstate=1
+	def_special GleCompetitionTrophyTypes, waitstate=1
+	def_special GleCompetitionTrophySet
+	def_special GleCompetitionTrophyInfo

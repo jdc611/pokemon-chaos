@@ -598,3 +598,133 @@ GleColleague_TextInvalid:
 	.string "Please register a legal team\nwith your Gym Guide first.\lThe match has not started.$"
 GleColleague_TextLeagueWelcome:
 	.string "Optional Elite Four rematches\nuse your current Gym rank rules.\pEach member accepts one victory\nper rank. Losses can be retried.\lThese are separate from inspections.$"
+
+GleCompetition_Desk::
+	lockall
+	faceplayer
+GleCompetition_Menu::
+	closemessage
+	special GleCompetitionMenu
+	switch VAR_RESULT
+	case 0, GleCompetition_Notice
+	case 1, GleCompetition_Enter
+	case 2, GleCompetition_Fight
+	case 3, GleCompetition_History
+	case 4, GleCompetition_Bet
+	case 5, GleCompetition_Hall
+	case 6, GleCompetition_Prize
+	case 7, GleCompetition_Trophies
+	releaseall
+	end
+GleCompetition_Notice::
+	special GleCompetitionInfo
+	msgbox gStringVar4, MSGBOX_DEFAULT
+	goto GleCompetition_Menu
+GleCompetition_Enter::
+	special GleCompetitionEnter
+	compare VAR_RESULT, 0
+	goto_if_ne GleCompetition_Refused
+	msgbox GleCompetition_TextEntered, MSGBOX_DEFAULT
+	goto GleCompetition_Menu
+GleCompetition_Fight::
+	msgbox GleCompetition_TextFight, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq GleCompetition_Menu
+	closemessage
+	special GymLeaderStartCompetition
+	compare VAR_RESULT, 10
+	goto_if_ge GleCompetition_Refused
+	msgbox GleCompetition_TextBattleDone, MSGBOX_DEFAULT
+	goto GleCompetition_Menu
+GleCompetition_History::
+	special GleCompetitionHistoryStart
+	compare VAR_RESULT, 0
+	goto_if_eq GleCompetition_Refused
+GleCompetition_HistoryPage::
+	special GleCompetitionHistoryInfo
+	msgbox gStringVar4, MSGBOX_DEFAULT
+	closemessage
+	special GleCompetitionHistoryMenu
+	compare VAR_RESULT, 2
+	goto_if_ge GleCompetition_Menu
+	special GleCompetitionHistoryMove
+	goto GleCompetition_HistoryPage
+GleCompetition_Bet::
+	msgbox GleCompetition_TextBet, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq GleCompetition_Menu
+	closemessage
+	special GleCompetitionBetMenu
+	compare VAR_RESULT, 8
+	goto_if_ge GleCompetition_Menu
+	special GleCompetitionPlaceBet
+	compare VAR_RESULT, 0
+	goto_if_ne GleCompetition_Refused
+	msgbox GleCompetition_TextBetPlaced, MSGBOX_DEFAULT
+	goto GleCompetition_Menu
+GleCompetition_Hall::
+	special GleCompetitionHallStart
+GleCompetition_HallPage::
+	special GleCompetitionHallInfo
+	msgbox gStringVar4, MSGBOX_DEFAULT
+	closemessage
+	special GleCompetitionHistoryMenu
+	compare VAR_RESULT, 2
+	goto_if_ge GleCompetition_Menu
+	special GleCompetitionHallMove
+	goto GleCompetition_HallPage
+GleCompetition_Refused::
+	msgbox GleCompetition_TextRefused, MSGBOX_DEFAULT
+	goto GleCompetition_Menu
+GleCompetition_TextEntered:
+	.string "Your place is confirmed!\nYou may explore until it starts.\pYour matches use your registered\nGym team and current rank rules.\lYou can return between rounds.$"
+GleCompetition_TextFight:
+	.string "Play your next bracket match?\nYour registered team is healed\lbefore and after the battle.$"
+GleCompetition_TextBattleDone:
+	.string "The bracket has been updated.\nThe GLA records results and pays\lrewards automatically.$"
+GleCompetition_TextBet:
+	.string "Wager 500 on the event winner?\nA winning wager returns 4,000.\lOnly one wager per event.\pEnter before betting if you want\nto compete. Entries close after\lfurther travel and activities.$"
+GleCompetition_TextBetPlaced:
+	.string "Your wager is recorded.\nPayout is automatic after the final.$"
+GleCompetition_TextRefused:
+	.string "That service is not available yet.\nCheck the event notice, entry\lrules and registered team.\pYou need Rank 2 for Regionals.\nKanto requires current Rank 6\land a previous Regional victory.$"
+
+GleCompetition_Prize::
+	msgbox GleCompetition_TextPrize, MSGBOX_DEFAULT
+	closemessage
+	special GleCompetitionPrizeMenu
+	compare VAR_RESULT, 255
+	goto_if_eq GleCompetition_Menu
+	special GleCompetitionPrizeClaim
+	compare VAR_RESULT, 0
+	goto_if_ne GleCompetition_Refused
+	msgbox GleCompetition_TextPrizeClaimed, MSGBOX_DEFAULT
+	goto GleCompetition_Menu
+GleCompetition_Trophies::
+	msgbox GleCompetition_TextTrophies, MSGBOX_DEFAULT
+	closemessage
+	special GleCompetitionTrophySlots
+	compare VAR_RESULT, 3
+	goto_if_ge GleCompetition_Menu
+	special GleCompetitionTrophyTypes
+	compare VAR_RESULT, 3
+	goto_if_ge GleCompetition_Menu
+	special GleCompetitionTrophySet
+	compare VAR_RESULT, 0
+	goto_if_ne GleCompetition_Refused
+	msgbox GleCompetition_TextTrophySet, MSGBOX_DEFAULT
+	goto GleCompetition_Menu
+GleCompetition_Trophy::
+	lockall
+	special GleCompetitionTrophyInfo
+	msgbox gStringVar4, MSGBOX_DEFAULT
+	releaseall
+	end
+GleCompetition_TextPrize:
+	.string "Each Kanto title earns one TM\nlicense from the championship pool.\lLicensed TMs are reusable.\pNew titles offer unclaimed moves.\nAfter all eight licenses, later\ltitles earn an extra ¥5,000.$"
+GleCompetition_TextPrizeClaimed:
+	.string "Your reusable TM license is ready!\nThe TM is in your Bag. Existing\lcopies also use this license.$"
+GleCompetition_TextTrophies:
+	.string "Choose free cosmetic Gym displays.\nYour collection is permanent.\lThe left pedestal starts unlocked.\pLandmark tiers 1 and 2 unlock\nthe center and right pedestals.\lChanges appear on your next visit.$"
+GleCompetition_TextTrophySet:
+	.string "Your display choice is saved.\nIt appears when you next enter\lyour Gym. It gives no battle boosts.$"

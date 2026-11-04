@@ -6,6 +6,7 @@ struct Trainer;
 struct TrainerMon;
 bool32 GymLeaderConfigureColleagues(struct MapEvents *,struct ObjectEventTemplate *,u32 capacity);
 bool32 GymLeaderPrepareColleagueRoster(struct Trainer *,struct TrainerMon *);
+bool32 GymLeaderPrepareEventColleague(u32 id,struct Trainer *,struct TrainerMon *);
 u32 GymLeaderColleagueSelected(void);
 bool32 GymLeaderColleagueAvailable(void);
 void GymLeaderSettleColleague(bool32 won);

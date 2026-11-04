@@ -1095,3 +1095,7 @@ static void CopyFromSaveBlock3(u32 sectorId, struct SaveSector *sector)
     u32 size = SaveBlock3Size(sectorId);
     memcpy(sector->saveBlock3Chunk, (u8 *)&gSaveblock3 + (sectorId * SAVE_BLOCK_3_CHUNK_SIZE), size);
 }
+
+// GLE uses the two legacy Hall sectors as alternating archive generations.
+u8 GleReadArchiveSector(u8 bank,u8 *data){return bank<2?TryLoadSaveSector(SECTOR_ID_HOF_1+bank,data,SECTOR_DATA_SIZE):SAVE_STATUS_ERROR;}
+u8 GleWriteArchiveSector(u8 bank,u8 *data){return bank<2?HandleWriteSectorNBytes(SECTOR_ID_HOF_1+bank,data,SECTOR_DATA_SIZE):SAVE_STATUS_ERROR;}

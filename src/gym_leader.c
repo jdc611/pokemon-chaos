@@ -1,5 +1,6 @@
 #include "global.h"
 #include "gym_leader.h"
+#include "gym_leader_competitions_native.h"
 #include "pokemon.h"
 #include "event_data.h"
 #include "constants/pokemon.h"
@@ -52,6 +53,7 @@ struct GleState *GymLeaderState(void)
             memset(&s->rocket,0,sizeof(s->rocket));
             s->rocket.nextAt=s->activity>UINT32_MAX-80?UINT32_MAX:s->activity+80;
         }
+        if(s->version<11)GleCompetitionInit(s);
         s->version = GLE_VERSION;
     }
     return s;
@@ -262,6 +264,7 @@ void GymLeaderAdvanceActivity(void)
     money = GetMoney(&gSaveBlock1Ptr->money);
     GleActivity(GymLeaderState(), &money);
     SetMoney(&gSaveBlock1Ptr->money, money);
+    GymLeaderCompetitionArchive();
 }
 
 

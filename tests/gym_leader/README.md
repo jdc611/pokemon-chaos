@@ -7,7 +7,7 @@ ROM as the requested finished game.
 Host scenarios:
 
 ```
-gcc -std=c11 -Wall -Wextra -Werror -fsanitize=address,undefined -g -Iinclude src/gym_leader_state.c tests/gym_leader/state_test.c -o /tmp/gle-state-test
+gcc -std=c11 -Wall -Wextra -Werror -fsanitize=address,undefined -g -Iinclude src/gym_leader_state.c src/gym_leader_competitions_core.c tests/gym_leader/state_test.c -o /tmp/gle-state-test
 ASAN_OPTIONS=detect_leaks=0 /tmp/gle-state-test
 ```
 

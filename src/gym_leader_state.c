@@ -20,6 +20,7 @@ void GleInit(struct GleState *s, uint32_t seed) {
     memset(s, 0, sizeof(*s));
     s->magic = GLE_MAGIC; s->version = GLE_VERSION; s->seed = seed;
     s->rocket.nextAt=120;
+    GleCompetitionInit(s);
     s->rank = s->rankFloor = s->highestRank = 1; s->gymType = GLE_NONE; s->interiorPlot = s->interiorTown = GLE_NONE; s->reputation = 100;
     for (i = 0; i < GLE_PLOTS; i++) s->plots[i].size = i < 12 ? 1 : i < 20 ? 2 : 3;
     for (i = 0; i < 3; i++) GleEnqueue(s, 0);
@@ -107,6 +108,7 @@ void GleActivity(struct GleState *s, uint32_t *money) {
     if (!GleValid(s) || !money) return;
     s->activity++;
     GleRocketActivity(s);
+    GleCompetitionActivity(s,money);
     if (++s->queueClock >= 6) { GleEnqueue(s, GleMix(s->seed ^ s->activity) % 25 == 0 ? 2 : 0); s->queueClock = 0; FilterStaffChallenger(s); }
     if (s->activity % 12) return;
     Recount(s);

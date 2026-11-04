@@ -94,6 +94,8 @@ extern struct SaveSectorLocation gRamSaveSectorLocations[];
 
 extern struct SaveSector gSaveDataBuffer;
 
+u8 GleReadArchiveSector(u8 bank,u8 *data);
+u8 GleWriteArchiveSector(u8 bank,u8 *data);
 void ClearSaveData(void);
 void Save_ResetSaveCounters(void);
 u8 HandleSavingData(u8 saveType);
