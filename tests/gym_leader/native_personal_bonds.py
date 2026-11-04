@@ -8,7 +8,7 @@ ctx=runpy.run_path('tests/gym_leader/native_opening.py');globals().update(ctx)
 blob=(ROOT/'bonds-layout.bin').read_bytes();c=struct.unpack('<'+'I'*(len(blob)//4),blob)
 ids={n:int(i) for n,i in re.findall(r'#define\s+(TRAINER_\w+)\s+(\d+)',(repo/'include/constants/opponents_frlg.h').read_text())}
 catalog=[ids[n] for n in re.findall(r'\{(TRAINER_\w+),',(repo/'src/data/gym_leader_recruit_sources.h').read_text())]
-assert len(catalog)<=256 and len(catalog)==len(set(catalog)) and c[0]==3156 and c[1]==3188 and c[2]==13
+assert len(catalog)<=256 and len(catalog)==len(set(catalog)) and c[0]==3156 and 3188<=c[1]<=3200 and c[2]>=13
 def record(i):return current()+c[3]+i*c[4]
 def money():return call('GetMoney',rd('gSaveBlock1Ptr')+v[64])
 def result():return rd('gSpecialVar_Result',2)

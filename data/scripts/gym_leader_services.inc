@@ -1109,9 +1109,13 @@ GleHosting_Decline::
 GleHosting_Travel::
 	special GleHostingTravel
 	compare VAR_RESULT, 1
-	goto_if_eq GleHall_Stay
+	goto_if_eq GleHosting_Travelled
 	msgbox GleHosting_TextUnavailable, MSGBOX_DEFAULT
 	goto GleHosting_Menu
+GleHosting_Travelled::
+	waitstate
+	release
+	end
 GleHosting_TextWelcome:
 	.string "The GLA can bring competitions\nto your rebuilt hometown. Apply\lor review a hosting invitation.\pFacilities, population and standing\nshape approval and visitor income.\lYour rival can bid for events too.\pNo preparation errands are needed.\nHosting and entering are separate.\lDeclining an invitation is harmless.$"
 GleHosting_TextInvitation:

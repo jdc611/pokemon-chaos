@@ -21,6 +21,8 @@ def finish_text():
 def announce(kind=0):
  # Saved history index determines event kind; sequence 2 is the first Kanto.
  setfield(7,2 if kind else 0,2);setfield(8,0);setfield(3,rd(current()+v[56]),4);call('GymLeaderAdvanceActivity');assert field(8)==1
+ # Isolate the direct HQ bracket; physical hosting is tested separately.
+ wr(cp()+c[5]+c[19],3,1)
 
 def start():wr(current()+v[56],field(4,4)-1);call('GymLeaderAdvanceActivity')
 # Exact old v10 prefix remains intact, including seeded research/colleague data.

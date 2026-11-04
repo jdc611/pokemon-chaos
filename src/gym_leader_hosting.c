@@ -4,6 +4,7 @@
 #include "gym_leader_script.h"
 #include "event_data.h"
 #include "event_object_movement.h"
+#include "field_screen_effect.h"
 #include "money.h"
 #include "overworld.h"
 #include "string_util.h"
@@ -11,7 +12,7 @@
 static const u16 sTowns[]={MAP_SAFFRON_CITY,MAP_CELADON_CITY,MAP_FUCHSIA_CITY};
 static const u8 *const sFormats[]={COMPOUND_STRING("Town showcase"),COMPOUND_STRING("Gym defense doubles"),COMPOUND_STRING("Regional Cup"),COMPOUND_STRING("Kanto Championship")};
 static const u8 *const sNames[]={COMPOUND_STRING("SAFFRON"),COMPOUND_STRING("CELADON"),COMPOUND_STRING("FUCHSIA"),COMPOUND_STRING("GLA HEADQUARTERS")};
-static EWRAM_DATA u8 sHostingFormat=GLE_NONE;
+static EWRAM_DATA u8 sHostingFormat;
 static u16 Map(void){return (u8)gSaveBlock1Ptr->location.mapNum|((u8)gSaveBlock1Ptr->location.mapGroup<<8);}
 static const u8 *VenueName(unsigned n){return n==GymLeaderState()->town?GymLeaderState()->townName:sNames[n<4?n:3];}
 int GymLeaderHostingTown(void){struct GleState *s;unsigned n;if(!IsGymLeaderRun())return -1;s=GymLeaderState();if(s->competitions.stage&&(n=GleEventVenue(&s->competitions.current))<3)return n;if(s->competitions.stage==1&&s->hosting.stage==GLE_HOST_INVITED&&s->hosting.event==s->competitions.count+1)return s->town;return -1;}
@@ -47,4 +48,4 @@ void GleHostingQuote(void)
 }
 void GleHostingConfirm(void){u32 money=GetMoney(&gSaveBlock1Ptr->money);gSpecialVar_Result=GleHostingBook(GymLeaderState(),sHostingFormat,gSpecialVar_0x8005,&money);SetMoney(&gSaveBlock1Ptr->money,money);}
 void GleHostingDeclineNative(void){gSpecialVar_Result=GleHostingDecline(GymLeaderState());}
-void GleHostingTravel(void){struct GleState *s=GymLeaderState();unsigned n=GleEventVenue(&s->competitions.current);u16 map=n<3?sTowns[n]:MAP_GLE_LEAGUE_HALL;gSpecialVar_Result=0;if(!IsGymLeaderRun()||!s->competitions.stage)return;SetWarpDestination(MAP_GROUP(map),MAP_NUM(map),-1,n<3?10:6,n<3?10:13);DoWarp();gSpecialVar_Result=1;}
+void GleHostingTravel(void){struct GleState *s=GymLeaderState();unsigned n=GleEventVenue(&s->competitions.current);u16 map=n<3?sTowns[n]:MAP_GLE_LEAGUE_HALL;gSpecialVar_Result=0;if(!IsGymLeaderRun()||!s->competitions.stage)return;SetWarpDestination(MAP_GROUP(map),MAP_NUM(map),-1,n<3?10:6,n<3?9:13);DoWarp();gSpecialVar_Result=1;}
