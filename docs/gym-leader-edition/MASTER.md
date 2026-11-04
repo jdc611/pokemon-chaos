@@ -4,7 +4,7 @@ Updated November 3, 2026. Owner: Jack Coleman.
 
 ## Authority and scope
 
-This master consolidates the recovered “Choose Rebuild Town” conversation, the original handoff quoted in that conversation, and the present instruction to compile all Gym Leader decisions and fix Articuno's slot. Sections 1–16 preserve design/source authority; sections 17–39 separately record implementation choices and their specific validation. This is not a completed-release declaration. Original message text is preserved in the final appendix so smaller decisions, numerical proposals, and revisions are not lost.
+This master consolidates the recovered “Choose Rebuild Town” conversation, the original handoff quoted in that conversation, and the present instruction to compile all Gym Leader decisions and fix Articuno's slot. Sections 1–16 preserve design/source authority; sections 17–40 separately record implementation choices and their specific validation. This is not a completed-release declaration. Original message text is preserved in the final appendix so smaller decisions, numerical proposals, and revisions are not lost.
 
 Read the current decisions first. Use source messages to recover exact context. Explicit user decisions override assistant suggestions; later explicit revisions override earlier choices. An assistant saying “locked in” is not sufficient evidence on its own. Unanswered suggestions remain proposed. Short answers must be read with their preceding question. Numeric tuning delegated to implementation is not a missing user decision. Source excerpts preserve historical claims without independently verifying them.
 
@@ -12,7 +12,7 @@ Status vocabulary: APPROVED (explicit user direction), DELEGATED (implementation
 
 ## Current implementation status
 
-The latest tested checkpoints cover native opening/draft/registration/defenses and inspections; town construction, landmarks, all-type habitats and Safari configuration; GLA vouchers/supplies/permanent tutors; the 72 exclusive assignments and six universal birds; native career-card records; the basic recruitment/staff loop, current-rank rival friendlies, Ancient Titans/Ancient Awakening, five additional field-research groups and finite resident requests/Honor choices, Paradox of Evolution, Kanto colleague/Elite Four rematches, persistent Rocket town incidents, Regional/Kanto competition brackets and archives, and Swords/Echoes/Creation Trio research. Exact test boundaries and delegated tuning are recorded in sections 17–39. Four Winds/form upgrades, complete rival/Rocket stories and competition presentation, full species coverage and campaign validation still gate a finished V1 release.
+The latest tested checkpoints cover native opening/draft/registration/defenses and inspections; town construction, landmarks, all-type habitats and Safari configuration; GLA vouchers/supplies/permanent tutors; the 72 exclusive assignments and six universal birds; native career-card records; the basic recruitment/staff loop, current-rank rival friendlies, Ancient Titans/Ancient Awakening, five additional field-research groups and finite resident requests/Honor choices, Paradox of Evolution, Kanto colleague/Elite Four rematches, persistent Rocket town incidents, Regional/Kanto competition brackets and archives, Swords/Echoes/Creation Trio research, and Oak's final examination/native ending. Exact test boundaries and delegated tuning are recorded in sections 17–40. Four Winds/form upgrades, complete rival/Rocket stories and competition presentation, full species coverage and campaign validation still gate a finished V1 release.
 
 ## Contents
 
@@ -51,6 +51,7 @@ Implementation checkpoints follow the preserved appendix. Latest additions:
 37. Persistent Rocket town incidents
 38. Regional Cups, Kanto brackets and permanent archives
 39. Swords, Echoes and Creation Trio field research
+40. Oak's final examination and native ending
 
 ## 1. Current Articuno correction — CURRENT FIX
 
@@ -27143,3 +27144,17 @@ Native GLA notebooks provide locations, clues and per-species progress for all t
 Native tests pass all thirteen template placements and dry walkable approaches, avoiding original objects/warps/events; early discovery/rank refusal; independent Keldeo/ancient-pair/Giratina evidence gates; controller-driven wrong/correct seal menus and save/battle declines; generated species/current-cap checks after demotion; independent outcome/retry/anti-duplicate ledgers; and native flash persistence. The new species' caught outcomes in this targeted suite are injected integration fixtures, not thirteen played capture battles. Regression suites pass the previous fifteen research sites, actual Uxie capture, all five original notebooks, and actual Cyclizar capture/party-and-PC study plus Koraidon/Miraidon research.
 
 Linked EWRAM remains 257,676/262,144 bytes; ROM payload is 27,313,128 bytes before 32 MiB padding. Four Winds roaming/weather research and conditional form projects remain, along with the broader rival/Rocket narrative, competition presentation, final Oak battle and campaign validation.
+
+## 40. Oak's final examination and native ending
+
+Oak now returns to his actual Pallet Town laboratory after the opening, through a Gym Leader-only object-script override. His final examination requires current Rank 8, no pending inspection and at least one retained Kanto Championship title. Reigning status is not required. Early visits explain the career requirements; declining or bringing an invalid registered team cannot consume the challenge.
+
+The final battle uses the registered Gym team, current Rank 8 cap/team limit, actual party/PC identities, normal career healing/restoration and the no-Dynamax/no-automatic-Tera rules. Oak brings six level-100 partners: Tauros, Exeggutor, Arcanine, Blastoise, Venusaur and Charizard, with ordinary abilities, trained stats, native moves and held items. His roster covers the three Kanto starters and classic Oak partners. Losses remain retryable without rank, queue, official-record or money penalties. Victory awards the actual Earthbadge/game-clear flags, 20,000 Pokédollars and reputation once; career play remains open.
+
+Final completion occupies reserved research bit 223, following championship licenses and cosmetic choices, without increasing state size or save version. Repeat visits retain recognition and offer credits without re-awarding the battle or stipend. Oak comments on current Honor before the examination. Other game modes retain the original Oak script.
+
+The ending enters FireRed's existing credits directly after a successful normal save and map-view capture. It deliberately bypasses the legacy Hall of Fame writer because those sectors hold permanent Kanto team archives. The player can defer credits, and a failed save does not intentionally enter the resetting credits sequence. Credits return through the native title-screen reset; continuing resumes the saved career. This reuses the original FireRed staff presentation, not a newly authored Chaos credits sequence.
+
+Native checks pass lab placement and rank/title gates, decline, missing registration, all six native species/levels/normal abilities/moves, loss/retry, one-time settlement, final Badge/game-clear flags, original healed identities and unchanged rank/queue/official/activity records. A full controller-played Oak victory uses six supplied level-100 Meowscarada, normal Overgrow, Life Orbs, Attack/Speed training, Jolly mint effects, native maximum PP and compatible Brick Break/Knock Off/Thunder Punch/Flower Trick. Battle presentation uses native FAST text, SET style and animations off; no enemy HP or battle result is injected for this victory. Two earlier supplied Grass-team strategies lost; this is one successful integration fixture, not an all-type difficulty certification or a full campaign playthrough.
+
+The native credits entry succeeds after saving. Byte-for-byte checks preserve both complete Hall flash sectors across final settlement and the credits save. Registered defense/PC/EXP and all eighteen rival specialties, real rival battle, migration/flash and legacy E4/Champion/Hall-of-Fame protection regress successfully. Linked EWRAM remains 257,676/262,144 bytes; ROM payload is 27,316,028 bytes before 32 MiB padding. Four Winds, broader rival/Rocket stories, remaining competition presentation and campaign/species/device validation still gate the polished release.

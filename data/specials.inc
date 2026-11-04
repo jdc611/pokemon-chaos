@@ -880,3 +880,6 @@ gSpecials::
 	def_special GleCompetitionTrophyTypes, waitstate=1
 	def_special GleCompetitionTrophySet
 	def_special GleCompetitionTrophyInfo
+	def_special GleFinalOakInfo
+	def_special GymLeaderStartFinalOak, waitstate=1
+	def_special GleFinalOakCredits, waitstate=1

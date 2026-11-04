@@ -734,3 +734,63 @@ GleCompetition_TextTrophies:
 	.string "Choose free cosmetic Gym displays.\nYour collection is permanent.\lThe left pedestal starts unlocked.\pLandmark tiers 1 and 2 unlock\nthe center and right pedestals.\lChanges appear on your next visit.$"
 GleCompetition_TextTrophySet:
 	.string "Your display choice is saved.\nIt appears when you next enter\lyour Gym. It gives no battle boosts.$"
+
+GleFinalOak_Desk::
+	lockall
+	faceplayer
+	special GleFinalOakInfo
+	compare VAR_RESULT, 2
+	goto_if_eq GleFinalOak_Complete
+	compare VAR_RESULT, 1
+	goto_if_ne GleFinalOak_Locked
+	msgbox GleFinalOak_TextWelcome, MSGBOX_DEFAULT
+	msgbox GleFinalOak_TextFight, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq GleFinalOak_End
+	closemessage
+	special GymLeaderStartFinalOak
+	compare VAR_RESULT, 1
+	goto_if_eq GleFinalOak_Won
+	compare VAR_RESULT, 2
+	goto_if_eq GleFinalOak_Lost
+	msgbox GleColleague_TextInvalid, MSGBOX_DEFAULT
+	goto GleFinalOak_End
+GleFinalOak_Won::
+	playfanfare MUS_OBTAIN_BADGE
+	msgbox GleFinalOak_TextWon, MSGBOX_DEFAULT
+	waitfanfare
+	goto GleFinalOak_CreditsChoice
+GleFinalOak_Lost::
+	msgbox GleFinalOak_TextLost, MSGBOX_DEFAULT
+	goto GleFinalOak_End
+GleFinalOak_Locked::
+	msgbox GleFinalOak_TextLocked, MSGBOX_DEFAULT
+	goto GleFinalOak_End
+GleFinalOak_Complete::
+	msgbox GleFinalOak_TextComplete, MSGBOX_DEFAULT
+GleFinalOak_CreditsChoice::
+	msgbox GleFinalOak_TextCredits, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq GleFinalOak_End
+	closemessage
+	special GleFinalOakCredits
+	msgbox GleFinalOak_TextSaveFailed, MSGBOX_DEFAULT
+GleFinalOak_End::
+	releaseall
+	end
+GleFinalOak_TextWelcome:
+	.string "OAK: You've reached Rank 8 and\nwon a Kanto Championship.\lNow face my final examination!\p{STR_VAR_1}\pI'll use six trained partners.\nUse your registered Gym team\land our current rank rules.$"
+GleFinalOak_TextFight:
+	.string "Challenge OAK for the final Badge?\nYour traveling team is restored\land healed after the battle.$"
+GleFinalOak_TextLocked:
+	.string "OAK: Keep building your career!\nReach current Rank 8, complete\lyour League inspections, and\lwin a Kanto Championship.\pThen return here for my final\nexamination and the last Badge.\lResearch and exploration remain open.$"
+GleFinalOak_TextLost:
+	.string "OAK: An examination is a lesson.\nYour rank and title are safe.\lYour team has been restored.\pPrepare, learn, and challenge\nme again when you're ready!$"
+GleFinalOak_TextWon:
+	.string "OAK: Extraordinary! Your partners\nand leadership have passed\lmy final examination!\pYou received the EARTHBADGE!\nYour final victory is permanent.\lThe GLA awards you ¥20,000.\pYour career continues. Keep\nbuilding, researching, and defending\lyour Gym with your partners!$"
+GleFinalOak_TextComplete:
+	.string "OAK: Your final examination\nand Badge are already recorded.\lYou've earned this recognition.\pYour town and Gym still need you.\nYou may continue your career\land watch the credits again.$"
+GleFinalOak_TextCredits:
+	.string "Save your progress and view\nthe native ending credits now?\pThe credits return to the title\nscreen. Continue from your save\lto resume your Gym career.$"
+GleFinalOak_TextSaveFailed:
+	.string "Your progress could not be saved.\nThe credits have not started.\lPlease keep a backup and try again.$"

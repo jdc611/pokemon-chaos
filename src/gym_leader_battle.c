@@ -4,6 +4,7 @@
 #include "gym_leader_recruit.h"
 #include "gym_leader_colleagues.h"
 #include "gym_leader_rocket.h"
+#include "gym_leader_finale.h"
 #include "gym_leader_competitions_native.h"
 #include "battle.h"
 #include "battle_setup.h"
@@ -40,6 +41,7 @@ static EWRAM_DATA bool8 sRivalFriendly = FALSE;
 static EWRAM_DATA bool8 sColleagueFriendly = FALSE;
 static EWRAM_DATA bool8 sTownDefense = FALSE;
 static EWRAM_DATA bool8 sCompetition = FALSE;
+static EWRAM_DATA bool8 sFinalOak = FALSE;
 static EWRAM_DATA u16 sOldFacility = 0;
 static EWRAM_DATA u8 sTravelCount = 0;
 static EWRAM_DATA struct Pokemon sTravelParty[PARTY_SIZE] = {0};
@@ -53,7 +55,7 @@ static const u8 sRocketDefeatText[] = _("I underestimated this town!");
 
 // Friendly rewards settle once in the adapter, never through normal trainer
 // prize/blackout/Pay Day handling. Real Pokémon EXP still works normally.
-bool32 GymLeaderTrainingActive(void) { return sActive && (sTraining || sRivalFriendly || sColleagueFriendly || sTownDefense || sCompetition); }
+bool32 GymLeaderTrainingActive(void) { return sActive && (sTraining || sRivalFriendly || sColleagueFriendly || sTownDefense || sCompetition || sFinalOak); }
 
 bool32 GymLeaderRegistering(void) { return sRegistering; }
 const struct Trainer *GymLeaderBattleTrainer(void) { return sActive ? &sChallenger : NULL; }
@@ -194,6 +196,7 @@ static bool32 PrepareInspector(u32 inspection)
 
 static bool32 PrepareChallenger(void)
 {
+    if(sFinalOak)return GymLeaderPrepareFinalOakRoster(&sChallenger,sChallengerEntries);
     if(sCompetition)return GymLeaderPrepareCompetitionRoster(&sChallenger,sChallengerEntries);
     if(sTownDefense)
         return GymLeaderPrepareRocketRoster(&sChallenger,sChallengerEntries);
@@ -248,7 +251,7 @@ static u32 PrepareOfficialBattle(u32 inspection)
 {
     struct GleState *s = GymLeaderState();
     u32 i, j;
-    if (!IsGymLeaderRun() || s->openingStage != 5 || sActive || (!inspection && !sTraining && !sRivalFriendly && !sColleagueFriendly && !sTownDefense && !sCompetition && !s->queueCount))
+    if (!IsGymLeaderRun() || s->openingStage != 5 || sActive || (!inspection && !sTraining && !sRivalFriendly && !sColleagueFriendly && !sTownDefense && !sCompetition && !sFinalOak && !s->queueCount))
         return 0;
     if(sTownDefense)
     {
@@ -312,7 +315,7 @@ static u32 PrepareOfficialBattle(u32 inspection)
     HealPlayerParty();
     sActive = TRUE;
     sInspection = inspection;
-    if (!inspection && !sTraining && !sRivalFriendly && !sColleagueFriendly && !sTownDefense && !sCompetition)
+    if (!inspection && !sTraining && !sRivalFriendly && !sColleagueFriendly && !sTownDefense && !sCompetition && !sFinalOak)
         GleTakeChallenger(s);
     return 1;
 }
@@ -376,7 +379,8 @@ void GymLeaderFinishDefense(void)
     memcpy(gParties[B_TRAINER_PLAYER], sTravelParty, sizeof(sTravelParty));
     gPartiesCount[B_TRAINER_PLAYER] = sTravelCount;
     HealPlayerParty();
-    if(sCompetition){GymLeaderSettleCompetition((gBattleOutcome & 0x7F)==B_OUTCOME_WON);GymLeaderCompetitionArchive();}
+    if(sFinalOak)GymLeaderSettleFinalOak((gBattleOutcome & 0x7F)==B_OUTCOME_WON);
+    else if(sCompetition){GymLeaderSettleCompetition((gBattleOutcome & 0x7F)==B_OUTCOME_WON);GymLeaderCompetitionArchive();}
     else if(sTownDefense)
         GleRocketBattleResult(s,(gBattleOutcome & 0x7F)==B_OUTCOME_WON);
     else if(sColleagueFriendly)
@@ -408,10 +412,10 @@ void GymLeaderFinishDefense(void)
             AddMoney(&gSaveBlock1Ptr->money, 250 * s->rank + 5 * s->population);
         GleDefenseResult(s, (gBattleOutcome & 0x7F) == B_OUTCOME_WON);
     }
-    if (!sTraining && !sRivalFriendly && !sColleagueFriendly && !sTownDefense && !sCompetition)
+    if (!sTraining && !sRivalFriendly && !sColleagueFriendly && !sTownDefense && !sCompetition && !sFinalOak)
         GymLeaderAdvanceActivity();
     // Preserve a reliable queue while visiting the Gym; never force waiting.
-    if (!sTraining && !sRivalFriendly && !sColleagueFriendly && !sTownDefense && !sCompetition && !s->queueCount)
+    if (!sTraining && !sRivalFriendly && !sColleagueFriendly && !sTownDefense && !sCompetition && !sFinalOak && !s->queueCount)
         GleEnqueue(s, 0);
     gSpecialVar_Result = (gBattleOutcome & 0x7F) == B_OUTCOME_WON ? (sInspection ? 3 : 1) : (sInspection ? 4 : 2);
     sActive = FALSE;
@@ -421,6 +425,7 @@ void GymLeaderFinishDefense(void)
     sColleagueFriendly = FALSE;
     sTownDefense = FALSE;
     sCompetition = FALSE;
+    sFinalOak = FALSE;
 }
 
 static void ReturnFromDefense(void)
@@ -441,7 +446,8 @@ static void Task_StartDefense(u8 taskId)
 
 static void StartOfficialBattle(bool32 inspection)
 {
-    gSpecialVar_Result = sCompetition ? GymLeaderPrepareCompetition()
+    gSpecialVar_Result = sFinalOak ? GymLeaderPrepareFinalOak()
+        : sCompetition ? GymLeaderPrepareCompetition()
         : sTownDefense ? GymLeaderPrepareTownDefense()
         : sColleagueFriendly ? GymLeaderPrepareColleagueFriendly()
         : sRivalFriendly ? GymLeaderPrepareRivalFriendly()
@@ -454,6 +460,7 @@ static void StartOfficialBattle(bool32 inspection)
         sColleagueFriendly = FALSE;
         sTownDefense = FALSE;
     sCompetition = FALSE;
+    sFinalOak = FALSE;
         GymLeaderResumeScriptNextFrame();
         return;
     }
@@ -520,3 +527,6 @@ void GymLeaderStartTownDefense(void)
 
 u32 GymLeaderPrepareCompetition(void){u32 result;if(!IsGymLeaderRun()||sActive||GleCompetitionOpponent(GymLeaderState())<1||!GleCompetitionEligible(GymLeaderState()))return 4;sCompetition=TRUE;result=PrepareOfficialBattle(0);if(result!=1)sCompetition=FALSE;return result;}
 void GymLeaderStartCompetition(void){if(sActive){gSpecialVar_Result=14;GymLeaderResumeScriptNextFrame();return;}sCompetition=TRUE;StartOfficialBattle(FALSE);}
+
+u32 GymLeaderPrepareFinalOak(void){u32 result;if(!IsGymLeaderRun()||sActive||!GymLeaderFinalOakEligible())return 4;sFinalOak=TRUE;result=PrepareOfficialBattle(0);if(result!=1)sFinalOak=FALSE;return result;}
+void GymLeaderStartFinalOak(void){if(sActive){gSpecialVar_Result=14;GymLeaderResumeScriptNextFrame();return;}sFinalOak=TRUE;StartOfficialBattle(FALSE);}
