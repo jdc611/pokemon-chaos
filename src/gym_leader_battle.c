@@ -287,7 +287,7 @@ static u32 PrepareOfficialBattle(u32 inspection)
         return 4;
     if (!(inspection ? PrepareInspector(inspection) : PrepareChallenger()))
         return 0;
-    if(sRivalDouble)sChallenger.battleType=TRAINER_BATTLE_TYPE_DOUBLES;
+    if(sRivalDouble||(sCompetition&&GleEventFormat(&s->competitions.current)==GLE_HOST_DEFENSE))sChallenger.battleType=TRAINER_BATTLE_TYPE_DOUBLES;
     // Generated opponents follow the normal trainer-data convention: no
     // automatic battle gimmick unless this career explicitly unlocks one.
     for(i=0;i<gPartiesCount[B_TRAINER_OPPONENT_A];i++)
@@ -474,7 +474,7 @@ static void StartOfficialBattle(bool32 inspection)
     InitTrainerBattleParameter();
     TRAINER_BATTLE_PARAM.opponentA = TRAINER_NONE;
     TRAINER_BATTLE_PARAM.defeatTextA = (u8 *)(sTownDefense?sRocketDefeatText:sDefeatText);
-    gBattleTypeFlags = BATTLE_TYPE_TRAINER | (sRivalDouble?BATTLE_TYPE_DOUBLE:0);
+    gBattleTypeFlags = BATTLE_TYPE_TRAINER | ((sRivalDouble||(sCompetition&&GleEventFormat(&GymLeaderState()->competitions.current)==GLE_HOST_DEFENSE))?BATTLE_TYPE_DOUBLE:0);
     CreateTask(Task_StartDefense, 1);
     PlayMapChosenOrBattleBGM(0);
     BattleTransition_StartOnField(GetTrainerBattleTransition());
@@ -533,7 +533,7 @@ void GymLeaderStartTownDefense(void)
     sTownDefense=TRUE;StartOfficialBattle(FALSE);
 }
 
-u32 GymLeaderPrepareCompetition(void){u32 result;if(!IsGymLeaderRun()||sActive||GleCompetitionOpponent(GymLeaderState())<1||!GleCompetitionEligible(GymLeaderState()))return 4;sCompetition=TRUE;result=PrepareOfficialBattle(0);if(result!=1)sCompetition=FALSE;return result;}
+u32 GymLeaderPrepareCompetition(void){u32 result;if(!IsGymLeaderRun()||sActive||GleCompetitionOpponent(GymLeaderState())<1||!GleCompetitionEligible(GymLeaderState())||!GymLeaderCompetitionAtVenue())return 4;if(GleEventFormat(&GymLeaderState()->competitions.current)==GLE_HOST_DEFENSE&&GymLeaderState()->registeredCount<2)return 2;sCompetition=TRUE;result=PrepareOfficialBattle(0);if(result!=1)sCompetition=FALSE;return result;}
 void GymLeaderStartCompetition(void){if(sActive){gSpecialVar_Result=14;GymLeaderResumeScriptNextFrame();return;}sCompetition=TRUE;StartOfficialBattle(FALSE);}
 
 u32 GymLeaderPrepareFinalOak(void){u32 result;if(!IsGymLeaderRun()||sActive||!GymLeaderFinalOakEligible())return 4;sFinalOak=TRUE;result=PrepareOfficialBattle(0);if(result!=1)sFinalOak=FALSE;return result;}

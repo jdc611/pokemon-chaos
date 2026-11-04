@@ -651,6 +651,8 @@ GleCompetition_Fight::
 	special GymLeaderStartCompetition
 	compare VAR_RESULT, 10
 	goto_if_ge GleCompetition_Refused
+	special GleHostingRefreshVenue
+	special GleTownArrival
 	msgbox GleCompetition_TextBattleDone, MSGBOX_DEFAULT
 	goto GleCompetition_Menu
 GleCompetition_History::
@@ -1034,3 +1036,95 @@ GleCatalog_TextHeld:
 	.string "This partner is offered by an open\nvoucher. Complete that voucher\lbefore arranging a placement.$"
 GleCatalog_TextRecorded:
 	.string "This normal placement is already\nrecorded. Moving or releasing a\lpartner does not reset its record.$"
+
+GleHosting_Desk::
+	lock
+	faceplayer
+	msgbox GleHosting_TextWelcome, MSGBOX_DEFAULT
+GleHosting_Menu::
+	closemessage
+	special GleHostingMenu
+	switch VAR_RESULT
+	case 0, GleHosting_Apply
+	case 1, GleHosting_Invitation
+	case 2, GleHosting_Travel
+	goto GleHall_Stay
+GleHosting_Apply::
+	setvar VAR_0x8005, 0
+	special GleHostingInfo
+	copyvar VAR_0x8006, VAR_RESULT
+	msgbox gStringVar4, MSGBOX_DEFAULT
+	compare VAR_0x8006, 2
+	goto_if_ge GleHosting_Menu
+	goto GleHosting_Format
+GleHosting_Invitation::
+	special GleHostingInfo
+	copyvar VAR_0x8006, VAR_RESULT
+	msgbox gStringVar4, MSGBOX_DEFAULT
+	compare VAR_0x8006, 1
+	goto_if_ne GleHosting_Menu
+	msgbox GleHosting_TextInvitation, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq GleHosting_Decline
+	setvar VAR_0x8005, 1
+GleHosting_Format::
+	closemessage
+	special GleHostingFormatMenu
+	special GleHostingQuote
+	compare VAR_RESULT, 2
+	goto_if_eq GleHosting_Menu
+	compare VAR_RESULT, 1
+	goto_if_ne GleHosting_Requirements
+	msgbox GleHosting_TextQuote, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq GleHosting_Menu
+	special GleHostingConfirm
+	compare VAR_RESULT, 0
+	goto_if_eq GleHosting_Booked
+	compare VAR_RESULT, 1
+	goto_if_eq GleHosting_RivalBid
+	compare VAR_RESULT, 4
+	goto_if_eq GleHosting_Funds
+	msgbox GleHosting_TextUnavailable, MSGBOX_DEFAULT
+	goto GleHosting_Menu
+GleHosting_Booked::
+	special GleHostingRefreshVenue
+	msgbox GleHosting_TextBooked, MSGBOX_DEFAULT
+	goto GleHosting_Menu
+GleHosting_RivalBid::
+	special GleHostingRefreshVenue
+	msgbox GleHosting_TextRivalBid, MSGBOX_DEFAULT
+	goto GleHosting_Menu
+GleHosting_Requirements::
+	msgbox gStringVar4, MSGBOX_DEFAULT
+	goto GleHosting_Menu
+GleHosting_Funds::
+	msgbox GleHosting_TextFunds, MSGBOX_DEFAULT
+	goto GleHosting_Menu
+GleHosting_Decline::
+	special GleHostingDeclineNative
+	special GleHostingRefreshVenue
+	msgbox GleHosting_TextDeclined, MSGBOX_DEFAULT
+	goto GleHosting_Menu
+GleHosting_Travel::
+	special GleHostingTravel
+	compare VAR_RESULT, 1
+	goto_if_eq GleHall_Stay
+	msgbox GleHosting_TextUnavailable, MSGBOX_DEFAULT
+	goto GleHosting_Menu
+GleHosting_TextWelcome:
+	.string "The GLA can bring competitions\nto your rebuilt hometown. Apply\lor review a hosting invitation.\pFacilities, population and standing\nshape approval and visitor income.\lYour rival can bid for events too.\pNo preparation errands are needed.\nHosting and entering are separate.\lDeclining an invitation is harmless.$"
+GleHosting_TextInvitation:
+	.string "Accept the invitation in principle?\nChoose a format and review its fee\lbefore anything is paid.$"
+GleHosting_TextQuote:
+	.string "{STR_VAR_1}\nHosting fee if approved: ¥{STR_VAR_2}\lProjected visitor income: ¥{STR_VAR_3}\pIncome arrives after the event and\ncan change with town conditions.\lHosting may make a small loss.\pSubmit this hosting proposal?$"
+GleHosting_TextBooked:
+	.string "Your town is approved! The fee\nwas paid once. The GLA will\lhandle the arrangements.\pTravel to the venue for registration\nand matches. NPCs can compete\leven if your team does not enter.$"
+GleHosting_TextRivalBid:
+	.string "Your rival's town won this bid.\nNo hosting fee was taken.\pBetter facilities, population and\nstanding can strengthen a future\lhosting application.$"
+GleHosting_TextFunds:
+	.string "The hosting funds are insufficient.\nNo fee was taken. Your invitation,\lif any, remains available.$"
+GleHosting_TextDeclined:
+	.string "The invitation was declined.\nNo money, reputation or Honor\lwas lost. You can apply later.$"
+GleHosting_TextUnavailable:
+	.string "This hosting request is unavailable.\nReview the current event notice,\lvenue and registration timing.$"

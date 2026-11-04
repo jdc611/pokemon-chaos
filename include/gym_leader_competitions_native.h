@@ -8,4 +8,5 @@ void GymLeaderSettleCompetition(bool32 won);
 void GymLeaderCompetitionArchive(void);
 void GymLeaderCaptureCompetitionTeam(void);
 u32 GymLeaderPrepareCompetition(void);
+bool32 GymLeaderCompetitionAtVenue(void);
 #endif

@@ -914,3 +914,11 @@ gSpecials::
 	def_special GleRecognitionInfo
 	def_special GleNewsMenu, waitstate=1
 	def_special GleNewsPage
+	def_special GleHostingInfo
+	def_special GleHostingMenu, waitstate=1
+	def_special GleHostingFormatMenu, waitstate=1
+	def_special GleHostingQuote
+	def_special GleHostingConfirm
+	def_special GleHostingDeclineNative
+	def_special GleHostingTravel
+	def_special GleHostingRefreshVenue
