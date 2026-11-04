@@ -340,5 +340,252 @@
     ],
     "answer": 2,
     "index": 17
+  },
+  {
+    "map": "MAP_ROCK_TUNNEL_B1F",
+    "map_name": "RockTunnel_B1F_Frlg",
+    "x": 8,
+    "y": 9,
+    "map_id": 9041,
+    "species": "SPECIES_COBALION",
+    "project": 6,
+    "rank": 3,
+    "location": "ROCK TUNNEL WATCH",
+    "clue": "An iron guardian protects the weak.\\nWhat makes strength honorable?",
+    "answers": [
+      "Protecting others",
+      "Winning at any cost",
+      "Threatening others"
+    ],
+    "answer": 0,
+    "index": 18
+  },
+  {
+    "map": "MAP_VICTORY_ROAD_2F",
+    "map_name": "VictoryRoad_2F_Frlg",
+    "x": 20,
+    "y": 7,
+    "map_id": 8999,
+    "species": "SPECIES_TERRAKION",
+    "project": 6,
+    "rank": 4,
+    "location": "VICTORY ROAD PASS",
+    "clue": "A stone blade guards a narrow pass.\\nWhen should a defender stand firm?",
+    "answers": [
+      "For pride",
+      "To protect others",
+      "For a reward"
+    ],
+    "answer": 1,
+    "index": 19
+  },
+  {
+    "map": "MAP_ROUTE25",
+    "map_name": "Route25_Frlg",
+    "x": 15,
+    "y": 4,
+    "map_id": 9511,
+    "species": "SPECIES_VIRIZION",
+    "project": 6,
+    "rank": 4,
+    "location": "ROUTE 25 GROVE",
+    "clue": "A green blade leaves no scars.\\nHow should a forest be defended?",
+    "answers": [
+      "Burn every path",
+      "Cut it all down",
+      "With care"
+    ],
+    "answer": 2,
+    "index": 20
+  },
+  {
+    "map": "MAP_SEAFOAM_ISLANDS_B1F",
+    "map_name": "SeafoamIslands_B1F_Frlg",
+    "x": 20,
+    "y": 14,
+    "map_id": 9043,
+    "species": "SPECIES_KELDEO",
+    "project": 6,
+    "rank": 5,
+    "location": "SEAFOAM TRAINING POOL",
+    "clue": "A young sword seeks its purpose.\\nWhat unites the three teachings?",
+    "answers": [
+      "Courage with kindness",
+      "Power without limits",
+      "Fame above all"
+    ],
+    "answer": 0,
+    "index": 21
+  },
+  {
+    "map": "MAP_POWER_PLANT",
+    "map_name": "PowerPlant_Frlg",
+    "x": 9,
+    "y": 12,
+    "map_id": 9054,
+    "species": "SPECIES_RAIKOU",
+    "project": 10,
+    "rank": 3,
+    "location": "POWER PLANT THUNDER TRACE",
+    "clue": "A storm leaves tracks in the dust.\\nWhat makes a trace useful evidence?",
+    "answers": [
+      "Recording its context",
+      "Taking a guess",
+      "Ignoring its source"
+    ],
+    "answer": 0,
+    "index": 22
+  },
+  {
+    "map": "MAP_POKEMON_MANSION_2F",
+    "map_name": "PokemonMansion_2F_Frlg",
+    "x": 20,
+    "y": 11,
+    "map_id": 9019,
+    "species": "SPECIES_ENTEI",
+    "project": 10,
+    "rank": 4,
+    "location": "MANSION FIRE TRACE",
+    "clue": "Ash preserves an ancient footprint.\\nHow should a fragile trace be kept?",
+    "answers": [
+      "Brush it away",
+      "Document it carefully",
+      "Keep only rumors"
+    ],
+    "answer": 1,
+    "index": 23
+  },
+  {
+    "map": "MAP_ROUTE24",
+    "map_name": "Route24_Frlg",
+    "x": 12,
+    "y": 9,
+    "map_id": 9510,
+    "species": "SPECIES_SUICUNE",
+    "project": 10,
+    "rank": 3,
+    "location": "ROUTE 24 WATER TRACE",
+    "clue": "Clear water reflects a passing beast.\\nWhat should a field study avoid?",
+    "answers": [
+      "Patient observation",
+      "Keeping records",
+      "Disturbing the habitat"
+    ],
+    "answer": 2,
+    "index": 24
+  },
+  {
+    "map": "MAP_ROCK_TUNNEL_B1F",
+    "map_name": "RockTunnel_B1F_Frlg",
+    "x": 30,
+    "y": 19,
+    "map_id": 9041,
+    "species": "SPECIES_RAGING_BOLT",
+    "project": 10,
+    "rank": 6,
+    "location": "ROCK TUNNEL ANCIENT STORM",
+    "clue": "Ancient thunder echoes a modern roar.\\nWhat connects the two traces?",
+    "answers": [
+      "A required capture",
+      "Shared field evidence",
+      "An evolution stone"
+    ],
+    "answer": 1,
+    "index": 25
+  },
+  {
+    "map": "MAP_MT_EMBER_SUMMIT",
+    "map_name": "MtEmber_Summit_Frlg",
+    "x": 7,
+    "y": 6,
+    "map_id": 9060,
+    "species": "SPECIES_GOUGING_FIRE",
+    "project": 10,
+    "rank": 6,
+    "location": "MT. EMBER ANCIENT FLAME",
+    "clue": "Old fire leaves a familiar pattern.\\nWhat does this ancient beast prove?",
+    "answers": [
+      "ENTEI must evolve",
+      "The present must vanish",
+      "The past has its own life"
+    ],
+    "answer": 2,
+    "index": 26
+  },
+  {
+    "map": "MAP_SEAFOAM_ISLANDS_B4F",
+    "map_name": "SeafoamIslands_B4F_Frlg",
+    "x": 24,
+    "y": 18,
+    "map_id": 9046,
+    "species": "SPECIES_WALKING_WAKE",
+    "project": 10,
+    "rank": 6,
+    "location": "SEAFOAM ANCIENT CURRENT",
+    "clue": "An ancient wake resembles clear water.\\nHow can both beasts coexist?",
+    "answers": [
+      "As separate partners",
+      "By replacing SUICUNE",
+      "Only after a capture"
+    ],
+    "answer": 0,
+    "index": 27
+  },
+  {
+    "map": "MAP_POKEMON_TOWER_7F",
+    "map_name": "PokemonTower_7F_Frlg",
+    "x": 9,
+    "y": 7,
+    "map_id": 9053,
+    "species": "SPECIES_DIALGA",
+    "project": 2,
+    "rank": 6,
+    "location": "TOWER TEMPORAL FRACTURE",
+    "clue": "A fractured moment repeats in stone.\\nWhat anchors a study of time?",
+    "answers": [
+      "A reliable observation",
+      "A hurried guess",
+      "Forgetting the past"
+    ],
+    "answer": 0,
+    "index": 28
+  },
+  {
+    "map": "MAP_SEAFOAM_ISLANDS_B3F",
+    "map_name": "SeafoamIslands_B3F_Frlg",
+    "x": 21,
+    "y": 18,
+    "map_id": 9045,
+    "species": "SPECIES_PALKIA",
+    "project": 2,
+    "rank": 6,
+    "location": "SEAFOAM SPATIAL FRACTURE",
+    "clue": "Two distant echoes share one place.\\nWhat anchors a study of space?",
+    "answers": [
+      "Ignoring distances",
+      "Mapping the connection",
+      "Breaking the boundary"
+    ],
+    "answer": 1,
+    "index": 29
+  },
+  {
+    "map": "MAP_FIVE_ISLAND_LOST_CAVE_ROOM10",
+    "map_name": "FiveIsland_LostCave_Room10_Frlg",
+    "x": 6,
+    "y": 6,
+    "map_id": 9238,
+    "species": "SPECIES_GIRATINA",
+    "project": 2,
+    "rank": 7,
+    "location": "LOST CAVE DISTORTION SEAM",
+    "clue": "Time and space bend at this seam.\\nHow should the distortion be entered?",
+    "answers": [
+      "Without preparation",
+      "By forcing it apart",
+      "With both observations"
+    ],
+    "answer": 2,
+    "index": 30
   }
 ]

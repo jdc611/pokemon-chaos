@@ -127,6 +127,12 @@ GleResearch_Notebook::
 	goto_if_eq GleResearch_Wings
 	compare VAR_RESULT, 1
 	goto_if_eq GleResearch_Field
+	compare VAR_RESULT, 2
+	goto_if_eq GleResearch_Field
+	compare VAR_RESULT, 6
+	goto_if_eq GleResearch_Field
+	compare VAR_RESULT, 10
+	goto_if_eq GleResearch_Field
 	compare VAR_RESULT, 7
 	goto_if_eq GleResearch_Field
 	compare VAR_RESULT, 8

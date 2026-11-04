@@ -44,6 +44,19 @@ static const struct GleFieldSite sSites[]={
     {SPECIES_CYCLIZAR, MAP_ROUTE16, 30, 9, 2, 1, 0, COMPOUND_STRING("ROUTE 16 STUDY SITE"), COMPOUND_STRING("A swift partner watches the road.\nHow should a researcher begin?"), {COMPOUND_STRING("With patience"),COMPOUND_STRING("With threats"),COMPOUND_STRING("With a trap")}},
     {SPECIES_KORAIDON, MAP_MT_MOON_B2F, 16, 21, 5, 1, 1, COMPOUND_STRING("MT. MOON ANCIENT TRACE"), COMPOUND_STRING("Ancient tracks cross the stone.\nHow should this past be studied?"), {COMPOUND_STRING("Erase it"),COMPOUND_STRING("Preserve it"),COMPOUND_STRING("Ignore it")}},
     {SPECIES_MIRAIDON, MAP_POWER_PLANT, 35, 12, 6, 1, 2, COMPOUND_STRING("POWER PLANT SIGNAL"), COMPOUND_STRING("An unknown signal fills the air.\nHow should new knowledge be used?"), {COMPOUND_STRING("For control"),COMPOUND_STRING("For profit only"),COMPOUND_STRING("For discovery")}},
+    {SPECIES_COBALION, MAP_ROCK_TUNNEL_B1F, 8, 9, 3, 6, 0, COMPOUND_STRING("ROCK TUNNEL WATCH"), COMPOUND_STRING("An iron guardian protects the weak.\nWhat makes strength honorable?"), {COMPOUND_STRING("Protecting others"),COMPOUND_STRING("Winning at any cost"),COMPOUND_STRING("Threatening others")}},
+    {SPECIES_TERRAKION, MAP_VICTORY_ROAD_2F, 20, 7, 4, 6, 1, COMPOUND_STRING("VICTORY ROAD PASS"), COMPOUND_STRING("A stone blade guards a narrow pass.\nWhen should a defender stand firm?"), {COMPOUND_STRING("For pride"),COMPOUND_STRING("To protect others"),COMPOUND_STRING("For a reward")}},
+    {SPECIES_VIRIZION, MAP_ROUTE25, 15, 4, 4, 6, 2, COMPOUND_STRING("ROUTE 25 GROVE"), COMPOUND_STRING("A green blade leaves no scars.\nHow should a forest be defended?"), {COMPOUND_STRING("Burn every path"),COMPOUND_STRING("Cut it all down"),COMPOUND_STRING("With care")}},
+    {SPECIES_KELDEO, MAP_SEAFOAM_ISLANDS_B1F, 20, 14, 5, 6, 0, COMPOUND_STRING("SEAFOAM TRAINING POOL"), COMPOUND_STRING("A young sword seeks its purpose.\nWhat unites the three teachings?"), {COMPOUND_STRING("Courage with kindness"),COMPOUND_STRING("Power without limits"),COMPOUND_STRING("Fame above all")}},
+    {SPECIES_RAIKOU, MAP_POWER_PLANT, 9, 12, 3, 10, 0, COMPOUND_STRING("POWER PLANT THUNDER TRACE"), COMPOUND_STRING("A storm leaves tracks in the dust.\nWhat makes a trace useful evidence?"), {COMPOUND_STRING("Recording its context"),COMPOUND_STRING("Taking a guess"),COMPOUND_STRING("Ignoring its source")}},
+    {SPECIES_ENTEI, MAP_POKEMON_MANSION_2F, 20, 11, 4, 10, 1, COMPOUND_STRING("MANSION FIRE TRACE"), COMPOUND_STRING("Ash preserves an ancient footprint.\nHow should a fragile trace be kept?"), {COMPOUND_STRING("Brush it away"),COMPOUND_STRING("Document it carefully"),COMPOUND_STRING("Keep only rumors")}},
+    {SPECIES_SUICUNE, MAP_ROUTE24, 12, 9, 3, 10, 2, COMPOUND_STRING("ROUTE 24 WATER TRACE"), COMPOUND_STRING("Clear water reflects a passing beast.\nWhat should a field study avoid?"), {COMPOUND_STRING("Patient observation"),COMPOUND_STRING("Keeping records"),COMPOUND_STRING("Disturbing the habitat")}},
+    {SPECIES_RAGING_BOLT, MAP_ROCK_TUNNEL_B1F, 30, 19, 6, 10, 1, COMPOUND_STRING("ROCK TUNNEL ANCIENT STORM"), COMPOUND_STRING("Ancient thunder echoes a modern roar.\nWhat connects the two traces?"), {COMPOUND_STRING("A required capture"),COMPOUND_STRING("Shared field evidence"),COMPOUND_STRING("An evolution stone")}},
+    {SPECIES_GOUGING_FIRE, MAP_MT_EMBER_SUMMIT, 7, 6, 6, 10, 2, COMPOUND_STRING("MT. EMBER ANCIENT FLAME"), COMPOUND_STRING("Old fire leaves a familiar pattern.\nWhat does this ancient beast prove?"), {COMPOUND_STRING("ENTEI must evolve"),COMPOUND_STRING("The present must vanish"),COMPOUND_STRING("The past has its own life")}},
+    {SPECIES_WALKING_WAKE, MAP_SEAFOAM_ISLANDS_B4F, 24, 18, 6, 10, 0, COMPOUND_STRING("SEAFOAM ANCIENT CURRENT"), COMPOUND_STRING("An ancient wake resembles clear water.\nHow can both beasts coexist?"), {COMPOUND_STRING("As separate partners"),COMPOUND_STRING("By replacing SUICUNE"),COMPOUND_STRING("Only after a capture")}},
+    {SPECIES_DIALGA, MAP_POKEMON_TOWER_7F, 9, 7, 6, 2, 0, COMPOUND_STRING("TOWER TEMPORAL FRACTURE"), COMPOUND_STRING("A fractured moment repeats in stone.\nWhat anchors a study of time?"), {COMPOUND_STRING("A reliable observation"),COMPOUND_STRING("A hurried guess"),COMPOUND_STRING("Forgetting the past")}},
+    {SPECIES_PALKIA, MAP_SEAFOAM_ISLANDS_B3F, 21, 18, 6, 2, 1, COMPOUND_STRING("SEAFOAM SPATIAL FRACTURE"), COMPOUND_STRING("Two distant echoes share one place.\nWhat anchors a study of space?"), {COMPOUND_STRING("Ignoring distances"),COMPOUND_STRING("Mapping the connection"),COMPOUND_STRING("Breaking the boundary")}},
+    {SPECIES_GIRATINA, MAP_FIVE_ISLAND_LOST_CAVE_ROOM10, 6, 6, 7, 2, 2, COMPOUND_STRING("LOST CAVE DISTORTION SEAM"), COMPOUND_STRING("Time and space bend at this seam.\nHow should the distortion be entered?"), {COMPOUND_STRING("Without preparation"),COMPOUND_STRING("By forcing it apart"),COMPOUND_STRING("With both observations")}},
 };
 _Static_assert(ARRAY_COUNT(sSites)<=35,"Research bit reservations overlap");
 static EWRAM_DATA u8 sFieldSlot=0;
@@ -74,6 +87,9 @@ static bool32 EvidenceReady(u32 slot)
     // by catching a different member of the group.
     if(sSites[slot].project==1 && slot!=15)
         return HasBit(208) && (slot==16 || HasBit(FIELD_FIRST_DISCOVERY+16));
+    if(slot==21)return HasBit(FIELD_FIRST_DISCOVERY+18)&&HasBit(FIELD_FIRST_DISCOVERY+19)&&HasBit(FIELD_FIRST_DISCOVERY+20);
+    if(slot>=25&&slot<=27)return HasBit(FIELD_FIRST_DISCOVERY+slot-3);
+    if(slot==30)return HasBit(FIELD_FIRST_DISCOVERY+28)&&HasBit(FIELD_FIRST_DISCOVERY+29);
     return sSites[slot].project!=13 || ProjectCount(13,FIELD_FIRST_DISCOVERY)==3;
 }
 void GymLeaderConfigureFieldResearch(struct MapEvents *events,struct ObjectEventTemplate *objects,u32 capacity)
@@ -118,6 +134,12 @@ void GleFieldNotebook(void)
         if(StudyCyclizar())StringCopy(gStringVar4,COMPOUND_STRING("Paradox of Evolution\nOur live CYCLIZAR study is complete.\lYour partner remains unchanged.\pSurvey ancient traces in MT. MOON\nB2F, then investigate a strange\lsignal in the POWER PLANT.\pKORAIDON and MIRAIDON are separate\npartners, never evolutions.\lNo other capture is required."));
         else StringCopy(gStringVar4,COMPOUND_STRING("Paradox of Evolution\nA rare CYCLIZAR visits ROUTE 16.\pBring one in your party or PC\nfor a non-invasive live study.\lReturn to this notebook to begin.\pYour partner is never consumed\nor evolved by the research.\lEarly field evidence is remembered."));
         break;
+    case 2:
+        StringCopy(gStringVar4,COMPOUND_STRING("Fractures in Time and Space\nStudy a temporal fracture in\lPOKEMON TOWER 7F and a spatial\lfracture in SEAFOAM B3F.\pTheir observations reveal a\nDistortion seam in LOST CAVE\lROOM 10. No captures are required."));break;
+    case 6:
+        StringCopy(gStringVar4,COMPOUND_STRING("Swords of Justice\nSeek three teachings in ROCK\lTUNNEL B1F, VICTORY ROAD 2F,\land the ROUTE 25 grove.\pTheir discoveries reveal KELDEO's\ntraining pool in SEAFOAM B1F.\lCatching the teachers is optional."));break;
+    case 10:
+        StringCopy(gStringVar4,COMPOUND_STRING("Echoes of the Past\nRecord modern traces at the POWER\lPLANT, MANSION 2F and ROUTE 24.\pCorresponding ancient echoes wait\nin ROCK TUNNEL B1F, MT. EMBER's\lsummit and SEAFOAM B4F.\pEach pair shares field evidence.\nCaptures are independent. No beast\levolves into its ancient counterpart."));break;
     case 7:
         StringCopy(gStringVar4,COMPOUND_STRING("Cursed Treasures\nFour old grudges sealed in Kanto.\pSeek leaves in VIRIDIAN FOREST,\nice in SEAFOAM B2F, a vessel in\lROCK TUNNEL 1F, and MANSION fire.\pRead each seal and choose wisely.\nAll four encounters are independent."));break;
     case 8:
@@ -172,6 +194,9 @@ void GleFieldInfo(void)
     if(!EvidenceReady(slot))
     {
         if(sSites[slot].project==1)StringCopy(gStringVar4,COMPOUND_STRING("The trace is not understood yet.\nBring CYCLIZAR in your party or PC\lto the GLA Paradox notebook.\pStudy MT. MOON's ancient trace\nbefore investigating the future.\lNo other capture is required."));
+        else if(sSites[slot].project==6)StringCopy(gStringVar4,COMPOUND_STRING("KELDEO awaits all three teachings.\nSurvey ROCK TUNNEL B1F, VICTORY\lROAD 2F and ROUTE 25 first.\pDiscoveries are enough.\nNo other capture is required."));
+        else if(sSites[slot].project==10)StringCopy(gStringVar4,COMPOUND_STRING("The ancient echo lacks context.\nSurvey its modern counterpart's\ltrace first. Consult the notebook.\pA field observation is enough.\nNo other capture is required."));
+        else if(sSites[slot].project==2)StringCopy(gStringVar4,COMPOUND_STRING("The distortion is not understood.\nSurvey POKEMON TOWER 7F and\lSEAFOAM B3F first.\pBoth observations are enough.\nNo other capture is required."));
         else StringCopy(gStringVar4,COMPOUND_STRING("A poisonous chain holds firm.\nTrace the pact's other sites on\lROUTE 15, ROUTE 8 and ROUTE 18.\pDiscoveries are enough.\nNo other capture is required."));
         gSpecialVar_Result=4;return;
     }

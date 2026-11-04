@@ -4,7 +4,7 @@ Updated November 3, 2026. Owner: Jack Coleman.
 
 ## Authority and scope
 
-This master consolidates the recovered “Choose Rebuild Town” conversation, the original handoff quoted in that conversation, and the present instruction to compile all Gym Leader decisions and fix Articuno's slot. Sections 1–16 preserve design/source authority; sections 17–38 separately record implementation choices and their specific validation. This is not a completed-release declaration. Original message text is preserved in the final appendix so smaller decisions, numerical proposals, and revisions are not lost.
+This master consolidates the recovered “Choose Rebuild Town” conversation, the original handoff quoted in that conversation, and the present instruction to compile all Gym Leader decisions and fix Articuno's slot. Sections 1–16 preserve design/source authority; sections 17–39 separately record implementation choices and their specific validation. This is not a completed-release declaration. Original message text is preserved in the final appendix so smaller decisions, numerical proposals, and revisions are not lost.
 
 Read the current decisions first. Use source messages to recover exact context. Explicit user decisions override assistant suggestions; later explicit revisions override earlier choices. An assistant saying “locked in” is not sufficient evidence on its own. Unanswered suggestions remain proposed. Short answers must be read with their preceding question. Numeric tuning delegated to implementation is not a missing user decision. Source excerpts preserve historical claims without independently verifying them.
 
@@ -12,7 +12,7 @@ Status vocabulary: APPROVED (explicit user direction), DELEGATED (implementation
 
 ## Current implementation status
 
-The latest tested checkpoints cover native opening/draft/registration/defenses and inspections; town construction, landmarks, all-type habitats and Safari configuration; GLA vouchers/supplies/permanent tutors; the 72 exclusive assignments and six universal birds; native career-card records; the basic recruitment/staff loop, current-rank rival friendlies, Ancient Titans/Ancient Awakening, five additional field-research groups and finite resident requests/Honor choices, Paradox of Evolution, Kanto colleague/Elite Four rematches, persistent Rocket town incidents, and Regional/Kanto competition brackets and archives. Exact test boundaries and delegated tuning are recorded in sections 17–38. Remaining universal projects/form upgrades, complete rival/Rocket stories and competition presentation, full species coverage and campaign validation still gate a finished V1 release.
+The latest tested checkpoints cover native opening/draft/registration/defenses and inspections; town construction, landmarks, all-type habitats and Safari configuration; GLA vouchers/supplies/permanent tutors; the 72 exclusive assignments and six universal birds; native career-card records; the basic recruitment/staff loop, current-rank rival friendlies, Ancient Titans/Ancient Awakening, five additional field-research groups and finite resident requests/Honor choices, Paradox of Evolution, Kanto colleague/Elite Four rematches, persistent Rocket town incidents, Regional/Kanto competition brackets and archives, and Swords/Echoes/Creation Trio research. Exact test boundaries and delegated tuning are recorded in sections 17–39. Four Winds/form upgrades, complete rival/Rocket stories and competition presentation, full species coverage and campaign validation still gate a finished V1 release.
 
 ## Contents
 
@@ -50,6 +50,7 @@ Implementation checkpoints follow the preserved appendix. Latest additions:
 36. Kanto colleague friendlies and Elite Four rematches
 37. Persistent Rocket town incidents
 38. Regional Cups, Kanto brackets and permanent archives
+39. Swords, Echoes and Creation Trio field research
 
 ## 1. Current Articuno correction — CURRENT FIX
 
@@ -27130,3 +27131,15 @@ Kanto titles earn a choice of eight reusable TM licenses: Earthquake, Ice Beam, 
 Host ASan/UBSan checks pass three-round player victory, elimination, rank qualification, deterministic unattended events, wagers, one-time settlements, pending archival and full-capacity history preservation. Native tests pass exact version-10 prefix migration/flash, event menu and results navigation, missing-registration refusal, all three registered-team round adapters, Kanto archival/reload, independent NPC championships, native prize selection/reusable licensing/duplicate refusal, and trophy placement/upgrade gating/flash. A controller-played quarter-final against Brock uses three supplied level-25 Torterra with Giga Drain without altered enemy HP or an injected outcome. Remaining round and archive fixtures inject outcomes to test integration; they do not certify tournament difficulty. An invalid alternate archive bank preserves the valid prior teams. This is not a real-device power-cut test.
 
 Registered defense/PC/EXP, all colleague rematches and Rocket incident regression suites pass the integrated version-11 ROM. Linked EWRAM is 257,676/262,144 bytes; payload is 27,309,424 bytes before 32 MiB padding. Town showcase/defense-format competitions, richer news/recognition, hometown celebrations and a visual Hall viewer remain unfinished competition work alongside the remaining research, rival narrative, final Oak battle and full campaign validation.
+
+## 39. Swords, Echoes and Creation Trio field research
+
+Appended thirteen universal field sites without renumbering the previous eighteen: Cobalion, Terrakion, Virizion, Keldeo; Raikou, Entei, Suicune, Raging Bolt, Gouging Fire, Walking Wake; and Dialga, Palkia, Giratina. Exact maps, coordinates, ranks and seal answers are recorded in field-research-sites.json as delegated implementation choices. All are excluded from ordinary species/voucher pools through the existing special-species reservation.
+
+Swords of Justice records three independent teachings before Keldeo's training-pool encounter opens. Echoes of the Past links each modern beast's field discovery to its own ancient counterpart; the six captures remain independent, with no evolution or consumed partner. Fractures in Time and Space links temporal evidence in Pokemon Tower 7F and spatial evidence in Seafoam B3F to Giratina's distortion seam in Lost Cave Room 10. This currently uses the existing cave room and native field presentation, not a finished custom Distortion World dungeon.
+
+Native GLA notebooks provide locations, clues and per-species progress for all three groups. Exploration is remembered at early ranks, earned access survives demotion, encounters scale to the current cap, and each site offers the established save/battle confirmation flow. Failed encounters retain their opened seal and can be retried; only an actual caught outcome records exhaustion. No other capture is a prerequisite. This uses the existing capture/discovery/seal reservations, with 31 of 35 slots occupied, and leaves save version 11/state size unchanged at 3,072 bytes.
+
+Native tests pass all thirteen template placements and dry walkable approaches, avoiding original objects/warps/events; early discovery/rank refusal; independent Keldeo/ancient-pair/Giratina evidence gates; controller-driven wrong/correct seal menus and save/battle declines; generated species/current-cap checks after demotion; independent outcome/retry/anti-duplicate ledgers; and native flash persistence. The new species' caught outcomes in this targeted suite are injected integration fixtures, not thirteen played capture battles. Regression suites pass the previous fifteen research sites, actual Uxie capture, all five original notebooks, and actual Cyclizar capture/party-and-PC study plus Koraidon/Miraidon research.
+
+Linked EWRAM remains 257,676/262,144 bytes; ROM payload is 27,313,128 bytes before 32 MiB padding. Four Winds roaming/weather research and conditional form projects remain, along with the broader rival/Rocket narrative, competition presentation, final Oak battle and campaign validation.
