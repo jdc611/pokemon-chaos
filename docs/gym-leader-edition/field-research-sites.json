@@ -587,5 +587,85 @@
     ],
     "answer": 2,
     "index": 30
+  },
+  {
+    "map": "MAP_ROUTE9",
+    "map_name": "Route9_Frlg",
+    "x": 26,
+    "y": 8,
+    "map_id": 9494,
+    "species": "SPECIES_TORNADUS",
+    "project": 5,
+    "rank": 3,
+    "location": "ROUTE 9 WIND STATION",
+    "clue": "A spiral current carries forest seeds.\\nWhat does a wind survey record?",
+    "answers": [
+      "Direction and change",
+      "Only the loudest gust",
+      "Rumors"
+    ],
+    "answer": 0,
+    "index": 31,
+    "roaming": true
+  },
+  {
+    "map": "MAP_ROUTE11",
+    "map_name": "Route11_Frlg",
+    "x": 28,
+    "y": 12,
+    "map_id": 9496,
+    "species": "SPECIES_THUNDURUS",
+    "project": 5,
+    "rank": 4,
+    "location": "ROUTE 11 STORM STATION",
+    "clue": "Electric air gathers before a storm.\\nHow should a storm be observed?",
+    "answers": [
+      "From an exposed peak",
+      "From a safe station",
+      "Without a plan"
+    ],
+    "answer": 1,
+    "index": 32,
+    "roaming": true
+  },
+  {
+    "map": "MAP_ROUTE23",
+    "map_name": "Route23_Frlg",
+    "x": 10,
+    "y": 18,
+    "map_id": 9509,
+    "species": "SPECIES_LANDORUS",
+    "project": 5,
+    "rank": 5,
+    "location": "ROUTE 23 EARTH STATION",
+    "clue": "Rich soil follows the changing wind.\\nWhat connects weather and the land?",
+    "answers": [
+      "Nothing at all",
+      "Only strength",
+      "A living cycle"
+    ],
+    "answer": 2,
+    "index": 33,
+    "roaming": true
+  },
+  {
+    "map": "MAP_ROUTE18",
+    "map_name": "Route18_Frlg",
+    "x": 21,
+    "y": 7,
+    "map_id": 9503,
+    "species": "SPECIES_ENAMORUS",
+    "project": 5,
+    "rank": 6,
+    "location": "ROUTE 18 SPRING STATION",
+    "clue": "New life follows a returning breeze.\\nWhat does a careful survey preserve?",
+    "answers": [
+      "Patterns across seasons",
+      "Only one moment",
+      "Only the strongest storm"
+    ],
+    "answer": 0,
+    "index": 34,
+    "roaming": true
   }
 ]

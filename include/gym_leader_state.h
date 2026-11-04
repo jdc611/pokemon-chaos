@@ -5,7 +5,7 @@
 #include <stdint.h>
 #include "gym_leader_competitions.h"
 #define GLE_MAGIC 0x474C4531u
-#define GLE_VERSION 11
+#define GLE_VERSION 12
 #define GLE_PLOTS 24
 #define GLE_RECRUITS 10
 #define GLE_QUEUE 5
@@ -26,6 +26,12 @@ struct GleRocketState {
     uint16_t serial, cleared, losses, stolen, recovered;
     uint8_t stage, kind, remaining, staffHelp, heist, bossDefeated;
 };
+struct GleWind {
+    uint32_t ivs, personality, status;
+    uint16_t hp, maxHp;
+    uint8_t mapGroup, mapNum, level, flags;
+};
+struct GleWindsState {struct GleWind mon[4];uint8_t selected;uint8_t reserved[3];};
 struct GleState {
     uint32_t magic, seed, activity, rankXp, serial;
     uint16_t version, population, capacity, reputation, defenses, losses;
@@ -55,6 +61,7 @@ struct GleState {
     uint8_t colleaguePendingVouchers[4];
     _Alignas(4) struct GleRocketState rocket;
     struct GleCompetitionState competitions;
+    struct GleWindsState winds;
 };
 extern const uint8_t gGleRankCaps[8], gGleRankTeamSizes[8];
 void GleInit(struct GleState *, uint32_t seed);

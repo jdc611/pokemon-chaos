@@ -1,4 +1,5 @@
 #include "global.h"
+#include "gym_leader_winds.h"
 #include "gym_leader.h"
 #include "chaos_arcade.h"
 #include "main.h"
@@ -2109,7 +2110,8 @@ void CB2_OpenFlyMap(void)
         LoadPalette(gSaveBlock3Ptr->arcadeRiderTheme==1?sMidnightFramePal:gSaveBlock3Ptr->arcadeRiderTheme==2?sRocketFramePal:sRegionMapFramePal, BG_PLTT_ID(1), sizeof(sRegionMapFramePal));
         PutWindowTilemap(WIN_FLY_TO_WHERE);
         FillWindowPixelBuffer(WIN_FLY_TO_WHERE, PIXEL_FILL(0));
-        AddTextPrinterParameterized(WIN_FLY_TO_WHERE, FONT_NORMAL, gText_FlyToWhere, 0, 1, 0, NULL);
+        if(GymLeaderWindCaption(gStringVar4))AddTextPrinterParameterized(WIN_FLY_TO_WHERE, FONT_NARROW, gStringVar4, 0, 1, 0, NULL);
+        else AddTextPrinterParameterized(WIN_FLY_TO_WHERE, FONT_NORMAL, gText_FlyToWhere, 0, 1, 0, NULL);
         ScheduleBgCopyTilemapToVram(0);
         gMain.state++;
         break;

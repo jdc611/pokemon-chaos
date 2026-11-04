@@ -1796,3 +1796,14 @@ bool32 CanRemoveObjectForOWEMovement(struct ObjectEvent *objectEvent)
 #undef sOverworldEncounterLevel
 #undef sOverworldEncounterAge
 #undef sOverworldEncounterCategory
+
+// A GLE weather-signal change reuses native roamer index zero. Remove its old
+// visual actor before that index can refer to another persistent individual.
+void DespawnTrackedRoamerOWE(void)
+{
+    u32 i;
+    for(i=0;i<OBJECT_EVENTS_COUNT;i++)
+        if(gObjectEvents[i].active && IsOverworldWildEncounter(&gObjectEvents[i],OWE_GENERATED)
+            && GetOWECategory(&gObjectEvents[i])<ROAMER_COUNT)
+            RemoveObjectEvent(&gObjectEvents[i]);
+}

@@ -54,6 +54,7 @@ struct GleState *GymLeaderState(void)
             s->rocket.nextAt=s->activity>UINT32_MAX-80?UINT32_MAX:s->activity+80;
         }
         if(s->version<11)GleCompetitionInit(s);
+        if(s->version<12){memset(&s->winds,0,sizeof(s->winds));s->winds.selected=GLE_NONE;}
         s->version = GLE_VERSION;
     }
     return s;

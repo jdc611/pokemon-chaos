@@ -83,6 +83,7 @@ void OnOverworldWildEncounterSpawn(struct ObjectEvent *owe);
 void OnOverworldWildEncounterDespawn(struct ObjectEvent *owe);
 bool32 IsOWEDespawnExempt(struct ObjectEvent *owe);
 bool32 DespawnOWEDueToNPCCollision(struct ObjectEvent *obstacle, struct ObjectEvent *activeObject);
+void DespawnTrackedRoamerOWE(void);
 void DespawnAllOverworldWildEncounters(enum TypeOWE oweType, u32 flags);
 u32 TryAndDespawnOldestGeneratedOWE_ToFreeObject();
 void DespawnOWEOnBattleStart(void);

@@ -1,4 +1,6 @@
 #include "global.h"
+#include "gym_leader.h"
+#include "gym_leader_winds.h"
 #include "event_data.h"
 #include "ow_abilities.h"
 #include "pokemon.h"
@@ -84,6 +86,7 @@ static void ClearRoamerLocationHistory(u32 roamerIndex)
 
 void MoveAllRoamersToOtherLocationSets(void)
 {
+    if(IsGymLeaderRun()){GymLeaderMoveWinds();return;}
     u32 i;
 
     for (i = 0; i < ROAMER_COUNT; i++)
@@ -92,6 +95,7 @@ void MoveAllRoamersToOtherLocationSets(void)
 
 void MoveAllRoamers(void)
 {
+    if(IsGymLeaderRun()){GymLeaderMoveWinds();return;}
     u32 i;
 
     for (i = 0; i < ROAMER_COUNT; i++)
@@ -139,6 +143,7 @@ static u8 GetFirstInactiveRoamerIndex(void)
 
 bool8 TryAddRoamer(enum Species species, u8 level)
 {
+    if(IsGymLeaderRun()&&!GymLeaderWindSpecies(species))return FALSE;
     u8 index = GetFirstInactiveRoamerIndex();
 
     if (index < ROAMER_COUNT)
@@ -180,6 +185,7 @@ void UpdateLocationHistoryForRoamer(void)
 
 void RoamerMoveToOtherLocationSet(u32 roamerIndex)
 {
+    if(GymLeaderWindMove(roamerIndex))return;
     u8 mapNum = 0;
 
     if (!ROAMER(roamerIndex)->active)
@@ -203,6 +209,7 @@ void RoamerMoveToOtherLocationSet(u32 roamerIndex)
 
 void RoamerMove(u32 roamerIndex)
 {
+    if(GymLeaderWindMove(roamerIndex))return;
     u8 locSet = 0;
 
     if ((Random() % 16) == 0)
@@ -238,6 +245,7 @@ void RoamerMove(u32 roamerIndex)
 
 bool8 IsRoamerAt(u32 roamerIndex, u8 mapGroup, u8 mapNum)
 {
+    if(IsGymLeaderRun())return roamerIndex==0&&GymLeaderWindAt(mapGroup,mapNum);
     if (ROAMER(roamerIndex)->active && mapGroup == sRoamerLocation[roamerIndex][MAP_GRP] && mapNum == sRoamerLocation[roamerIndex][MAP_NUM])
         return TRUE;
     else
@@ -246,6 +254,7 @@ bool8 IsRoamerAt(u32 roamerIndex, u8 mapGroup, u8 mapNum)
 
 void CreateRoamerMonInstance(u32 roamerIndex)
 {
+    if(IsGymLeaderRun()){GymLeaderCreateWind();return;}
     u32 status = ROAMER(roamerIndex)->statusA + (ROAMER(roamerIndex)->statusB << 8);
     struct Pokemon *mon = &gParties[B_TRAINER_OPPONENT_A][0];
     ZeroEnemyPartyMons();
@@ -278,6 +287,7 @@ bool8 TryStartRoamerEncounter(void)
 
 void UpdateRoamerHPStatus(struct Pokemon *mon)
 {
+    if(IsGymLeaderRun()){GymLeaderUpdateWind(mon);return;}
     u32 status = GetMonData(mon, MON_DATA_STATUS);
 
     ROAMER(gEncounteredRoamerIndex)->hp = GetMonData(mon, MON_DATA_HP);
@@ -289,11 +299,13 @@ void UpdateRoamerHPStatus(struct Pokemon *mon)
 
 void SetRoamerInactive(u32 roamerIndex)
 {
+    if(IsGymLeaderRun()&&GymLeaderWindKeepActive())return;
     ROAMER(roamerIndex)->active = FALSE;
 }
 
 void GetRoamerLocation(u32 roamerIndex, u8 *mapGroup, u8 *mapNum)
 {
+    if(IsGymLeaderRun()){GymLeaderWindLocation(mapGroup,mapNum);return;}
     *mapGroup = sRoamerLocation[roamerIndex][MAP_GRP];
     *mapNum = sRoamerLocation[roamerIndex][MAP_NUM];
 }

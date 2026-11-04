@@ -2,7 +2,7 @@
 import runpy,json
 ctx=runpy.run_path('tests/gym_leader/native_opening.py');globals().update(ctx)
 catalog=json.load(open('docs/gym-leader-edition/field-research-sites.json'));species=v[-(len(catalog)+30):-30];highest=v[-1]
-assert len(catalog)==len(species)==31
+assert len(catalog)==len(species) and len(catalog)>=31
 wr('sWildEncountersDisabled',1,1)
 for trainer in range(768):call('SetTrainerFlag',trainer)
 def warp(slot,x=None,y=None):

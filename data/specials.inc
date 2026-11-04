@@ -883,3 +883,5 @@ gSpecials::
 	def_special GleFinalOakInfo
 	def_special GymLeaderStartFinalOak, waitstate=1
 	def_special GleFinalOakCredits, waitstate=1
+	def_special GleWindsTrack
+	def_special GleWindsCanTrack

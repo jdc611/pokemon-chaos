@@ -1,10 +1,10 @@
 # Pokémon Chaos: Gym Leader Edition — Master Design and Decision Record
 
-Updated November 3, 2026. Owner: Jack Coleman.
+Updated November 4, 2026. Owner: Jack Coleman.
 
 ## Authority and scope
 
-This master consolidates the recovered “Choose Rebuild Town” conversation, the original handoff quoted in that conversation, and the present instruction to compile all Gym Leader decisions and fix Articuno's slot. Sections 1–16 preserve design/source authority; sections 17–40 separately record implementation choices and their specific validation. This is not a completed-release declaration. Original message text is preserved in the final appendix so smaller decisions, numerical proposals, and revisions are not lost.
+This master consolidates the recovered “Choose Rebuild Town” conversation, the original handoff quoted in that conversation, and the present instruction to compile all Gym Leader decisions and fix Articuno's slot. Sections 1–16 preserve design/source authority; sections 17–41 separately record implementation choices and their specific validation. This is not a completed-release declaration. Original message text is preserved in the final appendix so smaller decisions, numerical proposals, and revisions are not lost.
 
 Read the current decisions first. Use source messages to recover exact context. Explicit user decisions override assistant suggestions; later explicit revisions override earlier choices. An assistant saying “locked in” is not sufficient evidence on its own. Unanswered suggestions remain proposed. Short answers must be read with their preceding question. Numeric tuning delegated to implementation is not a missing user decision. Source excerpts preserve historical claims without independently verifying them.
 
@@ -12,7 +12,7 @@ Status vocabulary: APPROVED (explicit user direction), DELEGATED (implementation
 
 ## Current implementation status
 
-The latest tested checkpoints cover native opening/draft/registration/defenses and inspections; town construction, landmarks, all-type habitats and Safari configuration; GLA vouchers/supplies/permanent tutors; the 72 exclusive assignments and six universal birds; native career-card records; the basic recruitment/staff loop, current-rank rival friendlies, Ancient Titans/Ancient Awakening, five additional field-research groups and finite resident requests/Honor choices, Paradox of Evolution, Kanto colleague/Elite Four rematches, persistent Rocket town incidents, Regional/Kanto competition brackets and archives, Swords/Echoes/Creation Trio research, and Oak's final examination/native ending. Exact test boundaries and delegated tuning are recorded in sections 17–40. Four Winds/form upgrades, complete rival/Rocket stories and competition presentation, full species coverage and campaign validation still gate a finished V1 release.
+The latest tested checkpoints cover native opening/draft/registration/defenses and inspections; town construction, landmarks, all-type habitats and Safari configuration; GLA vouchers/supplies/permanent tutors; the 72 exclusive assignments and six universal birds; native career-card records; the basic recruitment/staff loop, current-rank rival friendlies, Ancient Titans/Ancient Awakening, five additional field-research groups and finite resident requests/Honor choices, Paradox of Evolution, Kanto colleague/Elite Four rematches, persistent Rocket town incidents, Regional/Kanto competition brackets and archives, Swords/Echoes/Creation Trio research, Oak's final examination/native ending, and Four Winds roaming research. Exact test boundaries and delegated tuning are recorded in sections 17–41. Broader rival/Rocket stories, competition presentation, full species coverage and campaign validation still gate a finished V1 release. Conditional form-research proposals remain documented separately.
 
 ## Contents
 
@@ -52,6 +52,7 @@ Implementation checkpoints follow the preserved appendix. Latest additions:
 38. Regional Cups, Kanto brackets and permanent archives
 39. Swords, Echoes and Creation Trio field research
 40. Oak's final examination and native ending
+41. Four Winds weather surveys and persistent roaming
 
 ## 1. Current Articuno correction — CURRENT FIX
 
@@ -27158,3 +27159,17 @@ The ending enters FireRed's existing credits directly after a successful normal 
 Native checks pass lab placement and rank/title gates, decline, missing registration, all six native species/levels/normal abilities/moves, loss/retry, one-time settlement, final Badge/game-clear flags, original healed identities and unchanged rank/queue/official/activity records. A full controller-played Oak victory uses six supplied level-100 Meowscarada, normal Overgrow, Life Orbs, Attack/Speed training, Jolly mint effects, native maximum PP and compatible Brick Break/Knock Off/Thunder Punch/Flower Trick. Battle presentation uses native FAST text, SET style and animations off; no enemy HP or battle result is injected for this victory. Two earlier supplied Grass-team strategies lost; this is one successful integration fixture, not an all-type difficulty certification or a full campaign playthrough.
 
 The native credits entry succeeds after saving. Byte-for-byte checks preserve both complete Hall flash sectors across final settlement and the credits save. Registered defense/PC/EXP and all eighteen rival specialties, real rival battle, migration/flash and legacy E4/Champion/Hall-of-Fame protection regress successfully. Linked EWRAM remains 257,676/262,144 bytes; ROM payload is 27,316,028 bytes before 32 MiB padding. Four Winds, broader rival/Rocket stories, remaining competition presentation and campaign/species/device validation still gate the polished release.
+
+## 41. Four Winds weather surveys and persistent roaming
+
+Added four native scientist weather stations on Routes 9, 11, 23 and 18 for Tornadus, Thundurus, Landorus and Enamorus, with delegated survey ranks 3/4/5/6. Each independent seal releases its wind to roam Kanto; no other capture or completed wind is required. The GLA Four Winds notebook reports each signal and lets the player choose which to track or help a fainted wind recover. The native PokeRider/Fly map displays the selected species and current route in its existing caption window.
+
+The engine still has one native encounter slot. Four separate saved individuals are multiplexed through it: each retains IVs, personality, shiny appearance, HP, status and route. All released uncaught records can move on map transitions, while the selected signal supplies actual native roaming encounters. Changing the tracked signal does not reroll a Pokemon. Old generated roamer visuals are removed when changing individuals so one native index cannot retain another wind's sprite. Movement uses Kanto routes, caches duplicate/same-map loads, leaves an encounter opportunity on arrival, and sometimes moves other signals between maps. Fleeing moves that wind while preserving its condition. Current-cap changes reconstruct its stats and scale retained HP proportionally.
+
+Native catches exhaust the corresponding independent research allocation. Defeat/fainting records a resting wind; the notebook restores its health with the same identity and shiny result. The original Roar/player-teleport deactivation hazard is guarded for active winds. Ordinary non-Gym-Leader native roamer creation and location behavior retain their original path. Legacy unrelated roamer releases are refused inside Gym Leader mode. Weather stations cannot start duplicate static legendary battles.
+
+Save version 12 appends four 20-byte records plus four bytes of selection/map-load metadata after the exact 3,072-byte version-11 prefix. State size is 3,156/3,200 bytes; previous registration, research, competition, license, trophy and final-Oak data remain unchanged. Four final field slots use the previously reserved capture bits 126–129, discoveries 161–164 and seals 196–199; all 35 field reservations are now assigned. Linked EWRAM remains 257,676/262,144 bytes, with a ROM payload of 27,320,672 bytes before 32 MiB padding.
+
+Native tests pass exact version-11 prefix/flash migration, all four weather placements and controller-driven seal/decline/release flows, independent uncaught signals, static-battle refusal, all four reconstructed species/IVs/personalities/shininess/normal abilities, Kanto locations, HP/status retention through switching, Roar survival, faint/recovery without reroll, current-cap access after demotion, duplicate-load/arrival location retention and flash. One real Tornadus roaming encounter is placed deterministically on the test route, then caught through the native battle Bag with a Master Ball; its actual party delivery, original identity, exhaustion and save/reload pass. No caught outcome is injected for this played capture. Other condition/outcome checks are explicit fixtures, not four complete played hunts.
+
+The selected signal is visibly readable in the native Rider screen. A non-Gym-Leader fixture still creates the old native Latias roamer without changing any stored wind record. Version-12 regressions pass the thirteen Swords/Echoes/Creation sites, the Regional/Kanto bracket/archive/reward fixture, and a full played final-Oak victory, Badge, normal save and native credits with both Hall sectors preserved. These do not certify all-type balance, every supported species' acquisition method, or a complete physical-device campaign.

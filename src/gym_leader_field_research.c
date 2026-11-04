@@ -1,6 +1,7 @@
 #include "global.h"
 #include "gym_leader.h"
 #include "gym_leader_research.h"
+#include "gym_leader_winds.h"
 #include "gym_leader_script.h"
 #include "battle.h"
 #include "battle_setup.h"
@@ -57,11 +58,15 @@ static const struct GleFieldSite sSites[]={
     {SPECIES_DIALGA, MAP_POKEMON_TOWER_7F, 9, 7, 6, 2, 0, COMPOUND_STRING("TOWER TEMPORAL FRACTURE"), COMPOUND_STRING("A fractured moment repeats in stone.\nWhat anchors a study of time?"), {COMPOUND_STRING("A reliable observation"),COMPOUND_STRING("A hurried guess"),COMPOUND_STRING("Forgetting the past")}},
     {SPECIES_PALKIA, MAP_SEAFOAM_ISLANDS_B3F, 21, 18, 6, 2, 1, COMPOUND_STRING("SEAFOAM SPATIAL FRACTURE"), COMPOUND_STRING("Two distant echoes share one place.\nWhat anchors a study of space?"), {COMPOUND_STRING("Ignoring distances"),COMPOUND_STRING("Mapping the connection"),COMPOUND_STRING("Breaking the boundary")}},
     {SPECIES_GIRATINA, MAP_FIVE_ISLAND_LOST_CAVE_ROOM10, 6, 6, 7, 2, 2, COMPOUND_STRING("LOST CAVE DISTORTION SEAM"), COMPOUND_STRING("Time and space bend at this seam.\nHow should the distortion be entered?"), {COMPOUND_STRING("Without preparation"),COMPOUND_STRING("By forcing it apart"),COMPOUND_STRING("With both observations")}},
+    {SPECIES_TORNADUS, MAP_ROUTE9, 26, 8, 3, 5, 0, COMPOUND_STRING("ROUTE 9 WIND STATION"), COMPOUND_STRING("A spiral current carries forest seeds.\nWhat does a wind survey record?"), {COMPOUND_STRING("Direction and change"),COMPOUND_STRING("Only the loudest gust"),COMPOUND_STRING("Rumors")}},
+    {SPECIES_THUNDURUS, MAP_ROUTE11, 28, 12, 4, 5, 1, COMPOUND_STRING("ROUTE 11 STORM STATION"), COMPOUND_STRING("Electric air gathers before a storm.\nHow should a storm be observed?"), {COMPOUND_STRING("From an exposed peak"),COMPOUND_STRING("From a safe station"),COMPOUND_STRING("Without a plan")}},
+    {SPECIES_LANDORUS, MAP_ROUTE23, 10, 18, 5, 5, 2, COMPOUND_STRING("ROUTE 23 EARTH STATION"), COMPOUND_STRING("Rich soil follows the changing wind.\nWhat connects weather and the land?"), {COMPOUND_STRING("Nothing at all"),COMPOUND_STRING("Only strength"),COMPOUND_STRING("A living cycle")}},
+    {SPECIES_ENAMORUS, MAP_ROUTE18, 21, 7, 6, 5, 0, COMPOUND_STRING("ROUTE 18 SPRING STATION"), COMPOUND_STRING("New life follows a returning breeze.\nWhat does a careful survey preserve?"), {COMPOUND_STRING("Patterns across seasons"),COMPOUND_STRING("Only one moment"),COMPOUND_STRING("Only the strongest storm")}},
 };
 _Static_assert(ARRAY_COUNT(sSites)<=35,"Research bit reservations overlap");
 static EWRAM_DATA u8 sFieldSlot=0;
 static EWRAM_DATA u8 sFieldProject=0;
-extern const u8 GleField_Approach[];
+extern const u8 GleField_Approach[],GleWinds_Station[];
 static u16 CurrentMap(void)
 {
     return (u8)gSaveBlock1Ptr->location.mapNum|((u8)gSaveBlock1Ptr->location.mapGroup<<8);
@@ -104,8 +109,8 @@ void GymLeaderConfigureFieldResearch(struct MapEvents *events,struct ObjectEvent
         s->projectStage[site->project]=ProjectCount(site->project,FIELD_FIRST_DISCOVERY);
         if(HasBit(FIELD_FIRST_CAPTURE+i) || count>=capacity)continue;
         objects[count++]=(struct ObjectEventTemplate){.localId=FIELD_LOCAL_ID+i,
-            .graphicsId=OBJ_EVENT_MON|site->species,.x=site->x,.y=site->y,.elevation=3,
-            .movementType=MOVEMENT_TYPE_FACE_DOWN,.script=GleField_Approach};
+            .graphicsId=site->project==5?OBJ_EVENT_GFX_SCIENTIST_1:OBJ_EVENT_MON|site->species,.x=site->x,.y=site->y,.elevation=3,
+            .movementType=MOVEMENT_TYPE_FACE_DOWN,.script=site->project==5?GleWinds_Station:GleField_Approach};
     }
     events->objectEvents=objects;events->objectEventCount=count;
 }
@@ -140,6 +145,8 @@ void GleFieldNotebook(void)
         StringCopy(gStringVar4,COMPOUND_STRING("Swords of Justice\nSeek three teachings in ROCK\lTUNNEL B1F, VICTORY ROAD 2F,\land the ROUTE 25 grove.\pTheir discoveries reveal KELDEO's\ntraining pool in SEAFOAM B1F.\lCatching the teachers is optional."));break;
     case 10:
         StringCopy(gStringVar4,COMPOUND_STRING("Echoes of the Past\nRecord modern traces at the POWER\lPLANT, MANSION 2F and ROUTE 24.\pCorresponding ancient echoes wait\nin ROCK TUNNEL B1F, MT. EMBER's\lsummit and SEAFOAM B4F.\pEach pair shares field evidence.\nCaptures are independent. No beast\levolves into its ancient counterpart."));break;
+    case 5:
+        StringCopy(gStringVar4,COMPOUND_STRING("The Four Winds\nSurvey weather stations on ROUTES\l9, 11, 23 and 18. Open each seal\land release its independent wind.\pChoose a signal here to track it.\nThe POKéRIDER map shows its route.\lChanging signals never rerolls it.\pFled partners keep HP and status.\nA fainted wind can recover here.\lCaptures are never prerequisites."));break;
     case 7:
         StringCopy(gStringVar4,COMPOUND_STRING("Cursed Treasures\nFour old grudges sealed in Kanto.\pSeek leaves in VIRIDIAN FOREST,\nice in SEAFOAM B2F, a vessel in\lROCK TUNNEL 1F, and MANSION fire.\pRead each seal and choose wisely.\nAll four encounters are independent."));break;
     case 8:
@@ -163,11 +170,12 @@ void GleFieldMenu(void)
 }
 void GleFieldReport(void)
 {
-    u32 selection=gSpecialVar_Result,i,n=0;gSpecialVar_Result=0;
+    u32 selection=gSpecialVar_Result,i,n=0;gSpecialVar_Result=0;sFieldSlot=GLE_NONE;
     if(!IsGymLeaderRun())return;
     for(i=0;i<ARRAY_COUNT(sSites);i++)if(sSites[i].project==sFieldProject)
     {
         if(n++!=selection)continue;
+        sFieldSlot=i;
         StringCopy(gStringVar1,GetSpeciesName(sSites[i].species));
         StringCopy(gStringVar2,sSites[i].location);
         StringCopy(gStringVar3,HasBit(FIELD_FIRST_CAPTURE+i)?COMPOUND_STRING("CAPTURE RECORDED"):
@@ -177,6 +185,7 @@ void GleFieldReport(void)
         ConvertIntToDecimalStringN(gStringVar1,sSites[i].rank,STR_CONV_MODE_LEFT_ALIGN,1);
         StringAppend(gStringVar4,gStringVar1);
         StringAppend(gStringVar4,COMPOUND_STRING(".\nEarned access survives demotion."));
+        if(sSites[i].project==5&&GymLeaderWindDescription(i-31,gStringVar1)){StringAppend(gStringVar4,COMPOUND_STRING("\p"));StringAppend(gStringVar4,gStringVar1);}
         gSpecialVar_Result=1;return;
     }
 }
@@ -222,7 +231,7 @@ u32 GymLeaderPrepareFieldBattle(void)
 {
     u32 slot=sFieldSlot;
     if(!IsGymLeaderRun() || slot>=ARRAY_COUNT(sSites) || CurrentMap()!=sSites[slot].map
-        || !EarnedRank(slot) || !EvidenceReady(slot) || !HasBit(FIELD_FIRST_SEAL+slot)
+        || sSites[slot].project==5 || !EarnedRank(slot) || !EvidenceReady(slot) || !HasBit(FIELD_FIRST_SEAL+slot)
         || HasBit(FIELD_FIRST_CAPTURE+slot))return 0;
     ZeroEnemyPartyMons();
     CreateMonWithIVs(&gParties[B_TRAINER_OPPONENT_A][0],sSites[slot].species,GymLeaderLevelCap(),Random32(),OTID_STRUCT_PLAYER_ID,USE_RANDOM_IVS);
@@ -239,3 +248,5 @@ void GleFieldFinish(void)
     if(!IsGymLeaderRun() || slot>=ARRAY_COUNT(sSites) || CurrentMap()!=sSites[slot].map || gBattleOutcome!=B_OUTCOME_CAUGHT)return;
     if(GleUniqueCapture(GymLeaderState(),FIELD_FIRST_CAPTURE+slot)==GLE_OK)gSpecialVar_Result=1;
 }
+
+u32 GymLeaderFieldSelected(void){return sFieldSlot;}

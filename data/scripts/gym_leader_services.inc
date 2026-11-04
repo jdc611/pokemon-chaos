@@ -133,6 +133,8 @@ GleResearch_Notebook::
 	goto_if_eq GleResearch_Field
 	compare VAR_RESULT, 10
 	goto_if_eq GleResearch_Field
+	compare VAR_RESULT, 5
+	goto_if_eq GleResearch_Field
 	compare VAR_RESULT, 7
 	goto_if_eq GleResearch_Field
 	compare VAR_RESULT, 8
@@ -493,6 +495,9 @@ GleField_NotebookMenu::
 	compare VAR_RESULT, 0
 	goto_if_eq GleResearch_Notebook
 	msgbox gStringVar4, MSGBOX_DEFAULT
+	special GleWindsCanTrack
+	compare VAR_RESULT, 1
+	goto_if_eq GleWinds_NotebookTrack
 	goto GleField_NotebookMenu
 GleField_Approach::
 	lockall
@@ -794,3 +799,60 @@ GleFinalOak_TextCredits:
 	.string "Save your progress and view\nthe native ending credits now?\pThe credits return to the title\nscreen. Continue from your save\lto resume your Gym career.$"
 GleFinalOak_TextSaveFailed:
 	.string "Your progress could not be saved.\nThe credits have not started.\lPlease keep a backup and try again.$"
+
+GleWinds_NotebookTrack::
+	msgbox GleWinds_TextTrack, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq GleField_NotebookMenu
+	special GleWindsTrack
+	compare VAR_RESULT, 1
+	goto_if_ne GleWinds_NotReady
+	msgbox GleWinds_TextTracked, MSGBOX_DEFAULT
+	goto GleField_NotebookMenu
+GleWinds_NotReady::
+	msgbox GleWinds_TextNotReady, MSGBOX_DEFAULT
+	goto GleField_NotebookMenu
+GleWinds_Station::
+	lockall
+	faceplayer
+	special GleFieldInfo
+	compare VAR_RESULT, 2
+	goto_if_eq GleExclusive_AlreadyCaught
+	compare VAR_RESULT, 0
+	goto_if_eq GleExclusive_Locked
+	compare VAR_RESULT, 3
+	goto_if_ne GleWinds_StationReady
+	special GleFieldClue
+	msgbox gStringVar4, MSGBOX_DEFAULT
+	closemessage
+	special GleFieldSealMenu
+	special GleFieldSolve
+	compare VAR_RESULT, 1
+	goto_if_ne GleTitans_Wrong
+GleWinds_StationReady::
+	msgbox GleWinds_TextSave, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq GleWinds_ReleaseChoice
+	call Common_EventScript_SaveGame
+GleWinds_ReleaseChoice::
+	msgbox GleWinds_TextRelease, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq GleExclusive_Done
+	special GleWindsTrack
+	compare VAR_RESULT, 1
+	goto_if_ne GleWinds_StationNotReady
+	msgbox GleWinds_TextTracked, MSGBOX_DEFAULT
+	goto GleExclusive_Done
+GleWinds_StationNotReady::
+	msgbox GleWinds_TextNotReady, MSGBOX_DEFAULT
+	goto GleExclusive_Done
+GleWinds_TextTrack:
+	.string "Track this wind, or help it recover?\nInitialized partners keep their\lidentity when signals change.$"
+GleWinds_TextRelease:
+	.string "Release and track this wind?\nIt will roam Kanto routes. Find\lit through ordinary wild encounters.\pOther winds are independent.\nChoose a different tracked signal\lin the GLA Four Winds notebook.$"
+GleWinds_TextSave:
+	.string "The weather survey is complete.\nWould you like to save before\lreleasing this wind?$"
+GleWinds_TextTracked:
+	.string "The signal is being tracked!\nThe POKéRIDER map shows its route.\pFleeing preserves its HP and status.\nA fainted wind can recover through\lthe GLA notebook with the same identity.$"
+GleWinds_TextNotReady:
+	.string "Open that wind's weather seal\nat the required survey rank first.\lA captured partner cannot\lbe released again.$"
