@@ -48,6 +48,9 @@ struct HofGfx
 static EWRAM_DATA u32 sSelectedPaletteIndices = 0;
 static EWRAM_DATA struct HallofFameTeam * sHofMonPtr = NULL;
 static EWRAM_DATA struct HofGfx * sHofGfxPtr = NULL;
+static EWRAM_DATA struct HallofFameTeam *sArchivedTeam = NULL;
+static EWRAM_DATA MainCallback sArchiveReturn = NULL;
+static EWRAM_DATA u8 sArchiveTitle[32] = {0};
 
 static void Task_Hof_InitMonData(u8 taskId);
 static void Task_Hof_InitTeamSaveData(u8 taskId);
@@ -726,6 +729,13 @@ static void SetWarpsToRollCredits(void)
     ResetInitialPlayerAvatarState();
 }
 
+void ShowArchivedHallOfFameTeam(struct HallofFameTeam *team,const u8 *title,void (*returnCallback)(void))
+{
+    sArchivedTeam=team;sArchiveReturn=returnCallback;
+    StringCopyN(sArchiveTitle,title,sizeof(sArchiveTitle)-1);sArchiveTitle[sizeof(sArchiveTitle)-1]=EOS;
+    SetMainCallback2(CB2_InitHofPC);
+}
+
 void CB2_InitHofPC(void)
 {
     switch (gMain.state)
@@ -770,7 +780,7 @@ void CB2_InitHofPC(void)
         SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(16, 7));
         SetGpuReg(REG_OFFSET_BLDY, 0);
         CreateTask(Task_HofPC_CopySaveData, 0);
-        sHofMonPtr = AllocZeroed(SECTOR_SIZE * NUM_HOF_SECTORS);
+        // AllocateHoFTeams already owns the scratch team; do not leak it.
         SetMainCallback2(CB2_HofIdle);
         break;
     }
@@ -779,6 +789,13 @@ void CB2_InitHofPC(void)
 static void Task_HofPC_CopySaveData(u8 taskId)
 {
     HofPCTopBar_AddWindow(0, 30, 0, 0x0C, 0x226);
+    if(sArchiveReturn)
+    {
+        memset(gHoFSaveBuffer,0,SECTOR_SIZE*NUM_HOF_SECTORS);
+        *gHoFSaveBuffer=*sArchivedTeam;TRY_FREE_AND_SET_NULL(sArchivedTeam);
+        gTasks[taskId].data[0]=0;gTasks[taskId].data[1]=1;
+        gTasks[taskId].func=Task_HofPC_DrawSpritesPrintText;return;
+    }
     if (LoadGameSave(SAVE_HALL_OF_FAME) != SAVE_STATUS_OK)
     {
         gTasks[taskId].func = Task_HofPC_PrintDataIsCorrupted;
@@ -861,7 +878,9 @@ static void Task_HofPC_DrawSpritesPrintText(u8 taskId)
     ConvertIntToDecimalStringN(gStringVar1, gTasks[taskId].data[1], STR_CONV_MODE_LEFT_ALIGN, 3);
     StringExpandPlaceholders(gStringVar4, gText_HOFNumber);
 
-    if (gTasks[taskId].data[0] <= 0)
+    if(sArchiveReturn)
+        HofPCTopBar_PrintPair(sArchiveTitle,gText_PickCancel,0,0,TRUE);
+    else if (gTasks[taskId].data[0] <= 0)
         HofPCTopBar_PrintPair(gStringVar4, gText_PickCancel, 0, 0, TRUE);
     else
         HofPCTopBar_PrintPair(gStringVar4, gText_PickNextCancel, 0, 0, TRUE);
@@ -975,7 +994,8 @@ static void Task_HofPC_HandleExit(u8 taskId)
         DestroyTask(taskId);
         FreeAllHoFMem();
 
-        ReturnFromHallOfFamePC();
+        if(sArchiveReturn){MainCallback cb=sArchiveReturn;sArchiveReturn=NULL;cb();}
+        else ReturnFromHallOfFamePC();
     }
 }
 
@@ -1082,9 +1102,14 @@ static void HallOfFame_PrintMonInfo(struct HallofFameMon* currMon, u8 unused1, u
         ConvertIntToDecimalStringN(stringPtr, currMon->lvl, STR_CONV_MODE_LEFT_ALIGN, 3);
         AddTextPrinterParameterized3(0, FONT_NORMAL, 0x20, 0x11, sTextColors[0], 0, text);
 
-        stringPtr = StringCopy(text, gText_IDNumber);
-        ConvertIntToDecimalStringN(stringPtr, (u16)(currMon->tid), STR_CONV_MODE_LEADING_ZEROS, 5);
-        AddTextPrinterParameterized3(0, FONT_NORMAL, 0x60, 0x11, sTextColors[0], 0, text);
+        if(!sArchiveReturn)
+        {
+            stringPtr = StringCopy(text, gText_IDNumber);
+            ConvertIntToDecimalStringN(stringPtr, (u16)(currMon->tid), STR_CONV_MODE_LEADING_ZEROS, 5);
+            AddTextPrinterParameterized3(0, FONT_NORMAL, 0x60, 0x11, sTextColors[0], 0, text);
+        }
+        else if(currMon->isShiny)
+            AddTextPrinterParameterized3(0,FONT_NORMAL,0x60,0x11,sTextColors[0],0,COMPOUND_STRING("Shiny partner"));
 
     }
     CopyWindowToVram(0, COPYWIN_FULL);

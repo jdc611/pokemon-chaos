@@ -683,11 +683,22 @@ GleCompetition_HallPage::
 	special GleCompetitionHallInfo
 	msgbox gStringVar4, MSGBOX_DEFAULT
 	closemessage
-	special GleCompetitionHistoryMenu
-	compare VAR_RESULT, 2
+	special GleCompetitionHallMenu
+	compare VAR_RESULT, 3
 	goto_if_ge GleCompetition_Menu
+	compare VAR_RESULT, 0
+	goto_if_eq GleCompetition_HallArtwork
+	subvar VAR_RESULT, 1
 	special GleCompetitionHallMove
 	goto GleCompetition_HallPage
+GleCompetition_HallArtwork::
+	special GleCompetitionHallView
+	compare VAR_RESULT, 1
+	goto_if_eq GleCompetition_HallPage
+	msgbox GleCompetition_TextHallUnavailable, MSGBOX_DEFAULT
+	goto GleCompetition_HallPage
+GleCompetition_TextHallUnavailable:
+	.string "No team artwork is available.\nComplete a Kanto Championship\lor retain your archive backup.$"
 GleCompetition_Refused::
 	msgbox GleCompetition_TextRefused, MSGBOX_DEFAULT
 	goto GleCompetition_Menu

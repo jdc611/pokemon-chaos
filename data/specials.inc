@@ -895,3 +895,6 @@ gSpecials::
 	def_special GleLineageMenu, waitstate=1
 	def_special GleLineageInfo
 	def_special GleLineageClaim
+
+	def_special GleCompetitionHallMenu, waitstate=1
+	def_special GleCompetitionHallView, waitstate=1

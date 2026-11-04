@@ -7,6 +7,13 @@
 #include "battle.h"
 #include "event_data.h"
 #include "malloc.h"
+#include "hall_of_fame.h"
+#include "hall_of_fame_frlg.h"
+#include "main.h"
+#include "overworld.h"
+#include "palette.h"
+#include "task.h"
+#include "constants/rgb.h"
 #include "money.h"
 #include "item.h"
 #include "move.h"
@@ -94,6 +101,46 @@ void GleCompetitionHallInfo(void){
     StringCopy(gStringVar4,COMPOUND_STRING("KANTO CHAMPION: "));StringAppend(gStringVar4,sEventNames[p[2]<=8?p[2]:0]);
     for(i=0;i<p[3]&&i<6;i++){u8 *q=p+4+i*18;u16 species;memcpy(&species,q+4,2);memcpy(n,q+8,10);n[10]=EOS;ConvertIntToDecimalStringN(level,q[6],STR_CONV_MODE_LEFT_ALIGN,3);StringAppend(gStringVar4,COMPOUND_STRING("\p"));StringAppend(gStringVar4,n);StringAppend(gStringVar4,COMPOUND_STRING(" Lv. "));StringAppend(gStringVar4,level);StringAppend(gStringVar4,COMPOUND_STRING("\n"));StringAppend(gStringVar4,GetSpeciesName(species));if(q[7])StringAppend(gStringVar4,COMPOUND_STRING(" (Shiny)"));}
     Free(a);Free(b);
+}
+
+static EWRAM_DATA struct HallofFameTeam *sHallPreview=NULL;
+static bool32 CopyHallTeam(struct HallofFameTeam *team)
+{
+    struct GleState *s=GymLeaderState();struct Archive *a,*b,*best;
+    bool32 va,vb,ok=FALSE;u8 *p;u32 i;
+    if(!IsGymLeaderRun() || sHallCursor>=s->competitions.archiveCount)return FALSE;
+    a=AllocZeroed(sizeof(*a));b=AllocZeroed(sizeof(*b));if(!a||!b){Free(a);Free(b);return FALSE;}
+    va=GleReadArchiveSector(0,(u8 *)a)==SAVE_STATUS_OK&&a->magic==ARCHIVE_MAGIC&&a->seed==s->seed&&a->count>=s->competitions.archiveCount&&a->count<=32;
+    vb=GleReadArchiveSector(1,(u8 *)b)==SAVE_STATUS_OK&&b->magic==ARCHIVE_MAGIC&&b->seed==s->seed&&b->count>=s->competitions.archiveCount&&b->count<=32;
+    if(va||vb){
+        best=vb&&(!va||b->generation>a->generation)?b:a;p=best->teams[sHallCursor];
+        if(p[2]<=8&&p[3]>=1&&p[3]<=6){
+            memset(team,0,sizeof(*team));ok=TRUE;
+            for(i=0;i<p[3];i++){
+                u8 *q=p+4+i*18;u16 species;memcpy(&species,q+4,2);
+                if(!species||species>=NUM_SPECIES||!gSpeciesInfo[species].baseHP||q[6]<1||q[6]>100){ok=FALSE;break;}
+                memcpy(&team->mon[i].personality,q,4);team->mon[i].species=species;team->mon[i].lvl=q[6];team->mon[i].isShiny=!!q[7];
+                memcpy(team->mon[i].nickname,q+8,10);
+            }
+            StringCopy(gStringVar4,sEventNames[p[2]]);StringAppend(gStringVar4,COMPOUND_STRING(" / KANTO"));
+        }
+    }
+    Free(a);Free(b);return ok;
+}
+static void Task_HallArtwork(u8 taskId)
+{
+    struct HallofFameTeam *team;
+    if(gPaletteFade.active)return;
+    team=sHallPreview;sHallPreview=NULL;ResetTasks();CleanupOverworldWindowsAndTilemaps();
+    ShowArchivedHallOfFameTeam(team,gStringVar4,CB2_ReturnToFieldContinueScriptPlayMapMusic);
+}
+void GleCompetitionHallMenu(void){static const u8 *const names[]={COMPOUND_STRING("View team"),COMPOUND_STRING("Older event"),COMPOUND_STRING("Newer event"),COMPOUND_STRING("Back")};GymLeaderMenu(names,ARRAY_COUNT(names),FALSE);}
+void GleCompetitionHallView(void)
+{
+    gSpecialVar_Result=0;
+    sHallPreview=AllocZeroed(sizeof(*sHallPreview));
+    if(!sHallPreview || !CopyHallTeam(sHallPreview)){TRY_FREE_AND_SET_NULL(sHallPreview);GymLeaderResumeScriptNextFrame();return;}
+    gSpecialVar_Result=1;BeginNormalPaletteFade(PALETTES_ALL,0,0,16,RGB_BLACK);CreateTask(Task_HallArtwork,10);
 }
 
 // Append-only research bits 209..216 license eight reusable championship TMs;

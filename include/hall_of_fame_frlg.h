@@ -7,5 +7,8 @@ void CB2_DoHallOfFameScreenFrlg(void);
 void CB2_DoHallOfFameScreenDontSaveDataFrlg(void);
 void CB2_InitHofPC(void);
 void ReturnFromHallOfFamePC(void);
+struct HallofFameTeam;
+// Takes ownership of team; this read-only viewer never loads/writes HOF save sectors.
+void ShowArchivedHallOfFameTeam(struct HallofFameTeam *team,const u8 *title,void (*returnCallback)(void));
 
 #endif // GUARD_HALL_OF_FAME_FRLG_H
