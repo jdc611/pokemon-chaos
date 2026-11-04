@@ -1,4 +1,5 @@
 #include "global.h"
+#include "gym_leader_news.h"
 #include "gym_leader.h"
 #include "gym_leader_colleagues.h"
 #include "gym_leader_competitions_native.h"
@@ -21,6 +22,7 @@ static const u16 sPictures[]={TRAINER_PIC_LEADER_BROCK_FRLG,TRAINER_PIC_LEADER_M
 static const u16 sGyms[]={MAP_PEWTER_CITY_GYM,MAP_CERULEAN_CITY_GYM,MAP_VERMILION_CITY_GYM,MAP_CELADON_CITY_GYM,MAP_FUCHSIA_CITY_GYM,MAP_SAFFRON_CITY_GYM,MAP_CINNABAR_ISLAND_GYM};
 extern const u8 PewterCity_Gym_EventScript_Brock[],CeruleanCity_Gym_EventScript_Misty[],VermilionCity_Gym_EventScript_LtSurge[],CeladonCity_Gym_EventScript_Erika[],FuchsiaCity_Gym_EventScript_Koga[],SaffronCity_Gym_EventScript_Sabrina[],CinnabarIsland_Gym_EventScript_Blaine[];
 static const u8 *const sOriginalScripts[]={PewterCity_Gym_EventScript_Brock,CeruleanCity_Gym_EventScript_Misty,VermilionCity_Gym_EventScript_LtSurge,CeladonCity_Gym_EventScript_Erika,FuchsiaCity_Gym_EventScript_Koga,SaffronCity_Gym_EventScript_Sabrina,CinnabarIsland_Gym_EventScript_Blaine};
+extern const u8 GleChampion_NewsNpc[];
 extern const u8 GleColleague_Leader[],GleColleague_LeagueDesk[],GleCompetition_Desk[],GleCompetition_Trophy[],GleFinalOak_Desk[],GleRivalDouble_Desk[],PalletTown_ProfessorOaksLab_EventScript_ProfOak[];
 static EWRAM_DATA u8 sColleagueId=0;
 static u16 CurrentMap(void){return (u8)gSaveBlock1Ptr->location.mapNum|((u8)gSaveBlock1Ptr->location.mapGroup<<8);}
@@ -29,6 +31,7 @@ bool32 GymLeaderConfigureColleagues(struct MapEvents *events,struct ObjectEventT
 {
     u32 i,j,count=events->objectEventCount;bool32 changed=FALSE;u16 map=CurrentMap();
     if(!IsGymLeaderRun())return FALSE;
+    for(i=0;i<count;i++){const u8 *replacement=GymLeaderChampionNpcScript(objects[i].script);if(replacement!=objects[i].script){objects[i].script=replacement;changed=TRUE;}}
     for(i=0;i<7;i++)if(map==sGyms[i])
         for(j=0;j<count;j++)if(objects[j].script==sOriginalScripts[i])
         {objects[j].script=GleColleague_Leader;changed=TRUE;}
@@ -49,6 +52,7 @@ bool32 GymLeaderConfigureColleagues(struct MapEvents *events,struct ObjectEventT
     if(map==MAP_GLE_GYM_INTERIOR && GymLeaderState()->openingStage==5)for(i=0;i<3&&count<capacity;i++)if(GymLeaderTrophyAt(i)){objects[count++]=(struct ObjectEventTemplate){.localId=236+i,.graphicsId=OBJ_EVENT_GFX_TRICK_HOUSE_STATUE,.x=2+i*4,.y=3,.elevation=3,.movementType=MOVEMENT_TYPE_NONE,.script=GleCompetition_Trophy};changed=TRUE;}
     if(map==MAP_PALLET_TOWN_PROFESSOR_OAKS_LAB && GymLeaderState()->openingStage==5)for(i=0;i<count;i++)if(objects[i].script==PalletTown_ProfessorOaksLab_EventScript_ProfOak){objects[i].script=GleFinalOak_Desk;objects[i].flagId=0;objects[i].x=6;objects[i].y=3;changed=TRUE;}
     if(map==MAP_GLE_LEAGUE_HALL && count<capacity){objects[count++]=(struct ObjectEventTemplate){.localId=234,.graphicsId=OBJ_EVENT_GFX_BLUE,.x=2,.y=8,.elevation=3,.movementType=MOVEMENT_TYPE_FACE_DOWN,.script=GleRivalDouble_Desk};changed=TRUE;}
+    if(map==MAP_GLE_LEAGUE_HALL && count<capacity){objects[count++]=(struct ObjectEventTemplate){.localId=235,.graphicsId=OBJ_EVENT_GFX_GENTLEMAN_FRLG,.x=7,.y=8,.elevation=3,.movementType=MOVEMENT_TYPE_FACE_DOWN,.script=GleChampion_NewsNpc};changed=TRUE;}
     events->objectEventCount=count;events->objectEvents=objects;return changed;
 }
 u32 GymLeaderColleagueSelected(void){return sColleagueId;}

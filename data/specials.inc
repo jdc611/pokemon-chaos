@@ -907,3 +907,10 @@ gSpecials::
 	def_special GleCatalogClaim
 
 	def_special GleCatalogCancel
+	def_special GleTownArrival
+	def_special GleCelebrationInfo
+	def_special GleCelebrationStaffText
+	def_special GleCelebrationFinish
+	def_special GleRecognitionInfo
+	def_special GleNewsMenu, waitstate=1
+	def_special GleNewsPage

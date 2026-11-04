@@ -1,9 +1,14 @@
 GleTown_MapScripts::
 	map_script MAP_SCRIPT_ON_LOAD, GleTown_OnLoad
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, GleTown_OnFrame
 	.byte 0
 GleTown_OnLoad::
 	special GleTownDraw
+	special GleTownArrival
 	end
+GleTown_OnFrame::
+	map_script_2 VAR_TEMP_F, 1, GleChampion_Celebration
+	.2byte 0
 GleTownPlot::
 	lockall
 	setvar VAR_0x8009, 255
@@ -51,6 +56,11 @@ GleTown_RivalPlot::
 GleTownResident::
 	lock
 	faceplayer
+	special GleRecognitionInfo
+	compare VAR_RESULT, 0
+	goto_if_eq GleTownResident_Request
+	msgbox gStringVar4, MSGBOX_DEFAULT
+GleTownResident_Request::
 	special GleResidentRequestInfo
 	compare VAR_RESULT, 3
 	goto_if_eq GleResident_Completed
@@ -389,6 +399,7 @@ GleRocket_Decision::
 	special GleRocketRefresh
 	msgbox GleRocket_TextResolved, MSGBOX_DEFAULT
 GleRocket_Done::
+	special GleTownArrival
 	releaseall
 	end
 GleRocket_TextIncident:
@@ -405,3 +416,61 @@ GleRocket_TextDecision:
 	.string "The raid has been defeated.\nRocket offers hush money to leave\lwithout being reported.\pThe GLA also pays for turning\nraiders over. How will you handle it?\lYou may decide later.$"
 GleRocket_TextResolved:
 	.string "The incident is resolved.\nYour funds, standing and town\lrecords have been updated.\pOrdinary town income resumes.\nBuildings and their upgrades\lremain in place.$"
+
+GleChampion_Celebration::
+	lockall
+	setvar VAR_TEMP_F, 0
+	special GleCelebrationInfo
+	compare VAR_RESULT, 0
+	goto_if_eq GleExclusive_Done
+	addobject 245
+	addobject 246
+	compare VAR_RESULT, 2
+	goto_if_eq GleChampion_ShortCelebration
+	playfanfare MUS_OBTAIN_BADGE
+	msgbox gStringVar4, MSGBOX_DEFAULT
+	special GleCelebrationStaffText
+	msgbox gStringVar4, MSGBOX_DEFAULT
+	msgbox GleChampion_TextHome, MSGBOX_DEFAULT
+	waitfanfare
+	goto GleChampion_EndCelebration
+GleChampion_ShortCelebration::
+	playfanfare MUS_OBTAIN_ITEM
+	msgbox gStringVar4, MSGBOX_DEFAULT
+	waitfanfare
+GleChampion_EndCelebration::
+	special GleCelebrationFinish
+	releaseall
+	end
+GleChampion_Celebrant::
+	lock
+	faceplayer
+	special GleRecognitionInfo
+	msgbox gStringVar4, MSGBOX_DEFAULT
+	release
+	end
+GleChampion_Display::
+	msgbox GleChampion_TextDisplay, MSGBOX_SIGN
+	end
+GleChampion_TextHome:
+	.string "Our town's championship memorial\nwill honour this achievement.\pThe celebrations may be brief,\nbut our pride in this Gym\lwill stay with us.$"
+GleChampion_TextDisplay:
+	.string "The town's championship memorial.\nA place in Kanto's history,\lshared by this Gym and its people.$"
+GleChampion_NewsNpc::
+	lock
+	faceplayer
+	special GleRecognitionInfo
+	msgbox gStringVar4, MSGBOX_DEFAULT
+	msgbox GleChampion_TextReadNews, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq GleHall_Stay
+GleChampion_NewsMenu::
+	closemessage
+	special GleNewsMenu
+	compare VAR_RESULT, 5
+	goto_if_ge GleHall_Stay
+	special GleNewsPage
+	msgbox gStringVar4, MSGBOX_DEFAULT
+	goto GleChampion_NewsMenu
+GleChampion_TextReadNews:
+	.string "Read the latest Kanto Gazette?$"

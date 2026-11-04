@@ -325,3 +325,10 @@ void GleStaffPersonalClaim(void)
     s->personalBonds[index/8]|=1u<<(index%8);r->questBond=1;r->loyalty=min(100,r->loyalty+25);r->warnings=0;
     s->honor=min(1000,s->honor+5);s->reputation=min(65535,s->reputation+3);AddMoney(&gSaveBlock1Ptr->money,1500);gSpecialVar_Result=GLE_OK;
 }
+
+u16 GymLeaderCelebrationStaffGraphics(void)
+{
+    struct GleState *s=GymLeaderState();u32 i;
+    for(i=0;i<GLE_RECRUITS;i++)if(s->recruits[i].id&&s->recruits[i].active&&!s->recruits[i].away){const struct GleRecruitSource *source=Source(s->recruits[i].id);if(source)return source->graphics;}
+    return OBJ_EVENT_GFX_GENTLEMAN_FRLG;
+}

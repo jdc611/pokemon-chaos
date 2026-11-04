@@ -3,6 +3,7 @@
 #include "gym_leader_script.h"
 #include "gym_leader_research.h"
 #include "gym_leader_recruit.h"
+#include "gym_leader_news.h"
 #include "event_data.h"
 #include "fieldmap.h"
 #include "field_camera.h"
@@ -17,7 +18,7 @@
 #include "constants/flags.h"
 #include "constants/maps.h"
 
-extern const u8 GleRocket_Contact[];
+extern const u8 GleRocket_Contact[],GleChampion_Celebrant[],GleChampion_Display[];
 extern const u8 GleTown_MapScripts[], GleTownResident[], GleLandmarkSign[], GleSilphResearch[], GleSilphPrivate[];
 extern const u8 GleTownPlot0[];
 extern const u8 GleTownPlot1[];
@@ -56,7 +57,7 @@ static const u8 *const sBuildings[] = {
 static EWRAM_DATA struct MapEvents sEvents = {0};
 static EWRAM_DATA struct WarpEvent sWarps[64] = {0};
 static EWRAM_DATA struct BgEvent sSigns[GLE_PLOTS+1] = {0};
-static EWRAM_DATA struct ObjectEventTemplate sResidents[9] = {0};
+static EWRAM_DATA struct ObjectEventTemplate sResidents[13] = {0};
 static EWRAM_DATA u8 sOriginalWarpCount = 0;
 
 static s32 TownIndex(u16 map)
@@ -164,6 +165,14 @@ void GymLeaderConfigureTown(struct MapHeader *header)
     if(town==GymLeaderState()->town && GymLeaderState()->rocket.stage)
         sResidents[visitors++]=(struct ObjectEventTemplate){.localId=235,.graphicsId=OBJ_EVENT_GFX_ROCKET_M,
             .x=15,.y=8,.elevation=3,.movementType=MOVEMENT_TYPE_FACE_DOWN,.script=GleRocket_Contact};
+    if(town==GymLeaderState()->town && GymLeaderState()->championshipWins){
+        for(i=0;i<2;i++)sResidents[visitors++]=(struct ObjectEventTemplate){.localId=247+i,.graphicsId=OBJ_EVENT_GFX_TRICK_HOUSE_STATUE,.x=7+i*6,.y=9,.elevation=3,.movementType=MOVEMENT_TYPE_NONE,.script=GleChampion_Display};
+        if(GymLeaderCelebrationPending()){
+            FlagClear(FLAG_TEMP_1E);FlagClear(FLAG_TEMP_1F);
+            sResidents[visitors++]=(struct ObjectEventTemplate){.localId=245,.flagId=FLAG_TEMP_1E,.graphicsId=OBJ_EVENT_GFX_GENTLEMAN_FRLG,.x=8,.y=9,.elevation=3,.movementType=MOVEMENT_TYPE_FACE_DOWN,.script=GleChampion_Celebrant};
+            sResidents[visitors++]=(struct ObjectEventTemplate){.localId=246,.flagId=FLAG_TEMP_1F,.graphicsId=GymLeaderCelebrationStaffGraphics(),.x=12,.y=9,.elevation=3,.movementType=MOVEMENT_TYPE_FACE_DOWN,.script=GleChampion_Celebrant};
+        }
+    }
     sEvents.objectEventCount = visitors; sEvents.objectEvents = sResidents;
     header->events = &sEvents;
     header->mapScripts = GleTown_MapScripts;

@@ -3,6 +3,7 @@
 struct MapHeader;
 struct GleState;
 void GymLeaderMigratePersonalBonds(struct GleState *s);
+u16 GymLeaderCelebrationStaffGraphics(void);
 struct Trainer;
 struct TrainerMon;
 void GymLeaderRecruitResetOffer(void);
