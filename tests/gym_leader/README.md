@@ -7,7 +7,7 @@ ROM as the requested finished game.
 Host scenarios:
 
 ```
-gcc -std=c11 -Wall -Wextra -Werror -fsanitize=address,undefined -g -Iinclude src/gym_leader_state.c src/gym_leader_competitions_core.c tests/gym_leader/state_test.c -o /tmp/gle-state-test
+gcc -std=c11 -Wall -Wextra -Werror -fsanitize=address,undefined -g -Iinclude src/gym_leader_state.c src/gym_leader_competitions_core.c src/gym_leader_hosting_state.c tests/gym_leader/state_test.c -o /tmp/gle-state-test
 ASAN_OPTIONS=detect_leaks=0 /tmp/gle-state-test
 ```
 
@@ -78,3 +78,5 @@ are supplied for the Habitat fixture; its walking-generated wild encounter is re
 The direct whiteout callback fixture verifies home recovery, not a full wild loss.
 Build with conservative parallelism if a compiler job is killed by memory pressure;
 remove any resulting zero-byte generated objects before rebuilding.
+
+Hosting checks: compile `hosting_layout.c` and `competition_layout.c` alongside the shared layout, then run `native_hosting.py` with `GLE_TEST_TOWN=0`, `1`, and `2` in separate QA directories. `hosting_state_test.c` links the state, competition core and hosting-state sources and covers invitations/rival bids and Kanto settlement.

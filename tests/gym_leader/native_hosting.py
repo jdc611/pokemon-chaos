@@ -3,7 +3,7 @@ import runpy,struct
 ctx=runpy.run_path('tests/gym_leader/native_opening.py');globals().update(ctx)
 def layout(name):
  data=(ROOT/(name+'-layout.bin')).read_bytes();return struct.unpack('<'+'I'*(len(data)//4),data)
-h=layout('hosting');c=layout('competition')
+h=layout('hosting');c=layout('competition');townmap=v[58+town]
 def cp():return current()+c[0]
 def hp():return current()+h[0]
 def money():return call('GetMoney',rd('gSaveBlock1Ptr')+v[64])
@@ -36,12 +36,12 @@ def proposal(accept):
 setmoney(0);proposal(True);assert money()==0 and rd(hp()+h[5],1)!=2
 setmoney(100000);proposal(False);assert money()==100000 and rd(hp()+h[5],1)!=2
 proposal(True);assert money()==95000 and rd(hp()+h[5],1)==2
-assert call('GleEventVenue',cp()+c[5])==0 and call('GleEventFormat',cp()+c[5])==1
+assert call('GleEventVenue',cp()+c[5])==town and call('GleEventFormat',cp()+c[5])==1
 # Duplicate applications cannot charge again.
 choose(0);until(lambda:menu_count()==4);assert money()==95000
 print('PASS native director, insufficient funds, proposal cancellation, doubles booking and one-time fee',flush=True)
 choose(2);frames(360);finish_text()
-loc=rd('gSaveBlock1Ptr')+v[25];assert (rd(loc,1)<<8|rd(loc+1,1))==v[58]
+loc=rd('gSaveBlock1Ptr')+v[25];assert (rd(loc,1)<<8|rd(loc+1,1))==townmap
 assert call('GetObjectEventIdByLocalId',249)<16
 assert call('GymLeaderCompetitionAtVenue')
 snap('hosting-town-venue')
@@ -59,7 +59,7 @@ assert call('GleCompetitionJoin',current())==0
 wr(cp()+c[5],sum(who<<(4*i) for i,who in enumerate([0,2,1,3,4,5,6,7])))
 wr(current()+v[56],rd(cp()+c[4])-1);call('GymLeaderAdvanceActivity');assert rd(cp()+c[8],1)==2
 assert call('GymLeaderPrepareCompetition')==4
-warp(v[58],10,9);wr(current()+v[26],1,1);assert call('GymLeaderPrepareCompetition')==2;wr(current()+v[26],3,1)
+warp(townmap,10,9);wr(current()+v[26],1,1);assert call('GymLeaderPrepareCompetition')==2;wr(current()+v[26],3,1)
 opt=rd('gSaveBlock2Ptr')+0x14;wr(opt,(rd(opt,2)&~7)|2|0x600,2)
 def records():return tuple(rd(current()+v[k],n) for k,n in [(29,2),(30,2),(31,4),(32,1),(56,4)])
 baseline=records();funds=money()
@@ -95,7 +95,7 @@ while call('GleCompetitionOpponent',current())<0x80000000:
 assert rounds==3 and rd(hp()+h[5],1)==0 and rd(cp()+c[7],2)==1
 assert money()>funds+6000 and records()==baseline
 settled=money();scratch=symbols['gStringVar1'];wr(scratch,settled);call('GleHostingFinish',current(),scratch);assert rd(scratch)==settled
-assert call('GleEventFormat',cp()+c[14])==1 and call('GleEventVenue',cp()+c[14])==0
+assert call('GleEventFormat',cp()+c[14])==1 and call('GleEventVenue',cp()+c[14])==town
 assert call('TrySavingData',0)==1 and call('LoadGameSave',0)==1 and money()==settled and rd(hp()+h[5],1)==0
 print('PASS all hosting round adapters, visitor income once, immutable format/venue history and completed flash state',flush=True)
 print('PASS HOSTING NATIVE CHECKS COMPLETE',flush=True)
