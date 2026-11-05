@@ -35,5 +35,11 @@ int main(void) {
     copy=s;assert(GlePositionTrainer(&s,0,6)==GLE_INVALID&&!memcmp(&s,&copy,sizeof(s)));
     assert(GlePositionTrainer(&s,GLE_RECRUITS,0)==GLE_INVALID);
     memset(&s.recruits[0],0,sizeof(s.recruits[0]));assert(GleTrainerStation(&s,0)==GLE_NONE);unique(&s);
+    GleInit(&s,42);s.rank=s.highestRank=8;
+    assert(GleRecruitTrainer(&s,1,3,20)==GLE_OK);
+    assert(GleAssignTrainer(&s,0,1)==GLE_OK && GlePositionTrainer(&s,0,5)==GLE_OK);
+    s.recruits[0].warnings=3;s.reputation=50;s.lossStreak=3;s.activity=11;
+    {uint32_t money=0;GleActivity(&s,&money);}
+    assert(s.recruits[0].away && !s.recruits[0].active && GleTrainerStation(&s,0)==GLE_NONE);
     puts("PASS station reservations, atomic conflict rejection, automatic fill, assignment retention, departure, malformed fallback and unchanged save budget");
 }
