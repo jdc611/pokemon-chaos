@@ -1,4 +1,5 @@
 #include "global.h"
+#include "gym_leader.h"
 #include "chaos_arcade.h"
 #include "battle_pyramid.h"
 #include "bg.h"
@@ -1007,6 +1008,7 @@ static void LoadTilesetPalette(struct Tileset const *tileset, u16 destOffset, u1
         }
     }
     ChaosArcadeRanchPalette(destOffset,size/2,skipFaded);
+    GymLeaderGymPalette(destOffset,size/2,skipFaded);
 }
 
 void CopyPrimaryTilesetToVram(struct MapLayout const *mapLayout)

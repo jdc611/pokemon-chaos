@@ -17,10 +17,10 @@ assert not call('ScriptContext_IsEnabled')
 call('GleWarpHome');frames(240)
 wr(current()+v[26],0,1)
 frames(32,16);frames(64,128);frames(20);press(1)
-until(lambda:menu_count()==7)
+until(lambda:menu_count()==8)
 q=rd(current()+v[32],1);wins=rd(current()+v[29],2);loss=rd(current()+v[30],2)
 choose(0);until(yesno);choose(0)
-until(lambda:menu_count()==7)
+until(lambda:menu_count()==8)
 assert rd(current()+v[32],1)==q
 assert rd(current()+v[29],2)==wins and rd(current()+v[30],2)==loss
 assert not call('GymLeaderBattleTrainer')

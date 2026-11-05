@@ -413,7 +413,7 @@ void GymLeaderGuideMenu(void)
     static const u8 *const names[] = {
         COMPOUND_STRING("Defend GYM"), COMPOUND_STRING("Register team"),
         COMPOUND_STRING("GYM status"), COMPOUND_STRING("Heal team"),
-        COMPOUND_STRING("League Inspection"), COMPOUND_STRING("Visit GLA"), COMPOUND_STRING("Back")
+        COMPOUND_STRING("League Inspection"), COMPOUND_STRING("Visit GLA"), COMPOUND_STRING("GYM design"), COMPOUND_STRING("Back")
     };
     GymLeaderMenu(names, ARRAY_COUNT(names), FALSE);
 }

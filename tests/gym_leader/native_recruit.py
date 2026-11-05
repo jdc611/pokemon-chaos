@@ -112,10 +112,10 @@ press(2);until(lambda:menu_count()==2);press(2);frames(50)
 call('GleWarpHome');frames(240);assert 230 in objectids()
 snap('staff-active-gym')
 # Register an existing third starter through the real Guide selector.
-walkto(7,12);press(16);press(1);until(lambda:menu_count()==7)
+walkto(7,12);press(16);press(1);until(lambda:menu_count()==8)
 choose(1);until(lambda:call('GymLeaderRegistering'));frames(160)
 press(16,25);press(128,25);press(1,25);press(1,25);press(128);press(1,100)
-until(lambda:menu_count()==7);assert rd(current()+v[26],1)==1
+until(lambda:menu_count()==8);assert rd(current()+v[26],1)==1
 press(2);frames(50)
 walkto(3,12);press(32);press(1);until(lambda:menu_count()==2)
 choose(0);until(lambda:menu_count()==7)

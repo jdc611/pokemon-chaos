@@ -104,6 +104,7 @@ void GymLeaderConfigureTown(struct MapHeader *header)
     const struct MapEvents *source;
     u32 i, visitors;
     GymLeaderUnlockTravel();
+    GymLeaderConfigureGymDesign(header);
     GymLeaderConfigureExclusiveMap(header);
     GymLeaderConfigureResearchMap(header);
     if (IsGymLeaderRun())

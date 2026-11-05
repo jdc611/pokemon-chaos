@@ -4,6 +4,7 @@ GleGymInterior_MapScripts::
 	.byte 0
 GleGym_OnTransition::
 	special GleGymPrepare
+	special GleGymDesignOwnerAccess
 	special GleOpeningStage
 	setvar VAR_TEMP_0, 0
 	compare VAR_RESULT, 1

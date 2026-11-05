@@ -924,3 +924,13 @@ gSpecials::
 	def_special GleHostingRefreshVenue
 
 	def_special ChaosArcadeUnlocked
+	def_special GleGymDesignInfo
+	def_special GleGymDesignMenu, waitstate=1
+	def_special GleGymDesignChoices, waitstate=1
+	def_special GleGymDesignQuote
+	def_special GleGymDesignConfirm
+	def_special GleGymDesignReset
+	def_special GleGymDesignClues
+	def_special GleGymDesignSwitch
+
+	def_special GleGymDesignOwnerAccess

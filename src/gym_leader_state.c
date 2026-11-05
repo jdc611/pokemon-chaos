@@ -98,7 +98,7 @@ static void FilterStaffChallenger(struct GleState *s) {
     for(i=0;i<GLE_RECRUITS;i++) {
         struct GleRecruit *r=&s->recruits[(start+i)%GLE_RECRUITS];unsigned chance;
         if(!r->id || !r->active || r->away)continue;
-        chance=35+7*r->potential+(r->wins+r->losses>20?5:0);
+        chance=35+7*r->potential+2*s->gymDesign.puzzle+(r->wins+r->losses>20?5:0);
         if(GleMix(s->seed^s->activity^r->id)%100<chance) {
             r->wins=Add16(r->wins,1);if(r->loyalty<100)r->loyalty++;
             memmove(s->queue,s->queue+1,--s->queueCount);return;
@@ -296,4 +296,23 @@ int GleResolveRocket(struct GleState *s,uint8_t choice,uint32_t *money)
     s->rocket.cleared=Add16(s->rocket.cleared,1);s->rocket.stage=0;s->rocket.remaining=0;
     s->rocket.nextAt=Add32(s->activity,80+GleMix(s->seed^s->rocket.serial)%80);
     return GLE_OK;
+}
+
+uint32_t GleGymDesignPrice(const struct GleState *s,uint8_t kind,uint8_t choice)
+{
+ static const uint32_t upgrade[]={5000,15000,30000};uint32_t n;
+ if(!s||kind>3)return 0;
+ if(kind==3){if(s->gymDesign.tier>=3)return 0;n=upgrade[s->gymDesign.tier];}
+ else {if(choice>=(kind==2?6:4))return 0;n=kind==0?1000:kind==1?1500:750;}
+ return s->honor>=100?n*9/10:n;
+}
+int GleGymDesignPurchase(struct GleState *s,uint8_t kind,uint8_t choice,uint32_t *money)
+{
+ uint8_t *field;uint32_t cost;
+ if(!GleValid(s)||!money||kind>3||choice>=(kind==2?6:4))return GLE_INVALID;
+ field=kind==0?&s->gymDesign.layout:kind==1?&s->gymDesign.puzzle:kind==2?&s->gymDesign.theme:&s->gymDesign.tier;
+ if(kind==3){if(*field>=3)return GLE_DUPLICATE;if((s->rank>s->highestRank?s->rank:s->highestRank)<3+2*(*field))return GLE_NOT_READY;choice=*field+1;}
+ else {if(*field==choice)return GLE_DUPLICATE;if(kind<2&&choice>s->gymDesign.tier)return GLE_NOT_READY;}
+ cost=GleGymDesignPrice(s,kind,choice);if(*money<cost)return GLE_NOT_ENOUGH_MONEY;
+ *money-=cost;*field=choice;return GLE_OK;
 }

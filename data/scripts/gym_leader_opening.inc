@@ -147,6 +147,8 @@ GleGym_GuideMenu::
 	goto_if_eq GleGym_Inspection
 	compare VAR_RESULT, 5
 	goto_if_eq GleGym_VisitGLA
+	compare VAR_RESULT, 6
+	goto_if_eq GleGymDesign_Main
 	release
 	end
 GleGym_Heal::
@@ -321,3 +323,67 @@ GleText_ReturnHome:
 	.include "data/scripts/gym_leader_encounter.inc"
 
 	.include "data/scripts/gym_leader_staff.inc"
+
+GleGymDesign_Main::
+	special GleGymDesignInfo
+	msgbox gStringVar4, MSGBOX_DEFAULT
+GleGymDesign_Menu::
+	closemessage
+	special GleGymDesignMenu
+	compare VAR_RESULT, 3
+	goto_if_lt GleGymDesign_Choose
+	goto_if_eq GleGymDesign_Upgrade
+	compare VAR_RESULT, 4
+	goto_if_eq GleGymDesign_Reset
+	compare VAR_RESULT, 5
+	goto_if_eq GleGymDesign_Clues
+	goto GleGym_GuideMenu
+GleGymDesign_Choose::
+	copyvar VAR_0x8005, VAR_RESULT
+	special GleGymDesignChoices
+	goto GleGymDesign_Quote
+GleGymDesign_Upgrade::
+	setvar VAR_0x8005, 3
+GleGymDesign_Quote::
+	special GleGymDesignQuote
+	compare VAR_RESULT, 2
+	goto_if_eq GleGymDesign_Menu
+	compare VAR_RESULT, 1
+	goto_if_ne GleGymDesign_Unavailable
+	msgbox GleGymDesign_TextQuote, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq GleGymDesign_Menu
+	special GleGymDesignConfirm
+	compare VAR_RESULT, 0
+	goto_if_eq GleGymDesign_Applied
+	msgbox GleGymDesign_TextRefused, MSGBOX_DEFAULT
+	goto GleGymDesign_Menu
+GleGymDesign_Unavailable::
+	msgbox gStringVar4, MSGBOX_DEFAULT
+	goto GleGymDesign_Menu
+GleGymDesign_Applied::
+	msgbox GleGymDesign_TextApplied, MSGBOX_DEFAULT
+	goto GleGymDesign_Menu
+GleGymDesign_Reset::
+	special GleGymDesignReset
+	msgbox GleGymDesign_TextReset, MSGBOX_DEFAULT
+	goto GleGymDesign_Menu
+GleGymDesign_Clues::
+	special GleGymDesignClues
+	msgbox gStringVar4, MSGBOX_DEFAULT
+	goto GleGymDesign_Menu
+GleGymDesign_Switch::
+	lock
+	faceplayer
+	special GleGymDesignSwitch
+	msgbox gStringVar4, MSGBOX_DEFAULT
+	release
+	end
+GleGymDesign_TextQuote:
+	.string "{STR_VAR_1}\nInstallation fee: ¥{STR_VAR_2}\pApply this change? Other design\nchoices and trainer records stay\lintact. No fee is taken on refusal.$"
+GleGymDesign_TextApplied:
+	.string "The GYM design has been updated!\nYour guide and exit remain open.$"
+GleGymDesign_TextRefused:
+	.string "This change could not be applied.\nCheck the upgrade and available\lfunds. No fee was taken.$"
+GleGymDesign_TextReset:
+	.string "The trial has been reset.\nPuzzles reset when you re-enter\lthe GYM as well.$"

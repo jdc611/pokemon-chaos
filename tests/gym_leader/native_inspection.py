@@ -39,7 +39,7 @@ for i in range(1000):
  press(1,18)
  if not call('GymLeaderBattleTrainer'):break
 else:raise AssertionError('inspection did not return')
-until(lambda:menu_count()==7)
+until(lambda:menu_count()==8)
 assert rd(current()+v[2],1)==2 and rd(current()+v[46],1)==1
 assert rd(current()+v[30],2)==losses
 snap('inspection-retry-menu')

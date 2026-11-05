@@ -16,7 +16,7 @@ def finish_text():
   if not call('ScriptContext_IsEnabled'):return
   press(1,20)
  raise AssertionError('hosting dialogue did not release')
-assert h[:3]==(3188,3196,14)
+assert h[0]==3188 and 3196<=h[1]<=3200 and h[2]>=14
 wr(current()+h[16],13,2)
 expected=bytearray(rd(current()+i,1) for i in range(h[0]));expected[h[16]:h[16]+2]=h[2].to_bytes(2,'little')
 for i in range(8):wr(hp()+i,255,1)

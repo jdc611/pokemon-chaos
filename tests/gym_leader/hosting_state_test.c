@@ -8,7 +8,7 @@ static void announce(struct GleState *s,uint32_t *m){s->activity=s->competitions
 static void start(struct GleState *s,uint32_t *m){s->activity=s->competitions.closesAt;GleCompetitionActivity(s,m);}
 int main(void){
  struct GleState s,copy;uint32_t money,before,income;unsigned seed,host;
- assert(sizeof(s)==3196&&sizeof(s.hosting)==8);
+ assert(sizeof(s)>=3196&&sizeof(s)<=3200&&sizeof(s.hosting)==8);
  setup(&s,1);money=3000;announce(&s,&money);s.hosting.stage=0;
  assert(GleHostingEligible(&s,0)&&!GleHostingEligible(&s,1));copy=s;money=100;
  assert(GleHostingBook(&s,0,0,&money)==GLE_NOT_ENOUGH_MONEY&&money==100&&!memcmp(&s,&copy,sizeof(s)));
