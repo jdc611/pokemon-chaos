@@ -64,7 +64,10 @@ print('PASS demotion-safe tiers, relay/master adapters, reset, independent remov
 wr(current()+v[2],8,1);wr(current()+v[-1],8,1);constants=(repo/'include/constants/opponents_frlg.h').read_text()
 for i,name in enumerate(['TRAINER_LASS_KAY','TRAINER_BEAUTY_BRIDGET','TRAINER_PICNICKER_TINA','TRAINER_BEAUTY_TAMIA','TRAINER_BEAUTY_LORI']):
  trainer=int(re.search(r'^#define '+name+r'\s+(\d+)',constants,re.M)[1]);assert call('GleRecruitTrainer',current(),trainer,3,80)==0;assert call('GleAssignTrainer',current(),i,1)==0
-for bit in [217,219,221]:assert call('GleUniqueCapture',current(),bit)==0
+# An earned Regional title is an explicit display fixture; paid Gym tiers unlock the slots.
+wr(current()+d[10],1,1)
+for slot in range(3):
+ wr('gSpecialVar_0x8007',slot,2);wr('gSpecialVar_Result',1,2);call('GleCompetitionTrophySet');assert rd('gSpecialVar_Result',2)==0
 assert call('GleGymDesignPurchase',current(),1,3,scratch)==0
 locals_=[230,231,232,233,234,236,237,238,245,246,247]
 for layout in range(4):
