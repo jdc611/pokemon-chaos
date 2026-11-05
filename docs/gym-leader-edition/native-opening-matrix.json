@@ -1,0 +1,115 @@
+{
+  "rom_sha256": "6a15a7d679426c69c572d991b88585ca8e6c5e49c5f9b29cd5f602ab2d4813f5",
+  "scope": "Controller-driven native opening/draft/ability Summary/three starters/registration/tutorial/doorway. One fixed native seed fixture per type; towns cycle 0/1/2. Not complete campaign or all 54 type-town combinations.",
+  "complete_campaign_certified": false,
+  "results": [
+    {
+      "type_index": 0,
+      "town_index": 0,
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "type_index": 1,
+      "town_index": 1,
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "type_index": 2,
+      "town_index": 2,
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "type_index": 3,
+      "town_index": 0,
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "type_index": 4,
+      "town_index": 1,
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "type_index": 5,
+      "town_index": 2,
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "type_index": 6,
+      "town_index": 0,
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "type_index": 7,
+      "town_index": 1,
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "type_index": 8,
+      "town_index": 2,
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "type_index": 9,
+      "town_index": 0,
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "type_index": 10,
+      "town_index": 1,
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "type_index": 11,
+      "town_index": 2,
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "type_index": 12,
+      "town_index": 0,
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "type_index": 13,
+      "town_index": 1,
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "type_index": 14,
+      "town_index": 2,
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "type_index": 15,
+      "town_index": 0,
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "type_index": 16,
+      "town_index": 1,
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "type_index": 17,
+      "town_index": 2,
+      "exit_code": 0,
+      "passed": true
+    }
+  ]
+}

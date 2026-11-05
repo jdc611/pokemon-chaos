@@ -86,3 +86,5 @@ Ecology checks: generate the ROM candidate header with `generate_ecology_catalog
 Inherited-service checks: compile `arcade_layout.c` and `gift_layout.c` into their matching QA directories, alongside the shared layout, then run `native_arcade_access.py` and `native_gift_caps.py`. They exercise actual prize/TM/cabinet and Eevee scripts in addition to delivery adapters, flash and mode-isolation fixtures.
 
 Travel checks: compile `ferry_layout.c` into `ferry-layout.bin` with the shared layout and run `native_ferry.py`. It checks old-permit repair, badge/game-clear neutrality, both native destination pages, a real Vermilion-to-Five-Island-Harbor sailing scene, native flash and the skipped mandatory Bill/Celio introduction.
+
+Broader fixtures: `native_all_types.py` uses the emulator/shared layout from `CHAOS_QA_DIR` and launches eighteen independent opening fixtures with at most three worker processes. `native_research_access.py` records the bounded graph/collision/ledge audit for thirty-six field sites and verifies the loaded map dimensions before analysis; it does not certify a walked campaign.

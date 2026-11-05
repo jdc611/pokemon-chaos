@@ -1,0 +1,369 @@
+{
+  "rom_sha256": "6a15a7d679426c69c572d991b88585ca8e6c5e49c5f9b29cd5f602ab2d4813f5",
+  "scope": "Static warp/connection graph with assumed ferry edges, plus loaded native collision-grid components. Actors, elevation transitions, Surf actions and puzzle/story prerequisites are not fully simulated. Direct warp used to inspect each map; not a controller-walked campaign.",
+  "results": [
+    {
+      "index": 0,
+      "map": "MAP_VIRIDIAN_FOREST",
+      "species": "SPECIES_WO_CHIEN",
+      "graph_reachable": true,
+      "entry_tiles": 8,
+      "approach_component_reachable": true,
+      "component_tiles": 1600,
+      "includes_directional_ledges": false
+    },
+    {
+      "index": 1,
+      "map": "MAP_SEAFOAM_ISLANDS_B2F",
+      "species": "SPECIES_CHIEN_PAO",
+      "graph_reachable": true,
+      "entry_tiles": 39,
+      "approach_component_reachable": true,
+      "component_tiles": 457,
+      "includes_directional_ledges": false
+    },
+    {
+      "index": 2,
+      "map": "MAP_ROCK_TUNNEL_1F",
+      "species": "SPECIES_TING_LU",
+      "graph_reachable": true,
+      "entry_tiles": 25,
+      "approach_component_reachable": true,
+      "component_tiles": 972,
+      "includes_directional_ledges": false
+    },
+    {
+      "index": 3,
+      "map": "MAP_POKEMON_MANSION_B1F",
+      "species": "SPECIES_CHI_YU",
+      "graph_reachable": true,
+      "entry_tiles": 3,
+      "approach_component_reachable": true,
+      "component_tiles": 578,
+      "includes_directional_ledges": false
+    },
+    {
+      "index": 4,
+      "map": "MAP_ROUTE10",
+      "species": "SPECIES_TAPU_KOKO",
+      "graph_reachable": true,
+      "entry_tiles": 18,
+      "approach_component_reachable": true,
+      "component_tiles": 936,
+      "includes_directional_ledges": false
+    },
+    {
+      "index": 5,
+      "map": "MAP_ROUTE25",
+      "species": "SPECIES_TAPU_LELE",
+      "graph_reachable": true,
+      "entry_tiles": 8,
+      "approach_component_reachable": true,
+      "component_tiles": 467,
+      "includes_directional_ledges": false
+    },
+    {
+      "index": 6,
+      "map": "MAP_SAFARI_ZONE_WEST",
+      "species": "SPECIES_TAPU_BULU",
+      "graph_reachable": true,
+      "entry_tiles": 17,
+      "approach_component_reachable": true,
+      "component_tiles": 658,
+      "includes_directional_ledges": false
+    },
+    {
+      "index": 7,
+      "map": "MAP_ROUTE19",
+      "species": "SPECIES_TAPU_FINI",
+      "graph_reachable": true,
+      "entry_tiles": 49,
+      "approach_component_reachable": true,
+      "component_tiles": 898,
+      "includes_directional_ledges": false
+    },
+    {
+      "index": 8,
+      "map": "MAP_ROUTE22",
+      "species": "SPECIES_UXIE",
+      "graph_reachable": true,
+      "entry_tiles": 11,
+      "approach_component_reachable": true,
+      "component_tiles": 491,
+      "includes_directional_ledges": false
+    },
+    {
+      "index": 9,
+      "map": "MAP_SAFARI_ZONE_EAST",
+      "species": "SPECIES_MESPRIT",
+      "graph_reachable": true,
+      "entry_tiles": 10,
+      "approach_component_reachable": true,
+      "component_tiles": 694,
+      "includes_directional_ledges": false
+    },
+    {
+      "index": 10,
+      "map": "MAP_ROUTE12",
+      "species": "SPECIES_AZELF",
+      "graph_reachable": true,
+      "entry_tiles": 22,
+      "approach_component_reachable": true,
+      "component_tiles": 1410,
+      "includes_directional_ledges": false
+    },
+    {
+      "index": 11,
+      "map": "MAP_ROUTE15",
+      "species": "SPECIES_OKIDOGI",
+      "graph_reachable": true,
+      "entry_tiles": 21,
+      "approach_component_reachable": true,
+      "component_tiles": 588,
+      "includes_directional_ledges": false
+    },
+    {
+      "index": 12,
+      "map": "MAP_ROUTE8",
+      "species": "SPECIES_MUNKIDORI",
+      "graph_reachable": true,
+      "entry_tiles": 14,
+      "approach_component_reachable": true,
+      "component_tiles": 819,
+      "includes_directional_ledges": false
+    },
+    {
+      "index": 13,
+      "map": "MAP_ROUTE18",
+      "species": "SPECIES_FEZANDIPITI",
+      "graph_reachable": true,
+      "entry_tiles": 37,
+      "approach_component_reachable": true,
+      "component_tiles": 659,
+      "includes_directional_ledges": false
+    },
+    {
+      "index": 14,
+      "map": "MAP_VIRIDIAN_FOREST",
+      "species": "SPECIES_ZARUDE",
+      "graph_reachable": true,
+      "entry_tiles": 8,
+      "approach_component_reachable": true,
+      "component_tiles": 1600,
+      "includes_directional_ledges": false
+    },
+    {
+      "index": 15,
+      "map": "MAP_ROUTE16",
+      "species": "SPECIES_CYCLIZAR",
+      "graph_reachable": true,
+      "entry_tiles": 34,
+      "approach_component_reachable": true,
+      "component_tiles": 401,
+      "includes_directional_ledges": false
+    },
+    {
+      "index": 16,
+      "map": "MAP_MT_MOON_B2F",
+      "species": "SPECIES_KORAIDON",
+      "graph_reachable": true,
+      "entry_tiles": 13,
+      "approach_component_reachable": true,
+      "component_tiles": 884,
+      "includes_directional_ledges": false
+    },
+    {
+      "index": 17,
+      "map": "MAP_POWER_PLANT",
+      "species": "SPECIES_MIRAIDON",
+      "graph_reachable": true,
+      "entry_tiles": 8,
+      "approach_component_reachable": true,
+      "component_tiles": 961,
+      "includes_directional_ledges": false
+    },
+    {
+      "index": 18,
+      "map": "MAP_ROCK_TUNNEL_B1F",
+      "species": "SPECIES_COBALION",
+      "graph_reachable": true,
+      "entry_tiles": 15,
+      "approach_component_reachable": true,
+      "component_tiles": 1092,
+      "includes_directional_ledges": false
+    },
+    {
+      "index": 19,
+      "map": "MAP_VICTORY_ROAD_2F",
+      "species": "SPECIES_TERRAKION",
+      "graph_reachable": true,
+      "entry_tiles": 23,
+      "approach_component_reachable": true,
+      "component_tiles": 657,
+      "includes_directional_ledges": false
+    },
+    {
+      "index": 20,
+      "map": "MAP_ROUTE25",
+      "species": "SPECIES_VIRIZION",
+      "graph_reachable": true,
+      "entry_tiles": 8,
+      "approach_component_reachable": true,
+      "component_tiles": 467,
+      "includes_directional_ledges": false
+    },
+    {
+      "index": 21,
+      "map": "MAP_SEAFOAM_ISLANDS_B1F",
+      "species": "SPECIES_KELDEO",
+      "graph_reachable": true,
+      "entry_tiles": 43,
+      "approach_component_reachable": true,
+      "component_tiles": 478,
+      "includes_directional_ledges": false
+    },
+    {
+      "index": 22,
+      "map": "MAP_POWER_PLANT",
+      "species": "SPECIES_RAIKOU",
+      "graph_reachable": true,
+      "entry_tiles": 8,
+      "approach_component_reachable": true,
+      "component_tiles": 961,
+      "includes_directional_ledges": false
+    },
+    {
+      "index": 23,
+      "map": "MAP_POKEMON_MANSION_2F",
+      "species": "SPECIES_ENTEI",
+      "graph_reachable": true,
+      "entry_tiles": 17,
+      "approach_component_reachable": true,
+      "component_tiles": 570,
+      "includes_directional_ledges": false
+    },
+    {
+      "index": 24,
+      "map": "MAP_ROUTE24",
+      "species": "SPECIES_SUICUNE",
+      "graph_reachable": true,
+      "entry_tiles": 36,
+      "approach_component_reachable": true,
+      "component_tiles": 562,
+      "includes_directional_ledges": false
+    },
+    {
+      "index": 25,
+      "map": "MAP_ROCK_TUNNEL_B1F",
+      "species": "SPECIES_RAGING_BOLT",
+      "graph_reachable": true,
+      "entry_tiles": 15,
+      "approach_component_reachable": true,
+      "component_tiles": 1092,
+      "includes_directional_ledges": false
+    },
+    {
+      "index": 26,
+      "map": "MAP_MT_EMBER_SUMMIT",
+      "species": "SPECIES_GOUGING_FIRE",
+      "graph_reachable": true,
+      "entry_tiles": 2,
+      "approach_component_reachable": true,
+      "component_tiles": 40,
+      "includes_directional_ledges": false
+    },
+    {
+      "index": 27,
+      "map": "MAP_SEAFOAM_ISLANDS_B4F",
+      "species": "SPECIES_WALKING_WAKE",
+      "graph_reachable": true,
+      "entry_tiles": 13,
+      "approach_component_reachable": true,
+      "component_tiles": 528,
+      "includes_directional_ledges": false
+    },
+    {
+      "index": 28,
+      "map": "MAP_POKEMON_TOWER_7F",
+      "species": "SPECIES_DIALGA",
+      "graph_reachable": true,
+      "entry_tiles": 4,
+      "approach_component_reachable": true,
+      "component_tiles": 59,
+      "includes_directional_ledges": false
+    },
+    {
+      "index": 29,
+      "map": "MAP_SEAFOAM_ISLANDS_B3F",
+      "species": "SPECIES_PALKIA",
+      "graph_reachable": true,
+      "entry_tiles": 33,
+      "approach_component_reachable": true,
+      "component_tiles": 349,
+      "includes_directional_ledges": false
+    },
+    {
+      "index": 30,
+      "map": "MAP_FIVE_ISLAND_LOST_CAVE_ROOM10",
+      "species": "SPECIES_GIRATINA",
+      "graph_reachable": true,
+      "entry_tiles": 4,
+      "approach_component_reachable": true,
+      "component_tiles": 47,
+      "includes_directional_ledges": false
+    },
+    {
+      "index": 31,
+      "map": "MAP_ROUTE9",
+      "species": "SPECIES_TORNADUS",
+      "graph_reachable": true,
+      "entry_tiles": 8,
+      "approach_component_reachable": true,
+      "component_tiles": 627,
+      "includes_directional_ledges": true
+    },
+    {
+      "index": 32,
+      "map": "MAP_ROUTE11",
+      "species": "SPECIES_THUNDURUS",
+      "graph_reachable": true,
+      "entry_tiles": 20,
+      "approach_component_reachable": true,
+      "component_tiles": 947,
+      "includes_directional_ledges": false
+    },
+    {
+      "index": 33,
+      "map": "MAP_ROUTE23",
+      "species": "SPECIES_LANDORUS",
+      "graph_reachable": true,
+      "entry_tiles": 11,
+      "approach_component_reachable": true,
+      "component_tiles": 1561,
+      "includes_directional_ledges": false
+    },
+    {
+      "index": 34,
+      "map": "MAP_ROUTE18",
+      "species": "SPECIES_ENAMORUS",
+      "graph_reachable": true,
+      "entry_tiles": 37,
+      "approach_component_reachable": true,
+      "component_tiles": 659,
+      "includes_directional_ledges": false
+    },
+    {
+      "index": 35,
+      "map": "MAP_ROUTE25",
+      "species": "SPECIES_SHAYMIN",
+      "graph_reachable": true,
+      "entry_tiles": 8,
+      "approach_component_reachable": true,
+      "component_tiles": 467,
+      "includes_directional_ledges": false
+    }
+  ],
+  "ordinary_trainers_completed_fixture": true,
+  "native_map_dimensions_verified": true,
+  "complete_campaign_certified": false
+}
