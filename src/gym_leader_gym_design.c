@@ -26,7 +26,7 @@ static const u8 *const sThemes[]={COMPOUND_STRING("Classic stone"),COMPOUND_STRI
 extern const u8 GleGymDesign_Switch[];
 static bool32 AtGym(void){return IsGymLeaderRun()&&GymLeaderState()->openingStage==5&&gSaveBlock1Ptr->location.mapGroup==MAP_GROUP(MAP_GLE_GYM_INTERIOR)&&gSaveBlock1Ptr->location.mapNum==MAP_NUM(MAP_GLE_GYM_INTERIOR);}
 static bool32 GateOpen(void){u32 puzzle=GymLeaderState()->gymDesign.puzzle;return !puzzle||(puzzle==1?sPuzzleMask==3:puzzle==2?sPuzzleProgress>=3:sPuzzleProgress>=5);}
-static void Gate(bool32 live){u32 x;for(x=1;x<12;x++){u16 tile=GateOpen()||x==4||x==6||x==8?0x3294:0x3688;sGymMap[6*13+x]=tile;if(live)MapGridSetMetatileEntryAt(x+7,13,tile);}}
+static void Gate(bool32 live){u32 x;for(x=1;x<12;x++){u16 tile=GateOpen()||x==4||x==6||x==8?0x3294:0x36a3;sGymMap[6*13+x]=tile;if(live)MapGridSetMetatileEntryAt(x+7,13,tile);}}
 void GymLeaderConfigureGymDesign(struct MapHeader *header)
 {
  const struct MapHeader *base;const struct GleGymDesign *d;u32 i,n;
@@ -34,8 +34,8 @@ void GymLeaderConfigureGymDesign(struct MapHeader *header)
  base=Overworld_GetMapHeaderByGroupAndId(MAP_GROUP(MAP_GLE_GYM_INTERIOR),MAP_NUM(MAP_GLE_GYM_INTERIOR));
  if(base->mapLayout->width!=13||base->mapLayout->height!=16)return;
  d=&GymLeaderState()->gymDesign;sGymLayout=*base->mapLayout;memcpy(sGymMap,base->mapLayout->map,sizeof(sGymMap));sPuzzleProgress=sPuzzleMask=0;
- if(d->layout==1||d->layout==3){sGymMap[8*13+3]=0x3688;sGymMap[8*13+9]=0x3688;}
- if(d->layout>=2){sGymMap[5*13+3]=0x3688;sGymMap[5*13+9]=0x3688;sGymMap[9*13+3]=0x3688;sGymMap[9*13+9]=0x3688;}
+ if(d->layout==1||d->layout==3){sGymMap[8*13+3]=0x36a3;sGymMap[8*13+9]=0x36a3;}
+ if(d->layout>=2){sGymMap[5*13+3]=0x36a3;sGymMap[5*13+9]=0x36a3;sGymMap[9*13+3]=0x36a3;sGymMap[9*13+9]=0x36a3;}
  if(d->puzzle)Gate(FALSE);
  sGymLayout.map=sGymMap;header->mapLayout=&sGymLayout;sGymEvents=*base->events;n=sGymEvents.objectEventCount;
  if(n>ARRAY_COUNT(sGymObjects)-3)return;
@@ -62,6 +62,7 @@ void GleGymDesignInfo(void)
  const struct GleGymDesign *d=&GymLeaderState()->gymDesign;
  StringCopy(gStringVar1,sLayouts[min(d->layout,3)]);StringCopy(gStringVar2,sPuzzles[min(d->puzzle,3)]);StringCopy(gStringVar3,sThemes[min(d->theme,5)]);
  StringExpandPlaceholders(gStringVar4,COMPOUND_STRING("Layout: {STR_VAR_1}\nPuzzle: {STR_VAR_2}\lTheme: {STR_VAR_3}\pLayout, puzzle and theme are\nindependent. Changes have a fee.\lInstalled upgrades survive demotion.\pPuzzles are optional. Your guide\nand doorway always stay accessible.\lStaff filtering earns no rank XP."));
+ ConvertIntToDecimalStringN(gStringVar1,d->tier,STR_CONV_MODE_LEFT_ALIGN,1);StringAppend(gStringVar4,COMPOUND_STRING("\pPermanent upgrade tier: "));StringAppend(gStringVar4,gStringVar1);StringAppend(gStringVar4,COMPOUND_STRING("/3.\nEarned ranks 3, 5 and 7 permit\lthe three paid upgrades."));
 }
 void GleGymDesignMenu(void){static const u8 *const n[]={COMPOUND_STRING("Layout"),COMPOUND_STRING("Puzzle"),COMPOUND_STRING("Theme"),COMPOUND_STRING("Upgrade GYM"),COMPOUND_STRING("Reset trial"),COMPOUND_STRING("Puzzle clues"),COMPOUND_STRING("Back")};GymLeaderMenu(n,ARRAY_COUNT(n),FALSE);}
 void GleGymDesignChoices(void)
@@ -99,4 +100,4 @@ void GleGymDesignSwitch(void)
  StringCopy(gStringVar4,GateOpen()?COMPOUND_STRING("The trial gate is open!\nUse Reset trial to try again."):COMPOUND_STRING("The console clicks.\nThe trial gate is still closed.\lYour guide remains available."));
 }
 
-void GleGymDesignOwnerAccess(void){if(AtGym()&&gSaveBlock1Ptr->pos.y<6){sPuzzleMask=3;sPuzzleProgress=5;Gate(TRUE);}}
+void GleGymDesignOwnerAccess(void){u32 x,y;if(!AtGym())return;if(gSaveBlock1Ptr->pos.y<6){sPuzzleMask=3;sPuzzleProgress=5;}Gate(FALSE);for(y=0;y<16;y++)for(x=0;x<13;x++)MapGridSetMetatileEntryAt(x+7,y+7,sGymMap[y*13+x]);}

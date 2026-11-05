@@ -1,10 +1,10 @@
 GleGymInterior_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, GleGym_OnTransition
+	map_script MAP_SCRIPT_ON_LOAD, GleGym_OnLoad
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, GleGym_OnFrame
 	.byte 0
 GleGym_OnTransition::
 	special GleGymPrepare
-	special GleGymDesignOwnerAccess
 	special GleOpeningStage
 	setvar VAR_TEMP_0, 0
 	compare VAR_RESULT, 1
@@ -20,3 +20,7 @@ GleGym_SetIntro::
 GleGym_OnFrame::
 	map_script_2 VAR_TEMP_0, 1, GleGym_Opening
 	.2byte 0
+
+GleGym_OnLoad::
+	special GleGymDesignOwnerAccess
+	end
