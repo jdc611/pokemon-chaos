@@ -84,3 +84,5 @@ Hosting checks: compile `hosting_layout.c` and `competition_layout.c` alongside 
 Ecology checks: generate the ROM candidate header with `generate_ecology_catalog.py`, compile `ecology_layout.c` into `ecology-layout.bin` alongside the shared layout and run `native_ecology.py`. It covers all eight ranks, actual forest wild generation, DexNav display/search caps, RNG/cache behavior and the non-GLE adapter. Run native town and Safari regressions for configured encounter overrides.
 
 Inherited-service checks: compile `arcade_layout.c` and `gift_layout.c` into their matching QA directories, alongside the shared layout, then run `native_arcade_access.py` and `native_gift_caps.py`. They exercise actual prize/TM/cabinet and Eevee scripts in addition to delivery adapters, flash and mode-isolation fixtures.
+
+Travel checks: compile `ferry_layout.c` into `ferry-layout.bin` with the shared layout and run `native_ferry.py`. It checks old-permit repair, badge/game-clear neutrality, both native destination pages, a real Vermilion-to-Five-Island-Harbor sailing scene, native flash and the skipped mandatory Bill/Celio introduction.

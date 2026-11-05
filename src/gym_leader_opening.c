@@ -481,6 +481,13 @@ void GymLeaderUnlockTravel(void)
     // The modern engine treats Escape Rope as reusable field equipment.
     // Also provision existing V1 saves whose travel permit predates this item.
     if(!CheckBagHasItem(ITEM_ESCAPE_ROPE,1) && !AddBagItem(ITEM_ESCAPE_ROPE,1))return;
+    // The GLE permit replaces FireRed's Bill/Celio ferry storyline. Refresh
+    // this independently of the old one-time bit so existing careers can sail.
+    if(!CheckBagHasItem(ITEM_RAINBOW_PASS,1) && !AddBagItem(ITEM_RAINBOW_PASS,1))return;
+    VarSet(VAR_MAP_SCENE_VERMILION_CITY,3);
+    VarSet(VAR_MAP_SCENE_ONE_ISLAND_POKEMON_CENTER_1F,7);
+    VarSet(VAR_MAP_SCENE_ONE_ISLAND_HARBOR,3);
+    FlagSet(FLAG_HIDE_ONE_ISLAND_POKECENTER_BILL);
     if(s->milestoneRewardMask&1)return;
     for(i=0;i<ARRAY_COUNT(equipment);i++)
         if(!CheckBagHasItem(equipment[i],1) && !AddBagItem(equipment[i],1))return;
