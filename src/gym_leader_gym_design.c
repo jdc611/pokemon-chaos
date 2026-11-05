@@ -64,7 +64,7 @@ void GleGymDesignInfo(void)
  StringExpandPlaceholders(gStringVar4,COMPOUND_STRING("Layout: {STR_VAR_1}\nPuzzle: {STR_VAR_2}\lTheme: {STR_VAR_3}\pLayout, puzzle and theme are\nindependent. Changes have a fee.\lInstalled upgrades survive demotion.\pPuzzles are optional. Your guide\nand doorway always stay accessible.\lStaff filtering earns no rank XP."));
  ConvertIntToDecimalStringN(gStringVar1,d->tier,STR_CONV_MODE_LEFT_ALIGN,1);StringAppend(gStringVar4,COMPOUND_STRING("\pPermanent upgrade tier: "));StringAppend(gStringVar4,gStringVar1);StringAppend(gStringVar4,COMPOUND_STRING("/3.\nEarned ranks 3, 5 and 7 permit\lthe three paid upgrades."));
 }
-void GleGymDesignMenu(void){static const u8 *const n[]={COMPOUND_STRING("Layout"),COMPOUND_STRING("Puzzle"),COMPOUND_STRING("Theme"),COMPOUND_STRING("Upgrade GYM"),COMPOUND_STRING("Reset trial"),COMPOUND_STRING("Puzzle clues"),COMPOUND_STRING("Back")};GymLeaderMenu(n,ARRAY_COUNT(n),FALSE);}
+void GleGymDesignMenu(void){static const u8 *const n[]={COMPOUND_STRING("Layout"),COMPOUND_STRING("Puzzle"),COMPOUND_STRING("Theme"),COMPOUND_STRING("Upgrade GYM"),COMPOUND_STRING("Reset trial"),COMPOUND_STRING("Puzzle clues"),COMPOUND_STRING("Staff stations"),COMPOUND_STRING("Back")};GymLeaderMenu(n,ARRAY_COUNT(n),FALSE);}
 void GleGymDesignChoices(void)
 {
  static const u8 *const layouts[]={COMPOUND_STRING("Classic"),COMPOUND_STRING("Twin courts"),COMPOUND_STRING("Training ring"),COMPOUND_STRING("League arena"),COMPOUND_STRING("Back")};

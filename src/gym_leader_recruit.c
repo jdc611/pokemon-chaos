@@ -208,7 +208,7 @@ void GymLeaderConfigureStaffMap(struct MapHeader *header)
     {
         const struct GleRecruit *r=&s->recruits[i];const struct GleRecruitSource *source=Source(r->id);u8 x,y;
         if(!source)continue;
-        if(map==MAP_GLE_GYM_INTERIOR && !r->away && r->active){x=xs[visible];y=ys[visible];}
+        if(map==MAP_GLE_GYM_INTERIOR && !r->away && r->active){u8 station=GleTrainerStation(s,i);if(station>=5)continue;x=xs[station];y=ys[station];}
         else if(map==towns[s->town] && !r->away && !r->active){x=14+3*visible;y=8;}
         else if(map==MAP_GLE_RIVAL_GYM && r->away==2){x=xs[visible];y=ys[visible];}
         else continue;
@@ -331,4 +331,28 @@ u16 GymLeaderCelebrationStaffGraphics(void)
     struct GleState *s=GymLeaderState();u32 i;
     for(i=0;i<GLE_RECRUITS;i++)if(s->recruits[i].id&&s->recruits[i].active&&!s->recruits[i].away){const struct GleRecruitSource *source=Source(s->recruits[i].id);if(source)return source->graphics;}
     return OBJ_EVENT_GFX_GENTLEMAN_FRLG;
+}
+
+// Placement uses existing active records and the established safe floor tiles.
+static bool32 AtOwnGym(void){return IsGymLeaderRun()&&GymLeaderState()->openingStage==5&&CurrentMap()==MAP_GLE_GYM_INTERIOR;}
+void GleStaffStationMenu(void)
+{
+    const u8 *names[GLE_RECRUITS+1];u32 i;struct GleState *s=GymLeaderState();sStaffCount=0;
+    if(AtOwnGym())for(i=0;i<GLE_RECRUITS;i++)if(s->recruits[i].id&&s->recruits[i].active&&!s->recruits[i].away){sStaffChoices[sStaffCount]=i;names[sStaffCount++]=GetTrainerNameFromId(s->recruits[i].id);}
+    if(!sStaffCount){gSpecialVar_Result=255;GymLeaderResumeScriptNextFrame();return;}
+    names[sStaffCount]=COMPOUND_STRING("Back");GymLeaderMenu(names,sStaffCount+1,FALSE);
+}
+void GleStaffStationChoices(void)
+{
+    static const u8 *const names[]={COMPOUND_STRING("Automatic"),COMPOUND_STRING("Upper left"),COMPOUND_STRING("Upper right"),COMPOUND_STRING("Lower left"),COMPOUND_STRING("Lower right"),COMPOUND_STRING("Rear platform"),COMPOUND_STRING("Back")};
+    u32 choice=gSpecialVar_Result;
+    if(!AtOwnGym()||choice>=sStaffCount){gSpecialVar_Result=255;GymLeaderResumeScriptNextFrame();return;}
+    sStaffSlot=sStaffChoices[choice];GymLeaderMenu(names,ARRAY_COUNT(names),FALSE);
+}
+void GleStaffStationApply(void)
+{
+    u32 choice=gSpecialVar_Result;int result;
+    if(choice>5){gSpecialVar_Result=255;return;}
+    result=AtOwnGym()?GlePositionTrainer(GymLeaderState(),sStaffSlot,choice):GLE_INVALID;gSpecialVar_Result=result;
+    StringCopy(gStringVar4,result==GLE_OK?COMPOUND_STRING("Station saved. Your trainer reports\nthere on your next GYM visit.\lNo fee was charged."):result==GLE_NO_ROOM?COMPOUND_STRING("Another trainer has reserved that\nstation. Move them or choose\la different station. No change made."):COMPOUND_STRING("Only active staff at your GYM can\nreceive a station. Assign them\lfirst. No change made."));
 }

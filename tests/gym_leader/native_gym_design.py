@@ -21,7 +21,7 @@ def walkto(x,y):
  raise AssertionError(('design walking blocked',pos(),(x,y)))
 def gate():return call('MapGridGetCollisionAt',12,13)
 def palette():return bytes(rd(symbols['gPlttBufferUnfaded']+384+i,1) for i in range(32))
-def finishmenu():until(lambda:menu_count()==7)
+def finishmenu():until(lambda:menu_count()==8)
 def change(kind,choice,accept=True):
  choose(kind);until(lambda:menu_count()==(7 if kind==2 else 5));choose(choice);until(yesno);choose(0 if accept else 1);finishmenu()
 assert d[:3]==(3196,3200,15)

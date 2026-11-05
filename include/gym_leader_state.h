@@ -21,6 +21,7 @@ enum GleVoucherKind { GLE_STANDARD, GLE_RARE, GLE_ELITE, GLE_SHINY, GLE_SHINY_EL
 enum GleBuilding { GLE_EMPTY, GLE_CENTER, GLE_MART, GLE_HOUSE, GLE_HOTEL, GLE_RESTAURANT, GLE_DOJO, GLE_MUSEUM, GLE_LAB, GLE_HABITAT, GLE_PARK, GLE_MARKET, GLE_BUILDING_COUNT };
 enum GleResult { GLE_OK, GLE_INVALID, GLE_NO_ROOM, GLE_NOT_READY, GLE_NOT_ENOUGH_MONEY, GLE_DUPLICATE, GLE_INSPECTION_NEEDED };
 struct GlePlot { uint8_t building, tier, size, type; };
+/* active: 0 reserve, 1 automatic station, 2..6 requested station 0..4. */
 struct GleRecruit { uint16_t id, wins, losses; uint8_t potential, loyalty, warnings, active, away, questBond; };
 struct GleVoucher { uint16_t species[3]; uint8_t level; uint32_t seed; uint8_t kind, tier, count, viewed; };
 struct GleRocketState {
@@ -86,6 +87,9 @@ uint32_t GleBuildCost(uint8_t building, uint8_t tier);
 int GleConstruct(struct GleState *, uint8_t plot, uint8_t building, uint32_t *money);
 int GleRecruitTrainer(struct GleState *, uint16_t id, uint8_t potential, uint8_t loyalty);
 int GleAssignTrainer(struct GleState *, uint8_t recruit, int active);
+int GlePositionTrainer(struct GleState *, uint8_t recruit, uint8_t station);
+/* Returns station 0..4, or GLE_NONE for an inactive/overflow record. */
+uint8_t GleTrainerStation(const struct GleState *, uint8_t recruit);
 void GleRocketActivity(struct GleState *);
 int GleRocketBattleResult(struct GleState *, int won);
 int GleResolveRocket(struct GleState *, uint8_t choice, uint32_t *money);
