@@ -934,3 +934,7 @@ gSpecials::
 	def_special GleGymDesignSwitch
 
 	def_special GleGymDesignOwnerAccess
+
+	def_special GleStaffStationMenu, waitstate=1
+	def_special GleStaffStationChoices, waitstate=1
+	def_special GleStaffStationApply

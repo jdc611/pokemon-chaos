@@ -47,7 +47,7 @@ int main(void) {
   for(i=1;i<5;i++)assert(GleRecruitTrainer(&staff,14+i,3,80)==GLE_OK);
   for(i=0;i<5;i++)assert(GleAssignTrainer(&staff,i,1)==GLE_OK);
   for(i=0;i<5;i++)GleDefenseResult(&staff,0);
-  active=0;for(i=0;i<10;i++)active+=staff.recruits[i].active;
+  active=0;for(i=0;i<10;i++)active+=!!staff.recruits[i].active;
   assert(staff.rank==7 && active==4 && staff.recruits[4].id && !staff.recruits[4].active);
   GleInit(&staff,91);assert(GleChooseIdentity(&staff,0,4,1)==GLE_OK);
   assert(GleRecruitTrainer(&staff,14,1,40)==GLE_OK && GleAssignTrainer(&staff,0,1)==GLE_OK);

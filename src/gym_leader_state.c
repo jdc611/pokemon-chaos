@@ -163,7 +163,39 @@ int GleAssignTrainer(struct GleState *s, uint8_t slot, int active) {
     if (!GleValid(s) || slot >= GLE_RECRUITS || !s->recruits[slot].id || s->recruits[slot].away) return GLE_INVALID;
     for (i = 0; i < GLE_RECRUITS; i++) count += !!s->recruits[i].active;
     if (active && !s->recruits[slot].active && count >= (unsigned)((s->rank + 1) / 2 + (s->rank == 8))) return GLE_NO_ROOM;
-    s->recruits[slot].active = !!active; return GLE_OK;
+    if (!active) s->recruits[slot].active = 0;
+    else if (!s->recruits[slot].active) s->recruits[slot].active = 1;
+    return GLE_OK;
+}
+/* station 0 selects automatic placement; 1..5 request a safe station. */
+int GlePositionTrainer(struct GleState *s, uint8_t slot, uint8_t station) {
+    unsigned i;
+    if (!GleValid(s) || slot >= GLE_RECRUITS || station > 5 ||
+        !s->recruits[slot].id || !s->recruits[slot].active || s->recruits[slot].away) return GLE_INVALID;
+    if (station) for (i = 0; i < GLE_RECRUITS; i++)
+        if (i != slot && s->recruits[i].id && !s->recruits[i].away && s->recruits[i].active == station + 1) return GLE_NO_ROOM;
+    s->recruits[slot].active = station + 1;
+    return GLE_OK;
+}
+uint8_t GleTrainerStation(const struct GleState *s, uint8_t slot) {
+    unsigned i, place, reserved = 0, used = 0;
+    if (!GleValid(s) || slot >= GLE_RECRUITS) return GLE_NONE;
+    for (i = 0; i < GLE_RECRUITS; i++) {
+        const struct GleRecruit *r = &s->recruits[i];
+        if (r->id && !r->away && r->active >= 2 && r->active <= 6) reserved |= 1u << (r->active - 2);
+    }
+    for (i = 0; i <= slot; i++) {
+        const struct GleRecruit *r = &s->recruits[i];
+        if (!r->id || r->away || !r->active) { if (i == slot) return GLE_NONE; continue; }
+        place = r->active >= 2 && r->active <= 6 ? r->active - 2 : 5;
+        if (place == 5 || (used & (1u << place))) {
+            for (place = 0; place < 5 && ((used | reserved) & (1u << place)); place++);
+            if (place == 5) for (place = 0; place < 5 && (used & (1u << place)); place++);
+        }
+        if (i == slot) return place < 5 ? place : GLE_NONE;
+        if (place < 5) used |= 1u << place;
+    }
+    return GLE_NONE;
 }
 int GleResearchDiscover(struct GleState *s, uint8_t p, uint8_t stage) {
     if (!GleValid(s) || p >= GLE_PROJECTS || !stage) return GLE_INVALID;

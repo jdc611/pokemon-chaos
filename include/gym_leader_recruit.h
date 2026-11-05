@@ -1,5 +1,7 @@
 #ifndef GUARD_GYM_LEADER_RECRUIT_H
 #define GUARD_GYM_LEADER_RECRUIT_H
+/* Dedicated actor range, disjoint from trophies, Rocket and League desks. */
+#define GLE_STAFF_LOCAL_ID 210
 struct MapHeader;
 struct GleState;
 void GymLeaderMigratePersonalBonds(struct GleState *s);
@@ -10,5 +12,6 @@ void GymLeaderRecruitResetOffer(void);
 bool32 GymLeaderRecruitOffer(u16 trainer);
 bool32 GymLeaderRecruitPostBattleOffer(void);
 void GymLeaderConfigureStaffMap(struct MapHeader *header);
+void GymLeaderRestoreStaffSaveIds(void);
 bool32 GymLeaderPrepareStaffRoster(u32 slot, struct Trainer *trainer, struct TrainerMon *entries, bool32 preview);
 #endif

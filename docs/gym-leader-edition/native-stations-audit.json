@@ -1,0 +1,93 @@
+{
+  "checkpoint": 54,
+  "rom_sha256": "05b769f7875608d0d5c749facf0f2b05a9fa56efe8dc35e613832f358c07bef6",
+  "save_version": 15,
+  "state_bytes": 3200,
+  "native_towns": [
+    {
+      "town": 0,
+      "passed": true,
+      "pass_lines": [
+        "PASS controller-driven town=0 type=4, Summary profile/stats/moves, 3 level-5 starters and GLA tutorial",
+        "PASS hall exit and native Viridian Gym doorway redirect",
+        "PASS exact v14 prefix preservation, new four-byte design tail and reserved-union native flash",
+        "PASS native guide/menu, upgrade locks, cancellation, funds, independent settings and palette restoration",
+        "PASS controller switches/gate walking, re-entry reset, upper-room owner access and guide/exit floor",
+        "PASS demotion-safe tiers, relay/master adapters, reset, independent removal and flash",
+        "PASS all four presets with five staff, three trophies, three consoles and clear approach tiles",
+        "PASS NATIVE GYM DESIGN CHECKS COMPLETE",
+        "PASS controller staff/station menus, conflict refusal, both cancellations and no fees",
+        "PASS legacy actor IDs survive real Continue without a repair warp",
+        "PASS native flash, reserved station before automatic staff and repeat assignment retention",
+        "PASS all five individual positions in all four layouts with puzzles/trophies and visible native actors",
+        "PASS late recruitment slots have distinct trainer, trophy and puzzle actors",
+        "PASS away exclusion, reserve/reactivation automatic reset, dismissal and flash without returning actor",
+        "PASS NATIVE STAFF STATIONS COMPLETE"
+      ]
+    },
+    {
+      "town": 1,
+      "passed": true,
+      "pass_lines": [
+        "PASS controller-driven town=1 type=4, Summary profile/stats/moves, 3 level-5 starters and GLA tutorial",
+        "PASS hall exit and native Viridian Gym doorway redirect",
+        "PASS exact v14 prefix preservation, new four-byte design tail and reserved-union native flash",
+        "PASS native guide/menu, upgrade locks, cancellation, funds, independent settings and palette restoration",
+        "PASS controller switches/gate walking, re-entry reset, upper-room owner access and guide/exit floor",
+        "PASS demotion-safe tiers, relay/master adapters, reset, independent removal and flash",
+        "PASS all four presets with five staff, three trophies, three consoles and clear approach tiles",
+        "PASS NATIVE GYM DESIGN CHECKS COMPLETE",
+        "PASS controller staff/station menus, conflict refusal, both cancellations and no fees",
+        "PASS legacy actor IDs survive real Continue without a repair warp",
+        "PASS native flash, reserved station before automatic staff and repeat assignment retention",
+        "PASS all five individual positions in all four layouts with puzzles/trophies and visible native actors",
+        "PASS late recruitment slots have distinct trainer, trophy and puzzle actors",
+        "PASS away exclusion, reserve/reactivation automatic reset, dismissal and flash without returning actor",
+        "PASS NATIVE STAFF STATIONS COMPLETE"
+      ]
+    },
+    {
+      "town": 2,
+      "passed": true,
+      "pass_lines": [
+        "PASS controller-driven town=2 type=4, Summary profile/stats/moves, 3 level-5 starters and GLA tutorial",
+        "PASS hall exit and native Viridian Gym doorway redirect",
+        "PASS exact v14 prefix preservation, new four-byte design tail and reserved-union native flash",
+        "PASS native guide/menu, upgrade locks, cancellation, funds, independent settings and palette restoration",
+        "PASS controller switches/gate walking, re-entry reset, upper-room owner access and guide/exit floor",
+        "PASS demotion-safe tiers, relay/master adapters, reset, independent removal and flash",
+        "PASS all four presets with five staff, three trophies, three consoles and clear approach tiles",
+        "PASS NATIVE GYM DESIGN CHECKS COMPLETE",
+        "PASS controller staff/station menus, conflict refusal, both cancellations and no fees",
+        "PASS legacy actor IDs survive real Continue without a repair warp",
+        "PASS native flash, reserved station before automatic staff and repeat assignment retention",
+        "PASS all five individual positions in all four layouts with puzzles/trophies and visible native actors",
+        "PASS late recruitment slots have distinct trainer, trophy and puzzle actors",
+        "PASS away exclusion, reserve/reactivation automatic reset, dismissal and flash without returning actor",
+        "PASS NATIVE STAFF STATIONS COMPLETE"
+      ]
+    }
+  ],
+  "host_sanitizers": [
+    "address",
+    "undefined"
+  ],
+  "host_suites": [
+    "stations",
+    "state",
+    "gym_design",
+    "competition",
+    "rocket",
+    "hosting"
+  ],
+  "native_regressions": [
+    "recruitment/Summary/practice/return/dismissal",
+    "defense/registration/PC identity/inspection gates",
+    "personal bonds/migration/requests/return eligibility"
+  ],
+  "limits": [
+    "Explicit rank, currency, contract and trophy fixtures are used for later content.",
+    "Real Continue covers a legacy actor-ID fixture, without a repair warp.",
+    "This is not an uninterrupted campaign or completed release."
+  ]
+}

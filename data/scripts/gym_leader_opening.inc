@@ -337,6 +337,8 @@ GleGymDesign_Menu::
 	goto_if_eq GleGymDesign_Reset
 	compare VAR_RESULT, 5
 	goto_if_eq GleGymDesign_Clues
+	compare VAR_RESULT, 6
+	goto_if_eq GleGymDesign_Stations
 	goto GleGym_GuideMenu
 GleGymDesign_Choose::
 	copyvar VAR_0x8005, VAR_RESULT
@@ -387,3 +389,16 @@ GleGymDesign_TextRefused:
 	.string "This change could not be applied.\nCheck the upgrade and available\lfunds. No fee was taken.$"
 GleGymDesign_TextReset:
 	.string "The trial has been reset.\nPuzzles reset when you re-enter\lthe GYM as well.$"
+
+GleGymDesign_Stations::
+	msgbox GleGymDesign_TextStations, MSGBOX_DEFAULT
+	closemessage
+	special GleStaffStationMenu
+	special GleStaffStationChoices
+	special GleStaffStationApply
+	compare VAR_RESULT, 255
+	goto_if_eq GleGymDesign_Menu
+	msgbox gStringVar4, MSGBOX_DEFAULT
+	goto GleGymDesign_Menu
+GleGymDesign_TextStations:
+	.string "Choose an active trainer, then a\nstation. Automatic staff fill open\lspaces around reserved stations.\pEach station holds one trainer.\nReserves must be assigned first.\lChanges take effect next visit.$"
