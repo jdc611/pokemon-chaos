@@ -69,7 +69,7 @@ wr(current()+d[10],1,1)
 for slot in range(3):
  wr('gSpecialVar_0x8007',slot,2);wr('gSpecialVar_Result',1,2);call('GleCompetitionTrophySet');assert rd('gSpecialVar_Result',2)==0
 assert call('GleGymDesignPurchase',current(),1,3,scratch)==0
-locals_=[230,231,232,233,234,236,237,238,245,246,247]
+locals_=[210,211,212,213,214,236,237,238,245,246,247]
 for layout in range(4):
  assert call('GleGymDesignPurchase',current(),0,layout,scratch) in [0,5];warp(7,12)
  events=rd(symbols['gMapHeader']+v[157]);objects=rd(events+v[158]);ids={rd(objects+i*v[116],1) for i in range(rd(events,1))}

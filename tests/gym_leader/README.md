@@ -90,3 +90,16 @@ Travel checks: compile `ferry_layout.c` into `ferry-layout.bin` with the shared 
 Broader fixtures: `native_all_types.py` uses the emulator/shared layout from `CHAOS_QA_DIR` and launches eighteen independent opening fixtures with at most three worker processes. `native_research_access.py` records the bounded graph/collision/ledge audit for thirty-six field sites and verifies the loaded map dimensions before analysis; it does not certify a walked campaign.
 
 Gym design: compile `gym_design_layout.c` into `gym-design-layout.bin` beside the shared layout, then run `native_gym_design.py`. It checks exact v14 migration, native design transactions, actual two-switch walking, trial adapters/reset/owner safety, palette restoration and full staff/trophy/console coexistence. `gym_design_state_test.c` links the standard three state sources for atomic prices, entitlements and the exact 3,200-byte save limit.
+
+
+Individual staff stations:
+
+- `stations_state_test.c` exercises five safe reservations, conflict rejection,
+  automatic allocation, every one-byte malformed preference, repeat assignment,
+  reserve/reactivation, real activity-based departure and the unchanged save size.
+- `native_stations.py` first runs the Gym design regression, then uses the real
+  guide menus to position staff and reject/cancel changes. It verifies native
+  flash persistence, all five actors across all four layouts, away exclusion and
+  dismissal. It uses explicit rank/staff fixtures and is not a campaign test.
+- Compile `stations_layout.c` into `$CHAOS_QA_DIR/stations-layout.bin` in addition
+  to fresh `native_layout.c` and `gym_design_layout.c` layouts.

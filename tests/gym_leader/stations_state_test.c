@@ -24,6 +24,10 @@ int main(void) {
     for(i=0;i<5;i++)assert(GlePositionTrainer(&s,i,0)==GLE_OK);
     for(i=0;i<5;i++)assert(GlePositionTrainer(&s,i,5-i)==GLE_OK);
     for(i=0;i<5;i++)assert(GleTrainerStation(&s,i)==4-i);
+    copy=s;copy.lossStreak=4;GleDefenseResult(&copy,0);
+    assert(copy.rank==7 && !copy.recruits[4].active);
+    for(i=0;i<4;i++)assert(copy.recruits[i].active==6-i);
+    unique(&copy);
     /* Malformed duplicate/unknown encodings must still render without overlap. */
     for(i=0;i<5;i++)for(j=0;j<256;j++){copy=s;copy.recruits[i].active=j;unique(&copy);}
     s.recruits[4].away=2;assert(GleTrainerStation(&s,4)==GLE_NONE);

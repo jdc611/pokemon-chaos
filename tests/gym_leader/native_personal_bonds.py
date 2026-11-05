@@ -15,7 +15,7 @@ def result():return rd('gSpecialVar_Result',2)
 def claimed(trainer):
  i=catalog.index(trainer);return bool(rd(current()+c[0]+i//8,1)&(1<<(i%8)))
 def select(i):
- wr('gSpecialVar_LastTalked',230+i,2);call('GleStaffMemberSelect');assert result()==0
+ wr('gSpecialVar_LastTalked',210+i,2);call('GleStaffMemberSelect');assert result()==0
 def warp(m,x,y):
  lib.call6(symbols['SetWarpDestination'],m>>8,m&255,-1,x,y,0);call('WarpIntoMap');call('SetMainCallback2',symbols['CB2_LoadMap']|1);frames(300)
 # Migrate a real earlier contract, retaining the entire v12 prefix.

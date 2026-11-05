@@ -92,7 +92,7 @@ wr(record(),0,2);assert call('LoadGameSave',0)==1
 assert bytes(rd(record()+i,1) for i in range(v[168]))==expected
 warp(v[150],47,46);assert 3 not in objectids()
 print('PASS actual ordinary trainer victory, offer retry after failed funds/decline, paid hire, no Pokémon gift, flash record and original NPC relocation',flush=True)
-warp(v[58+town],14,9);assert 230 in objectids()
+warp(v[58+town],14,9);assert 210 in objectids()
 press(64);press(1);until(lambda:menu_count()==7)
 snap('staff-visible-reserve')
 press(2);until(lambda:menu_count()==2);press(2);frames(50)
@@ -109,7 +109,7 @@ assert any(call('GetMonData2',symbols['gGlePreviewParty'],v[38]+j) for j in rang
 snap('staff-native-summary')
 press(2,120);until(lambda:menu_count()==7)
 press(2);until(lambda:menu_count()==2);press(2);frames(50)
-call('GleWarpHome');frames(240);assert 230 in objectids()
+call('GleWarpHome');frames(240);assert 210 in objectids()
 snap('staff-active-gym')
 # Register an existing third starter through the real Guide selector.
 walkto(7,12);press(16);press(1);until(lambda:menu_count()==8)
@@ -149,8 +149,8 @@ state('staff-before-progression',1)
 # records and rosters remain attached to this identity, then can be persuaded.
 press(2);until(lambda:menu_count()==2);press(2);frames(50)
 wr(record()+v[176],2,1);wr(record()+v[175],0,1)
-warp(v[181],6,7);assert 230 in objectids()
-call('VarSet',0x800F,230);call('GleStaffMemberSelect');assert rd('gSpecialVar_Result',2)==0
+warp(v[181],6,7);assert 210 in objectids()
+call('VarSet',0x800F,210);call('GleStaffMemberSelect');assert rd('gSpecialVar_Result',2)==0
 call('VarSet',0x800D,0);call('GleStaffAction');assert rd('gSpecialVar_Result',2)==3
 wr(current()+v[2],8,1);wr(current()+26,100,2)
 old=bytes(rd(record()+i,1) for i in range(v[168]))
@@ -168,7 +168,7 @@ walkto(2,6);press(64);press(1);until(lambda:menu_count()==7)
 choose(4);until(yesno);choose(0);until(lambda:menu_count()==1)
 assert rd(record(),2)==0
 press(2);frames(50)
-assert call('GetObjectEventIdByLocalIdAndMap',230,v[23]&255,v[23]>>8)==16
+assert call('GetObjectEventIdByLocalIdAndMap',210,v[23]&255,v[23]>>8)==16
 walkto(6,13);walkto(3,13);walkto(3,6);walkto(2,6);frames(80)
-assert call('GetObjectEventIdByLocalIdAndMap',230,v[23]&255,v[23]>>8)==16
+assert call('GetObjectEventIdByLocalIdAndMap',210,v[23]&255,v[23]>>8)==16
 print('PASS native confirmed dismissal removes the record and actor without lazy respawn',flush=True)

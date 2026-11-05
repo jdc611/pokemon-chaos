@@ -143,8 +143,8 @@ void GleStaffSelect(void)
 void GleStaffMemberSelect(void)
 {
     u32 local=gSpecialVar_LastTalked;gSpecialVar_Result=GLE_INVALID;
-    if(local<230 || local>=230+GLE_RECRUITS)return;
-    sStaffSlot=local-230;gSpecialVar_0x8007=sStaffSlot;
+    if(local<GLE_STAFF_LOCAL_ID || local>=GLE_STAFF_LOCAL_ID+GLE_RECRUITS)return;
+    sStaffSlot=local-GLE_STAFF_LOCAL_ID;gSpecialVar_0x8007=sStaffSlot;
     if(GymLeaderState()->recruits[sStaffSlot].id)gSpecialVar_Result=GLE_OK;
 }
 void GleStaffInfo(void)
@@ -183,7 +183,7 @@ void GleStaffDismiss(void)
     // These temporary flags are scoped to the rebuilt town and new Gym maps.
     // Prevent a dismissed visible actor from returning through lazy spawning.
     FlagSet(FLAG_TEMP_2+sStaffSlot);
-    RemoveObjectEventByLocalIdAndMap(230+sStaffSlot,gSaveBlock1Ptr->location.mapNum,gSaveBlock1Ptr->location.mapGroup);
+    RemoveObjectEventByLocalIdAndMap(GLE_STAFF_LOCAL_ID+sStaffSlot,gSaveBlock1Ptr->location.mapNum,gSaveBlock1Ptr->location.mapGroup);
     memset(&GymLeaderState()->recruits[sStaffSlot],0,sizeof(struct GleRecruit));
 }
 void GymLeaderConfigureStaffMap(struct MapHeader *header)
@@ -213,7 +213,7 @@ void GymLeaderConfigureStaffMap(struct MapHeader *header)
         else if(map==MAP_GLE_RIVAL_GYM && r->away==2){x=xs[visible];y=ys[visible];}
         else continue;
         FlagClear(FLAG_TEMP_2+i);
-        sStaffObjects[count++]=(struct ObjectEventTemplate){.localId=230+i,.flagId=FLAG_TEMP_2+i,.graphicsId=source->graphics,.x=x,.y=y,.elevation=3,
+        sStaffObjects[count++]=(struct ObjectEventTemplate){.localId=GLE_STAFF_LOCAL_ID+i,.flagId=FLAG_TEMP_2+i,.graphicsId=source->graphics,.x=x,.y=y,.elevation=3,
             .movementType=MOVEMENT_TYPE_FACE_DOWN,.script=GleStaff_Member};visible++;
     }
     sStaffEvents.objectEventCount=count;sStaffEvents.objectEvents=sStaffObjects;header->events=&sStaffEvents;
@@ -355,4 +355,29 @@ void GleStaffStationApply(void)
     if(choice>5){gSpecialVar_Result=255;return;}
     result=AtOwnGym()?GlePositionTrainer(GymLeaderState(),sStaffSlot,choice):GLE_INVALID;gSpecialVar_Result=result;
     StringCopy(gStringVar4,result==GLE_OK?COMPOUND_STRING("Station saved. Your trainer reports\nthere on your next GYM visit.\lNo fee was charged."):result==GLE_NO_ROOM?COMPOUND_STRING("Another trainer has reserved that\nstation. Move them or choose\la different station. No change made."):COMPOUND_STRING("Only active staff at your GYM can\nreceive a station. Assign them\lfirst. No change made."));
+}
+
+/* Continue retains saved actor templates and live actor state. Translate the
+ * former 230..239 staff IDs only where the rebuilt header identifies staff. */
+void GymLeaderRestoreStaffSaveIds(void)
+{
+    u32 i,j;u16 map=CurrentMap();
+    if(!IsGymLeaderRun()||!gMapHeader.events)return;
+    for(i=0;i<gMapHeader.events->objectEventCount&&i<OBJECT_EVENT_TEMPLATES_COUNT;i++)
+    {
+        const struct ObjectEventTemplate *t=&gMapHeader.events->objectEvents[i];
+        const struct GleRecruitSource *source;u32 slot,old;u16 swapped;
+        if(t->script!=GleStaff_Member||t->localId<GLE_STAFF_LOCAL_ID||t->localId>=GLE_STAFF_LOCAL_ID+GLE_RECRUITS)continue;
+        slot=t->localId-GLE_STAFF_LOCAL_ID;old=230+slot;
+        if(gSaveBlock1Ptr->objectEventTemplates[i].localId!=old)continue;
+        source=Source(GymLeaderState()->recruits[slot].id);if(!source)continue;
+        gSaveBlock1Ptr->objectEventTemplates[i].localId=t->localId;
+        swapped=(source->graphics>>8)|(source->graphics<<8);
+        for(j=0;j<OBJECT_EVENTS_COUNT;j++)
+        {
+            struct ObjectEvent *live=&gObjectEvents[j],*saved=&gSaveBlock1Ptr->objectEvents[j];
+            if(live->active&&live->localId==old&&live->mapNum==(map&255)&&live->mapGroup==(map>>8)&&live->graphicsId==source->graphics)live->localId=t->localId;
+            if(saved->active&&saved->localId==old&&saved->mapNum==(map&255)&&saved->mapGroup==(map>>8)&&saved->graphicsId==swapped)saved->localId=t->localId;
+        }
+    }
 }

@@ -1,6 +1,7 @@
 #include "global.h"
 #include "ironmon.h"
 #include "gym_leader.h"
+#include "gym_leader_recruit.h"
 #include "chaos_arcade.h"
 #include "run_settings.h"
 #include "challenge_reset.h"
@@ -578,6 +579,7 @@ void LoadSaveblockObjEventScripts(void)
 
     for (i = 0; i < OBJECT_EVENT_TEMPLATES_COUNT; i++)
         savObjTemplates[i].script = mapHeaderObjTemplates[i].script;
+    GymLeaderRestoreStaffSaveIds();
 }
 
 static struct ObjectEventTemplate *GetObjectEventTemplate(u8 localId)
