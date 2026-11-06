@@ -1,7 +1,17 @@
 """Continue the earned controller campaign; no game-state writes or supplied outcomes."""
 import runpy,os,json
-assert os.environ.get('GLE_CAMPAIGN_RESUME') or os.environ.get('GLE_CAMPAIGN_FLASH'), 'Use an earned, ROM-matched checkpoint'
-globals().update(runpy.run_path('tests/gym_leader/native_campaign.py'))
+if '_campaign_context' in globals():
+ globals().update(_campaign_context)
+ # Refresh the controller policy between continuous stages without rebooting.
+ policy=__import__('pathlib').Path('tests/gym_leader/native_campaign.py').read_text()
+ b=(ROOT/'volatile-masks.bin').read_bytes();bg=battle.__globals__
+ bg['volatile_masks']=[int.from_bytes(b[i:i+c[0]],'little') for i in range(0,len(b),c[0])]
+ exec(policy[policy.index('def volatilefield('):policy.index('def choose_forgotten_move(')],bg)
+ exec(policy[policy.index('def controller_save('):policy.index('def fast_options(')],bg)
+ controller_save=bg['controller_save']
+else:
+ assert os.environ.get('GLE_CAMPAIGN_RESUME') or os.environ.get('GLE_CAMPAIGN_FLASH'), 'Use an earned checkpoint or the continuous campaign orchestrator'
+ globals().update(runpy.run_path('tests/gym_leader/native_campaign.py'))
 def rank():return rd(current()+v[2],1)
 def desk():
  walkto(7,12);press(16);press(1);until(lambda:menu_count()==5)

@@ -2,12 +2,15 @@
 import os,runpy,json
 from pathlib import Path
 os.environ['GLE_CAREER_HELPERS_ONLY']='1'
-globals().update(runpy.run_path('tests/gym_leader/native_career.py'))
+globals().update(runpy.run_path('tests/gym_leader/native_career.py',init_globals={'_campaign_context':_campaign_context} if '_campaign_context' in globals() else None))
 assert rank()==6
+controller_save('career-rank-6-native')
 READ_ONLY.update({'MapGridGetMetatileBehaviorAt','MetatileBehavior_IsPC'})
 src=Path('tests/gym_leader/native_career_town.py').read_text();exec(src[src.index('def deposit_reserve('):src.index("if not os.environ.get('GLE_CAREER_TOWN_HELPERS_ONLY')")])
-deposit_reserve(2,1334);new=claim_reward((move_meta[12],c[29],c[30]));assert new==5
-indices=[5,4,2,1,0];register_team(indices)
+indices=[5,4,2,1,0]
+if not os.environ.get('GLE_AGATHA_TEAM_READY'):
+ deposit_reserve(2,1334);new=claim_reward((move_meta[12],c[29],c[30]));assert new==5
+ register_team(indices)
 prepared=False
 for match in range(100):
  if rank()>=7:break
@@ -29,5 +32,6 @@ for match in range(100):
  if inspection and outcome!=1:state('career-agatha-loss');raise AssertionError('Agatha defeated the earned team; strategy review required')
 else:raise AssertionError('Rank seven not reached within budget')
 assert rank()==7
+controller_save('career-rank-seven-native')
 state('career-earned-rank-seven');snap('career-earned-rank-seven')
 print('PASS EARNED CONTROLLER CAREER THROUGH AGATHA; FULL CAMPAIGN REMAINS INCOMPLETE',flush=True)

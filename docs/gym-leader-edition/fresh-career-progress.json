@@ -286,5 +286,66 @@
     ],
     "campaign_complete": false,
     "history": "Controller-earned continuation from prior earned checkpoint. Development resumes were used. No supplied ranks, outcomes, Pokemon, money or HP. Final uninterrupted campaign replay remains required."
-  }
+  },
+  "fresh_continuous_first_inspection": {
+    "rom_sha256": "a2bf30748226a4b63f20f096638bcde1d9a2f14b55748c3577b72735c87af4e2",
+    "used_snapshot_or_flash_resume": false,
+    "actual_lorelei_victory": {
+      "stage": "first_inspection",
+      "match": 9,
+      "outcome": 1,
+      "rank": 3,
+      "rank_xp": 20,
+      "wins": 12,
+      "losses": 0,
+      "party": [
+        {
+          "species": 459,
+          "level": 25,
+          "moves": [
+            196,
+            181,
+            633,
+            75
+          ],
+          "exp": 19531
+        },
+        {
+          "species": 549,
+          "level": 25,
+          "moves": [
+            71,
+            72,
+            80,
+            78
+          ],
+          "exp": 15625
+        },
+        {
+          "species": 672,
+          "level": 6,
+          "moves": [
+            33,
+            74,
+            0,
+            0
+          ],
+          "exp": 222
+        },
+        {
+          "species": 1334,
+          "level": 25,
+          "moves": [
+            229,
+            331,
+            72,
+            506
+          ],
+          "exp": 15625
+        }
+      ]
+    },
+    "complete_campaign": false
+  },
+  "runner_move_legality_fix": "Read compiled volatile-bitfield masks to avoid Disabled, Tormented, Taunted, Encored and Throat Chopped moves. Original long Unown defense completed with corrected controller policy; no game changes or supplied outcome."
 }
