@@ -1,0 +1,81 @@
+{
+  "rom_sha256": "a2bf30748226a4b63f20f096638bcde1d9a2f14b55748c3577b72735c87af4e2",
+  "state_sha256": "bed1562a4f4864fb6da8aa1281a88c47bbd5f587a05a2ba1541945707d33e7b6",
+  "state_bytes": 397312,
+  "save_sha256": "f83a9d69ef42bfb286c2481957e63eb130d8e2d2240b999c39c8556e09895970",
+  "flash_bytes": 131072,
+  "earned_rank": 6,
+  "official_wins": 61,
+  "official_losses": 23,
+  "rank_xp": 5,
+  "party": [
+    {
+      "species": 460,
+      "level": 55,
+      "moves": [
+        8,
+        452,
+        59,
+        75
+      ],
+      "exp": 207968
+    },
+    {
+      "species": 549,
+      "level": 55,
+      "moves": [
+        71,
+        72,
+        80,
+        78
+      ],
+      "exp": 166375
+    },
+    {
+      "species": 1334,
+      "level": 27,
+      "moves": [
+        229,
+        331,
+        72,
+        506
+      ],
+      "exp": 21160
+    },
+    {
+      "species": 413,
+      "level": 55,
+      "moves": [
+        437,
+        405,
+        94,
+        60
+      ],
+      "exp": 166375
+    },
+    {
+      "species": 1315,
+      "level": 53,
+      "moves": [
+        402,
+        412,
+        572,
+        733
+      ],
+      "exp": 149109
+    },
+    {
+      "species": 1315,
+      "level": 55,
+      "moves": [
+        412,
+        73,
+        733,
+        572
+      ],
+      "exp": 159635
+    }
+  ],
+  "campaign_complete": false,
+  "history": "Controller-earned continuation from prior earned checkpoint. Development resumes were used. No supplied ranks, outcomes, Pokemon, money or HP. Final uninterrupted campaign replay remains required."
+}

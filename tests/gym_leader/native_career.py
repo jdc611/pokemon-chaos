@@ -18,7 +18,7 @@ def register_team(indices):
  snap('career-registration-'+str(len(indices)))
  press(8,25);press(1,100);until(lambda:menu_count()==8)
  assert rd(current()+v[26],1)==len(indices)
-def claim_reward():
+def claim_reward(prefer_types=()):
  count=rd('gPartiesCount',1);assert count<6, 'Native PC withdrawal required before next reward'
  goleague();desk();choose(1);until(lambda:menu_count()==5)
  vouchers=rd(current()+v[66],1);assert vouchers>0
@@ -27,7 +27,10 @@ def claim_reward():
  for i in range(3):
   mon=symbols['gGlePreviewParty']+i*v[5]
   moves=[call('GetMonData2',mon,v[38]+j) for j in range(4)]
-  scores.append(sum(sorted([movevalue(m) for m in moves],reverse=True)[:2]))
+  attack=call('GetMonData2',mon,c[31]) if len(c)>36 else 100
+  special=call('GetMonData2',mon,c[33]) if len(c)>36 else 100
+  values=[movevalue(m)*(attack if category(m)==move_meta[2] else special)/100*(1.8 if movetype(m) in prefer_types else 1) for m in moves]
+  scores.append(sum(sorted(values,reverse=True)[:2]))
  choose(max(range(3),key=lambda i:scores[i]));until(lambda:menu_count()==3);choose(0);until(yesno);choose(0)
  until(lambda:menu_count()==5);assert rd('gPartiesCount',1)==count+1
  print('CAREER earned milestone reward',json.dumps(profile()),flush=True)
