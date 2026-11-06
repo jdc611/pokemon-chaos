@@ -1,0 +1,209 @@
+{
+  "rom_sha256": "05b769f7875608d0d5c749facf0f2b05a9fa56efe8dc35e613832f358c07bef6",
+  "complete_campaign": false,
+  "verified_fresh_route": {
+    "opening": "Normal title, Oak and native naming; no debug/name/state bypass",
+    "town": 0,
+    "gym_type": 4,
+    "earned_rank": 2,
+    "official_defense_wins": 12,
+    "official_defense_losses": 4,
+    "rank_xp": 200,
+    "milestone_voucher_claimed": true,
+    "voucher_species": 1334,
+    "voucher_level_at_claim": 22,
+    "first_inspection": {
+      "opponent": "Lorelei",
+      "outcome": "lost",
+      "rank_xp_preserved": true,
+      "official_defense_loss_count_preserved": true
+    },
+    "party_at_inspection": [
+      {
+        "species": 459,
+        "level": 13
+      },
+      {
+        "species": 548,
+        "level": 15
+      },
+      {
+        "species": 672,
+        "level": 6
+      },
+      {
+        "species": 1334,
+        "level": 23
+      }
+    ]
+  },
+  "preparation_status": "Native paid evolution and practice passed. Corrected read-only move/type/immunity evaluation defeated the previously blocking practice matchup. The earned team defeated Lorelei through actual controller input and advanced to rank 3; official XP and battle results were not injected.",
+  "blocker": "Later campaign progression, competitions, ending and final save/release checks remain under validation.",
+  "recovery": "Latest preparation helper reconstructed from the executed editing commands and saved as unverified WIP; compile and validate it when execution returns. Local emulator snapshots and build cache availability must be checked. Final fresh campaign requires a clean run without GLE_CAMPAIGN_RESUME.",
+  "latest_development_preparation": {
+    "snapshot_resume": true,
+    "native_options_fast_text_and_animation_off": true,
+    "sun_stone_purchase_and_payment": true,
+    "native_bag_and_party_use": true,
+    "species_before": 548,
+    "species_after": 549,
+    "evolution_attack_learned": 80,
+    "practice_battles_running": true,
+    "practice_preserves_money_rank_xp_and_official_records": true,
+    "inspection_retry_verified": false,
+    "first_inspection_victory": true,
+    "earned_rank": 3,
+    "source": "Resumed earned-career emulator snapshot; real controller battle; no rank or outcome injection",
+    "registered_team_level": 25,
+    "verified_fresh_campaign_complete": false
+  },
+  "earned_rank_four": {
+    "rom_sha256": "05b769f7875608d0d5c749facf0f2b05a9fa56efe8dc35e613832f358c07bef6",
+    "state_sha256": "e0f8900b4e17024430fc5dee7246396454cafd1432485e5ad7816bba86684c7f",
+    "state_bytes": 397312,
+    "compressed_bytes": 50515,
+    "campaign_complete": false,
+    "earned_rank": 4,
+    "official_wins": 23,
+    "official_losses": 6,
+    "rank_xp": 15,
+    "party": [
+      {
+        "species": 459,
+        "level": 30,
+        "moves": [
+          196,
+          181,
+          633,
+          75
+        ],
+        "exp": 34424
+      },
+      {
+        "species": 549,
+        "level": 31,
+        "moves": [
+          71,
+          72,
+          80,
+          78
+        ],
+        "exp": 32007
+      },
+      {
+        "species": 672,
+        "level": 6,
+        "moves": [
+          33,
+          74,
+          0,
+          0
+        ],
+        "exp": 222
+      },
+      {
+        "species": 1334,
+        "level": 27,
+        "moves": [
+          229,
+          331,
+          72,
+          506
+        ],
+        "exp": 21160
+      },
+      {
+        "species": 413,
+        "level": 32,
+        "moves": [
+          93,
+          75,
+          74,
+          60
+        ],
+        "exp": 35579
+      }
+    ],
+    "history": "Continued the legitimately earned Rank 3 snapshot. Actual milestone claim, registration and 16 controller defenses earned Rank 4. No supplied ranks, outcomes, Pokemon, money or HP. Final clean full-campaign replay remains required."
+  },
+  "earned_rank_five": {
+    "rom_sha256": "05b769f7875608d0d5c749facf0f2b05a9fa56efe8dc35e613832f358c07bef6",
+    "state_sha256": "4fb30ccb0af1b58bb0e5d1ae0306b8c056a511e2725b58e3ba124cad6a793111",
+    "state_bytes": 397312,
+    "earned_rank": 5,
+    "official_wins": 39,
+    "official_losses": 18,
+    "rank_xp": 15,
+    "party": [
+      {
+        "species": 460,
+        "level": 45,
+        "moves": [
+          8,
+          452,
+          633,
+          75
+        ],
+        "exp": 113906
+      },
+      {
+        "species": 549,
+        "level": 45,
+        "moves": [
+          71,
+          72,
+          80,
+          78
+        ],
+        "exp": 91125
+      },
+      {
+        "species": 672,
+        "level": 6,
+        "moves": [
+          33,
+          74,
+          0,
+          0
+        ],
+        "exp": 222
+      },
+      {
+        "species": 1334,
+        "level": 27,
+        "moves": [
+          229,
+          331,
+          72,
+          506
+        ],
+        "exp": 21160
+      },
+      {
+        "species": 413,
+        "level": 45,
+        "moves": [
+          93,
+          75,
+          94,
+          60
+        ],
+        "exp": 91125
+      },
+      {
+        "species": 1315,
+        "level": 45,
+        "moves": [
+          402,
+          412,
+          73,
+          733
+        ],
+        "exp": 83335
+      }
+    ],
+    "campaign_complete": false,
+    "history": "Earned Rank 4 continued by controller: 28 defenses, 30 practice battles and actual Bruno victory. Resumed development career; final clean replay remains required."
+  },
+  "rank_five_registration_blocker": "RESOLVED: selected-order storage expanded to six and Fifth/Sixth labels added. Earned five-member and explicit-fixture six-member registration pass; fixed-build native Save/Continue preserves five registered identities."
+}

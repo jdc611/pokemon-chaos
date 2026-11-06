@@ -1,0 +1,155 @@
+{
+  "before": {
+    "rank": 5,
+    "wins": 39,
+    "losses": 18,
+    "xp": 15,
+    "party": [
+      {
+        "species": 460,
+        "level": 45,
+        "moves": [
+          8,
+          452,
+          633,
+          75
+        ],
+        "exp": 113906
+      },
+      {
+        "species": 549,
+        "level": 45,
+        "moves": [
+          71,
+          72,
+          80,
+          78
+        ],
+        "exp": 91125
+      },
+      {
+        "species": 672,
+        "level": 6,
+        "moves": [
+          33,
+          74,
+          0,
+          0
+        ],
+        "exp": 222
+      },
+      {
+        "species": 1334,
+        "level": 27,
+        "moves": [
+          229,
+          331,
+          72,
+          506
+        ],
+        "exp": 21160
+      },
+      {
+        "species": 413,
+        "level": 45,
+        "moves": [
+          93,
+          75,
+          94,
+          60
+        ],
+        "exp": 91125
+      },
+      {
+        "species": 1315,
+        "level": 45,
+        "moves": [
+          402,
+          412,
+          73,
+          733
+        ],
+        "exp": 83335
+      }
+    ]
+  },
+  "after": {
+    "rank": 5,
+    "wins": 39,
+    "losses": 18,
+    "xp": 15,
+    "party": [
+      {
+        "species": 460,
+        "level": 45,
+        "moves": [
+          8,
+          452,
+          633,
+          75
+        ],
+        "exp": 113906
+      },
+      {
+        "species": 549,
+        "level": 45,
+        "moves": [
+          71,
+          72,
+          80,
+          78
+        ],
+        "exp": 91125
+      },
+      {
+        "species": 672,
+        "level": 6,
+        "moves": [
+          33,
+          74,
+          0,
+          0
+        ],
+        "exp": 222
+      },
+      {
+        "species": 1334,
+        "level": 27,
+        "moves": [
+          229,
+          331,
+          72,
+          506
+        ],
+        "exp": 21160
+      },
+      {
+        "species": 413,
+        "level": 45,
+        "moves": [
+          93,
+          75,
+          94,
+          60
+        ],
+        "exp": 91125
+      },
+      {
+        "species": 1315,
+        "level": 45,
+        "moves": [
+          402,
+          412,
+          73,
+          733
+        ],
+        "exp": 83335
+      }
+    ]
+  },
+  "flash_bytes": 131072,
+  "pass": true,
+  "save_sha256": "9ec56566b056d762c23420714de5eebc073781ea706d341a07e001e2346fbb4e",
+  "rom_sha256": "05b769f7875608d0d5c749facf0f2b05a9fa56efe8dc35e613832f358c07bef6",
+  "full_campaign_complete": false
+}

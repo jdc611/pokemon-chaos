@@ -1,0 +1,13 @@
+{
+  "rom_sha256": "05b769f7875608d0d5c749facf0f2b05a9fa56efe8dc35e613832f358c07bef6",
+  "state_sha256": "88e171a1066dc43b40aa1ecb32791ed0db5b7ccb731c9decc2e51aebab7e7b4e",
+  "state_bytes": 397312,
+  "compressed_bytes": 47787,
+  "campaign_complete": false,
+  "earned_rank": 3,
+  "official_wins": 12,
+  "official_losses": 1,
+  "rank_xp": 20,
+  "registered_team_level": 25,
+  "history": "Rank one and two were earned through controller battles. Development resumed from earned emulator checkpoints to debug preparation. Lorelei victory was a real controller battle. No rank, outcomes, Pokemon, money or HP were injected. A final clean full-campaign replay is still required."
+}
