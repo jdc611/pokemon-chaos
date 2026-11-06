@@ -1,0 +1,33 @@
+{
+  "date": "2026-11-06",
+  "rom_sha256": "85c4b4c3da3366d138b4624cff162ad1720a9e70cadca179cf8ae4969edc190a",
+  "rom_payload_bytes": 27354480,
+  "ewram_bytes": 259488,
+  "iwram_bytes": 29076,
+  "save_version": 15,
+  "gle_state_bytes": 3200,
+  "fix": "Allow the existing Party Relearn action in Gym Leader careers independently of the inherited Pewter training/story flags. Other modes retain their existing conditions.",
+  "checks": {
+    "pewter_training_gate_unset": true,
+    "pewter_story_scene_below_unlock_threshold": true,
+    "native_party_level_up_relearner_access": true,
+    "native_quiver_dance_sleep_powder_giga_drain_synthesis_teaching": true,
+    "actual_agatha_victory_after_preparation": true,
+    "earned_rank_seven": true,
+    "native_save_power_reset_continue_preserves_moves_rank_and_five_registrations": true
+  },
+  "earned_record": {
+    "rank": 7,
+    "official_wins": 92,
+    "official_losses": 28,
+    "rank_xp": 20,
+    "agatha_attempts": 3,
+    "agatha_wins": 1
+  },
+  "limits": [
+    "Earned development campaign used checkpoint resumes.",
+    "Fresh title-screen replay reached Rank 4 before the environment outage; a completed uninterrupted campaign is not claimed.",
+    "Lance, competitions, Oak and full release validation remain open."
+  ],
+  "complete_release": false
+}

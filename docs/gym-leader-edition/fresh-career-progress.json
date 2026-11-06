@@ -347,5 +347,86 @@
     },
     "complete_campaign": false
   },
-  "runner_move_legality_fix": "Read compiled volatile-bitfield masks to avoid Disabled, Tormented, Taunted, Encored and Throat Chopped moves. Original long Unown defense completed with corrected controller policy; no game changes or supplied outcome."
+  "runner_move_legality_fix": "Read compiled volatile-bitfield masks to avoid Disabled, Tormented, Taunted, Encored and Throat Chopped moves. Original long Unown defense completed with corrected controller policy; no game changes or supplied outcome.",
+  "earned_rank_seven": {
+    "rom_sha256": "85c4b4c3da3366d138b4624cff162ad1720a9e70cadca179cf8ae4969edc190a",
+    "state_sha256": "7d191fdccb8bb31796f07c5cd2795c930b7726a599915282a89fb0153a644900",
+    "state_bytes": 397312,
+    "save_sha256": "86294e7f4f2b69f1d76045d47b74bde6e7f1c119fe5e6e72ceacc6137aaeb4b0",
+    "flash_bytes": 131072,
+    "earned_rank": 7,
+    "official_wins": 92,
+    "official_losses": 28,
+    "rank_xp": 20,
+    "party": [
+      {
+        "species": 460,
+        "level": 65,
+        "moves": [
+          8,
+          452,
+          59,
+          75
+        ],
+        "exp": 343281
+      },
+      {
+        "species": 549,
+        "level": 65,
+        "moves": [
+          483,
+          79,
+          202,
+          235
+        ],
+        "exp": 274625
+      },
+      {
+        "species": 413,
+        "level": 65,
+        "moves": [
+          437,
+          405,
+          94,
+          60
+        ],
+        "exp": 274625
+      },
+      {
+        "species": 1315,
+        "level": 53,
+        "moves": [
+          402,
+          412,
+          572,
+          733
+        ],
+        "exp": 149109
+      },
+      {
+        "species": 1315,
+        "level": 65,
+        "moves": [
+          412,
+          80,
+          733,
+          572
+        ],
+        "exp": 272535
+      },
+      {
+        "species": 781,
+        "level": 65,
+        "moves": [
+          438,
+          640,
+          412,
+          566
+        ],
+        "exp": 274625
+      }
+    ],
+    "campaign_complete": false,
+    "history": "Controller-earned continuation from prior earned checkpoint. Development resumes were used. No supplied ranks, outcomes, Pokemon, money or HP. Final uninterrupted campaign replay remains required."
+  }
 }

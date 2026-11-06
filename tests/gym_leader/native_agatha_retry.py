@@ -1,4 +1,4 @@
-"""Draft earned-team Agatha retry; unexecuted after environment outage.
+"""First earned-team Agatha strategy retry; actual outcome was a loss.
 Uses native registration, paralysis support and actual Ghost coverage.
 """
 import os,runpy,json

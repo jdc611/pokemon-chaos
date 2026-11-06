@@ -26,6 +26,11 @@ for match in range(100):
    (ROOT/'career-progress.json').write_text(json.dumps(history,indent=2)+'\n');state('career-practice-latest');print('CAREER',json.dumps(row),flush=True)
   else:raise AssertionError('Practice did not reach cap within budget')
   gohome();prepared=True
+  register_team([1,5,4,3,2,0])
+  original_bestmove=bestmove
+  strategy=Path('tests/gym_leader/native_agatha_sleep.py').read_text()
+  exec(strategy[strategy.index('def prepared_bestmove():'):strategy.index("battle.__globals__['bestmove']=prepared_bestmove")])
+  battle.__globals__['bestmove']=prepared_bestmove
  choose(4 if inspection else 0);until(yesno);choose(0);outcome=battle();until(lambda:menu_count()==8)
  row={'stage':'lance_inspection' if inspection else 'rank_seven_defense','match':match+1,'outcome':outcome,'rank':rank(),'rank_xp':rd(current()+v[31]),'wins':rd(current()+v[29],2),'losses':rd(current()+v[30],2),'party':profile()}
  history.append(row);(ROOT/'career-progress.json').write_text(json.dumps(history,indent=2)+'\n');state('career-latest');print('CAREER',json.dumps(row),flush=True)

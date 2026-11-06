@@ -86,6 +86,8 @@ def volatilefield(index):
  return (rd(symbols['gBattleMons']+(bit//32)*4)>>(bit%32))&((1<<width)-1)
 def bestmove():
  own=symbols['gBattleMons'];enemy=own+c[0];scores=[]
+ choice=rd(rd('gBattleStruct')+c[43],c[4]) if len(c)>44 else 0
+ held=rd(own+c[44],2) if len(c)>44 else 0
  disabled=volatilefield(0);torment=volatilefield(1);taunt=volatilefield(2);encore=volatilefield(3);encored=volatilefield(4);throat=volatilefield(5)
  ability=rd(enemy+move_meta[13],move_meta[14]);ownability=rd(own+move_meta[13],move_meta[14])
  ignore=ownability in move_meta[28:31]
@@ -106,8 +108,9 @@ def bestmove():
   physical=category(move)==move_meta[2]
   attack=rd(own+(c[8] if physical else c[9]),2);defense=rd(enemy+(c[10] if physical else c[11]),2)
   score*=attack/max(1,defense)
-  blocked=move==disabled or (torment and move==rd('gLastMoves',2)) or (taunt and category(move)==0) or (encore and move!=encored) or (throat and movefield(move,8,1))
+  blocked=(len(c)>44 and held in [c[40],c[41]] and choice not in [0,65535] and move!=choice) or move==disabled or (torment and move==rd('gLastMoves',2)) or (taunt and category(move)==0) or (encore and move!=encored) or (throat and movefield(move,8,1))
   scores.append(score if pp and move and not blocked else -1)
+ bestmove.last_scores=scores
  return max(range(4),key=lambda i:scores[i])
 def choose_forgotten_move(index):
  frames(80)
@@ -118,7 +121,7 @@ def choose_forgotten_move(index):
   press(128,20)
  raise AssertionError(('native move-learning cursor did not reach target',index))
 def battle():
- started=False;replacement=False
+ started=False;replacement=False;switch_target=None
  for step in range(4500):
   active=bool(call('GymLeaderBattleTrainer'))
   if active:
@@ -141,7 +144,8 @@ def battle():
   if task('Task_HandleChooseMonInput')<16:
    alive=[i for i in range(rd('gPartiesCount',1)) if rd(symbols['gParties']+i*v[5]+v[13],2)>0 and i!=rd('gBattlerPartyIndexes',2)]
    if not alive:press(1,25);continue
-   target=alive[0]
+   target=switch_target if switch_target in alive else alive[0]
+   switch_target=None
    for _ in range(12):
     cursor=call('GetCursorSelectionMonId')
     if cursor==target:break
@@ -152,6 +156,33 @@ def battle():
    press(2,20);continue
   if rd('gBattlerControllerFuncs')==symbols['HandleInputChooseMove']|1:
    target=bestmove()
+   if bestmove.__name__=='bestmove' and hasattr(bestmove,'last_scores') and max(bestmove.last_scores)<=0:
+    candidates=[];active_index=rd('gBattlerPartyIndexes',2)
+    for i in range(rd('gPartiesCount',1)):
+     mon=symbols['gParties']+i*v[5]
+     if i==active_index or rd(mon+v[13],2)==0:continue
+     values=[]
+     for j,move in enumerate(partymoves(i)):
+      if not call('GetMonData2',mon,v[45]+j):continue
+      typ=movetype(move);effect=1;seen=set()
+      for k in range(2):
+       t=rd(symbols['gBattleMons']+c[0]+c[3]+k*c[5],c[5])
+       if t in seen or t in move_meta[4:6]:continue
+       seen.add(t)
+       if typ<c[7] and t<c[7]:effect*=rd(symbols['gTypeEffectivenessTable']+move_meta[1]*(typ*c[7]+t),move_meta[1])/4096
+      ability=rd(symbols['gBattleMons']+c[0]+move_meta[13],move_meta[14])
+      if typ==move_meta[10] and ability==move_meta[15]:effect=0
+      if typ==move_meta[11] and ability in [move_meta[16],move_meta[24]]:effect=0
+      values.append(movevalue(move)*effect)
+     if values and max(values)>0:candidates.append((max(values),i))
+    if candidates:
+     switch_target=max(candidates)[1];press(2,40)
+     waitfor(lambda:rd('gBattlerControllerFuncs')==symbols['HandleInputChooseAction']|1)
+     for _ in range(8):
+      cursor=rd('gActionSelectionCursor',1)
+      if cursor==2:break
+      press(32 if cursor%2 else 128,20)
+     press(1,50);continue
    for _ in range(10):
     cursor=rd('gMoveSelectionCursor',1)
     if cursor==target:break
