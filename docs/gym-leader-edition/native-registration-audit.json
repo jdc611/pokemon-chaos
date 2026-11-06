@@ -1,0 +1,34 @@
+{
+  "date": "2026-11-06",
+  "rom_sha256": "a2bf30748226a4b63f20f096638bcde1d9a2f14b55748c3577b72735c87af4e2",
+  "rom_payload_bytes": 27354472,
+  "ewram_bytes": 259488,
+  "iwram_bytes": 29076,
+  "save_version": 15,
+  "gle_state_bytes": 3200,
+  "earned_campaign": {
+    "rank": 5,
+    "official_wins": 39,
+    "official_losses": 18,
+    "rank_xp": 15,
+    "lorelei_actual_victory": true,
+    "bruno_actual_victory": true,
+    "development_snapshot_resumes": true,
+    "full_campaign_complete": false
+  },
+  "checks": {
+    "earned_rank_four_native_save_power_reset_continue": true,
+    "earned_rank_five_native_save_power_reset_continue": true,
+    "old_build_rank_five_flash_continues_in_fixed_build": true,
+    "controller_paid_center_and_native_pc_deposit_return": true,
+    "earned_rank_five_native_five_partner_registration": true,
+    "explicit_rank_seven_fixture_native_six_partner_registration": true,
+    "fifth_and_sixth_labels_visually_checked": true,
+    "fixed_build_native_save_continue_preserves_five_registered_identities": true
+  },
+  "fix": "Expand native selected-order storage from four frontier slots to six party slots and add contiguous Fifth/Sixth description labels. Frontier facility limits remain unchanged.",
+  "limits": [
+    "Six-partner registration uses an explicit rank-seven fixture, not earned rank seven.",
+    "Final uninterrupted fresh campaign, remaining inspections, competitions, Oak and complete release checks remain open."
+  ]
+}

@@ -7,13 +7,15 @@ def desk():
  walkto(7,12);press(16);press(1);until(lambda:menu_count()==5)
 def register_team(indices):
  choose(1);until(lambda:call('GymLeaderRegistering'));frames(160)
- for target in indices:
+ for order,target in enumerate(indices):
   for _ in range(24):
    cursor=call('GetCursorSelectionMonId')
    if cursor==target:break
    press(32 if target==0 else 16 if cursor==0 else 128 if cursor<target else 64,15)
   assert call('GetCursorSelectionMonId')==target
   press(1,25);press(1,25)
+  assert [rd(symbols['gSelectedOrderFromParty']+i,1) for i in range(order+1)]==[i+1 for i in indices[:order+1]]
+ snap('career-registration-'+str(len(indices)))
  press(8,25);press(1,100);until(lambda:menu_count()==8)
  assert rd(current()+v[26],1)==len(indices)
 def claim_reward():

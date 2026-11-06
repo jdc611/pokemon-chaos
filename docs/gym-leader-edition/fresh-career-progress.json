@@ -205,5 +205,5 @@
     "campaign_complete": false,
     "history": "Earned Rank 4 continued by controller: 28 defenses, 30 practice battles and actual Bruno victory. Resumed development career; final clean replay remains required."
   },
-  "rank_five_registration_blocker": "Four-slot native frontier selection array is too small for five/six GLE defenders. Repair and native UI regression pending."
+  "rank_five_registration_blocker": "RESOLVED: selected-order storage expanded to six and Fifth/Sixth labels added. Earned five-member and explicit-fixture six-member registration pass; fixed-build native Save/Continue preserves five registered identities."
 }
