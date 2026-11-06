@@ -56,5 +56,74 @@
     "source": "Resumed earned-career emulator snapshot; real controller battle; no rank or outcome injection",
     "registered_team_level": 25,
     "verified_fresh_campaign_complete": false
+  },
+  "earned_rank_four": {
+    "rom_sha256": "05b769f7875608d0d5c749facf0f2b05a9fa56efe8dc35e613832f358c07bef6",
+    "state_sha256": "e0f8900b4e17024430fc5dee7246396454cafd1432485e5ad7816bba86684c7f",
+    "state_bytes": 397312,
+    "compressed_bytes": 50515,
+    "campaign_complete": false,
+    "earned_rank": 4,
+    "official_wins": 23,
+    "official_losses": 6,
+    "rank_xp": 15,
+    "party": [
+      {
+        "species": 459,
+        "level": 30,
+        "moves": [
+          196,
+          181,
+          633,
+          75
+        ],
+        "exp": 34424
+      },
+      {
+        "species": 549,
+        "level": 31,
+        "moves": [
+          71,
+          72,
+          80,
+          78
+        ],
+        "exp": 32007
+      },
+      {
+        "species": 672,
+        "level": 6,
+        "moves": [
+          33,
+          74,
+          0,
+          0
+        ],
+        "exp": 222
+      },
+      {
+        "species": 1334,
+        "level": 27,
+        "moves": [
+          229,
+          331,
+          72,
+          506
+        ],
+        "exp": 21160
+      },
+      {
+        "species": 413,
+        "level": 32,
+        "moves": [
+          93,
+          75,
+          74,
+          60
+        ],
+        "exp": 35579
+      }
+    ],
+    "history": "Continued the legitimately earned Rank 3 snapshot. Actual milestone claim, registration and 16 controller defenses earned Rank 4. No supplied ranks, outcomes, Pokemon, money or HP. Final clean full-campaign replay remains required."
   }
 }
