@@ -6,7 +6,8 @@ This is an in-progress campaign driver; completion requires its final sentinel.
 import runpy,struct,json,os,time,sys
 from collections import deque
 from pathlib import Path
-resume=os.environ.get('GLE_CAMPAIGN_RESUME')
+flash=os.environ.get('GLE_CAMPAIGN_FLASH')
+resume=os.environ.get('GLE_CAMPAIGN_RESUME') or flash
 if resume:
  sys.path.insert(0,'tools/chaos/native')
  from qa import *
@@ -256,13 +257,23 @@ def prepare_first_inspection():
  else:raise AssertionError('practice did not reach the earned cap within its budget')
  gohome()
  print('CAMPAIGN first inspection preparation complete',json.dumps(profile()),flush=True)
-resume=os.environ.get('GLE_CAMPAIGN_RESUME')
+flash=os.environ.get('GLE_CAMPAIGN_FLASH')
+resume=os.environ.get('GLE_CAMPAIGN_RESUME') or flash
 if resume:
- state(resume,1);frames(30)
+ if flash:
+  import ctypes as C
+  lib.save_restore.argtypes=[C.c_char_p]
+  assert lib.save_restore(str(ROOT/flash).encode())
+  frames(180)
+  for _ in range(1200):
+   if rd(symbols['gMain']+4)==symbols['CB2_Overworld']|1 and call('IsGymLeaderRun'):break
+   press(1,25)
+  else:raise AssertionError('Earned flash save did not Continue from title')
+ else:state(resume,1);frames(30)
  fast_options();walkto(7,12);press(16);press(1)
  if mappair()==(v[24]>>8,v[24]&255):until(lambda:menu_count()==5);gohome()
  else:until(lambda:menu_count()==8)
- print('DEVELOPMENT SNAPSHOT RESUME: final fresh-run validation remains required',flush=True)
+ print('DEVELOPMENT '+('EARNED FLASH SAVE' if flash else 'SNAPSHOT')+' RESUME: final fresh-run validation remains required',flush=True)
 else:
  fast_options()
  # Return home through the real GLA desk.

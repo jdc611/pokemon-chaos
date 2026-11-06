@@ -1,6 +1,6 @@
 """Continue the earned controller campaign; no game-state writes or supplied outcomes."""
 import runpy,os,json
-assert os.environ.get('GLE_CAMPAIGN_RESUME'), 'Use an earned, ROM-matched checkpoint'
+assert os.environ.get('GLE_CAMPAIGN_RESUME') or os.environ.get('GLE_CAMPAIGN_FLASH'), 'Use an earned, ROM-matched checkpoint'
 globals().update(runpy.run_path('tests/gym_leader/native_campaign.py'))
 def rank():return rd(current()+v[2],1)
 def desk():
