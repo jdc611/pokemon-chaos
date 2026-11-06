@@ -1,0 +1,134 @@
+{
+  "before": {
+    "rank": 4,
+    "wins": 23,
+    "losses": 6,
+    "xp": 15,
+    "party": [
+      {
+        "species": 459,
+        "level": 30,
+        "moves": [
+          196,
+          181,
+          633,
+          75
+        ],
+        "exp": 34424
+      },
+      {
+        "species": 549,
+        "level": 31,
+        "moves": [
+          71,
+          72,
+          80,
+          78
+        ],
+        "exp": 32007
+      },
+      {
+        "species": 672,
+        "level": 6,
+        "moves": [
+          33,
+          74,
+          0,
+          0
+        ],
+        "exp": 222
+      },
+      {
+        "species": 1334,
+        "level": 27,
+        "moves": [
+          229,
+          331,
+          72,
+          506
+        ],
+        "exp": 21160
+      },
+      {
+        "species": 413,
+        "level": 32,
+        "moves": [
+          93,
+          75,
+          74,
+          60
+        ],
+        "exp": 35579
+      }
+    ]
+  },
+  "after": {
+    "rank": 4,
+    "wins": 23,
+    "losses": 6,
+    "xp": 15,
+    "party": [
+      {
+        "species": 459,
+        "level": 30,
+        "moves": [
+          196,
+          181,
+          633,
+          75
+        ],
+        "exp": 34424
+      },
+      {
+        "species": 549,
+        "level": 31,
+        "moves": [
+          71,
+          72,
+          80,
+          78
+        ],
+        "exp": 32007
+      },
+      {
+        "species": 672,
+        "level": 6,
+        "moves": [
+          33,
+          74,
+          0,
+          0
+        ],
+        "exp": 222
+      },
+      {
+        "species": 1334,
+        "level": 27,
+        "moves": [
+          229,
+          331,
+          72,
+          506
+        ],
+        "exp": 21160
+      },
+      {
+        "species": 413,
+        "level": 32,
+        "moves": [
+          93,
+          75,
+          74,
+          60
+        ],
+        "exp": 35579
+      }
+    ]
+  },
+  "flash_bytes": 131072,
+  "pass": true,
+  "save_sha256": "a6257c57e78fedfd7a62104933713b90d788f598de1143ad7ed20caa4455e941",
+  "rom_sha256": "05b769f7875608d0d5c749facf0f2b05a9fa56efe8dc35e613832f358c07bef6",
+  "full_campaign_complete": false,
+  "scope": "Earned rank-four development career; native Start Save, emulator power reset and title Continue; exact party, EXP, records and rank preserved."
+}

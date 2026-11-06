@@ -35,3 +35,9 @@ unsigned call6(unsigned fn,unsigned a,unsigned b,unsigned d,unsigned e,unsigned 
 }
 unsigned call(unsigned fn,unsigned a,unsigned b,unsigned d,unsigned e){return call6(fn,a,b,d,e,0,0);}
 unsigned reg(int r){struct ARMCore *cpu=c->cpu;return r==16?cpu->cpsr.packed:cpu->gprs[r];}
+
+// Export/import emulator flash exactly as written by the game; never alters RAM.
+int save_dump(const char *path){void *data=NULL;size_t n=c->savedataClone(c,&data);if(!n||!data)return 0;FILE *f=fopen(path,"wb");if(!f){free(data);return 0;}int ok=fwrite(data,1,n,f)==n;fclose(f);free(data);return ok;}
+int save_restore(const char *path){FILE *f=fopen(path,"rb");if(!f)return 0;fseek(f,0,SEEK_END);size_t n=ftell(f);rewind(f);void *data=malloc(n);int ok=fread(data,1,n,f)==n;fclose(f);if(ok)ok=c->savedataRestore(c,data,n,false);free(data);return ok;}
+
+void reset(void){c->reset(c);}
