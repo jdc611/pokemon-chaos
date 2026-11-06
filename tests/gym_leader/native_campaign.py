@@ -129,6 +129,25 @@ def close_to_field():
   if rd(symbols['gMain']+4)==symbols['CB2_Overworld']|1 and not call('ScriptContext_IsEnabled') and menu_count()==0 and task('Task_ShopMenu')==255 and task('Task_BuyMenu')==255 and task('Task_BagMenu_HandleInput')==255:return
   press(2,25)
  snap('campaign-close-field-failure');state('campaign-close-field-debug');raise AssertionError('menus did not return to the field')
+def fast_options():
+ close_to_field();press(8,60)
+ actions=[rd(symbols['sCurrentStartMenuActions']+i,1) for i in range(rd('sNumStartMenuActions',1))]
+ if 6 not in actions:
+  press(16,40);actions=[rd(symbols['sCurrentStartMenuActions']+i,1) for i in range(rd('sNumStartMenuActions',1))]
+ target=actions.index(6)
+ for _ in range(20):
+  cursor=rd('sStartMenuCursorPos',1)
+  if cursor==target:break
+  press(128 if cursor<target else 64,15)
+ press(1,160);waitfor(lambda:task('Task_OptionMenuProcessInput')<16)
+ options=rd(rd('gSaveBlock2Ptr')+0x14,2)
+ if options&7!=2:press(16,25)
+ press(128,25)
+ if not options&(1<<10):press(16,25)
+ press(2,160);press(2,80);close_to_field()
+ options=rd(rd('gSaveBlock2Ptr')+0x14,2)
+ assert options&7==2 and options&(1<<10)
+ print('CAMPAIGN native Options: FAST text and battle animations OFF',flush=True)
 def prepare_first_inspection():
  # Spend earned money at the rank-two evolution counter.
  goleague();walkto(9,10);press(16);press(1);until(lambda:menu_count()==6)
@@ -168,10 +187,18 @@ def prepare_first_inspection():
   if cursor==1:break
   press(16 if cursor==0 else 64,20)
  press(1,50)
+ learning=False
  for _ in range(1600):
   if task('Task_BagMenu_HandleInput')<16 and call('GetMonData2',symbols['gParties']+v[5],v[10])!=548:break
-  if task('Task_HandleReplaceMoveInput')<16:frames(80);press(2,80)
-  else:press(1,20)
+  if task('Task_HandleReplaceMoveInput')<16:
+   if not learning:
+    frames(80);learning=True;new=rd('gMoveToLearn',2);moves=partymoves(1);weak=min(range(4),key=lambda i:power(moves[i]))
+    if power(new)<=power(moves[weak]):press(2,80)
+    else:
+     for _ in range(weak):press(128,20)
+     press(1,80)
+   else:frames(20)
+  else:learning=False;press(1,20)
  else:
   snap('campaign-evolution-failure');raise AssertionError('native stone evolution did not return')
  assert not call('CheckBagHasItem',c[18],1)
@@ -193,8 +220,10 @@ def prepare_first_inspection():
 resume=os.environ.get('GLE_CAMPAIGN_RESUME')
 if resume:
  state(resume,1);frames(30)
+ fast_options();walkto(7,12);press(16);press(1);until(lambda:menu_count()==8)
  print('DEVELOPMENT SNAPSHOT RESUME: final fresh-run validation remains required',flush=True)
 else:
+ fast_options()
  # Return home through the real GLA desk.
  walkto(7,12);press(16);press(1);until(lambda:menu_count()==5);choose(3)
  for _ in range(200):
