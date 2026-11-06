@@ -103,3 +103,22 @@ Individual staff stations:
   dismissal. It uses explicit rank/staff fixtures and is not a campaign test.
 - Compile `stations_layout.c` into `$CHAOS_QA_DIR/stations-layout.bin` in addition
   to fresh `native_layout.c` and `gym_design_layout.c` layouts.
+
+### Earned controller campaign development
+
+`native_fresh_career.py` starts at the real title screen and chains the opening,
+first inspection, Rank 4, Bruno, Rank 6 and Agatha routes without loading an
+emulator snapshot or imported flash. It is still a campaign prefix: its sentinel
+explicitly excludes Lance, competitions, Oak and full release certification.
+Use fresh matching layout fixtures (`campaign_layout.c`, `move_layout.c`,
+`volatile_layout.c` and `generate_summary_layout.py`); extract `.qa_move_meta`,
+`.qa_move_bits` and `.qa_volatiles` into `move-meta.bin`, `move-bits.bin` and
+`volatile-masks.bin`. Public struct data uses `.rodata` as usual.
+
+For development only, `GLE_CAMPAIGN_RESUME` names a genuinely earned emulator
+snapshot; `GLE_CAMPAIGN_FLASH` names genuine game-written flash continued from
+the title. Snapshots require the exact ROM hash. The controller policy reads
+compiled bitfield metadata and avoids Disabled, Tormented, Taunted, Encored or
+Throat Chopped moves. It never supplies battle outcomes or modifies game RAM.
+`native_registration.py` explicitly separates its earned five-slot test from
+its injected Rank 7 six-slot fixture; never count the latter as campaign progress.

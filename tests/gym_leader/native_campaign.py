@@ -30,6 +30,8 @@ summary_cursor=struct.unpack('<I',(ROOT/'summary-layout.bin').read_bytes())[0]
 b=(ROOT/'move-meta.bin').read_bytes();move_meta=struct.unpack('<'+'I'*(len(b)//4),b)
 b=(ROOT/'move-bits.bin').read_bytes();move_bits=[int.from_bytes(b[i*move_meta[0]:(i+1)*move_meta[0]],'little').bit_length()-1 for i in range(len(b)//move_meta[0])]
 assert move_meta[0]==c[6]
+b=(ROOT/'volatile-masks.bin').read_bytes();volatile_masks=[int.from_bytes(b[i:i+c[0]],'little') for i in range(0,len(b),c[0])]
+assert len(volatile_masks)==6
 def pos():return rd(rd('gSaveBlock1Ptr'),2),rd(rd('gSaveBlock1Ptr')+2,2)
 def walkto(x,y):
  goal=(x,y);blocked=set()
@@ -78,8 +80,15 @@ def movevalue(move):
  # Charge/semi-invulnerable moves spend two turns for one attack.
  if move in {19,76,91,130,143,291,340,467,553,554,566,601,611,669}:value*=0.55
  return value
+def volatilefield(index):
+ mask=volatile_masks[index];bit=(mask&-mask).bit_length()-1;width=mask.bit_count()
+ assert mask>>bit==(1<<width)-1 and bit%32+width<=32
+ return (rd(symbols['gBattleMons']+(bit//32)*4)>>(bit%32))&((1<<width)-1)
 def bestmove():
  own=symbols['gBattleMons'];enemy=own+c[0];scores=[]
+ choice=rd(rd('gBattleStruct')+c[43],c[4]) if len(c)>44 else 0
+ held=rd(own+c[44],2) if len(c)>44 else 0
+ disabled=volatilefield(0);torment=volatilefield(1);taunt=volatilefield(2);encore=volatilefield(3);encored=volatilefield(4);throat=volatilefield(5)
  ability=rd(enemy+move_meta[13],move_meta[14]);ownability=rd(own+move_meta[13],move_meta[14])
  ignore=ownability in move_meta[28:31]
  for i in range(4):
@@ -99,7 +108,9 @@ def bestmove():
   physical=category(move)==move_meta[2]
   attack=rd(own+(c[8] if physical else c[9]),2);defense=rd(enemy+(c[10] if physical else c[11]),2)
   score*=attack/max(1,defense)
-  scores.append(score if pp and move else -1)
+  blocked=(len(c)>44 and held in [c[40],c[41]] and choice not in [0,65535] and move!=choice) or move==disabled or (torment and move==rd('gLastMoves',2)) or (taunt and category(move)==0) or (encore and move!=encored) or (throat and movefield(move,8,1))
+  scores.append(score if pp and move and not blocked else -1)
+ bestmove.last_scores=scores
  return max(range(4),key=lambda i:scores[i])
 def choose_forgotten_move(index):
  frames(80)
@@ -110,7 +121,7 @@ def choose_forgotten_move(index):
   press(128,20)
  raise AssertionError(('native move-learning cursor did not reach target',index))
 def battle():
- started=False;replacement=False
+ started=False;replacement=False;switch_target=None
  for step in range(4500):
   active=bool(call('GymLeaderBattleTrainer'))
   if active:
@@ -133,7 +144,8 @@ def battle():
   if task('Task_HandleChooseMonInput')<16:
    alive=[i for i in range(rd('gPartiesCount',1)) if rd(symbols['gParties']+i*v[5]+v[13],2)>0 and i!=rd('gBattlerPartyIndexes',2)]
    if not alive:press(1,25);continue
-   target=alive[0]
+   target=switch_target if switch_target in alive else alive[0]
+   switch_target=None
    for _ in range(12):
     cursor=call('GetCursorSelectionMonId')
     if cursor==target:break
@@ -144,6 +156,33 @@ def battle():
    press(2,20);continue
   if rd('gBattlerControllerFuncs')==symbols['HandleInputChooseMove']|1:
    target=bestmove()
+   if bestmove.__name__=='bestmove' and hasattr(bestmove,'last_scores') and max(bestmove.last_scores)<=0:
+    candidates=[];active_index=rd('gBattlerPartyIndexes',2)
+    for i in range(rd('gPartiesCount',1)):
+     mon=symbols['gParties']+i*v[5]
+     if i==active_index or rd(mon+v[13],2)==0:continue
+     values=[]
+     for j,move in enumerate(partymoves(i)):
+      if not call('GetMonData2',mon,v[45]+j):continue
+      typ=movetype(move);effect=1;seen=set()
+      for k in range(2):
+       t=rd(symbols['gBattleMons']+c[0]+c[3]+k*c[5],c[5])
+       if t in seen or t in move_meta[4:6]:continue
+       seen.add(t)
+       if typ<c[7] and t<c[7]:effect*=rd(symbols['gTypeEffectivenessTable']+move_meta[1]*(typ*c[7]+t),move_meta[1])/4096
+      ability=rd(symbols['gBattleMons']+c[0]+move_meta[13],move_meta[14])
+      if typ==move_meta[10] and ability==move_meta[15]:effect=0
+      if typ==move_meta[11] and ability in [move_meta[16],move_meta[24]]:effect=0
+      values.append(movevalue(move)*effect)
+     if values and max(values)>0:candidates.append((max(values),i))
+    if candidates:
+     switch_target=max(candidates)[1];press(2,40)
+     waitfor(lambda:rd('gBattlerControllerFuncs')==symbols['HandleInputChooseAction']|1)
+     for _ in range(8):
+      cursor=rd('gActionSelectionCursor',1)
+      if cursor==2:break
+      press(32 if cursor%2 else 128,20)
+     press(1,50);continue
    for _ in range(10):
     cursor=rd('gMoveSelectionCursor',1)
     if cursor==target:break
@@ -169,6 +208,25 @@ def close_to_field():
   if rd(symbols['gMain']+4)==symbols['CB2_Overworld']|1 and not call('ScriptContext_IsEnabled') and not call('ArePlayerFieldControlsLocked') and menu_count()==0 and task('Task_ShopMenu')==255 and task('Task_BuyMenu')==255 and task('Task_BagMenu_HandleInput')==255:return
   press(2,25)
  snap('campaign-close-field-failure');state('campaign-close-field-debug');raise AssertionError('menus did not return to the field')
+def controller_save(name):
+ # Native Start > Save only; exporting its flash bytes never resets the run.
+ close_to_field();before=rd('gSaveCounter');press(8,60)
+ waitfor(lambda:task('Task_ShowStartMenu')<16 and rd('gMenuCallback')==symbols['HandleStartMenuInput']|1)
+ actions=[rd(symbols['sCurrentStartMenuActions']+i,1) for i in range(rd('sNumStartMenuActions',1))];target=actions.index(5)
+ for _ in range(20):
+  cursor=rd('sStartMenuCursorPos',1)
+  if cursor==target:break
+  press(128 if cursor<target else 64,15)
+ press(1,80)
+ for _ in range(200):
+  if rd('gSaveCounter')!=before:break
+  press(1,30)
+ else:raise AssertionError('Native career save did not finish')
+ close_to_field();frames(120)
+ import ctypes as C
+ lib.save_dump.argtypes=[C.c_char_p];assert lib.save_dump(str(ROOT/(name+'.sav')).encode())
+ print('CAREER native in-run Save',name,'rank',rd(current()+v[2],1),flush=True)
+ walkto(7,12);press(16);press(1);until(lambda:menu_count()==8)
 def fast_options():
  close_to_field();press(8,60);waitfor(lambda:task('Task_ShowStartMenu')<16 and rd('gMenuCallback')==symbols['HandleStartMenuInput']|1)
  actions=[rd(symbols['sCurrentStartMenuActions']+i,1) for i in range(rd('sNumStartMenuActions',1))]

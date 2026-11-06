@@ -1,8 +1,9 @@
 """Earn the second inspection via native reward, registration, practice and battles."""
 import os,runpy,json
 os.environ['GLE_CAREER_HELPERS_ONLY']='1'
-globals().update(runpy.run_path('tests/gym_leader/native_career.py'))
+globals().update(runpy.run_path('tests/gym_leader/native_career.py',init_globals={'_campaign_context':_campaign_context} if '_campaign_context' in globals() else None))
 assert rank()==4
+controller_save('career-rank-4-native')
 new=claim_reward();indices=[new,4,1,0];register_team(indices)
 prepared=False
 for match in range(80):

@@ -736,3 +736,7 @@ These later-tier, currency, contract, title and legacy-ID scenarios remain expli
 ## November 6: earned Rank 5 and native registration repair
 
 Actual controller victories over Lorelei and Bruno now reach earned Rank 5 in a resumed development career. Native Save/power-reset/Continue and genuine flash backups pass. Rank 5 exposed the inherited four-entry selected-order array; it now covers all six party slots and has correct Fifth/Sixth labels. Earned five-partner and explicit-fixture six-partner registration pass. See MASTER section 55 and native-registration-audit.json. Remaining inspections, competitions, Oak and uninterrupted campaign/release validation remain open; no overall completion percentage or finished ROM is declared.
+
+## November 6: earned Rank 7 and Party Relearn access
+
+Agatha is defeated after actual native move relearning. Party Relearn is now available independently of the original Pewter flags in GLE; exact flag-state access, four actual lessons and Rank 7 Save/power-reset/Continue pass. Controller inputs now avoid move restrictions and switch normally when no damaging attack is usable. See MASTER section 56 and native-relearner-access-audit.json. Lance, competitions, Oak and full campaign/release validation remain open.

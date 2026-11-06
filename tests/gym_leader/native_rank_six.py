@@ -2,8 +2,9 @@
 import os,runpy,json
 from pathlib import Path
 os.environ['GLE_CAREER_HELPERS_ONLY']='1'
-globals().update(runpy.run_path('tests/gym_leader/native_career.py'))
+globals().update(runpy.run_path('tests/gym_leader/native_career.py',init_globals={'_campaign_context':_campaign_context} if '_campaign_context' in globals() else None))
 assert rank()==5
+controller_save('career-rank-5-native')
 READ_ONLY.update({'MapGridGetMetatileBehaviorAt','MetatileBehavior_IsPC'})
 src=Path('tests/gym_leader/native_career_town.py').read_text();exec(src[src.index('def deposit_reserve('):src.index("if not os.environ.get('GLE_CAREER_TOWN_HELPERS_ONLY')")])
 deposit_reserve(2,672)

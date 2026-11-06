@@ -205,5 +205,228 @@
     "campaign_complete": false,
     "history": "Earned Rank 4 continued by controller: 28 defenses, 30 practice battles and actual Bruno victory. Resumed development career; final clean replay remains required."
   },
-  "rank_five_registration_blocker": "RESOLVED: selected-order storage expanded to six and Fifth/Sixth labels added. Earned five-member and explicit-fixture six-member registration pass; fixed-build native Save/Continue preserves five registered identities."
+  "rank_five_registration_blocker": "RESOLVED: selected-order storage expanded to six and Fifth/Sixth labels added. Earned five-member and explicit-fixture six-member registration pass; fixed-build native Save/Continue preserves five registered identities.",
+  "earned_rank_six": {
+    "rom_sha256": "a2bf30748226a4b63f20f096638bcde1d9a2f14b55748c3577b72735c87af4e2",
+    "state_sha256": "bed1562a4f4864fb6da8aa1281a88c47bbd5f587a05a2ba1541945707d33e7b6",
+    "state_bytes": 397312,
+    "save_sha256": "f83a9d69ef42bfb286c2481957e63eb130d8e2d2240b999c39c8556e09895970",
+    "flash_bytes": 131072,
+    "earned_rank": 6,
+    "official_wins": 61,
+    "official_losses": 23,
+    "rank_xp": 5,
+    "party": [
+      {
+        "species": 460,
+        "level": 55,
+        "moves": [
+          8,
+          452,
+          59,
+          75
+        ],
+        "exp": 207968
+      },
+      {
+        "species": 549,
+        "level": 55,
+        "moves": [
+          71,
+          72,
+          80,
+          78
+        ],
+        "exp": 166375
+      },
+      {
+        "species": 1334,
+        "level": 27,
+        "moves": [
+          229,
+          331,
+          72,
+          506
+        ],
+        "exp": 21160
+      },
+      {
+        "species": 413,
+        "level": 55,
+        "moves": [
+          437,
+          405,
+          94,
+          60
+        ],
+        "exp": 166375
+      },
+      {
+        "species": 1315,
+        "level": 53,
+        "moves": [
+          402,
+          412,
+          572,
+          733
+        ],
+        "exp": 149109
+      },
+      {
+        "species": 1315,
+        "level": 55,
+        "moves": [
+          412,
+          73,
+          733,
+          572
+        ],
+        "exp": 159635
+      }
+    ],
+    "campaign_complete": false,
+    "history": "Controller-earned continuation from prior earned checkpoint. Development resumes were used. No supplied ranks, outcomes, Pokemon, money or HP. Final uninterrupted campaign replay remains required."
+  },
+  "fresh_continuous_first_inspection": {
+    "rom_sha256": "a2bf30748226a4b63f20f096638bcde1d9a2f14b55748c3577b72735c87af4e2",
+    "used_snapshot_or_flash_resume": false,
+    "actual_lorelei_victory": {
+      "stage": "first_inspection",
+      "match": 9,
+      "outcome": 1,
+      "rank": 3,
+      "rank_xp": 20,
+      "wins": 12,
+      "losses": 0,
+      "party": [
+        {
+          "species": 459,
+          "level": 25,
+          "moves": [
+            196,
+            181,
+            633,
+            75
+          ],
+          "exp": 19531
+        },
+        {
+          "species": 549,
+          "level": 25,
+          "moves": [
+            71,
+            72,
+            80,
+            78
+          ],
+          "exp": 15625
+        },
+        {
+          "species": 672,
+          "level": 6,
+          "moves": [
+            33,
+            74,
+            0,
+            0
+          ],
+          "exp": 222
+        },
+        {
+          "species": 1334,
+          "level": 25,
+          "moves": [
+            229,
+            331,
+            72,
+            506
+          ],
+          "exp": 15625
+        }
+      ]
+    },
+    "complete_campaign": false
+  },
+  "runner_move_legality_fix": "Read compiled volatile-bitfield masks to avoid Disabled, Tormented, Taunted, Encored and Throat Chopped moves. Original long Unown defense completed with corrected controller policy; no game changes or supplied outcome.",
+  "earned_rank_seven": {
+    "rom_sha256": "85c4b4c3da3366d138b4624cff162ad1720a9e70cadca179cf8ae4969edc190a",
+    "state_sha256": "7d191fdccb8bb31796f07c5cd2795c930b7726a599915282a89fb0153a644900",
+    "state_bytes": 397312,
+    "save_sha256": "86294e7f4f2b69f1d76045d47b74bde6e7f1c119fe5e6e72ceacc6137aaeb4b0",
+    "flash_bytes": 131072,
+    "earned_rank": 7,
+    "official_wins": 92,
+    "official_losses": 28,
+    "rank_xp": 20,
+    "party": [
+      {
+        "species": 460,
+        "level": 65,
+        "moves": [
+          8,
+          452,
+          59,
+          75
+        ],
+        "exp": 343281
+      },
+      {
+        "species": 549,
+        "level": 65,
+        "moves": [
+          483,
+          79,
+          202,
+          235
+        ],
+        "exp": 274625
+      },
+      {
+        "species": 413,
+        "level": 65,
+        "moves": [
+          437,
+          405,
+          94,
+          60
+        ],
+        "exp": 274625
+      },
+      {
+        "species": 1315,
+        "level": 53,
+        "moves": [
+          402,
+          412,
+          572,
+          733
+        ],
+        "exp": 149109
+      },
+      {
+        "species": 1315,
+        "level": 65,
+        "moves": [
+          412,
+          80,
+          733,
+          572
+        ],
+        "exp": 272535
+      },
+      {
+        "species": 781,
+        "level": 65,
+        "moves": [
+          438,
+          640,
+          412,
+          566
+        ],
+        "exp": 274625
+      }
+    ],
+    "campaign_complete": false,
+    "history": "Controller-earned continuation from prior earned checkpoint. Development resumes were used. No supplied ranks, outcomes, Pokemon, money or HP. Final uninterrupted campaign replay remains required."
+  }
 }
