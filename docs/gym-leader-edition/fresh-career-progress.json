@@ -37,7 +37,24 @@
       }
     ]
   },
-  "preparation_status": "Native Sun Stone purchase and payment were observed in a development snapshot resume. Shop exit automation needed a timing fix. Evolution, practice and inspection retry have not been verified.",
-  "blocker": "Execution workspace became unavailable before the next result could be inspected.",
-  "recovery": "Latest preparation helper reconstructed from the executed editing commands and saved as unverified WIP; compile and validate it when execution returns. Local emulator snapshots and build cache availability must be checked. Final fresh campaign requires a clean run without GLE_CAMPAIGN_RESUME."
+  "preparation_status": "Native paid evolution and practice passed. Corrected read-only move/type/immunity evaluation defeated the previously blocking practice matchup. The earned team defeated Lorelei through actual controller input and advanced to rank 3; official XP and battle results were not injected.",
+  "blocker": "Later campaign progression, competitions, ending and final save/release checks remain under validation.",
+  "recovery": "Latest preparation helper reconstructed from the executed editing commands and saved as unverified WIP; compile and validate it when execution returns. Local emulator snapshots and build cache availability must be checked. Final fresh campaign requires a clean run without GLE_CAMPAIGN_RESUME.",
+  "latest_development_preparation": {
+    "snapshot_resume": true,
+    "native_options_fast_text_and_animation_off": true,
+    "sun_stone_purchase_and_payment": true,
+    "native_bag_and_party_use": true,
+    "species_before": 548,
+    "species_after": 549,
+    "evolution_attack_learned": 80,
+    "practice_battles_running": true,
+    "practice_preserves_money_rank_xp_and_official_records": true,
+    "inspection_retry_verified": false,
+    "first_inspection_victory": true,
+    "earned_rank": 3,
+    "source": "Resumed earned-career emulator snapshot; real controller battle; no rank or outcome injection",
+    "registered_team_level": 25,
+    "verified_fresh_campaign_complete": false
+  }
 }
